@@ -1,6 +1,6 @@
 # Void Blaster
 
-Neon space survivor for iPhone (PWA). Drag anywhere to fly — weapons fire automatically.
+Neon space survivor for iPhone (PWA). Steer with the joystick at the bottom of the screen (or switch to floating joystick / drag anywhere in Settings) — weapons fire automatically.
 Blast the swarm, collect XP crystals, pick upgrades, evolve weapons and take down the boss.
 
 ## Features (prototype v0.1)

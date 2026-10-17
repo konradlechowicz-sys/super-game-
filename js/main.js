@@ -14,13 +14,16 @@ const TIME_SCALE = DEV ? Math.max(1, +params.get('ts') || 1) : 1;
 const canvas = document.getElementById('game');
 const ctx = canvas.getContext('2d', { alpha: false });
 
-// ---------------- input: relative drag + keyboard ----------------
+// ---------------- input: joystick / relative drag + keyboard ----------------
+const JOY_R = 52; // knob travel radius in CSS px
 const input = {
   dx: 0, dy: 0, down: false, lx: 0, ly: 0, pid: null,
+  // joystick: base centre (bx, by), knob offset (kx, ky), normalised output (jx, jy)
+  joy: false, bx: 0, by: 0, kx: 0, ky: 0, jx: 0, jy: 0,
   keys: new Set(),
   keyX() { return (this.keys.has('ArrowRight') || this.keys.has('KeyD') ? 1 : 0) - (this.keys.has('ArrowLeft') || this.keys.has('KeyA') ? 1 : 0); },
   keyY() { return (this.keys.has('ArrowDown') || this.keys.has('KeyS') ? 1 : 0) - (this.keys.has('ArrowUp') || this.keys.has('KeyW') ? 1 : 0); },
-  resetDrag() { this.dx = this.dy = 0; this.down = false; this.pid = null; },
+  resetDrag() { this.dx = this.dy = 0; this.down = false; this.pid = null; this.joy = false; this.kx = this.ky = this.jx = this.jy = 0; },
 };
 
 const app = {
@@ -34,9 +37,40 @@ const app = {
 app.bg = new Background(app);
 app.ui = new UI(app);
 
+const control = () => app.save.settings.control || 'joystick';
+const safeProbe = document.createElement('div');
+safeProbe.style.cssText = 'position:fixed;visibility:hidden;pointer-events:none;padding-bottom:env(safe-area-inset-bottom, 0px)';
+document.body.appendChild(safeProbe);
+const safeBottom = () => parseFloat(getComputedStyle(safeProbe).paddingBottom) || 0;
+// Fixed joystick sits centred near the bottom edge; the floating one appears under the thumb.
+app.joyHome = () => ({ x: app.W / 2, y: app.H - safeBottom() - Math.max(90, Math.min(130, app.H * 0.13)) });
+app.joyZoneTop = () => app.H * 0.58;
+
+function setKnob(x, y) {
+  let ox = x - input.bx, oy = y - input.by;
+  const l = Math.hypot(ox, oy);
+  if (l > JOY_R) { ox = (ox / l) * JOY_R; oy = (oy / l) * JOY_R; }
+  input.kx = ox; input.ky = oy;
+  // dead zone, then linear 0..1 output along the knob direction
+  const m = Math.min(1, l / JOY_R);
+  const out = m < 0.12 ? 0 : (m - 0.12) / 0.88;
+  const kl = Math.hypot(ox, oy) || 1;
+  input.jx = (ox / kl) * out;
+  input.jy = (oy / kl) * out;
+}
+
 canvas.addEventListener('pointerdown', (e) => {
   app.audio.unlock();
   if (input.pid !== null) return;
+  const mode = control();
+  if (mode !== 'drag') {
+    // joystick modes only react to touches in the lower part of the screen
+    if (e.clientY < app.joyZoneTop()) return;
+    input.joy = true;
+    if (mode === 'float') { input.bx = e.clientX; input.by = Math.min(e.clientY, app.H - safeBottom() - JOY_R - 8); }
+    else { const h = app.joyHome(); input.bx = h.x; input.by = h.y; }
+    setKnob(e.clientX, e.clientY);
+  }
   input.pid = e.pointerId;
   input.down = true;
   input.lx = e.clientX;
@@ -45,12 +79,16 @@ canvas.addEventListener('pointerdown', (e) => {
 });
 canvas.addEventListener('pointermove', (e) => {
   if (e.pointerId !== input.pid) return;
+  if (input.joy) {
+    setKnob(e.clientX, e.clientY);
+    return;
+  }
   input.dx += e.clientX - input.lx;
   input.dy += e.clientY - input.ly;
   input.lx = e.clientX;
   input.ly = e.clientY;
 });
-const up = (e) => { if (e.pointerId === input.pid) { input.pid = null; input.down = false; } };
+const up = (e) => { if (e.pointerId === input.pid) input.resetDrag(); };
 canvas.addEventListener('pointerup', up);
 canvas.addEventListener('pointercancel', up);
 document.addEventListener('pointerdown', () => app.audio.unlock(), { capture: true });
@@ -164,11 +202,51 @@ function frame(now) {
   app.time += dt;
   if (app.game) {
     for (let i = 0; i < TIME_SCALE && app.game; i++) app.game.update(dt);
-    if (app.game) app.game.render(ctx);
+    if (app.game) { app.game.render(ctx); drawJoystick(); }
   } else {
     renderMenu(dt);
   }
   requestAnimationFrame(frame);
+}
+
+function drawJoystick() {
+  const mode = control();
+  const st = app.game.state;
+  if (mode === 'drag' || (st !== 'play' && st !== 'winning')) return;
+  if (mode === 'float' && !input.joy) return;
+  const { dpr } = app;
+  const h = input.joy ? { x: input.bx, y: input.by } : app.joyHome();
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  ctx.globalAlpha = input.joy ? 0.9 : 0.45;
+  ctx.fillStyle = 'rgba(20, 8, 50, 0.45)';
+  ctx.beginPath(); ctx.arc(h.x, h.y, JOY_R + 14, 0, Math.PI * 2); ctx.fill();
+  ctx.strokeStyle = '#2ff3ff';
+  ctx.lineWidth = 2;
+  ctx.shadowColor = '#2ff3ff';
+  ctx.shadowBlur = 12;
+  ctx.stroke();
+  // direction ticks
+  ctx.shadowBlur = 0;
+  ctx.globalAlpha *= 0.6;
+  for (let i = 0; i < 4; i++) {
+    const a = (i * Math.PI) / 2;
+    ctx.beginPath();
+    ctx.moveTo(h.x + Math.cos(a) * (JOY_R + 2), h.y + Math.sin(a) * (JOY_R + 2));
+    ctx.lineTo(h.x + Math.cos(a) * (JOY_R + 9), h.y + Math.sin(a) * (JOY_R + 9));
+    ctx.stroke();
+  }
+  ctx.globalAlpha = input.joy ? 1 : 0.6;
+  const kx = h.x + input.kx, ky = h.y + input.ky;
+  const g = ctx.createRadialGradient(kx, ky, 2, kx, ky, 26);
+  g.addColorStop(0, '#ffffff');
+  g.addColorStop(0.35, '#2ff3ff');
+  g.addColorStop(1, 'rgba(47, 243, 255, 0.15)');
+  ctx.fillStyle = g;
+  ctx.shadowColor = '#2ff3ff';
+  ctx.shadowBlur = 18;
+  ctx.beginPath(); ctx.arc(kx, ky, 26, 0, Math.PI * 2); ctx.fill();
+  ctx.shadowBlur = 0;
+  ctx.globalAlpha = 1;
 }
 
 function renderMenu(dt) {

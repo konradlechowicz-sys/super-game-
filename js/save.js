@@ -8,7 +8,7 @@ const fresh = () => ({
   ship: 'striker',
   shop: {},
   daily: { last: null, streak: 0 },
-  settings: { sfx: true, music: true, dmgNums: true },
+  settings: { sfx: true, music: true, dmgNums: true, control: 'joystick' },
   stats: { kills: 0, runs: 0, bossKills: 0 },
 });
 

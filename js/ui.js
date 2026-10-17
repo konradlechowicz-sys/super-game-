@@ -119,7 +119,7 @@ export class UI {
         </div>
         <button class="btn daily-btn ${d.claimable ? 'glow' : ''}" data-act="daily">DAILY REWARD ${d.claimable ? '<span class="badge">!</span>' : ''}</button>
       </div>
-      <div class="foot">Drag anywhere to fly · Weapons fire automatically</div>
+      <div class="foot">${this.save.settings.control === 'drag' ? 'Drag anywhere to fly' : 'Steer with the joystick at the bottom'} · Weapons fire automatically</div>
     `, {
       play: () => this.map(),
       hangar: () => this.hangar(),
@@ -306,6 +306,7 @@ export class UI {
     const tog = (k, label) => `<button class="toggle ${s[k] ? 'on' : ''}" data-act="tog" data-k="${k}"><span>${label}</span><i></i></button>`;
     this.modal(`
       <h2>SETTINGS</h2>
+      <button class="toggle choice" data-act="control"><span>Controls</span><b>${({ joystick: 'Joystick', float: 'Floating joystick', drag: 'Drag anywhere' })[s.control] || 'Joystick'}</b></button>
       ${tog('music', 'Music')}
       ${tog('sfx', 'Sound effects')}
       ${tog('dmgNums', 'Damage numbers')}
@@ -317,6 +318,12 @@ export class UI {
       <p class="tiny muted">On iPhone: Share → Add to Home Screen to play full-screen.</p>
     `, {
       close: () => this.closeModal(),
+      control: () => {
+        const order = ['joystick', 'float', 'drag'];
+        s.control = order[(order.indexOf(s.control) + 1) % order.length];
+        this.app.persist();
+        this.settings();
+      },
       tog: (ds) => {
         s[ds.k] = !s[ds.k];
         this.app.applySettings();

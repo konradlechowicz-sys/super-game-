@@ -521,8 +521,9 @@ export class Game {
 
     // camera
     const k = Math.min(1, rawDt * 7);
+    const lift = this.save.settings.control === 'drag' ? 0 : this.viewSize().vh * 0.1;
     this.cam.x += (p.x - this.cam.x) * k;
-    this.cam.y += (p.y - this.cam.y) * k;
+    this.cam.y += (p.y + lift - this.cam.y) * k;
     const { vw, vh } = this.viewSize();
     const ex = Math.max(0, this.arena.w / 2 - vw / 2 + 60), ey = Math.max(0, this.arena.h / 2 - vh / 2 + 60);
     this.cam.x = clamp(this.cam.x, -ex, ex);
@@ -551,6 +552,14 @@ export class Game {
       p.tx += (inp.dx * DRAG_SENS) / this.app.zoom;
       p.ty += (inp.dy * DRAG_SENS) / this.app.zoom;
       inp.dx = inp.dy = 0;
+    }
+    if (inp.jx || inp.jy) {
+      // analog joystick: speed scales with how far the knob is pushed
+      p.tx = p.x + inp.jx * p.speed * dt;
+      p.ty = p.y + inp.jy * p.speed * dt;
+    } else if (inp.joy) {
+      p.tx = p.x;
+      p.ty = p.y;
     }
     const kx = inp.keyX(), ky = inp.keyY();
     if (kx || ky) {
