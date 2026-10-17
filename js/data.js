@@ -66,8 +66,10 @@ export const ENEMIES = {
 
 export const BOSSES = {
   hive: {
-    name: 'HIVE MOTHER', hp: 7800, speed: 46, dmg: 25, r: 58, color: '#ff2d6f', inner: '#ff8ad0', sides: 6,
-    move: 'chase', rest: 1.4, phases: [0.5], attacks: ['spiral', 'burst', 'summon', 'charge'], summon: ['drone', 'swarmer'],
+    // First boss: deliberately forgiving (weaker, slower bullets, fewer minions, long pauses).
+    name: 'HIVE MOTHER', hp: 5000, speed: 42, dmg: 18, r: 58, color: '#ff2d6f', inner: '#ff8ad0', sides: 6,
+    move: 'chase', rest: 1.9, phases: [0.5], attacks: ['spiral', 'burst', 'summon', 'charge'], summon: ['drone', 'swarmer'],
+    bulletDmg: 7, bulletSpeed: 0.85, burstN: 16, summonN: 5, bgSpawn: 0.2,
   },
   serpent: {
     name: 'CRYSTAL SERPENT', hp: 15000, speed: 120, dmg: 22, r: 34, color: '#2ff3ff', inner: '#b4fff0', sides: 5,
@@ -136,12 +138,11 @@ const W1 = [
     ],
   },
   {
-    id: '1-6', name: 'Hive Mother', duration: 150, bossAt: 150, boss: 'hive', hp: 2.6, speed: 1.1, rate: [1.2, 4.2], max: 160, kills: 700,
-    enemies: [['drone', 0, 9], ['swarmer', 10, 5], ['dasher', 25, 4], ['shooter', 40, 3], ['tank', 55, 2], ['splitter', 45, 3]],
+    id: '1-6', name: 'Hive Mother', duration: 150, bossAt: 150, boss: 'hive', hp: 2.3, speed: 1.1, rate: [1, 3.4], max: 130, kills: 600,
+    enemies: [['drone', 0, 9], ['swarmer', 10, 5], ['dasher', 25, 4], ['shooter', 40, 2], ['splitter', 45, 3], ['tank', 70, 1]],
     events: [
-      { t: 50, type: 'ring', enemy: 'drone', count: 24, msg: 'INCOMING SWARM' },
-      { t: 100, type: 'elite', enemy: 'tank', msg: 'ELITE DETECTED' },
-      { t: 125, type: 'elite', enemy: 'dasher', msg: 'ELITE DETECTED' },
+      { t: 50, type: 'ring', enemy: 'drone', count: 20, msg: 'INCOMING SWARM' },
+      { t: 100, type: 'elite', enemy: 'drone', msg: 'ELITE DETECTED' },
     ],
   },
 ];

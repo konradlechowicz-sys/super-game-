@@ -477,6 +477,18 @@ export class Game {
     }
     this.boss = b;
     this.enemies.push(b);
+    this.pickups.push({ x: p.x + rand(-40, 40), y: p.y + 60, kind: 'heal', v: 1 });
+    // Boss entrance: a shockwave clears the small fry and the player gets a breather.
+    for (const e of this.enemies) {
+      if (e.dead || e.boss || e.seg || e.elite) continue;
+      e.dead = true;
+      this.burst(e.x, e.y, e.color, 5, 180, 0.4);
+    }
+    this.ebullets.length = 0;
+    p.hp = Math.min(p.maxHp, p.hp + p.maxHp * 0.5);
+    p.inv = Math.max(p.inv, 1.5);
+    this.addFx(p.x, p.y, 500, '#ffffff', 0.7, 6);
+    this.text(p.x, p.y - 24, 'HULL RESTORED', '#3dff8a');
     this.ui.banner('WARNING', `${def.name} APPROACHES`);
     this.ui.bossBar(def.name, 1);
     this.app.audio.setTrack('boss');
@@ -489,7 +501,7 @@ export class Game {
     const prog = clamp(this.time / st.duration, 0, 1);
     let rate = lerp(st.rate[0], st.rate[1], prog);
     if (this.surge && this.time < this.surge.until) rate *= this.surge.mul;
-    if (this.boss) rate *= 0.35;
+    if (this.boss) rate *= this.boss.def.bgSpawn ?? 0.35;
     if (this.bossDefeated) rate = 0;
     this.spawnAcc += rate * dt;
     while (this.spawnAcc >= 1) {
@@ -956,8 +968,8 @@ export class Game {
     switch (b.mode) {
       case 'spiral': b.modeT = 3; break;
       case 'burst': b.modeT = 1.6; break;
-      case 'summon': b.modeT = 0.6; this.bossSummon(b, 7 + enr * 3); break;
-      case 'charge': b.modeT = 0.9; b.dir = Math.atan2(dy, dx); break;
+      case 'summon': b.modeT = 0.6; this.bossSummon(b, (b.def.summonN || 7) + enr * 3); break;
+      case 'charge': b.modeT = 1.05; b.dir = Math.atan2(dy, dx); break;
       case 'lunge': b.modeT = 1.4; b.lunge = 1.4; this.sfx('warn'); break;
       case 'segburst': {
         b.modeT = 0.2;
@@ -993,6 +1005,7 @@ export class Game {
 
   bossTick(b, dt, enr, dx, dy) {
     const p = this.player;
+    const bd = b.def.bulletDmg || 10, bs = b.def.bulletSpeed || 1;
     switch (b.mode) {
       case 'spiral':
         b.shotT -= dt;
@@ -1000,19 +1013,20 @@ export class Game {
           b.shotT = 0.1 - enr * 0.015;
           b.spin += 0.32;
           const arms = 2 + enr;
-          for (let k = 0; k < arms; k++) this.enemyShoot(b.x, b.y, b.spin + (k / arms) * TAU, 160 + enr * 25, 10);
+          for (let k = 0; k < arms; k++) this.enemyShoot(b.x, b.y, b.spin + (k / arms) * TAU, (160 + enr * 25) * bs, bd);
         }
         break;
       case 'burst':
         b.shotT -= dt;
         if (b.shotT <= 0) {
           b.shotT = 0.5;
-          const n = 20 + enr * 6, off = rand(0, TAU);
-          for (let k = 0; k < n; k++) this.enemyShoot(b.x, b.y, off + (k / n) * TAU, 150 + enr * 25, 10);
+          const n = (b.def.burstN || 20) + enr * 6, off = rand(0, TAU);
+          for (let k = 0; k < n; k++) this.enemyShoot(b.x, b.y, off + (k / n) * TAU, (150 + enr * 25) * bs, bd);
         }
         break;
       case 'charge': {
         if (b.modeT > 0.45) {
+          // telegraph: the boss flashes and a red lane shows the charge direction
           b.flash = Math.max(b.flash, Math.sin(b.modeT * 50) > 0 ? 0.03 : 0);
           b.dir = Math.atan2(dy, dx);
           return [0, 0];
@@ -1037,7 +1051,7 @@ export class Game {
           if (b.alpha >= 1 && b.ghost) {
             b.ghost = false;
             const n = 18 + enr * 6;
-            for (let k = 0; k < n; k++) this.enemyShoot(b.x, b.y, (k / n) * TAU, 150 + enr * 20, 10);
+            for (let k = 0; k < n; k++) this.enemyShoot(b.x, b.y, (k / n) * TAU, (150 + enr * 20) * bs, bd);
             this.addFx(b.x, b.y, b.r * 2.5, b.color, 0.4, 5);
           }
         }
