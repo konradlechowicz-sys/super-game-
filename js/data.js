@@ -20,13 +20,13 @@ export const SHIPS = {
 };
 
 export const SHOP = [
-  { id: 'power', name: 'Weapon Core', desc: '+8% damage', icon: 'power', cost: [60, 120, 220, 360, 550] },
-  { id: 'hull', name: 'Reinforced Hull', desc: '+15 max hull', icon: 'armor', cost: [50, 100, 180, 300, 480] },
+  { id: 'power', name: 'Weapon Core', desc: '+8% damage', icon: 'power', cost: [60, 120, 220, 360, 550, 800, 1100, 1500] },
+  { id: 'hull', name: 'Reinforced Hull', desc: '+15 max hull', icon: 'armor', cost: [50, 100, 180, 300, 480, 700, 950, 1300] },
   { id: 'thrust', name: 'Engine Tuning', desc: '+5% speed', icon: 'thrusters', cost: [50, 100, 180, 300, 480] },
   { id: 'magnet', name: 'Collector Field', desc: '+15% pickup range', icon: 'tractor', cost: [40, 80, 150, 250, 400] },
-  { id: 'regen', name: 'Nano Repair', desc: '+0.25 hull / sec', icon: 'heal', cost: [100, 200, 350, 550] },
-  { id: 'growth', name: 'Data Mining', desc: '+8% XP gain', icon: 'amplifier', cost: [60, 120, 220, 360, 550] },
-  { id: 'greed', name: 'Salvage Rights', desc: '+15% coins', icon: 'coins', cost: [80, 160, 280, 450, 700] },
+  { id: 'regen', name: 'Nano Repair', desc: '+0.25 hull / sec', icon: 'heal', cost: [100, 200, 350, 550, 800, 1100] },
+  { id: 'growth', name: 'Data Mining', desc: '+8% XP gain', icon: 'amplifier', cost: [60, 120, 220, 360, 550, 800] },
+  { id: 'greed', name: 'Salvage Rights', desc: '+15% coins', icon: 'coins', cost: [80, 160, 280, 450, 700, 1000] },
   { id: 'reroll', name: 'Re-Roll Chip', desc: '+1 upgrade re-roll per run', icon: 'overclock', cost: [150, 350, 700] },
   { id: 'revive', name: 'Phoenix Protocol', desc: 'Revive once per run', icon: 'phoenix', cost: [800] },
 ];
@@ -50,10 +50,39 @@ export const ENEMIES = {
   shooter: { hp: 30, speed: 50, dmg: 8, r: 13, xp: 3, color: '#4dff8a', shape: 'hex', ai: 'shoot', spin: 1 },
   tank: { hp: 130, speed: 34, dmg: 12, r: 22, xp: 6, color: '#a35cff', shape: 'square', spin: 0.6 },
   splitter: { hp: 45, speed: 58, dmg: 10, r: 15, xp: 2, color: '#9dff3d', shape: 'circle', split: 'swarmer', spin: 1.5 },
+  // Crystal Belt
+  shard: { hp: 14, speed: 150, dmg: 7, r: 9, xp: 1, color: '#7df9ff', shape: 'shard', ai: 'orbit' },
+  prism: { hp: 40, speed: 45, dmg: 8, r: 14, xp: 3, color: '#b4fff0', shape: 'prism', ai: 'shoot', shots: 3, fire: 4.2, spin: 0.8 },
+  asteroid: { hp: 160, speed: 70, dmg: 14, r: 26, xp: 5, color: '#6fa8ff', shape: 'rock', ai: 'drift', spin: 0.5 },
+  // Solar Forge
+  bomber: { hp: 22, speed: 100, dmg: 6, r: 12, xp: 2, color: '#ff6a1a', shape: 'bomb', ai: 'fuse', spin: 3 },
+  turret: { hp: 70, speed: 0, dmg: 8, r: 16, xp: 4, color: '#ffc23d', shape: 'turret', ai: 'turret', spin: 0.7 },
+  golem: { hp: 220, speed: 30, dmg: 14, r: 24, xp: 8, color: '#ff3d1a', shape: 'square', spin: 0.4 },
+  // Void Core
+  wraith: { hp: 30, speed: 80, dmg: 7, r: 12, xp: 3, color: '#c86bff', shape: 'wraith', ai: 'blink' },
+  eye: { hp: 50, speed: 40, dmg: 8, r: 15, xp: 4, color: '#ff4dd8', shape: 'eye', ai: 'seeker' },
+  voidling: { hp: 10, speed: 130, dmg: 4, r: 8, xp: 1, color: '#9d4dff', shape: 'dart', pack: [4, 6] },
 };
 
 export const BOSSES = {
-  hive: { name: 'HIVE MOTHER', hp: 3000, speed: 46, dmg: 25, r: 58, color: '#ff2d6f', xp: 0 },
+  hive: {
+    name: 'HIVE MOTHER', hp: 7800, speed: 46, dmg: 25, r: 58, color: '#ff2d6f', inner: '#ff8ad0', sides: 6,
+    move: 'chase', rest: 1.4, phases: [0.5], attacks: ['spiral', 'burst', 'summon', 'charge'], summon: ['drone', 'swarmer'],
+  },
+  serpent: {
+    name: 'CRYSTAL SERPENT', hp: 15000, speed: 120, dmg: 22, r: 34, color: '#2ff3ff', inner: '#b4fff0', sides: 5,
+    move: 'serpent', rest: 1.2, phases: [0.5], attacks: ['segburst', 'lunge', 'burst', 'summon', 'segburst', 'lunge'],
+    summon: ['shard'], segments: 14, segR: 20, segSpacing: 30,
+  },
+  forge: {
+    name: 'FORGE TITAN', hp: 14000, speed: 32, dmg: 28, r: 64, color: '#ffb52e', inner: '#ff5a1a', sides: 4,
+    move: 'chase', rest: 1.3, phases: [0.5], attacks: ['beams', 'mortar', 'turrets', 'burst', 'mortar'], summon: ['bomber'],
+  },
+  voidheart: {
+    name: 'VOID HEART', hp: 18000, speed: 70, dmg: 26, r: 60, color: '#b04dff', inner: '#ff2d95', sides: 8,
+    move: 'float', rest: 1.1, phases: [0.6, 0.25],
+    attacks: ['spiral', 'teleport', 'blackhole', 'beams', 'summon', 'teleport', 'burst'], summon: ['wraith', 'voidling'],
+  },
 };
 
 const W1 = [
@@ -117,14 +146,116 @@ const W1 = [
   },
 ];
 
+// Compact stage builder for worlds 2-4.
+// enemies: [type, unlock time (s), weight]; hp0 -> hp: enemy toughness at the start / end of the stage.
+const S = (id, name, duration, hp0, hp, rate, max, kills, enemies, events, extra = {}) => ({
+  id, name, duration, hp0, hp, speed: 1.1, rate, max, kills, enemies, events, ...extra,
+});
+
+const W2 = [
+  S('2-1', 'Frozen Drift', 210, 1.15, 3.0, [1.1, 4.2], 150, 900,
+    [['drone', 0, 8], ['shard', 0, 6], ['swarmer', 15, 4], ['asteroid', 30, 2]],
+    [{ t: 60, type: 'asteroids', count: 6, msg: 'ASTEROID FIELD' }, { t: 110, type: 'elite', enemy: 'shard', msg: 'ELITE DETECTED' },
+      { t: 150, type: 'ring', enemy: 'shard', count: 20, msg: 'SHARD STORM' }, { t: 180, type: 'surge', dur: 30, mul: 2, msg: 'FINAL WAVE' }]),
+  S('2-2', 'Prism Reef', 220, 1.17, 3.1, [1.1, 4.3], 155, 950,
+    [['drone', 0, 8], ['shard', 0, 6], ['swarmer', 10, 4], ['prism', 30, 4], ['asteroid', 45, 2]],
+    [{ t: 60, type: 'ring', enemy: 'drone', count: 24, msg: 'INCOMING SWARM' }, { t: 110, type: 'elite', enemy: 'prism', msg: 'ELITE DETECTED' },
+      { t: 140, type: 'asteroids', count: 8, msg: 'ASTEROID FIELD' }, { t: 190, type: 'surge', dur: 30, mul: 2, msg: 'FINAL WAVE' }]),
+  S('2-3', 'Shatter Point', 230, 1.19, 3.2, [1.15, 4.4], 160, 1000,
+    [['drone', 0, 7], ['shard', 0, 6], ['swarmer', 10, 4], ['prism', 25, 4], ['splitter', 40, 4], ['asteroid', 50, 2]],
+    [{ t: 70, type: 'ring', enemy: 'splitter', count: 12, msg: 'SPLITTERS INCOMING' }, { t: 120, type: 'asteroids', count: 10, msg: 'ASTEROID FIELD' },
+      { t: 150, type: 'elite', enemy: 'prism', msg: 'ELITE DETECTED' }, { t: 200, type: 'surge', dur: 30, mul: 2, msg: 'FINAL WAVE' }]),
+  S('2-4', 'Glacier Run', 240, 1.21, 3.3, [1.15, 4.5], 165, 1050,
+    [['drone', 0, 7], ['shard', 0, 6], ['dasher', 15, 4], ['prism', 25, 4], ['tank', 50, 3], ['asteroid', 30, 3]],
+    [{ t: 60, type: 'asteroids', count: 10, msg: 'ASTEROID FIELD' }, { t: 100, type: 'elite', enemy: 'tank', msg: 'ELITE DETECTED' },
+      { t: 150, type: 'ring', enemy: 'shard', count: 30, msg: 'SHARD STORM' }, { t: 210, type: 'surge', dur: 30, mul: 2, msg: 'FINAL WAVE' }]),
+  S('2-5', 'Mirror Maze', 250, 1.23, 3.5, [1.2, 4.6], 175, 1150,
+    [['drone', 0, 7], ['shard', 0, 6], ['swarmer', 0, 4], ['prism', 20, 5], ['splitter', 35, 4], ['tank', 55, 3], ['asteroid', 30, 2]],
+    [{ t: 60, type: 'ring', enemy: 'prism', count: 10, msg: 'PRISM RING' }, { t: 110, type: 'elite', enemy: 'splitter', msg: 'ELITE DETECTED' },
+      { t: 150, type: 'asteroids', count: 12, msg: 'ASTEROID FIELD' }, { t: 180, type: 'elite', enemy: 'prism', msg: 'ELITE DETECTED' },
+      { t: 220, type: 'surge', dur: 30, mul: 2, msg: 'FINAL WAVE' }]),
+  S('2-6', 'Crystal Serpent', 150, 1.25, 3.3, [1.2, 4.2], 160, 750,
+    [['drone', 0, 7], ['shard', 0, 6], ['swarmer', 10, 4], ['prism', 25, 4], ['asteroid', 40, 2]],
+    [{ t: 50, type: 'asteroids', count: 8, msg: 'ASTEROID FIELD' }, { t: 100, type: 'elite', enemy: 'prism', msg: 'ELITE DETECTED' }],
+    { bossAt: 150, boss: 'serpent' }),
+];
+
+const W3 = [
+  S('3-1', 'Ember Gate', 225, 1.3, 3.6, [1.15, 4.3], 160, 1000,
+    [['drone', 0, 7], ['bomber', 0, 6], ['swarmer', 10, 4], ['dasher', 25, 4], ['turret', 40, 2]],
+    [{ t: 60, type: 'mortar', count: 6, msg: 'INCOMING FIRE' }, { t: 110, type: 'elite', enemy: 'bomber', msg: 'ELITE DETECTED' },
+      { t: 150, type: 'ring', enemy: 'bomber', count: 14, msg: 'BOMBER PACK' }, { t: 195, type: 'surge', dur: 30, mul: 2, msg: 'FINAL WAVE' }]),
+  S('3-2', 'Slag Rivers', 235, 1.32, 3.7, [1.15, 4.4], 165, 1050,
+    [['drone', 0, 7], ['bomber', 0, 6], ['dasher', 15, 4], ['turret', 30, 3], ['golem', 50, 2]],
+    [{ t: 60, type: 'flare', count: 2, msg: 'SOLAR FLARE' }, { t: 100, type: 'elite', enemy: 'golem', msg: 'ELITE DETECTED' },
+      { t: 140, type: 'mortar', count: 8, msg: 'INCOMING FIRE' }, { t: 205, type: 'surge', dur: 30, mul: 2, msg: 'FINAL WAVE' }]),
+  S('3-3', 'Turret Alley', 245, 1.34, 3.8, [1.2, 4.5], 170, 1100,
+    [['drone', 0, 6], ['bomber', 0, 6], ['swarmer', 10, 4], ['turret', 20, 4], ['shooter', 35, 3], ['golem', 55, 2]],
+    [{ t: 60, type: 'ring', enemy: 'turret', count: 6, msg: 'TURRET RING' }, { t: 110, type: 'flare', count: 3, msg: 'SOLAR FLARE' },
+      { t: 150, type: 'elite', enemy: 'turret', msg: 'ELITE DETECTED' }, { t: 215, type: 'surge', dur: 30, mul: 2, msg: 'FINAL WAVE' }]),
+  S('3-4', 'Solar Flare', 255, 1.36, 3.95, [1.2, 4.6], 175, 1150,
+    [['drone', 0, 6], ['bomber', 0, 6], ['dasher', 10, 4], ['turret', 25, 3], ['golem', 45, 3]],
+    [{ t: 50, type: 'flare', count: 3, msg: 'SOLAR FLARE' }, { t: 100, type: 'mortar', count: 10, msg: 'INCOMING FIRE' },
+      { t: 140, type: 'flare', count: 4, msg: 'SOLAR FLARE' }, { t: 175, type: 'elite', enemy: 'golem', msg: 'ELITE DETECTED' },
+      { t: 225, type: 'surge', dur: 30, mul: 2, msg: 'FINAL WAVE' }]),
+  S('3-5', 'Core Smelter', 265, 1.38, 4.2, [1.25, 4.7], 185, 1250,
+    [['drone', 0, 6], ['bomber', 0, 6], ['swarmer', 0, 4], ['dasher', 15, 4], ['turret', 25, 3], ['shooter', 35, 3], ['golem', 50, 3]],
+    [{ t: 60, type: 'ring', enemy: 'bomber', count: 18, msg: 'BOMBER PACK' }, { t: 110, type: 'flare', count: 4, msg: 'SOLAR FLARE' },
+      { t: 150, type: 'elite', enemy: 'turret', msg: 'ELITE DETECTED' }, { t: 190, type: 'mortar', count: 12, msg: 'INCOMING FIRE' },
+      { t: 235, type: 'surge', dur: 30, mul: 2, msg: 'FINAL WAVE' }]),
+  S('3-6', 'Forge Titan', 150, 1.4, 4.0, [1.2, 4.3], 165, 750,
+    [['drone', 0, 6], ['bomber', 0, 6], ['dasher', 15, 4], ['turret', 30, 3], ['golem', 70, 2]],
+    [{ t: 50, type: 'flare', count: 3, msg: 'SOLAR FLARE' }, { t: 100, type: 'elite', enemy: 'golem', msg: 'ELITE DETECTED' }],
+    { bossAt: 150, boss: 'forge' }),
+];
+
+const W4 = [
+  S('4-1', 'Event Horizon', 240, 1.45, 4.2, [1.2, 4.4], 170, 1100,
+    [['voidling', 0, 6], ['drone', 0, 6], ['wraith', 15, 5], ['eye', 35, 3], ['tank', 50, 2]],
+    [{ t: 60, type: 'well', count: 1, msg: 'GRAVITY ANOMALY' }, { t: 110, type: 'elite', enemy: 'wraith', msg: 'ELITE DETECTED' },
+      { t: 150, type: 'ring', enemy: 'voidling', count: 30, msg: 'VOID SWARM' }, { t: 210, type: 'surge', dur: 30, mul: 2, msg: 'FINAL WAVE' }]),
+  S('4-2', 'Whispering Dark', 250, 1.47, 4.3, [1.2, 4.5], 175, 1150,
+    [['voidling', 0, 6], ['wraith', 0, 5], ['eye', 20, 4], ['prism', 35, 3], ['splitter', 50, 3]],
+    [{ t: 60, type: 'ring', enemy: 'wraith', count: 12, msg: 'WRAITHS RISING' }, { t: 110, type: 'well', count: 2, msg: 'GRAVITY ANOMALY' },
+      { t: 150, type: 'elite', enemy: 'eye', msg: 'ELITE DETECTED' }, { t: 220, type: 'surge', dur: 30, mul: 2, msg: 'FINAL WAVE' }]),
+  S('4-3', 'Phase Rift', 260, 1.49, 4.45, [1.25, 4.6], 180, 1200,
+    [['voidling', 0, 6], ['wraith', 0, 5], ['eye', 15, 4], ['bomber', 30, 4], ['tank', 50, 2]],
+    [{ t: 60, type: 'well', count: 2, msg: 'GRAVITY ANOMALY' }, { t: 100, type: 'mortar', count: 8, msg: 'INCOMING FIRE' },
+      { t: 150, type: 'elite', enemy: 'wraith', msg: 'ELITE DETECTED' }, { t: 230, type: 'surge', dur: 30, mul: 2, msg: 'FINAL WAVE' }]),
+  S('4-4', 'Gravity Well', 270, 1.51, 4.6, [1.25, 4.7], 185, 1250,
+    [['voidling', 0, 6], ['wraith', 0, 5], ['eye', 15, 4], ['shard', 25, 4], ['golem', 50, 2]],
+    [{ t: 50, type: 'well', count: 2, msg: 'GRAVITY ANOMALY' }, { t: 100, type: 'flare', count: 3, msg: 'VOID FLARE' },
+      { t: 140, type: 'well', count: 3, msg: 'GRAVITY ANOMALY' }, { t: 180, type: 'elite', enemy: 'golem', msg: 'ELITE DETECTED' },
+      { t: 240, type: 'surge', dur: 30, mul: 2, msg: 'FINAL WAVE' }]),
+  S('4-5', 'Null Cathedral', 285, 1.53, 4.8, [1.3, 4.8], 190, 1350,
+    [['voidling', 0, 6], ['wraith', 0, 5], ['eye', 10, 4], ['prism', 25, 3], ['bomber', 35, 3], ['tank', 50, 2]],
+    [{ t: 60, type: 'ring', enemy: 'eye', count: 8, msg: 'ALL-SEEING' }, { t: 110, type: 'well', count: 3, msg: 'GRAVITY ANOMALY' },
+      { t: 150, type: 'elite', enemy: 'eye', msg: 'ELITE DETECTED' }, { t: 190, type: 'flare', count: 4, msg: 'VOID FLARE' },
+      { t: 250, type: 'surge', dur: 30, mul: 2, msg: 'FINAL WAVE' }]),
+  S('4-6', 'Void Heart', 160, 1.55, 4.6, [1.25, 4.4], 170, 800,
+    [['voidling', 0, 6], ['wraith', 0, 5], ['eye', 15, 4], ['tank', 50, 2]],
+    [{ t: 50, type: 'well', count: 2, msg: 'GRAVITY ANOMALY' }, { t: 100, type: 'elite', enemy: 'wraith', msg: 'ELITE DETECTED' },
+      { t: 130, type: 'elite', enemy: 'eye', msg: 'ELITE DETECTED' }],
+    { bossAt: 160, boss: 'voidheart' }),
+];
+
 export const WORLDS = [
   {
-    id: 1, name: 'Neon Nebula', color: '#ff2d95', stages: W1,
+    id: 1, name: 'Neon Nebula', color: '#ff2d95', stages: W1, music: 'game',
     theme: { top: '#16002e', bottom: '#030010', neb: ['#ff2d95', '#7a2dff', '#00b3ff'], grid: '#b04dff' },
   },
-  { id: 2, name: 'Crystal Belt', color: '#2ff3ff', stages: [], locked: true },
-  { id: 3, name: 'Solar Forge', color: '#ffb52e', stages: [], locked: true },
-  { id: 4, name: 'Void Core', color: '#9d4dff', stages: [], locked: true },
+  {
+    id: 2, name: 'Crystal Belt', color: '#2ff3ff', stages: W2, music: 'game2',
+    theme: { top: '#001a2e', bottom: '#000812', neb: ['#2ff3ff', '#3d7bff', '#b4fff0'], grid: '#2fd2ff' },
+  },
+  {
+    id: 3, name: 'Solar Forge', color: '#ffb52e', stages: W3, music: 'game3',
+    theme: { top: '#2a0a00', bottom: '#0c0300', neb: ['#ff8a2a', '#ff3d1a', '#ffd23d'], grid: '#ff8a2a' },
+  },
+  {
+    id: 4, name: 'Void Core', color: '#b04dff', stages: W4, music: 'game4',
+    theme: { top: '#0d0020', bottom: '#020005', neb: ['#9d4dff', '#ff2d95', '#3d1aff'], grid: '#9d4dff' },
+  },
 ];
 
 export const ALL_STAGES = WORLDS.flatMap((w) => w.stages.map((s) => ({ ...s, world: w })));

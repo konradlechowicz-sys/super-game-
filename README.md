@@ -3,8 +3,12 @@
 Neon space survivor for iPhone (PWA). Steer with the joystick at the bottom of the screen (or switch to floating joystick / drag anywhere in Settings) — weapons fire automatically.
 Blast the swarm, collect XP crystals, pick upgrades, evolve weapons and take down the boss.
 
-## Features (prototype v0.1)
-- World 1 **Neon Nebula**: 6 sectors, the last one ends with the **Hive Mother** boss (worlds 2–4 coming soon)
+## Features (v0.3)
+- 4 worlds × 6 sectors, each world with its own colours, music, enemies and boss:
+  - **Neon Nebula** — Hive Mother
+  - **Crystal Belt** — orbiting shards, prism gunners, drifting asteroids · boss: Crystal Serpent
+  - **Solar Forge** — fused bombers, turrets, magma golems, solar flares and mortar strikes · boss: Forge Titan
+  - **Void Core** — teleporting wraiths, seeker eyes, gravity wells · final boss: Void Heart (3 phases)
 - 3 stars per sector: clear · kill target · finish with 50%+ hull
 - 3 ships: Striker, Phantom, Titan (unlock with coins)
 - 8 weapons, 6 passive upgrades, 4 weapon evolutions

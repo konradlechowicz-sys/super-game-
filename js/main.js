@@ -178,7 +178,7 @@ app.startStage = (id) => {
   input.resetDrag();
   app.ui.showHud();
   app.game = new Game(app, stage);
-  app.audio.setTrack('game');
+  app.audio.setTrack(st.world.music || 'game');
 };
 
 app.endRun = () => {

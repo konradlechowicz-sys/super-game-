@@ -144,6 +144,58 @@ export function enemySprite(shape, color, r, variant = '') {
           neon(g, c, 1.5, 4, 0.4);
         }
         break;
+      case 'shard':
+        poly(g, [r * 1.4, 0, 0, r * 0.45, -r * 1.1, 0, 0, -r * 0.45]);
+        neon(g, c, 2, 9, fa);
+        g.beginPath(); g.moveTo(r * 1.4, 0); g.lineTo(-r * 1.1, 0);
+        neon(g, c, 1.2, 4);
+        break;
+      case 'prism':
+        ngon(g, 3, r * 1.1, 0);
+        neon(g, c, 2.2, 10, fa);
+        ngon(g, 3, r * 0.5, Math.PI);
+        neon(g, c, 1.6, 6, 0.4);
+        break;
+      case 'rock':
+        poly(g, [r, 0, r * 0.6, r * 0.75, -r * 0.1, r * 0.95, -r * 0.8, r * 0.55, -r, -r * 0.1, -r * 0.55, -r * 0.85, r * 0.25, -r * 0.95, r * 0.8, -r * 0.5]);
+        neon(g, c, 2.4, 9, fa);
+        circle(g, r * 0.22, r * 0.25, r * 0.2); neon(g, c, 1.4, 4);
+        circle(g, r * 0.15, -r * 0.35, -r * 0.3); neon(g, c, 1.4, 4);
+        break;
+      case 'bomb':
+        circle(g, r * 0.85);
+        neon(g, c, 2.2, 10, fa);
+        for (let i = 0; i < 4; i++) {
+          const a = (i / 4) * TAU;
+          g.beginPath(); g.moveTo(Math.cos(a) * r * 0.85, Math.sin(a) * r * 0.85); g.lineTo(Math.cos(a) * r * 1.25, Math.sin(a) * r * 1.25);
+          neon(g, c, 2, 6);
+        }
+        circle(g, r * 0.3); g.fillStyle = variant === 'flash' ? '#fff' : '#ffd23d'; g.fill();
+        break;
+      case 'turret':
+        ngon(g, 8, r, 0);
+        neon(g, c, 2.2, 9, fa);
+        g.beginPath();
+        for (let i = 0; i < 4; i++) { const a = (i / 4) * TAU; g.moveTo(Math.cos(a) * r * 0.4, Math.sin(a) * r * 0.4); g.lineTo(Math.cos(a) * r * 1.2, Math.sin(a) * r * 1.2); }
+        neon(g, c, 3, 6);
+        circle(g, r * 0.4); neon(g, c, 1.8, 6, 0.5);
+        break;
+      case 'wraith':
+        g.beginPath();
+        g.moveTo(r * 1.1, 0);
+        g.quadraticCurveTo(r * 0.2, r * 1.1, -r, r * 0.8);
+        g.lineTo(-r * 0.5, r * 0.25); g.lineTo(-r * 1.05, 0); g.lineTo(-r * 0.5, -r * 0.25); g.lineTo(-r, -r * 0.8);
+        g.quadraticCurveTo(r * 0.2, -r * 1.1, r * 1.1, 0);
+        neon(g, c, 2, 10, fa);
+        circle(g, r * 0.16, r * 0.35, -r * 0.2); g.fillStyle = '#fff'; g.fill();
+        circle(g, r * 0.16, r * 0.35, r * 0.2); g.fill();
+        break;
+      case 'eye':
+        g.beginPath(); g.ellipse(0, 0, r * 1.15, r * 0.7, 0, 0, TAU);
+        neon(g, c, 2.2, 10, fa);
+        circle(g, r * 0.42); neon(g, c, 2, 6, 0.4);
+        circle(g, r * 0.18, r * 0.12, 0); g.fillStyle = '#fff'; g.fill();
+        break;
     }
     if (variant === 'elite') {
       circle(g, r * 1.25);
@@ -153,23 +205,24 @@ export function enemySprite(shape, color, r, variant = '') {
 }
 
 // ---------- Boss: Hive Mother, drawn in layers so they can spin independently ----------
-export function bossLayer(layer, color, r, flash = false) {
-  return sprite(`boss:${layer}:${color}:${r}:${flash}`, r * 1.2, (g) => {
+export function bossLayer(layer, color, r, flash = false, sides = 6) {
+  return sprite(`boss:${layer}:${color}:${r}:${flash}:${sides}`, r * 1.2, (g) => {
     const c = flash ? '#ffffff' : color;
     if (layer === 'outer') {
-      ngon(g, 6, r, 0);
+      ngon(g, sides, r, 0);
       neon(g, c, 4, 16, 0.12);
-      for (let i = 0; i < 6; i++) {
-        const a = (i / 6) * TAU + TAU / 12;
+      for (let i = 0; i < sides; i++) {
+        const a = (i / sides) * TAU + TAU / (sides * 2);
         g.beginPath();
         g.moveTo(Math.cos(a) * r * 0.8, Math.sin(a) * r * 0.8);
         g.lineTo(Math.cos(a) * r * 1.15, Math.sin(a) * r * 1.15);
         neon(g, c, 3, 8);
       }
     } else if (layer === 'inner') {
-      ngon(g, 3, r * 0.62, 0);
+      const n = sides === 4 ? 4 : 3;
+      ngon(g, n, r * 0.62, 0);
       neon(g, c, 3, 10, 0.1);
-      ngon(g, 3, r * 0.62, Math.PI);
+      ngon(g, n, r * 0.62, Math.PI / n * (n === 4 ? 1 : 3));
       neon(g, c, 3, 10);
     } else {
       circle(g, r * 0.26);

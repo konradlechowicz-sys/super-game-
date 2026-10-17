@@ -1,4 +1,4 @@
-import { WORLDS, SHIPS, SHOP, DAILY, ALL_STAGES, stageIndex } from './data.js';
+import { WORLDS, SHIPS, SHOP, DAILY, ALL_STAGES, BOSSES, stageIndex } from './data.js';
 import { WEAPONS } from './weapons.js';
 import { icon } from './icons.js';
 import { fmtTime } from './util.js';
@@ -7,6 +7,7 @@ import { shipSprite } from './sprites.js';
 const STAR = '<svg viewBox="0 0 24 24" class="star-svg"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6-4.9-4.6 6.6-.8z"/></svg>';
 const COIN = '<span class="coin-ico"></span>';
 
+const titleCase = (s) => s.toLowerCase().replace(/\b\w/g, (c) => c.toUpperCase());
 const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
 
 export class UI {
@@ -130,17 +131,20 @@ export class UI {
   }
 
   // ======================= MAP =======================
-  map(worldId = this.mapWorld || 1) {
+  map(worldId = this.mapWorld || [...WORLDS].reverse().find((w) => this.app.isUnlocked(w.stages[0].id)).id) {
     this.mapWorld = worldId;
     const save = this.save;
     const world = WORLDS.find((w) => w.id === worldId);
+    const open = (w) => this.app.isUnlocked(w.stages[0].id);
     const tabs = WORLDS.map((w) => `
-      <button class="world-tab ${w.id === worldId ? 'active' : ''} ${w.locked ? 'locked' : ''}" style="--wc:${w.color}" data-act="world" data-id="${w.id}">
-        <span class="wnum">${w.id}</span><span class="wname">${w.locked ? 'SOON' : esc(w.name)}</span>
+      <button class="world-tab ${w.id === worldId ? 'active' : ''} ${open(w) ? '' : 'locked'}" style="--wc:${w.color}" data-act="world" data-id="${w.id}">
+        <span class="wnum">${w.id}</span><span class="wname">${esc(w.name)}</span>
       </button>`).join('');
     let body;
-    if (world.locked) {
-      body = `<div class="soon"><img src="${icon('lock', world.color)}" alt=""><h3>${esc(world.name)}</h3><p>New sector coming in the next update.</p></div>`;
+    if (!open(world)) {
+      const prev = WORLDS.find((w) => w.id === world.id - 1);
+      const gate = titleCase(BOSSES[prev.stages[prev.stages.length - 1].boss].name);
+      body = `<div class="soon"><img src="${icon('lock', world.color)}" alt=""><h3>${esc(world.name)}</h3><p>Defeat the ${esc(gate)} in ${esc(prev.name)} to open this sector.</p></div>`;
     } else {
       const totalStars = world.stages.reduce((a, s) => a + (save.stars[s.id] || 0), 0);
       body = `<div class="world-head"><h2 style="--wc:${world.color}">${esc(world.name)}</h2><div class="star-count">${STAR}<b>${totalStars}</b>/${world.stages.length * 3}</div></div>
@@ -176,7 +180,7 @@ export class UI {
     this.modal(`
       <div class="modal-kicker" style="color:${st.world.color}">SECTOR ${st.id}</div>
       <h2>${esc(st.name)}</h2>
-      <p class="muted">${st.boss ? `Survive until the ${esc(st.boss === 'hive' ? 'Hive Mother' : 'boss')} arrives at ${fmtTime(st.bossAt)}, then destroy it.` : `Survive for ${fmtTime(st.duration)}.`}</p>
+      <p class="muted">${st.boss ? `Survive until the ${esc(titleCase(BOSSES[st.boss].name))} arrives at ${fmtTime(st.bossAt)}, then destroy it.` : `Survive for ${fmtTime(st.duration)}.`}</p>
       <ul class="goals">
         ${goal(0, st.boss ? 'Defeat the boss' : 'Survive to the end')}
         ${goal(1, `Destroy ${st.kills} enemies`)}
@@ -459,7 +463,8 @@ export class UI {
     const goals = ['Clear', `${r.stage.kills} kills`, '50%+ hull'].map((g, i) => `<li class="${r.goals[i] && r.won ? 'done' : ''}">${STAR}<span>${g}</span></li>`).join('');
     this.hideHud();
     this.modal(`
-      <div class="lu-title ${r.won ? '' : 'lose'}">${r.won ? 'SECTOR CLEAR' : 'SHIP DESTROYED'}</div>
+      <div class="lu-title ${r.won ? '' : 'lose'}">${r.won ? (next ? 'SECTOR CLEAR' : 'GALAXY SAVED') : 'SHIP DESTROYED'}</div>
+      ${r.won && !next ? '<p class="muted center">The Void Heart is destroyed. Replay any sector to collect every star.</p>' : ''}
       <div class="muted center">${esc(r.stage.id)} · ${esc(r.stage.name)}</div>
       ${r.won ? `<div class="rstars">${stars}</div><ul class="goals inline">${goals}</ul>` : ''}
       <div class="rtable">

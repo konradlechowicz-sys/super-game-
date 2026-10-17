@@ -4,6 +4,10 @@ const midi = (n) => 440 * Math.pow(2, (n - 69) / 12);
 const TRACKS = {
   menu: { bpm: 96, chords: [[45, 57, 60, 64], [41, 53, 57, 60], [48, 55, 60, 64], [43, 55, 59, 62]], drums: false, pad: true },
   game: { bpm: 126, chords: [[45, 57, 60, 64], [41, 53, 57, 60], [48, 55, 60, 64], [43, 55, 59, 62]], drums: true, pad: false },
+  // Crystal Belt: E minor, airy; Solar Forge: D minor, driving; Void Core: C minor, dark
+  game2: { bpm: 122, chords: [[40, 52, 55, 59], [36, 48, 52, 55], [43, 55, 59, 62], [38, 50, 54, 57]], drums: true, pad: false },
+  game3: { bpm: 134, chords: [[38, 50, 53, 57], [46, 58, 62, 65], [36, 48, 52, 55], [45, 57, 61, 64]], drums: true, pad: false, hard: true },
+  game4: { bpm: 128, chords: [[36, 48, 51, 55], [44, 56, 60, 63], [39, 51, 55, 58], [43, 55, 59, 62]], drums: true, pad: false, hard: true },
   boss: { bpm: 140, chords: [[45, 57, 60, 64], [46, 58, 62, 65], [38, 50, 53, 57], [40, 52, 56, 59]], drums: true, pad: false, hard: true },
 };
 
