@@ -9,6 +9,7 @@
 import { execSync } from 'node:child_process';
 import { appendFileSync, existsSync, readFileSync } from 'node:fs';
 import { createInterface } from 'node:readline/promises';
+import { runInSimulator } from './sim.mjs';
 
 const sh = (cmd, opts = {}) => execSync(cmd, { encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'], ...opts }).trim();
 const run = (cmd) => execSync(cmd, { stdio: 'inherit' });
@@ -46,18 +47,9 @@ function switchToMain() {
 function buildAndLaunch() {
   run('npm install --no-audit --no-fund');
   run('node scripts/build.mjs');
-  if (process.env.VB_NO_SIM) { run('npx cap sync ios'); return; }
-  try {
-    sh('xcrun simctl help');
-  } catch {
-    // Common on a fresh Mac: the command line tools are selected instead of the full Xcode.
-    console.log('\nSystem nie widzi symulatora iOS (używa „Command Line Tools” zamiast pełnego Xcode). Napraw jednorazowo:\n' +
-      '  sudo xcode-select -s /Applications/Xcode.app/Contents/Developer\n' +
-      'i uruchom „npm run review” ponownie.');
-    throw new Error('simctl unavailable');
-  }
-  console.log('\nUruchamiam symulator — wybierz iPhone\'a strzałkami i Enter.\n');
-  run('npx cap run ios');
+  run('npx cap sync ios');
+  if (process.env.VB_NO_SIM) return;
+  runInSimulator();
 }
 
 // ---------------------------------------------------------------------------

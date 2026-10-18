@@ -15,7 +15,7 @@
     "build:release": "node scripts/build.mjs --release",
     "ios:release": "node scripts/build.mjs --release && npx cap sync ios",
     "review": "node scripts/review.mjs",
-    "play": "node -e \"try{require('child_process').execSync('xcrun simctl help',{stdio:'ignore'})}catch{console.log('Najpierw: sudo xcode-select -s /Applications/Xcode.app/Contents/Developer');process.exit(1)}\" && node scripts/build.mjs && npx cap run ios",
+    "play": "node scripts/build.mjs && npx cap sync ios && node scripts/sim.mjs",
     "release": "node scripts/release.mjs"
   },
   "dependencies": {
