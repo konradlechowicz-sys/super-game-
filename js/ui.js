@@ -3,6 +3,7 @@ import { WEAPONS } from './weapons.js';
 import { icon } from './icons.js';
 import { fmtTime } from './util.js';
 import { shipSprite } from './sprites.js';
+import { versionLabel, versionFull } from './version.js';
 
 const STAR = '<svg viewBox="0 0 24 24" class="star-svg"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6-4.9-4.6 6.6-.8z"/></svg>';
 const COIN = '<span class="coin-ico"></span>';
@@ -121,6 +122,7 @@ export class UI {
         <button class="btn daily-btn ${d.claimable ? 'glow' : ''}" data-act="daily">DAILY REWARD ${d.claimable ? '<span class="badge">!</span>' : ''}</button>
       </div>
       <div class="foot">${this.save.settings.control === 'drag' ? 'Drag anywhere to fly' : 'Steer with the joystick at the bottom'} · Weapons fire automatically</div>
+      <div class="version-tag">${versionLabel()}</div>
     `, {
       play: () => this.map(),
       hangar: () => this.hangar(),
@@ -315,6 +317,7 @@ export class UI {
       ${tog('sfx', 'Sound effects')}
       ${tog('dmgNums', 'Damage numbers')}
       ${this.app.native ? tog('haptics', 'Vibration') : ''}
+      <div class="stats-line muted">${versionFull()}</div>
       <div class="stats-line muted">Enemies destroyed: ${this.save.stats.kills.toLocaleString('en-US')} · Runs: ${this.save.stats.runs}</div>
       <div class="modal-actions">
         <button class="btn danger small" data-act="reset">RESET PROGRESS</button>

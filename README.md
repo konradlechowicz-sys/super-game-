@@ -30,7 +30,8 @@ The game ships as a native iOS app via [Capacitor](https://capacitorjs.com). The
 
 ```
 npm install        # once
-npm run ios        # build www/ and copy it into the Xcode project
+npm run ios        # build www/ (test label) and copy it into the Xcode project
+npm run ios:release  # same, with the release label (use for App Store uploads)
 npm run open       # open Xcode
 ```
 In Xcode: select the **App** target → *Signing & Capabilities* → pick your Team, then Run on a device or simulator.
@@ -39,6 +40,12 @@ After new changes are pushed: `npm run update` (git pull + npm install + build +
 The app build (`scripts/build.mjs`) bundles `js/native-main.js`, which adds haptics and a native copy of the save
 (Capacitor Haptics / Preferences). Fonts are bundled in `fonts/` (SIL OFL), so the app needs no network.
 Bundle ID: `com.konradlechowicz.voidblaster` (change it in `capacitor.config.json` and in Xcode if needed).
+
+## Versions and builds
+`js/version.js` holds the public version and the build number; `npm run bump` increments the build after every change
+and keeps `package.json`, `sw.js` and the Xcode project in sync (`npm run bump -- 1.1.0` also sets a new public version).
+Test builds show *date · build N* on the start screen. For App Store uploads use `npm run ios:release`, which shows
+*vX.Y.Z* instead; Settings always shows the full version, build and date.
 
 ## App Store materials
 - `appstore/LISTING.md`: name, subtitle, description, keywords, privacy and age-rating answers, review notes

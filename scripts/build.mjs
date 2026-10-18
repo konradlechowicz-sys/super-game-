@@ -7,7 +7,11 @@ const out = 'www';
 rmSync(out, { recursive: true, force: true });
 mkdirSync(out, { recursive: true });
 
+// --release: the app shows the public version ("v1.0.0") instead of the test label ("date · build N").
+const channel = process.argv.includes('--release') ? 'release' : 'dev';
+
 await build({
+  define: { __CHANNEL__: JSON.stringify(channel) },
   entryPoints: ['js/native-main.js'],
   bundle: true,
   format: 'iife',
@@ -25,4 +29,4 @@ html = html
   .replace('<script type="module" src="js/main.js"></script>', '<script src="app.js"></script>');
 if (!html.includes('src="app.js"')) throw new Error('index.html: could not find the main script tag');
 writeFileSync(`${out}/index.html`, html);
-console.log('Built www/ for iOS');
+console.log(`Built www/ for iOS (${channel})`);
