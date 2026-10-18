@@ -12,8 +12,17 @@ import { createInterface } from 'node:readline/promises';
 
 const sh = (cmd, opts = {}) => execSync(cmd, { encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'], ...opts }).trim();
 const run = (cmd) => execSync(cmd, { stdio: 'inherit' });
-const rl = createInterface({ input: process.stdin, output: process.stdout });
-const ask = async (q) => (await rl.question(q)).trim().toLowerCase();
+// Answers are queued line by line, so typed-ahead or piped answers are never lost between questions.
+const rl = createInterface({ input: process.stdin });
+const lines = [];
+let waiting = null;
+rl.on('line', (l) => (waiting ? (waiting(l), (waiting = null)) : lines.push(l)));
+rl.on('close', () => waiting && waiting(''));
+const ask = async (q) => {
+  process.stdout.write(q);
+  const l = lines.length ? lines.shift() : await new Promise((r) => (waiting = r));
+  return l.trim().toLowerCase();
+};
 const bye = (msg, code = 0) => { if (msg) console.log(msg); rl.close(); process.exit(code); };
 
 const REJECTED = `${sh('git rev-parse --git-dir')}/void-blaster-rejected`;
@@ -67,6 +76,12 @@ const candidates = sh("git for-each-ref --sort=-committerdate --format='%(refnam
 const mainHasGame = (() => { try { sh('git cat-file -e origin/main:package.json'); return true; } catch { return false; } })();
 console.log(`Zaakceptowana wersja (main): ${mainHasGame ? buildLabel('origin/main') : 'jeszcze żadna'}\n`);
 if (!candidates.length) {
+  if (mainHasGame && startBranch !== 'main') {
+    // e.g. still on `release` after an App Store upload: come back to the accepted version
+    switchToMain();
+    syncAcceptedVersion();
+    console.log('Wróciłeś do zaakceptowanej wersji (main).');
+  }
   bye('Brak nowych wersji do sprawdzenia. Zaakceptowaną wersję uruchomisz komendą: npm run play');
 }
 

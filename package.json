@@ -15,7 +15,8 @@
     "build:release": "node scripts/build.mjs --release",
     "ios:release": "node scripts/build.mjs --release && npx cap sync ios",
     "review": "node scripts/review.mjs",
-    "play": "node scripts/build.mjs && npx cap run ios"
+    "play": "node scripts/build.mjs && npx cap run ios",
+    "release": "node scripts/release.mjs"
   },
   "dependencies": {
     "@capacitor/core": "^8.5.3",

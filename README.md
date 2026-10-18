@@ -32,6 +32,7 @@ The game ships as a native iOS app via [Capacitor](https://capacitorjs.com). The
 npm install        # once
 npm run review     # test new versions from the cloud in the simulator, then accept or reject them
 npm run play       # launch the accepted version (main) in the simulator
+npm run release    # turn an accepted build into an App Store release (tag vX.Y.Z), then open Xcode to Archive
 npm run ios        # build www/ (test label) and copy it into the Xcode project
 npm run ios:release  # same, with the release label (use for App Store uploads)
 npm run open       # open Xcode
@@ -44,6 +45,13 @@ On the Mac, `npm run review` lists them, launches the chosen one in the simulato
 The app build (`scripts/build.mjs`) bundles `js/native-main.js`, which adds haptics and a native copy of the save
 (Capacitor Haptics / Preferences). Fonts are bundled in `fonts/` (SIL OFL), so the app needs no network.
 Bundle ID: `com.konradlechowicz.voidblaster` (change it in `capacitor.config.json` and in Xcode if needed).
+
+## Branches and releases
+- `claude/...`: proposals from cloud sessions. They never go straight into `main`.
+- `main`: builds tested in the simulator and accepted with `npm run review`.
+- `release` + tags `v1.0.0`, `v1.0.1`, …: exactly what was sent to the App Store. `npm run release` picks an accepted
+  build, copies it to `release` with the public version, keeps its build number, tags it and opens Xcode for
+  *Product → Archive*. `main` is never modified by a release.
 
 ## Versions and builds
 `js/version.js` holds the public version and the build number; `npm run bump` increments the build after every change

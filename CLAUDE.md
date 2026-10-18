@@ -4,14 +4,23 @@
   Talk to Konrad in Polish; the game itself is in English.
 - Neon space survivor for iPhone. Vanilla JS + Canvas, no framework. Code map is in README.md.
 
+## Branches and releases
+| Branch / tag | Holds | Written by |
+|---|---|---|
+| `claude/...` | proposals from cloud sessions (dev builds) | Claude |
+| `main` | builds Konrad tested and accepted (`npm run review`) | Konrad |
+| `release` + tags `vX.Y.Z` | exactly what was sent to the App Store (`npm run release`) | Konrad |
+Claude never pushes to `main` or `release` and never creates `v*` tags.
+
 ## Versioning
 - `js/version.js` is the single source of truth; never edit it by hand.
 - **Every change gets a new build:** run `npm run bump` before committing. It increments the build number, sets the
   date (Europe/Warsaw) and syncs `package.json`, `sw.js` and the Xcode project (Build / Version).
 - Test builds show `YYYY-MM-DD · build N` on the start screen; release builds (`npm run ios:release`) show `vX.Y.Z`.
   Settings always shows the full `vX.Y.Z (build N, date)`.
-- New App Store release: `npm run bump -- X.Y.Z` (patch = fixes, minor = new content, major = big overhaul).
-  The build number never resets: App Store Connect requires it to grow with every upload.
+- App Store releases are made only by Konrad with `npm run release` on his Mac: it picks an accepted build from `main`,
+  copies it to `release` with the public version (patch = fixes, minor = new content, major = big overhaul),
+  keeps that build's number, tags `vX.Y.Z` and opens Xcode for Archive. Do not change the public version in cloud work.
 - Mention the new build number to Konrad after each change.
 
 ## Shipping a change (do all three after every gameplay change)
