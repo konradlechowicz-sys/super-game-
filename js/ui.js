@@ -110,7 +110,7 @@ export class UI {
     const d = this.app.dailyStatus();
     this.hideHud();
     this.setScreen(`
-      <div class="topbar">${this.coinsHtml()}<button class="icon-btn" data-act="settings" aria-label="Settings">⚙</button></div>
+      <div class="topbar">${this.coinsHtml()}<div class="version-tag">${versionLabel()}</div><button class="icon-btn" data-act="settings" aria-label="Settings">⚙</button></div>
       <div class="logo"><div class="logo-a">VOID</div><div class="logo-b">BLASTER</div></div>
       <div class="menu-spacer"></div>
       <div class="menu-buttons">
@@ -122,7 +122,6 @@ export class UI {
         <button class="btn daily-btn ${d.claimable ? 'glow' : ''}" data-act="daily">DAILY REWARD ${d.claimable ? '<span class="badge">!</span>' : ''}</button>
       </div>
       <div class="foot">${this.save.settings.control === 'drag' ? 'Drag anywhere to fly' : 'Steer with the joystick at the bottom'} · Weapons fire automatically</div>
-      <div class="version-tag">${versionLabel()}</div>
     `, {
       play: () => this.map(),
       hangar: () => this.hangar(),
