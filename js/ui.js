@@ -275,9 +275,20 @@ export class UI {
       const maxed = lvl >= max;
       const cost = maxed ? 0 : it.cost[lvl];
       const pips = Array.from({ length: max }, (_, i) => `<i class="${i < lvl ? 'on' : ''}"></i>`).join('');
+      // "Damage +16% → +24%": the total bonus now and after buying the next level
+      const fmt = (l) => {
+        const v = l * it.per;
+        if (it.plain) return String(v);
+        const n = it.pct ? Math.round(v * 100) : Math.round(v * 100) / 100;
+        return `+${n}${it.pct ? '%' : it.unit || ''}`;
+      };
+      const effect = maxed
+        ? `${esc(it.stat)} <b class="fx-now">${fmt(lvl)}</b>`
+        : `${esc(it.stat)} <b class="fx-now">${fmt(lvl)}</b> <span class="fx-arrow">→</span> <b class="fx-next">${fmt(lvl + 1)}</b>`;
       return `<div class="shop-row">
         <img src="${icon(it.icon, '#2ff3ff')}" alt="">
-        <div class="shop-info"><b>${esc(it.name)}</b><small>${esc(it.desc)}</small><div class="pips">${pips}</div></div>
+        <div class="shop-info"><div class="shop-head"><b>${esc(it.name)}</b><span class="shop-lvl">LV ${lvl}/${max}</span></div>
+          <small class="shop-fx">${effect}</small><div class="pips">${pips}</div></div>
         ${maxed ? '<button class="btn small" disabled>MAX</button>' : `<button class="btn small buy" data-act="buy" data-id="${it.id}" ${save.coins < cost ? 'disabled' : ''}>${COIN}<span class="num">${cost}</span></button>`}
       </div>`;
     }).join('');

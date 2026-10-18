@@ -19,17 +19,25 @@ export const SHIPS = {
   },
 };
 
+// Permanent upgrades. `per` is the fixed bonus each level adds; the game (Game.recompute) and the shop screen
+// both read it from here. stat/unit/pct describe how the shop shows it: "Damage +16% → +24%".
 export const SHOP = [
-  { id: 'power', name: 'Weapon Core', desc: '+8% damage', icon: 'power', cost: [60, 120, 220, 360, 550, 800, 1100, 1500] },
-  { id: 'hull', name: 'Reinforced Hull', desc: '+15 max hull', icon: 'armor', cost: [50, 100, 180, 300, 480, 700, 950, 1300] },
-  { id: 'thrust', name: 'Engine Tuning', desc: '+5% speed', icon: 'thrusters', cost: [50, 100, 180, 300, 480] },
-  { id: 'magnet', name: 'Collector Field', desc: '+15% pickup range', icon: 'tractor', cost: [40, 80, 150, 250, 400] },
-  { id: 'regen', name: 'Nano Repair', desc: '+0.25 hull / sec', icon: 'heal', cost: [100, 200, 350, 550, 800, 1100] },
-  { id: 'growth', name: 'Data Mining', desc: '+8% XP gain', icon: 'amplifier', cost: [60, 120, 220, 360, 550, 800] },
-  { id: 'greed', name: 'Salvage Rights', desc: '+15% coins', icon: 'coins', cost: [80, 160, 280, 450, 700, 1000] },
-  { id: 'reroll', name: 'Re-Roll Chip', desc: '+1 upgrade re-roll per run', icon: 'overclock', cost: [150, 350, 700] },
-  { id: 'revive', name: 'Phoenix Protocol', desc: 'Revive once per run', icon: 'phoenix', cost: [800] },
+  { id: 'power', name: 'Weapon Core', stat: 'Damage', per: 0.08, pct: true, icon: 'power', cost: [60, 120, 220, 360, 550, 800, 1100, 1500] },
+  { id: 'hull', name: 'Reinforced Hull', stat: 'Max hull', per: 15, icon: 'armor', cost: [50, 100, 180, 300, 480, 700, 950, 1300] },
+  { id: 'thrust', name: 'Engine Tuning', stat: 'Speed', per: 0.05, pct: true, icon: 'thrusters', cost: [50, 100, 180, 300, 480] },
+  { id: 'magnet', name: 'Collector Field', stat: 'Pickup range', per: 0.15, pct: true, icon: 'tractor', cost: [40, 80, 150, 250, 400] },
+  { id: 'regen', name: 'Nano Repair', stat: 'Repair', per: 0.25, unit: '/s', icon: 'heal', cost: [100, 200, 350, 550, 800, 1100] },
+  { id: 'growth', name: 'Data Mining', stat: 'XP gain', per: 0.08, pct: true, icon: 'amplifier', cost: [60, 120, 220, 360, 550, 800] },
+  { id: 'greed', name: 'Salvage Rights', stat: 'Coins', per: 0.15, pct: true, icon: 'coins', cost: [80, 160, 280, 450, 700, 1000] },
+  { id: 'reroll', name: 'Re-Roll Chip', stat: 'Re-rolls per run', per: 1, plain: true, icon: 'overclock', cost: [150, 350, 700] },
+  { id: 'revive', name: 'Phoenix Protocol', stat: 'Revives per run', per: 1, plain: true, icon: 'phoenix', cost: [800] },
 ];
+
+// Total bonus of a permanent upgrade at a given level (0 when not bought).
+export function shopBonus(save, id) {
+  const it = SHOP.find((x) => x.id === id);
+  return (save.shop[id] || 0) * it.per;
+}
 
 export const DAILY = [50, 80, 120, 160, 220, 300, 500];
 

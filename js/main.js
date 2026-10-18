@@ -189,6 +189,7 @@ app.startStage = (id) => {
 
 app.endRun = () => {
   app.game = null;
+  app.ui.bannerEl.innerHTML = '';
   app.audio.setTrack('menu');
   app.bg.setTheme(WORLDS[0].theme);
 };

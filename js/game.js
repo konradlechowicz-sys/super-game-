@@ -1,5 +1,5 @@
 import { TAU, rand, randi, clamp, lerp, pick, weightedPick, angleLerp, SpatialHash } from './util.js';
-import { ENEMIES, BOSSES, PASSIVES, PASSIVE_MAX, SHIPS, xpFor, stageIndex } from './data.js';
+import { ENEMIES, BOSSES, PASSIVES, PASSIVE_MAX, SHIPS, xpFor, stageIndex, shopBonus } from './data.js';
 import { WEAPONS, WEAPON_MAX, weaponStats } from './weapons.js';
 import {
   shipSprite, enemySprite, bossLayer, boltSprite, missileSprite, orbSprite, gemSprite,
@@ -50,19 +50,20 @@ export class Game {
   }
 
   recompute() {
-    const p = this.player, sh = this.save.shop, P = this.passives, s = this.ship;
+    const p = this.player, P = this.passives, s = this.ship;
+    const B = (id) => shopBonus(this.save, id);
     const oldMax = p.maxHp;
-    p.maxHp = s.hp + (sh.hull || 0) * 15 + (P.armor || 0) * 20;
+    p.maxHp = s.hp + B('hull') + (P.armor || 0) * 20;
     if (oldMax > 1 && p.maxHp > oldMax) p.hp += p.maxHp - oldMax;
-    p.speed = s.speed * (1 + (sh.thrust || 0) * 0.05 + (P.thrusters || 0) * 0.08);
-    p.dmgMult = s.dmg * (1 + (sh.power || 0) * 0.08 + (P.power || 0) * 0.12);
+    p.speed = s.speed * (1 + B('thrust') + (P.thrusters || 0) * 0.08);
+    p.dmgMult = s.dmg * (1 + B('power') + (P.power || 0) * 0.12);
     p.cdMult = 1 - (P.overclock || 0) * 0.08;
     p.areaMult = 1 + (P.amplifier || 0) * 0.12;
-    p.magnet = 105 * (1 + (sh.magnet || 0) * 0.15 + (P.tractor || 0) * 0.3);
-    p.regen = (sh.regen || 0) * 0.25 + (P.armor || 0) * 0.15;
+    p.magnet = 105 * (1 + B('magnet') + (P.tractor || 0) * 0.3);
+    p.regen = B('regen') + (P.armor || 0) * 0.15;
     p.armor = s.armor || 0;
-    p.xpMult = 1 + (sh.growth || 0) * 0.08;
-    p.coinMult = 1 + (sh.greed || 0) * 0.15;
+    p.xpMult = 1 + B('growth');
+    p.coinMult = 1 + B('greed');
   }
 
   addWeapon(id) {
