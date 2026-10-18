@@ -2,7 +2,7 @@ import { Game } from './game.js';
 import { UI } from './ui.js';
 import { AudioEngine } from './audio.js';
 import { Background } from './background.js';
-import { loadSave, writeSave, resetSave } from './save.js';
+import { loadSave, writeSave, resetSave, hasLocalSave, importSave, SAVE_KEY } from './save.js';
 import { setSpriteScale, shipSprite, glowDot } from './sprites.js';
 import { ALL_STAGES, DAILY, SHIPS, WORLDS, stageIndex } from './data.js';
 import { clamp, todayStr } from './util.js';
@@ -32,7 +32,13 @@ const app = {
   audio: new AudioEngine(),
   game: null,
   god: DEV && params.has('god'),
-  persist() { writeSave(this.save); },
+  // Set by js/native-entry.js inside the iOS app (Capacitor plugins); null in the browser.
+  native: window.__native || null,
+  persist() {
+    writeSave(this.save);
+    // iOS may purge WebView storage, so the app also keeps a native copy of the save.
+    this.native?.Preferences.set({ key: SAVE_KEY, value: JSON.stringify(this.save) }).catch(() => {});
+  },
 };
 app.bg = new Background(app);
 app.ui = new UI(app);
@@ -271,6 +277,19 @@ function renderMenu(dt) {
   ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 }
 
+// ---------------- haptics (iOS app only) ----------------
+let lastHaptic = 0;
+app.haptic = (kind) => {
+  const n = app.native;
+  if (!n || !app.save.settings.haptics) return;
+  const now = performance.now();
+  if (now - lastHaptic < 80) return;
+  lastHaptic = now;
+  const style = { light: n.ImpactStyle.Light, medium: n.ImpactStyle.Medium, heavy: n.ImpactStyle.Heavy }[kind];
+  const call = style ? n.Haptics.impact({ style }) : n.Haptics.notification({ type: n.NotificationType.Success });
+  call.catch(() => {});
+};
+
 // ---------------- boot ----------------
 app.applySettings();
 if (DEV && params.get('coins')) app.save.coins = +params.get('coins');
@@ -280,6 +299,16 @@ if (app.dailyStatus().claimable && app.save.stats.runs > 0) app.ui.daily();
 requestAnimationFrame(frame);
 window.__app = app;
 
-if ('serviceWorker' in navigator && location.protocol === 'https:' && !DEV) {
+// In the app, restore progress from the native copy if WebView storage was cleared.
+if (app.native && !hasLocalSave()) {
+  app.native.Preferences.get({ key: SAVE_KEY }).then(({ value }) => {
+    if (!value || app.game) return;
+    app.save = importSave(value);
+    app.applySettings();
+    app.ui.menu();
+  }).catch(() => {});
+}
+
+if (!app.native && 'serviceWorker' in navigator && location.protocol === 'https:' && !DEV) {
   navigator.serviceWorker.register('sw.js').catch(() => {});
 }

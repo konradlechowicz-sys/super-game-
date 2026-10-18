@@ -1,4 +1,5 @@
-const KEY = 'voidblaster.save.v1';
+export const SAVE_KEY = 'voidblaster.save.v1';
+const KEY = SAVE_KEY;
 
 const fresh = () => ({
   coins: 0,
@@ -8,7 +9,7 @@ const fresh = () => ({
   ship: 'striker',
   shop: {},
   daily: { last: null, streak: 0 },
-  settings: { sfx: true, music: true, dmgNums: true, control: 'joystick' },
+  settings: { sfx: true, music: true, dmgNums: true, haptics: true, control: 'joystick' },
   stats: { kills: 0, runs: 0, bossKills: 0 },
 });
 
@@ -35,4 +36,13 @@ export function writeSave(s) {
 export function resetSave() {
   try { localStorage.removeItem(KEY); } catch { /* storage unavailable */ }
   return fresh();
+}
+
+export function hasLocalSave() {
+  try { return localStorage.getItem(KEY) !== null; } catch { return false; }
+}
+
+export function importSave(json) {
+  try { localStorage.setItem(KEY, json); } catch { /* storage unavailable */ }
+  return loadSave();
 }

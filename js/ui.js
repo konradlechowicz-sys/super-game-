@@ -314,12 +314,13 @@ export class UI {
       ${tog('music', 'Music')}
       ${tog('sfx', 'Sound effects')}
       ${tog('dmgNums', 'Damage numbers')}
+      ${this.app.native ? tog('haptics', 'Vibration') : ''}
       <div class="stats-line muted">Enemies destroyed: ${this.save.stats.kills.toLocaleString('en-US')} · Runs: ${this.save.stats.runs}</div>
       <div class="modal-actions">
         <button class="btn danger small" data-act="reset">RESET PROGRESS</button>
         <button class="btn primary" data-act="close">DONE</button>
       </div>
-      <p class="tiny muted">On iPhone: Share → Add to Home Screen to play full-screen.</p>
+      ${this.app.native ? '' : '<p class="tiny muted">On iPhone: Share → Add to Home Screen to play full-screen.</p>'}
     `, {
       close: () => this.closeModal(),
       control: () => {

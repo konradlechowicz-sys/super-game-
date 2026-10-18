@@ -1,10 +1,11 @@
 // Offline cache. Bump VERSION on every release so players get the new files.
-const VERSION = 'vb-0.3.1';
+const VERSION = 'vb-0.4.0';
 const FILES = [
   './', 'index.html', 'manifest.webmanifest', 'css/style.css',
   'js/main.js', 'js/game.js', 'js/ui.js', 'js/data.js', 'js/weapons.js', 'js/sprites.js',
   'js/audio.js', 'js/background.js', 'js/icons.js', 'js/save.js', 'js/util.js',
   'icons/icon-180.png', 'icons/icon-192.png', 'icons/icon-512.png',
+  'fonts/orbitron.woff2', 'fonts/rajdhani-500.woff2', 'fonts/rajdhani-600.woff2', 'fonts/rajdhani-700.woff2',
 ];
 
 self.addEventListener('install', (e) => {
@@ -21,7 +22,7 @@ self.addEventListener('fetch', (e) => {
   if (e.request.method !== 'GET') return;
   e.respondWith(
     caches.match(e.request).then((hit) => hit || fetch(e.request).then((res) => {
-      if (res.ok && (new URL(e.request.url).origin === location.origin || e.request.url.includes('fonts.g'))) {
+      if (res.ok && (new URL(e.request.url).origin === location.origin)) {
         const copy = res.clone();
         caches.open(VERSION).then((c) => c.put(e.request, copy));
       }

@@ -1,0 +1,13 @@
+{
+  "appId": "com.konradlechowicz.voidblaster",
+  "appName": "Void Blaster",
+  "webDir": "www",
+  "backgroundColor": "#05010f",
+  "ios": {
+    "contentInset": "never",
+    "scrollEnabled": false,
+    "allowsLinkPreview": false,
+    "backgroundColor": "#05010f",
+    "preferredContentMode": "mobile"
+  }
+}

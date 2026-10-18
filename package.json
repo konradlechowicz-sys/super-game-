@@ -1,0 +1,24 @@
+{
+  "name": "void-blaster",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Neon space survivor for iPhone",
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "ios": "node scripts/build.mjs && npx cap sync ios",
+    "open": "npx cap open ios",
+    "build:web": "node scripts/build-web.mjs",
+    "serve": "npx http-server -p 8080 -c-1 ."
+  },
+  "dependencies": {
+    "@capacitor/core": "^8.5.3",
+    "@capacitor/haptics": "^8.0.2",
+    "@capacitor/ios": "^8.5.3",
+    "@capacitor/preferences": "^8.0.1"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "^8.5.3",
+    "esbuild": "^0.28.2"
+  }
+}

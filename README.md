@@ -24,6 +24,22 @@ npx http-server -p 8080 .
 ```
 Then open http://localhost:8080. On iPhone: open the hosted URL in Safari → Share → **Add to Home Screen**.
 
+## iOS app (App Store)
+The game ships as a native iOS app via [Capacitor](https://capacitorjs.com). The Xcode project lives in `ios/`
+(Swift Package Manager, no CocoaPods). Requirements: a Mac with Xcode, Node.js 20+, an Apple Developer account.
+
+```
+npm install        # once
+npm run ios        # build www/ and copy it into the Xcode project
+npm run open       # open Xcode
+```
+In Xcode: select the **App** target → *Signing & Capabilities* → pick your Team, then Run on a device or simulator.
+Run `npm run ios` again after every change to the game code.
+
+The app build (`scripts/build.mjs`) bundles `js/native-main.js`, which adds haptics and a native copy of the save
+(Capacitor Haptics / Preferences). Fonts are bundled in `fonts/` (SIL OFL), so the app needs no network.
+Bundle ID: `com.konradlechowicz.voidblaster` (change it in `capacitor.config.json` and in Xcode if needed).
+
 ## Dev flags (query string)
 - `?dev` — all sectors unlocked, service worker disabled
 - `&fast=1` — sectors 6× shorter · `&ts=4` — 4× game speed · `&god` — invulnerable · `&coins=1000`

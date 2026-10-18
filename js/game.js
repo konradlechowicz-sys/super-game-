@@ -212,6 +212,7 @@ export class Game {
     p.hp -= dmg;
     (this.dmgLog ||= {})[src] = (this.dmgLog[src] || 0) + dmg;
     p.inv = 0.6;
+    this.app.haptic('medium');
     this.shake = Math.max(this.shake, 9);
     this.flash = 0.25;
     this.sfx('hurt');
@@ -250,6 +251,7 @@ export class Game {
     this.addFx(p.x, p.y, 160, this.ship.color, 0.8, 5);
     this.shake = 20;
     this.sfx('bigboom');
+    this.app.haptic('heavy');
   }
 
   onBossDeath(b) {
@@ -257,6 +259,7 @@ export class Game {
     this.bossDefeated = true;
     this.ui.bossBar(null);
     this.sfx('bigboom');
+    this.app.haptic('heavy');
     this.shake = 28;
     this.slowmo = 0.3;
     for (let i = 0; i < 30; i++) this.pickups.push({ x: b.x + rand(-80, 80), y: b.y + rand(-80, 80), kind: 'coin', v: 3 });
@@ -493,6 +496,7 @@ export class Game {
     this.ui.bossBar(def.name, 1);
     this.app.audio.setTrack('boss');
     this.sfx('boss');
+    this.app.haptic('heavy');
     this.shake = 14;
   }
 
@@ -602,6 +606,7 @@ export class Game {
         this.addFx(p.x, p.y, 260, '#ffd23d', 0.7, 6);
         this.burst(p.x, p.y, '#ffd23d', 50, 380, 1, 8);
         this.sfx('evolve');
+        this.app.haptic('success');
         break;
       }
       case 'pnew': case 'plvl':
@@ -617,6 +622,7 @@ export class Game {
     this.state = 'levelup';
     if (chest) this.coinsRun += 10;
     this.sfx(chest ? 'chest' : 'levelup');
+    this.app.haptic('light');
     const show = () => {
       const cards = this.rollCards(3, chest);
       this.ui.levelUp({
@@ -1231,6 +1237,7 @@ export class Game {
       case 'heal': p.hp = Math.min(p.maxHp, p.hp + p.maxHp * 0.3); this.sfx('pickup'); this.text(p.x, p.y - 20, 'REPAIR', '#3dff8a'); break;
       case 'magnet': for (const g of this.gems) g.mag = true; this.sfx('pickup'); this.text(p.x, p.y - 20, 'MAGNET', '#3dc8ff'); break;
       case 'bomb':
+        this.app.haptic('heavy');
         this.flash = 0.4;
         this.shake = 16;
         this.sfx('bigboom');
