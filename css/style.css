@@ -113,6 +113,17 @@ h1, h2, h3 { font-family: 'Orbitron', sans-serif; margin: 0; letter-spacing: 0.0
 .daily-btn.glow { animation: pulse 1.6s infinite; }
 @keyframes pulse { 50% { box-shadow: 0 0 26px rgba(255, 210, 61, 0.7); } }
 .badge { position: absolute; top: -8px; right: -6px; width: 22px; height: 22px; border-radius: 50%; background: var(--red); color: #fff; font-size: 13px; display: grid; place-items: center; text-shadow: none; box-shadow: 0 0 10px var(--red); }
+.full-btn { border-color: var(--gold); color: #1d1200; background: linear-gradient(135deg, #ffe680, #ffb52e); text-shadow: none; box-shadow: 0 0 16px rgba(255, 210, 61, 0.5); }
+.modal.paywall { border-color: rgba(255, 210, 61, 0.6); box-shadow: 0 0 40px rgba(255, 210, 61, 0.3); }
+.perks { list-style: none; padding: 0; margin: 12px 0 4px; display: flex; flex-direction: column; gap: 8px; }
+.perks li { display: flex; flex-direction: column; padding: 8px 12px 8px 30px; border-radius: 10px; background: rgba(255, 255, 255, 0.04); position: relative; }
+.perks li::before { content: '★'; position: absolute; left: 10px; top: 8px; color: var(--gold); text-shadow: 0 0 6px var(--gold); }
+.perks b { font-size: 16px; }
+.perks span { color: var(--muted); font-size: 14px; }
+.btn.ghost { border-color: transparent; background: none; box-shadow: none; color: var(--muted); text-shadow: none; }
+.skin-row { display: flex; align-items: center; gap: 6px; font-size: 13px; color: var(--muted); }
+.skin { padding: 4px 10px; border-radius: 999px; border: 1px solid var(--line); font-size: 13px; color: var(--k); }
+.skin.on { border-color: var(--k); box-shadow: 0 0 8px var(--k); }
 .foot { text-align: center; color: var(--muted); font-size: 13px; margin-top: 14px; }
 .version-tag { flex: 1; min-width: 0; text-align: center; color: var(--muted); font-size: 13px; letter-spacing: 0.06em; font-variant-numeric: tabular-nums; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 

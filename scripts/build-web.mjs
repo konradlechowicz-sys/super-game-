@@ -3,7 +3,8 @@
 import { build } from 'esbuild';
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 
-const js = (await build({ entryPoints: ['js/main.js'], bundle: true, format: 'iife', minify: true, write: false })).outputFiles[0].text;
+// __PREVIEW__: the shareable preview may simulate the full-game purchase (labelled TEST) so every world can be tested.
+const js = (await build({ entryPoints: ['js/main.js'], bundle: true, format: 'iife', minify: true, write: false, define: { __PREVIEW__: 'true' } })).outputFiles[0].text;
 const css = readFileSync('css/style.css', 'utf8').replace(/\/\* fonts:start[\s\S]*?\/\* fonts:end \*\/\n*/, '');
 const html = `<title>Void Blaster</title>
 <meta name="claude:viewport-fit-sides" content="cover">

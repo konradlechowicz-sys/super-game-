@@ -1,6 +1,7 @@
 import { TAU, rand, randi, clamp, lerp, pick, weightedPick, angleLerp, SpatialHash } from './util.js';
 import { ENEMIES, BOSSES, PASSIVES, PASSIVE_MAX, SHIPS, xpFor, stageIndex, shopBonus } from './data.js';
 import { WEAPONS, WEAPON_MAX, weaponStats } from './weapons.js';
+import { shipLook } from './store.js';
 import {
   shipSprite, enemySprite, bossLayer, boltSprite, missileSprite, orbSprite, gemSprite,
   glowDot, mineSprite, pickupSprite,
@@ -19,7 +20,7 @@ export class Game {
     this.ui = app.ui;
     this.stage = stage;
     this.save = app.save;
-    this.ship = SHIPS[this.save.ship] || SHIPS.striker;
+    this.ship = shipLook(SHIPS[this.save.ship] || SHIPS.striker, this.save);
     const { vw, vh } = this.viewSize();
     this.arena = { w: Math.max(900, vw * 1.8), h: Math.max(1300, vh * 1.45) };
     this.time = 0;
