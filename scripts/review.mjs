@@ -9,7 +9,6 @@
 import { execSync } from 'node:child_process';
 import { appendFileSync, existsSync, readFileSync } from 'node:fs';
 import { createInterface } from 'node:readline/promises';
-import { runInSimulator } from './sim.mjs';
 
 const sh = (cmd, opts = {}) => execSync(cmd, { encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'], ...opts }).trim();
 const run = (cmd) => execSync(cmd, { stdio: 'inherit' });
@@ -44,12 +43,15 @@ function switchToMain() {
   run('git merge -q --ff-only origin/main');
 }
 
+// Build and launch with the tools of the version being tested (it is checked out at this point), so fixes to the
+// build/launch scripts take effect immediately instead of only after they reach main.
 function buildAndLaunch() {
   run('npm install --no-audit --no-fund');
   run('node scripts/build.mjs');
   run('npx cap sync ios');
   if (process.env.VB_NO_SIM) return;
-  runInSimulator();
+  if (existsSync('scripts/sim.mjs')) run('node scripts/sim.mjs');
+  else run('npx cap run ios');
 }
 
 // ---------------------------------------------------------------------------
