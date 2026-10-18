@@ -30,13 +30,16 @@ The game ships as a native iOS app via [Capacitor](https://capacitorjs.com). The
 
 ```
 npm install        # once
+npm run review     # test new versions from the cloud in the simulator, then accept or reject them
+npm run play       # launch the accepted version (main) in the simulator
 npm run ios        # build www/ (test label) and copy it into the Xcode project
 npm run ios:release  # same, with the release label (use for App Store uploads)
 npm run open       # open Xcode
-npm run sim        # build and launch in an iOS Simulator (asks which iPhone), no Xcode clicks needed
 ```
 In Xcode: select the **App** target → *Signing & Capabilities* → pick your Team, then Run on a device or simulator.
-After new changes are pushed: `npm run update` (git pull + npm install + build + sync), then Run in Xcode.
+**Reviewing new versions.** Changes made in the cloud arrive on `claude/...` branches and never go straight into `main`.
+On the Mac, `npm run review` lists them, launches the chosen one in the simulator and asks to accept (merge into
+`main` and push), reject or decide later. `main` therefore always holds the versions Konrad accepted.
 
 The app build (`scripts/build.mjs`) bundles `js/native-main.js`, which adds haptics and a native copy of the save
 (Capacitor Haptics / Preferences). Fonts are bundled in `fonts/` (SIL OFL), so the app needs no network.

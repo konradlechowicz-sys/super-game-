@@ -10,11 +10,12 @@
     "open": "npx cap open ios",
     "build:web": "node scripts/build-web.mjs",
     "serve": "npx http-server -p 8080 -c-1 .",
-    "update": "git pull && npm install && npm run ios",
+    "update": "node scripts/review.mjs",
     "bump": "node scripts/bump.mjs",
     "build:release": "node scripts/build.mjs --release",
     "ios:release": "node scripts/build.mjs --release && npx cap sync ios",
-    "sim": "node scripts/build.mjs && npx cap run ios"
+    "review": "node scripts/review.mjs",
+    "play": "node scripts/build.mjs && npx cap run ios"
   },
   "dependencies": {
     "@capacitor/core": "^8.5.3",

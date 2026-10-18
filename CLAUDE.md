@@ -15,12 +15,17 @@
 - Mention the new build number to Konrad after each change.
 
 ## Shipping a change (do all three after every gameplay change)
-1. **Repo:** commit and push to the working branch. GitHub Pages serves the repo root, so the web version
-   (`https://konradlechowicz-sys.github.io/super-game-/`) updates by itself 1-2 minutes after the push.
+Konrad decides what becomes the real game: **never push to `main`**. `main` holds only versions he accepted.
+1. **Repo:** commit and push to a `claude/...` branch (this session's working branch). Do not merge into `main`.
 2. **Shareable preview:** `npm run build:web` produces `dist/void-blaster.html` (whole game in one file);
    republish it to the existing artifact https://claude.ai/artifact/LvvWrttnsoUNQZYBt7HgDo (keep the URL).
-3. **iOS app:** nothing to do on the server side. Konrad runs `npm run update` on his Mac
-   (git pull + npm install + build + cap sync), then presses Run in Xcode.
+   This preview always shows the newest candidate.
+3. **Tell Konrad the build number and to run `npm run review` on his Mac.** The script lists every `claude/...`
+   branch with commits not in `main`, builds the chosen one, launches it in the iOS Simulator and asks:
+   accept (merged into `main` and pushed), reject (hidden until the branch gets new commits) or later.
+   `npm run play` launches the accepted version (`main`) in the simulator.
+- GitHub Pages should serve `main`, so `https://konradlechowicz-sys.github.io/super-game-/` is the accepted version.
+- If a branch's commits are already in `main`, start new work from the latest `main`.
 
 ## Checks before pushing
 - `node --check js/*.js`, then load the game with Playwright (`index.html?dev&god`) and confirm no page errors.
