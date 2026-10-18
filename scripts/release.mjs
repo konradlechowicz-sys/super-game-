@@ -35,7 +35,12 @@ const semver = (v) => v.split('.').map(Number);
 const cmpVer = (a, b) => { const x = semver(a), y = semver(b); for (let i = 0; i < 3; i++) if (x[i] !== y[i]) return x[i] - y[i]; return 0; };
 
 // ---------------------------------------------------------------------------
-if (sh('git status --porcelain')) bye('Masz niezapisane zmiany w projekcie. Zapisz je (git commit) albo odłóż (git stash) i uruchom ponownie.', 1);
+// Only changes to tracked files can block switching versions; new untracked files (e.g. Xcode caches) cannot.
+const dirty = sh('git status --porcelain --untracked-files=no');
+if (dirty) {
+  bye(`Te pliki projektu mają niezapisane zmiany:\n${dirty.split('\n').map((l) => '  ' + l.trim().replace(/^\S+\s+/, '')).join('\n')}\n` +
+    'Odłóż je komendą „git stash” (można je przywrócić: „git stash pop”) i uruchom ponownie.', 1);
+}
 console.log('Pobieram stan z GitHuba…');
 run('git fetch -q --prune --tags origin');
 if (!versionAt('origin/main')) bye('W main nie ma jeszcze zaakceptowanej wersji gry. Najpierw: npm run review', 1);

@@ -10,3 +10,5 @@ ios/DerivedData/
 ios/App/build/
 xcuserdata/
 *.xcuserstate
+# Xcode's Swift Package Manager cache (Package.resolved etc.), created on the first build
+**/xcshareddata/swiftpm/
