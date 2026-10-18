@@ -180,10 +180,10 @@ export function menuTip(app, screen) {
   if (!tipsOn(save) || app.game) return null;
   if (save.stats.runs < 1) return null;
   if (screen === 'map' && !tipSeen(save, 'stars')) {
-    return { id: 'stars', anchor: '.world-head', title: 'EARN 3 STARS', text: 'Each sector has 3 goals: clear it, destroy enough enemies and finish with half your hull. Stars give bonus coins.' };
+    return { id: 'stars', anchor: '.world-head', title: 'EARN 3 STARS', text: 'Clear the sector, hit the kill goal, keep half your hull.' };
   }
   if (screen === 'menu' && !tipSeen(save, 'shop') && save.coins >= 60) {
-    return { id: 'shop', anchor: '[data-act="shop"]', title: 'SPEND YOUR COINS', text: 'Upgrades are permanent and make every ship stronger.' };
+    return { id: 'shop', anchor: '[data-act="shop"]', below: true, title: 'SPEND YOUR COINS', text: 'Permanent upgrades for every ship.' };
   }
   return null;
 }

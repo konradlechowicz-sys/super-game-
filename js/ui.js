@@ -47,7 +47,6 @@ export class UI {
     this.globalH = {
       pause: () => app.game?.pause(),
       skiptips: () => { setTips(app, false); this.tip(null); this.coachEl?.remove(); this.toast('Tutorial off · replay it in Settings'); },
-      coachok: () => this.coachEl?.remove(),
     };
     // Buttons fire on finger lift. iOS drops the synthetic click when the finger moves even slightly during a tap,
     // so a tap that ends on the same button within a small slop counts; bigger moves are scrolls, not taps.
@@ -62,6 +61,8 @@ export class UI {
     };
     let down = null;
     root.addEventListener('pointerdown', (e) => {
+      // a menu tutorial bubble never blocks anything: the next tap anywhere dismisses it
+      if (this.coachEl) { this.coachEl.remove(); this.coachEl = null; }
       const t = e.target.closest('[data-act]');
       down = t ? { t, x: e.clientX, y: e.clientY, id: e.pointerId } : null;
     });
@@ -164,7 +165,7 @@ export class UI {
     this.coach('menu');
   }
 
-  // Tutorial hint on a menu screen: a bubble next to the element it explains.
+  // Tutorial hint on a menu screen: a small bubble pointing at the element it explains.
   coach(screen) {
     const t = menuTip(this.app, screen);
     const anchor = t && this.screenEl.querySelector(t.anchor);
@@ -173,11 +174,16 @@ export class UI {
     anchor.classList.add('coach-target');
     const b = (this.coachEl = document.createElement('div'));
     b.className = 'coach';
-    b.innerHTML = `<b>${esc(t.title)}</b><p>${esc(t.text)}</p><div class="coach-row"><button class="btn small ghost" data-act="skiptips">SKIP TUTORIAL</button><button class="btn small primary" data-act="coachok">GOT IT</button></div>`;
+    b.innerHTML = `<b>${esc(t.title)}</b>${esc(t.text)}<i class="coach-tail"></i>`;
     this.screenEl.firstElementChild.appendChild(b);
     const r = anchor.getBoundingClientRect();
-    if (r.top + r.height / 2 < this.app.H / 2) { b.style.top = `${r.bottom + 12}px`; b.classList.add('below'); }
-    else b.style.bottom = `${this.app.H - r.top + 12}px`;
+    // centred on the target where it fits, kept 12px inside the screen
+    const w = b.offsetWidth, cx = r.left + r.width / 2;
+    const left = Math.max(12, Math.min(this.app.W - w - 12, cx - w / 2));
+    b.style.left = `${left}px`;
+    b.style.setProperty('--tail', `${cx - left}px`);
+    if (t.below || r.top + r.height / 2 < this.app.H / 2) { b.style.top = `${r.bottom + 10}px`; b.classList.add('below'); }
+    else b.style.bottom = `${this.app.H - r.top + 10}px`;
   }
 
   // In-game tutorial hint above the joystick. Called with title null to hide it (with a check mark when done).
