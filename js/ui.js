@@ -41,15 +41,37 @@ export class UI {
     this.mh = {};
     this.hudCache = {};
     this.globalH = { pause: () => app.game?.pause() };
-    root.addEventListener('click', (e) => {
-      const t = e.target.closest('[data-act]');
-      if (!t || t.disabled || t.classList.contains('locked-tap')) return;
+    // Buttons fire on finger lift. iOS drops the synthetic click when the finger moves even slightly during a tap,
+    // so a tap that ends on the same button within a small slop counts; bigger moves are scrolls, not taps.
+    const activate = (t) => {
+      if (!t || t.disabled || t.classList.contains('locked-tap') || !t.isConnected) return;
       app.audio.unlock();
       const fn = this.mh[t.dataset.act] || this.h[t.dataset.act] || this.globalH[t.dataset.act];
       if (fn) {
         if (t.dataset.act !== 'pick') app.audio.sfx('select');
         fn(t.dataset, t);
       }
+    };
+    let down = null;
+    root.addEventListener('pointerdown', (e) => {
+      const t = e.target.closest('[data-act]');
+      down = t ? { t, x: e.clientX, y: e.clientY, id: e.pointerId } : null;
+    });
+    root.addEventListener('pointerup', (e) => {
+      if (!down || e.pointerId !== down.id) return;
+      const { t, x, y } = down;
+      down = null;
+      if (Math.hypot(e.clientX - x, e.clientY - y) > 24) return;
+      if (e.target.closest('[data-act]') !== t && document.elementFromPoint(e.clientX, e.clientY)?.closest('[data-act]') !== t) return;
+      this.lastFired = { t, at: performance.now() };
+      activate(t);
+    });
+    root.addEventListener('pointercancel', () => { down = null; });
+    // Keyboard / accessibility clicks (and any click not already handled on pointerup).
+    root.addEventListener('click', (e) => {
+      const t = e.target.closest('[data-act]');
+      if (this.lastFired && this.lastFired.t === t && performance.now() - this.lastFired.at < 800) return;
+      activate(t);
     });
   }
 
@@ -406,7 +428,7 @@ export class UI {
     return `<div class="build"><div class="build-row">${build.weapons.map(item).join('')}</div><div class="build-row">${build.passives.map(item).join('')}</div></div>`;
   }
 
-  levelUp({ title, sub, cards, rerolls, build, onPick, onReroll }) {
+  levelUp({ title, sub, cards, rerolls, build, onPick, onReroll, step = 1, steps = 1 }) {
     const html = cards.map((c, i) => `
       <button class="card ${c.evo ? 'evo' : ''}" style="--cc:${c.color}" data-act="pick" data-i="${i}">
         <img src="${icon(c.icon, c.color, c.evo)}" alt="">
@@ -416,15 +438,22 @@ export class UI {
         </div>
       </button>`).join('');
     this.modal(`
-      <div class="lu-title">${esc(title)}</div>
+      <div class="lu-title">${esc(title)}${steps > 1 ? ` <span class="lu-step">${step}/${steps}</span>` : ''}</div>
       <div class="muted center">${esc(sub)}</div>
       <div class="cards">${html}</div>
       ${this.buildHtml(build)}
       ${rerolls > 0 ? `<button class="btn small reroll" data-act="reroll">RE-ROLL (${rerolls})</button>` : ''}
     `, {
-      pick: (ds) => { this.app.audio.sfx('select'); this.closeModal(); onPick(+ds.i); },
+      pick: (ds, el) => {
+        if (this.picking) return;
+        this.picking = true;
+        this.app.audio.sfx('select');
+        el.classList.add('chosen');
+        // brief flash so the choice visibly registers before the next level-up (if any) replaces this one
+        setTimeout(() => { this.picking = false; this.closeModal(); onPick(+ds.i); }, 110);
+      },
       reroll: () => onReroll(),
-    }, 'levelup', 450);
+    }, 'levelup', 220);
   }
 
   pause(build, onResume, onQuit) {

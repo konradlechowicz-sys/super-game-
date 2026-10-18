@@ -623,15 +623,21 @@ export class Game {
     if (chest) this.coinsRun += 10;
     this.sfx(chest ? 'chest' : 'levelup');
     this.app.haptic('light');
+    // Count level-ups that arrive together so the player sees "2/3" and knows the previous pick registered.
+    const left = chest ? this.pendingChests : this.pendingLevels;
+    if (!this.batch || this.batch.chest !== chest || this.batch.left < left) this.batch = { chest, total: left, left };
+    this.batch.left = left;
     const show = () => {
       const cards = this.rollCards(3, chest);
       this.ui.levelUp({
+        step: this.batch.total - left + 1, steps: this.batch.total,
         title: chest ? 'SUPPLY CRATE' : 'LEVEL UP!',
         sub: chest ? 'Choose your reward' : `Level ${this.level - this.pendingLevels + 1}`,
         cards, rerolls: this.rerolls, build: this.buildSummary(),
         onPick: (i) => {
           this.applyCard(cards[i]);
           if (chest) this.pendingChests--; else this.pendingLevels--;
+          if ((chest ? this.pendingChests : this.pendingLevels) === 0) this.batch = null;
           this.state = 'play';
           this.player.inv = Math.max(this.player.inv, 0.6);
           this.app.input.resetDrag();

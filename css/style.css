@@ -238,6 +238,9 @@ h1, h2, h3 { font-family: 'Orbitron', sans-serif; margin: 0; letter-spacing: 0.0
 .card:nth-child(3) { animation-delay: 0.12s; }
 @keyframes cardin { from { transform: translateX(-20px); opacity: 0; } }
 .card:active { transform: scale(0.97); }
+.card.chosen { transform: scale(1.03); background: color-mix(in srgb, var(--cc) 35%, rgba(10, 4, 26, 0.9)); box-shadow: 0 0 30px var(--cc); transition: transform 0.08s, background 0.08s; }
+.lu-step { display: inline-block; vertical-align: middle; margin-left: 6px; padding: 3px 9px; border-radius: 999px; font-size: 14px; letter-spacing: 0.06em;
+  background: var(--pink); color: #fff; text-shadow: none; box-shadow: 0 0 12px var(--pink); }
 .card.evo { border-color: var(--gold); background: linear-gradient(135deg, rgba(255, 210, 61, 0.2), rgba(255, 45, 149, 0.15)); animation: cardin 0.3s backwards, pulse 1.2s infinite; }
 .card img { width: 54px; height: 54px; flex: none; }
 .card-info { flex: 1; min-width: 0; }
