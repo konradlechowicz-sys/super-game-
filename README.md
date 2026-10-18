@@ -34,7 +34,7 @@ npm run ios        # build www/ and copy it into the Xcode project
 npm run open       # open Xcode
 ```
 In Xcode: select the **App** target → *Signing & Capabilities* → pick your Team, then Run on a device or simulator.
-Run `npm run ios` again after every change to the game code.
+After new changes are pushed: `npm run update` (git pull + npm install + build + sync), then Run in Xcode.
 
 The app build (`scripts/build.mjs`) bundles `js/native-main.js`, which adds haptics and a native copy of the save
 (Capacitor Haptics / Preferences). Fonts are bundled in `fonts/` (SIL OFL), so the app needs no network.
