@@ -33,6 +33,7 @@ npm install        # once
 npm run ios        # build www/ (test label) and copy it into the Xcode project
 npm run ios:release  # same, with the release label (use for App Store uploads)
 npm run open       # open Xcode
+npm run sim        # build and launch in an iOS Simulator (asks which iPhone), no Xcode clicks needed
 ```
 In Xcode: select the **App** target → *Signing & Capabilities* → pick your Team, then Run on a device or simulator.
 After new changes are pushed: `npm run update` (git pull + npm install + build + sync), then Run in Xcode.

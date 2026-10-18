@@ -13,7 +13,8 @@
     "update": "git pull && npm install && npm run ios",
     "bump": "node scripts/bump.mjs",
     "build:release": "node scripts/build.mjs --release",
-    "ios:release": "node scripts/build.mjs --release && npx cap sync ios"
+    "ios:release": "node scripts/build.mjs --release && npx cap sync ios",
+    "sim": "node scripts/build.mjs && npx cap run ios"
   },
   "dependencies": {
     "@capacitor/core": "^8.5.3",
