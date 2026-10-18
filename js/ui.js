@@ -353,6 +353,7 @@ export class UI {
   showHud() {
     this.clearScreen();
     this.hudEl.classList.remove('hidden');
+    this.bossBar(null);
     this.hudCache = {};
   }
 

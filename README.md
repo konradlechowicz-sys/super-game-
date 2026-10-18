@@ -40,6 +40,15 @@ The app build (`scripts/build.mjs`) bundles `js/native-main.js`, which adds hapt
 (Capacitor Haptics / Preferences). Fonts are bundled in `fonts/` (SIL OFL), so the app needs no network.
 Bundle ID: `com.konradlechowicz.voidblaster` (change it in `capacitor.config.json` and in Xcode if needed).
 
+## App Store materials
+- `appstore/LISTING.md`: name, subtitle, description, keywords, privacy and age-rating answers, review notes
+- `appstore/screenshots/`: 7 captioned screenshots, 1290 × 2796 (iPhone 6.9"), in upload order
+- `site/privacy.html`, `site/support.html`: Privacy Policy and Support pages (required URLs)
+
+Publish them with GitHub Pages: repository **Settings → Pages → Build and deployment → Deploy from a branch**,
+pick the branch and `/ (root)`. The pages are then at `https://konradlechowicz-sys.github.io/super-game-/site/privacy.html`
+and `.../site/support.html`, and the web version of the game at `https://konradlechowicz-sys.github.io/super-game-/`.
+
 ## Dev flags (query string)
 - `?dev` — all sectors unlocked, service worker disabled
 - `&fast=1` — sectors 6× shorter · `&ts=4` — 4× game speed · `&god` — invulnerable · `&coins=1000`

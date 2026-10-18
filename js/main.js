@@ -194,6 +194,7 @@ app.endRun = () => {
 };
 
 app.quitRun = () => {
+  app.ui.closeModal();
   app.endRun();
   app.ui.hideHud();
   app.ui.map();
