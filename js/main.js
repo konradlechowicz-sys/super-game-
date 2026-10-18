@@ -196,6 +196,7 @@ app.startStage = (id) => {
 app.endRun = () => {
   app.game = null;
   app.ui.bannerEl.innerHTML = '';
+  app.ui.tip(null);
   app.audio.setTrack('menu');
   app.bg.setTheme(WORLDS[0].theme);
 };
@@ -227,10 +228,21 @@ function drawJoystick() {
   const mode = control();
   const st = app.game.state;
   if (mode === 'drag' || (st !== 'play' && st !== 'winning')) return;
-  if (mode === 'float' && !input.joy) return;
   const { dpr } = app;
   const h = input.joy ? { x: input.bx, y: input.by } : app.joyHome();
   ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  // tutorial: pulsing gold ring around the joystick until the player moves
+  if (app.game.tut.joyTarget() && !input.joy) {
+    const p = 0.5 + 0.5 * Math.sin(app.time * 6);
+    ctx.globalAlpha = 0.5 + p * 0.5;
+    ctx.strokeStyle = '#ffd23d';
+    ctx.lineWidth = 3;
+    ctx.shadowColor = '#ffd23d';
+    ctx.shadowBlur = 14;
+    ctx.beginPath(); ctx.arc(h.x, h.y, JOY_R + 22 + p * 8, 0, Math.PI * 2); ctx.stroke();
+    ctx.shadowBlur = 0;
+  }
+  if (mode === 'float' && !input.joy) { ctx.globalAlpha = 1; return; }
   ctx.globalAlpha = input.joy ? 0.9 : 0.45;
   ctx.fillStyle = 'rgba(20, 8, 50, 0.45)';
   ctx.beginPath(); ctx.arc(h.x, h.y, JOY_R + 14, 0, Math.PI * 2); ctx.fill();

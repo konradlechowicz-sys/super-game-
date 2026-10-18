@@ -2,6 +2,7 @@ import { TAU, rand, randi, clamp, lerp, pick, weightedPick, angleLerp, SpatialHa
 import { ENEMIES, BOSSES, PASSIVES, PASSIVE_MAX, SHIPS, xpFor, stageIndex, shopBonus } from './data.js';
 import { WEAPONS, WEAPON_MAX, weaponStats } from './weapons.js';
 import { shipLook } from './store.js';
+import { Tutorial, tipsOn, tipSeen, markTip } from './tutorial.js';
 import {
   shipSprite, enemySprite, bossLayer, boltSprite, missileSprite, orbSprite, gemSprite,
   glowDot, mineSprite, pickupSprite,
@@ -43,6 +44,7 @@ export class Game {
     this.recompute();
     this.player.hp = this.player.maxHp;
     this.addWeapon(this.ship.weapon);
+    this.tut = new Tutorial(this);
     this.ui.banner(`STAGE ${stage.id}`, stage.name.toUpperCase());
   }
 
@@ -622,6 +624,7 @@ export class Game {
 
   openCards(chest) {
     this.state = 'levelup';
+    this.tut.interrupt();
     if (chest) this.coinsRun += 10;
     this.sfx(chest ? 'chest' : 'levelup');
     this.app.haptic('light');
@@ -629,9 +632,12 @@ export class Game {
     const left = chest ? this.pendingChests : this.pendingLevels;
     if (!this.batch || this.batch.chest !== chest || this.batch.left < left) this.batch = { chest, total: left, left };
     this.batch.left = left;
+    let hint = null;
     const show = () => {
       const cards = this.rollCards(3, chest);
+      hint ??= this.cardHint(chest, cards);
       this.ui.levelUp({
+        hint,
         step: this.batch.total - left + 1, steps: this.batch.total,
         title: chest ? 'SUPPLY CRATE' : 'LEVEL UP!',
         sub: chest ? 'Choose your reward' : `Level ${this.level - this.pendingLevels + 1}`,
@@ -654,6 +660,20 @@ export class Game {
     show();
   }
 
+  // First-time explanation shown above the cards (tutorial).
+  cardHint(chest, cards) {
+    if (!tipsOn(this.save)) return '';
+    const tips = [
+      ['evo', cards.some((c) => c.kind === 'evo'), 'Evolution! A max-level weapon plus its partner upgrade becomes a super weapon.'],
+      ['crate', chest, 'A free pick. Crates are the surest way to evolve a weapon.'],
+      ['level', !chest, 'Pick one card. New weapons and upgrades last until the end of this run.'],
+    ];
+    const t = tips.find(([id, when]) => when && !tipSeen(this.save, id));
+    if (!t) return '';
+    markTip(this.app, t[0]);
+    return t[2];
+  }
+
   buildSummary() {
     return {
       weapons: this.weapons.map((w) => ({ id: w.id, icon: WEAPONS[w.id].icon, color: w.evolved ? '#ffd23d' : WEAPONS[w.id].color, level: w.evolved ? '★' : w.level, name: w.evolved ? WEAPONS[w.id].evo.name : WEAPONS[w.id].name })),
@@ -665,6 +685,9 @@ export class Game {
   update(rawDt) {
     if (this.state === 'levelup' || this.state === 'paused' || this.state === 'revive' || this.state === 'over') return;
     this.slowmo = Math.min(1, this.slowmo + rawDt * (this.state === 'play' ? 1.5 : 0.25));
+    // a tutorial hint waiting for the player slows the action down
+    if (this.state === 'play') this.slowmo = Math.min(this.slowmo, this.tut.update(rawDt));
+    else if (this.tut.tip) this.tut.close(false);
     const dt = rawDt * this.slowmo;
     this.time += this.state === 'play' ? dt : 0;
     const p = this.player;
@@ -1290,6 +1313,7 @@ export class Game {
     const st = this.stage, save = this.save;
     const p = this.player;
     this.state = 'over';
+    if (this.tut.tip) this.tut.close(false);
     let stars = 0;
     const goals = [won, this.kills >= st.kills, won && p.hp >= p.maxHp * 0.5];
     if (won) stars = goals.filter(Boolean).length;
@@ -1437,6 +1461,8 @@ export class Game {
       ctx.globalAlpha = 1;
       this.drawBar(ctx, p.x, p.y + 26, 40, p.hp / p.maxHp, p.hp / p.maxHp > 0.35 ? '#3dff8a' : '#ff3d6e');
     }
+
+    this.tut.renderWorld(ctx);
 
     // particles, explosions, lightning
     ctx.globalCompositeOperation = 'lighter';

@@ -11,6 +11,9 @@ const fresh = () => ({
   unlockBonus: false,
   skins: [],
   skin: null,
+  // tutorial hints already shown (id -> 1); tipsOff after SKIP
+  tips: {},
+  tipsOff: false,
   shop: {},
   daily: { last: null, streak: 0 },
   settings: { sfx: true, music: true, dmgNums: true, haptics: true, control: 'joystick' },

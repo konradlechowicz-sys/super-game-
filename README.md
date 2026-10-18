@@ -85,5 +85,6 @@ and `.../site/support.html`, and the web version of the game at `https://konradl
 - `js/weapons.js` — weapon stats, behaviours and evolutions
 - `js/data.js` — ships, enemies, sectors, shop, daily rewards
 - `js/ui.js` — menus, HUD, level-up cards, results
+- `js/tutorial.js` — first-run hints (in-game with slow motion, level-up cards, map and menu); SKIP turns them off, Settings → Tutorial → Replay brings them back
 - `js/sprites.js`, `js/icons.js`, `js/background.js` — pre-rendered neon graphics
 - `js/audio.js` — Web Audio synth engine and music sequencer

@@ -5,6 +5,7 @@ import { fmtTime } from './util.js';
 import { shipSprite } from './sprites.js';
 import { versionLabel, versionFull } from './version.js';
 import { FREE_SHOP_CAP, UNLOCK_COINS, shipLook } from './store.js';
+import { menuTip, markTip, setTips } from './tutorial.js';
 
 const STAR = '<svg viewBox="0 0 24 24" class="star-svg"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6-4.9-4.6 6.6-.8z"/></svg>';
 const COIN = '<span class="coin-ico"></span>';
@@ -31,17 +32,23 @@ export class UI {
         </div>
       </div>
       <div class="layer banner-layer"></div>
+      <div class="layer tip-layer"></div>
       <div class="layer modal-layer"></div>
       <div class="toast"></div>`;
     this.screenEl = root.querySelector('.screen-layer');
     this.hudEl = root.querySelector('.hud');
     this.modalEl = root.querySelector('.modal-layer');
     this.bannerEl = root.querySelector('.banner-layer');
+    this.tipEl = root.querySelector('.tip-layer');
     this.toastEl = root.querySelector('.toast');
     this.h = {};
     this.mh = {};
     this.hudCache = {};
-    this.globalH = { pause: () => app.game?.pause() };
+    this.globalH = {
+      pause: () => app.game?.pause(),
+      skiptips: () => { setTips(app, false); this.tip(null); this.coachEl?.remove(); this.toast('Tutorial off · replay it in Settings'); },
+      coachok: () => this.coachEl?.remove(),
+    };
     // Buttons fire on finger lift. iOS drops the synthetic click when the finger moves even slightly during a tap,
     // so a tap that ends on the same button within a small slop counts; bigger moves are scrolls, not taps.
     const activate = (t) => {
@@ -154,6 +161,39 @@ export class UI {
       settings: () => this.settings(),
       full: () => this.paywall(),
     }, 'menu');
+    this.coach('menu');
+  }
+
+  // Tutorial hint on a menu screen: a bubble next to the element it explains.
+  coach(screen) {
+    const t = menuTip(this.app, screen);
+    const anchor = t && this.screenEl.querySelector(t.anchor);
+    if (!anchor) return;
+    markTip(this.app, t.id);
+    anchor.classList.add('coach-target');
+    const b = (this.coachEl = document.createElement('div'));
+    b.className = 'coach';
+    b.innerHTML = `<b>${esc(t.title)}</b><p>${esc(t.text)}</p><div class="coach-row"><button class="btn small ghost" data-act="skiptips">SKIP TUTORIAL</button><button class="btn small primary" data-act="coachok">GOT IT</button></div>`;
+    this.screenEl.firstElementChild.appendChild(b);
+    const r = anchor.getBoundingClientRect();
+    if (r.top + r.height / 2 < this.app.H / 2) { b.style.top = `${r.bottom + 12}px`; b.classList.add('below'); }
+    else b.style.bottom = `${this.app.H - r.top + 12}px`;
+  }
+
+  // In-game tutorial hint above the joystick. Called with title null to hide it (with a check mark when done).
+  tip(title, sub, nearJoy = false, success = false) {
+    const el = this.tipEl;
+    if (title == null) {
+      const box = el.firstElementChild;
+      if (!box) return;
+      if (success) {
+        box.classList.add('done');
+        setTimeout(() => box.remove(), 650);
+      } else box.remove();
+      return;
+    }
+    el.innerHTML = `<div class="tip-box ${nearJoy ? 'joy' : ''}"><div class="tip-text"><b>${esc(title)}</b><span>${esc(sub)}</span></div>
+      <button class="tip-skip" data-act="skiptips">SKIP</button><i class="tip-check">✓</i></div>`;
   }
 
   // ======================= MAP =======================
@@ -201,6 +241,7 @@ export class UI {
       world: (ds) => this.map(+ds.id),
       stage: (ds) => this.briefing(ds.id),
     }, 'map');
+    this.coach('map');
   }
 
   briefing(id) {
@@ -373,6 +414,7 @@ export class UI {
       ${tog('sfx', 'Sound effects')}
       ${tog('dmgNums', 'Damage numbers')}
       ${this.app.native ? tog('haptics', 'Vibration') : ''}
+      <button class="toggle choice" data-act="tips"><span>Tutorial</span><b>Replay</b></button>
       ${this.app.store.mode !== 'none' ? `<button class="toggle choice" data-act="restore"><span>Restore purchases</span><b>${this.app.store.isFull() ? 'Full game ✓' : 'Restore'}</b></button>` : ''}
       <div class="stats-line muted">${versionFull()}</div>
       <div class="stats-line muted">Enemies destroyed: ${this.save.stats.kills.toLocaleString('en-US')} · Runs: ${this.save.stats.runs}</div>
@@ -383,6 +425,7 @@ export class UI {
       ${this.app.native ? '' : '<p class="tiny muted">On iPhone: Share → Add to Home Screen to play full-screen.</p>'}
     `, {
       close: () => this.closeModal(),
+      tips: () => { setTips(this.app, true); this.toast('Tutorial hints will show again'); },
       restore: async () => {
         const owned = await this.app.store.restore();
         this.toast(owned ? 'Full game restored' : 'No purchase found for this Apple ID');
@@ -469,7 +512,7 @@ export class UI {
     return `<div class="build"><div class="build-row">${build.weapons.map(item).join('')}</div><div class="build-row">${build.passives.map(item).join('')}</div></div>`;
   }
 
-  levelUp({ title, sub, cards, rerolls, build, onPick, onReroll, step = 1, steps = 1 }) {
+  levelUp({ title, sub, cards, rerolls, build, onPick, onReroll, step = 1, steps = 1, hint = '' }) {
     const html = cards.map((c, i) => `
       <button class="card ${c.evo ? 'evo' : ''}" style="--cc:${c.color}" data-act="pick" data-i="${i}">
         <img src="${icon(c.icon, c.color, c.evo)}" alt="">
@@ -481,6 +524,7 @@ export class UI {
     this.modal(`
       <div class="lu-title">${esc(title)}${steps > 1 ? ` <span class="lu-step">${step}/${steps}</span>` : ''}</div>
       <div class="muted center">${esc(sub)}</div>
+      ${hint ? `<div class="lu-hint">${esc(hint)}</div>` : ''}
       <div class="cards">${html}</div>
       ${this.buildHtml(build)}
       ${rerolls > 0 ? `<button class="btn small reroll" data-act="reroll">RE-ROLL (${rerolls})</button>` : ''}
