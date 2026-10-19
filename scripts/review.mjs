@@ -9,6 +9,7 @@
 import { execSync } from 'node:child_process';
 import { appendFileSync, existsSync, readFileSync } from 'node:fs';
 import { createInterface } from 'node:readline/promises';
+import { clearLocalChanges } from './localchanges.mjs';
 
 const sh = (cmd, opts = {}) => execSync(cmd, { encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'], ...opts }).trim();
 const run = (cmd) => execSync(cmd, { stdio: 'inherit' });
@@ -56,12 +57,7 @@ function buildAndLaunch(test) {
 }
 
 // ---------------------------------------------------------------------------
-// Only changes to tracked files can block switching versions; new untracked files (e.g. Xcode caches) cannot.
-const dirty = sh('git status --porcelain --untracked-files=no');
-if (dirty) {
-  bye(`Te pliki projektu mają niezapisane zmiany:\n${dirty.split('\n').map((l) => '  ' + l.trim().replace(/^\S+\s+/, '')).join('\n')}\n` +
-    'Odłóż je komendą „git stash” (można je przywrócić: „git stash pop”) i uruchom ponownie.', 1);
-}
+await clearLocalChanges(ask, bye);
 const startBranch = sh('git branch --show-current');
 const startSha = sh('git rev-parse HEAD');
 console.log('Sprawdzam nowe wersje na GitHubie…');

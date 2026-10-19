@@ -8,6 +8,7 @@
 // Set VB_NO_SIM=1 to skip building and opening Xcode (for testing on a machine without Xcode).
 import { execSync } from 'node:child_process';
 import { createInterface } from 'node:readline/promises';
+import { clearLocalChanges } from './localchanges.mjs';
 
 const sh = (cmd) => execSync(cmd, { encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'] }).trim();
 const run = (cmd) => execSync(cmd, { stdio: 'inherit' });
@@ -35,12 +36,7 @@ const semver = (v) => v.split('.').map(Number);
 const cmpVer = (a, b) => { const x = semver(a), y = semver(b); for (let i = 0; i < 3; i++) if (x[i] !== y[i]) return x[i] - y[i]; return 0; };
 
 // ---------------------------------------------------------------------------
-// Only changes to tracked files can block switching versions; new untracked files (e.g. Xcode caches) cannot.
-const dirty = sh('git status --porcelain --untracked-files=no');
-if (dirty) {
-  bye(`Te pliki projektu mają niezapisane zmiany:\n${dirty.split('\n').map((l) => '  ' + l.trim().replace(/^\S+\s+/, '')).join('\n')}\n` +
-    'Odłóż je komendą „git stash” (można je przywrócić: „git stash pop”) i uruchom ponownie.', 1);
-}
+await clearLocalChanges(ask, bye);
 console.log('Pobieram stan z GitHuba…');
 run('git fetch -q --prune --tags origin');
 if (!versionAt('origin/main')) bye('W main nie ma jeszcze zaakceptowanej wersji gry. Najpierw: npm run review', 1);
