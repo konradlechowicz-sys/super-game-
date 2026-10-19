@@ -53,8 +53,10 @@ Bundle ID: `com.konradlechowicz.voidblaster` (change it in `capacitor.config.jso
 - **Full Game** in-app purchase (`com.konradlechowicz.voidblaster.fullgame`, non-consumable): worlds 2–4, Phantom and
   Titan, every upgrade level, 1,000 coins and the Gold Striker skin. Logic in `js/store.js`; StoreKit 2 bridge in
   `ios/App/App/StorePlugin.swift`, registered by `GameViewController.swift`.
-- Test without real money: in Xcode, *Product → Scheme → Edit Scheme → Run → Options → StoreKit Configuration* =
-  `VoidBlaster.storekit`, then run from Xcode. In the browser, `?dev` simulates the purchase and `?dev&full` starts unlocked.
+- Test without real money: run the game from Xcode (▶). The shared scheme
+  (`ios/App/App.xcodeproj/xcshareddata/xcschemes/App.xcscheme`) already selects the local StoreKit configuration
+  `VoidBlaster.storekit`, so the purchase works in the simulator for free. It only works when launched from Xcode, not
+  via `npm run play` / `review`, which install the app without the scheme. In the browser, `?dev` simulates the purchase and `?dev&full` starts unlocked.
 
 ## Three lines: R&D, TEST, RELEASE
 - **R&D** — `claude/...` branches: proposals from cloud sessions; `main`: builds accepted with `npm run review`.
