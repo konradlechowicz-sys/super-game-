@@ -40,6 +40,8 @@ npm run ios:release  # same, with the release label (use for App Store uploads)
 npm run open       # open Xcode
 ```
 In Xcode: select the **App** target → *Signing & Capabilities* → pick your Team, then Run on a device or simulator.
+**Xcode's own changes.** Xcode rewrites files under `ios/` by itself (e.g. the signing team). `review` and `release`
+offer to discard such changes (a backup patch goes to `.git/vb-xcode-changes-*.patch`); changes elsewhere still stop them.
 **Reviewing new versions.** Changes made in the cloud arrive on `claude/...` branches and never go straight into `main`.
 On the Mac, `npm run review` lists them, launches the chosen one in the simulator and asks to accept (merge into
 `main` and push), reject or decide later. `main` therefore always holds the versions Konrad accepted.
