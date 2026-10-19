@@ -9,6 +9,7 @@ Free trial + one non-consumable in-app purchase "Full Game" (USD 3.99, `com.konr
 Free: world 1 with its boss, the Striker, upgrades up to level 3. Full: worlds 2-4, Phantom + Titan, all upgrade
 levels, 1,000 coins, Gold Striker skin. No ads, no subscriptions, no pay-to-win coin sales. Logic: `js/store.js`;
 StoreKit 2: `ios/App/App/StorePlugin.swift`.
+Apple Developer Program team: Konrad Lechowicz, Team ID `6V97J7SV57` (set as DEVELOPMENT_TEAM in the Xcode project).
 `ios/App/App/VoidBlaster.storekit` (format 6.3) and the shared scheme `App.xcscheme` were saved by Konrad's Xcode and
 tested (purchase works in the simulator from Xcode); never hand-write them in an older format. The public web version is trial-only; the preview artifact may simulate it.
 
