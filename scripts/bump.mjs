@@ -3,6 +3,7 @@
 // Usage: npm run bump                 -> build + 1, date = today
 //        npm run bump -- 1.1.0        -> also set the public version
 //        node scripts/bump.mjs 1.1.0 --build 42   -> exact build number (used by scripts/release.mjs)
+import { execSync } from 'node:child_process';
 import { readFileSync, writeFileSync } from 'node:fs';
 
 const file = 'js/version.js';
@@ -15,7 +16,24 @@ const bi = args.indexOf('--build');
 const forcedBuild = bi >= 0 ? +args.splice(bi, 2)[1] : null;
 const newVersion = args[0] || m[1];
 if (!/^\d+\.\d+\.\d+$/.test(newVersion)) throw new Error(`Version must look like 1.2.3, got "${newVersion}"`);
-const build = forcedBuild ?? +m[2] + 1;
+// Build numbers are never reused: also count builds on other branches (e.g. test/... builds that never reach main).
+function highestBuildOnBranches() {
+  try {
+    const refs = execSync("git for-each-ref --format='%(refname)' refs/remotes/origin/ refs/heads/", { encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] })
+      .split('\n').filter((r) => r && !r.endsWith('/HEAD'));
+    let max = 0;
+    for (const ref of refs) {
+      try {
+        const b = execSync(`git show ${ref}:js/version.js`, { encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] }).match(/build: (\d+)/);
+        if (b) max = Math.max(max, +b[1]);
+      } catch { /* branch without the game */ }
+    }
+    return max;
+  } catch {
+    return 0;
+  }
+}
+const build = forcedBuild ?? Math.max(+m[2], highestBuildOnBranches()) + 1;
 if (!Number.isInteger(build) || build < 1) throw new Error(`Invalid build number: ${build}`);
 const date = new Intl.DateTimeFormat('en-CA', { timeZone: 'Europe/Warsaw' }).format(new Date());
 

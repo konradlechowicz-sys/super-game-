@@ -152,7 +152,6 @@ export class UI {
         </div>
         <button class="btn daily-btn ${d.claimable ? 'glow' : ''}" data-act="daily">DAILY REWARD ${d.claimable ? '<span class="badge">!</span>' : ''}</button>
         ${this.app.store.isFull() ? '' : '<button class="btn full-btn" data-act="full">UNLOCK FULL GAME</button>'}
-        ${this.app.bossTest ? '<button class="btn full-btn" data-act="bosstest">BOSS TEST</button>' : ''}
       </div>
       <div class="foot">${this.save.settings.control === 'drag' ? 'Drag anywhere to fly' : 'Steer with the joystick at the bottom'} · Weapons fire automatically</div>
     `, {
@@ -162,29 +161,8 @@ export class UI {
       daily: () => this.daily(),
       settings: () => this.settings(),
       full: () => this.paywall(),
-      bosstest: () => this.bossTest(),
     }, 'menu');
     this.coach('menu');
-  }
-
-  // Boss test build only: start any boss sector of worlds 2-4, from the beginning or right before the boss.
-  bossTest() {
-    const rows = ['2-6', '3-6', '4-6'].map((id) => {
-      const st = ALL_STAGES.find((s) => s.id === id);
-      return `<div class="bt-row" style="--wc:${st.world.color}"><div><b style="color:${st.world.color}">${esc(titleCase(BOSSES[st.boss].name))}</b><br><small class="muted">${esc(st.world.name)} · ${id}</small></div>
-        <button class="btn small" data-act="go" data-id="${id}">FULL SECTOR</button>
-        <button class="btn small primary" data-act="go" data-id="${id}" data-skip="1">BOSS NOW</button></div>`;
-    }).join('');
-    this.modal(`
-      <h2>BOSS TEST</h2>
-      <p class="muted center">FULL SECTOR: play from the start (about 2.5 min until the boss).<br>BOSS NOW: start 8 s before the boss with 12 level-ups to pick.</p>
-      ${rows}
-      <p class="tiny muted center">Test build: full game unlocked, 4,000 coins for permanent Upgrades.</p>
-      <div class="modal-actions"><button class="btn" data-act="close">BACK</button></div>
-    `, {
-      close: () => this.closeModal(),
-      go: (ds) => { this.closeModal(); this.app.startStage(ds.id, { skipToBoss: !!ds.skip }); },
-    });
   }
 
   // Tutorial hint on a menu screen: a small bubble pointing at the element it explains.

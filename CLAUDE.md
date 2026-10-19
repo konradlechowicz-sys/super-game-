@@ -16,10 +16,12 @@ StoreKit 2: `ios/App/App/StorePlugin.swift`. The public web version is trial-onl
 | `claude/...` | proposals from cloud sessions (dev builds) | Claude |
 | `main` | builds Konrad tested and accepted (`npm run review`) | Konrad |
 | `release` + tags `vX.Y.Z` | exactly what was sent to the App Store (`npm run release`) | Konrad |
+| `test/...` | test-only builds (e.g. `test/build-14-boss-test`: BOSS TEST menu for worlds 2-4); never merged, not in `npm run review` | Claude |
 Claude never pushes to `main` or `release` and never creates `v*` tags.
 
 ## Versioning
 - `js/version.js` is the single source of truth; never edit it by hand.
+- Build numbers are never reused; `npm run bump` also counts builds on `test/...` and other branches.
 - **Every change gets a new build:** run `npm run bump` before committing. It increments the build number, sets the
   date (Europe/Warsaw) and syncs `package.json`, `sw.js` and the Xcode project (Build / Version).
 - Test builds show `YYYY-MM-DD · build N` on the start screen; release builds (`npm run ios:release`) show `vX.Y.Z`.
