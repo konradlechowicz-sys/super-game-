@@ -9,7 +9,10 @@ import { clamp, todayStr } from './util.js';
 import { createStore, shipLook } from './store.js';
 
 const params = new URLSearchParams(location.search);
-const DEV = params.has('dev');
+// Boss test build (npm run build:web -- --bosses): full game, every sector open and a BOSS TEST menu.
+/* global __BOSS_TEST__ */
+const BOSS_TEST = typeof __BOSS_TEST__ !== 'undefined' && __BOSS_TEST__;
+const DEV = params.has('dev') || BOSS_TEST;
 const TIME_SCALE = DEV ? Math.max(1, +params.get('ts') || 1) : 1;
 
 const canvas = document.getElementById('game');
@@ -33,6 +36,7 @@ const app = {
   audio: new AudioEngine(),
   game: null,
   god: DEV && params.has('god'),
+  bossTest: BOSS_TEST,
   // Set by js/native-entry.js inside the iOS app (Capacitor plugins); null in the browser.
   native: window.__native || null,
   persist() {
@@ -182,7 +186,7 @@ app.resetProgress = () => {
   app.applySettings();
 };
 
-app.startStage = (id) => {
+app.startStage = (id, opts = {}) => {
   if (app.needsFullGame(id)) { app.ui.paywall(); return; }
   const st = ALL_STAGES.find((s) => s.id === id);
   const stage = DEV && params.get('fast') ? { ...st, duration: st.duration / 6, bossAt: st.bossAt && st.bossAt / 6, events: st.events.map((e) => ({ ...e, t: e.t / 6 })) } : st;
@@ -190,6 +194,7 @@ app.startStage = (id) => {
   input.resetDrag();
   app.ui.showHud();
   app.game = new Game(app, stage);
+  if (opts.skipToBoss) app.game.skipToBoss(opts.levels);
   app.audio.setTrack(st.world.music || 'game');
 };
 
@@ -317,6 +322,7 @@ const PREVIEW = typeof __PREVIEW__ !== 'undefined' && __PREVIEW__;
 app.store = createStore(app, DEV || PREVIEW);
 // ?dev&full: start with the full game (simulated purchase) for testing worlds 2-4.
 if (DEV && params.has('full')) app.store.grant();
+if (BOSS_TEST && !app.save.fullGame) { app.store.grant(); app.save.coins = 4000; app.save.tipsOff = true; app.persist(); }
 // Refresh whatever screen is open when the purchase state changes from outside (refund, Ask to Buy approval).
 app.onFullGameChanged = () => { if (!app.game) app.ui.menu(); };
 app.store.init().then(() => { if (!app.game && document.querySelector('.screen.menu')) app.ui.menu(); });

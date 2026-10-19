@@ -320,6 +320,9 @@ h1, h2, h3 { font-family: 'Orbitron', sans-serif; margin: 0; letter-spacing: 0.0
 .toast.show { animation: toast 2.2s ease; }
 @keyframes toast { 0% { opacity: 0; transform: translate(-50%, -10px); } 12%, 80% { opacity: 1; transform: translate(-50%, 0); } 100% { opacity: 0; } }
 
+.bt-row { display: grid; grid-template-columns: 1fr auto auto; gap: 8px; align-items: center; padding: 10px 0; border-top: 1px solid var(--line); }
+.bt-row b { font-family: 'Orbitron', sans-serif; font-size: 13px; letter-spacing: 0.06em; }
+
 /* ---------- tutorial ---------- */
 .tip-box { position: absolute; left: 50%; bottom: calc(42% + 10px); transform: translateX(-50%); width: min(calc(100% - 32px), 360px);
   display: flex; align-items: center; gap: 10px; padding: 10px 10px 10px 14px; border-radius: 14px;

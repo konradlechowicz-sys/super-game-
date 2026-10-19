@@ -48,6 +48,15 @@ export class Game {
     this.ui.banner(`STAGE ${stage.id}`, stage.name.toUpperCase());
   }
 
+  // Boss test build: jump to just before the boss with a typical number of level-ups to spend.
+  skipToBoss(levels = 12) {
+    const st = this.stage;
+    const t = Math.max(0, st.bossAt - 8);
+    st.events.forEach((e, i) => { if (e.t < t) this.eventsDone.add(i); });
+    this.time = t;
+    for (let i = 0; i < levels; i++) this.gainXp((this.xpNext - this.xp) / this.player.xpMult);
+  }
+
   viewSize() {
     return { vw: this.app.W / this.app.zoom, vh: this.app.H / this.app.zoom };
   }
