@@ -320,6 +320,20 @@ h1, h2, h3 { font-family: 'Orbitron', sans-serif; margin: 0; letter-spacing: 0.0
 .toast.show { animation: toast 2.2s ease; }
 @keyframes toast { 0% { opacity: 0; transform: translate(-50%, -10px); } 12%, 80% { opacity: 1; transform: translate(-50%, 0); } 100% { opacity: 0; } }
 
+/* ---------- TEST variant (js/testkit.js) ---------- */
+.test-build .version-tag { color: var(--red); font-weight: 700; }
+.test-build .hud-row { grid-template-columns: 1fr auto 1fr 44px 44px; }
+.test-btn { border-color: var(--red) !important; font-size: 18px; }
+.fps { position: fixed; left: calc(var(--sl) + 8px); bottom: calc(var(--sb) + 6px); z-index: 50; pointer-events: none; font: 600 12px 'Rajdhani', sans-serif;
+  color: var(--green); background: rgba(5, 1, 15, 0.7); padding: 2px 6px; border-radius: 6px; }
+.modal.testkit { border-color: var(--red); }
+.tk-kicker { color: var(--red); }
+.tk-head { margin: 12px 0 6px; font-family: 'Orbitron', sans-serif; font-size: 11px; letter-spacing: 0.12em; color: var(--muted); }
+.tk-row { display: flex; flex-wrap: wrap; gap: 6px; }
+.tk-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-top: 6px; }
+.tk-boss { display: flex; flex-direction: column; gap: 2px; border-color: var(--wc) !important; color: var(--wc) !important; }
+.tk-boss small { font-family: 'Rajdhani', sans-serif; color: var(--muted); }
+
 /* ---------- tutorial ---------- */
 .tip-box { position: absolute; left: 50%; bottom: calc(42% + 10px); transform: translateX(-50%); width: min(calc(100% - 32px), 360px);
   display: flex; align-items: center; gap: 10px; padding: 10px 10px 10px 14px; border-radius: 14px;

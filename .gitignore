@@ -1,4 +1,6 @@
 node_modules/
+# Konrad's Apple Team ID for `npm run phone:test` (asked once, stays on the Mac)
+.vb-team
 www/
 dist/
 .DS_Store

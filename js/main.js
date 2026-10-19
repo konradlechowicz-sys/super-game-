@@ -7,10 +7,10 @@ import { setSpriteScale, shipSprite, glowDot } from './sprites.js';
 import { ALL_STAGES, DAILY, SHIPS, WORLDS, stageIndex } from './data.js';
 import { clamp, todayStr } from './util.js';
 import { createStore, shipLook } from './store.js';
+import { installTestKit } from './testkit.js';
 
 const params = new URLSearchParams(location.search);
 const DEV = params.has('dev');
-const TIME_SCALE = DEV ? Math.max(1, +params.get('ts') || 1) : 1;
 
 const canvas = document.getElementById('game');
 const ctx = canvas.getContext('2d', { alpha: false });
@@ -33,6 +33,7 @@ const app = {
   audio: new AudioEngine(),
   game: null,
   god: DEV && params.has('god'),
+  timeScale: DEV ? Math.max(1, +params.get('ts') || 1) : 1,
   // Set by js/native-entry.js inside the iOS app (Capacitor plugins); null in the browser.
   native: window.__native || null,
   persist() {
@@ -142,7 +143,7 @@ app.needsFullGame = (id) => ALL_STAGES.find((s) => s.id === id)?.world.id > 1 &&
 
 app.isUnlocked = (id) => {
   if (app.needsFullGame(id)) return false;
-  if (DEV) return true;
+  if (DEV || app.testUnlockAll) return true;
   const i = stageIndex(id);
   if (i <= 0) return true;
   return !!app.save.cleared[ALL_STAGES[i - 1].id];
@@ -215,8 +216,9 @@ function frame(now) {
   const dt = Math.min(0.05, (now - last) / 1000);
   last = now;
   app.time += dt;
+  app.onFrame?.(dt);
   if (app.game) {
-    for (let i = 0; i < TIME_SCALE && app.game; i++) app.game.update(dt);
+    for (let i = 0; i < app.timeScale && app.game; i++) app.game.update(dt);
     if (app.game) { app.game.render(ctx); drawJoystick(); }
   } else {
     renderMenu(dt);
@@ -312,7 +314,7 @@ app.haptic = (kind) => {
 
 // ---------------- boot ----------------
 // The private preview build (scripts/build-web.mjs) also allows a simulated purchase; the public web version does not.
-/* global __PREVIEW__ */
+/* global __PREVIEW__, __TEST__ */
 const PREVIEW = typeof __PREVIEW__ !== 'undefined' && __PREVIEW__;
 app.store = createStore(app, DEV || PREVIEW);
 // ?dev&full: start with the full game (simulated purchase) for testing worlds 2-4.
@@ -320,6 +322,9 @@ if (DEV && params.has('full')) app.store.grant();
 // Refresh whatever screen is open when the purchase state changes from outside (refund, Ask to Buy approval).
 app.onFullGameChanged = () => { if (!app.game) app.ui.menu(); };
 app.store.init().then(() => { if (!app.game && document.querySelector('.screen.menu')) app.ui.menu(); });
+// TEST variant only. __TEST__ is replaced by the build (true/false), so normal and App Store builds drop this call and
+// js/testkit.js entirely; on the unbundled dev page index.html sets it from ?test.
+if (__TEST__) installTestKit(app);
 app.applySettings();
 if (DEV && params.get('coins')) app.save.coins = +params.get('coins');
 app.audio.setTrack('menu');

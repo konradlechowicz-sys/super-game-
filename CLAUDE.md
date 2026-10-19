@@ -10,14 +10,23 @@ Free: world 1 with its boss, the Striker, upgrades up to level 3. Full: worlds 2
 levels, 1,000 coins, Gold Striker skin. No ads, no subscriptions, no pay-to-win coin sales. Logic: `js/store.js`;
 StoreKit 2: `ios/App/App/StorePlugin.swift`. The public web version is trial-only; the preview artifact may simulate it.
 
-## Branches and releases
-| Branch / tag | Holds | Written by |
-|---|---|---|
-| `claude/...` | proposals from cloud sessions (dev builds) | Claude |
-| `main` | builds Konrad tested and accepted (`npm run review`) | Konrad |
-| `release` + tags `vX.Y.Z` | exactly what was sent to the App Store (`npm run release`) | Konrad |
-| `test/...` | test-only builds (e.g. `test/build-14-boss-test`: BOSS TEST menu for worlds 2-4); never merged, not in `npm run review` | Claude |
+## Three lines: R&D, TEST, RELEASE (decided by Konrad)
+| Line | Where | Holds | Decides |
+|---|---|---|---|
+| **R&D** | `claude/...` → `main` | ideas, fixes; tested in browser, simulator, phone; accepted with `npm run review` | Konrad accepts |
+| **TEST** | same code as R&D, built as the TEST variant | the game plus the tester's panel 🛠 (`js/testkit.js`) | Claude builds, Konrad tests |
+| **RELEASE** | `release` + tags `vX.Y.Z` | exactly what was sent to the App Store (`npm run release`), no test tools | Konrad only |
 Claude never pushes to `main` or `release` and never creates `v*` tags.
+
+TEST is a build variant, not a branch, so it always contains the newest game:
+- Test tools (god mode, unlock all, boss now, coins, stars, speed, level up, spawn elite, skip, win, FPS) belong in
+  `js/testkit.js`, never in game code paths. Hooks into the game use `__TEST__` (replaced by the build with
+  true/false) or generic fields (`app.god`, `app.testUnlockAll`, `app.timeScale`, `app.onFrame`).
+- Normal and App Store builds drop the testkit entirely; `build.mjs --release` and `build-web.mjs` fail if the marker
+  `VB-TESTKIT` is found. Keep testkit.js free of top-level code so tree-shaking can remove it.
+- The TEST variant shows `TEST · build N` in red; on iOS it is a separate app "VB Test"
+  (`com.konradlechowicz.voidblaster.test`) with its own save.
+- Old `test/...` branches (e.g. `test/build-14-boss-test`) are archives only; do not create new ones.
 
 ## Versioning
 - `js/version.js` is the single source of truth; never edit it by hand.
@@ -34,17 +43,21 @@ Claude never pushes to `main` or `release` and never creates `v*` tags.
 ## Shipping a change (do all three after every gameplay change)
 Konrad decides what becomes the real game: **never push to `main`**. `main` holds only versions he accepted.
 1. **Repo:** commit and push to a `claude/...` branch (this session's working branch). Do not merge into `main`.
-2. **Shareable preview:** `npm run build:web` produces `dist/void-blaster.html` (whole game in one file);
-   republish it to the existing artifact https://claude.ai/artifact/LvvWrttnsoUNQZYBt7HgDo (keep the URL).
-   This preview always shows the newest candidate.
+2. **Shareable previews:** `npm run build:web` produces `dist/void-blaster.html` and `dist/void-blaster-test.html`
+   (whole game in one file each). Republish them to the existing artifacts (keep the URLs):
+   normal https://claude.ai/artifact/LvvWrttnsoUNQZYBt7HgDo, TEST https://claude.ai/artifact/T9TmADoewKYcxJgXLp4YCk.
+   Both always show the newest candidate.
 3. **Tell Konrad the build number and to run `npm run review` on his Mac.** The script lists every `claude/...`
    branch with commits not in `main`, builds the chosen one, launches it in the iOS Simulator and asks:
    accept (merged into `main` and pushed), reject (hidden until the branch gets new commits) or later.
-   `npm run play` launches the accepted version (`main`) in the simulator.
+   It also asks whether to launch the normal or the TEST variant.
+   `npm run play` launches the accepted version (`main`) in the simulator; `npm run play:test` its TEST variant,
+   `npm run phone:test` the TEST variant on the connected iPhone (asks for the Team ID once, saved in `.vb-team`).
 - GitHub Pages should serve `main`, so `https://konradlechowicz-sys.github.io/super-game-/` is the accepted version.
 - If a branch's commits are already in `main`, start new work from the latest `main`.
 
 ## Checks before pushing
 - `node --check js/*.js`, then load the game with Playwright (`index.html?dev&god`) and confirm no page errors.
-- Dev URL flags: `?dev` unlocks all sectors of the purchased content, `&full` grants the full game (simulated purchase),
+- Also load `dist/void-blaster-test.html` and open the 🛠 panel; confirm the normal page has no 🛠 button.
+- Dev URL flags: `?test` turns on the TEST variant on the unbundled page, `?dev` unlocks all sectors of the purchased content, `&full` grants the full game (simulated purchase),
   `&fast=1`, `&ts=4`, `&god`, `&coins=1000`. Without `&full`, worlds 2-4 show the paywall.
