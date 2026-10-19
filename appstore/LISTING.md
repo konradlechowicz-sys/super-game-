@@ -17,13 +17,13 @@ Everything to paste into App Store Connect. Character limits are Apple's; all te
 | Bundle ID | com.konradlechowicz.voidblaster |
 | Primary category | Games → Action |
 | Secondary category | Games → Arcade |
-| Price | Free (no in-app purchases) |
+| Price | Free, with one in-app purchase (Full Game) |
 | Seller / developer name | Konrad Lechowicz |
 
 If the name is already taken on the App Store, alternatives: *Void Blaster: Neon Swarm*, *Void Blaster Survivor*.
 
 ## Promotional text (170)
-Dodge the swarm, level up, evolve your weapons and take down four neon bosses across 24 sectors. One thumb, endless action.
+Free to try: play the whole first world and its boss. Unlock the full game once for 3 more worlds, 3 bosses and 2 ships. No ads, ever.
 
 ## Keywords (100, comma-separated, no spaces)
 shooter,space,survivor,roguelite,arcade,neon,bullet hell,galaxy,shmup,asteroid,boss,offline
@@ -47,6 +47,9 @@ BUILD YOUR ARSENAL
 EPIC BOSS FIGHTS
 Face the Hive Mother, the Crystal Serpent, the Forge Titan and the three-phase Void Heart, each with its own attack patterns.
 
+FREE TO TRY
+Play the entire Neon Nebula world and defeat the Hive Mother for free. One purchase unlocks the full game: three more worlds, 18 sectors, three bosses, the Phantom and Titan ships, every upgrade level, plus 1,000 coins and the Gold Striker skin. No ads, no subscriptions, no energy timers.
+
 PROGRESS THAT STICKS
 • Earn up to 3 stars in every sector
 • Spend coins on permanent ship upgrades
@@ -64,17 +67,36 @@ First release: 4 worlds, 24 sectors, 4 bosses, 3 ships and 8 weapons.
 
 ## App Privacy (questionnaire)
 Answer **"No, we do not collect data from this app"** → result: **Data Not Collected**.
-Progress is stored only on the device; there are no analytics, ads or third-party SDKs.
+Progress is stored only on the device; there are no analytics, ads or third-party SDKs. The purchase is handled
+entirely by Apple (StoreKit); the game never sees payment details.
 
 ## Age rating (questionnaire)
 - Cartoon or Fantasy Violence: the player shoots abstract neon shapes that burst into particles. No blood, no people.
   Answer this honestly in the questionnaire; Apple shows the resulting rating before you save.
 - Everything else (realistic violence, gambling, horror, user-generated content, web access, etc.): None / No.
-- In-app purchases: No. Unrestricted web access: No.
+- In-app purchases: Yes (one non-consumable). Unrestricted web access: No.
 
 ## App Review notes
-No login or account is needed. The first sector unlocks immediately; later worlds unlock after beating each world's boss.
-The game works fully offline.
+No login or account is needed. The first sector unlocks immediately; later sectors unlock one by one.
+World 1 (6 sectors and the Hive Mother boss) is free. The "Full Game" in-app purchase unlocks worlds 2–4; it can be
+bought from the main menu (UNLOCK FULL GAME), from the locked worlds on the sector map, after defeating the Hive Mother,
+or restored in Settings → Restore purchases. The game works fully offline.
+
+## In-app purchase (App Store Connect → Monetization → In-App Purchases)
+| Field | Value |
+|---|---|
+| Type | Non-Consumable |
+| Reference name | Full Game |
+| Product ID | `com.konradlechowicz.voidblaster.fullgame` (must match `js/store.js`) |
+| Price | USD 3.99 (Apple converts it per country, e.g. about PLN 19.99) |
+| Family Sharing | On |
+| Display name (30) | Void Blaster Full Game |
+| Description (45) | 3 more worlds, 2 ships and every upgrade |
+| Review screenshot | `appstore/iap-review.jpg` |
+| Review notes | Opens from UNLOCK FULL GAME in the main menu. |
+
+Also: App Store Connect → Business → sign the **Paid Apps Agreement** and add bank and tax details (required before
+any purchase can be sold), and apply for the **App Store Small Business Program** (Apple's commission 15% instead of 30%).
 
 ## Screenshots
 `appstore/screenshots/` holds 7 captioned images at **1290 × 2796 px** (iPhone 6.9" display), in upload order:

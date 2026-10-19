@@ -4,6 +4,12 @@
   Talk to Konrad in Polish; the game itself is in English.
 - Neon space survivor for iPhone. Vanilla JS + Canvas, no framework. Code map is in README.md.
 
+## Monetization (decided by Konrad)
+Free trial + one non-consumable in-app purchase "Full Game" (USD 3.99, `com.konradlechowicz.voidblaster.fullgame`).
+Free: world 1 with its boss, the Striker, upgrades up to level 3. Full: worlds 2-4, Phantom + Titan, all upgrade
+levels, 1,000 coins, Gold Striker skin. No ads, no subscriptions, no pay-to-win coin sales. Logic: `js/store.js`;
+StoreKit 2: `ios/App/App/StorePlugin.swift`. The public web version is trial-only; the preview artifact may simulate it.
+
 ## Branches and releases
 | Branch / tag | Holds | Written by |
 |---|---|---|
@@ -38,4 +44,5 @@ Konrad decides what becomes the real game: **never push to `main`**. `main` hold
 
 ## Checks before pushing
 - `node --check js/*.js`, then load the game with Playwright (`index.html?dev&god`) and confirm no page errors.
-- Dev URL flags: `?dev` unlocks all sectors, `&fast=1`, `&ts=4`, `&god`, `&coins=1000`.
+- Dev URL flags: `?dev` unlocks all sectors of the purchased content, `&full` grants the full game (simulated purchase),
+  `&fast=1`, `&ts=4`, `&god`, `&coins=1000`. Without `&full`, worlds 2-4 show the paywall.

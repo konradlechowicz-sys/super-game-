@@ -6,6 +6,7 @@ import { loadSave, writeSave, resetSave, hasLocalSave, importSave, SAVE_KEY } fr
 import { setSpriteScale, shipSprite, glowDot } from './sprites.js';
 import { ALL_STAGES, DAILY, SHIPS, WORLDS, stageIndex } from './data.js';
 import { clamp, todayStr } from './util.js';
+import { createStore, shipLook } from './store.js';
 
 const params = new URLSearchParams(location.search);
 const DEV = params.has('dev');
@@ -136,7 +137,11 @@ window.addEventListener('resize', resize);
 resize();
 
 // ---------------- progression helpers ----------------
+// Worlds 2-4 are part of the full game.
+app.needsFullGame = (id) => ALL_STAGES.find((s) => s.id === id)?.world.id > 1 && !app.store.isFull();
+
 app.isUnlocked = (id) => {
+  if (app.needsFullGame(id)) return false;
   if (DEV) return true;
   const i = stageIndex(id);
   if (i <= 0) return true;
@@ -178,6 +183,7 @@ app.resetProgress = () => {
 };
 
 app.startStage = (id) => {
+  if (app.needsFullGame(id)) { app.ui.paywall(); return; }
   const st = ALL_STAGES.find((s) => s.id === id);
   const stage = DEV && params.get('fast') ? { ...st, duration: st.duration / 6, bossAt: st.bossAt && st.bossAt / 6, events: st.events.map((e) => ({ ...e, t: e.t / 6 })) } : st;
   app.bg.setTheme(st.world.theme);
@@ -189,6 +195,8 @@ app.startStage = (id) => {
 
 app.endRun = () => {
   app.game = null;
+  app.ui.bannerEl.innerHTML = '';
+  app.ui.tip(null);
   app.audio.setTrack('menu');
   app.bg.setTheme(WORLDS[0].theme);
 };
@@ -220,10 +228,21 @@ function drawJoystick() {
   const mode = control();
   const st = app.game.state;
   if (mode === 'drag' || (st !== 'play' && st !== 'winning')) return;
-  if (mode === 'float' && !input.joy) return;
   const { dpr } = app;
   const h = input.joy ? { x: input.bx, y: input.by } : app.joyHome();
   ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  // tutorial: pulsing gold ring around the joystick until the player moves
+  if (app.game.tut.joyTarget() && !input.joy) {
+    const p = 0.5 + 0.5 * Math.sin(app.time * 6);
+    ctx.globalAlpha = 0.5 + p * 0.5;
+    ctx.strokeStyle = '#ffd23d';
+    ctx.lineWidth = 3;
+    ctx.shadowColor = '#ffd23d';
+    ctx.shadowBlur = 14;
+    ctx.beginPath(); ctx.arc(h.x, h.y, JOY_R + 22 + p * 8, 0, Math.PI * 2); ctx.stroke();
+    ctx.shadowBlur = 0;
+  }
+  if (mode === 'float' && !input.joy) { ctx.globalAlpha = 1; return; }
   ctx.globalAlpha = input.joy ? 0.9 : 0.45;
   ctx.fillStyle = 'rgba(20, 8, 50, 0.45)';
   ctx.beginPath(); ctx.arc(h.x, h.y, JOY_R + 14, 0, Math.PI * 2); ctx.fill();
@@ -262,7 +281,7 @@ function renderMenu(dt) {
   const onMenu = !!document.querySelector('.screen.menu');
   if (!onMenu) return;
   const { W, H, dpr } = app;
-  const ship = SHIPS[app.save.ship] || SHIPS.striker;
+  const ship = shipLook(SHIPS[app.save.ship] || SHIPS.striker, app.save);
   const x = W / 2, y = H * 0.47 + Math.sin(app.time * 1.6) * 8;
   const sc = 2.6;
   ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
@@ -292,6 +311,15 @@ app.haptic = (kind) => {
 };
 
 // ---------------- boot ----------------
+// The private preview build (scripts/build-web.mjs) also allows a simulated purchase; the public web version does not.
+/* global __PREVIEW__ */
+const PREVIEW = typeof __PREVIEW__ !== 'undefined' && __PREVIEW__;
+app.store = createStore(app, DEV || PREVIEW);
+// ?dev&full: start with the full game (simulated purchase) for testing worlds 2-4.
+if (DEV && params.has('full')) app.store.grant();
+// Refresh whatever screen is open when the purchase state changes from outside (refund, Ask to Buy approval).
+app.onFullGameChanged = () => { if (!app.game) app.ui.menu(); };
+app.store.init().then(() => { if (!app.game && document.querySelector('.screen.menu')) app.ui.menu(); });
 app.applySettings();
 if (DEV && params.get('coins')) app.save.coins = +params.get('coins');
 app.audio.setTrack('menu');

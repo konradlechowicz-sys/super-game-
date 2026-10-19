@@ -46,6 +46,14 @@ The app build (`scripts/build.mjs`) bundles `js/native-main.js`, which adds hapt
 (Capacitor Haptics / Preferences). Fonts are bundled in `fonts/` (SIL OFL), so the app needs no network.
 Bundle ID: `com.konradlechowicz.voidblaster` (change it in `capacitor.config.json` and in Xcode if needed).
 
+## Free trial and the full game
+- Free: world 1 with its boss, the Striker, shop upgrades up to level 3. The browser version is always the free trial.
+- **Full Game** in-app purchase (`com.konradlechowicz.voidblaster.fullgame`, non-consumable): worlds 2–4, Phantom and
+  Titan, every upgrade level, 1,000 coins and the Gold Striker skin. Logic in `js/store.js`; StoreKit 2 bridge in
+  `ios/App/App/StorePlugin.swift`, registered by `GameViewController.swift`.
+- Test without real money: in Xcode, *Product → Scheme → Edit Scheme → Run → Options → StoreKit Configuration* =
+  `VoidBlaster.storekit`, then run from Xcode. In the browser, `?dev` simulates the purchase and `?dev&full` starts unlocked.
+
 ## Branches and releases
 - `claude/...`: proposals from cloud sessions. They never go straight into `main`.
 - `main`: builds tested in the simulator and accepted with `npm run review`.
@@ -77,5 +85,6 @@ and `.../site/support.html`, and the web version of the game at `https://konradl
 - `js/weapons.js` — weapon stats, behaviours and evolutions
 - `js/data.js` — ships, enemies, sectors, shop, daily rewards
 - `js/ui.js` — menus, HUD, level-up cards, results
+- `js/tutorial.js` — first-run hints (in-game with slow motion, level-up cards, map and menu); SKIP turns them off, Settings → Tutorial → Replay brings them back
 - `js/sprites.js`, `js/icons.js`, `js/background.js` — pre-rendered neon graphics
 - `js/audio.js` — Web Audio synth engine and music sequencer

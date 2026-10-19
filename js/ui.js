@@ -4,6 +4,8 @@ import { icon } from './icons.js';
 import { fmtTime } from './util.js';
 import { shipSprite } from './sprites.js';
 import { versionLabel, versionFull } from './version.js';
+import { FREE_SHOP_CAP, UNLOCK_COINS, shipLook } from './store.js';
+import { menuTip, markTip, setTips } from './tutorial.js';
 
 const STAR = '<svg viewBox="0 0 24 24" class="star-svg"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6-4.9-4.6 6.6-.8z"/></svg>';
 const COIN = '<span class="coin-ico"></span>';
@@ -30,26 +32,55 @@ export class UI {
         </div>
       </div>
       <div class="layer banner-layer"></div>
+      <div class="layer tip-layer"></div>
       <div class="layer modal-layer"></div>
       <div class="toast"></div>`;
     this.screenEl = root.querySelector('.screen-layer');
     this.hudEl = root.querySelector('.hud');
     this.modalEl = root.querySelector('.modal-layer');
     this.bannerEl = root.querySelector('.banner-layer');
+    this.tipEl = root.querySelector('.tip-layer');
     this.toastEl = root.querySelector('.toast');
     this.h = {};
     this.mh = {};
     this.hudCache = {};
-    this.globalH = { pause: () => app.game?.pause() };
-    root.addEventListener('click', (e) => {
-      const t = e.target.closest('[data-act]');
-      if (!t || t.disabled || t.classList.contains('locked-tap')) return;
+    this.globalH = {
+      pause: () => app.game?.pause(),
+      skiptips: () => { setTips(app, false); this.tip(null); this.coachEl?.remove(); this.toast('Tutorial off · replay it in Settings'); },
+    };
+    // Buttons fire on finger lift. iOS drops the synthetic click when the finger moves even slightly during a tap,
+    // so a tap that ends on the same button within a small slop counts; bigger moves are scrolls, not taps.
+    const activate = (t) => {
+      if (!t || t.disabled || t.classList.contains('locked-tap') || !t.isConnected) return;
       app.audio.unlock();
       const fn = this.mh[t.dataset.act] || this.h[t.dataset.act] || this.globalH[t.dataset.act];
       if (fn) {
         if (t.dataset.act !== 'pick') app.audio.sfx('select');
         fn(t.dataset, t);
       }
+    };
+    let down = null;
+    root.addEventListener('pointerdown', (e) => {
+      // a menu tutorial bubble never blocks anything: the next tap anywhere dismisses it
+      if (this.coachEl) { this.coachEl.remove(); this.coachEl = null; }
+      const t = e.target.closest('[data-act]');
+      down = t ? { t, x: e.clientX, y: e.clientY, id: e.pointerId } : null;
+    });
+    root.addEventListener('pointerup', (e) => {
+      if (!down || e.pointerId !== down.id) return;
+      const { t, x, y } = down;
+      down = null;
+      if (Math.hypot(e.clientX - x, e.clientY - y) > 24) return;
+      if (e.target.closest('[data-act]') !== t && document.elementFromPoint(e.clientX, e.clientY)?.closest('[data-act]') !== t) return;
+      this.lastFired = { t, at: performance.now() };
+      activate(t);
+    });
+    root.addEventListener('pointercancel', () => { down = null; });
+    // Keyboard / accessibility clicks. After a tap was handled on pointerup the browser still sends a click to
+    // whatever is under the finger now, often a button of the screen that just opened, so ignore clicks briefly.
+    root.addEventListener('click', (e) => {
+      if (this.lastFired && performance.now() - this.lastFired.at < 700) return;
+      activate(e.target.closest('[data-act]'));
     });
   }
 
@@ -89,7 +120,7 @@ export class UI {
     el.querySelectorAll('canvas[data-ship]').forEach((c) => {
       const s = SHIPS[c.dataset.ship];
       const g = c.getContext('2d');
-      const spr = shipSprite(s.shape, s.color);
+      const spr = shipSprite(s.shape, c.dataset.color || s.color);
       g.clearRect(0, 0, c.width, c.height);
       g.translate(c.width / 2, c.height / 2);
       g.rotate(-Math.PI / 2);
@@ -120,6 +151,7 @@ export class UI {
           <button class="btn" data-act="shop">UPGRADES</button>
         </div>
         <button class="btn daily-btn ${d.claimable ? 'glow' : ''}" data-act="daily">DAILY REWARD ${d.claimable ? '<span class="badge">!</span>' : ''}</button>
+        ${this.app.store.isFull() ? '' : '<button class="btn full-btn" data-act="full">UNLOCK FULL GAME</button>'}
       </div>
       <div class="foot">${this.save.settings.control === 'drag' ? 'Drag anywhere to fly' : 'Steer with the joystick at the bottom'} · Weapons fire automatically</div>
     `, {
@@ -128,7 +160,46 @@ export class UI {
       shop: () => this.shop(),
       daily: () => this.daily(),
       settings: () => this.settings(),
+      full: () => this.paywall(),
     }, 'menu');
+    this.coach('menu');
+  }
+
+  // Tutorial hint on a menu screen: a small bubble pointing at the element it explains.
+  coach(screen) {
+    const t = menuTip(this.app, screen);
+    const anchor = t && this.screenEl.querySelector(t.anchor);
+    if (!anchor) return;
+    markTip(this.app, t.id);
+    anchor.classList.add('coach-target');
+    const b = (this.coachEl = document.createElement('div'));
+    b.className = 'coach';
+    b.innerHTML = `<b>${esc(t.title)}</b>${esc(t.text)}<i class="coach-tail"></i>`;
+    this.screenEl.firstElementChild.appendChild(b);
+    const r = anchor.getBoundingClientRect();
+    // centred on the target where it fits, kept 12px inside the screen
+    const w = b.offsetWidth, cx = r.left + r.width / 2;
+    const left = Math.max(12, Math.min(this.app.W - w - 12, cx - w / 2));
+    b.style.left = `${left}px`;
+    b.style.setProperty('--tail', `${cx - left}px`);
+    if (t.below || r.top + r.height / 2 < this.app.H / 2) { b.style.top = `${r.bottom + 10}px`; b.classList.add('below'); }
+    else b.style.bottom = `${this.app.H - r.top + 10}px`;
+  }
+
+  // In-game tutorial hint above the joystick. Called with title null to hide it (with a check mark when done).
+  tip(title, sub, nearJoy = false, success = false) {
+    const el = this.tipEl;
+    if (title == null) {
+      const box = el.firstElementChild;
+      if (!box) return;
+      if (success) {
+        box.classList.add('done');
+        setTimeout(() => box.remove(), 650);
+      } else box.remove();
+      return;
+    }
+    el.innerHTML = `<div class="tip-box ${nearJoy ? 'joy' : ''}"><div class="tip-text"><b>${esc(title)}</b><span>${esc(sub)}</span></div>
+      <button class="tip-skip" data-act="skiptips">SKIP</button><i class="tip-check">✓</i></div>`;
   }
 
   // ======================= MAP =======================
@@ -142,7 +213,11 @@ export class UI {
         <span class="wnum">${w.id}</span><span class="wname">${esc(w.name)}</span>
       </button>`).join('');
     let body;
-    if (!open(world)) {
+    if (world.id > 1 && !this.app.store.isFull()) {
+      body = `<div class="soon"><img src="${icon('lock', world.color)}" alt=""><h3>${esc(world.name)}</h3>
+        <p>Part of the full game: worlds 2–4, 18 sectors and 3 more bosses.</p>
+        <button class="btn full-btn" data-act="full">UNLOCK FULL GAME</button></div>`;
+    } else if (!open(world)) {
       const prev = WORLDS.find((w) => w.id === world.id - 1);
       const gate = titleCase(BOSSES[prev.stages[prev.stages.length - 1].boss].name);
       body = `<div class="soon"><img src="${icon('lock', world.color)}" alt=""><h3>${esc(world.name)}</h3><p>Defeat the ${esc(gate)} in ${esc(prev.name)} to open this sector.</p></div>`;
@@ -168,9 +243,11 @@ export class UI {
       <div class="scroll">${body}</div>
     `, {
       back: () => this.menu(),
+      full: () => this.paywall(() => this.map()),
       world: (ds) => this.map(+ds.id),
       stage: (ds) => this.briefing(ds.id),
     }, 'map');
+    this.coach('map');
   }
 
   briefing(id) {
@@ -203,14 +280,22 @@ export class UI {
   hangar(back = () => this.menu()) {
     const save = this.save;
     const bars = (v, max) => `<div class="statbar"><i style="width:${Math.round((v / max) * 100)}%"></i></div>`;
-    const cards = Object.values(SHIPS).map((s) => {
+    const full = this.app.store.isFull();
+    const cards = Object.values(SHIPS).map((base) => {
+      const s = shipLook(base, save);
       const owned = save.ships.includes(s.id);
       const sel = save.ship === s.id;
       const btn = sel ? '<button class="btn small" disabled>SELECTED</button>'
         : owned ? `<button class="btn small primary" data-act="select" data-id="${s.id}">SELECT</button>`
-          : `<button class="btn small buy" data-act="buy" data-id="${s.id}" ${save.coins < s.cost ? 'disabled' : ''}>${COIN}<span class="num">${s.cost}</span></button>`;
+          : !full ? '<button class="btn small full-btn" data-act="full">FULL GAME</button>'
+            : `<button class="btn small buy" data-act="buy" data-id="${s.id}" ${save.coins < s.cost ? 'disabled' : ''}>${COIN}<span class="num">${s.cost}</span></button>`;
+      const skins = s.id === 'striker' && save.skins.includes('gold')
+        ? `<div class="skin-row"><span>Color</span>
+            <button class="skin ${save.skin !== 'gold' ? 'on' : ''}" data-act="skin" data-id="" style="--k:${base.color}">Neon</button>
+            <button class="skin ${save.skin === 'gold' ? 'on' : ''}" data-act="skin" data-id="gold" style="--k:#ffd23d">Gold ★</button></div>`
+        : '';
       return `<div class="ship-card ${sel ? 'selected' : ''}" style="--sc:${s.color}">
-        <canvas data-ship="${s.id}" width="120" height="120"></canvas>
+        <canvas data-ship="${s.id}" data-color="${s.color}" width="120" height="120"></canvas>
         <div class="ship-info">
           <h3>${esc(s.name)}</h3>
           <p class="muted">${esc(s.desc)}</p>
@@ -220,6 +305,7 @@ export class UI {
             <label>POWER</label>${bars(s.dmg, 1.2)}
           </div>
           <div class="ship-weapon"><img src="${icon(WEAPONS[s.weapon].icon, WEAPONS[s.weapon].color)}" alt=""><span>${esc(WEAPONS[s.weapon].name)}</span><em>${esc(s.perk)}</em></div>
+          ${skins}
           ${btn}
         </div>
       </div>`;
@@ -229,6 +315,8 @@ export class UI {
       <div class="scroll">${cards}</div>
     `, {
       back,
+      full: () => this.paywall(() => this.hangar(back)),
+      skin: (ds) => { save.skin = ds.id || null; this.app.persist(); this.hangar(back); },
       select: (ds) => { save.ship = ds.id; this.app.persist(); this.hangar(back); },
       buy: (ds) => {
         const s = SHIPS[ds.id];
@@ -251,12 +339,26 @@ export class UI {
       const lvl = save.shop[it.id] || 0;
       const max = it.cost.length;
       const maxed = lvl >= max;
+      const capped = !maxed && lvl >= FREE_SHOP_CAP && !this.app.store.isFull();
       const cost = maxed ? 0 : it.cost[lvl];
       const pips = Array.from({ length: max }, (_, i) => `<i class="${i < lvl ? 'on' : ''}"></i>`).join('');
+      // "Damage +16% → +24%": the total bonus now and after buying the next level
+      const fmt = (l) => {
+        const v = l * it.per;
+        if (it.plain) return String(v);
+        const n = it.pct ? Math.round(v * 100) : Math.round(v * 100) / 100;
+        return `+${n}${it.pct ? '%' : it.unit || ''}`;
+      };
+      const effect = maxed
+        ? `${esc(it.stat)} <b class="fx-now">${fmt(lvl)}</b>`
+        : `${esc(it.stat)} <b class="fx-now">${fmt(lvl)}</b> <span class="fx-arrow">→</span> <b class="fx-next">${fmt(lvl + 1)}</b>`;
       return `<div class="shop-row">
         <img src="${icon(it.icon, '#2ff3ff')}" alt="">
-        <div class="shop-info"><b>${esc(it.name)}</b><small>${esc(it.desc)}</small><div class="pips">${pips}</div></div>
-        ${maxed ? '<button class="btn small" disabled>MAX</button>' : `<button class="btn small buy" data-act="buy" data-id="${it.id}" ${save.coins < cost ? 'disabled' : ''}>${COIN}<span class="num">${cost}</span></button>`}
+        <div class="shop-info"><div class="shop-head"><b>${esc(it.name)}</b><span class="shop-lvl">LV ${lvl}/${max}</span></div>
+          <small class="shop-fx">${effect}</small><div class="pips">${pips}</div></div>
+        ${maxed ? '<button class="btn small" disabled>MAX</button>'
+          : capped ? '<button class="btn small full-btn" data-act="full">FULL GAME</button>'
+            : `<button class="btn small buy" data-act="buy" data-id="${it.id}" ${save.coins < cost ? 'disabled' : ''}>${COIN}<span class="num">${cost}</span></button>`}
       </div>`;
     }).join('');
     this.setScreen(`
@@ -265,11 +367,13 @@ export class UI {
       <div class="scroll">${rows}</div>
     `, {
       back: () => this.menu(),
+      full: () => this.paywall(() => this.shop()),
       buy: (ds) => {
         const it = SHOP.find((x) => x.id === ds.id);
         const lvl = save.shop[it.id] || 0;
         const cost = it.cost[lvl];
         if (cost == null || save.coins < cost) return;
+        if (lvl >= FREE_SHOP_CAP && !this.app.store.isFull()) { this.paywall(() => this.shop()); return; }
         save.coins -= cost;
         save.shop[it.id] = lvl + 1;
         this.app.persist();
@@ -316,6 +420,8 @@ export class UI {
       ${tog('sfx', 'Sound effects')}
       ${tog('dmgNums', 'Damage numbers')}
       ${this.app.native ? tog('haptics', 'Vibration') : ''}
+      <button class="toggle choice" data-act="tips"><span>Tutorial</span><b>Replay</b></button>
+      ${this.app.store.mode !== 'none' ? `<button class="toggle choice" data-act="restore"><span>Restore purchases</span><b>${this.app.store.isFull() ? 'Full game ✓' : 'Restore'}</b></button>` : ''}
       <div class="stats-line muted">${versionFull()}</div>
       <div class="stats-line muted">Enemies destroyed: ${this.save.stats.kills.toLocaleString('en-US')} · Runs: ${this.save.stats.runs}</div>
       <div class="modal-actions">
@@ -325,6 +431,12 @@ export class UI {
       ${this.app.native ? '' : '<p class="tiny muted">On iPhone: Share → Add to Home Screen to play full-screen.</p>'}
     `, {
       close: () => this.closeModal(),
+      tips: () => { setTips(this.app, true); this.toast('Tutorial hints will show again'); },
+      restore: async () => {
+        const owned = await this.app.store.restore();
+        this.toast(owned ? 'Full game restored' : 'No purchase found for this Apple ID');
+        this.settings();
+      },
       control: () => {
         const order = ['joystick', 'float', 'drag'];
         s.control = order[(order.indexOf(s.control) + 1) % order.length];
@@ -406,7 +518,7 @@ export class UI {
     return `<div class="build"><div class="build-row">${build.weapons.map(item).join('')}</div><div class="build-row">${build.passives.map(item).join('')}</div></div>`;
   }
 
-  levelUp({ title, sub, cards, rerolls, build, onPick, onReroll }) {
+  levelUp({ title, sub, cards, rerolls, build, onPick, onReroll, step = 1, steps = 1, hint = '' }) {
     const html = cards.map((c, i) => `
       <button class="card ${c.evo ? 'evo' : ''}" style="--cc:${c.color}" data-act="pick" data-i="${i}">
         <img src="${icon(c.icon, c.color, c.evo)}" alt="">
@@ -416,15 +528,23 @@ export class UI {
         </div>
       </button>`).join('');
     this.modal(`
-      <div class="lu-title">${esc(title)}</div>
+      <div class="lu-title">${esc(title)}${steps > 1 ? ` <span class="lu-step">${step}/${steps}</span>` : ''}</div>
       <div class="muted center">${esc(sub)}</div>
+      ${hint ? `<div class="lu-hint">${esc(hint)}</div>` : ''}
       <div class="cards">${html}</div>
       ${this.buildHtml(build)}
       ${rerolls > 0 ? `<button class="btn small reroll" data-act="reroll">RE-ROLL (${rerolls})</button>` : ''}
     `, {
-      pick: (ds) => { this.app.audio.sfx('select'); this.closeModal(); onPick(+ds.i); },
+      pick: (ds, el) => {
+        if (this.picking) return;
+        this.picking = true;
+        this.app.audio.sfx('select');
+        el.classList.add('chosen');
+        // brief flash so the choice visibly registers before the next level-up (if any) replaces this one
+        setTimeout(() => { this.picking = false; this.closeModal(); onPick(+ds.i); }, 110);
+      },
       reroll: () => onReroll(),
-    }, 'levelup', 450);
+    }, 'levelup', 220);
   }
 
   pause(build, onResume, onQuit) {
@@ -459,10 +579,62 @@ export class UI {
     }, 'revive', 500);
   }
 
+  // Offer for the full game. `after` runs when the dialog closes; `afterBoss` changes the headline.
+  paywall(after = () => this.menu(), afterBoss = false) {
+    const store = this.app.store;
+    if (store.isFull()) { after(); return; }
+    const price = store.price;
+    const buyLabel = store.mode === 'none' ? 'AVAILABLE IN THE iOS APP'
+      : `UNLOCK${price ? ` — ${esc(price)}` : ''}${store.mode === 'dev' ? ' (TEST)' : ''}`;
+    this.modal(`
+      <div class="modal-kicker" style="color:var(--gold)">${afterBoss ? 'HIVE MOTHER DEFEATED' : 'VOID BLASTER'}</div>
+      <h2>${afterBoss ? 'THE GALAXY NEEDS YOU' : 'UNLOCK THE FULL GAME'}</h2>
+      <p class="muted center">${afterBoss ? 'Three more worlds are waiting beyond the Neon Nebula.' : 'One purchase, no ads, no subscriptions.'}</p>
+      <ul class="perks">
+        <li><b>3 new worlds</b><span>Crystal Belt, Solar Forge, Void Core: 18 sectors</span></li>
+        <li><b>3 epic bosses</b><span>Crystal Serpent, Forge Titan and the Void Heart</span></li>
+        <li><b>2 new ships</b><span>Phantom and Titan, unlocked right away</span></li>
+        <li><b>Every upgrade level</b><span>Past level ${FREE_SHOP_CAP} in the Upgrades shop</span></li>
+        <li><b>Welcome bonus</b><span>${UNLOCK_COINS.toLocaleString('en-US')} coins and the Gold Striker skin</span></li>
+      </ul>
+      <div class="modal-actions col">
+        <button class="btn primary big-ish" data-act="buy" ${store.mode === 'none' ? 'disabled' : ''}>${buyLabel}</button>
+        ${store.mode !== 'none' ? '<button class="btn small" data-act="restore">RESTORE PURCHASE</button>' : ''}
+        <button class="btn small ghost" data-act="close">NOT NOW</button>
+      </div>
+    `, {
+      close: () => { this.closeModal(); after(); },
+      buy: async (ds, el) => {
+        el.disabled = true;
+        el.textContent = 'CONNECTING…';
+        const status = await store.buy();
+        if (status === 'purchased') {
+          this.closeModal();
+          this.app.audio.sfx('win');
+          this.toast(`Full game unlocked! +${UNLOCK_COINS} coins`);
+          after();
+        } else if (status === 'pending') {
+          this.closeModal();
+          this.toast('Purchase pending approval');
+          after();
+        } else {
+          if (status === 'error' || status === 'unavailable') this.toast('The App Store is not available right now');
+          this.paywall(after, afterBoss);
+        }
+      },
+      restore: async () => {
+        const owned = await store.restore();
+        this.toast(owned ? 'Full game restored' : 'No purchase found for this Apple ID');
+        if (owned) { this.closeModal(); after(); } else this.paywall(after, afterBoss);
+      },
+    }, 'paywall', 300);
+  }
+
   results(r) {
     const idx = stageIndex(r.stage.id);
     const next = ALL_STAGES[idx + 1];
     const canNext = r.won && next && this.app.isUnlocked(next.id);
+    const invite = r.won && next && this.app.needsFullGame(next.id);
     const stars = [0, 1, 2].map((k) => `<span class="rstar ${k < r.stars ? 'on' : ''}" style="animation-delay:${0.3 + k * 0.25}s">${STAR}</span>`).join('');
     const goals = ['Clear', `${r.stage.kills} kills`, '50%+ hull'].map((g, i) => `<li class="${r.goals[i] && r.won ? 'done' : ''}">${STAR}<span>${g}</span></li>`).join('');
     this.hideHud();
@@ -483,12 +655,14 @@ export class UI {
         <button class="btn" data-act="map">SECTORS</button>
         <button class="btn" data-act="retry">RETRY</button>
         ${canNext ? '<button class="btn primary" data-act="next">NEXT</button>' : ''}
+        ${invite ? '<button class="btn primary" data-act="full">CONTINUE</button>' : ''}
       </div>
       ${!r.won ? '<p class="tiny muted center">Tip: spend coins on permanent Upgrades to get stronger.</p>' : ''}
     `, {
       map: () => { this.closeModal(); this.app.endRun(); this.map(); },
       retry: () => { this.closeModal(); this.app.startStage(r.stage.id); },
       next: () => { this.closeModal(); this.app.startStage(next.id); },
+      full: () => { this.closeModal(); this.app.endRun(); this.paywall(() => this.map(), true); },
     }, 'results', 700);
   }
 }

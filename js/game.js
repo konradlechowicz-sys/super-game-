@@ -1,6 +1,8 @@
 import { TAU, rand, randi, clamp, lerp, pick, weightedPick, angleLerp, SpatialHash } from './util.js';
-import { ENEMIES, BOSSES, PASSIVES, PASSIVE_MAX, SHIPS, xpFor, stageIndex } from './data.js';
+import { ENEMIES, BOSSES, PASSIVES, PASSIVE_MAX, SHIPS, xpFor, stageIndex, shopBonus } from './data.js';
 import { WEAPONS, WEAPON_MAX, weaponStats } from './weapons.js';
+import { shipLook } from './store.js';
+import { Tutorial, tipsOn, tipSeen, markTip } from './tutorial.js';
 import {
   shipSprite, enemySprite, bossLayer, boltSprite, missileSprite, orbSprite, gemSprite,
   glowDot, mineSprite, pickupSprite,
@@ -19,7 +21,7 @@ export class Game {
     this.ui = app.ui;
     this.stage = stage;
     this.save = app.save;
-    this.ship = SHIPS[this.save.ship] || SHIPS.striker;
+    this.ship = shipLook(SHIPS[this.save.ship] || SHIPS.striker, this.save);
     const { vw, vh } = this.viewSize();
     this.arena = { w: Math.max(900, vw * 1.8), h: Math.max(1300, vh * 1.45) };
     this.time = 0;
@@ -42,6 +44,7 @@ export class Game {
     this.recompute();
     this.player.hp = this.player.maxHp;
     this.addWeapon(this.ship.weapon);
+    this.tut = new Tutorial(this);
     this.ui.banner(`STAGE ${stage.id}`, stage.name.toUpperCase());
   }
 
@@ -50,19 +53,20 @@ export class Game {
   }
 
   recompute() {
-    const p = this.player, sh = this.save.shop, P = this.passives, s = this.ship;
+    const p = this.player, P = this.passives, s = this.ship;
+    const B = (id) => shopBonus(this.save, id);
     const oldMax = p.maxHp;
-    p.maxHp = s.hp + (sh.hull || 0) * 15 + (P.armor || 0) * 20;
+    p.maxHp = s.hp + B('hull') + (P.armor || 0) * 20;
     if (oldMax > 1 && p.maxHp > oldMax) p.hp += p.maxHp - oldMax;
-    p.speed = s.speed * (1 + (sh.thrust || 0) * 0.05 + (P.thrusters || 0) * 0.08);
-    p.dmgMult = s.dmg * (1 + (sh.power || 0) * 0.08 + (P.power || 0) * 0.12);
+    p.speed = s.speed * (1 + B('thrust') + (P.thrusters || 0) * 0.08);
+    p.dmgMult = s.dmg * (1 + B('power') + (P.power || 0) * 0.12);
     p.cdMult = 1 - (P.overclock || 0) * 0.08;
     p.areaMult = 1 + (P.amplifier || 0) * 0.12;
-    p.magnet = 105 * (1 + (sh.magnet || 0) * 0.15 + (P.tractor || 0) * 0.3);
-    p.regen = (sh.regen || 0) * 0.25 + (P.armor || 0) * 0.15;
+    p.magnet = 105 * (1 + B('magnet') + (P.tractor || 0) * 0.3);
+    p.regen = B('regen') + (P.armor || 0) * 0.15;
     p.armor = s.armor || 0;
-    p.xpMult = 1 + (sh.growth || 0) * 0.08;
-    p.coinMult = 1 + (sh.greed || 0) * 0.15;
+    p.xpMult = 1 + B('growth');
+    p.coinMult = 1 + B('greed');
   }
 
   addWeapon(id) {
@@ -620,18 +624,28 @@ export class Game {
 
   openCards(chest) {
     this.state = 'levelup';
+    this.tut.interrupt();
     if (chest) this.coinsRun += 10;
     this.sfx(chest ? 'chest' : 'levelup');
     this.app.haptic('light');
+    // Count level-ups that arrive together so the player sees "2/3" and knows the previous pick registered.
+    const left = chest ? this.pendingChests : this.pendingLevels;
+    if (!this.batch || this.batch.chest !== chest || this.batch.left < left) this.batch = { chest, total: left, left };
+    this.batch.left = left;
+    let hint = null;
     const show = () => {
       const cards = this.rollCards(3, chest);
+      hint ??= this.cardHint(chest, cards);
       this.ui.levelUp({
+        hint,
+        step: this.batch.total - left + 1, steps: this.batch.total,
         title: chest ? 'SUPPLY CRATE' : 'LEVEL UP!',
         sub: chest ? 'Choose your reward' : `Level ${this.level - this.pendingLevels + 1}`,
         cards, rerolls: this.rerolls, build: this.buildSummary(),
         onPick: (i) => {
           this.applyCard(cards[i]);
           if (chest) this.pendingChests--; else this.pendingLevels--;
+          if ((chest ? this.pendingChests : this.pendingLevels) === 0) this.batch = null;
           this.state = 'play';
           this.player.inv = Math.max(this.player.inv, 0.6);
           this.app.input.resetDrag();
@@ -646,6 +660,20 @@ export class Game {
     show();
   }
 
+  // First-time explanation shown above the cards (tutorial).
+  cardHint(chest, cards) {
+    if (!tipsOn(this.save)) return '';
+    const tips = [
+      ['evo', cards.some((c) => c.kind === 'evo'), 'Evolution! A max-level weapon plus its partner upgrade becomes a super weapon.'],
+      ['crate', chest, 'A free pick. Crates are the surest way to evolve a weapon.'],
+      ['level', !chest, 'Pick one card. New weapons and upgrades last until the end of this run.'],
+    ];
+    const t = tips.find(([id, when]) => when && !tipSeen(this.save, id));
+    if (!t) return '';
+    markTip(this.app, t[0]);
+    return t[2];
+  }
+
   buildSummary() {
     return {
       weapons: this.weapons.map((w) => ({ id: w.id, icon: WEAPONS[w.id].icon, color: w.evolved ? '#ffd23d' : WEAPONS[w.id].color, level: w.evolved ? '★' : w.level, name: w.evolved ? WEAPONS[w.id].evo.name : WEAPONS[w.id].name })),
@@ -657,6 +685,9 @@ export class Game {
   update(rawDt) {
     if (this.state === 'levelup' || this.state === 'paused' || this.state === 'revive' || this.state === 'over') return;
     this.slowmo = Math.min(1, this.slowmo + rawDt * (this.state === 'play' ? 1.5 : 0.25));
+    // a tutorial hint waiting for the player slows the action down
+    if (this.state === 'play') this.slowmo = Math.min(this.slowmo, this.tut.update(rawDt));
+    else if (this.tut.tip) this.tut.close(false);
     const dt = rawDt * this.slowmo;
     this.time += this.state === 'play' ? dt : 0;
     const p = this.player;
@@ -1282,6 +1313,7 @@ export class Game {
     const st = this.stage, save = this.save;
     const p = this.player;
     this.state = 'over';
+    if (this.tut.tip) this.tut.close(false);
     let stars = 0;
     const goals = [won, this.kills >= st.kills, won && p.hp >= p.maxHp * 0.5];
     if (won) stars = goals.filter(Boolean).length;
@@ -1429,6 +1461,8 @@ export class Game {
       ctx.globalAlpha = 1;
       this.drawBar(ctx, p.x, p.y + 26, 40, p.hp / p.maxHp, p.hp / p.maxHp > 0.35 ? '#3dff8a' : '#ff3d6e');
     }
+
+    this.tut.renderWorld(ctx);
 
     // particles, explosions, lightning
     ctx.globalCompositeOperation = 'lighter';
