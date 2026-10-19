@@ -82,6 +82,7 @@ Test builds show *date · build N* on the start screen. For App Store uploads us
 ## App Store materials
 - `appstore/LISTING.md`: name, subtitle, description, keywords, privacy and age-rating answers, review notes
 - `appstore/screenshots/`: 7 captioned screenshots, 1290 × 2796 (iPhone 6.9"), in upload order
+- `appstore/screenshots/<W>x<H>/`: the same 7 screenshots in every iPhone size App Store Connect may ask for (6.9", 6.7", 6.5", 6.3", 6.1")
 - `appstore/social/`: profile picture (1080×1080), YouTube banner (2560×1440), video thumbnail (1280×720), vertical cover for TikTok / Shorts / Reels (1080×1920)
 - `site/privacy.html`, `site/support.html`: Privacy Policy and Support pages (required URLs)
 
