@@ -82,6 +82,7 @@ Test builds show *date · build N* on the start screen. For App Store uploads us
 ## App Store materials
 - `appstore/LISTING.md`: name, subtitle, description, keywords, privacy and age-rating answers, review notes
 - `appstore/screenshots/`: 7 captioned screenshots, 1290 × 2796 (iPhone 6.9"), in upload order
+- `appstore/social/`: profile picture (1080×1080), YouTube banner (2560×1440), video thumbnail (1280×720), vertical cover for TikTok / Shorts / Reels (1080×1920)
 - `site/privacy.html`, `site/support.html`: Privacy Policy and Support pages (required URLs)
 
 Publish them with GitHub Pages: repository **Settings → Pages → Build and deployment → Deploy from a branch**,
