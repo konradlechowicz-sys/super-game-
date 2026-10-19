@@ -1,12 +1,18 @@
-// Builds dist/void-blaster.html: the whole game in one self-contained page (used for the shareable web preview).
+// Builds the whole game as one self-contained page for the shareable web previews (normal and TEST).
 // Fonts load from Google Fonts there, so the bundled @font-face block is stripped.
 import { build } from 'esbuild';
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 
-// __PREVIEW__: the shareable preview may simulate the full-game purchase (labelled TEST) so every world can be tested.
-const js = (await build({ entryPoints: ['js/main.js'], bundle: true, format: 'iife', minify: true, write: false, define: { __PREVIEW__: 'true' } })).outputFiles[0].text;
+// Builds two pages: dist/void-blaster.html (the normal preview) and dist/void-blaster-test.html (TEST variant with the
+// tester's panel, js/testkit.js). __PREVIEW__: both may simulate the full-game purchase (labelled TEST).
 const css = readFileSync('css/style.css', 'utf8').replace(/\/\* fonts:start[\s\S]*?\/\* fonts:end \*\/\n*/, '');
-const html = `<title>Void Blaster</title>
+mkdirSync('dist', { recursive: true });
+
+for (const test of [false, true]) {
+  const define = { __PREVIEW__: 'true', __TEST__: String(test) };
+  const js = (await build({ entryPoints: ['js/main.js'], bundle: true, format: 'iife', minify: true, write: false, define })).outputFiles[0].text;
+  if (!test && js.includes('VB-TESTKIT')) throw new Error('The normal preview contains the TEST panel. Stopping.');
+  const html = `<title>${test ? 'Void Blaster TEST' : 'Void Blaster'}</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -22,6 +28,7 @@ body { background: var(--bg); color: var(--text); }
 ${js.replace(/<\/script/g, '<\\/script')}
 </script>
 `;
-mkdirSync('dist', { recursive: true });
-writeFileSync('dist/void-blaster.html', html);
-console.log('Built dist/void-blaster.html');
+  const out = test ? 'dist/void-blaster-test.html' : 'dist/void-blaster.html';
+  writeFileSync(out, html);
+  console.log(`Built ${out}`);
+}

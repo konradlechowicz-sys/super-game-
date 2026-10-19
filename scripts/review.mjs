@@ -45,12 +45,13 @@ function switchToMain() {
 
 // Build and launch with the tools of the version being tested (it is checked out at this point), so fixes to the
 // build/launch scripts take effect immediately instead of only after they reach main.
-function buildAndLaunch() {
+// test = TEST variant (tester's panel, separate "VB Test" app); versions from before the TEST line ignore the flag.
+function buildAndLaunch(test) {
   run('npm install --no-audit --no-fund');
-  run('node scripts/build.mjs');
+  run(`node scripts/build.mjs${test ? ' --test' : ''}`);
   run('npx cap sync ios');
   if (process.env.VB_NO_SIM) return;
-  if (existsSync('scripts/sim.mjs')) run('node scripts/sim.mjs');
+  if (existsSync('scripts/sim.mjs')) run(`node scripts/sim.mjs${test ? ' --test' : ''}`);
   else run('npx cap run ios');
 }
 
@@ -97,10 +98,11 @@ const pick = candidates.length === 1 ? '1' : await ask(`\nKtórą wersję urucho
 const c = candidates[(+pick || 1) - 1];
 if (!c) bye('Nie ma takiej wersji.', 1);
 
-console.log(`\nPrzygotowuję ${c.label} z gałęzi ${c.branch}…`);
+const variant = await ask('Jak uruchomić? [Enter] zwykła wersja  [t] wersja TEST (panel testera, osobna aplikacja „VB Test”): ');
+console.log(`\nPrzygotowuję ${c.label}${variant === 't' ? ' (TEST)' : ''} z gałęzi ${c.branch}…`);
 run(`git checkout -q --detach ${c.sha}`);
 try {
-  buildAndLaunch();
+  buildAndLaunch(variant === 't');
 } catch {
   console.log('\nNie udało się zbudować albo uruchomić tej wersji. Możesz ją odrzucić albo spróbować później.');
 }

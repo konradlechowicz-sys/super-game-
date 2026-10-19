@@ -16,6 +16,8 @@
     "ios:release": "node scripts/build.mjs --release && npx cap sync ios",
     "review": "node scripts/review.mjs",
     "play": "node scripts/build.mjs && npx cap sync ios && node scripts/sim.mjs",
+    "play:test": "node scripts/testapp.mjs sim",
+    "phone:test": "node scripts/testapp.mjs phone",
     "release": "node scripts/release.mjs"
   },
   "dependencies": {

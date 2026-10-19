@@ -4,6 +4,9 @@ import { icon } from './icons.js';
 import { fmtTime } from './util.js';
 import { shipSprite } from './sprites.js';
 import { versionLabel, versionFull } from './version.js';
+
+// TEST variant flag, replaced by the build scripts (see js/version.js).
+/* global __TEST__ */
 import { FREE_SHOP_CAP, UNLOCK_COINS, shipLook } from './store.js';
 import { menuTip, markTip, setTips } from './tutorial.js';
 
@@ -26,6 +29,7 @@ export class UI {
             <div class="hud-stat"><span class="hud-kills">0</span><small>KILLS</small></div>
             <div class="hud-timer">0:00</div>
             <div class="hud-stat right"><span class="hud-coins">0</span>${COIN}</div>
+            ${__TEST__ ? '<button class="pause-btn test-btn" data-act="testkit" aria-label="Tester">🛠</button>' : ''}
             <button class="pause-btn" data-act="pause" aria-label="Pause"><i></i><i></i></button>
           </div>
           <div class="bossbar hidden"><div class="bossname"></div><div class="bosstrack"><div class="bossfill"></div></div></div>
@@ -141,7 +145,7 @@ export class UI {
     const d = this.app.dailyStatus();
     this.hideHud();
     this.setScreen(`
-      <div class="topbar">${this.coinsHtml()}<div class="version-tag">${versionLabel()}</div><button class="icon-btn" data-act="settings" aria-label="Settings">⚙</button></div>
+      <div class="topbar">${this.coinsHtml()}<div class="version-tag">${versionLabel()}</div>${__TEST__ ? '<button class="icon-btn test-btn" data-act="testkit" aria-label="Tester">🛠</button>' : ''}<button class="icon-btn" data-act="settings" aria-label="Settings">⚙</button></div>
       <div class="logo"><div class="logo-a">VOID</div><div class="logo-b">BLASTER</div></div>
       <div class="menu-spacer"></div>
       <div class="menu-buttons">
