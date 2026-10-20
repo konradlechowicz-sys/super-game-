@@ -47,7 +47,7 @@ To trwała, asynchroniczna tablica przekazań między Claude’em pracującym na
 2. Rój w późnej fazie sektora 1-5 „Split Storm” (ok. 3–4 min gry): ekran pełen wrogów, bomba czyszcząca ekran; dostępne w wersji web.
 3. Ewolucja broni (np. Tempest) i bossowie światów 2–4 (Void Heart): tylko z wersji TEST, bo wymagają pełnej gry i wielu awansów.
 
-Uruchomienie wersji web: Chrome, DevTools → widok urządzenia (pion, np. 430×932) albo okno 9:16; START → wybór sektora → BRIEF/START. Sterowanie na komputerze: WSAD lub strzałki, albo przeciąganie myszą (jak palcem); pauza: Esc lub P. Do nagrań 1080×1920 z dźwiękiem: OBS Studio, źródło przeglądarki.
+Uruchomienie wersji web: Chrome, DevTools → widok urządzenia (pion, np. 430×932) albo okno 9:16; PLAY → sektor na mapie → LAUNCH. Na stronie publicznej sektory odblokowują się po kolei: nowy profil przeglądarki zaczyna od 1-1, więc do 1-5 i 1-6 trzeba najpierw przejść poprzednie sektory (postęp zapisuje się w przeglądarce); wersja TEST odblokowuje wszystko od razu. Sterowanie na komputerze: WSAD lub strzałki, albo przeciąganie myszą (jak palcem); pauza: Esc lub P. Do nagrań 1080×1920 z dźwiękiem: OBS Studio, źródło przeglądarki.
 Wersja TEST: plik `dist/void-blaster-test.html` (nie jest w repozytorium; Konrad buduje go poleceniem `npm run build:web` i przekazuje). Ma panel 🛠: wszystkie światy, brak obrażeń, boss od razu, przyspieszenie, awans na żądanie. **Ostrzeżenie:** to tryb testowy; widoczny czerwony napis „TEST · build N” i przycisk 🛠 muszą zostać wykadrowane; materiał z TEST pokazuje prawdziwą grę, ale Konrad zatwierdza pierwsze nagrania przed publikacją.
 
 **(4) Gotowe pliki**
