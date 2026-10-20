@@ -15,10 +15,16 @@ i wersja TEST (gracze tego nie widzą).
 - Historia zmian: każdy build ma opis, a review i release go pokazują.
 - Zamknięta luka w wersji przeglądarkowej: parametry testowe nie odblokowują już pełnej gry na publicznej stronie, a zapisy odblokowane wcześniej wracają do wersji próbnej.
 - Zwrot pieniędzy za pełną wersję zabiera też statki z pełnej wersji.
+- Reset postępu nie zabiera już kupionej pełnej wersji i nie daje drugi raz bonusu 1000 monet.
 
 ### What's New (App Store)
 
-- 
+- Fixed: resetting your progress no longer locks the full game you bought.
+
+## Build 29 · 2026-10-20
+- [Poprawka] „Reset progress” w Ustawieniach kasuje tylko postęp: kupiona pełna wersja zostaje odblokowana (światy 2–4, Phantom, Titan, złota skórka, wszystkie poziomy ulepszeń). Wcześniej po resecie wracała oferta zakupu aż do ponownego uruchomienia gry.
+- [Poprawka] Reset nie daje już ponownie bonusu 1000 monet za zakup (wcześniej po restarcie gry bonus wypłacał się drugi raz).
+- [Poprawka] Reset zapisuje się od razu, także w kopii zapasowej na telefonie: wyłączenie gry tuż po resecie nie przywraca starego postępu.
 
 ## Build 28 · 2026-10-20
 - [Narzędzia] Wiadomości między Claude a Codexem (commity zmieniające tylko `AI-HANDOFF.md`) nie podbijają już numeru buildu ani nie trafiają do historii zmian. Zasada zapisana w `CLAUDE.md` i `AI-HANDOFF.md`.

@@ -181,8 +181,13 @@ app.applySettings = () => {
   app.audio.setMusicOn(s.music);
 };
 
+// Resets progress, never the purchase: an owned full game stays unlocked and its coin bonus is not paid again.
 app.resetProgress = () => {
+  const owned = app.store.isFull(), bonusPaid = !!app.save.unlockBonus;
   app.save = resetSave();
+  app.save.unlockBonus = bonusPaid;
+  if (owned) app.store.grant();
+  app.persist();
   app.applySettings();
 };
 
