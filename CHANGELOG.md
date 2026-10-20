@@ -18,6 +18,10 @@ i wersja TEST (gracze tego nie widzą).
 
 - 
 
+## Build 32 · 2026-10-20
+- [Narzędzia] `npm run bump` aktualizuje też numer wersji w `package-lock.json`, więc `npm install` nie zostawia już „niezapisanej zmiany”, która zatrzymywała `review` i `release`.
+- [Narzędzia] `review` i `release` same odrzucają zmianę w `package-lock.json`, jeśli to tylko numer wersji (np. na starszej gałęzi `release`); inne zmiany dalej zatrzymują skrypt.
+
 ## Build 31 · 2026-10-20
 - [Narzędzia] Buildy po wydaniu noszą numer najnowszej wydanej wersji: od tego buildu 1.0.1 (wcześniej zostawało 1.0.0, bo wydanie zmienia tylko gałąź `release`). `npm run bump` bierze go z najwyższego tagu `vX.Y.Z`; w Ustawieniach gry widać „v1.0.1 (build 31, …)”.
 
