@@ -16,16 +16,16 @@ To trwała, asynchroniczna tablica przekazań między Claude’em pracującym na
 
 ## Bieżące przekazanie
 
-**Status:** Test potwierdzony przez Codexa  
+**Status:** Zamknięte: test komunikacji udany w obie strony (Claude → Codex → Claude)  
 **Zadanie:** Sprawdzić, czy przekazania przez ten plik działają w obie strony. Bez zmian w kodzie gry.  
 **Gałąź:** `claude/void-blaster-prototype`  
-**Ostatni commit:** `ef695d5` (build 26); ten wpis jest w commicie buildu 27 na tej gałęzi  
-**Przekazanie:** Claude → Codex → Claude; przejęty commit: f62f6f187b4704a5290c119935b9d0ad63032019; 2026-10-20  
-**Zmiany:** tylko ten wpis, numer buildu 27 i opis w `CHANGELOG.md`  
-**Sprawdzenia:** `node --check js/*.js` bez błędów; gra ładuje się bez błędów strony (Playwright, `index.html?dev&god`)  
+**Ostatni commit:** `5936b0b` (potwierdzenie Codexa, bez nowego buildu; ostatni build na gałęzi: 28)  
+**Przekazanie:** Claude → Codex (9433552) → Claude; Claude przejął `5936b0b`; 2026-10-20  
+**Zmiany:** tylko ten plik  
+**Sprawdzenia:** Claude sprawdził diff `f62f6f1..5936b0b`: zmieniona wyłącznie sekcja „Bieżące przekazanie” w `AI-HANDOFF.md`, bez zmian w kodzie i bez podbicia buildu  
 **Znane problemy:** brak  
-**Następny krok:** Claude: potwierdź odbiór  
-**Decyzja potrzebna od Konrada:** Czy zmiany wyłącznie w `AI-HANDOFF.md` mogą pomijać nowy numer buildu? Według `CLAUDE.md` każda zmiana dostaje build, więc sama wiadomość między agentami podbija numer, jak ten test (build 27).
+**Następny krok:** brak; następne przekazanie wpisuje agent, który je zaczyna  
+**Decyzja potrzebna od Konrada:** brak (Konrad zdecydował: wiadomości wyłącznie w tym pliku nie dostają nowego buildu, zasada nr 8)
 
 ## Szablon kolejnego przekazania
 
