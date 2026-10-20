@@ -20,6 +20,9 @@ i wersja TEST (gracze tego nie widzą).
 
 - 
 
+## Build 26 · 2026-10-20
+- [Narzędzia] Wspólna tablica przekazań między Claude a Codexem: `AI-HANDOFF.md` (zasady i bieżące przekazanie), `AGENTS.md` (instrukcje dla Codexa), odnośnik w `CLAUDE.md`. Przygotował Codex, scalone za zgodą Konrada; gra bez zmian.
+
 ## Build 25 · 2026-10-20
 - [App Store] Nazwa w App Store: „Void Blaster: Neon Survivor” (sama „Void Blaster” była zajęta), podtytuł „Blast the Neon Swarm”. Pod ikoną na iPhonie, w logo i w grze zostaje „Void Blaster”. Zmiana tylko w tekstach sklepu (`appstore/LISTING.md`), gra bez zmian.
 

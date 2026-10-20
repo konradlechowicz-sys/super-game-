@@ -73,6 +73,10 @@ Bundle ID: `com.konradlechowicz.voidblaster` (change it in `capacitor.config.jso
   an accepted build, copies it to `release` with the public version, keeps its build number, tags it and opens Xcode
   for *Product → Archive*. `main` is never modified by a release.
 
+## AI handoff
+`AI-HANDOFF.md` is the shared handoff board between Claude (development) and Codex: working rules and the current
+handoff (task, branch, commit, checks, next step, decision needed from Konrad). Codex's own instructions: `AGENTS.md`.
+
 ## Changelog
 `CHANGELOG.md` lists every build's changes (newest first) and a full summary of every App Store release.
 `npm run bump` adds the section for a new build; `npm run review` shows what a candidate changes and `npm run release`
