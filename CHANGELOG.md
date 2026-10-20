@@ -13,11 +13,17 @@ i wersja TEST (gracze tego nie widzą).
 <!-- Podsumowanie zmian od v1.0.0; uzupełnia Claude przy każdym buildzie. -->
 
 - Historia zmian: każdy build ma opis, a review i release go pokazują.
-- Zamknięta luka w wersji przeglądarkowej: parametry testowe nie odblokowują już pełnej gry na publicznej stronie.
+- Zamknięta luka w wersji przeglądarkowej: parametry testowe nie odblokowują już pełnej gry na publicznej stronie, a zapisy odblokowane wcześniej wracają do wersji próbnej.
+- Zwrot pieniędzy za pełną wersję zabiera też statki z pełnej wersji.
 
 ### What's New (App Store)
 
 - 
+
+## Build 24 · 2026-10-20
+- [Poprawka] Wersja w przeglądarce na GitHub Pages cofa do wersji próbnej zapis, który wcześniej odblokowano parametrami testowymi albo panelem 🛠 (pełna gra, Phantom, Titan, złota skórka). Monety i przejścia sektorów zostają, światy 2–4 są znowu zablokowane.
+- [Zmiana] Zwrot pieniędzy za „Full Game” w App Store zabiera też statki Phantom i Titan (wcześniej zostawały); wybrany statek wraca do Strikera.
+- [Poprawka] Strona w przeglądarce najpierw pobiera najnowsze pliki z sieci, a pamięć podręczną używa tylko bez internetu: nowa wersja działa od razu po wejściu, bez czyszczenia pamięci przeglądarki.
 
 ## Build 23 · 2026-10-20
 - [Poprawka] Wersja w przeglądarce na GitHub Pages ignoruje parametry testowe (`?dev`, `&full`, `?test`): nie da się już za darmo odblokować pełnej gry dopisując je do adresu. Działają tylko lokalnie (localhost, sieć domowa, plik z dysku) i w wersji TEST. Gra w App Store nie była tym dotknięta.
