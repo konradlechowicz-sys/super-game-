@@ -1,10 +1,12 @@
 // Bumps the build number after every change and keeps every place that carries the version in sync:
 //   js/version.js, package.json, sw.js (offline cache name) and the Xcode project (Build / Version).
+// A new build also gets its own section in CHANGELOG.md, to be filled in with what changed.
 // Usage: npm run bump                 -> build + 1, date = today
 //        npm run bump -- 1.1.0        -> also set the public version
 //        node scripts/bump.mjs 1.1.0 --build 42   -> exact build number (used by scripts/release.mjs)
 import { execSync } from 'node:child_process';
-import { readFileSync, writeFileSync } from 'node:fs';
+import { existsSync, readFileSync, writeFileSync } from 'node:fs';
+import { addBuild, FILE as CHANGELOG } from './changelog.mjs';
 
 const file = 'js/version.js';
 const src = readFileSync(file, 'utf8');
@@ -50,5 +52,11 @@ edit('sw.js', /const VERSION = '[^']+';/, `const VERSION = 'vb-${newVersion}-${b
 const pbx = 'ios/App/App.xcodeproj/project.pbxproj';
 edit(pbx, /CURRENT_PROJECT_VERSION = [^;]+;/g, `CURRENT_PROJECT_VERSION = ${build};`);
 edit(pbx, /MARKETING_VERSION = [^;]+;/g, `MARKETING_VERSION = ${newVersion};`);
+
+// Releases (--build) reuse an accepted build's number; that build already has its section.
+if (forcedBuild == null && existsSync(CHANGELOG)) {
+  writeFileSync(CHANGELOG, addBuild(readFileSync(CHANGELOG, 'utf8'), build, date));
+  console.log(`${CHANGELOG}: describe what changed under "## Build ${build}"`);
+}
 
 console.log(`Version ${newVersion}, build ${build}, ${date}`);
