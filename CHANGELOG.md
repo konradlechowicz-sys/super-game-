@@ -10,7 +10,19 @@ i wersja TEST (gracze tego nie widzą).
 
 ## Następne wydanie
 
-<!-- Podsumowanie zmian od v1.0.0; uzupełnia Claude przy każdym buildzie. -->
+<!-- Podsumowanie zmian od v1.0.1; uzupełnia Claude przy każdym buildzie. -->
+
+- Opis w App Store: poprawiona nazwa broni Arc Coil.
+
+### What's New (App Store)
+
+- 
+
+## Build 30 · 2026-10-20
+- [App Store] Opis w sklepie (`appstore/LISTING.md`) używa nazwy broni z gry: „arc coil” zamiast „arc lightning”. Gra bez zmian; w App Store Connect trzeba poprawić opis ręcznie przy najbliższej wersji.
+- [Narzędzia] Sekcja wydania v1.0.1 przeniesiona z gałęzi `release` do historii zmian, „Następne wydanie” zaczyna się od v1.0.1.
+
+## v1.0.1 · build 29 · 2026-10-20 · App Store
 
 - Historia zmian: każdy build ma opis, a review i release go pokazują.
 - Zamknięta luka w wersji przeglądarkowej: parametry testowe nie odblokowują już pełnej gry na publicznej stronie, a zapisy odblokowane wcześniej wracają do wersji próbnej.
@@ -20,6 +32,30 @@ i wersja TEST (gracze tego nie widzą).
 ### What's New (App Store)
 
 - Fixed: resetting your progress no longer locks the full game you bought.
+
+### Wszystkie zmiany (buildy 22–29)
+
+**Zmiana**
+- Zwrot pieniędzy za „Full Game” w App Store zabiera też statki Phantom i Titan (wcześniej zostawały); wybrany statek wraca do Strikera. (build 24)
+
+**Poprawka**
+- Wersja w przeglądarce na GitHub Pages ignoruje parametry testowe (`?dev`, `&full`, `?test`): nie da się już za darmo odblokować pełnej gry dopisując je do adresu. Działają tylko lokalnie (localhost, sieć domowa, plik z dysku) i w wersji TEST. Gra w App Store nie była tym dotknięta. (build 23)
+- Wersja w przeglądarce na GitHub Pages cofa do wersji próbnej zapis, który wcześniej odblokowano parametrami testowymi albo panelem 🛠 (pełna gra, Phantom, Titan, złota skórka). Monety i przejścia sektorów zostają, światy 2–4 są znowu zablokowane. (build 24)
+- Strona w przeglądarce najpierw pobiera najnowsze pliki z sieci, a pamięć podręczną używa tylko bez internetu: nowa wersja działa od razu po wejściu, bez czyszczenia pamięci przeglądarki. (build 24)
+- „Reset progress” w Ustawieniach kasuje tylko postęp: kupiona pełna wersja zostaje odblokowana (światy 2–4, Phantom, Titan, złota skórka, wszystkie poziomy ulepszeń). Wcześniej po resecie wracała oferta zakupu aż do ponownego uruchomienia gry. (build 29)
+- Reset nie daje już ponownie bonusu 1000 monet za zakup (wcześniej po restarcie gry bonus wypłacał się drugi raz). (build 29)
+- Reset zapisuje się od razu, także w kopii zapasowej na telefonie: wyłączenie gry tuż po resecie nie przywraca starego postępu. (build 29)
+
+**App Store**
+- Nazwa w App Store: „Void Blaster: Neon Survivor” (sama „Void Blaster” była zajęta), podtytuł „Blast the Neon Swarm”. Pod ikoną na iPhonie, w logo i w grze zostaje „Void Blaster”. Zmiana tylko w tekstach sklepu (`appstore/LISTING.md`), gra bez zmian. (build 25)
+
+**Narzędzia**
+- Historia zmian w `CHANGELOG.md`: `npm run bump` dodaje sekcję dla nowego buildu, Claude opisuje w niej zmiany. (build 22)
+- `npm run review` pokazuje, co się zmieniło w każdej wersji do sprawdzenia (w porównaniu z zaakceptowaną). (build 22)
+- `npm run release` pokazuje przy każdym zaakceptowanym buildzie jego zmiany, przed wydaniem wypisuje wszystkie zmiany od poprzedniego wydania, a w wydaniu zapisuje pełne podsumowanie (tag i `CHANGELOG.md`) oraz tekst „What's New” do App Store Connect. (build 22)
+- Wspólna tablica przekazań między Claude a Codexem: `AI-HANDOFF.md` (zasady i bieżące przekazanie), `AGENTS.md` (instrukcje dla Codexa), odnośnik w `CLAUDE.md`. Przygotował Codex, scalone za zgodą Konrada; gra bez zmian. (build 26)
+- Test komunikacji z Codexem: wpis w `AI-HANDOFF.md` z prośbą o potwierdzenie. Gra bez zmian. (build 27)
+- Wiadomości między Claude a Codexem (commity zmieniające tylko `AI-HANDOFF.md`) nie podbijają już numeru buildu ani nie trafiają do historii zmian. Zasada zapisana w `CLAUDE.md` i `AI-HANDOFF.md`. (build 28)
 
 ## Build 29 · 2026-10-20
 - [Poprawka] „Reset progress” w Ustawieniach kasuje tylko postęp: kupiona pełna wersja zostaje odblokowana (światy 2–4, Phantom, Titan, złota skórka, wszystkie poziomy ulepszeń). Wcześniej po resecie wracała oferta zakupu aż do ponownego uruchomienia gry.
