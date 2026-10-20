@@ -35,7 +35,7 @@ Blast your way through a glowing galaxy in Void Blaster, a fast neon space survi
 Steer your ship with the joystick while your weapons fire on their own. Hundreds of enemies close in from every side: weave through the swarm, scoop up the crystals they drop and level up mid-fight. Every level-up offers three upgrades, so each run builds a different arsenal.
 
 BUILD YOUR ARSENAL
-• 8 weapons: pulse blaster, scatter gun, seeker missiles, orbit blades, arc lightning, nova pulse, wingman drones and proximity mines
+• 8 weapons: pulse blaster, scatter gun, seeker missiles, orbit blades, arc coil, nova pulse, wingman drones and proximity mines
 • 6 passive upgrades to boost damage, fire rate, speed, hull, pickup range and blast area
 • 4 weapon evolutions: max out a weapon, pair it with the right upgrade and turn it into a super weapon
 
