@@ -48,7 +48,9 @@ TEST is a build variant, not a branch, so it always contains the newest game:
   Settings always shows the full `vX.Y.Z (build N, date)`.
 - App Store releases are made only by Konrad with `npm run release` on his Mac: it picks an accepted build from `main`,
   copies it to `release` with the public version (patch = fixes, minor = new content, major = big overhaul),
-  keeps that build's number, tags `vX.Y.Z` and opens Xcode for Archive. Do not change the public version in cloud work.
+  keeps that build's number, tags `vX.Y.Z` and opens Xcode for Archive. Do not choose public versions in cloud work:
+  `npm run bump` gives every new build the newest released version (highest `vX.Y.Z` tag; fetch tags first), so builds
+  after the v1.0.1 release carry 1.0.1 (decided by Konrad).
 - Mention the new build number to Konrad after each change.
 
 ## Changelog (`CHANGELOG.md`, decided by Konrad)
