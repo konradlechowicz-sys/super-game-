@@ -13,10 +13,14 @@ i wersja TEST (gracze tego nie widzą).
 <!-- Podsumowanie zmian od v1.0.0; uzupełnia Claude przy każdym buildzie. -->
 
 - Historia zmian: każdy build ma opis, a review i release go pokazują.
+- Zamknięta luka w wersji przeglądarkowej: parametry testowe nie odblokowują już pełnej gry na publicznej stronie.
 
 ### What's New (App Store)
 
 - 
+
+## Build 23 · 2026-10-20
+- [Poprawka] Wersja w przeglądarce na GitHub Pages ignoruje parametry testowe (`?dev`, `&full`, `?test`): nie da się już za darmo odblokować pełnej gry dopisując je do adresu. Działają tylko lokalnie (localhost, sieć domowa, plik z dysku) i w wersji TEST. Gra w App Store nie była tym dotknięta.
 
 ## Build 22 · 2026-10-20
 - [Narzędzia] Historia zmian w `CHANGELOG.md`: `npm run bump` dodaje sekcję dla nowego buildu, Claude opisuje w niej zmiany.
