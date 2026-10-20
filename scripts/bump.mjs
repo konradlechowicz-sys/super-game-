@@ -65,6 +65,14 @@ const edit = (path, re, to) => {
 
 edit(file, m[0], `export const VERSION = { version: '${newVersion}', build: ${build}, date: '${date}' };`);
 edit('package.json', /"version": "[^"]+"/, `"version": "${newVersion}"`);
+// package-lock.json repeats the version (top level and packages[""]); keep it in sync, or npm install rewrites it
+// and review/release stop on an "unsaved change".
+if (existsSync('package-lock.json')) {
+  const lock = JSON.parse(readFileSync('package-lock.json', 'utf8'));
+  lock.version = newVersion;
+  if (lock.packages?.['']) lock.packages[''].version = newVersion;
+  writeFileSync('package-lock.json', JSON.stringify(lock, null, 2) + '\n');
+}
 edit('sw.js', /const VERSION = '[^']+';/, `const VERSION = 'vb-${newVersion}-${build}';`);
 const pbx = 'ios/App/App.xcodeproj/project.pbxproj';
 edit(pbx, /CURRENT_PROJECT_VERSION = [^;]+;/g, `CURRENT_PROJECT_VERSION = ${build};`);
