@@ -20,6 +20,9 @@ i wersja TEST (gracze tego nie widzą).
 
 - 
 
+## Build 28 · 2026-10-20
+- [Narzędzia] Wiadomości między Claude a Codexem (commity zmieniające tylko `AI-HANDOFF.md`) nie podbijają już numeru buildu ani nie trafiają do historii zmian. Zasada zapisana w `CLAUDE.md` i `AI-HANDOFF.md`.
+
 ## Build 27 · 2026-10-20
 - [Narzędzia] Test komunikacji z Codexem: wpis w `AI-HANDOFF.md` z prośbą o potwierdzenie. Gra bez zmian.
 

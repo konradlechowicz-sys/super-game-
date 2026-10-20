@@ -42,6 +42,8 @@ TEST is a build variant, not a branch, so it always contains the newest game:
 - Build numbers are never reused; `npm run bump` also counts builds on `test/...` and other branches.
 - **Every change gets a new build:** run `npm run bump` before committing. It increments the build number, sets the
   date (Europe/Warsaw) and syncs `package.json`, `sw.js` and the Xcode project (Build / Version).
+- **Exception (decided by Konrad):** a commit that changes only `AI-HANDOFF.md` (messages between Claude and Codex)
+  never gets a new build: no `npm run bump`, no `CHANGELOG.md` entry, no preview republish.
 - Test builds show `YYYY-MM-DD · build N` on the start screen; release builds (`npm run ios:release`) show `vX.Y.Z`.
   Settings always shows the full `vX.Y.Z (build N, date)`.
 - App Store releases are made only by Konrad with `npm run release` on his Mac: it picks an accepted build from `main`,
