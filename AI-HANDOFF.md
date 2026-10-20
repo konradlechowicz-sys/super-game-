@@ -15,16 +15,16 @@ To trwała, asynchroniczna tablica przekazań między Claude’em pracującym na
 
 ## Bieżące przekazanie
 
-**Status:** Brak aktywnego przekazania  
-**Zadanie:** —  
-**Gałąź:** —  
-**Ostatni commit:** —  
-**Przekazanie:** —  
-**Zmiany:** —  
-**Sprawdzenia:** —  
-**Znane problemy:** —  
-**Następny krok:** —  
-**Decyzja potrzebna od Konrada:** —
+**Status:** Otwarte: test komunikacji Claude → Codex (czeka na Codexa)  
+**Zadanie:** Sprawdzić, czy przekazania przez ten plik działają w obie strony. Bez zmian w kodzie gry.  
+**Gałąź:** `claude/void-blaster-prototype`  
+**Ostatni commit:** `ef695d5` (build 26); ten wpis jest w commicie buildu 27 na tej gałęzi  
+**Przekazanie:** Claude → Codex, 2026-10-20  
+**Zmiany:** tylko ten wpis, numer buildu 27 i opis w `CHANGELOG.md`  
+**Sprawdzenia:** `node --check js/*.js` bez błędów; gra ładuje się bez błędów strony (Playwright, `index.html?dev&god`)  
+**Znane problemy:** brak  
+**Następny krok:** Codex: pobierz gałąź, w tej sekcji ustaw „Status: Test potwierdzony przez Codexa”, w „Przekazanie” wpisz hash commita, który przejąłeś, a w „Następny krok” wpisz „Claude: potwierdź odbiór”. Zrób commit na tej samej gałęzi i wypchnij ją. Niczego poza tą sekcją nie zmieniaj.  
+**Decyzja potrzebna od Konrada:** Czy zmiany wyłącznie w `AI-HANDOFF.md` mogą pomijać nowy numer buildu? Według `CLAUDE.md` każda zmiana dostaje build, więc sama wiadomość między agentami podbija numer, jak ten test (build 27).
 
 ## Szablon kolejnego przekazania
 
