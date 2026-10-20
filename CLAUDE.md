@@ -75,3 +75,5 @@ Konrad decides what becomes the real game: **never push to `main`**. `main` hold
 - Also load `dist/void-blaster-test.html` and open the 🛠 panel; confirm the normal page has no 🛠 button.
 - Dev URL flags: `?test` turns on the TEST variant on the unbundled page, `?dev` unlocks all sectors of the purchased content, `&full` grants the full game (simulated purchase),
   `&fast=1`, `&ts=4`, `&god`, `&coins=1000`. Without `&full`, worlds 2-4 show the paywall.
+  These flags work only on local hosts (localhost, private network, `file:`) and in TEST builds; the public
+  GitHub Pages version ignores them so it stays a free trial (`LOCAL` in `js/main.js`, same rule for `?test` in `index.html`).
