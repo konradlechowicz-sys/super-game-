@@ -9,6 +9,7 @@
 import { execSync } from 'node:child_process';
 import { appendFileSync, existsSync, readFileSync } from 'node:fs';
 import { createInterface } from 'node:readline/promises';
+import { buildsBetween, describe, readAt } from './changelog.mjs';
 import { clearLocalChanges } from './localchanges.mjs';
 
 const sh = (cmd, opts = {}) => execSync(cmd, { encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'], ...opts }).trim();
@@ -37,6 +38,10 @@ function buildLabel(ref) {
     return 'bez numeru builda';
   }
 }
+
+const buildOf = (ref) => { try { return +(sh(`git show ${ref}:js/version.js`).match(/build: (\d+)/) || [])[1] || 0; } catch { return 0; } };
+// What a version changes compared with the accepted one, from its CHANGELOG.md.
+const changesOf = (ref, max) => describe(buildsBetween(readAt(ref), buildOf('origin/main'), buildOf(ref)), '     ', max);
 
 function switchToMain() {
   const hasLocalMain = sh('git branch --list main') !== '';
@@ -89,7 +94,7 @@ if (!candidates.length) {
 }
 
 console.log('Nowe wersje do sprawdzenia:');
-candidates.forEach((c, i) => console.log(`  ${i + 1}) ${c.label} · ${c.when} · ${c.subject}\n     gałąź: ${c.branch}`));
+candidates.forEach((c, i) => console.log(`  ${i + 1}) ${c.label} · ${c.when}\n     gałąź: ${c.branch}\n${changesOf(c.ref, 4)}\n`));
 const pick = candidates.length === 1 ? '1' : await ask(`\nKtórą wersję uruchomić? [1-${candidates.length}, Enter = 1] `);
 const c = candidates[(+pick || 1) - 1];
 if (!c) bye('Nie ma takiej wersji.', 1);
@@ -103,6 +108,7 @@ try {
   console.log('\nNie udało się zbudować albo uruchomić tej wersji. Możesz ją odrzucić albo spróbować później.');
 }
 
+console.log(`\nZmiany w ${c.label} względem zaakceptowanej wersji:\n${changesOf(c.sha)}`);
 const decision = await ask('\nCo z tą wersją? [a] akceptuj  [o] odrzuć  [p] później: ');
 // Normally return to main. Until the first version is accepted main has no game (not even this script),
 // so in that case go back to the branch the script was started from.

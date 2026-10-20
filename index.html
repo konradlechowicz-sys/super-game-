@@ -18,7 +18,7 @@
 <body>
 <canvas id="game"></canvas>
 <div id="ui"></div>
-<script>window.__TEST__ ??= new URLSearchParams(location.search).has('test');</script>
+<script>window.__TEST__ ??= new URLSearchParams(location.search).has('test') && /^(localhost|127\.0\.0\.1|\[::1\]|10\.\d+\.\d+\.\d+|192\.168\.\d+\.\d+|172\.(1[6-9]|2\d|3[01])\.\d+\.\d+|[\w-]+\.local|)$/.test(location.hostname);</script>
 <script type="module" src="js/main.js"></script>
 </body>
 </html>

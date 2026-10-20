@@ -4,6 +4,12 @@
   Talk to Konrad in Polish; the game itself is in English.
 - Neon space survivor for iPhone. Vanilla JS + Canvas, no framework. Code map is in README.md.
 
+## Shared handoff with Codex
+
+- Before starting a task, read the root `AI-HANDOFF.md` for a pending assignment or status from Codex.
+- For a handoff, use the same `claude/...` branch and commit the handoff update with the work. Work sequentially: only one agent edits that branch at a time.
+- Keep the current handoff factual and secret-free. Continue to follow the project branch and Konrad-approval rules below.
+
 ## Monetization (decided by Konrad)
 Free trial + one non-consumable in-app purchase "Full Game" (USD 3.99, `com.konradlechowicz.voidblaster.fullgame`).
 Free: world 1 with its boss, the Striker, upgrades up to level 3. Full: worlds 2-4, Phantom + Titan, all upgrade
@@ -36,12 +42,25 @@ TEST is a build variant, not a branch, so it always contains the newest game:
 - Build numbers are never reused; `npm run bump` also counts builds on `test/...` and other branches.
 - **Every change gets a new build:** run `npm run bump` before committing. It increments the build number, sets the
   date (Europe/Warsaw) and syncs `package.json`, `sw.js` and the Xcode project (Build / Version).
+- **Exception (decided by Konrad):** a commit that changes only `AI-HANDOFF.md` (messages between Claude and Codex)
+  never gets a new build: no `npm run bump`, no `CHANGELOG.md` entry, no preview republish.
 - Test builds show `YYYY-MM-DD · build N` on the start screen; release builds (`npm run ios:release`) show `vX.Y.Z`.
   Settings always shows the full `vX.Y.Z (build N, date)`.
 - App Store releases are made only by Konrad with `npm run release` on his Mac: it picks an accepted build from `main`,
   copies it to `release` with the public version (patch = fixes, minor = new content, major = big overhaul),
   keeps that build's number, tags `vX.Y.Z` and opens Xcode for Archive. Do not change the public version in cloud work.
 - Mention the new build number to Konrad after each change.
+
+## Changelog (`CHANGELOG.md`, decided by Konrad)
+Konrad wants to see what every build changes when he reviews and releases, and a full summary for every release.
+- `npm run bump` adds `## Build N · date` with a placeholder; replace it with bullets tagged `[Nowe]`, `[Zmiana]`,
+  `[Balans]`, `[Poprawka]`, `[App Store]` or `[Narzędzia]` (written in Polish, concrete: what the player notices).
+- Also keep `## Następne wydanie` current: a short Polish summary of everything since the last release and, under
+  `### What's New (App Store)`, the English text for App Store Connect (player-facing changes only).
+- `npm run review` prints the builds a candidate adds over `main`; `npm run release` prints every change since the last
+  release and stamps a `## vX.Y.Z · build N · date · App Store` section (summary + all changes) into the release's
+  `CHANGELOG.md` and the tag. If a `v*` tag exists that `main`'s `CHANGELOG.md` does not have yet, copy that section
+  from the `release` branch into it and reset `Następne wydanie`. Logic: `scripts/changelog.mjs`.
 
 ## Shipping a change (do all three after every gameplay change)
 Konrad decides what becomes the real game: **never push to `main`**. `main` holds only versions he accepted.
@@ -64,3 +83,5 @@ Konrad decides what becomes the real game: **never push to `main`**. `main` hold
 - Also load `dist/void-blaster-test.html` and open the 🛠 panel; confirm the normal page has no 🛠 button.
 - Dev URL flags: `?test` turns on the TEST variant on the unbundled page, `?dev` unlocks all sectors of the purchased content, `&full` grants the full game (simulated purchase),
   `&fast=1`, `&ts=4`, `&god`, `&coins=1000`. Without `&full`, worlds 2-4 show the paywall.
+  These flags work only on local hosts (localhost, private network, `file:`) and in TEST builds; the public
+  GitHub Pages version ignores them so it stays a free trial (`LOCAL` in `js/main.js`, same rule for `?test` in `index.html`).

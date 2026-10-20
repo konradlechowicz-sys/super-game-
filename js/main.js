@@ -10,7 +10,10 @@ import { createStore, shipLook } from './store.js';
 import { installTestKit } from './testkit.js';
 
 const params = new URLSearchParams(location.search);
-const DEV = params.has('dev');
+// Test flags (?dev, &full, &god, ...) work only on the developer's own machine or network and in TEST builds, so the
+// public web version on GitHub Pages stays the free trial. index.html applies the same rule to ?test.
+const LOCAL = /^(localhost|127\.0\.0\.1|\[::1\]|10\.\d+\.\d+\.\d+|192\.168\.\d+\.\d+|172\.(1[6-9]|2\d|3[01])\.\d+\.\d+|[\w-]+\.local|)$/.test(location.hostname);
+const DEV = params.has('dev') && (LOCAL || __TEST__);
 
 const canvas = document.getElementById('game');
 const ctx = canvas.getContext('2d', { alpha: false });
@@ -178,8 +181,13 @@ app.applySettings = () => {
   app.audio.setMusicOn(s.music);
 };
 
+// Resets progress, never the purchase: an owned full game stays unlocked and its coin bonus is not paid again.
 app.resetProgress = () => {
+  const owned = app.store.isFull(), bonusPaid = !!app.save.unlockBonus;
   app.save = resetSave();
+  app.save.unlockBonus = bonusPaid;
+  if (owned) app.store.grant();
+  app.persist();
   app.applySettings();
 };
 

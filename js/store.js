@@ -38,13 +38,18 @@ export function createStore(app, dev) {
 
   // A refunded purchase disappears from StoreKit's entitlements; take the full game back, keep progress and coins.
   store.revoke = () => {
-    if (!app.save.fullGame) return;
-    app.save.fullGame = false;
-    if (app.save.skin === 'gold') app.save.skin = null;
+    const s = app.save;
+    if (!s.fullGame) return;
+    s.fullGame = false;
+    if (s.skin === 'gold') s.skin = null;
+    s.ships = s.ships.filter((id) => !FULL_GAME_SHIPS.includes(id));
+    if (!s.ships.includes(s.ship)) s.ship = 'striker';
     app.persist();
   };
 
   store.init = async () => {
+    // The public web version is trial-only: a save unlocked earlier (e.g. by a test flag) goes back to the trial.
+    if (store.mode === 'none') { store.revoke(); return; }
     if (!native) return;
     try {
       const p = await native.getProduct({ id: FULL_GAME_ID });
