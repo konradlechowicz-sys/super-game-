@@ -12,15 +12,16 @@ Everything to paste into App Store Connect. Character limits are Apple's; all te
 ## App information
 | Field | Value |
 |---|---|
-| Name (30) | Void Blaster |
-| Subtitle (30) | Neon Space Survivor |
+| Name (30) | Void Blaster: Neon Survivor |
+| Subtitle (30) | Blast the Neon Swarm |
 | Bundle ID | com.konradlechowicz.voidblaster |
 | Primary category | Games → Action |
 | Secondary category | Games → Arcade |
 | Price | Free, with one in-app purchase (Full Game) |
 | Seller / developer name | Konrad Lechowicz |
 
-If the name is already taken on the App Store, alternatives: *Void Blaster: Neon Swarm*, *Void Blaster Survivor*.
+"Void Blaster" alone was taken on the App Store, so the store name is *Void Blaster: Neon Survivor*. The name under
+the icon on the iPhone, the logo and all marketing stay "Void Blaster"; the subtitle avoids repeating "Survivor".
 
 ## Promotional text (170)
 Free to try: play the whole first world and its boss. Unlock the full game once for 3 more worlds, 3 bosses and 2 ships. No ads, ever.
