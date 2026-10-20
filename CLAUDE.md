@@ -4,6 +4,12 @@
   Talk to Konrad in Polish; the game itself is in English.
 - Neon space survivor for iPhone. Vanilla JS + Canvas, no framework. Code map is in README.md.
 
+## Shared handoff with Codex
+
+- Before starting a task, read the root `AI-HANDOFF.md` for a pending assignment or status from Codex.
+- For a handoff, use the same `claude/...` branch and commit the handoff update with the work. Work sequentially: only one agent edits that branch at a time.
+- Keep the current handoff factual and secret-free. Continue to follow the project branch and Konrad-approval rules below.
+
 ## Monetization (decided by Konrad)
 Free trial + one non-consumable in-app purchase "Full Game" (USD 3.99, `com.konradlechowicz.voidblaster.fullgame`).
 Free: world 1 with its boss, the Striker, upgrades up to level 3. Full: worlds 2-4, Phantom + Titan, all upgrade
