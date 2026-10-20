@@ -73,6 +73,12 @@ Bundle ID: `com.konradlechowicz.voidblaster` (change it in `capacitor.config.jso
   an accepted build, copies it to `release` with the public version, keeps its build number, tags it and opens Xcode
   for *Product → Archive*. `main` is never modified by a release.
 
+## Changelog
+`CHANGELOG.md` lists every build's changes (newest first) and a full summary of every App Store release.
+`npm run bump` adds the section for a new build; `npm run review` shows what a candidate changes and `npm run release`
+shows everything since the last release, then writes the release summary into `CHANGELOG.md` and the tag and prints
+the App Store "What's New" text. Parsing and formatting: `scripts/changelog.mjs`.
+
 ## Versions and builds
 `js/version.js` holds the public version and the build number; `npm run bump` increments the build after every change
 and keeps `package.json`, `sw.js` and the Xcode project in sync (`npm run bump -- 1.1.0` also sets a new public version).

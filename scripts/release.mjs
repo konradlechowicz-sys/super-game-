@@ -5,9 +5,13 @@
 // The script picks an accepted build from main, merges it into `release`, stamps the public version and a build
 // number (the accepted build's own, if possible), tags it vX.Y.Z, pushes branch + tag and opens Xcode for Archive.
 // main is never modified, so cloud work keeps merging cleanly.
+// CHANGELOG.md: each build is listed with its changes, the release shows everything since the previous release and
+// stamps a full summary into the release's CHANGELOG.md and tag, plus the App Store "What's New" text.
 // Set VB_NO_SIM=1 to skip building and opening Xcode (for testing on a machine without Xcode).
 import { execSync } from 'node:child_process';
+import { readFileSync, writeFileSync } from 'node:fs';
 import { createInterface } from 'node:readline/promises';
+import { buildsBetween, describe, FILE as CHANGELOG, grouped, parse, readAt, stampRelease, whatsNew } from './changelog.mjs';
 import { clearLocalChanges } from './localchanges.mjs';
 
 const sh = (cmd) => execSync(cmd, { encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'] }).trim();
@@ -57,15 +61,31 @@ const builds = sh("git log --first-parent -n 30 --format='%H|%cr' origin/main").
   .filter((b) => b.v && !seen.has(b.v.build) && seen.add(b.v.build))
   .slice(0, 8);
 
+// The last released build: changes after it go into the next release.
+const lastBuild = Math.max(0, ...releases.map((r) => r.info?.build || 0));
+const latestLog = readAt('origin/main');
 console.log('\nZaakceptowane buildy w main:');
 builds.forEach((b, i) => {
   const rel = releasedFrom.get(b.sha);
+  const own = buildsBetween(latestLog, b.v.build - 1, b.v.build)[0];
+  const first = own?.bullets[0]?.replace(/^- /, '') || '(bez opisu)';
+  const more = own && own.bullets.length > 1 ? ` (+${own.bullets.length - 1})` : '';
   console.log(`  ${i + 1}) build ${b.v.build} (${b.v.date}) · ${b.when}${rel ? `  ← już wydany jako ${rel}` : ''}`);
+  console.log(`     ${first.length > 100 ? first.slice(0, 97) + '…' : first}${more}`);
 });
 const pick = await ask(`\nKtóry build wydać? [1-${builds.length}, Enter = 1] `);
 const chosen = builds[(+pick || 1) - 1];
 if (!chosen) bye('Nie ma takiego buildu.', 1);
 
+// Everything this release brings, read from the chosen build's own CHANGELOG.md.
+const chosenLog = readAt(chosen.sha);
+const inRelease = buildsBetween(chosenLog, lastBuild, chosen.v.build);
+console.log(`\n━━ Zmiany w tym wydaniu${lastBuild ? ` (od wydanego buildu ${lastBuild})` : ''} ━━`);
+console.log(inRelease.length ? grouped(inRelease).replace(/^/gm, '  ') : describe(inRelease, '  '));
+const nextNote = parse(chosenLog).find((s) => s.kind === 'next');
+const news = whatsNew(nextNote);
+if (news) console.log(`\n━━ What's New (App Store) ━━\n${news}`);
+else if (chosenLog) console.log('\n(Brak tekstu „What\'s New” w CHANGELOG.md; poproś Claude o jego przygotowanie.)');
 const last = releases[0]?.tag.slice(1);
 let version;
 if (!last) {
@@ -100,8 +120,18 @@ if (exists('origin/release')) {
   run(`git checkout -q -B release ${chosen.sha}`);
 }
 run(`node scripts/bump.mjs ${version} --build ${build}`);
+// The release's full summary goes into its CHANGELOG.md and into the tag.
+let summary = '';
+if (chosenLog) {
+  const date = new Intl.DateTimeFormat('en-CA', { timeZone: 'Europe/Warsaw' }).format(new Date());
+  const stamped = stampRelease(readFileSync(CHANGELOG, 'utf8'), { version, build, date, fromBuild: lastBuild });
+  writeFileSync(CHANGELOG, stamped);
+  const sec = parse(stamped).find((s) => s.kind === 'release' && s.version === version);
+  summary = sec ? sec.lines.join('\n').trim() : '';
+}
 run(`git commit -q --allow-empty -am "Release v${version} (build ${build})"`);
-run(`git tag -a v${version} -m "App Store release v${version} (build ${build}), from ${chosen.sha}"`);
+writeFileSync(`${sh('git rev-parse --git-dir')}/vb-tag-message`, `App Store release v${version} (build ${build}), from ${chosen.sha}\n\n${summary}\n`);
+run(`git tag -a --cleanup=verbatim v${version} -F "${sh('git rev-parse --git-dir')}/vb-tag-message"`);
 try {
   run(`git push -q origin release v${version}`);
   console.log(`\n✔ Wydanie v${version} (build ${build}) jest na GitHubie: gałąź release i tag v${version}.`);
@@ -115,6 +145,8 @@ if (!process.env.VB_NO_SIM) {
   run('npx cap sync ios');
   run('npx cap open ios');
 }
+if (news) console.log(`\nTekst „What's New” do App Store Connect (pole przy wersji ${version}):\n\n${news}\n`);
+console.log(`Pełne podsumowanie wydania: CHANGELOG.md na gałęzi release (sekcja v${version}) i opis tagu v${version} na GitHubie.`);
 console.log(`
 Teraz w Xcode:
   1. U góry jako urządzenie wybierz „Any iOS Device (arm64)”.

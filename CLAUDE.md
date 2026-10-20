@@ -43,6 +43,17 @@ TEST is a build variant, not a branch, so it always contains the newest game:
   keeps that build's number, tags `vX.Y.Z` and opens Xcode for Archive. Do not change the public version in cloud work.
 - Mention the new build number to Konrad after each change.
 
+## Changelog (`CHANGELOG.md`, decided by Konrad)
+Konrad wants to see what every build changes when he reviews and releases, and a full summary for every release.
+- `npm run bump` adds `## Build N · date` with a placeholder; replace it with bullets tagged `[Nowe]`, `[Zmiana]`,
+  `[Balans]`, `[Poprawka]`, `[App Store]` or `[Narzędzia]` (written in Polish, concrete: what the player notices).
+- Also keep `## Następne wydanie` current: a short Polish summary of everything since the last release and, under
+  `### What's New (App Store)`, the English text for App Store Connect (player-facing changes only).
+- `npm run review` prints the builds a candidate adds over `main`; `npm run release` prints every change since the last
+  release and stamps a `## vX.Y.Z · build N · date · App Store` section (summary + all changes) into the release's
+  `CHANGELOG.md` and the tag. If a `v*` tag exists that `main`'s `CHANGELOG.md` does not have yet, copy that section
+  from the `release` branch into it and reset `Następne wydanie`. Logic: `scripts/changelog.mjs`.
+
 ## Shipping a change (do all three after every gameplay change)
 Konrad decides what becomes the real game: **never push to `main`**. `main` holds only versions he accepted.
 1. **Repo:** commit and push to a `claude/...` branch (this session's working branch). Do not merge into `main`.
