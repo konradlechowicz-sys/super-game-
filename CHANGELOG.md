@@ -13,10 +13,18 @@ i wersja TEST (gracze tego nie widzą).
 <!-- Podsumowanie zmian od v1.0.1; uzupełnia Claude przy każdym buildzie. -->
 
 - Opis w App Store: poprawiona nazwa broni Arc Coil.
+- Elity z cechami: Swift, Bulwark, Berserker, Commander, Shielded; bogatsze nagrody za ich pokonanie.
 
 ### What's New (App Store)
 
-- 
+- Elite enemies now come with traits: Swift, Bulwark, Berserker, Commander and Shielded. Beat them for richer rewards.
+
+## Build 33 · 2026-10-22
+- [Nowe] Elity z cechami (stałe dla każdego sektora; od 1-3 jedna cecha, w światach 3–4 dwie): **Swift** (szybka, co 4 s szarża po ostrzeżeniu linią), **Bulwark** (większa i twardsza, nie da się przez nią przelecieć, aura 120 px spowalnia statek o 35%), **Berserker** (×2,5 obrażeń, mocniejsze pociski, szał przy połowie HP), **Commander** (przychodzi z eskortą 6 wrogów, wrogowie w aurze 220 px +30% prędkości i +20% obrażeń), **Shielded** (tarcza = połowa HP, odnawia się po 3 s bez trafień).
+- [Nowe] Elita z cechą ma kolorową obwódkę i nazwę cechy nad paskiem HP; komunikat np. „SWIFT ELITE”, „COMMANDER SHIELDED ELITE”.
+- [Balans] Elita z cechą zostawia skrzynię z dwiema nagrodami i więcej monet (20 przy jednej cesze, 28 przy dwóch; zwykła elita 12).
+- [Nowe] Samouczek: podpowiedź przy pierwszym spotkaniu każdej cechy.
+- [Narzędzia] Panel 🛠: „Spawn elite with a trait” z wyborem cechy.
 
 ## Build 32 · 2026-10-20
 - [Narzędzia] `npm run bump` aktualizuje też numer wersji w `package-lock.json`, więc `npm install` nie zostawia już „niezapisanej zmiany”, która zatrzymywała `review` i `release`.

@@ -1,5 +1,5 @@
 import { TAU, rand, randi, clamp, lerp, pick, weightedPick, angleLerp, SpatialHash } from './util.js';
-import { ENEMIES, BOSSES, PASSIVES, PASSIVE_MAX, SHIPS, xpFor, stageIndex, shopBonus } from './data.js';
+import { ENEMIES, BOSSES, PASSIVES, PASSIVE_MAX, SHIPS, TRAITS, xpFor, stageIndex, shopBonus } from './data.js';
 import { WEAPONS, WEAPON_MAX, weaponStats } from './weapons.js';
 import { shipLook } from './store.js';
 import { Tutorial, tipsOn, tipSeen, markTip } from './tutorial.js';
@@ -150,6 +150,13 @@ export class Game {
       this.damage(e.parent, dmg * 0.6, 0, 0, quiet);
       return;
     }
+    if (e.shield > 0) {
+      // a shielded elite's shield soaks damage first and regrows after 3 s without hits
+      const soak = Math.min(e.shield, dmg);
+      e.shield -= soak; dmg -= soak; e.lastHit = this.time;
+      if (e.shield <= 0) { this.text(e.x, e.y - e.r - 12, 'SHIELD DOWN', TRAITS.shielded.color); this.burst(e.x, e.y, TRAITS.shielded.color, 14, 220, 0.4); }
+    }
+    if (e.traits) e.lastHit = this.time;
     e.hp -= dmg;
     e.flash = 0.07;
     if (!e.boss) { e.kx += kx * e.kbRes; e.ky += ky * e.kbRes; }
@@ -181,8 +188,10 @@ export class Game {
     this.dropGem(e.x, e.y, e.xp);
     if (e.elite) {
       this.shake = Math.max(this.shake, 10);
-      this.pickups.push({ x: e.x, y: e.y, kind: 'chest', v: 1 });
-      for (let i = 0; i < 6; i++) this.pickups.push({ x: e.x + rand(-25, 25), y: e.y + rand(-25, 25), kind: 'coin', v: 2 });
+      // a trait elite's crate holds two rewards and it drops more coins (12 plain, 20 with one trait, 28 with two)
+      const nt = e.traits ? e.traits.size : 0;
+      this.pickups.push({ x: e.x, y: e.y, kind: 'chest', v: nt ? 2 : 1 });
+      for (let i = 0; i < 6 + nt * 4; i++) this.pickups.push({ x: e.x + rand(-25, 25), y: e.y + rand(-25, 25), kind: 'coin', v: 2 });
     } else {
       const r = Math.random();
       if (r < 0.035) this.pickups.push({ x: e.x, y: e.y, kind: 'coin', v: 1 });
@@ -276,7 +285,7 @@ export class Game {
   }
 
   // ---------------- spawning ----------------
-  spawnEnemy(type, x, y, elite = false) {
+  spawnEnemy(type, x, y, elite = false, traits = []) {
     const d = ENEMIES[type], st = this.stage;
     // Enemy toughness ramps from 1x to the stage's peak, since every run starts with a fresh build.
     const hpMul = lerp(st.hp0 || 1, st.hp, clamp(this.time / st.duration, 0, 1));
@@ -287,6 +296,7 @@ export class Game {
       rot: 0, state: 'chase', t: 0, cd: rand(0.5, 2), kbRes: d.speed === 0 ? 0 : elite ? 0.25 : d.r > 18 ? 0.4 : 1, alpha: 1,
     };
     e.maxHp = e.hp;
+    if (traits.length) this.applyTraits(e, traits);
     if (d.ai === 'drift') {
       const p = this.player;
       const a = Math.atan2(p.y - y, p.x - x) + rand(-0.35, 0.35);
@@ -295,6 +305,40 @@ export class Game {
     }
     this.enemies.push(e);
     return e;
+  }
+
+  spawnElite(type, x, y, traits = []) {
+    const e = this.spawnEnemy(type, x, y, true, traits);
+    if (e.traits?.has('commander')) {
+      // an escort of six; a stationary commander (turret) brings the sector's first enemy type instead
+      const esc = ENEMIES[type].speed === 0 ? this.stage.enemies[0][0] : type;
+      for (let i = 0; i < 6; i++) {
+        const a = (i / 6) * TAU;
+        this.spawnEnemy(esc, x + Math.cos(a) * 70, y + Math.sin(a) * 70);
+      }
+    }
+    return e;
+  }
+
+  // Elite traits (v1.1): stat changes at spawn; behaviour lives in updateTraits, drawing in drawTraits.
+  applyTraits(e, traits) {
+    e.traits = new Set(traits);
+    const d = e.def;
+    if (e.traits.has('swift') && d.speed > 0) { e.speed = (e.speed / 0.9) * 1.7; e.sw = { cd: 2.5, t: 0, phase: 'run' }; }
+    if (e.traits.has('bulwark')) { e.hp *= 10 / 7; e.r *= 1.25; e.kbRes = 0; }
+    if (e.traits.has('berserker')) e.dmg = (e.dmg / 1.5) * 2.5;
+    if (e.traits.has('shielded')) { e.shield = e.maxShield = e.hp * 0.5; e.lastHit = -9; }
+    e.maxHp = e.hp;
+  }
+
+  // Damage an enemy deals: berserker rage and a commander's aura. Shots of a berserker hit harder too (its contact
+  // damage is already raised at spawn).
+  dmgMul(e) {
+    return (e.enraged ? 1.25 : 1) * (e.buffT > 0 ? 1.2 : 1);
+  }
+
+  shotDmg(e, base) {
+    return base * this.dmgMul(e) * (e.traits?.has('berserker') ? 1.6 : 1);
   }
 
   spawnPos() {
@@ -343,7 +387,7 @@ export class Game {
       }
     } else if (ev.type === 'elite') {
       const pos = this.posFor(ev.enemy);
-      this.spawnEnemy(ev.enemy, pos.x, pos.y, true);
+      this.spawnElite(ev.enemy, pos.x, pos.y, ev.traits || []);
     } else if (ev.type === 'surge') {
       this.surge = { until: this.time + ev.dur, mul: ev.mul };
     } else if (ev.type === 'mortar') {
@@ -740,6 +784,10 @@ export class Game {
 
   updatePlayer(dt) {
     const p = this.player, inp = this.app.input;
+    // a bulwark elite's aura (measured last frame) slows the ship
+    const slow = this.slowNow = this.slowNext ?? 1;
+    this.slowNext = 1;
+    const speed = p.speed * slow;
     const hw = this.arena.w / 2 - p.r, hh = this.arena.h / 2 - p.r;
     if (this.state === 'dying') return;
     if (inp.dx || inp.dy) {
@@ -749,8 +797,8 @@ export class Game {
     }
     if (inp.jx || inp.jy) {
       // analog joystick: speed scales with how far the knob is pushed
-      p.tx = p.x + inp.jx * p.speed * dt;
-      p.ty = p.y + inp.jy * p.speed * dt;
+      p.tx = p.x + inp.jx * speed * dt;
+      p.ty = p.y + inp.jy * speed * dt;
     } else if (inp.joy) {
       p.tx = p.x;
       p.ty = p.y;
@@ -758,8 +806,8 @@ export class Game {
     const kx = inp.keyX(), ky = inp.keyY();
     if (kx || ky) {
       const l = Math.hypot(kx, ky);
-      p.tx = p.x + (kx / l) * p.speed * 0.12;
-      p.ty = p.y + (ky / l) * p.speed * 0.12;
+      p.tx = p.x + (kx / l) * speed * 0.12;
+      p.ty = p.y + (ky / l) * speed * 0.12;
     }
     p.tx = clamp(p.tx, -hw, hw);
     p.ty = clamp(p.ty, -hh, hh);
@@ -770,7 +818,7 @@ export class Game {
       p.ty = p.y + (ly / ld) * MAX_LAG;
       lx = p.tx - p.x; ly = p.ty - p.y; ld = MAX_LAG;
     }
-    const step = p.speed * dt;
+    const step = speed * dt;
     const ox = p.x, oy = p.y;
     if (ld <= step) { p.x = p.tx; p.y = p.ty; } else { p.x += (lx / ld) * step; p.y += (ly / ld) * step; }
     const mv = Math.hypot(p.x - ox, p.y - oy);
@@ -821,7 +869,7 @@ export class Game {
           e.cd = (e.def.fire || 3.2) * (e.elite ? 0.45 : 1);
           const a = Math.atan2(dy, dx);
           const n = (e.def.shots || 1) + (e.elite ? 2 : 0);
-          for (let k = 0; k < n; k++) this.enemyShoot(e.x, e.y, a + (k - (n - 1) / 2) * 0.25, 165, 6);
+          for (let k = 0; k < n; k++) this.enemyShoot(e.x, e.y, a + (k - (n - 1) / 2) * 0.25, 165, this.shotDmg(e, 6));
         }
       } else if (ai === 'orbit') {
         // circle the player, then lunge in
@@ -858,7 +906,7 @@ export class Game {
         if (e.cd <= 0 && d < 430) {
           e.cd = e.elite ? 1.4 : 2.6;
           const n = e.elite ? 8 : 4;
-          for (let k = 0; k < n; k++) this.enemyShoot(e.x, e.y, e.rot + (k / n) * TAU, 150, 6);
+          for (let k = 0; k < n; k++) this.enemyShoot(e.x, e.y, e.rot + (k / n) * TAU, 150, this.shotDmg(e, 6));
         }
       } else if (ai === 'blink') {
         // fade out, reappear next to the player
@@ -886,8 +934,14 @@ export class Game {
           e.cd = e.elite ? 1.6 : 3.4;
           const a = Math.atan2(dy, dx);
           const n = e.elite ? 3 : 1;
-          for (let k = 0; k < n; k++) this.enemyShoot(e.x, e.y, a + (k - (n - 1) / 2) * 0.5, 120, 7, true);
+          for (let k = 0; k < n; k++) this.enemyShoot(e.x, e.y, a + (k - (n - 1) / 2) * 0.5, 120, this.shotDmg(e, 7), true);
         }
+      }
+      if (e.traits || e.buffT > 0) {
+        const tm = this.updateTraits(e, dt, dx, dy, d);
+        if (tm) { mx = tm[0]; my = tm[1]; }
+        else { const k = (e.enraged ? 1.5 : 1) * (e.buffT > 0 ? 1.3 : 1); mx *= k; my *= k; }
+        e.buffT = Math.max(0, (e.buffT || 0) - dt);
       }
       // separation
       let sx = 0, sy = 0;
@@ -913,8 +967,53 @@ export class Game {
       }
       if (e.def.spin) e.rot += e.def.spin * dt;
       else if (mx || my) e.rot = angleLerp(e.rot, Math.atan2(my, mx), Math.min(1, dt * 8));
-      if (!e.ghost && d < e.r + p.r) this.hurtPlayer(e.dmg, e.type);
+      if (!e.ghost && d < e.r + p.r) {
+        this.hurtPlayer(e.dmg * this.dmgMul(e), e.type);
+        if (e.traits?.has('bulwark')) {
+          // solid: push the ship out instead of letting it fly through
+          const ox = p.x - e.x, oy = p.y - e.y, od = Math.hypot(ox, oy) || 1, push = e.r + p.r - od + 1;
+          if (push > 0) { p.x += (ox / od) * push; p.y += (oy / od) * push; p.tx = p.x; p.ty = p.y; }
+        }
+      }
     }
+  }
+
+  // Per-frame trait behaviour. Returns a movement override [mx, my] while a swift elite winds up or charges.
+  updateTraits(e, dt, dx, dy, d) {
+    const t = e.traits;
+    if (!t) return null;
+    const p = this.player;
+    if (t.has('berserker') && !e.enraged && e.hp < e.maxHp * 0.5) {
+      e.enraged = true;
+      this.text(e.x, e.y - e.r - 14, 'ENRAGED', TRAITS.berserker.color);
+      this.sfx('warn');
+    }
+    if (t.has('shielded') && e.maxShield && this.time - e.lastHit > 3) e.shield = Math.min(e.maxShield, e.shield + e.maxShield * 0.15 * dt);
+    if (t.has('commander')) {
+      // speeds up and strengthens nearby enemies while it lives
+      const near = this.tmp3 || (this.tmp3 = []);
+      this.hash.query(e.x, e.y, 220, near);
+      e.led = 0;
+      for (const o of near) if (o !== e && !o.boss && !o.seg && !o.elite && (o.x - e.x) ** 2 + (o.y - e.y) ** 2 < 220 * 220) { o.buffT = 0.25; e.led++; }
+    }
+    if (t.has('bulwark') && d < e.r + 120) this.slowNext = Math.min(this.slowNext ?? 1, 0.65);
+    if (e.sw && !e.def.ai) {
+      const s = e.sw;
+      if (s.phase === 'run') {
+        s.cd -= dt;
+        if (s.cd <= 0 && d < 420) { s.phase = 'wind'; s.t = 0.6; s.dir = Math.atan2(dy, dx); }
+      } else if (s.phase === 'wind') {
+        s.t -= dt; e.flash = Math.max(e.flash, Math.sin(s.t * 40) > 0 ? 0.02 : 0);
+        if (s.t <= 0) { s.phase = 'charge'; s.t = 0.5; }
+        return [0, 0];
+      } else {
+        s.t -= dt;
+        if (s.t <= 0) { s.phase = 'run'; s.cd = 4; }
+        const v = e.speed * 3;
+        return [Math.cos(s.dir) * v, Math.sin(s.dir) * v];
+      }
+    }
+    return null;
   }
 
   enemyShoot(x, y, a, speed, dmg, homing = false) {
@@ -1278,7 +1377,7 @@ export class Game {
         }
         this.ebullets.length = 0;
         break;
-      case 'chest': this.pendingChests++; break;
+      case 'chest': this.pendingChests += k.v || 1; break;
     }
   }
 
@@ -1422,6 +1521,7 @@ export class Game {
       R.rot(enemySprite(e.shape, e.color, Math.round(e.r), variant), ex, ey, e.rot, sc);
       ctx.globalAlpha = 1;
       if (e.elite) this.drawBar(ctx, e.x, e.y + e.r + 10, 34, e.hp / e.maxHp, '#ffd23d');
+      if (e.traits) this.drawTraits(ctx, e);
     }
 
     // player bullets / enemy bullets
@@ -1631,6 +1731,42 @@ export class Game {
       }
     }
     ctx.globalAlpha = 1;
+  }
+
+  // Trait elites: a ring per trait, names over the health bar, the shield, a swift charge line, command links.
+  drawTraits(ctx, e) {
+    const list = [...e.traits];
+    const pulse = 0.5 + 0.5 * Math.sin(this.app.time * 5);
+    ctx.save();
+    ctx.lineWidth = 2;
+    list.forEach((id, i) => {
+      const c = TRAITS[id].color;
+      ctx.strokeStyle = c; ctx.shadowColor = c; ctx.shadowBlur = 10;
+      ctx.globalAlpha = 0.55 + pulse * 0.35;
+      ctx.beginPath(); ctx.arc(e.x, e.y, e.r + 7 + i * 5, 0, TAU); ctx.stroke();
+    });
+    ctx.shadowBlur = 0; ctx.globalAlpha = 1;
+    if (e.traits.has('bulwark')) { ctx.strokeStyle = TRAITS.bulwark.color; ctx.globalAlpha = 0.18; ctx.setLineDash([6, 8]); ctx.beginPath(); ctx.arc(e.x, e.y, e.r + 120, 0, TAU); ctx.stroke(); ctx.setLineDash([]); ctx.globalAlpha = 1; }
+    if (e.enraged) { ctx.fillStyle = TRAITS.berserker.color; ctx.globalAlpha = 0.18 + pulse * 0.12; ctx.beginPath(); ctx.arc(e.x, e.y, e.r + 4, 0, TAU); ctx.fill(); ctx.globalAlpha = 1; }
+    if (e.sw?.phase === 'wind') {
+      ctx.strokeStyle = TRAITS.swift.color; ctx.globalAlpha = 0.7; ctx.lineWidth = 3; ctx.setLineDash([10, 8]);
+      ctx.beginPath(); ctx.moveTo(e.x, e.y); ctx.lineTo(e.x + Math.cos(e.sw.dir) * 300, e.y + Math.sin(e.sw.dir) * 300); ctx.stroke();
+      ctx.setLineDash([]); ctx.globalAlpha = 1;
+    }
+    if (e.traits.has('commander')) {
+      ctx.strokeStyle = TRAITS.commander.color; ctx.globalAlpha = 0.22; ctx.lineWidth = 1;
+      const near = this.tmp3 || [];
+      let n = 0;
+      for (const o of near) { if (o.buffT > 0 && !o.dead && n++ < 14) { ctx.beginPath(); ctx.moveTo(e.x, e.y); ctx.lineTo(o.x, o.y); ctx.stroke(); } }
+      ctx.globalAlpha = 1;
+    }
+    if (e.maxShield) this.drawBar(ctx, e.x, e.y + e.r + 16, 34, e.shield / e.maxShield, TRAITS.shielded.color);
+    ctx.font = "700 10px 'Orbitron', sans-serif";
+    ctx.textAlign = 'center';
+    ctx.fillStyle = TRAITS[list[0]].color;
+    ctx.shadowColor = '#000'; ctx.shadowBlur = 4;
+    ctx.fillText(list.map((id) => TRAITS[id].name).join(' · '), e.x, e.y - e.r - 14);
+    ctx.restore();
   }
 
   drawBar(ctx, x, y, w, frac, color) {
