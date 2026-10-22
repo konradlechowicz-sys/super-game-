@@ -15,8 +15,9 @@ i wersja TEST (gracze tego nie widzą).
 - Opis w App Store: poprawiona nazwa broni Arc Coil.
 - Elity z cechami: Swift, Bulwark, Berserker, Commander, Shielded, z własnymi atakami (szarża, uderzenie, posiłki, tarcze dla innych); wytrzymalsze w miarę trwania sektora; bogatsze nagrody; strzałka do elity poza ekranem.
 - Arena 1,5× większa: więcej miejsca do manewrowania.
+- Balans po testach autopilotem: słabsze elity na bazie ciężkich wrogów, łagodniejsze Bulwark i Shielded.
 - Tłum boli: krótsza nietykalność po dotknięciu wroga i ścisk (+30% za każdego kolejnego wroga); statki +10 kadłuba.
-- Gwiazdki: 3. gwiazdka za zniszczenie wszystkich elit (i bossa), cel zabójstw +20% w światach 2–4, 50 monet za nową gwiazdkę, 300 za komplet w świecie; ekran wyników z postępem celów.
+- Gwiazdki: 3. gwiazdka za zniszczenie wszystkich elit (i bossa), cel zabójstw +20% w światach 2–4 (niższy w sektorach z ciężkimi wrogami), 50 monet za nową gwiazdkę, 300 za komplet w świecie; ekran wyników z postępem celów.
 
 ### What's New (App Store)
 
@@ -26,6 +27,14 @@ i wersja TEST (gracze tego nie widzą).
 - Flying through a swarm now hurts: the more enemies touch your ship, the harder it hits. All ships get +10 hull.
 - New third star: destroy every elite in the sector (and the boss). New stars pay 50 coins each, and collecting all 18 stars in a world earns a 300-coin bonus. Worlds 2-4 have higher kill goals.
 - The results screen shows your progress on every goal, so you can see which star you missed.
+
+## Build 40 · 2026-10-22
+- [Balans] Po drugim pomiarze autopilotem: niższe cele zabójstw w 2-6 (600), 3-2 (530), 3-4 (640) i 3-6 (450). Walka z bossem w 3-6 skróciła się z 6–8 do 2–3 min, więc pada w niej mniej wrogów.
+
+## Build 39 · 2026-10-22
+- [Balans] Elity na bazie ciężkich wrogów (Tank, Golem i podobne) mają HP ×8 na starcie sektora do ×11 pod koniec (było ×10 do ×14): autopilot nie był w stanie zabić Bulwarka w 1-4 i 2-4, a Swift+Shielded w 3-6 dożywał walki z bossem.
+- [Balans] Bulwark: +20% HP (było +40%). Shielded: tarcza 35% HP (było 50%), odnawia się po 4 s bez trafień (było 3 s) i wolniej (10%/s zamiast 15%/s).
+- [Balans] Niższe cele zabójstw tam, gdzie +20% było poza zasięgiem (sektory pełne ciężkich wrogów): 2-2 950, 2-4 510, 2-6 680, 3-1 1090, 3-2 640, 3-3 1180, 3-4 700, 3-5 1290, 3-6 680. Pozostałe sektory światów 2–4 zostają z +20%.
 
 ## Build 38 · 2026-10-22
 - [Zmiana] Trzecia gwiazdka: zniszcz wszystkie elity sektora (w sektorach z bossem: elity i bossa) zamiast „skończ z 50% kadłuba”. Odprawa sektora pokazuje nowy cel, np. „Destroy all 2 elites”, „Destroy 1 elite and the boss”. Zdobyte już gwiazdki zostają.
