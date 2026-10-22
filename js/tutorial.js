@@ -188,7 +188,7 @@ export function menuTip(app, screen) {
   if (!tipsOn(save) || app.game) return null;
   if (save.stats.runs < 1) return null;
   if (screen === 'map' && !tipSeen(save, 'stars')) {
-    return { id: 'stars', anchor: '.world-head', title: 'EARN 3 STARS', text: 'Clear the sector, hit the kill goal, keep half your hull.' };
+    return { id: 'stars', anchor: '.world-head', title: 'EARN 3 STARS', text: 'Clear the sector, hit the kill goal, destroy every elite.' };
   }
   if (screen === 'menu' && !tipSeen(save, 'shop') && save.coins >= 60) {
     return { id: 'shop', anchor: '[data-act="shop"]', below: true, title: 'SPEND YOUR COINS', text: 'Permanent upgrades for every ship.' };
