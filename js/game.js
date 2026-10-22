@@ -1,5 +1,5 @@
 import { TAU, rand, randi, clamp, lerp, pick, weightedPick, angleLerp, SpatialHash } from './util.js';
-import { ENEMIES, BOSSES, PASSIVES, PASSIVE_MAX, SHIPS, xpFor, stageIndex, shopBonus } from './data.js';
+import { ENEMIES, BOSSES, PASSIVES, PASSIVE_MAX, SHIPS, TRAITS, xpFor, stageIndex, shopBonus } from './data.js';
 import { WEAPONS, WEAPON_MAX, weaponStats } from './weapons.js';
 import { shipLook } from './store.js';
 import { Tutorial, tipsOn, tipSeen, markTip } from './tutorial.js';
@@ -12,6 +12,7 @@ const MAX_WEAPONS = 4;
 const MAX_PASSIVES = 4;
 const DRAG_SENS = 1.5;
 const MAX_LAG = 150;
+const ARENA_SCALE = 1.5;
 
 let nextId = 1;
 
@@ -23,7 +24,8 @@ export class Game {
     this.save = app.save;
     this.ship = shipLook(SHIPS[this.save.ship] || SHIPS.striker, this.save);
     const { vw, vh } = this.viewSize();
-    this.arena = { w: Math.max(900, vw * 1.8), h: Math.max(1300, vh * 1.45) };
+    // v1.1: the arena is 1.5x larger in both directions (was max(900, 1.8 view) x max(1300, 1.45 view)), for more room to manoeuvre
+    this.arena = { w: Math.max(900, vw * 1.8) * ARENA_SCALE, h: Math.max(1300, vh * 1.45) * ARENA_SCALE };
     this.time = 0;
     this.state = 'play';
     this.enemies = []; this.proj = []; this.ebullets = []; this.gems = []; this.pickups = [];
@@ -150,6 +152,13 @@ export class Game {
       this.damage(e.parent, dmg * 0.6, 0, 0, quiet);
       return;
     }
+    if (e.shield > 0) {
+      // a shielded elite's shield soaks damage first and regrows after 3 s without hits
+      const soak = Math.min(e.shield, dmg);
+      e.shield -= soak; dmg -= soak; e.lastHit = this.time;
+      if (e.shield <= 0 && e.maxShield) { this.text(e.x, e.y - e.r - 12, 'SHIELD DOWN', TRAITS.shielded.color); this.burst(e.x, e.y, TRAITS.shielded.color, 14, 220, 0.4); }
+    }
+    if (e.traits) e.lastHit = this.time;
     e.hp -= dmg;
     e.flash = 0.07;
     if (!e.boss) { e.kx += kx * e.kbRes; e.ky += ky * e.kbRes; }
@@ -181,8 +190,10 @@ export class Game {
     this.dropGem(e.x, e.y, e.xp);
     if (e.elite) {
       this.shake = Math.max(this.shake, 10);
-      this.pickups.push({ x: e.x, y: e.y, kind: 'chest', v: 1 });
-      for (let i = 0; i < 6; i++) this.pickups.push({ x: e.x + rand(-25, 25), y: e.y + rand(-25, 25), kind: 'coin', v: 2 });
+      // a trait elite's crate holds two rewards and it drops more coins (12 plain, 20 with one trait, 28 with two)
+      const nt = e.traits ? e.traits.size : 0;
+      this.pickups.push({ x: e.x, y: e.y, kind: 'chest', v: nt ? 2 : 1 });
+      for (let i = 0; i < 6 + nt * 4; i++) this.pickups.push({ x: e.x + rand(-25, 25), y: e.y + rand(-25, 25), kind: 'coin', v: 2 });
     } else {
       const r = Math.random();
       if (r < 0.035) this.pickups.push({ x: e.x, y: e.y, kind: 'coin', v: 1 });
@@ -276,7 +287,7 @@ export class Game {
   }
 
   // ---------------- spawning ----------------
-  spawnEnemy(type, x, y, elite = false) {
+  spawnEnemy(type, x, y, elite = false, traits = []) {
     const d = ENEMIES[type], st = this.stage;
     // Enemy toughness ramps from 1x to the stage's peak, since every run starts with a fresh build.
     const hpMul = lerp(st.hp0 || 1, st.hp, clamp(this.time / st.duration, 0, 1));
@@ -287,6 +298,7 @@ export class Game {
       rot: 0, state: 'chase', t: 0, cd: rand(0.5, 2), kbRes: d.speed === 0 ? 0 : elite ? 0.25 : d.r > 18 ? 0.4 : 1, alpha: 1,
     };
     e.maxHp = e.hp;
+    if (traits.length) this.applyTraits(e, traits);
     if (d.ai === 'drift') {
       const p = this.player;
       const a = Math.atan2(p.y - y, p.x - x) + rand(-0.35, 0.35);
@@ -295,6 +307,46 @@ export class Game {
     }
     this.enemies.push(e);
     return e;
+  }
+
+  spawnElite(type, x, y, traits = []) {
+    const e = this.spawnEnemy(type, x, y, true, traits);
+    if (e.traits?.has('commander')) {
+      // an escort of six; a stationary commander (turret) brings the sector's first enemy type instead
+      const esc = ENEMIES[type].speed === 0 ? this.stage.enemies[0][0] : type;
+      e.escort = [];
+      for (let i = 0; i < 6; i++) {
+        const a = (i / 6) * TAU;
+        e.escort.push(this.spawnEnemy(esc, x + Math.cos(a) * 70, y + Math.sin(a) * 70));
+      }
+    }
+    return e;
+  }
+
+  // Elite traits (v1.1): stat changes at spawn; behaviour lives in updateTraits, drawing in drawTraits.
+  applyTraits(e, traits) {
+    e.traits = new Set(traits);
+    const d = e.def;
+    // tougher than a plain elite, more so later in the sector: x10 health at the start, up to x14 at the end
+    e.hp *= (10 + 4 * clamp(this.time / this.stage.duration, 0, 1)) / 7;
+    if (e.traits.has('swift') && d.speed > 0) { e.speed = (e.speed / 0.9) * 1.7; e.sw = { cd: 2, t: 0, phase: 'run' }; }
+    if (e.traits.has('bulwark')) { e.hp *= 1.4; e.r *= 1.25; e.kbRes = 0; }
+    if (e.traits.has('berserker')) e.slamT = 0;
+    if (e.traits.has('commander')) e.callT = 10;
+    if (e.traits.has('shielded')) e.wardT = 3;
+    if (e.traits.has('berserker')) e.dmg = (e.dmg / 1.5) * 2.5;
+    if (e.traits.has('shielded')) { e.shield = e.maxShield = e.hp * 0.5; e.lastHit = -9; }
+    e.maxHp = e.hp;
+  }
+
+  // Damage an enemy deals: berserker rage and a commander's aura. Shots of a berserker hit harder too (its contact
+  // damage is already raised at spawn).
+  dmgMul(e) {
+    return (e.enraged ? 1.25 : 1) * (e.buffT > 0 ? 1.2 : 1);
+  }
+
+  shotDmg(e, base) {
+    return base * this.dmgMul(e) * (e.traits?.has('berserker') ? 1.6 : 1);
   }
 
   spawnPos() {
@@ -313,7 +365,11 @@ export class Game {
   // Stationary enemies are placed near the player, everything else just off-screen.
   posFor(type) {
     if (ENEMIES[type].speed > 0) return this.spawnPos();
-    const p = this.player, a = rand(0, TAU), R = rand(190, 280);
+    return this.nearPos(rand(190, 280));
+  }
+
+  nearPos(R) {
+    const p = this.player, a = rand(0, TAU);
     const hw = this.arena.w / 2 - 30, hh = this.arena.h / 2 - 30;
     return { x: clamp(p.x + Math.cos(a) * R, -hw, hw), y: clamp(p.y + Math.sin(a) * R, -hh, hh) };
   }
@@ -342,8 +398,9 @@ export class Game {
         this.spawnEnemy(ev.enemy, clamp(p.x + Math.cos(a) * R, -hw, hw), clamp(p.y + Math.sin(a) * R, -hh, hh));
       }
     } else if (ev.type === 'elite') {
-      const pos = this.posFor(ev.enemy);
-      this.spawnEnemy(ev.enemy, pos.x, pos.y, true);
+      // a stationary elite (turret) is placed in sight, closer than a normal turret
+      const pos = ENEMIES[ev.enemy].speed > 0 ? this.posFor(ev.enemy) : this.nearPos(150);
+      this.spawnElite(ev.enemy, pos.x, pos.y, ev.traits || []);
     } else if (ev.type === 'surge') {
       this.surge = { until: this.time + ev.dur, mul: ev.mul };
     } else if (ev.type === 'mortar') {
@@ -430,8 +487,8 @@ export class Game {
       } else if (h.kind === 'mortar') {
         if (h.t >= h.warn) {
           done = true;
-          this.addFx(h.x, h.y, h.r, '#ff8a2a', 0.35, 5);
-          this.burst(h.x, h.y, '#ffb52e', 12, 260, 0.45, 7);
+          this.addFx(h.x, h.y, h.r, h.color || '#ff8a2a', 0.35, 5);
+          this.burst(h.x, h.y, h.color || '#ffb52e', 12, 260, 0.45, 7);
           this.sfx('boom');
           this.shake = Math.max(this.shake, 5);
           if (live && Math.hypot(p.x - h.x, p.y - h.y) < h.r + p.r) this.hurtPlayer(h.dmg, 'mortar');
@@ -740,6 +797,10 @@ export class Game {
 
   updatePlayer(dt) {
     const p = this.player, inp = this.app.input;
+    // a bulwark elite's aura (measured last frame) slows the ship
+    const slow = this.slowNow = this.slowNext ?? 1;
+    this.slowNext = 1;
+    const speed = p.speed * slow;
     const hw = this.arena.w / 2 - p.r, hh = this.arena.h / 2 - p.r;
     if (this.state === 'dying') return;
     if (inp.dx || inp.dy) {
@@ -749,8 +810,8 @@ export class Game {
     }
     if (inp.jx || inp.jy) {
       // analog joystick: speed scales with how far the knob is pushed
-      p.tx = p.x + inp.jx * p.speed * dt;
-      p.ty = p.y + inp.jy * p.speed * dt;
+      p.tx = p.x + inp.jx * speed * dt;
+      p.ty = p.y + inp.jy * speed * dt;
     } else if (inp.joy) {
       p.tx = p.x;
       p.ty = p.y;
@@ -758,8 +819,8 @@ export class Game {
     const kx = inp.keyX(), ky = inp.keyY();
     if (kx || ky) {
       const l = Math.hypot(kx, ky);
-      p.tx = p.x + (kx / l) * p.speed * 0.12;
-      p.ty = p.y + (ky / l) * p.speed * 0.12;
+      p.tx = p.x + (kx / l) * speed * 0.12;
+      p.ty = p.y + (ky / l) * speed * 0.12;
     }
     p.tx = clamp(p.tx, -hw, hw);
     p.ty = clamp(p.ty, -hh, hh);
@@ -770,7 +831,7 @@ export class Game {
       p.ty = p.y + (ly / ld) * MAX_LAG;
       lx = p.tx - p.x; ly = p.ty - p.y; ld = MAX_LAG;
     }
-    const step = p.speed * dt;
+    const step = speed * dt;
     const ox = p.x, oy = p.y;
     if (ld <= step) { p.x = p.tx; p.y = p.ty; } else { p.x += (lx / ld) * step; p.y += (ly / ld) * step; }
     const mv = Math.hypot(p.x - ox, p.y - oy);
@@ -821,7 +882,7 @@ export class Game {
           e.cd = (e.def.fire || 3.2) * (e.elite ? 0.45 : 1);
           const a = Math.atan2(dy, dx);
           const n = (e.def.shots || 1) + (e.elite ? 2 : 0);
-          for (let k = 0; k < n; k++) this.enemyShoot(e.x, e.y, a + (k - (n - 1) / 2) * 0.25, 165, 6);
+          for (let k = 0; k < n; k++) this.enemyShoot(e.x, e.y, a + (k - (n - 1) / 2) * 0.25, 165, this.shotDmg(e, 6));
         }
       } else if (ai === 'orbit') {
         // circle the player, then lunge in
@@ -858,7 +919,7 @@ export class Game {
         if (e.cd <= 0 && d < 430) {
           e.cd = e.elite ? 1.4 : 2.6;
           const n = e.elite ? 8 : 4;
-          for (let k = 0; k < n; k++) this.enemyShoot(e.x, e.y, e.rot + (k / n) * TAU, 150, 6);
+          for (let k = 0; k < n; k++) this.enemyShoot(e.x, e.y, e.rot + (k / n) * TAU, 150, this.shotDmg(e, 6));
         }
       } else if (ai === 'blink') {
         // fade out, reappear next to the player
@@ -886,8 +947,14 @@ export class Game {
           e.cd = e.elite ? 1.6 : 3.4;
           const a = Math.atan2(dy, dx);
           const n = e.elite ? 3 : 1;
-          for (let k = 0; k < n; k++) this.enemyShoot(e.x, e.y, a + (k - (n - 1) / 2) * 0.5, 120, 7, true);
+          for (let k = 0; k < n; k++) this.enemyShoot(e.x, e.y, a + (k - (n - 1) / 2) * 0.5, 120, this.shotDmg(e, 7), true);
         }
+      }
+      if (e.traits || e.buffT > 0) {
+        const tm = this.updateTraits(e, dt, dx, dy, d);
+        if (tm) { mx = tm[0]; my = tm[1]; }
+        else { const k = (e.enraged ? 1.5 : 1) * (e.buffT > 0 ? 1.3 : 1); mx *= k; my *= k; }
+        e.buffT = Math.max(0, (e.buffT || 0) - dt);
       }
       // separation
       let sx = 0, sy = 0;
@@ -913,8 +980,80 @@ export class Game {
       }
       if (e.def.spin) e.rot += e.def.spin * dt;
       else if (mx || my) e.rot = angleLerp(e.rot, Math.atan2(my, mx), Math.min(1, dt * 8));
-      if (!e.ghost && d < e.r + p.r) this.hurtPlayer(e.dmg, e.type);
+      if (!e.ghost && d < e.r + p.r) {
+        this.hurtPlayer(e.dmg * this.dmgMul(e), e.type);
+        if (e.traits?.has('bulwark')) {
+          // solid: push the ship out instead of letting it fly through
+          const ox = p.x - e.x, oy = p.y - e.y, od = Math.hypot(ox, oy) || 1, push = e.r + p.r - od + 1;
+          if (push > 0) { p.x += (ox / od) * push; p.y += (oy / od) * push; p.tx = p.x; p.ty = p.y; }
+        }
+      }
     }
+  }
+
+  // Per-frame trait behaviour. Returns a movement override [mx, my] while a swift elite winds up or charges.
+  updateTraits(e, dt, dx, dy, d) {
+    const t = e.traits;
+    if (!t) return null;
+    const p = this.player;
+    if (t.has('berserker') && !e.enraged && e.hp < e.maxHp * 0.5) {
+      e.enraged = true;
+      this.text(e.x, e.y - e.r - 14, 'ENRAGED', TRAITS.berserker.color);
+      this.sfx('warn');
+      e.slamT = 0;
+    }
+    if (e.enraged && (e.slamT -= dt) <= 0) {
+      // ground slam: a red warning circle, then a blast around where it stood
+      e.slamT = 4;
+      this.addHazard({ kind: 'mortar', x: e.x, y: e.y, r: e.r + 110, warn: 0.75, dmg: 18, color: TRAITS.berserker.color });
+    }
+    if (t.has('commander') && (e.callT -= dt) <= 0) {
+      // calls reinforcements every 10 s while fewer than 12 of them are alive
+      e.callT = 10;
+      e.escort = (e.escort || []).filter((o) => !o.dead);
+      const type = e.def.speed === 0 ? this.stage.enemies[0][0] : e.type;
+      for (let i = 0; i < 4 && e.escort.length < 12; i++) {
+        const a = rand(0, TAU);
+        e.escort.push(this.spawnEnemy(type, e.x + Math.cos(a) * 80, e.y + Math.sin(a) * 80));
+      }
+      this.text(e.x, e.y - e.r - 14, 'REINFORCEMENTS', TRAITS.commander.color);
+    }
+    if (t.has('shielded') && (e.wardT -= dt) <= 0) {
+      // shields the enemies around it (30% of their health) every 5 s
+      e.wardT = 5;
+      const near = this.tmp4 || (this.tmp4 = []);
+      this.hash.query(e.x, e.y, 180, near);
+      for (const o of near) if (o !== e && !o.boss && !o.seg && !o.dead && !(o.shield > 0)) { o.shield = o.maxHp * 0.3; o.warded = true; }
+      this.addFx(e.x, e.y, 180, TRAITS.shielded.color, 0.35, 3);
+    }
+    if (t.has('shielded') && e.maxShield && this.time - e.lastHit > 3) e.shield = Math.min(e.maxShield, e.shield + e.maxShield * 0.15 * dt);
+    if (t.has('commander')) {
+      // speeds up and strengthens nearby enemies while it lives
+      const near = this.tmp3 || (this.tmp3 = []);
+      this.hash.query(e.x, e.y, 220, near);
+      e.led = 0;
+      for (const o of near) if (o !== e && !o.boss && !o.seg && !o.elite && (o.x - e.x) ** 2 + (o.y - e.y) ** 2 < 220 * 220) { o.buffT = 0.25; e.led++; }
+    }
+    if (t.has('bulwark') && d < e.r + 160) this.slowNext = Math.min(this.slowNext ?? 1, 0.5);
+    // a commander stays in sight: a ranged one does not back off past 190 px like a plain shooter
+    if (t.has('commander') && e.def.speed > 0 && d > 190 && !e.sw) return [(dx / d) * e.speed, (dy / d) * e.speed];
+    if (e.sw && !e.def.ai) {
+      const s = e.sw;
+      if (s.phase === 'run') {
+        s.cd -= dt;
+        if (s.cd <= 0 && d < 420) { s.phase = 'wind'; s.t = 0.6; s.dir = Math.atan2(dy, dx); }
+      } else if (s.phase === 'wind') {
+        s.t -= dt; e.flash = Math.max(e.flash, Math.sin(s.t * 40) > 0 ? 0.02 : 0);
+        if (s.t <= 0) { s.phase = 'charge'; s.t = 0.5; }
+        return [0, 0];
+      } else {
+        s.t -= dt;
+        if (s.t <= 0) { s.phase = 'run'; s.cd = 2.5; }
+        const v = e.speed * 4;
+        return [Math.cos(s.dir) * v, Math.sin(s.dir) * v];
+      }
+    }
+    return null;
   }
 
   enemyShoot(x, y, a, speed, dmg, homing = false) {
@@ -1278,7 +1417,7 @@ export class Game {
         }
         this.ebullets.length = 0;
         break;
-      case 'chest': this.pendingChests++; break;
+      case 'chest': this.pendingChests += k.v || 1; break;
     }
   }
 
@@ -1422,6 +1561,8 @@ export class Game {
       R.rot(enemySprite(e.shape, e.color, Math.round(e.r), variant), ex, ey, e.rot, sc);
       ctx.globalAlpha = 1;
       if (e.elite) this.drawBar(ctx, e.x, e.y + e.r + 10, 34, e.hp / e.maxHp, '#ffd23d');
+      if (e.traits) this.drawTraits(ctx, e);
+      else if (e.shield > 0) { ctx.strokeStyle = TRAITS.shielded.color; ctx.globalAlpha = 0.7; ctx.lineWidth = 1.5; ctx.beginPath(); ctx.arc(e.x, e.y, e.r + 4, 0, TAU); ctx.stroke(); ctx.globalAlpha = 1; }
     }
 
     // player bullets / enemy bullets
@@ -1508,6 +1649,11 @@ export class Game {
     // screen-space overlays
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     if (this.boss && !vis(this.boss, -40)) this.drawOffscreenArrow(ctx, this.boss, cx, cy);
+    // elites off screen get an arrow in the colour of their (first) trait, so the player can hunt them down
+    for (const e of this.enemies) {
+      if (!e.elite || e.dead || e.boss || vis(e, -20)) continue;
+      this.drawOffscreenArrow(ctx, e, cx, cy, e.traits ? TRAITS[[...e.traits][0]].color : '#ffd23d', 0.75);
+    }
     const low = p.hp / p.maxHp;
     if (low < 0.35 || this.flash > 0) {
       const a = Math.max(this.flash * 1.5, low < 0.35 ? (0.35 - low) * 1.4 * (0.7 + 0.3 * Math.sin(this.time * 6)) : 0);
@@ -1596,11 +1742,11 @@ export class Game {
       } else if (h.kind === 'mortar') {
         const k = Math.min(1, h.t / h.warn);
         ctx.globalAlpha = 0.6 + 0.3 * Math.sin(t * 25);
-        ctx.strokeStyle = '#ff8a2a';
+        ctx.strokeStyle = h.color || '#ff8a2a';
         ctx.lineWidth = 2;
         ctx.beginPath(); ctx.arc(h.x, h.y, h.r, 0, TAU); ctx.stroke();
         ctx.globalAlpha = 0.25;
-        ctx.fillStyle = '#ff5a1a';
+        ctx.fillStyle = h.color || '#ff5a1a';
         ctx.beginPath(); ctx.arc(h.x, h.y, h.r * k, 0, TAU); ctx.fill();
       } else if (h.kind === 'well') {
         const k = Math.min(1, h.t / h.warn) * Math.min(1, (h.dur - h.t) / 0.4);
@@ -1633,6 +1779,42 @@ export class Game {
     ctx.globalAlpha = 1;
   }
 
+  // Trait elites: a ring per trait, names over the health bar, the shield, a swift charge line, command links.
+  drawTraits(ctx, e) {
+    const list = [...e.traits];
+    const pulse = 0.5 + 0.5 * Math.sin(this.app.time * 5);
+    ctx.save();
+    ctx.lineWidth = 2;
+    list.forEach((id, i) => {
+      const c = TRAITS[id].color;
+      ctx.strokeStyle = c; ctx.shadowColor = c; ctx.shadowBlur = 10;
+      ctx.globalAlpha = 0.55 + pulse * 0.35;
+      ctx.beginPath(); ctx.arc(e.x, e.y, e.r + 7 + i * 5, 0, TAU); ctx.stroke();
+    });
+    ctx.shadowBlur = 0; ctx.globalAlpha = 1;
+    if (e.traits.has('bulwark')) { ctx.strokeStyle = TRAITS.bulwark.color; ctx.globalAlpha = 0.18; ctx.setLineDash([6, 8]); ctx.beginPath(); ctx.arc(e.x, e.y, e.r + 160, 0, TAU); ctx.stroke(); ctx.setLineDash([]); ctx.globalAlpha = 1; }
+    if (e.enraged) { ctx.fillStyle = TRAITS.berserker.color; ctx.globalAlpha = 0.18 + pulse * 0.12; ctx.beginPath(); ctx.arc(e.x, e.y, e.r + 4, 0, TAU); ctx.fill(); ctx.globalAlpha = 1; }
+    if (e.sw?.phase === 'wind') {
+      ctx.strokeStyle = TRAITS.swift.color; ctx.globalAlpha = 0.7; ctx.lineWidth = 3; ctx.setLineDash([10, 8]);
+      ctx.beginPath(); ctx.moveTo(e.x, e.y); ctx.lineTo(e.x + Math.cos(e.sw.dir) * 380, e.y + Math.sin(e.sw.dir) * 380); ctx.stroke();
+      ctx.setLineDash([]); ctx.globalAlpha = 1;
+    }
+    if (e.traits.has('commander')) {
+      ctx.strokeStyle = TRAITS.commander.color; ctx.globalAlpha = 0.22; ctx.lineWidth = 1;
+      const near = this.tmp3 || [];
+      let n = 0;
+      for (const o of near) { if (o.buffT > 0 && !o.dead && n++ < 14) { ctx.beginPath(); ctx.moveTo(e.x, e.y); ctx.lineTo(o.x, o.y); ctx.stroke(); } }
+      ctx.globalAlpha = 1;
+    }
+    if (e.maxShield) this.drawBar(ctx, e.x, e.y + e.r + 16, 34, e.shield / e.maxShield, TRAITS.shielded.color);
+    ctx.font = "700 10px 'Orbitron', sans-serif";
+    ctx.textAlign = 'center';
+    ctx.fillStyle = TRAITS[list[0]].color;
+    ctx.shadowColor = '#000'; ctx.shadowBlur = 4;
+    ctx.fillText(list.map((id) => TRAITS[id].name).join(' · '), e.x, e.y - e.r - 14);
+    ctx.restore();
+  }
+
   drawBar(ctx, x, y, w, frac, color) {
     ctx.fillStyle = 'rgba(0,0,0,0.55)';
     ctx.fillRect(x - w / 2 - 1, y - 1, w + 2, 5);
@@ -1640,7 +1822,7 @@ export class Game {
     ctx.fillRect(x - w / 2, y, w * clamp(frac, 0, 1), 3);
   }
 
-  drawOffscreenArrow(ctx, t, cx, cy) {
+  drawOffscreenArrow(ctx, t, cx, cy, color = '#ff2d6f', size = 1) {
     const { W, H } = this.app;
     const a = Math.atan2(t.y - cy, t.x - cx);
     const m = 40;
@@ -1648,8 +1830,9 @@ export class Game {
     ctx.save();
     ctx.translate(x, y);
     ctx.rotate(a);
-    ctx.fillStyle = '#ff2d6f';
-    ctx.shadowColor = '#ff2d6f';
+    ctx.scale(size, size);
+    ctx.fillStyle = color;
+    ctx.shadowColor = color;
     ctx.shadowBlur = 12;
     ctx.beginPath();
     ctx.moveTo(14, 0); ctx.lineTo(-8, 10); ctx.lineTo(-3, 0); ctx.lineTo(-8, -10);

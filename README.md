@@ -108,7 +108,7 @@ and `.../site/support.html`, and the web version of the game at `https://konradl
 ## Code map
 - `js/game.js` — run logic: player, enemies, boss, spawning, combat, rendering
 - `js/weapons.js` — weapon stats, behaviours and evolutions
-- `js/data.js` — ships, enemies, sectors, shop, daily rewards
+- `js/data.js` — ships, enemies, sectors, elite traits (fixed per sector), shop, daily rewards
 - `js/ui.js` — menus, HUD, level-up cards, results
 - `js/testkit.js` — TEST variant only: the tester's panel (removed from normal and App Store builds)
 - `js/tutorial.js` — first-run hints (in-game with slow motion, level-up cards, map and menu); SKIP turns them off, Settings → Tutorial → Replay brings them back

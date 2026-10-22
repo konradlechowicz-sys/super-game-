@@ -248,6 +248,33 @@ const W4 = [
     { bossAt: 160, boss: 'voidheart' }),
 ];
 
+// Elite traits (v1.1). Each sector's elites always have the same traits, so a sector plays the same way every time:
+// none in 1-1 and 1-2 (the player meets a plain elite first), one in sectors 1-3 to 2-6, two in worlds 3 and 4.
+export const TRAITS = {
+  swift: { name: 'SWIFT', color: '#2ff3ff', tip: 'Fast, and charges after a warning flash. Dodge sideways.' },
+  bulwark: { name: 'BULWARK', color: '#3dff8a', tip: "Huge and solid: you can't fly through it, and its aura slows you." },
+  berserker: { name: 'BERSERKER', color: '#ff3d3d', tip: 'Hits hard and goes berserk at half health. Keep your distance.' },
+  commander: { name: 'COMMANDER', color: '#ffd23d', tip: 'Brings an escort and speeds up enemies near it. Take it out first.' },
+  shielded: { name: 'SHIELDED', color: '#b06bff', tip: 'Its shield regrows if you stop hitting it. Keep firing.' },
+};
+// Traits of each elite event in a sector, in the order the elites appear.
+const ELITE_TRAITS = {
+  '1-3': [['shielded']], '1-4': [['swift'], ['bulwark']], '1-5': [['berserker'], ['commander']], '1-6': [['swift']],
+  '2-1': [['berserker']], '2-2': [['shielded']], '2-3': [['commander']], '2-4': [['bulwark']],
+  '2-5': [['swift'], ['shielded']], '2-6': [['commander']],
+  '3-1': [['swift', 'berserker']], '3-2': [['bulwark', 'shielded']], '3-3': [['shielded', 'commander']],
+  '3-4': [['bulwark', 'berserker']], '3-5': [['commander', 'berserker']], '3-6': [['swift', 'shielded']],
+  '4-1': [['berserker', 'shielded']], '4-2': [['commander', 'shielded']], '4-3': [['swift', 'berserker']],
+  '4-4': [['bulwark', 'commander']], '4-5': [['berserker', 'shielded']], '4-6': [['swift', 'berserker'], ['commander', 'shielded']],
+};
+for (const st of [...W1, ...W2, ...W3, ...W4]) {
+  const list = ELITE_TRAITS[st.id] || [];
+  st.events.filter((e) => e.type === 'elite').forEach((e, i) => {
+    e.traits = list[i] || [];
+    if (e.traits.length) e.msg = `${e.traits.map((t) => TRAITS[t].name).join(' ')} ELITE`;
+  });
+}
+
 export const WORLDS = [
   {
     id: 1, name: 'Neon Nebula', color: '#ff2d95', stages: W1, music: 'game',

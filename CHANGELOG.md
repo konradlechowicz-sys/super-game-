@@ -13,10 +13,37 @@ i wersja TEST (gracze tego nie widzą).
 <!-- Podsumowanie zmian od v1.0.1; uzupełnia Claude przy każdym buildzie. -->
 
 - Opis w App Store: poprawiona nazwa broni Arc Coil.
+- Elity z cechami: Swift, Bulwark, Berserker, Commander, Shielded, z własnymi atakami (szarża, uderzenie, posiłki, tarcze dla innych); wytrzymalsze w miarę trwania sektora; bogatsze nagrody; strzałka do elity poza ekranem.
+- Arena 1,5× większa: więcej miejsca do manewrowania.
 
 ### What's New (App Store)
 
-- 
+- Elite enemies now come with traits and attacks of their own: Swift charges, Berserkers slam the ground, Commanders call reinforcements, Shielded elites shield their allies, Bulwarks block your path. Beat them for richer rewards.
+- An arrow at the screen edge points to elites out of sight.
+- A 1.5x larger arena gives you more room to manoeuvre.
+
+## Build 36 · 2026-10-22
+- [Zmiana] Arena jest 1,5× większa w obu kierunkach (na typowym iPhonie ok. 1350×1950 zamiast 900×1300): więcej miejsca na manewry i ucieczkę od tłumu, rzadziej przyciśnięcie do ściany. Kamera bez zmian.
+
+## Build 35 · 2026-10-22
+- [Balans] Elity z cechami są wytrzymalsze: HP ×10 na starcie sektora, rośnie do ×14 pod jego koniec (wcześniej stałe ×7); Bulwark dodatkowo +40%.
+- [Zmiana] Swift szarżuje co 2,5 s (było 4 s), czterokrotnie szybciej (było trzy).
+- [Nowe] Berserker w szale co 4 s uderza w ziemię: czerwony okrąg ostrzeżenia, po 0,75 s wybuch wokół niego.
+- [Nowe] Commander co 10 s wzywa 4 posiłki (napis „REINFORCEMENTS”), maksymalnie 12 żywych naraz.
+- [Nowe] Shielded co 5 s osłania wrogów w promieniu 180 px tarczą o sile 30% ich HP (fioletowy pierścień).
+- [Zmiana] Aura Bulwark: 160 px (było 120), spowalnia o 50% (było 35%).
+
+## Build 34 · 2026-10-22
+- [Poprawka] Commander nie ucieka już poza ekran: strzelający dowódcy (prism, eye) wracają w stronę statku, gdy odlecą dalej niż 190 px, zamiast trzymać się na dystans jak zwykłe strzelające elity.
+- [Poprawka] Elity-wieżyczki (np. Commander w 3-3 i 3-5) pojawiają się w zasięgu wzroku, 150 px od statku, zamiast 190–280 px.
+- [Nowe] Strzałka na krawędzi ekranu wskazuje elitę poza kadrem, w kolorze jej cechy (zwykła elita: złota).
+
+## Build 33 · 2026-10-22
+- [Nowe] Elity z cechami (stałe dla każdego sektora; od 1-3 jedna cecha, w światach 3–4 dwie): **Swift** (szybka, co 4 s szarża po ostrzeżeniu linią), **Bulwark** (większa i twardsza, nie da się przez nią przelecieć, aura 120 px spowalnia statek o 35%), **Berserker** (×2,5 obrażeń, mocniejsze pociski, szał przy połowie HP), **Commander** (przychodzi z eskortą 6 wrogów, wrogowie w aurze 220 px +30% prędkości i +20% obrażeń), **Shielded** (tarcza = połowa HP, odnawia się po 3 s bez trafień).
+- [Nowe] Elita z cechą ma kolorową obwódkę i nazwę cechy nad paskiem HP; komunikat np. „SWIFT ELITE”, „COMMANDER SHIELDED ELITE”.
+- [Balans] Elita z cechą zostawia skrzynię z dwiema nagrodami i więcej monet (20 przy jednej cesze, 28 przy dwóch; zwykła elita 12).
+- [Nowe] Samouczek: podpowiedź przy pierwszym spotkaniu każdej cechy.
+- [Narzędzia] Panel 🛠: „Spawn elite with a trait” z wyborem cechy.
 
 ## Build 32 · 2026-10-20
 - [Narzędzia] `npm run bump` aktualizuje też numer wersji w `package-lock.json`, więc `npm install` nie zostawia już „niezapisanej zmiany”, która zatrzymywała `review` i `release`.
