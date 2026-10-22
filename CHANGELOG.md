@@ -27,6 +27,11 @@ i wersja TEST (gracze tego nie widzą).
 - New third star: destroy every elite in the sector (and the boss). New stars pay 50 coins each, and collecting all 18 stars in a world earns a 300-coin bonus. Worlds 2-4 have higher kill goals.
 - The results screen shows your progress on every goal, so you can see which star you missed.
 
+## Build 39 · 2026-10-22
+- [Balans] Elity na bazie ciężkich wrogów (Tank, Golem i podobne) mają HP ×8 na starcie sektora do ×11 pod koniec (było ×10 do ×14): autopilot nie był w stanie zabić Bulwarka w 1-4 i 2-4, a Swift+Shielded w 3-6 dożywał walki z bossem.
+- [Balans] Bulwark: +20% HP (było +40%). Shielded: tarcza 35% HP (było 50%), odnawia się po 4 s bez trafień (było 3 s) i wolniej (10%/s zamiast 15%/s).
+- [Balans] Niższe cele zabójstw tam, gdzie +20% było poza zasięgiem (sektory pełne ciężkich wrogów): 2-2 950, 2-4 510, 2-6 680, 3-1 1090, 3-2 640, 3-3 1180, 3-4 700, 3-5 1290, 3-6 680. Pozostałe sektory światów 2–4 zostają z +20%.
+
 ## Build 38 · 2026-10-22
 - [Zmiana] Trzecia gwiazdka: zniszcz wszystkie elity sektora (w sektorach z bossem: elity i bossa) zamiast „skończ z 50% kadłuba”. Odprawa sektora pokazuje nowy cel, np. „Destroy all 2 elites”, „Destroy 1 elite and the boss”. Zdobyte już gwiazdki zostają.
 - [Balans] Cel zabójstw w światach 2–4 jest o 20% wyższy (np. 2-1: 1080 zamiast 900); świat 1 bez zmian.

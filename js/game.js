@@ -159,7 +159,7 @@ export class Game {
       return;
     }
     if (e.shield > 0) {
-      // a shielded elite's shield soaks damage first and regrows after 3 s without hits
+      // a shielded elite's shield soaks damage first and regrows after 4 s without hits
       const soak = Math.min(e.shield, dmg);
       e.shield -= soak; dmg -= soak; e.lastHit = this.time;
       if (e.shield <= 0 && e.maxShield) { this.text(e.x, e.y - e.r - 12, 'SHIELD DOWN', TRAITS.shielded.color, true); this.burst(e.x, e.y, TRAITS.shielded.color, 14, 220, 0.4); }
@@ -335,15 +335,17 @@ export class Game {
   applyTraits(e, traits) {
     e.traits = new Set(traits);
     const d = e.def;
-    // tougher than a plain elite, more so later in the sector: x10 health at the start, up to x14 at the end
-    e.hp *= (10 + 4 * clamp(this.time / this.stage.duration, 0, 1)) / 7;
+    // tougher than a plain elite, more so later in the sector: x10 health at the start, up to x14 at the end;
+    // heavy enemies (tank, golem...) x8 to x11, or they take minutes to bring down
+    const late = clamp(this.time / this.stage.duration, 0, 1);
+    e.hp *= (d.hp >= 100 ? 8 + 3 * late : 10 + 4 * late) / 7;
     if (e.traits.has('swift') && d.speed > 0) { e.speed = (e.speed / 0.9) * 1.7; e.sw = { cd: 2, t: 0, phase: 'run' }; }
-    if (e.traits.has('bulwark')) { e.hp *= 1.4; e.r *= 1.25; e.kbRes = 0; }
+    if (e.traits.has('bulwark')) { e.hp *= 1.2; e.r *= 1.25; e.kbRes = 0; }
     if (e.traits.has('berserker')) e.slamT = 0;
     if (e.traits.has('commander')) e.callT = 10;
     if (e.traits.has('shielded')) e.wardT = 3;
     if (e.traits.has('berserker')) e.dmg = (e.dmg / 1.5) * 2.5;
-    if (e.traits.has('shielded')) { e.shield = e.maxShield = e.hp * 0.5; e.lastHit = -9; }
+    if (e.traits.has('shielded')) { e.shield = e.maxShield = e.hp * 0.35; e.lastHit = -9; }
     e.maxHp = e.hp;
   }
 
@@ -1051,7 +1053,7 @@ export class Game {
       for (const o of near) if (o !== e && !o.boss && !o.seg && !o.dead && !(o.shield > 0)) { o.shield = o.maxHp * 0.3; o.warded = true; }
       this.addFx(e.x, e.y, 180, TRAITS.shielded.color, 0.35, 3);
     }
-    if (t.has('shielded') && e.maxShield && this.time - e.lastHit > 3) e.shield = Math.min(e.maxShield, e.shield + e.maxShield * 0.15 * dt);
+    if (t.has('shielded') && e.maxShield && this.time - e.lastHit > 4) e.shield = Math.min(e.maxShield, e.shield + e.maxShield * 0.1 * dt);
     if (t.has('commander')) {
       // speeds up and strengthens nearby enemies while it lives
       const near = this.tmp3 || (this.tmp3 = []);
