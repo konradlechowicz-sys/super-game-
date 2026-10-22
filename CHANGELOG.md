@@ -16,6 +16,10 @@ i wersja TEST (gracze tego nie widzą).
 
 - 
 
+## Build 43 · 2026-10-22
+- [Narzędzia] Projekt Androida (`android/`, Capacitor 8): ta sama gra, tylko w pionie, ikonka i ekran startowy jak na iPhonie. `npm run android` buduje i kopiuje grę do projektu, `npm run android:open` dodatkowo otwiera Android Studio. Na razie bez zakupów (Android działa jak darmowa wersja), bez wersji TEST i bez podpisu do Google Play.
+- [Narzędzia] `npm run bump` ustawia też numer wersji Androida (versionCode = numer buildu, versionName = wersja).
+
 ## Build 42 · 2026-10-22
 - [Narzędzia] `npm run release`: ponowne wydanie buildu, który już był wydany (np. wersja, która nie trafiła do sklepu), liczy zmiany od wydania sprzed tego buildu i dopisuje „Ten sam build N co vX.Y.Z”; wcześniej lista „Wszystkie zmiany” wychodziła pusta.
 - [Narzędzia] CHANGELOG.md: dodane sekcje v1.1.1 (build 41, pełne podsumowanie buildów 30–40) i v1.1.0 (build 40, nie wydane); „Następne wydanie” wyczyszczone.

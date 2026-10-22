@@ -50,6 +50,14 @@ The app build (`scripts/build.mjs`) bundles `js/native-main.js`, which adds hapt
 (Capacitor Haptics / Preferences). Fonts are bundled in `fonts/` (SIL OFL), so the app needs no network.
 Bundle ID: `com.konradlechowicz.voidblaster` (change it in `capacitor.config.json` and in Xcode if needed).
 
+## Android app (Google Play, in preparation)
+The same game in `android/` (Capacitor 8, minSdk 24, target 36), package `com.konradlechowicz.voidblaster`, portrait
+only, launcher icons and splash made from the iOS ones. `npm run android` builds `www/` and syncs it into the Android
+project; `npm run android:open` also opens Android Studio (run it on an emulator or a phone from there).
+`npm run bump` sets `versionCode` (= build number) and `versionName` in `android/app/build.gradle`.
+Not done yet: Google Play Billing (Android plays as the free trial; `js/native-entry.js` passes no store plugin),
+the TEST variant, the back button, signing for Google Play.
+
 ## Free trial and the full game
 - Free: world 1 with its boss, the Striker, shop upgrades up to level 3. The browser version is always the free trial.
 - **Full Game** in-app purchase (`com.konradlechowicz.voidblaster.fullgame`, non-consumable): worlds 2–4, Phantom and

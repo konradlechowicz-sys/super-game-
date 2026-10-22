@@ -77,6 +77,12 @@ edit('sw.js', /const VERSION = '[^']+';/, `const VERSION = 'vb-${newVersion}-${b
 const pbx = 'ios/App/App.xcodeproj/project.pbxproj';
 edit(pbx, /CURRENT_PROJECT_VERSION = [^;]+;/g, `CURRENT_PROJECT_VERSION = ${build};`);
 edit(pbx, /MARKETING_VERSION = [^;]+;/g, `MARKETING_VERSION = ${newVersion};`);
+// Android: versionCode is the build number (Google Play needs it to grow), versionName the public version.
+const gradle = 'android/app/build.gradle';
+if (existsSync(gradle)) {
+  edit(gradle, /versionCode \d+/, `versionCode ${build}`);
+  edit(gradle, /versionName "[^"]+"/, `versionName "${newVersion}"`);
+}
 
 // Releases (--build) reuse an accepted build's number; that build already has its section.
 if (forcedBuild == null && existsSync(CHANGELOG)) {

@@ -10,6 +10,12 @@
 - For a handoff, use the same `claude/...` branch and commit the handoff update with the work. Work sequentially: only one agent edits that branch at a time.
 - Keep the current handoff factual and secret-free. Continue to follow the project branch and Konrad-approval rules below.
 
+## Android (decided by Konrad)
+Version 2.0 launches on the App Store and Google Play together; the Android port starts earlier (closed test from
+1.2.0: Google Play needs 12 testers for 14 days on a new account). Project in `android/`, see README.md. Until Google
+Play Billing exists, Android is trial-only. This cloud environment cannot build Android (no SDK); Konrad builds in
+Android Studio on his Mac (`npm run android:open`).
+
 ## Monetization (decided by Konrad)
 Free trial + one non-consumable in-app purchase "Full Game" (USD 3.99, `com.konradlechowicz.voidblaster.fullgame`).
 Free: world 1 with its boss, the Striker, upgrades up to level 3. Full: worlds 2-4, Phantom + Titan, all upgrade
