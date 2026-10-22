@@ -12,6 +12,7 @@ const MAX_WEAPONS = 4;
 const MAX_PASSIVES = 4;
 const DRAG_SENS = 1.5;
 const MAX_LAG = 150;
+const ARENA_SCALE = 1.5;
 
 let nextId = 1;
 
@@ -23,7 +24,8 @@ export class Game {
     this.save = app.save;
     this.ship = shipLook(SHIPS[this.save.ship] || SHIPS.striker, this.save);
     const { vw, vh } = this.viewSize();
-    this.arena = { w: Math.max(900, vw * 1.8), h: Math.max(1300, vh * 1.45) };
+    // v1.1: the arena is 1.5x larger in both directions (was max(900, 1.8 view) x max(1300, 1.45 view)), for more room to manoeuvre
+    this.arena = { w: Math.max(900, vw * 1.8) * ARENA_SCALE, h: Math.max(1300, vh * 1.45) * ARENA_SCALE };
     this.time = 0;
     this.state = 'play';
     this.enemies = []; this.proj = []; this.ebullets = []; this.gems = []; this.pickups = [];

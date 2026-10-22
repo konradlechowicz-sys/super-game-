@@ -14,11 +14,16 @@ i wersja TEST (gracze tego nie widzą).
 
 - Opis w App Store: poprawiona nazwa broni Arc Coil.
 - Elity z cechami: Swift, Bulwark, Berserker, Commander, Shielded, z własnymi atakami (szarża, uderzenie, posiłki, tarcze dla innych); wytrzymalsze w miarę trwania sektora; bogatsze nagrody; strzałka do elity poza ekranem.
+- Arena 1,5× większa: więcej miejsca do manewrowania.
 
 ### What's New (App Store)
 
 - Elite enemies now come with traits and attacks of their own: Swift charges, Berserkers slam the ground, Commanders call reinforcements, Shielded elites shield their allies, Bulwarks block your path. Beat them for richer rewards.
 - An arrow at the screen edge points to elites out of sight.
+- A 1.5x larger arena gives you more room to manoeuvre.
+
+## Build 36 · 2026-10-22
+- [Zmiana] Arena jest 1,5× większa w obu kierunkach (na typowym iPhonie ok. 1350×1950 zamiast 900×1300): więcej miejsca na manewry i ucieczkę od tłumu, rzadziej przyciśnięcie do ściany. Kamera bez zmian.
 
 ## Build 35 · 2026-10-22
 - [Balans] Elity z cechami są wytrzymalsze: HP ×10 na starcie sektora, rośnie do ×14 pod jego koniec (wcześniej stałe ×7); Bulwark dodatkowo +40%.
