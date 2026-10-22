@@ -1,5 +1,5 @@
 // Offline cache. Bump VERSION on every release so players get the new files.
-const VERSION = 'vb-1.1.0-40';
+const VERSION = 'vb-1.1.1-41';
 const FILES = [
   './', 'index.html', 'manifest.webmanifest', 'css/style.css',
   'js/main.js', 'js/game.js', 'js/ui.js', 'js/data.js', 'js/weapons.js', 'js/sprites.js',

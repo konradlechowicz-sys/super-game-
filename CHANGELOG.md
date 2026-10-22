@@ -10,13 +10,13 @@ i wersja TEST (gracze tego nie widzą).
 
 ## Następne wydanie
 
-<!-- Podsumowanie zmian od v1.1.0; uzupełnia Claude przy każdym buildzie. -->
+<!-- Podsumowanie zmian od v1.1.1; uzupełnia Claude przy każdym buildzie. -->
 
 ### What's New (App Store)
 
 - 
 
-## v1.1.0 · build 40 · 2026-10-22 · App Store
+## v1.1.1 · build 41 · 2026-10-22 · App Store
 
 - Opis w App Store: poprawiona nazwa broni Arc Coil.
 - Elity z cechami: Swift, Bulwark, Berserker, Commander, Shielded, z własnymi atakami (szarża, uderzenie, posiłki, tarcze dla innych); wytrzymalsze w miarę trwania sektora; bogatsze nagrody; strzałka do elity poza ekranem.
@@ -34,52 +34,9 @@ i wersja TEST (gracze tego nie widzą).
 - New third star: destroy every elite in the sector (and the boss). New stars pay 50 coins each, and collecting all 18 stars in a world earns a 300-coin bonus. Worlds 2-4 have higher kill goals.
 - The results screen shows your progress on every goal, so you can see which star you missed.
 
-### Wszystkie zmiany (buildy 30–40)
+### Wszystkie zmiany (buildy —)
 
-**Nowe**
-- Elity z cechami (stałe dla każdego sektora; od 1-3 jedna cecha, w światach 3–4 dwie): **Swift** (szybka, co 4 s szarża po ostrzeżeniu linią), **Bulwark** (większa i twardsza, nie da się przez nią przelecieć, aura 120 px spowalnia statek o 35%), **Berserker** (×2,5 obrażeń, mocniejsze pociski, szał przy połowie HP), **Commander** (przychodzi z eskortą 6 wrogów, wrogowie w aurze 220 px +30% prędkości i +20% obrażeń), **Shielded** (tarcza = połowa HP, odnawia się po 3 s bez trafień). (build 33)
-- Elita z cechą ma kolorową obwódkę i nazwę cechy nad paskiem HP; komunikat np. „SWIFT ELITE”, „COMMANDER SHIELDED ELITE”. (build 33)
-- Samouczek: podpowiedź przy pierwszym spotkaniu każdej cechy. (build 33)
-- Strzałka na krawędzi ekranu wskazuje elitę poza kadrem, w kolorze jej cechy (zwykła elita: złota). (build 34)
-- Berserker w szale co 4 s uderza w ziemię: czerwony okrąg ostrzeżenia, po 0,75 s wybuch wokół niego. (build 35)
-- Commander co 10 s wzywa 4 posiłki (napis „REINFORCEMENTS”), maksymalnie 12 żywych naraz. (build 35)
-- Shielded co 5 s osłania wrogów w promieniu 180 px tarczą o sile 30% ich HP (fioletowy pierścień). (build 35)
-- Przy ścisku 4+ wrogów: mocny czerwony błysk krawędzi ekranu i napis „CRUSHED ×N”. (build 37)
-- Ekran wyników pokazuje postęp każdego celu („Kills 182 / 220”, „Elites 1 / 2”, czas przetrwania), a nieosiągnięty cel jest podświetlony na czerwono; także po przegranej. Nowe gwiazdki mają znaczek NEW, a premia za gwiazdki podaje, ile jest nowych. (build 38)
-
-**Zmiana**
-- Swift szarżuje co 2,5 s (było 4 s), czterokrotnie szybciej (było trzy). (build 35)
-- Aura Bulwark: 160 px (było 120), spowalnia o 50% (było 35%). (build 35)
-- Arena jest 1,5× większa w obu kierunkach (na typowym iPhonie ok. 1350×1950 zamiast 900×1300): więcej miejsca na manewry i ucieczkę od tłumu, rzadziej przyciśnięcie do ściany. Kamera bez zmian. (build 36)
-- Trzecia gwiazdka: zniszcz wszystkie elity sektora (w sektorach z bossem: elity i bossa) zamiast „skończ z 50% kadłuba”. Odprawa sektora pokazuje nowy cel, np. „Destroy all 2 elites”, „Destroy 1 elite and the boss”. Zdobyte już gwiazdki zostają. (build 38)
-
-**Balans**
-- Elita z cechą zostawia skrzynię z dwiema nagrodami i więcej monet (20 przy jednej cesze, 28 przy dwóch; zwykła elita 12). (build 33)
-- Elity z cechami są wytrzymalsze: HP ×10 na starcie sektora, rośnie do ×14 pod jego koniec (wcześniej stałe ×7); Bulwark dodatkowo +40%. (build 35)
-- Tłum boli: po dotknięciu wroga nietykalność trwa 0,3 s (było 0,6 s; po pociskach i zagrożeniach bez zmian), a każdy kolejny wróg dotykający statku w tej samej chwili dodaje +30% obrażeń (maks. ×2,5). Pomiar: 3 s w tłumie 5 dronów kosztuje 176 kadłuba (było 40), przy 1 dronie 80 (było 40). (build 37)
-- Statki mają +10 kadłuba: Striker 110, Phantom 80, Titan 160. (build 37)
-- Cel zabójstw w światach 2–4 jest o 20% wyższy (np. 2-1: 1080 zamiast 900); świat 1 bez zmian. (build 38)
-- Nagroda za gwiazdki: 50 monet za każdą nową gwiazdkę (było 15), 15 za gwiazdkę zdobytą ponownie; jednorazowo 300 monet za komplet 18 gwiazdek w świecie. (build 38)
-- Elity na bazie ciężkich wrogów (Tank, Golem i podobne) mają HP ×8 na starcie sektora do ×11 pod koniec (było ×10 do ×14): autopilot nie był w stanie zabić Bulwarka w 1-4 i 2-4, a Swift+Shielded w 3-6 dożywał walki z bossem. (build 39)
-- Bulwark: +20% HP (było +40%). Shielded: tarcza 35% HP (było 50%), odnawia się po 4 s bez trafień (było 3 s) i wolniej (10%/s zamiast 15%/s). (build 39)
-- Niższe cele zabójstw tam, gdzie +20% było poza zasięgiem (sektory pełne ciężkich wrogów): 2-2 950, 2-4 510, 2-6 680, 3-1 1090, 3-2 640, 3-3 1180, 3-4 700, 3-5 1290, 3-6 680. Pozostałe sektory światów 2–4 zostają z +20%. (build 39)
-- Po drugim pomiarze autopilotem: niższe cele zabójstw w 2-6 (600), 3-2 (530), 3-4 (640) i 3-6 (450). Walka z bossem w 3-6 skróciła się z 6–8 do 2–3 min, więc pada w niej mniej wrogów. (build 40)
-
-**Poprawka**
-- Commander nie ucieka już poza ekran: strzelający dowódcy (prism, eye) wracają w stronę statku, gdy odlecą dalej niż 190 px, zamiast trzymać się na dystans jak zwykłe strzelające elity. (build 34)
-- Elity-wieżyczki (np. Commander w 3-3 i 3-5) pojawiają się w zasięgu wzroku, 150 px od statku, zamiast 190–280 px. (build 34)
-- Komunikaty cech elit („ENRAGED”, „REINFORCEMENTS”, „SHIELD DOWN”) i „CRUSHED” widać także przy wyłączonych liczbach obrażeń. (build 37)
-
-**App Store**
-- Opis w sklepie (`appstore/LISTING.md`) używa nazwy broni z gry: „arc coil” zamiast „arc lightning”. Gra bez zmian; w App Store Connect trzeba poprawić opis ręcznie przy najbliższej wersji. (build 30)
-
-**Narzędzia**
-- Sekcja wydania v1.0.1 przeniesiona z gałęzi `release` do historii zmian, „Następne wydanie” zaczyna się od v1.0.1. (build 30)
-- Buildy po wydaniu noszą numer najnowszej wydanej wersji: od tego buildu 1.0.1 (wcześniej zostawało 1.0.0, bo wydanie zmienia tylko gałąź `release`). `npm run bump` bierze go z najwyższego tagu `vX.Y.Z`; w Ustawieniach gry widać „v1.0.1 (build 31, …)”. (build 31)
-- `npm run bump` aktualizuje też numer wersji w `package-lock.json`, więc `npm install` nie zostawia już „niezapisanej zmiany”, która zatrzymywała `review` i `release`. (build 32)
-- `review` i `release` same odrzucają zmianę w `package-lock.json`, jeśli to tylko numer wersji (np. na starszej gałęzi `release`); inne zmiany dalej zatrzymują skrypt. (build 32)
-- Panel 🛠: „Spawn elite with a trait” z wyborem cechy. (build 33)
-- Panel 🛠: przycisk „WIN · 3 STARS” (wygrana ze spełnionymi wszystkimi celami). (build 38)
+- (brak opisanych zmian)
 
 ## Build 40 · 2026-10-22
 - [Balans] Po drugim pomiarze autopilotem: niższe cele zabójstw w 2-6 (600), 3-2 (530), 3-4 (640) i 3-6 (450). Walka z bossem w 3-6 skróciła się z 6–8 do 2–3 min, więc pada w niej mniej wrogów.
