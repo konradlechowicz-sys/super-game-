@@ -1,6 +1,6 @@
 // TEST build only: the tester's panel (🛠). Normal and App Store builds never contain this file: main.js loads it
 // behind the __TEST__ build flag and esbuild drops it, and `build.mjs --release` fails if MARKER is found.
-import { ALL_STAGES, BOSSES } from './data.js';
+import { ALL_STAGES, BOSSES, TRAITS } from './data.js';
 
 // Everything lives inside installTestKit (no top-level code), so bundlers drop the whole module when it is not called.
 export function installTestKit(app) {
@@ -107,9 +107,14 @@ export function installTestKit(app) {
         ${btn('level', 'LEVEL UP')}
         ${btn('heal', 'FULL HULL')}
         ${btn('elite', 'SPAWN ELITE')}
+      </div>
+      <div class="tk-head">Spawn elite with a trait</div>
+      <div class="tk-row">
+        ${Object.entries(TRAITS).map(([id, t]) => btn('elite', t.name, `data-trait="${id}" style="color:${t.color}"`)).join('')}
         ${btn('skip', 'SKIP 30 S')}
         ${st.boss && !g.boss && !g.bossDefeated ? btn('summon', 'BOSS NOW') : ''}
         ${btn('win', 'WIN SECTOR')}
+        ${btn('win3', 'WIN · 3 STARS')}
       </div>
       <div class="modal-actions"><button class="btn primary" data-act="close">RESUME</button></div>
     `, {
@@ -118,23 +123,28 @@ export function installTestKit(app) {
       speed: (ds) => { app.timeScale = +ds.n; resume(); },
       level: act(() => g.gainXp((g.xpNext - g.xp) / g.player.xpMult)),
       heal: act(() => { g.player.hp = g.player.maxHp; }),
-      elite: act(() => {
+      elite: (ds) => act(() => {
         const types = st.enemies.filter(([, at]) => at <= g.time).map(([t]) => t);
         const a = Math.random() * Math.PI * 2;
-        g.spawnEnemy(types[types.length - 1] || st.enemies[0][0], g.player.x + Math.cos(a) * 260, g.player.y + Math.sin(a) * 260, true);
-      }),
+        g.spawnElite(types[types.length - 1] || st.enemies[0][0], g.player.x + Math.cos(a) * 260, g.player.y + Math.sin(a) * 260, ds.trait ? [ds.trait] : []);
+      })(),
       skip: act(() => {
         const end = st.boss ? st.bossAt : st.duration;
         g.time = Math.min(g.time + 30, end - 1);
         st.events.forEach((e, i) => { if (e.t < g.time) g.eventsDone.add(i); });
       }),
       summon: act(() => { st.events.forEach((e, i) => g.eventsDone.add(i)); g.time = st.bossAt; }),
-      win: act(() => {
-        if (g.boss) g.kill(g.boss);
-        else if (!st.boss) g.win();
-        else { g.bossDefeated = true; g.win(); }
-      }),
+      win: act(() => winNow()),
+      // as if every goal was met: kill goal reached and every elite of the sector destroyed
+      win3: act(() => { g.kills = Math.max(g.kills, st.kills); g.elitesKilled = st.elites; winNow(); }),
     }, 'testkit');
+  }
+
+  function winNow() {
+    const g = app.game, st = g.stage;
+    if (g.boss) g.kill(g.boss);
+    else if (!st.boss) g.win();
+    else { g.bossDefeated = true; g.win(); }
   }
 
   ui.globalH.testkit = () => (app.game ? gamePanel() : menuPanel());

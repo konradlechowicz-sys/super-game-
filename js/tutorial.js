@@ -2,6 +2,7 @@
 // a pickup, a boss). Time slows down while a hint waits for the player to act. Each hint is shown once; SKIP turns
 // them all off and Settings → Tutorial brings them back.
 import { TAU } from './util.js';
+import { TRAITS } from './data.js';
 
 const PICKUP_TIPS = {
   heal: ['REPAIR KIT', 'Fly over it to restore 30% hull.'],
@@ -74,6 +75,13 @@ export class Tutorial {
         target: (t) => (t.e && !t.e.dead ? t.e : (t.e = g.enemies.find((e) => e.elite && !e.dead))),
         done: (t) => t.e && t.e.dead,
       },
+      // the first elite of each trait (v1.1)
+      ...Object.entries(TRAITS).map(([id, tr]) => ({
+        id: 'trait_' + id, title: `${tr.name} ELITE`, sub: tr.tip, slow: 2, max: 8, hold: 1.5,
+        when: () => this.onScreen(g.enemies).some((e) => e.traits?.has(id) && !e.dead),
+        target: (t) => (t.e && !t.e.dead ? t.e : (t.e = g.enemies.find((e) => e.traits?.has(id) && !e.dead))),
+        done: (t) => t.e && t.e.dead,
+      })),
       ...Object.entries(PICKUP_TIPS).map(([kind, [title, sub]]) => ({
         id: 'pickup_' + kind, title, sub, slow: 1.2, max: 7, hold: 1,
         when: () => this.onScreen(g.pickups).some((k) => k.kind === kind),
@@ -180,7 +188,7 @@ export function menuTip(app, screen) {
   if (!tipsOn(save) || app.game) return null;
   if (save.stats.runs < 1) return null;
   if (screen === 'map' && !tipSeen(save, 'stars')) {
-    return { id: 'stars', anchor: '.world-head', title: 'EARN 3 STARS', text: 'Clear the sector, hit the kill goal, keep half your hull.' };
+    return { id: 'stars', anchor: '.world-head', title: 'EARN 3 STARS', text: 'Clear the sector, hit the kill goal, destroy every elite.' };
   }
   if (screen === 'menu' && !tipSeen(save, 'shop') && save.coins >= 60) {
     return { id: 'shop', anchor: '[data-act="shop"]', below: true, title: 'SPEND YOUR COINS', text: 'Permanent upgrades for every ship.' };

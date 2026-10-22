@@ -4,6 +4,8 @@ const KEY = SAVE_KEY;
 const fresh = () => ({
   coins: 0,
   stars: {},
+  // worlds whose 18 stars already paid the full-set bonus (id -> true)
+  worldStars: {},
   cleared: {},
   ships: ['striker'],
   ship: 'striker',

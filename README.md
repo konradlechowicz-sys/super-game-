@@ -9,7 +9,7 @@ Blast the swarm, collect XP crystals, pick upgrades, evolve weapons and take dow
   - **Crystal Belt** — orbiting shards, prism gunners, drifting asteroids · boss: Crystal Serpent
   - **Solar Forge** — fused bombers, turrets, magma golems, solar flares and mortar strikes · boss: Forge Titan
   - **Void Core** — teleporting wraiths, seeker eyes, gravity wells · final boss: Void Heart (3 phases)
-- 3 stars per sector: clear · kill target · finish with 50%+ hull
+- 3 stars per sector: clear · kill target (+20% in worlds 2-4) · destroy every elite (and the boss); 50 coins per new star, 15 on a replay, 300 for all 18 stars of a world
 - 3 ships: Striker, Phantom, Titan (unlock with coins)
 - 8 weapons, 6 passive upgrades, 4 weapon evolutions
 - Elite enemies drop supply crates; pickups: repair, magnet, bomb
@@ -108,7 +108,7 @@ and `.../site/support.html`, and the web version of the game at `https://konradl
 ## Code map
 - `js/game.js` — run logic: player, enemies, boss, spawning, combat, rendering
 - `js/weapons.js` — weapon stats, behaviours and evolutions
-- `js/data.js` — ships, enemies, sectors, shop, daily rewards
+- `js/data.js` — ships, enemies, sectors, elite traits (fixed per sector), shop, daily rewards
 - `js/ui.js` — menus, HUD, level-up cards, results
 - `js/testkit.js` — TEST variant only: the tester's panel (removed from normal and App Store builds)
 - `js/tutorial.js` — first-run hints (in-game with slow motion, level-up cards, map and menu); SKIP turns them off, Settings → Tutorial → Replay brings them back

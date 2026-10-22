@@ -16,7 +16,24 @@ if (!m) throw new Error('js/version.js: VERSION line not found');
 const args = process.argv.slice(2);
 const bi = args.indexOf('--build');
 const forcedBuild = bi >= 0 ? +args.splice(bi, 2)[1] : null;
-const newVersion = args[0] || m[1];
+// Without an explicit version the build carries the newest released one (highest vX.Y.Z tag), so work after a
+// release shows e.g. 1.0.1 instead of the version main had before it; npm run release sets the next one.
+function latestReleased() {
+  try {
+    const tags = execSync("git tag -l 'v*.*.*'", { encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] })
+      .split('\n').map((t) => t.trim().replace(/^v/, '')).filter((v) => /^\d+\.\d+\.\d+$/.test(v));
+    return tags.sort(cmpVer).pop() || null;
+  } catch {
+    return null;
+  }
+}
+function cmpVer(a, b) {
+  const x = a.split('.').map(Number), y = b.split('.').map(Number);
+  for (let i = 0; i < 3; i++) if (x[i] !== y[i]) return x[i] - y[i];
+  return 0;
+}
+const released = args[0] ? null : latestReleased();
+const newVersion = args[0] || (released && cmpVer(released, m[1]) > 0 ? released : m[1]);
 if (!/^\d+\.\d+\.\d+$/.test(newVersion)) throw new Error(`Version must look like 1.2.3, got "${newVersion}"`);
 // Build numbers are never reused: also count builds on other branches (e.g. test/... builds that never reach main).
 function highestBuildOnBranches() {
@@ -48,6 +65,14 @@ const edit = (path, re, to) => {
 
 edit(file, m[0], `export const VERSION = { version: '${newVersion}', build: ${build}, date: '${date}' };`);
 edit('package.json', /"version": "[^"]+"/, `"version": "${newVersion}"`);
+// package-lock.json repeats the version (top level and packages[""]); keep it in sync, or npm install rewrites it
+// and review/release stop on an "unsaved change".
+if (existsSync('package-lock.json')) {
+  const lock = JSON.parse(readFileSync('package-lock.json', 'utf8'));
+  lock.version = newVersion;
+  if (lock.packages?.['']) lock.packages[''].version = newVersion;
+  writeFileSync('package-lock.json', JSON.stringify(lock, null, 2) + '\n');
+}
 edit('sw.js', /const VERSION = '[^']+';/, `const VERSION = 'vb-${newVersion}-${build}';`);
 const pbx = 'ios/App/App.xcodeproj/project.pbxproj';
 edit(pbx, /CURRENT_PROJECT_VERSION = [^;]+;/g, `CURRENT_PROJECT_VERSION = ${build};`);
