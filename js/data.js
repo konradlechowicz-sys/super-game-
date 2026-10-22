@@ -267,8 +267,8 @@ const ELITE_TRAITS = {
   '4-1': [['berserker', 'shielded']], '4-2': [['commander', 'shielded']], '4-3': [['swift', 'berserker']],
   '4-4': [['bulwark', 'commander']], '4-5': [['berserker', 'shielded']], '4-6': [['swift', 'berserker'], ['commander', 'shielded']],
 };
-// Kill goals set from autopilot runs (build 39) where +20% was out of reach: sectors full of heavy enemies kill slower.
-const KILL_GOALS = { '2-2': 950, '2-4': 510, '2-6': 680, '3-1': 1090, '3-2': 640, '3-3': 1180, '3-4': 700, '3-5': 1290, '3-6': 680 };
+// Kill goals set from autopilot runs (builds 39-40) where +20% was out of reach: sectors full of heavy enemies kill slower.
+const KILL_GOALS = { '2-2': 950, '2-4': 510, '2-6': 600, '3-1': 1090, '3-2': 530, '3-3': 1180, '3-4': 640, '3-5': 1290, '3-6': 450 };
 for (const st of [...W1, ...W2, ...W3, ...W4]) {
   // v1.1 stars: the 3rd star needs every elite of the sector, and the kill goal is 20% higher in worlds 2-4
   st.elites = st.events.filter((e) => e.type === 'elite').length;
