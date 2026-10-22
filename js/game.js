@@ -357,7 +357,11 @@ export class Game {
   // Stationary enemies are placed near the player, everything else just off-screen.
   posFor(type) {
     if (ENEMIES[type].speed > 0) return this.spawnPos();
-    const p = this.player, a = rand(0, TAU), R = rand(190, 280);
+    return this.nearPos(rand(190, 280));
+  }
+
+  nearPos(R) {
+    const p = this.player, a = rand(0, TAU);
     const hw = this.arena.w / 2 - 30, hh = this.arena.h / 2 - 30;
     return { x: clamp(p.x + Math.cos(a) * R, -hw, hw), y: clamp(p.y + Math.sin(a) * R, -hh, hh) };
   }
@@ -386,7 +390,8 @@ export class Game {
         this.spawnEnemy(ev.enemy, clamp(p.x + Math.cos(a) * R, -hw, hw), clamp(p.y + Math.sin(a) * R, -hh, hh));
       }
     } else if (ev.type === 'elite') {
-      const pos = this.posFor(ev.enemy);
+      // a stationary elite (turret) is placed in sight, closer than a normal turret
+      const pos = ENEMIES[ev.enemy].speed > 0 ? this.posFor(ev.enemy) : this.nearPos(150);
       this.spawnElite(ev.enemy, pos.x, pos.y, ev.traits || []);
     } else if (ev.type === 'surge') {
       this.surge = { until: this.time + ev.dur, mul: ev.mul };
@@ -997,6 +1002,8 @@ export class Game {
       for (const o of near) if (o !== e && !o.boss && !o.seg && !o.elite && (o.x - e.x) ** 2 + (o.y - e.y) ** 2 < 220 * 220) { o.buffT = 0.25; e.led++; }
     }
     if (t.has('bulwark') && d < e.r + 120) this.slowNext = Math.min(this.slowNext ?? 1, 0.65);
+    // a commander stays in sight: a ranged one does not back off past 190 px like a plain shooter
+    if (t.has('commander') && e.def.speed > 0 && d > 190 && !e.sw) return [(dx / d) * e.speed, (dy / d) * e.speed];
     if (e.sw && !e.def.ai) {
       const s = e.sw;
       if (s.phase === 'run') {
@@ -1608,6 +1615,11 @@ export class Game {
     // screen-space overlays
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     if (this.boss && !vis(this.boss, -40)) this.drawOffscreenArrow(ctx, this.boss, cx, cy);
+    // elites off screen get an arrow in the colour of their (first) trait, so the player can hunt them down
+    for (const e of this.enemies) {
+      if (!e.elite || e.dead || e.boss || vis(e, -20)) continue;
+      this.drawOffscreenArrow(ctx, e, cx, cy, e.traits ? TRAITS[[...e.traits][0]].color : '#ffd23d', 0.75);
+    }
     const low = p.hp / p.maxHp;
     if (low < 0.35 || this.flash > 0) {
       const a = Math.max(this.flash * 1.5, low < 0.35 ? (0.35 - low) * 1.4 * (0.7 + 0.3 * Math.sin(this.time * 6)) : 0);
@@ -1776,7 +1788,7 @@ export class Game {
     ctx.fillRect(x - w / 2, y, w * clamp(frac, 0, 1), 3);
   }
 
-  drawOffscreenArrow(ctx, t, cx, cy) {
+  drawOffscreenArrow(ctx, t, cx, cy, color = '#ff2d6f', size = 1) {
     const { W, H } = this.app;
     const a = Math.atan2(t.y - cy, t.x - cx);
     const m = 40;
@@ -1784,8 +1796,9 @@ export class Game {
     ctx.save();
     ctx.translate(x, y);
     ctx.rotate(a);
-    ctx.fillStyle = '#ff2d6f';
-    ctx.shadowColor = '#ff2d6f';
+    ctx.scale(size, size);
+    ctx.fillStyle = color;
+    ctx.shadowColor = color;
     ctx.shadowBlur = 12;
     ctx.beginPath();
     ctx.moveTo(14, 0); ctx.lineTo(-8, 10); ctx.lineTo(-3, 0); ctx.lineTo(-8, -10);
