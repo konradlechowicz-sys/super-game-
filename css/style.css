@@ -219,6 +219,14 @@ h1, h2, h3 { font-family: 'Orbitron', sans-serif; margin: 0; letter-spacing: 0.0
 .goals.inline { flex-direction: row; justify-content: center; flex-wrap: wrap; gap: 6px; }
 .goals.inline li { font-size: 13px; padding: 4px 8px; gap: 4px; }
 .goals.inline .star-svg { width: 14px; }
+.goals.progress { gap: 5px; margin: 8px 0 4px; }
+.goals.progress li { font-size: 14px; padding: 6px 10px; gap: 8px; }
+.goals.progress .star-svg { width: 16px; }
+.goals.progress span { flex: 1; }
+.goals.progress b { font-family: 'Orbitron', sans-serif; font-size: 13px; color: var(--muted); }
+.goals.progress li.done b { color: var(--gold); }
+.goals.progress li.miss { background: rgba(255, 61, 90, 0.1); }
+.goals.progress li.miss b { color: #ff5a7a; }
 .brief-ship { display: flex; align-items: center; gap: 12px; padding: 8px 12px; border-radius: 12px; background: rgba(255, 255, 255, 0.04); }
 .brief-ship canvas { width: 54px; height: 54px; }
 .brief-ship div { flex: 1; line-height: 1.2; }
@@ -283,6 +291,9 @@ h1, h2, h3 { font-family: 'Orbitron', sans-serif; margin: 0; letter-spacing: 0.0
 .rstar.on { animation: starpop 0.45s backwards cubic-bezier(0.2, 1.6, 0.4, 1); }
 .rstar.on .star-svg { fill: var(--gold); filter: drop-shadow(0 0 10px var(--gold)); }
 @keyframes starpop { from { transform: scale(0) rotate(-90deg); } }
+.rstar { position: relative; }
+.rstar.new::after { content: 'NEW'; position: absolute; left: 50%; bottom: -6px; transform: translateX(-50%); font: 700 9px 'Orbitron', sans-serif; letter-spacing: 0.1em; color: #0a0420; background: var(--gold); border-radius: 6px; padding: 1px 5px; }
+.rtable .world-bonus span, .rtable .world-bonus b { color: var(--gold); }
 .rtable { margin-top: 10px; border-radius: 12px; background: rgba(255, 255, 255, 0.04); padding: 6px 12px; }
 .rtable div { display: flex; justify-content: space-between; padding: 6px 0; font-size: 15px; border-bottom: 1px solid rgba(255, 255, 255, 0.06); }
 .rtable span { color: var(--muted); }

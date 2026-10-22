@@ -9,7 +9,7 @@ Blast the swarm, collect XP crystals, pick upgrades, evolve weapons and take dow
   - **Crystal Belt** — orbiting shards, prism gunners, drifting asteroids · boss: Crystal Serpent
   - **Solar Forge** — fused bombers, turrets, magma golems, solar flares and mortar strikes · boss: Forge Titan
   - **Void Core** — teleporting wraiths, seeker eyes, gravity wells · final boss: Void Heart (3 phases)
-- 3 stars per sector: clear · kill target · finish with 50%+ hull
+- 3 stars per sector: clear · kill target (+20% in worlds 2-4) · destroy every elite (and the boss); 50 coins per new star, 15 on a replay, 300 for all 18 stars of a world
 - 3 ships: Striker, Phantom, Titan (unlock with coins)
 - 8 weapons, 6 passive upgrades, 4 weapon evolutions
 - Elite enemies drop supply crates; pickups: repair, magnet, bomb

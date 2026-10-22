@@ -11,6 +11,11 @@ import { FREE_SHOP_CAP, UNLOCK_COINS, shipLook } from './store.js';
 import { menuTip, markTip, setTips } from './tutorial.js';
 
 const STAR = '<svg viewBox="0 0 24 24" class="star-svg"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6-4.9-4.6 6.6-.8z"/></svg>';
+// The 3rd star's goal: every elite of the sector, plus the boss on a boss sector.
+const eliteGoal = (st) => {
+  const el = `${st.elites} elite${st.elites === 1 ? '' : 's'}`;
+  return st.boss ? `Destroy ${st.elites ? `${el} and ` : ''}the boss` : `Destroy ${st.elites > 1 ? `all ${el}` : `the ${el}`}`;
+};
 const COIN = '<span class="coin-ico"></span>';
 
 const titleCase = (s) => s.toLowerCase().replace(/\b\w/g, (c) => c.toUpperCase());
@@ -266,7 +271,7 @@ export class UI {
       <ul class="goals">
         ${goal(0, st.boss ? 'Defeat the boss' : 'Survive to the end')}
         ${goal(1, `Destroy ${st.kills} enemies`)}
-        ${goal(2, 'Finish with 50%+ hull')}
+        ${goal(2, eliteGoal(st))}
       </ul>
       <div class="brief-ship"><canvas data-ship="${ship.id}" width="96" height="96"></canvas><div><b>${esc(ship.name)}</b><br><small>${esc(WEAPONS[ship.weapon].name)}</small></div><button class="btn small" data-act="hangar">CHANGE</button></div>
       <div class="modal-actions">
@@ -639,20 +644,34 @@ export class UI {
     const next = ALL_STAGES[idx + 1];
     const canNext = r.won && next && this.app.isUnlocked(next.id);
     const invite = r.won && next && this.app.needsFullGame(next.id);
-    const stars = [0, 1, 2].map((k) => `<span class="rstar ${k < r.stars ? 'on' : ''}" style="animation-delay:${0.3 + k * 0.25}s">${STAR}</span>`).join('');
-    const goals = ['Clear', `${r.stage.kills} kills`, '50%+ hull'].map((g, i) => `<li class="${r.goals[i] && r.won ? 'done' : ''}">${STAR}<span>${g}</span></li>`).join('');
+    // a star earned for the first time in this run is marked NEW
+    const stars = [0, 1, 2].map((k) => `<span class="rstar ${k < r.stars ? 'on' : ''} ${k >= r.prevStars && k < r.stars ? 'new' : ''}" style="animation-delay:${0.3 + k * 0.25}s">${STAR}</span>`).join('');
+    // every goal with its progress, so the player sees which one was missed
+    const st = r.stage;
+    const bossNote = st.boss ? (r.won ? ' + boss' : ' + boss ✗') : '';
+    const rows = [
+      [st.boss ? 'Defeat the boss' : 'Survive', st.boss ? (r.won ? '✓' : '✗') : `${fmtTime(Math.min(r.time, st.duration))} / ${fmtTime(st.duration)}`],
+      ['Kills', `${r.kills} / ${st.kills}`],
+      [st.elites ? 'Elites' : 'Boss', st.elites ? `${r.elitesKilled} / ${st.elites}${bossNote}` : (r.won ? '✓' : '✗')],
+    ];
+    const goals = rows.map(([label, val], i) => {
+      const cls = r.goals[i] && r.won ? 'done' : r.won ? 'miss' : '';
+      return `<li class="${cls}">${STAR}<span>${label}</span><b>${val}</b></li>`;
+    }).join('');
     this.hideHud();
     this.modal(`
       <div class="lu-title ${r.won ? '' : 'lose'}">${r.won ? (next ? 'SECTOR CLEAR' : 'GALAXY SAVED') : 'SHIP DESTROYED'}</div>
       ${r.won && !next ? '<p class="muted center">The Void Heart is destroyed. Replay any sector to collect every star.</p>' : ''}
       <div class="muted center">${esc(r.stage.id)} · ${esc(r.stage.name)}</div>
-      ${r.won ? `<div class="rstars">${stars}</div><ul class="goals inline">${goals}</ul>` : ''}
+      ${r.won ? `<div class="rstars">${stars}</div>` : ''}
+      <ul class="goals progress">${goals}</ul>
+      ${!r.won ? '<p class="tiny muted center">Stars count only when you clear the sector.</p>' : ''}
       <div class="rtable">
         <div><span>Time</span><b>${fmtTime(r.time)}</b></div>
-        <div><span>Enemies destroyed</span><b>${r.kills}</b></div>
         <div><span>Level reached</span><b>${r.level}</b></div>
         <div><span>Coins collected</span><b>${r.collected}</b></div>
-        ${r.won ? `<div><span>Clear bonus${r.firstClear ? ' (first clear!)' : ''}</span><b>${r.clearBonus}</b></div><div><span>Star bonus</span><b>${r.starBonus}</b></div>` : ''}
+        ${r.won ? `<div><span>Clear bonus${r.firstClear ? ' (first clear!)' : ''}</span><b>${r.clearBonus}</b></div><div><span>Star bonus${r.newStars ? ` (${r.newStars} new)` : ''}</span><b>${r.starBonus}</b></div>` : ''}
+        ${r.worldBonus ? `<div class="world-bonus"><span>All ${r.stage.world.stages.length * 3} stars in ${esc(r.stage.world.name)}!</span><b>${r.worldBonus}</b></div>` : ''}
         <div class="total"><span>Total</span><b>${COIN}${r.total}</b></div>
       </div>
       <div class="modal-actions">

@@ -114,6 +114,7 @@ export function installTestKit(app) {
         ${btn('skip', 'SKIP 30 S')}
         ${st.boss && !g.boss && !g.bossDefeated ? btn('summon', 'BOSS NOW') : ''}
         ${btn('win', 'WIN SECTOR')}
+        ${btn('win3', 'WIN · 3 STARS')}
       </div>
       <div class="modal-actions"><button class="btn primary" data-act="close">RESUME</button></div>
     `, {
@@ -133,12 +134,17 @@ export function installTestKit(app) {
         st.events.forEach((e, i) => { if (e.t < g.time) g.eventsDone.add(i); });
       }),
       summon: act(() => { st.events.forEach((e, i) => g.eventsDone.add(i)); g.time = st.bossAt; }),
-      win: act(() => {
-        if (g.boss) g.kill(g.boss);
-        else if (!st.boss) g.win();
-        else { g.bossDefeated = true; g.win(); }
-      }),
+      win: act(() => winNow()),
+      // as if every goal was met: kill goal reached and every elite of the sector destroyed
+      win3: act(() => { g.kills = Math.max(g.kills, st.kills); g.elitesKilled = st.elites; winNow(); }),
     }, 'testkit');
+  }
+
+  function winNow() {
+    const g = app.game, st = g.stage;
+    if (g.boss) g.kill(g.boss);
+    else if (!st.boss) g.win();
+    else { g.bossDefeated = true; g.win(); }
   }
 
   ui.globalH.testkit = () => (app.game ? gamePanel() : menuPanel());

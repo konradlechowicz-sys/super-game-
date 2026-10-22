@@ -37,6 +37,7 @@ export class Game {
     this.hash = new SpatialHash(64);
     this.tmp = [];
     this.kills = 0; this.coinsRun = 0;
+    this.elitesKilled = 0;
     this.level = 1; this.xp = 0; this.xpNext = xpFor(1); this.pendingLevels = 0; this.pendingChests = 0;
     this.weapons = []; this.passives = {};
     this.spawnAcc = 0; this.eventsDone = new Set(); this.surge = null;
@@ -185,6 +186,7 @@ export class Game {
   kill(e) {
     e.dead = true;
     this.kills++;
+    if (e.stageElite) this.elitesKilled++;
     this.burst(e.x, e.y, e.color, e.boss ? 80 : e.elite ? 30 : 9, e.boss ? 500 : 200, e.boss ? 1.4 : 0.5, e.boss ? 12 : 6);
     this.addFx(e.x, e.y, e.r * (e.boss ? 6 : 2.4), e.color, e.boss ? 0.9 : 0.3);
     if (e.boss) {
@@ -406,7 +408,8 @@ export class Game {
     } else if (ev.type === 'elite') {
       // a stationary elite (turret) is placed in sight, closer than a normal turret
       const pos = ENEMIES[ev.enemy].speed > 0 ? this.posFor(ev.enemy) : this.nearPos(150);
-      this.spawnElite(ev.enemy, pos.x, pos.y, ev.traits || []);
+      // only the sector's own elites count for the 3rd star (not the ones the tester's panel spawns)
+      this.spawnElite(ev.enemy, pos.x, pos.y, ev.traits || []).stageElite = true;
     } else if (ev.type === 'surge') {
       this.surge = { until: this.time + ev.dur, mul: ev.mul };
     } else if (ev.type === 'mortar') {
@@ -1475,29 +1478,40 @@ export class Game {
     const p = this.player;
     this.state = 'over';
     if (this.tut.tip) this.tut.close(false);
-    let stars = 0;
-    const goals = [won, this.kills >= st.kills, won && p.hp >= p.maxHp * 0.5];
-    if (won) stars = goals.filter(Boolean).length;
+    // 3 stars: clear the sector, reach the kill goal, destroy every elite (and the boss, which clearing a boss sector needs)
+    const goals = [won, this.kills >= st.kills, won && this.elitesKilled >= st.elites];
+    const stars = won ? goals.filter(Boolean).length : 0;
     const idx = stageIndex(st.id);
     const collected = Math.round(this.coinsRun);
     const firstClear = won && !save.cleared[st.id];
     const clearBonus = won ? Math.round((40 + idx * 20) * (firstClear ? 1.5 : 1) * p.coinMult) : 0;
-    const starBonus = won ? Math.round(stars * 15 * p.coinMult) : 0;
-    const total = collected + clearBonus + starBonus;
+    // a star earned for the first time pays 50, a star earned again 15
+    const prevStars = save.stars[st.id] || 0;
+    const newStars = Math.max(0, stars - prevStars);
+    const starBonus = won ? Math.round((newStars * 50 + (stars - newStars) * 15) * p.coinMult) : 0;
+    let worldBonus = 0;
+    if (won) {
+      save.cleared[st.id] = true;
+      save.stars[st.id] = Math.max(prevStars, stars);
+      if (st.boss) save.stats.bossKills += 1;
+      // all 18 stars of a world: a one-time 300 coins
+      const w = st.world;
+      const worldTotal = w.stages.reduce((a, s) => a + (save.stars[s.id] || 0), 0);
+      if (worldTotal >= w.stages.length * 3 && !save.worldStars[w.id]) {
+        save.worldStars[w.id] = true;
+        worldBonus = 300;
+      }
+    }
+    const total = collected + clearBonus + starBonus + worldBonus;
     save.coins += total;
     save.stats.kills += this.kills;
     save.stats.runs += 1;
-    if (won) {
-      save.cleared[st.id] = true;
-      save.stars[st.id] = Math.max(save.stars[st.id] || 0, stars);
-      if (st.boss) save.stats.bossKills += 1;
-    }
     this.app.persist();
     this.app.audio.sfx(won ? 'win' : 'lose');
     this.ui.bossBar(null);
     this.ui.results({
-      won, stage: st, stars, goals, time: this.time, kills: this.kills, level: this.level,
-      collected, clearBonus, starBonus, total, firstClear,
+      won, stage: st, stars, prevStars, newStars, goals, time: this.time, kills: this.kills, level: this.level,
+      elitesKilled: this.elitesKilled, collected, clearBonus, starBonus, worldBonus, total, firstClear,
     });
   }
 

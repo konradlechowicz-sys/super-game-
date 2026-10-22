@@ -268,6 +268,9 @@ const ELITE_TRAITS = {
   '4-4': [['bulwark', 'commander']], '4-5': [['berserker', 'shielded']], '4-6': [['swift', 'berserker'], ['commander', 'shielded']],
 };
 for (const st of [...W1, ...W2, ...W3, ...W4]) {
+  // v1.1 stars: the 3rd star needs every elite of the sector, and the kill goal is 20% higher in worlds 2-4
+  st.elites = st.events.filter((e) => e.type === 'elite').length;
+  if (!W1.includes(st)) st.kills = Math.round((st.kills * 1.2) / 10) * 10;
   const list = ELITE_TRAITS[st.id] || [];
   st.events.filter((e) => e.type === 'elite').forEach((e, i) => {
     e.traits = list[i] || [];

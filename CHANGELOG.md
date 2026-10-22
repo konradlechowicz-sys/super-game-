@@ -16,6 +16,7 @@ i wersja TEST (gracze tego nie widzą).
 - Elity z cechami: Swift, Bulwark, Berserker, Commander, Shielded, z własnymi atakami (szarża, uderzenie, posiłki, tarcze dla innych); wytrzymalsze w miarę trwania sektora; bogatsze nagrody; strzałka do elity poza ekranem.
 - Arena 1,5× większa: więcej miejsca do manewrowania.
 - Tłum boli: krótsza nietykalność po dotknięciu wroga i ścisk (+30% za każdego kolejnego wroga); statki +10 kadłuba.
+- Gwiazdki: 3. gwiazdka za zniszczenie wszystkich elit (i bossa), cel zabójstw +20% w światach 2–4, 50 monet za nową gwiazdkę, 300 za komplet w świecie; ekran wyników z postępem celów.
 
 ### What's New (App Store)
 
@@ -23,6 +24,15 @@ i wersja TEST (gracze tego nie widzą).
 - An arrow at the screen edge points to elites out of sight.
 - A 1.5x larger arena gives you more room to manoeuvre.
 - Flying through a swarm now hurts: the more enemies touch your ship, the harder it hits. All ships get +10 hull.
+- New third star: destroy every elite in the sector (and the boss). New stars pay 50 coins each, and collecting all 18 stars in a world earns a 300-coin bonus. Worlds 2-4 have higher kill goals.
+- The results screen shows your progress on every goal, so you can see which star you missed.
+
+## Build 38 · 2026-10-22
+- [Zmiana] Trzecia gwiazdka: zniszcz wszystkie elity sektora (w sektorach z bossem: elity i bossa) zamiast „skończ z 50% kadłuba”. Odprawa sektora pokazuje nowy cel, np. „Destroy all 2 elites”, „Destroy 1 elite and the boss”. Zdobyte już gwiazdki zostają.
+- [Balans] Cel zabójstw w światach 2–4 jest o 20% wyższy (np. 2-1: 1080 zamiast 900); świat 1 bez zmian.
+- [Balans] Nagroda za gwiazdki: 50 monet za każdą nową gwiazdkę (było 15), 15 za gwiazdkę zdobytą ponownie; jednorazowo 300 monet za komplet 18 gwiazdek w świecie.
+- [Nowe] Ekran wyników pokazuje postęp każdego celu („Kills 182 / 220”, „Elites 1 / 2”, czas przetrwania), a nieosiągnięty cel jest podświetlony na czerwono; także po przegranej. Nowe gwiazdki mają znaczek NEW, a premia za gwiazdki podaje, ile jest nowych.
+- [Narzędzia] Panel 🛠: przycisk „WIN · 3 STARS” (wygrana ze spełnionymi wszystkimi celami).
 
 ## Build 37 · 2026-10-22
 - [Balans] Tłum boli: po dotknięciu wroga nietykalność trwa 0,3 s (było 0,6 s; po pociskach i zagrożeniach bez zmian), a każdy kolejny wróg dotykający statku w tej samej chwili dodaje +30% obrażeń (maks. ×2,5). Pomiar: 3 s w tłumie 5 dronów kosztuje 176 kadłuba (było 40), przy 1 dronie 80 (było 40).
