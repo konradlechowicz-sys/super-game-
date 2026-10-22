@@ -13,12 +13,20 @@ i wersja TEST (gracze tego nie widzą).
 <!-- Podsumowanie zmian od v1.0.1; uzupełnia Claude przy każdym buildzie. -->
 
 - Opis w App Store: poprawiona nazwa broni Arc Coil.
-- Elity z cechami: Swift, Bulwark, Berserker, Commander, Shielded; bogatsze nagrody za ich pokonanie; strzałka do elity poza ekranem.
+- Elity z cechami: Swift, Bulwark, Berserker, Commander, Shielded, z własnymi atakami (szarża, uderzenie, posiłki, tarcze dla innych); wytrzymalsze w miarę trwania sektora; bogatsze nagrody; strzałka do elity poza ekranem.
 
 ### What's New (App Store)
 
-- Elite enemies now come with traits: Swift, Bulwark, Berserker, Commander and Shielded. Beat them for richer rewards.
+- Elite enemies now come with traits and attacks of their own: Swift charges, Berserkers slam the ground, Commanders call reinforcements, Shielded elites shield their allies, Bulwarks block your path. Beat them for richer rewards.
 - An arrow at the screen edge points to elites out of sight.
+
+## Build 35 · 2026-10-22
+- [Balans] Elity z cechami są wytrzymalsze: HP ×10 na starcie sektora, rośnie do ×14 pod jego koniec (wcześniej stałe ×7); Bulwark dodatkowo +40%.
+- [Zmiana] Swift szarżuje co 2,5 s (było 4 s), czterokrotnie szybciej (było trzy).
+- [Nowe] Berserker w szale co 4 s uderza w ziemię: czerwony okrąg ostrzeżenia, po 0,75 s wybuch wokół niego.
+- [Nowe] Commander co 10 s wzywa 4 posiłki (napis „REINFORCEMENTS”), maksymalnie 12 żywych naraz.
+- [Nowe] Shielded co 5 s osłania wrogów w promieniu 180 px tarczą o sile 30% ich HP (fioletowy pierścień).
+- [Zmiana] Aura Bulwark: 160 px (było 120), spowalnia o 50% (było 35%).
 
 ## Build 34 · 2026-10-22
 - [Poprawka] Commander nie ucieka już poza ekran: strzelający dowódcy (prism, eye) wracają w stronę statku, gdy odlecą dalej niż 190 px, zamiast trzymać się na dystans jak zwykłe strzelające elity.

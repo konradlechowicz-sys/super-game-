@@ -154,7 +154,7 @@ export class Game {
       // a shielded elite's shield soaks damage first and regrows after 3 s without hits
       const soak = Math.min(e.shield, dmg);
       e.shield -= soak; dmg -= soak; e.lastHit = this.time;
-      if (e.shield <= 0) { this.text(e.x, e.y - e.r - 12, 'SHIELD DOWN', TRAITS.shielded.color); this.burst(e.x, e.y, TRAITS.shielded.color, 14, 220, 0.4); }
+      if (e.shield <= 0 && e.maxShield) { this.text(e.x, e.y - e.r - 12, 'SHIELD DOWN', TRAITS.shielded.color); this.burst(e.x, e.y, TRAITS.shielded.color, 14, 220, 0.4); }
     }
     if (e.traits) e.lastHit = this.time;
     e.hp -= dmg;
@@ -312,9 +312,10 @@ export class Game {
     if (e.traits?.has('commander')) {
       // an escort of six; a stationary commander (turret) brings the sector's first enemy type instead
       const esc = ENEMIES[type].speed === 0 ? this.stage.enemies[0][0] : type;
+      e.escort = [];
       for (let i = 0; i < 6; i++) {
         const a = (i / 6) * TAU;
-        this.spawnEnemy(esc, x + Math.cos(a) * 70, y + Math.sin(a) * 70);
+        e.escort.push(this.spawnEnemy(esc, x + Math.cos(a) * 70, y + Math.sin(a) * 70));
       }
     }
     return e;
@@ -324,8 +325,13 @@ export class Game {
   applyTraits(e, traits) {
     e.traits = new Set(traits);
     const d = e.def;
-    if (e.traits.has('swift') && d.speed > 0) { e.speed = (e.speed / 0.9) * 1.7; e.sw = { cd: 2.5, t: 0, phase: 'run' }; }
-    if (e.traits.has('bulwark')) { e.hp *= 10 / 7; e.r *= 1.25; e.kbRes = 0; }
+    // tougher than a plain elite, more so later in the sector: x10 health at the start, up to x14 at the end
+    e.hp *= (10 + 4 * clamp(this.time / this.stage.duration, 0, 1)) / 7;
+    if (e.traits.has('swift') && d.speed > 0) { e.speed = (e.speed / 0.9) * 1.7; e.sw = { cd: 2, t: 0, phase: 'run' }; }
+    if (e.traits.has('bulwark')) { e.hp *= 1.4; e.r *= 1.25; e.kbRes = 0; }
+    if (e.traits.has('berserker')) e.slamT = 0;
+    if (e.traits.has('commander')) e.callT = 10;
+    if (e.traits.has('shielded')) e.wardT = 3;
     if (e.traits.has('berserker')) e.dmg = (e.dmg / 1.5) * 2.5;
     if (e.traits.has('shielded')) { e.shield = e.maxShield = e.hp * 0.5; e.lastHit = -9; }
     e.maxHp = e.hp;
@@ -479,8 +485,8 @@ export class Game {
       } else if (h.kind === 'mortar') {
         if (h.t >= h.warn) {
           done = true;
-          this.addFx(h.x, h.y, h.r, '#ff8a2a', 0.35, 5);
-          this.burst(h.x, h.y, '#ffb52e', 12, 260, 0.45, 7);
+          this.addFx(h.x, h.y, h.r, h.color || '#ff8a2a', 0.35, 5);
+          this.burst(h.x, h.y, h.color || '#ffb52e', 12, 260, 0.45, 7);
           this.sfx('boom');
           this.shake = Math.max(this.shake, 5);
           if (live && Math.hypot(p.x - h.x, p.y - h.y) < h.r + p.r) this.hurtPlayer(h.dmg, 'mortar');
@@ -992,6 +998,31 @@ export class Game {
       e.enraged = true;
       this.text(e.x, e.y - e.r - 14, 'ENRAGED', TRAITS.berserker.color);
       this.sfx('warn');
+      e.slamT = 0;
+    }
+    if (e.enraged && (e.slamT -= dt) <= 0) {
+      // ground slam: a red warning circle, then a blast around where it stood
+      e.slamT = 4;
+      this.addHazard({ kind: 'mortar', x: e.x, y: e.y, r: e.r + 110, warn: 0.75, dmg: 18, color: TRAITS.berserker.color });
+    }
+    if (t.has('commander') && (e.callT -= dt) <= 0) {
+      // calls reinforcements every 10 s while fewer than 12 of them are alive
+      e.callT = 10;
+      e.escort = (e.escort || []).filter((o) => !o.dead);
+      const type = e.def.speed === 0 ? this.stage.enemies[0][0] : e.type;
+      for (let i = 0; i < 4 && e.escort.length < 12; i++) {
+        const a = rand(0, TAU);
+        e.escort.push(this.spawnEnemy(type, e.x + Math.cos(a) * 80, e.y + Math.sin(a) * 80));
+      }
+      this.text(e.x, e.y - e.r - 14, 'REINFORCEMENTS', TRAITS.commander.color);
+    }
+    if (t.has('shielded') && (e.wardT -= dt) <= 0) {
+      // shields the enemies around it (30% of their health) every 5 s
+      e.wardT = 5;
+      const near = this.tmp4 || (this.tmp4 = []);
+      this.hash.query(e.x, e.y, 180, near);
+      for (const o of near) if (o !== e && !o.boss && !o.seg && !o.dead && !(o.shield > 0)) { o.shield = o.maxHp * 0.3; o.warded = true; }
+      this.addFx(e.x, e.y, 180, TRAITS.shielded.color, 0.35, 3);
     }
     if (t.has('shielded') && e.maxShield && this.time - e.lastHit > 3) e.shield = Math.min(e.maxShield, e.shield + e.maxShield * 0.15 * dt);
     if (t.has('commander')) {
@@ -1001,7 +1032,7 @@ export class Game {
       e.led = 0;
       for (const o of near) if (o !== e && !o.boss && !o.seg && !o.elite && (o.x - e.x) ** 2 + (o.y - e.y) ** 2 < 220 * 220) { o.buffT = 0.25; e.led++; }
     }
-    if (t.has('bulwark') && d < e.r + 120) this.slowNext = Math.min(this.slowNext ?? 1, 0.65);
+    if (t.has('bulwark') && d < e.r + 160) this.slowNext = Math.min(this.slowNext ?? 1, 0.5);
     // a commander stays in sight: a ranged one does not back off past 190 px like a plain shooter
     if (t.has('commander') && e.def.speed > 0 && d > 190 && !e.sw) return [(dx / d) * e.speed, (dy / d) * e.speed];
     if (e.sw && !e.def.ai) {
@@ -1015,8 +1046,8 @@ export class Game {
         return [0, 0];
       } else {
         s.t -= dt;
-        if (s.t <= 0) { s.phase = 'run'; s.cd = 4; }
-        const v = e.speed * 3;
+        if (s.t <= 0) { s.phase = 'run'; s.cd = 2.5; }
+        const v = e.speed * 4;
         return [Math.cos(s.dir) * v, Math.sin(s.dir) * v];
       }
     }
@@ -1529,6 +1560,7 @@ export class Game {
       ctx.globalAlpha = 1;
       if (e.elite) this.drawBar(ctx, e.x, e.y + e.r + 10, 34, e.hp / e.maxHp, '#ffd23d');
       if (e.traits) this.drawTraits(ctx, e);
+      else if (e.shield > 0) { ctx.strokeStyle = TRAITS.shielded.color; ctx.globalAlpha = 0.7; ctx.lineWidth = 1.5; ctx.beginPath(); ctx.arc(e.x, e.y, e.r + 4, 0, TAU); ctx.stroke(); ctx.globalAlpha = 1; }
     }
 
     // player bullets / enemy bullets
@@ -1708,11 +1740,11 @@ export class Game {
       } else if (h.kind === 'mortar') {
         const k = Math.min(1, h.t / h.warn);
         ctx.globalAlpha = 0.6 + 0.3 * Math.sin(t * 25);
-        ctx.strokeStyle = '#ff8a2a';
+        ctx.strokeStyle = h.color || '#ff8a2a';
         ctx.lineWidth = 2;
         ctx.beginPath(); ctx.arc(h.x, h.y, h.r, 0, TAU); ctx.stroke();
         ctx.globalAlpha = 0.25;
-        ctx.fillStyle = '#ff5a1a';
+        ctx.fillStyle = h.color || '#ff5a1a';
         ctx.beginPath(); ctx.arc(h.x, h.y, h.r * k, 0, TAU); ctx.fill();
       } else if (h.kind === 'well') {
         const k = Math.min(1, h.t / h.warn) * Math.min(1, (h.dur - h.t) / 0.4);
@@ -1758,11 +1790,11 @@ export class Game {
       ctx.beginPath(); ctx.arc(e.x, e.y, e.r + 7 + i * 5, 0, TAU); ctx.stroke();
     });
     ctx.shadowBlur = 0; ctx.globalAlpha = 1;
-    if (e.traits.has('bulwark')) { ctx.strokeStyle = TRAITS.bulwark.color; ctx.globalAlpha = 0.18; ctx.setLineDash([6, 8]); ctx.beginPath(); ctx.arc(e.x, e.y, e.r + 120, 0, TAU); ctx.stroke(); ctx.setLineDash([]); ctx.globalAlpha = 1; }
+    if (e.traits.has('bulwark')) { ctx.strokeStyle = TRAITS.bulwark.color; ctx.globalAlpha = 0.18; ctx.setLineDash([6, 8]); ctx.beginPath(); ctx.arc(e.x, e.y, e.r + 160, 0, TAU); ctx.stroke(); ctx.setLineDash([]); ctx.globalAlpha = 1; }
     if (e.enraged) { ctx.fillStyle = TRAITS.berserker.color; ctx.globalAlpha = 0.18 + pulse * 0.12; ctx.beginPath(); ctx.arc(e.x, e.y, e.r + 4, 0, TAU); ctx.fill(); ctx.globalAlpha = 1; }
     if (e.sw?.phase === 'wind') {
       ctx.strokeStyle = TRAITS.swift.color; ctx.globalAlpha = 0.7; ctx.lineWidth = 3; ctx.setLineDash([10, 8]);
-      ctx.beginPath(); ctx.moveTo(e.x, e.y); ctx.lineTo(e.x + Math.cos(e.sw.dir) * 300, e.y + Math.sin(e.sw.dir) * 300); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(e.x, e.y); ctx.lineTo(e.x + Math.cos(e.sw.dir) * 380, e.y + Math.sin(e.sw.dir) * 380); ctx.stroke();
       ctx.setLineDash([]); ctx.globalAlpha = 1;
     }
     if (e.traits.has('commander')) {
