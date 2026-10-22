@@ -2,19 +2,19 @@ export const SHIPS = {
   striker: {
     id: 'striker', name: 'Striker', color: '#2ff3ff', shape: 'striker',
     desc: 'Balanced interceptor. Reliable in any fight.',
-    hp: 100, speed: 235, dmg: 1, armor: 0, weapon: 'blaster', cost: 0,
+    hp: 110, speed: 235, dmg: 1, armor: 0, weapon: 'blaster', cost: 0,
     perk: 'No weaknesses',
   },
   phantom: {
     id: 'phantom', name: 'Phantom', color: '#ff4dd8', shape: 'phantom',
     desc: 'Blazing-fast scout. Fragile, but hits harder.',
-    hp: 70, speed: 290, dmg: 1.15, armor: 0, weapon: 'spread', cost: 400,
+    hp: 80, speed: 290, dmg: 1.15, armor: 0, weapon: 'spread', cost: 400,
     perk: '+15% damage',
   },
   titan: {
     id: 'titan', name: 'Titan', color: '#ffb52e', shape: 'titan',
     desc: 'Heavy gunship. Slow and armored, shreds anything close.',
-    hp: 150, speed: 200, dmg: 1, armor: 3, weapon: 'orbit', cost: 900,
+    hp: 160, speed: 200, dmg: 1, armor: 3, weapon: 'orbit', cost: 900,
     perk: 'Armor: -3 damage per hit',
   },
 };
