@@ -13,6 +13,10 @@ const MAX_PASSIVES = 4;
 const DRAG_SENS = 1.5;
 const MAX_LAG = 150;
 const ARENA_SCALE = 1.5;
+// Crowd damage (v1.1): invulnerability after touching an enemy (shots and hazards keep 0.6 s), and the squeeze bonus.
+const CONTACT_INV = 0.3;
+const CROWD_EXTRA = 0.3;
+const CROWD_MAX = 2.5;
 
 let nextId = 1;
 
@@ -137,8 +141,9 @@ export class Game {
     }
   }
 
-  text(x, y, str, color = '#ffffff') {
-    if (!this.save.settings.dmgNums) return;
+  // Floating text. Damage numbers follow the setting; gameplay cues (always = true) show regardless.
+  text(x, y, str, color = '#ffffff', always = false) {
+    if (!always && !this.save.settings.dmgNums) return;
     if (this.texts.length > 45) this.texts.shift();
     this.texts.push({ x: x + rand(-6, 6), y, str, color, t: 0.55 });
   }
@@ -156,7 +161,7 @@ export class Game {
       // a shielded elite's shield soaks damage first and regrows after 3 s without hits
       const soak = Math.min(e.shield, dmg);
       e.shield -= soak; dmg -= soak; e.lastHit = this.time;
-      if (e.shield <= 0 && e.maxShield) { this.text(e.x, e.y - e.r - 12, 'SHIELD DOWN', TRAITS.shielded.color); this.burst(e.x, e.y, TRAITS.shielded.color, 14, 220, 0.4); }
+      if (e.shield <= 0 && e.maxShield) { this.text(e.x, e.y - e.r - 12, 'SHIELD DOWN', TRAITS.shielded.color, true); this.burst(e.x, e.y, TRAITS.shielded.color, 14, 220, 0.4); }
     }
     if (e.traits) e.lastHit = this.time;
     e.hp -= dmg;
@@ -220,13 +225,14 @@ export class Game {
     this.gems.push({ x: x + rand(-4, 4), y: y + rand(-4, 4), v, mag: false, sp: 0 });
   }
 
-  hurtPlayer(dmg, src = '?') {
+  // inv = invulnerability after the hit: 0.6 s for shots and hazards, shorter for touching enemies (see CONTACT_INV)
+  hurtPlayer(dmg, src = '?', inv = 0.6) {
     const p = this.player;
     if (p.inv > 0 || this.state !== 'play' || this.app.god) return;
     dmg = Math.max(1, dmg - p.armor);
     p.hp -= dmg;
     (this.dmgLog ||= {})[src] = (this.dmgLog[src] || 0) + dmg;
-    p.inv = 0.6;
+    p.inv = inv;
     this.app.haptic('medium');
     this.shake = Math.max(this.shake, 9);
     this.flash = 0.25;
@@ -848,6 +854,8 @@ export class Game {
 
   updateEnemies(dt) {
     const p = this.player;
+    const contacts = this.contacts || (this.contacts = []);
+    contacts.length = 0;
     const hw = this.arena.w / 2, hh = this.arena.h / 2;
     const near = this.tmp2 || (this.tmp2 = []);
     for (let i = this.enemies.length - 1; i >= 0; i--) {
@@ -981,7 +989,8 @@ export class Game {
       if (e.def.spin) e.rot += e.def.spin * dt;
       else if (mx || my) e.rot = angleLerp(e.rot, Math.atan2(my, mx), Math.min(1, dt * 8));
       if (!e.ghost && d < e.r + p.r) {
-        this.hurtPlayer(e.dmg * this.dmgMul(e), e.type);
+        // collected and applied once per frame below: the more enemies touch the ship at once, the more it hurts
+        contacts.push(e);
         if (e.traits?.has('bulwark')) {
           // solid: push the ship out instead of letting it fly through
           const ox = p.x - e.x, oy = p.y - e.y, od = Math.hypot(ox, oy) || 1, push = e.r + p.r - od + 1;
@@ -989,6 +998,19 @@ export class Game {
         }
       }
     }
+    this.crowdHit(contacts);
+  }
+
+  // Crowd damage (v1.1): the strongest touching enemy's damage, +30% for each other enemy touching the ship at the
+  // same moment (at most x2.5), and only CONTACT_INV seconds of invulnerability, so ploughing through a swarm hurts.
+  crowdHit(contacts) {
+    const p = this.player;
+    if (!contacts.length || p.inv > 0) return;
+    let top = contacts[0], best = 0;
+    for (const e of contacts) { const v = e.dmg * this.dmgMul(e); if (v > best) { best = v; top = e; } }
+    const mul = Math.min(CROWD_MAX, 1 + CROWD_EXTRA * (contacts.length - 1));
+    this.hurtPlayer(best * mul, contacts.length > 1 ? 'crowd' : top.type, CONTACT_INV);
+    if (contacts.length >= 4) { this.flash = Math.max(this.flash, 0.45); this.text(p.x, p.y - 30, `CRUSHED x${mul.toFixed(1)}`, '#ff3d6e', true); }
   }
 
   // Per-frame trait behaviour. Returns a movement override [mx, my] while a swift elite winds up or charges.
@@ -998,7 +1020,7 @@ export class Game {
     const p = this.player;
     if (t.has('berserker') && !e.enraged && e.hp < e.maxHp * 0.5) {
       e.enraged = true;
-      this.text(e.x, e.y - e.r - 14, 'ENRAGED', TRAITS.berserker.color);
+      this.text(e.x, e.y - e.r - 14, 'ENRAGED', TRAITS.berserker.color, true);
       this.sfx('warn');
       e.slamT = 0;
     }
@@ -1016,7 +1038,7 @@ export class Game {
         const a = rand(0, TAU);
         e.escort.push(this.spawnEnemy(type, e.x + Math.cos(a) * 80, e.y + Math.sin(a) * 80));
       }
-      this.text(e.x, e.y - e.r - 14, 'REINFORCEMENTS', TRAITS.commander.color);
+      this.text(e.x, e.y - e.r - 14, 'REINFORCEMENTS', TRAITS.commander.color, true);
     }
     if (t.has('shielded') && (e.wardT -= dt) <= 0) {
       // shields the enemies around it (30% of their health) every 5 s

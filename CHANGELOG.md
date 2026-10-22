@@ -15,12 +15,20 @@ i wersja TEST (gracze tego nie widzą).
 - Opis w App Store: poprawiona nazwa broni Arc Coil.
 - Elity z cechami: Swift, Bulwark, Berserker, Commander, Shielded, z własnymi atakami (szarża, uderzenie, posiłki, tarcze dla innych); wytrzymalsze w miarę trwania sektora; bogatsze nagrody; strzałka do elity poza ekranem.
 - Arena 1,5× większa: więcej miejsca do manewrowania.
+- Tłum boli: krótsza nietykalność po dotknięciu wroga i ścisk (+30% za każdego kolejnego wroga); statki +10 kadłuba.
 
 ### What's New (App Store)
 
 - Elite enemies now come with traits and attacks of their own: Swift charges, Berserkers slam the ground, Commanders call reinforcements, Shielded elites shield their allies, Bulwarks block your path. Beat them for richer rewards.
 - An arrow at the screen edge points to elites out of sight.
 - A 1.5x larger arena gives you more room to manoeuvre.
+- Flying through a swarm now hurts: the more enemies touch your ship, the harder it hits. All ships get +10 hull.
+
+## Build 37 · 2026-10-22
+- [Balans] Tłum boli: po dotknięciu wroga nietykalność trwa 0,3 s (było 0,6 s; po pociskach i zagrożeniach bez zmian), a każdy kolejny wróg dotykający statku w tej samej chwili dodaje +30% obrażeń (maks. ×2,5). Pomiar: 3 s w tłumie 5 dronów kosztuje 176 kadłuba (było 40), przy 1 dronie 80 (było 40).
+- [Nowe] Przy ścisku 4+ wrogów: mocny czerwony błysk krawędzi ekranu i napis „CRUSHED ×N”.
+- [Balans] Statki mają +10 kadłuba: Striker 110, Phantom 80, Titan 160.
+- [Poprawka] Komunikaty cech elit („ENRAGED”, „REINFORCEMENTS”, „SHIELD DOWN”) i „CRUSHED” widać także przy wyłączonych liczbach obrażeń.
 
 ## Build 36 · 2026-10-22
 - [Zmiana] Arena jest 1,5× większa w obu kierunkach (na typowym iPhonie ok. 1350×1950 zamiast 900×1300): więcej miejsca na manewry i ucieczkę od tłumu, rzadziej przyciśnięcie do ściany. Kamera bez zmian.
