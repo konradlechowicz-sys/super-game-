@@ -1,6 +1,7 @@
 import { TAU, rand, randi, clamp, lerp, pick, weightedPick, angleLerp, SpatialHash } from './util.js';
 import { ENEMIES, BOSSES, PASSIVES, PASSIVE_MAX, SHIPS, TRAITS, xpFor, stageIndex, shopBonus } from './data.js';
 import { WEAPONS, WEAPON_MAX, weaponStats } from './weapons.js';
+import { COMBOS, COMBO_LEVEL, comboActive, combosFor } from './combos.js';
 import { shipLook } from './store.js';
 import { Tutorial, tipsOn, tipSeen, markTip } from './tutorial.js';
 import {
@@ -40,6 +41,8 @@ export class Game {
     this.elitesKilled = 0;
     this.level = 1; this.xp = 0; this.xpNext = xpFor(1); this.pendingLevels = 0; this.pendingChests = 0;
     this.weapons = []; this.passives = {};
+    // weapon combos active this run, and the ones still to announce once the level-up cards close
+    this.combos = new Set(); this.comboQueue = []; this.comboBannerT = 0;
     this.spawnAcc = 0; this.eventsDone = new Set(); this.surge = null;
     this.boss = null; this.bossDefeated = false;
     this.shake = 0; this.slowmo = 1; this.flash = 0; this.endTimer = 0;
@@ -78,6 +81,65 @@ export class Game {
 
   addWeapon(id) {
     this.weapons.push({ id, level: 1, evolved: false, t: 0.3 });
+  }
+
+  // Stats of an owned weapon, or null.
+  wstats(id) {
+    const w = this.weapons.find((x) => x.id === id);
+    return w ? weaponStats(w) : null;
+  }
+
+  // Turns on every combo whose two weapons have reached the combo level.
+  checkCombos() {
+    const p = this.player;
+    for (const id in COMBOS) {
+      if (this.combos.has(id) || !comboActive(this.weapons, id)) continue;
+      this.combos.add(id);
+      this.comboQueue.push(id);
+      this.addFx(p.x, p.y, 220, COMBOS[id].color, 0.6, 5);
+      this.burst(p.x, p.y, COMBOS[id].color, 36, 340, 0.9, 7);
+      this.sfx('evolve');
+      this.app.haptic('success');
+    }
+  }
+
+  // Chain lightning from (x, y): strikes `first`, then jumps to up to `chains` more enemies nearby.
+  chainLightning(x, y, first, dmg, chains, color, range = 150) {
+    const hit = new Set([first]);
+    const pts = [x, y, first.x, first.y];
+    this.damage(first, dmg, 0, 0, true);
+    let cur = first;
+    for (let c = 0; c < chains; c++) {
+      let best = null, bd = range * range;
+      for (const e of this.enemiesNear(cur.x, cur.y, range)) {
+        if (hit.has(e) || e.dead) continue;
+        const d = (e.x - cur.x) ** 2 + (e.y - cur.y) ** 2;
+        if (d < bd) { bd = d; best = e; }
+      }
+      if (!best) break;
+      hit.add(best);
+      pts.push(best.x, best.y);
+      this.damage(best, dmg * 0.85, 0, 0, true);
+      cur = best;
+    }
+    if (this.bolts.length < 40) this.addBolt(pts, color);
+  }
+
+  // Combo effects of an exploding missile: Cluster Missiles (a ring of pellets) and Minelayer (a mine left behind).
+  missileCombos(x, y) {
+    const p = this.player;
+    const sg = this.combos.has('cluster') && this.wstats('spread');
+    if (sg) {
+      for (let i = 0; i < 6; i++) {
+        this.shoot({ x, y, a: (i / 6) * TAU + rand(-0.2, 0.2), speed: rand(420, 500), dmg: sg.dmg * p.dmgMult, pierce: 0, r: 5,
+          life: 0.32 * p.areaMult, look: 'pellet', color: '#ff8a2a', knock: 120 });
+      }
+    }
+    const mn = this.combos.has('minelayer') && this.wstats('mines');
+    if (mn && Math.random() < 0.35) {
+      if (this.mines.length >= 40) this.mines.shift();
+      this.mines.push({ x, y, life: 6, arm: 0.3, dmg: mn.dmg * p.dmgMult, rad: mn.rad * p.areaMult });
+    }
   }
 
   // ---------------- queries used by weapons ----------------
@@ -626,10 +688,11 @@ export class Game {
     for (const w of this.weapons) {
       const def = WEAPONS[w.id];
       if (!w.evolved && def.evo && w.level >= WEAPON_MAX && P[def.evo.with]) opts.push({ kind: 'evo', id: w.id, wt: chest ? 200 : 8 });
-      else if (!w.evolved && w.level < WEAPON_MAX) opts.push({ kind: 'wlvl', id: w.id, wt: 10 });
+      else if (!w.evolved && w.level < WEAPON_MAX) opts.push({ kind: 'wlvl', id: w.id, wt: 10 + (combosFor(this.weapons, w.id, w.level + 1).length ? 4 : 0) });
     }
     if (this.weapons.length < MAX_WEAPONS) {
-      for (const id in WEAPONS) if (!this.weapons.some((w) => w.id === id)) opts.push({ kind: 'wnew', id, wt: 7 });
+      // a weapon that pairs into a combo with one already owned comes up a little more often
+      for (const id in WEAPONS) if (!this.weapons.some((w) => w.id === id)) opts.push({ kind: 'wnew', id, wt: combosFor(this.weapons, id, 1).length ? 10 : 7 });
     }
     const pc = Object.keys(P).length;
     for (const id in PASSIVES) {
@@ -661,7 +724,12 @@ export class Game {
       const lvl = w ? w.level + 1 : 1;
       let desc = def.desc[lvl - 1];
       if (lvl === WEAPON_MAX && def.evo) desc += ` · Evolves with ${PASSIVES[def.evo.with].name}`;
-      return { ...c, name: def.name, tag: w ? `LV ${lvl}` : 'NEW', desc, icon: def.icon, color: def.color };
+      // combo hint: only for a partner the player already has, so the rest stays a discovery
+      const combos = combosFor(this.weapons, c.id, lvl);
+      const done = combos.find((x) => x.done);
+      const comboHint = done ? `Unlocks combo: ${COMBOS[done.id].name}`
+        : combos.length ? `Combo with ${combos.map((x) => x.partner).join(' / ')} at LV ${COMBO_LEVEL}` : '';
+      return { ...c, name: def.name, tag: w ? `LV ${lvl}` : 'NEW', desc, comboHint, combo: !!done, icon: def.icon, color: def.color };
     }
     const def = PASSIVES[c.id];
     const lvl = (this.passives[c.id] || 0) + 1;
@@ -688,6 +756,7 @@ export class Game {
       case 'heal': p.hp = Math.min(p.maxHp, p.hp + p.maxHp * 0.4); break;
       case 'coins': this.coinsRun += 25; break;
     }
+    this.checkCombos();
   }
 
   openCards(chest) {
@@ -766,6 +835,12 @@ export class Game {
     for (const e of this.enemies) if (!e.dead) this.hash.insert(e);
 
     if (this.state === 'play') {
+      // announce new combos one at a time once the cards are closed
+      this.comboBannerT -= rawDt;
+      if (this.comboQueue.length && this.comboBannerT <= 0) {
+        this.ui.banner('COMBO!', COMBOS[this.comboQueue.shift()].name.toUpperCase());
+        this.comboBannerT = 2.2;
+      }
       for (const w of this.weapons) WEAPONS[w.id].update(w, this, dt, weaponStats(w));
       this.directSpawns(dt);
     }
@@ -1316,12 +1391,26 @@ export class Game {
           if (pr.hit.includes(e.id)) continue;
           if (pr.kind === 'missile') {
             this.explode(pr.x, pr.y, pr.rad, pr.dmg, pr.color);
+            this.missileCombos(pr.x, pr.y);
             remove = true;
             break;
           }
           const sp = pr.speed || 1;
           this.damage(e, pr.dmg, (pr.vx / sp) * pr.knock, (pr.vy / sp) * pr.knock);
           pr.hit.push(e.id);
+          if (pr.ion) {
+            // Ion Bolts combo: the hit sparks to the nearest other enemy for half damage
+            let best = null, bd = 130 * 130;
+            for (const o of this.enemiesNear(e.x, e.y, 130)) {
+              if (o === e || o.dead) continue;
+              const d = (o.x - e.x) ** 2 + (o.y - e.y) ** 2;
+              if (d < bd) { bd = d; best = o; }
+            }
+            if (best) {
+              this.damage(best, pr.dmg * 0.5, 0, 0, true);
+              if (this.bolts.length < 40) this.addBolt([e.x, e.y, best.x, best.y], '#c8ffff');
+            }
+          }
           if (this.particles.length < 700) this.burst(pr.x, pr.y, pr.color, 2, 120, 0.2, 4);
           if (pr.pierce-- <= 0) { remove = true; break; }
         }
@@ -1384,6 +1473,10 @@ export class Game {
       if (boom) {
         this.explode(m.x, m.y, m.rad, m.dmg, '#ffd23d');
         this.mines.splice(i, 1);
+        // Storm Mines combo: the blast fires chain lightning at Arc Coil's strength
+        const coil = this.combos.has('stormmines') && this.wstats('lightning');
+        const tgt = coil && this.nearestEnemy(m.x, m.y, 170);
+        if (tgt) this.chainLightning(m.x, m.y, tgt, coil.dmg * this.player.dmgMult * 0.7, 3, '#7df9ff');
       }
     }
   }

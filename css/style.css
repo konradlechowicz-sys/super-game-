@@ -276,6 +276,10 @@ h1, h2, h3 { font-family: 'Orbitron', sans-serif; margin: 0; letter-spacing: 0.0
 .tag.new { background: var(--pink); box-shadow: 0 0 8px var(--pink); }
 .card.evo .tag { background: var(--gold); color: #2a1600; }
 .card-desc { font-size: 14px; color: #c9cbe8; margin-top: 3px; line-height: 1.25; }
+.card-combo { font-size: 12px; font-weight: 700; color: #3dffc8; margin-top: 3px; letter-spacing: 0.02em; }
+.card-combo::before { content: '⚡ '; }
+.card.combo { border-color: #3dffc8; background: linear-gradient(135deg, rgba(61, 255, 200, 0.16), rgba(47, 243, 255, 0.08)); animation: cardin 0.3s backwards, pulse-combo 1.2s infinite; }
+@keyframes pulse-combo { 50% { box-shadow: 0 0 26px rgba(61, 255, 200, 0.7); } }
 .locked-tap { pointer-events: none; opacity: 0.85; }
 .build { display: flex; flex-direction: column; gap: 6px; align-items: center; margin-top: 6px; }
 .build-row { display: flex; gap: 6px; min-height: 0; }

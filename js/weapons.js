@@ -23,13 +23,27 @@ export const WEAPONS = {
       if (!tgt) { w.t = 0.1; return; }
       w.t = s.cd * p.cdMult;
       const a = Math.atan2(tgt.y - p.y, tgt.x - p.x);
+      const ion = g.combos.has('ionbolts');
       for (let i = 0; i < s.n; i++) {
         const off = (i - (s.n - 1) / 2) * (w.evolved ? 0.09 : 0.14);
         g.shoot({
           x: p.x, y: p.y, a: a + off, speed: w.evolved ? 980 : 650, dmg: s.dmg * p.dmgMult,
-          pierce: s.pierce, r: w.evolved ? 6 : 5, life: 1.1,
+          pierce: s.pierce, r: w.evolved ? 6 : 5, life: 1.1, ion,
           look: w.evolved ? 'photon' : 'bolt', color: w.evolved ? '#c8ffff' : '#2ff3ff', knock: 60,
         });
+      }
+      // Twin Link combo: every drone fires a bolt at the same target, at half the blaster's damage
+      const dw = g.combos.has('twinlink') && g.weapons.find((x) => x.id === 'drone');
+      if (dw) {
+        const ds = weaponStats(dw);
+        for (let i = 0; i < ds.n; i++) {
+          const da = (dw.a || 0) + (i / ds.n) * TAU;
+          const dx = p.x + Math.cos(da) * 44, dy = p.y + Math.sin(da) * 44;
+          g.shoot({
+            x: dx, y: dy, a: Math.atan2(tgt.y - dy, tgt.x - dx), speed: 650, dmg: s.dmg * p.dmgMult * 0.5,
+            pierce: 0, r: 4, life: 1.0, look: 'dronebolt', color: '#9dff3d', knock: 40,
+          });
+        }
       }
       g.sfx(w.evolved ? 'laser' : 'shoot');
     },
@@ -109,8 +123,12 @@ export const WEAPONS = {
     update(w, g, dt, s) {
       const p = g.player;
       w.a = (w.a || 0) + s.spd * dt;
-      const rad = s.rad * p.areaMult;
+      // Blade Nova combo: a pulse flings the blades out (up to +60% orbit) and they hit 50% harder while out there
+      w.flare = Math.max(0, (w.flare || 0) - dt);
+      const out = Math.min(1, w.flare / 0.3);
+      const rad = s.rad * p.areaMult * (1 + 0.6 * out);
       const br = (w.evolved ? 15 : 11) * p.areaMult;
+      const dmg = s.dmg * p.dmgMult * (w.flare > 0 ? 1.5 : 1);
       for (let i = 0; i < s.n; i++) {
         const a = w.a + (i / s.n) * TAU;
         const bx = p.x + Math.cos(a) * rad, by = p.y + Math.sin(a) * rad;
@@ -120,7 +138,7 @@ export const WEAPONS = {
           if (dx * dx + dy * dy < (br + e.r) ** 2) {
             e.orbitHit = g.time;
             const d = Math.hypot(e.x - p.x, e.y - p.y) || 1;
-            g.damage(e, s.dmg * p.dmgMult, ((e.x - p.x) / d) * 160, ((e.y - p.y) / d) * 160);
+            g.damage(e, dmg, ((e.x - p.x) / d) * 160, ((e.y - p.y) / d) * 160);
           }
         }
       }
@@ -136,7 +154,7 @@ export const WEAPONS = {
     },
     render(w, g, R, s) {
       const p = g.player;
-      const rad = s.rad * p.areaMult;
+      const rad = s.rad * p.areaMult * (1 + 0.6 * Math.min(1, (w.flare || 0) / 0.3));
       if (s.aura) {
         const ctx = R.ctx;
         ctx.globalAlpha = 0.18 + Math.sin(g.time * 6) * 0.05;
@@ -217,6 +235,9 @@ export const WEAPONS = {
       w.t = s.cd * p.cdMult;
       g.addRing({ x: p.x, y: p.y, max: s.rad * p.areaMult, dmg: s.dmg * p.dmgMult, dur: 0.4, color: '#3dffc8', knock: 380, follow: true });
       g.sfx('pulse');
+      // Blade Nova combo: the pulse flings the orbit blades out for a second
+      const ow = g.combos.has('bladenova') && g.weapons.find((x) => x.id === 'orbit');
+      if (ow) ow.flare = 1.2;
     },
   },
 
