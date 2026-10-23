@@ -103,3 +103,6 @@ app/src/main/res/xml/config.xml
 # Android Studio writes these on every open; keep them out of git so npm run review sees no "unsaved change"
 .idea/
 *.iml
+
+# TEST build of the game, written by npm run android:test
+app/src/vbtest/assets/public

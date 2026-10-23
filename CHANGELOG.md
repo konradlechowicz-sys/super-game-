@@ -18,6 +18,9 @@ i wersja TEST (gracze tego nie widzą).
 
 - Weapon combos: pair the right weapons and level both to 3 to unlock a bonus effect, like mines that fire chain lightning or missiles that burst into pellets. Level-up cards tell you which weapons pair up.
 
+## Build 45 · 2026-10-23
+- [Narzędzia] Android: wersja TEST jako osobna aplikacja „VB Test” (z panelem 🛠 i własnym zapisem), obok zwykłej gry. `npm run android:test` buduje ją, instaluje i uruchamia na włączonym emulatorze albo podłączonym telefonie; `npm run android:play` robi to samo ze zwykłą grą. Wcześniej `npm run android:open` zawsze budował zwykłą wersję, nawet po wybraniu TEST w `npm run review` (który dotyczy iPhone'a).
+
 ## Build 44 · 2026-10-23
 - [Nowe] Combo broni: gdy dwie pasujące bronie mają poziom 3+, włącza się dodatkowy efekt do końca przelotu (napis „COMBO!”, błysk i dźwięk). Sześć combo: **Storm Mines** (Arc Coil + Proximity Mines: wybuch miny wypuszcza łańcuch piorunów), **Cluster Missiles** (Seeker Missiles + Scatter Gun: wybuch rakiety rozrzuca 6 odłamków), **Blade Nova** (Orbit Blades + Nova Pulse: impuls wyrzuca ostrza na orbitę większą o 60%, na 1,2 s, z +50% obrażeń), **Twin Link** (Wingman Drone + Pulse Blaster: drony strzelają razem z każdą salwą blastera, połową jej siły), **Ion Bolts** (Pulse Blaster + Arc Coil: trafienie przeskakuje iskrą na sąsiedniego wroga, połową obrażeń), **Minelayer** (Seeker Missiles + Proximity Mines: wybuch rakiety zostawia minę w 35% przypadków).
 - [Nowe] Karta broni podpowiada combo, gdy masz już pasującą broń („⚡ Combo with Arc Coil at LV 3”), a karta, która je włącza, świeci na turkusowo („Unlocks combo: Storm Mines”). Takie karty pojawiają się trochę częściej.
