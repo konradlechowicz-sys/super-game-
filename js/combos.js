@@ -28,7 +28,7 @@ export const COMBOS = {
   },
   minelayer: {
     name: 'Minelayer', parts: ['missiles', 'mines'], color: '#ffd23d',
-    desc: 'Missile blasts can leave a mine behind.',
+    desc: 'Every other missile blast leaves a mine behind.',
   },
 };
 

@@ -130,13 +130,13 @@ export class Game {
     const p = this.player;
     const sg = this.combos.has('cluster') && this.wstats('spread');
     if (sg) {
-      for (let i = 0; i < 6; i++) {
-        this.shoot({ x, y, a: (i / 6) * TAU + rand(-0.2, 0.2), speed: rand(420, 500), dmg: sg.dmg * p.dmgMult, pierce: 0, r: 5,
+      for (let i = 0; i < 8; i++) {
+        this.shoot({ x, y, a: (i / 8) * TAU + rand(-0.2, 0.2), speed: rand(420, 500), dmg: sg.dmg * p.dmgMult, pierce: 0, r: 5,
           life: 0.32 * p.areaMult, look: 'pellet', color: '#ff8a2a', knock: 120 });
       }
     }
     const mn = this.combos.has('minelayer') && this.wstats('mines');
-    if (mn && Math.random() < 0.35) {
+    if (mn && Math.random() < 0.5) {
       if (this.mines.length >= 40) this.mines.shift();
       this.mines.push({ x, y, life: 6, arm: 0.3, dmg: mn.dmg * p.dmgMult, rad: mn.rad * p.areaMult });
     }
@@ -1476,7 +1476,7 @@ export class Game {
         // Storm Mines combo: the blast fires chain lightning at Arc Coil's strength
         const coil = this.combos.has('stormmines') && this.wstats('lightning');
         const tgt = coil && this.nearestEnemy(m.x, m.y, 170);
-        if (tgt) this.chainLightning(m.x, m.y, tgt, coil.dmg * this.player.dmgMult * 0.7, 3, '#7df9ff');
+        if (tgt) this.chainLightning(m.x, m.y, tgt, coil.dmg * this.player.dmgMult, 4, '#7df9ff');
       }
     }
   }
