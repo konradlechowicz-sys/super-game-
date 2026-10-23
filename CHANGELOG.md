@@ -12,9 +12,16 @@ i wersja TEST (gracze tego nie widzą).
 
 <!-- Podsumowanie zmian od v1.1.1; uzupełnia Claude przy każdym buildzie. -->
 
+- Combo broni: 6 par broni, które na poziomie 3+ dają dodatkowy efekt; karty podpowiadają pasujące bronie.
+
 ### What's New (App Store)
 
-- 
+- Weapon combos: pair the right weapons and level both to 3 to unlock a bonus effect, like mines that fire chain lightning or missiles that burst into pellets. Level-up cards tell you which weapons pair up.
+
+## Build 44 · 2026-10-23
+- [Nowe] Combo broni: gdy dwie pasujące bronie mają poziom 3+, włącza się dodatkowy efekt do końca przelotu (napis „COMBO!”, błysk i dźwięk). Sześć combo: **Storm Mines** (Arc Coil + Proximity Mines: wybuch miny wypuszcza łańcuch piorunów), **Cluster Missiles** (Seeker Missiles + Scatter Gun: wybuch rakiety rozrzuca 6 odłamków), **Blade Nova** (Orbit Blades + Nova Pulse: impuls wyrzuca ostrza na orbitę większą o 60%, na 1,2 s, z +50% obrażeń), **Twin Link** (Wingman Drone + Pulse Blaster: drony strzelają razem z każdą salwą blastera, połową jej siły), **Ion Bolts** (Pulse Blaster + Arc Coil: trafienie przeskakuje iskrą na sąsiedniego wroga, połową obrażeń), **Minelayer** (Seeker Missiles + Proximity Mines: wybuch rakiety zostawia minę w 35% przypadków).
+- [Nowe] Karta broni podpowiada combo, gdy masz już pasującą broń („⚡ Combo with Arc Coil at LV 3”), a karta, która je włącza, świeci na turkusowo („Unlocks combo: Storm Mines”). Takie karty pojawiają się trochę częściej.
+- [Narzędzia] Panel 🛠: przyciski „Give a combo” (obie bronie od razu na poziomie 3).
 
 ## Build 43 · 2026-10-22
 - [Narzędzia] Projekt Androida (`android/`, Capacitor 8): ta sama gra, tylko w pionie, ikonka i ekran startowy jak na iPhonie. `npm run android` buduje i kopiuje grę do projektu, `npm run android:open` dodatkowo otwiera Android Studio. Na razie bez zakupów (Android działa jak darmowa wersja), bez wersji TEST i bez podpisu do Google Play.
