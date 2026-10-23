@@ -19,7 +19,7 @@ i wersja TEST (gracze tego nie widzą).
 - Weapon combos: pair the right weapons and level both to 3 to unlock a bonus effect, like mines that fire chain lightning or missiles that burst into pellets. Level-up cards tell you which weapons pair up.
 
 ## Build 46 · 2026-10-24
-- (opis zmian do uzupełnienia)
+- [Balans] Mocniejsze trzy najsłabsze combo: Storm Mines (piorun z pełną siłą Arc Coil i 4 przeskokami zamiast 70% i 3), Cluster Missiles (8 odłamków zamiast 6), Minelayer (mina przy co drugim wybuchu rakiety zamiast co trzecim). Pomiar na stałym celu (25 wrogów wokół statku, 45 s): każde combo daje teraz +10% do +32% obrażeń pary broni (poziom 3: Storm Mines +18%, Cluster +26%, Blade Nova +11%, Twin Link +32%, Ion Bolts +24%, Minelayer +22%).
 
 ## Build 45 · 2026-10-23
 - [Narzędzia] Android: wersja TEST jako osobna aplikacja „VB Test” (z panelem 🛠 i własnym zapisem), obok zwykłej gry. `npm run android:test` buduje ją, instaluje i uruchamia na włączonym emulatorze albo podłączonym telefonie; `npm run android:play` robi to samo ze zwykłą grą. Wcześniej `npm run android:open` zawsze budował zwykłą wersję, nawet po wybraniu TEST w `npm run review` (który dotyczy iPhone'a).
