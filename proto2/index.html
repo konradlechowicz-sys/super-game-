@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<title>Void Blaster 2.0 Prototype</title>
+<style>
+  :root { color-scheme: dark; }
+  html, body { margin: 0; height: 100%; background: #05010f; overflow: hidden; touch-action: none; user-select: none; -webkit-user-select: none; }
+  canvas { display: block; }
+  .bar { position: fixed; left: 0; right: 0; top: 0; padding: calc(env(safe-area-inset-top) + 8px) 12px 8px; display: flex; align-items: center; gap: 8px;
+    background: linear-gradient(rgba(5, 1, 15, 0.85), rgba(5, 1, 15, 0)); font: 700 13px system-ui, sans-serif; color: #e9e6ff; pointer-events: none; }
+  .bar b { font-size: 16px; letter-spacing: 0.04em; }
+  .tag { margin-left: auto; padding: 3px 8px; border-radius: 6px; background: rgba(176, 77, 255, 0.25); border: 1px solid #b04dff; font-size: 11px; letter-spacing: 0.1em; }
+  #fps { position: fixed; left: 12px; top: calc(env(safe-area-inset-top) + 40px); font: 700 12px ui-monospace, monospace; padding: 3px 7px; border-radius: 6px; background: rgba(5, 1, 15, 0.7); pointer-events: none; }
+  #fps.ok { color: #3dff8a; } #fps.mid { color: #ffd23d; } #fps.bad { color: #ff3d6e; }
+  .tools { position: fixed; left: 0; right: 0; bottom: calc(env(safe-area-inset-bottom) + 10px); display: flex; gap: 6px; justify-content: center; flex-wrap: wrap; padding: 0 10px; }
+  .tools button { font: 700 12px system-ui, sans-serif; color: #e9e6ff; background: rgba(10, 4, 30, 0.8); border: 1px solid rgba(47, 243, 255, 0.6); border-radius: 9px; padding: 9px 11px; }
+  .hint { position: fixed; left: 0; right: 0; bottom: calc(env(safe-area-inset-bottom) + 104px); text-align: center; font: 12px system-ui, sans-serif; color: rgba(233, 230, 255, 0.6); pointer-events: none; }
+</style>
+</head>
+<body>
+<div class="bar"><b id="hud">0 KILLS</b><span class="tag">2.0 PROTOTYPE</span></div>
+<div id="fps">-- FPS</div>
+<div class="hint">Drag anywhere to fly · weapons fire on their own · the ship cannot die</div>
+<div class="tools">
+  <button id="less">− ENEMIES</button>
+  <button id="more">+ ENEMIES ×2</button>
+  <button id="elite">SPAWN ELITE</button>
+  <button id="glow">GLOW ON</button>
+</div>
+<script type="module" src="./main.js"></script>
+</body>
+</html>

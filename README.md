@@ -50,6 +50,12 @@ The app build (`scripts/build.mjs`) bundles `js/native-main.js`, which adds hapt
 (Capacitor Haptics / Preferences). Fonts are bundled in `fonts/` (SIL OFL), so the app needs no network.
 Bundle ID: `com.konradlechowicz.voidblaster` (change it in `capacitor.config.json` and in Xcode if needed).
 
+## 2.0 prototype (`proto2/`)
+One arena of the planned 2.0 look on PixiJS (WebGL): the Striker built from its parts (engine flames, banking,
+gun recoil), world 1 enemies with pre-baked glow, the tech-ruin floor, an FPS meter and stress buttons. Not part of
+the game builds. `npm run proto2` prepares the textures from `art/2.0` (`make-assets.py`) and writes one file,
+`dist/void-blaster-2-proto.html`.
+
 ## Android app (Google Play, in preparation)
 The same game in `android/` (Capacitor 8, minSdk 24, target 36), package `com.konradlechowicz.voidblaster`, portrait
 only, launcher icons and splash made from the iOS ones. `npm run android` builds `www/` and syncs it into the Android

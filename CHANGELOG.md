@@ -26,6 +26,9 @@ i wersja TEST (gracze tego nie widzą).
 - The new Codex collects every weapon, evolution, combo and perk set you discover. Undiscovered entries stay hidden behind "???".
 - Tougher enemies: they hit harder, especially in worlds 2-4 and late in each sector, and elites and bosses take more punishment.
 
+## Build 52 · 2026-10-24
+- [Narzędzia] Prototyp wersji 2.0 na PixiJS (`proto2/`, `npm run proto2` → `dist/void-blaster-2-proto.html`): jedna arena „technologiczna ruina”, Striker złożony z części (płomienie silników, przechył w zakrętach, odrzut działek), wrogowie świata 1 z poświatą, pociski, pioruny, wybuchy, licznik FPS i przyciski do testu wydajności (więcej wrogów, elita, poświata wł./wył.). Gra 1.x się nie zmienia.
+
 ## Build 51 · 2026-10-24
 - [Narzędzia] Folder `art/2.0/` z pierwszymi grafikami do wersji 2.0 (ChatGPT według promptów Claude'a): Striker (koncepty, wybrany wariant 4, arkusze części i części wycięte do animacji), 6 wrogów świata 1 i elita, koncept świata „technologiczna ruina”, próbny kadr i animacja statku. Gra ich jeszcze nie używa.
 - [Narzędzia] CLAUDE.md: plan wersji (1.2.0, 1.3 z Androidem, rankingami i trybem nieskończonym, 2.0 na PixiJS).

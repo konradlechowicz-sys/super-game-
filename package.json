@@ -22,7 +22,8 @@
     "android": "node scripts/build.mjs && npx cap sync android",
     "android:open": "node scripts/build.mjs && npx cap sync android && npx cap open android",
     "android:play": "node scripts/android.mjs play",
-    "android:test": "node scripts/android.mjs test"
+    "android:test": "node scripts/android.mjs test",
+    "proto2": "python3 proto2/make-assets.py && node proto2/build.mjs"
   },
   "dependencies": {
     "@capacitor/android": "^8.5.3",
@@ -33,6 +34,7 @@
   },
   "devDependencies": {
     "@capacitor/cli": "^8.5.3",
-    "esbuild": "^0.28.2"
+    "esbuild": "^0.28.2",
+    "pixi.js": "^8.22.0"
   }
 }
