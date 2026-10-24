@@ -14,11 +14,18 @@ i wersja TEST (gracze tego nie widzą).
 
 - Combo broni: 6 par broni, które na poziomie 3+ dają dodatkowy efekt; karty podpowiadają pasujące bronie.
 - Zestawy perków: 5 par perków z dodatkowym efektem (Overdrive, Ram Plating, Singularity, Hit & Run, Last Stand).
+- Nowe ewolucje: Flak Cannon, Supernova, Drone Squadron, Gravity Mines; każda z 8 broni może teraz ewoluować.
 
 ### What's New (App Store)
 
 - Weapon combos: pair the right weapons and level both to 3 to unlock a bonus effect, like mines that fire chain lightning or missiles that burst into pellets. Level-up cards tell you which weapons pair up.
 - Perk sets: Overdrive, Ram Plating, Singularity, Hit & Run and Last Stand reward the right pair of perks.
+- Four new weapon evolutions: Flak Cannon, Supernova, Drone Squadron and Gravity Mines. Every weapon can now evolve.
+
+## Build 48 · 2026-10-24
+- [Nowe] Ewolucje dla czterech kolejnych broni (teraz wszystkie 8 broni ma ewolucję; broń na poziomie 5 + perk): **Flak Cannon** (Scatter Gun + Armor Plating: 9 złotych śrutów, każdy wybucha przy trafieniu i rani wrogów obok), **Supernova** (Nova Pulse + Amplifier: ogromna fala co 2 s, spowalnia trafionych wrogów o połowę na 2 s; bossów nie), **Drone Squadron** (Wingman Drone + Overclock: 5 dronów, szybszy ogień, pociski przebijają jednego wroga), **Gravity Mines** (Proximity Mines + Tractor Beam: fioletowe miny przyciągają wrogów z okolicy, zanim wybuchną; bossów nie).
+- [Balans] Pomiar na stałym celu (25 wrogów wokół statku, 45 s; obrażenia na sekundę na poziomie 5 → po ewolucji): Flak Cannon 134 → 805, Supernova 348 → 555 + spowolnienie, Drone Squadron 84 → 559, Gravity Mines 1760 → 2531. Dla porównania stare ewolucje: Photon Storm 231 → 1148, Swarm Barrage 898 → 1446, Plasma Halo 783 → 1684, Tempest 149 → 849.
+- [Narzędzia] Panel 🛠: przyciski „Give an evolution” (broń od razu na poziomie 5 i po ewolucji).
 
 ## Build 47 · 2026-10-24
 - [Nowe] Zestawy perków: gdy dwa pasujące perki mają poziom 3+, włącza się dodatkowy efekt do końca przelotu (napis „PERK SET!”). Pięć zestawów: **Overdrive** (Power Core + Overclock: co 12 s przez 4 s bronie strzelają o 50% szybciej, napis „OVERDRIVE”), **Ram Plating** (Armor Plating + Thrusters: tłum zadaje 30% mniej, a dotykający wrogowie są odrzucani), **Singularity** (Tractor Beam + Amplifier: co 25 s wszystkie kryształy XP lecą do statku), **Hit & Run** (Thrusters + Overclock: +15% obrażeń w ruchu), **Last Stand** (Power Core + Armor Plating: +25% obrażeń poniżej 50% kadłuba).

@@ -59,6 +59,7 @@ export const WEAPONS = {
       { dmg: 12, cd: 0.75, n: 6, life: 0.45 },
       { dmg: 13, cd: 0.75, n: 8, life: 0.55 },
     ],
+    evo: { with: 'armor', name: 'Flak Cannon', desc: 'Heavy flak: every pellet bursts on impact.', stats: { dmg: 15, cd: 0.62, n: 9, life: 0.6, flak: 34 } },
     update(w, g, dt, s) {
       w.t -= dt;
       if (w.t > 0) return;
@@ -71,8 +72,10 @@ export const WEAPONS = {
       for (let i = 0; i < s.n; i++) {
         const off = (i / (s.n - 1) - 0.5) * spreadA + rand(-0.05, 0.05);
         g.shoot({
-          x: p.x, y: p.y, a: a + off, speed: rand(520, 600), dmg: s.dmg * p.dmgMult, pierce: 0, r: 5,
-          life: s.life * p.areaMult, look: 'pellet', color: '#ff8a2a', knock: 140,
+          x: p.x, y: p.y, a: a + off, speed: rand(520, 600), dmg: s.dmg * p.dmgMult, pierce: 0, r: w.evolved ? 6 : 5,
+          life: s.life * p.areaMult, look: 'pellet', color: w.evolved ? '#ffd23d' : '#ff8a2a', knock: 140,
+          // Flak Cannon: the pellet bursts on impact, hitting everything around for 60% of its damage
+          flak: s.flak ? s.flak * p.areaMult : 0,
         });
       }
       g.sfx('shotgun');
@@ -228,12 +231,13 @@ export const WEAPONS = {
       { dmg: 27, cd: 2.3, rad: 140 },
       { dmg: 34, cd: 2.3, rad: 170 },
     ],
+    evo: { with: 'amplifier', name: 'Supernova', desc: 'A colossal shockwave that slows everything it hits.', stats: { dmg: 48, cd: 2.0, rad: 230, slow: 2 } },
     update(w, g, dt, s) {
       w.t -= dt;
       if (w.t > 0) return;
       const p = g.player;
       w.t = s.cd * p.cdMult;
-      g.addRing({ x: p.x, y: p.y, max: s.rad * p.areaMult, dmg: s.dmg * p.dmgMult, dur: 0.4, color: '#3dffc8', knock: 380, follow: true });
+      g.addRing({ x: p.x, y: p.y, max: s.rad * p.areaMult, dmg: s.dmg * p.dmgMult, dur: w.evolved ? 0.5 : 0.4, color: w.evolved ? '#e0fff6' : '#3dffc8', knock: 380, follow: true, slow: s.slow || 0 });
       g.sfx('pulse');
       // Blade Nova combo: the pulse flings the orbit blades out for a second
       const ow = g.combos.has('bladenova') && g.weapons.find((x) => x.id === 'orbit');
@@ -251,6 +255,7 @@ export const WEAPONS = {
       { dmg: 13, cd: 0.5, n: 2 },
       { dmg: 13, cd: 0.45, n: 3 },
     ],
+    evo: { with: 'overclock', name: 'Drone Squadron', desc: 'Five rapid-fire drones with piercing shots.', stats: { dmg: 20, cd: 0.32, n: 5, pierce: 1 } },
     update(w, g, dt, s) {
       const p = g.player;
       w.a = (w.a || 0) + 1.7 * dt;
@@ -264,14 +269,14 @@ export const WEAPONS = {
         if (!tgt) { w.cds[i] = 0.1; continue; }
         w.cds[i] = s.cd * p.cdMult;
         g.shoot({
-          x: dx, y: dy, a: Math.atan2(tgt.y - dy, tgt.x - dx), speed: 600, dmg: s.dmg * p.dmgMult,
-          pierce: 0, r: 4, life: 0.9, look: 'dronebolt', color: '#9dff3d', knock: 40,
+          x: dx, y: dy, a: Math.atan2(tgt.y - dy, tgt.x - dx), speed: w.evolved ? 720 : 600, dmg: s.dmg * p.dmgMult,
+          pierce: s.pierce || 0, r: 4, life: 0.9, look: 'dronebolt', color: w.evolved ? '#e4ff7d' : '#9dff3d', knock: 40,
         });
       }
     },
     render(w, g, R, s) {
       const p = g.player;
-      const spr = wingmanSprite('#9dff3d');
+      const spr = wingmanSprite(w.evolved ? '#e4ff7d' : '#9dff3d');
       for (let i = 0; i < s.n; i++) {
         const a = (w.a || 0) + (i / s.n) * TAU;
         R.rot(spr, p.x + Math.cos(a) * 44, p.y + Math.sin(a) * 44, p.facing, 1);
@@ -289,6 +294,7 @@ export const WEAPONS = {
       { dmg: 45, cd: 1.0, n: 2, rad: 62 },
       { dmg: 58, cd: 1.0, n: 2, rad: 78 },
     ],
+    evo: { with: 'tractor', name: 'Gravity Mines', desc: 'Mines drag enemies in before they blow.', stats: { dmg: 62, cd: 0.9, n: 2, rad: 84, pull: 150 } },
     update(w, g, dt, s) {
       w.t -= dt;
       if (w.t > 0) return;
@@ -296,7 +302,7 @@ export const WEAPONS = {
       w.t = s.cd * p.cdMult;
       for (let i = 0; i < s.n; i++) {
         if (g.mines.length >= 40) g.mines.shift();
-        g.mines.push({ x: p.x + rand(-14, 14), y: p.y + rand(-14, 14), life: 8, arm: 0.5, dmg: s.dmg * p.dmgMult, rad: s.rad * p.areaMult });
+        g.mines.push({ x: p.x + rand(-14, 14), y: p.y + rand(-14, 14), life: 8, arm: 0.5, dmg: s.dmg * p.dmgMult, rad: s.rad * p.areaMult, pull: (s.pull || 0) * p.areaMult });
       }
     },
   },

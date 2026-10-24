@@ -1083,6 +1083,8 @@ export class Game {
         else { const k = (e.enraged ? 1.5 : 1) * (e.buffT > 0 ? 1.3 : 1); mx *= k; my *= k; }
         e.buffT = Math.max(0, (e.buffT || 0) - dt);
       }
+      // Supernova: slowed to half speed for a while
+      if (e.slowT > 0) { e.slowT -= dt; mx *= 0.5; my *= 0.5; }
       // separation
       let sx = 0, sy = 0;
       if (separate) this.hash.query(e.x, e.y, e.r * 2, near); else near.length = 0;
@@ -1445,6 +1447,11 @@ export class Game {
           const sp = pr.speed || 1;
           this.damage(e, pr.dmg, (pr.vx / sp) * pr.knock, (pr.vy / sp) * pr.knock);
           pr.hit.push(e.id);
+          if (pr.flak) {
+            // Flak Cannon: a small quiet blast around the hit
+            for (const o of this.enemiesNear(pr.x, pr.y, pr.flak)) if (o !== e) this.damage(o, pr.dmg * 0.6, 0, 0, true);
+            this.addFx(pr.x, pr.y, pr.flak, '#ffd23d', 0.22, 2);
+          }
           if (pr.ion) {
             // Ion Bolts combo: the hit sparks to the nearest other enemy for half damage
             let best = null, bd = 130 * 130;
@@ -1497,6 +1504,7 @@ export class Game {
         r.hit.add(e.id);
         const d = Math.hypot(e.x - r.x, e.y - r.y) || 1;
         this.damage(e, r.dmg, ((e.x - r.x) / d) * r.knock, ((e.y - r.y) / d) * r.knock, true);
+        if (r.slow && !e.boss) e.slowT = r.slow;
       }
       if (r.t >= r.dur + 0.15) this.rings.splice(i, 1);
     }
@@ -1516,9 +1524,18 @@ export class Game {
       m.life -= dt;
       m.arm -= dt;
       let boom = m.life <= 0;
+      if (m.pull && m.arm <= 0) {
+        // Gravity Mines: drag nearby enemies (not bosses) toward the mine
+        for (const e of this.enemiesNear(m.x, m.y, m.pull)) {
+          if (e.boss || e.seg || e.def.speed === 0) continue;
+          const dx = m.x - e.x, dy = m.y - e.y, d = Math.hypot(dx, dy) || 1;
+          const v = 160 * dt * (e.kbRes ?? 0.4);
+          e.x += (dx / d) * v; e.y += (dy / d) * v;
+        }
+      }
       if (!boom && m.arm <= 0 && this.enemiesNear(m.x, m.y, 22).length) boom = true;
       if (boom) {
-        this.explode(m.x, m.y, m.rad, m.dmg, '#ffd23d');
+        this.explode(m.x, m.y, m.rad, m.dmg, m.pull ? '#b06bff' : '#ffd23d');
         this.mines.splice(i, 1);
         // Storm Mines combo: the blast fires chain lightning at Arc Coil's strength
         const coil = this.combos.has('stormmines') && this.wstats('lightning');
@@ -1696,7 +1713,7 @@ export class Game {
 
     ctx.globalCompositeOperation = 'lighter';
     // mines
-    for (const m of this.mines) if (vis(m)) R.img(mineSprite('#ffd23d', m.arm <= 0 && Math.sin(this.time * 12) > 0), m.x, m.y);
+    for (const m of this.mines) if (vis(m)) R.img(mineSprite(m.pull ? '#b06bff' : '#ffd23d', m.arm <= 0 && Math.sin(this.time * 12) > 0), m.x, m.y);
     // gems & pickups
     for (const g of this.gems) {
       if (!vis(g)) continue;
