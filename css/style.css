@@ -383,3 +383,29 @@ h1, h2, h3 { font-family: 'Orbitron', sans-serif; margin: 0; letter-spacing: 0.0
   .card img { width: 44px; height: 44px; }
   .cards { gap: 7px; }
 }
+
+/* ---------- combos (v1.2) ---------- */
+.hud-combos { display: flex; flex-wrap: wrap; gap: 4px; justify-content: center; margin-top: 5px; pointer-events: none; }
+.combo-chip { font: 700 9px 'Orbitron', sans-serif; letter-spacing: 0.04em; padding: 2px 6px; border-radius: 6px; color: var(--cc);
+  border: 1px solid color-mix(in srgb, var(--cc) 60%, transparent); background: rgba(10, 4, 30, 0.7); white-space: nowrap; }
+.combo-chip.on { background: color-mix(in srgb, var(--cc) 35%, rgba(10, 4, 30, 0.8)); color: #fff; box-shadow: 0 0 10px var(--cc); }
+.build-combos { display: flex; flex-wrap: wrap; gap: 4px; justify-content: center; max-width: 320px; }
+.combo-list { list-style: none; padding: 0; margin: 4px 0 8px; display: flex; flex-direction: column; gap: 4px; font-size: 13px; color: #c9cbe8; }
+.combo-list b { color: var(--cc); margin-right: 4px; }
+/* ---------- codex ---------- */
+.codex-count { font: 700 15px 'Orbitron', sans-serif; color: var(--gold); min-width: 54px; text-align: right; }
+.codex-head { font: 700 13px 'Orbitron', sans-serif; letter-spacing: 0.12em; color: var(--muted); margin: 14px 2px 8px; display: flex; justify-content: space-between; }
+.codex-head span { color: var(--gold); }
+.codex-item { display: flex; align-items: center; gap: 12px; padding: 10px 12px; margin-bottom: 8px; border-radius: 12px; background: var(--panel);
+  border: 1px solid color-mix(in srgb, var(--cc, #6b5fa0) 45%, transparent); }
+.codex-item img { width: 44px; height: 44px; flex: none; }
+.codex-item b { display: block; color: var(--cc); font-size: 15px; }
+.codex-item small { display: block; color: #c9cbe8; font-size: 13px; line-height: 1.25; margin-top: 2px; }
+.codex-item em { display: block; font-style: normal; font-size: 12px; color: #3dffc8; margin-top: 3px; }
+.codex-item.locked { opacity: 0.6; --cc: #6b5fa0; }
+.codex-item.locked b { color: var(--muted); letter-spacing: 0.2em; }
+.codex-q { width: 44px; height: 44px; flex: none; border-radius: 10px; display: grid; place-items: center; font: 800 22px 'Orbitron', sans-serif;
+  color: var(--muted); border: 1px dashed rgba(255, 255, 255, 0.2); }
+.codex-link { width: 100%; margin-top: 4px; }
+.codex-new { margin-top: 10px; padding: 8px 12px; border-radius: 10px; text-align: center; font: 700 12px 'Orbitron', sans-serif; letter-spacing: 0.04em;
+  color: #3dffc8; background: rgba(61, 255, 200, 0.1); border: 1px solid rgba(61, 255, 200, 0.4); }

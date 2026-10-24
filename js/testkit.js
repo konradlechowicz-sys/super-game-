@@ -2,6 +2,7 @@
 // behind the __TEST__ build flag and esbuild drops it, and `build.mjs --release` fails if MARKER is found.
 import { ALL_STAGES, BOSSES, TRAITS } from './data.js';
 import { COMBOS, COMBO_LEVEL } from './combos.js';
+import { WEAPONS } from './weapons.js';
 
 // Everything lives inside installTestKit (no top-level code), so bundlers drop the whole module when it is not called.
 export function installTestKit(app) {
@@ -119,7 +120,15 @@ export function installTestKit(app) {
       </div>
       <div class="tk-head">Give a combo (both weapons to LV ${COMBO_LEVEL})</div>
       <div class="tk-row">
-        ${Object.entries(COMBOS).map(([id, c]) => btn('combo', c.name.toUpperCase(), `data-id="${id}" style="color:${c.color}"`)).join('')}
+        ${Object.entries(COMBOS).filter(([, c]) => !c.perk).map(([id, c]) => btn('combo', c.name.toUpperCase(), `data-id="${id}" style="color:${c.color}"`)).join('')}
+      </div>
+      <div class="tk-head">Give an evolution (weapon to LV 5, evolved)</div>
+      <div class="tk-row">
+        ${Object.entries(WEAPONS).filter(([, w]) => w.evo).map(([id, w]) => btn('evolve', w.evo.name.toUpperCase(), `data-id="${id}" style="color:${w.color}"`)).join('')}
+      </div>
+      <div class="tk-head">Give a perk set (both perks to LV ${COMBO_LEVEL})</div>
+      <div class="tk-row">
+        ${Object.entries(COMBOS).filter(([, c]) => c.perk).map(([id, c]) => btn('combo', c.name.toUpperCase(), `data-id="${id}" style="color:${c.color}"`)).join('')}
       </div>
       <div class="modal-actions"><button class="btn primary" data-act="close">RESUME</button></div>
     `, {
@@ -139,8 +148,21 @@ export function installTestKit(app) {
         st.events.forEach((e, i) => { if (e.t < g.time) g.eventsDone.add(i); });
       }),
       summon: act(() => { st.events.forEach((e, i) => g.eventsDone.add(i)); g.time = st.bossAt; }),
+      evolve: (ds) => act(() => {
+        let w = g.weapons.find((x) => x.id === ds.id);
+        if (!w) { g.addWeapon(ds.id); w = g.weapons[g.weapons.length - 1]; }
+        w.level = 5;
+        g.applyCard({ kind: 'evo', id: ds.id });
+      })(),
       combo: (ds) => act(() => {
-        for (const id of COMBOS[ds.id].parts) {
+        const c = COMBOS[ds.id];
+        if (c.perk) {
+          for (const id of c.parts) g.passives[id] = Math.max(g.passives[id] || 0, COMBO_LEVEL);
+          g.recompute();
+          g.checkCombos();
+          return;
+        }
+        for (const id of c.parts) {
           let w = g.weapons.find((x) => x.id === id);
           if (!w) { g.addWeapon(id); w = g.weapons[g.weapons.length - 1]; }
           w.level = Math.max(w.level, COMBO_LEVEL);

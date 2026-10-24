@@ -13,10 +13,53 @@ i wersja TEST (gracze tego nie widzą).
 <!-- Podsumowanie zmian od v1.1.1; uzupełnia Claude przy każdym buildzie. -->
 
 - Combo broni: 6 par broni, które na poziomie 3+ dają dodatkowy efekt; karty podpowiadają pasujące bronie.
+- Zestawy perków: 5 par perków z dodatkowym efektem (Overdrive, Ram Plating, Singularity, Hit & Run, Last Stand).
+- Nowe ewolucje: Flak Cannon, Supernova, Drone Squadron, Gravity Mines; każda z 8 broni może teraz ewoluować.
+- Księga ulepszeń CODEX (33 wpisy, nieodkryte pod „???”), aktywne combo w HUD i w pauzie.
+- Trudniej: wrogowie zadają więcej obrażeń (szczególnie w światach 2–4 i pod koniec sektora), elity i bossowie są wytrzymalsi.
 
 ### What's New (App Store)
 
 - Weapon combos: pair the right weapons and level both to 3 to unlock a bonus effect, like mines that fire chain lightning or missiles that burst into pellets. Level-up cards tell you which weapons pair up.
+- Perk sets: Overdrive, Ram Plating, Singularity, Hit & Run and Last Stand reward the right pair of perks.
+- Four new weapon evolutions: Flak Cannon, Supernova, Drone Squadron and Gravity Mines. Every weapon can now evolve.
+- The new Codex collects every weapon, evolution, combo and perk set you discover. Undiscovered entries stay hidden behind "???".
+- Tougher enemies: they hit harder, especially in worlds 2-4 and late in each sector, and elites and bosses take more punishment.
+
+## Build 52 · 2026-10-24
+- [Narzędzia] Prototyp wersji 2.0 na PixiJS (`proto2/`, `npm run proto2` → `dist/void-blaster-2-proto.html`): jedna arena „technologiczna ruina”, Striker złożony z części (płomienie silników, przechył w zakrętach, odrzut działek), wrogowie świata 1 z poświatą, pociski, pioruny, wybuchy, licznik FPS i przyciski do testu wydajności (więcej wrogów, elita, poświata wł./wył.). Gra 1.x się nie zmienia.
+
+## Build 51 · 2026-10-24
+- [Narzędzia] Folder `art/2.0/` z pierwszymi grafikami do wersji 2.0 (ChatGPT według promptów Claude'a): Striker (koncepty, wybrany wariant 4, arkusze części i części wycięte do animacji), 6 wrogów świata 1 i elita, koncept świata „technologiczna ruina”, próbny kadr i animacja statku. Gra ich jeszcze nie używa.
+- [Narzędzia] CLAUDE.md: plan wersji (1.2.0, 1.3 z Androidem, rankingami i trybem nieskończonym, 2.0 na PixiJS).
+
+## Build 50 · 2026-10-24
+- [Balans] Wrogowie mocniejsi, bo combo i nowe ewolucje wzmacniają statek. Każde trafienie w statek (kontakt, pociski, ostrzał, rozbłyski, bossowie) zadaje więcej i rośnie pod koniec sektora: świat 1 ×1,2 (do ×1,44), świat 2 ×1,4 (do ×1,82), świat 3 ×1,6 (do ×2,16), świat 4 ×1,8 (do ×2,52).
+- [Balans] HP wrogów: świat 2 +15%, świat 3 +20%, świat 4 +25% (świat 1 bez zmian). Elity dodatkowo: świat 1 +15%, 2 +30%, 3 +35%, 4 +40%. Bossowie: +10% / +20% / +25% / +30%. Ustawienia w `WORLD_TUNING` w `js/data.js`.
+- [Balans] Pomiar autopilotem (wszystkie 24 sektory po 2 razy; ulepszenia 3 w świecie 1, 6 w światach 2–4): w światach 2–4 kadłub tracony w sektorze wzrósł z 0–15% do zwykle 20–60%, bot wygrywa 26 z 36 przejść (było 32 z 36); najtrudniejsze: 2-6 (boss), 3-4 (Bulwark + Berserker), 3-2 (Bulwark + Shielded). Świat 1 nadal łagodny (bot traci 0–4%).
+
+## Build 49 · 2026-10-24
+- [Nowe] Księga ulepszeń „CODEX” (przycisk w menu głównym i w hangarze): 33 wpisy w pięciu działach: bronie (8), ewolucje (8), combo broni (6), perki (6), zestawy perków (5). Odkryte wpisy mają ikonę, opis i przepis (np. „Arc Coil + Proximity Mines (both LV 3)”), a nieodkryte są pod „???” z jedną podpowiedzią (np. „Evolves from Pulse Blaster”). Licznik odkryć ogólny i w każdym dziale.
+- [Nowe] Wpis odkrywa się, gdy pierwszy raz zdobędziesz go w dowolnym przelocie; ekran wyników pokazuje „NEW IN CODEX: …”. Odkrycia zostają po „Reset progress”.
+- [Nowe] Aktywne combo i zestawy perków widać pod licznikiem czasu w HUD (zestaw świeci, gdy jego efekt właśnie działa, np. Overdrive, Last Stand, Hit & Run w ruchu), a pauza i ekran awansu pokazują je z opisem efektu.
+- [Nowe] Samouczek: podpowiedź przy pierwszej karcie z combo i dymek „YOUR CODEX” w menu po kilku odkryciach.
+- [Zmiana] Przycisk „DAILY REWARD” w menu skrócony do „DAILY” (obok nowego przycisku „CODEX”).
+
+## Build 48 · 2026-10-24
+- [Nowe] Ewolucje dla czterech kolejnych broni (teraz wszystkie 8 broni ma ewolucję; broń na poziomie 5 + perk): **Flak Cannon** (Scatter Gun + Armor Plating: 9 złotych śrutów, każdy wybucha przy trafieniu i rani wrogów obok), **Supernova** (Nova Pulse + Amplifier: ogromna fala co 2 s, spowalnia trafionych wrogów o połowę na 2 s; bossów nie), **Drone Squadron** (Wingman Drone + Overclock: 5 dronów, szybszy ogień, pociski przebijają jednego wroga), **Gravity Mines** (Proximity Mines + Tractor Beam: fioletowe miny przyciągają wrogów z okolicy, zanim wybuchną; bossów nie).
+- [Balans] Pomiar na stałym celu (25 wrogów wokół statku, 45 s; obrażenia na sekundę na poziomie 5 → po ewolucji): Flak Cannon 134 → 805, Supernova 348 → 555 + spowolnienie, Drone Squadron 84 → 559, Gravity Mines 1760 → 2531. Dla porównania stare ewolucje: Photon Storm 231 → 1148, Swarm Barrage 898 → 1446, Plasma Halo 783 → 1684, Tempest 149 → 849.
+- [Narzędzia] Panel 🛠: przyciski „Give an evolution” (broń od razu na poziomie 5 i po ewolucji).
+
+## Build 47 · 2026-10-24
+- [Nowe] Zestawy perków: gdy dwa pasujące perki mają poziom 3+, włącza się dodatkowy efekt do końca przelotu (napis „PERK SET!”). Pięć zestawów: **Overdrive** (Power Core + Overclock: co 12 s przez 4 s bronie strzelają o 50% szybciej, napis „OVERDRIVE”), **Ram Plating** (Armor Plating + Thrusters: tłum zadaje 30% mniej, a dotykający wrogowie są odrzucani), **Singularity** (Tractor Beam + Amplifier: co 25 s wszystkie kryształy XP lecą do statku), **Hit & Run** (Thrusters + Overclock: +15% obrażeń w ruchu), **Last Stand** (Power Core + Armor Plating: +25% obrażeń poniżej 50% kadłuba).
+- [Nowe] Karta perka podpowiada zestaw, gdy masz już pasujący perk („⚡ Set with Power Core at LV 3”), a karta, która go włącza, świeci na turkusowo; takie karty pojawiają się trochę częściej.
+- [Narzędzia] Panel 🛠: przyciski „Give a perk set” (oba perki od razu na poziomie 3).
+
+## Build 46 · 2026-10-24
+- [Balans] Mocniejsze trzy najsłabsze combo: Storm Mines (piorun z pełną siłą Arc Coil i 4 przeskokami zamiast 70% i 3), Cluster Missiles (8 odłamków zamiast 6), Minelayer (mina przy co drugim wybuchu rakiety zamiast co trzecim). Pomiar na stałym celu (25 wrogów wokół statku, 45 s): każde combo daje teraz +10% do +32% obrażeń pary broni (poziom 3: Storm Mines +18%, Cluster +26%, Blade Nova +11%, Twin Link +32%, Ion Bolts +24%, Minelayer +22%).
+
+## Build 45 · 2026-10-23
+- [Narzędzia] Android: wersja TEST jako osobna aplikacja „VB Test” (z panelem 🛠 i własnym zapisem), obok zwykłej gry. `npm run android:test` buduje ją, instaluje i uruchamia na włączonym emulatorze albo podłączonym telefonie; `npm run android:play` robi to samo ze zwykłą grą. Wcześniej `npm run android:open` zawsze budował zwykłą wersję, nawet po wybraniu TEST w `npm run review` (który dotyczy iPhone'a).
 
 ## Build 44 · 2026-10-23
 - [Nowe] Combo broni: gdy dwie pasujące bronie mają poziom 3+, włącza się dodatkowy efekt do końca przelotu (napis „COMBO!”, błysk i dźwięk). Sześć combo: **Storm Mines** (Arc Coil + Proximity Mines: wybuch miny wypuszcza łańcuch piorunów), **Cluster Missiles** (Seeker Missiles + Scatter Gun: wybuch rakiety rozrzuca 6 odłamków), **Blade Nova** (Orbit Blades + Nova Pulse: impuls wyrzuca ostrza na orbitę większą o 60%, na 1,2 s, z +50% obrażeń), **Twin Link** (Wingman Drone + Pulse Blaster: drony strzelają razem z każdą salwą blastera, połową jej siły), **Ion Bolts** (Pulse Blaster + Arc Coil: trafienie przeskakuje iskrą na sąsiedniego wroga, połową obrażeń), **Minelayer** (Seeker Missiles + Proximity Mines: wybuch rakiety zostawia minę w 35% przypadków).

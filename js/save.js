@@ -4,6 +4,8 @@ const KEY = SAVE_KEY;
 const fresh = () => ({
   coins: 0,
   stars: {},
+  // Codex entries discovered in any run (key -> 1); kept by Reset progress
+  codex: {},
   // worlds whose 18 stars already paid the full-set bonus (id -> true)
   worldStars: {},
   cleared: {},

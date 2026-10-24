@@ -190,6 +190,9 @@ export function menuTip(app, screen) {
   if (screen === 'map' && !tipSeen(save, 'stars')) {
     return { id: 'stars', anchor: '.world-head', title: 'EARN 3 STARS', text: 'Clear the sector, hit the kill goal, destroy every elite.' };
   }
+  if (screen === 'menu' && !tipSeen(save, 'codex') && Object.keys(save.codex || {}).length >= 4) {
+    return { id: 'codex', anchor: '[data-act="codex"]', title: 'YOUR CODEX', text: 'Weapons, evolutions and combos you have found.' };
+  }
   if (screen === 'menu' && !tipSeen(save, 'shop') && save.coins >= 60) {
     return { id: 'shop', anchor: '[data-act="shop"]', below: true, title: 'SPEND YOUR COINS', text: 'Permanent upgrades for every ship.' };
   }

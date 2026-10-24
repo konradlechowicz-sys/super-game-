@@ -50,13 +50,22 @@ The app build (`scripts/build.mjs`) bundles `js/native-main.js`, which adds hapt
 (Capacitor Haptics / Preferences). Fonts are bundled in `fonts/` (SIL OFL), so the app needs no network.
 Bundle ID: `com.konradlechowicz.voidblaster` (change it in `capacitor.config.json` and in Xcode if needed).
 
+## 2.0 prototype (`proto2/`)
+One arena of the planned 2.0 look on PixiJS (WebGL): the Striker built from its parts (engine flames, banking,
+gun recoil), world 1 enemies with pre-baked glow, the tech-ruin floor, an FPS meter and stress buttons. Not part of
+the game builds. `npm run proto2` prepares the textures from `art/2.0` (`make-assets.py`) and writes one file,
+`dist/void-blaster-2-proto.html`.
+
 ## Android app (Google Play, in preparation)
 The same game in `android/` (Capacitor 8, minSdk 24, target 36), package `com.konradlechowicz.voidblaster`, portrait
 only, launcher icons and splash made from the iOS ones. `npm run android` builds `www/` and syncs it into the Android
 project; `npm run android:open` also opens Android Studio (run it on an emulator or a phone from there).
+`npm run android:play` builds, installs and launches the normal game on the running emulator or connected phone;
+`npm run android:test` does the same for the TEST variant, a separate app "VB Test" (`...voidblaster.test`, Gradle
+flavor `vbtest`, whose assets in `android/app/src/vbtest/assets/public` override the normal game's).
 `npm run bump` sets `versionCode` (= build number) and `versionName` in `android/app/build.gradle`.
 Not done yet: Google Play Billing (Android plays as the free trial; `js/native-entry.js` passes no store plugin),
-the TEST variant, the back button, signing for Google Play.
+the back button, signing for Google Play, Android in `npm run review`.
 
 ## Free trial and the full game
 - Free: world 1 with its boss, the Striker, shop upgrades up to level 3. The browser version is always the free trial.
@@ -116,7 +125,8 @@ and `.../site/support.html`, and the web version of the game at `https://konradl
 ## Code map
 - `js/game.js` — run logic: player, enemies, boss, spawning, combat, rendering
 - `js/weapons.js` — weapon stats, behaviours and evolutions
-- `js/combos.js` — weapon combos (v1.2): which pairs exist and when they are active; their effects live in weapons.js and game.js
+- `js/codex.js` — the Codex (v1.2): its sections and entries; discoveries are saved in `save.codex` (kept by Reset progress)
+- `js/combos.js` — weapon combos and perk sets (v1.2): which pairs exist and when they are active; their effects live in weapons.js and game.js (`updatePerkSets`, `missileCombos`, `crowdHit`)
 - `js/data.js` — ships, enemies, sectors, elite traits (fixed per sector), shop, daily rewards
 - `js/ui.js` — menus, HUD, level-up cards, results
 - `js/testkit.js` — TEST variant only: the tester's panel (removed from normal and App Store builds)

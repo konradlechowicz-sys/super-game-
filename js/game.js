@@ -1,5 +1,5 @@
 import { TAU, rand, randi, clamp, lerp, pick, weightedPick, angleLerp, SpatialHash } from './util.js';
-import { ENEMIES, BOSSES, PASSIVES, PASSIVE_MAX, SHIPS, TRAITS, xpFor, stageIndex, shopBonus } from './data.js';
+import { ENEMIES, BOSSES, PASSIVES, PASSIVE_MAX, SHIPS, TRAITS, WORLD_TUNING, xpFor, stageIndex, shopBonus } from './data.js';
 import { WEAPONS, WEAPON_MAX, weaponStats } from './weapons.js';
 import { COMBOS, COMBO_LEVEL, comboActive, combosFor } from './combos.js';
 import { shipLook } from './store.js';
@@ -26,6 +26,7 @@ export class Game {
     this.app = app;
     this.ui = app.ui;
     this.stage = stage;
+    this.tune = WORLD_TUNING[stage.world?.id] || WORLD_TUNING[1];
     this.save = app.save;
     this.ship = shipLook(SHIPS[this.save.ship] || SHIPS.striker, this.save);
     const { vw, vh } = this.viewSize();
@@ -43,6 +44,8 @@ export class Game {
     this.weapons = []; this.passives = {};
     // weapon combos active this run, and the ones still to announce once the level-up cards close
     this.combos = new Set(); this.comboQueue = []; this.comboBannerT = 0;
+    // Codex entries found for the first time in this run
+    this.newEntries = [];
     this.spawnAcc = 0; this.eventsDone = new Set(); this.surge = null;
     this.boss = null; this.bossDefeated = false;
     this.shake = 0; this.slowmo = 1; this.flash = 0; this.endTimer = 0;
@@ -69,8 +72,9 @@ export class Game {
     p.maxHp = s.hp + B('hull') + (P.armor || 0) * 20;
     if (oldMax > 1 && p.maxHp > oldMax) p.hp += p.maxHp - oldMax;
     p.speed = s.speed * (1 + B('thrust') + (P.thrusters || 0) * 0.08);
-    p.dmgMult = s.dmg * (1 + B('power') + (P.power || 0) * 0.12);
-    p.cdMult = 1 - (P.overclock || 0) * 0.08;
+    p.baseDmg = s.dmg * (1 + B('power') + (P.power || 0) * 0.12);
+    p.baseCd = 1 - (P.overclock || 0) * 0.08;
+    p.dmgMult = p.baseDmg; p.cdMult = p.baseCd;
     p.areaMult = 1 + (P.amplifier || 0) * 0.12;
     p.magnet = 105 * (1 + B('magnet') + (P.tractor || 0) * 0.3);
     p.regen = B('regen') + (P.armor || 0) * 0.15;
@@ -81,6 +85,15 @@ export class Game {
 
   addWeapon(id) {
     this.weapons.push({ id, level: 1, evolved: false, t: 0.3 });
+    this.discover(`w:${id}`);
+  }
+
+  // Marks a Codex entry as discovered (saved when the run ends).
+  discover(key) {
+    const codex = (this.save.codex ||= {});
+    if (codex[key]) return;
+    codex[key] = 1;
+    this.newEntries.push(key);
   }
 
   // Stats of an owned weapon, or null.
@@ -93,9 +106,10 @@ export class Game {
   checkCombos() {
     const p = this.player;
     for (const id in COMBOS) {
-      if (this.combos.has(id) || !comboActive(this.weapons, id)) continue;
+      if (this.combos.has(id) || !comboActive(this, id)) continue;
       this.combos.add(id);
       this.comboQueue.push(id);
+      this.discover(`c:${id}`);
       this.addFx(p.x, p.y, 220, COMBOS[id].color, 0.6, 5);
       this.burst(p.x, p.y, COMBOS[id].color, 36, 340, 0.9, 7);
       this.sfx('evolve');
@@ -125,18 +139,47 @@ export class Game {
     if (this.bolts.length < 40) this.addBolt(pts, color);
   }
 
+  // Perk sets that change the ship from moment to moment: Overdrive, Hit & Run, Last Stand, Singularity.
+  updatePerkSets(dt) {
+    const p = this.player, C = this.combos;
+    let dmg = 1, cd = 1;
+    if (C.has('overdrive')) {
+      // a 12 s cycle: the last 4 s fire 50% faster
+      this.overdriveT = ((this.overdriveT || 0) + dt) % 12;
+      const on = this.overdriveT >= 8;
+      if (on && !p.overdrive) { this.text(p.x, p.y - 34, 'OVERDRIVE', COMBOS.overdrive.color, true); this.addFx(p.x, p.y, 90, COMBOS.overdrive.color, 0.4, 3); }
+      p.overdrive = on;
+      if (on) cd /= 1.5;
+    }
+    if (C.has('hitrun') && p.moving > 40) dmg *= 1.15;
+    p.laststand = C.has('laststand') && p.hp < p.maxHp * 0.5;
+    if (p.laststand) dmg *= 1.25;
+    p.dmgMult = p.baseDmg * dmg;
+    p.cdMult = p.baseCd * cd;
+    if (C.has('singularity')) {
+      this.singT = (this.singT ?? 0) + dt;
+      if (this.singT >= 25) {
+        this.singT = 0;
+        for (const gm of this.gems) gm.mag = true;
+        this.addFx(p.x, p.y, 320, COMBOS.singularity.color, 0.7, 4);
+        this.text(p.x, p.y - 34, 'SINGULARITY', COMBOS.singularity.color, true);
+        this.sfx('pickup');
+      }
+    }
+  }
+
   // Combo effects of an exploding missile: Cluster Missiles (a ring of pellets) and Minelayer (a mine left behind).
   missileCombos(x, y) {
     const p = this.player;
     const sg = this.combos.has('cluster') && this.wstats('spread');
     if (sg) {
-      for (let i = 0; i < 6; i++) {
-        this.shoot({ x, y, a: (i / 6) * TAU + rand(-0.2, 0.2), speed: rand(420, 500), dmg: sg.dmg * p.dmgMult, pierce: 0, r: 5,
+      for (let i = 0; i < 8; i++) {
+        this.shoot({ x, y, a: (i / 8) * TAU + rand(-0.2, 0.2), speed: rand(420, 500), dmg: sg.dmg * p.dmgMult, pierce: 0, r: 5,
           life: 0.32 * p.areaMult, look: 'pellet', color: '#ff8a2a', knock: 120 });
       }
     }
     const mn = this.combos.has('minelayer') && this.wstats('mines');
-    if (mn && Math.random() < 0.35) {
+    if (mn && Math.random() < 0.5) {
       if (this.mines.length >= 40) this.mines.shift();
       this.mines.push({ x, y, life: 6, arm: 0.3, dmg: mn.dmg * p.dmgMult, rad: mn.rad * p.areaMult });
     }
@@ -293,6 +336,9 @@ export class Game {
   hurtPlayer(dmg, src = '?', inv = 0.6) {
     const p = this.player;
     if (p.inv > 0 || this.state !== 'play' || this.app.god) return;
+    // the world's damage level, rising towards the end of the sector
+    const T = this.tune;
+    dmg *= T.dmg * (1 + T.ramp * clamp(this.time / this.stage.duration, 0, 1));
     dmg = Math.max(1, dmg - p.armor);
     p.hp -= dmg;
     (this.dmgLog ||= {})[src] = (this.dmgLog[src] || 0) + dmg;
@@ -360,7 +406,7 @@ export class Game {
   spawnEnemy(type, x, y, elite = false, traits = []) {
     const d = ENEMIES[type], st = this.stage;
     // Enemy toughness ramps from 1x to the stage's peak, since every run starts with a fresh build.
-    const hpMul = lerp(st.hp0 || 1, st.hp, clamp(this.time / st.duration, 0, 1));
+    const hpMul = lerp(st.hp0 || 1, st.hp, clamp(this.time / st.duration, 0, 1)) * this.tune.hp * (elite ? this.tune.elite : 1);
     const e = {
       id: nextId++, type, def: d, x, y, kx: 0, ky: 0, color: d.color, shape: d.shape,
       hp: d.hp * hpMul * (elite ? 7 : 1), r: d.r * (elite ? 1.6 : 1), speed: d.speed * st.speed * (elite ? 0.9 : 1),
@@ -593,7 +639,7 @@ export class Game {
     const hh = this.arena.h / 2 - 80;
     const b = {
       id: nextId++, boss: true, def, name: def.name, x: p.x, y: clamp(p.y - vh * 0.4, -hh, hh), kx: 0, ky: 0,
-      hp: def.hp, r: def.r, speed: def.speed, dmg: def.dmg, color: def.color, flash: 0, spawnT: 1.2,
+      hp: def.hp * this.tune.boss, r: def.r, speed: def.speed, dmg: def.dmg, color: def.color, flash: 0, spawnT: 1.2,
       rot: 0, rot2: 0, phase: 1, atk: 0, atkT: 2.5, mode: 'idle', modeT: 0, spin: 0, kbRes: 0, alpha: 1,
       heading: Math.PI / 2, lunge: 0,
     };
@@ -688,17 +734,19 @@ export class Game {
     for (const w of this.weapons) {
       const def = WEAPONS[w.id];
       if (!w.evolved && def.evo && w.level >= WEAPON_MAX && P[def.evo.with]) opts.push({ kind: 'evo', id: w.id, wt: chest ? 200 : 8 });
-      else if (!w.evolved && w.level < WEAPON_MAX) opts.push({ kind: 'wlvl', id: w.id, wt: 10 + (combosFor(this.weapons, w.id, w.level + 1).length ? 4 : 0) });
+      else if (!w.evolved && w.level < WEAPON_MAX) opts.push({ kind: 'wlvl', id: w.id, wt: 10 + (combosFor(this, false, w.id, w.level + 1).length ? 4 : 0) });
     }
     if (this.weapons.length < MAX_WEAPONS) {
       // a weapon that pairs into a combo with one already owned comes up a little more often
-      for (const id in WEAPONS) if (!this.weapons.some((w) => w.id === id)) opts.push({ kind: 'wnew', id, wt: combosFor(this.weapons, id, 1).length ? 10 : 7 });
+      for (const id in WEAPONS) if (!this.weapons.some((w) => w.id === id)) opts.push({ kind: 'wnew', id, wt: combosFor(this, false, id, 1).length ? 10 : 7 });
     }
     const pc = Object.keys(P).length;
     for (const id in PASSIVES) {
       const l = P[id] || 0;
-      if (l > 0 && l < PASSIVE_MAX) opts.push({ kind: 'plvl', id, wt: 7 });
-      else if (l === 0 && pc < MAX_PASSIVES) opts.push({ kind: 'pnew', id, wt: 5 });
+      // a perk that builds a perk set with one already owned comes up a little more often
+      const set = combosFor(this, true, id, l + 1).length ? 3 : 0;
+      if (l > 0 && l < PASSIVE_MAX) opts.push({ kind: 'plvl', id, wt: 7 + set });
+      else if (l === 0 && pc < MAX_PASSIVES) opts.push({ kind: 'pnew', id, wt: 5 + set });
     }
     const out = [];
     while (out.length < n && opts.length) {
@@ -724,16 +772,21 @@ export class Game {
       const lvl = w ? w.level + 1 : 1;
       let desc = def.desc[lvl - 1];
       if (lvl === WEAPON_MAX && def.evo) desc += ` · Evolves with ${PASSIVES[def.evo.with].name}`;
-      // combo hint: only for a partner the player already has, so the rest stays a discovery
-      const combos = combosFor(this.weapons, c.id, lvl);
-      const done = combos.find((x) => x.done);
-      const comboHint = done ? `Unlocks combo: ${COMBOS[done.id].name}`
-        : combos.length ? `Combo with ${combos.map((x) => x.partner).join(' / ')} at LV ${COMBO_LEVEL}` : '';
-      return { ...c, name: def.name, tag: w ? `LV ${lvl}` : 'NEW', desc, comboHint, combo: !!done, icon: def.icon, color: def.color };
+      return { ...c, name: def.name, tag: w ? `LV ${lvl}` : 'NEW', desc, ...this.comboHint(false, c.id, lvl), icon: def.icon, color: def.color };
     }
     const def = PASSIVES[c.id];
     const lvl = (this.passives[c.id] || 0) + 1;
-    return { ...c, name: def.name, tag: lvl === 1 ? 'NEW' : `LV ${lvl}`, desc: def.desc, icon: def.icon, color: def.color };
+    return { ...c, name: def.name, tag: lvl === 1 ? 'NEW' : `LV ${lvl}`, desc: def.desc, ...this.comboHint(true, c.id, lvl), icon: def.icon, color: def.color };
+  }
+
+  // Combo hint on a card: only for a partner the player already has, so the rest stays a discovery.
+  comboHint(perk, id, lvl) {
+    const combos = combosFor(this, perk, id, lvl);
+    const done = combos.find((x) => x.done);
+    const what = perk ? 'perk set' : 'combo';
+    const comboHint = done ? `Unlocks ${what}: ${COMBOS[done.id].name}`
+      : combos.length ? `${perk ? 'Set' : 'Combo'} with ${combos.map((x) => x.partner).join(' / ')} at LV ${COMBO_LEVEL}` : '';
+    return { comboHint, combo: !!done };
   }
 
   applyCard(c) {
@@ -743,6 +796,7 @@ export class Game {
       case 'wlvl': this.weapons.find((w) => w.id === c.id).level++; break;
       case 'evo': {
         this.weapons.find((w) => w.id === c.id).evolved = true;
+        this.discover(`e:${c.id}`);
         this.addFx(p.x, p.y, 260, '#ffd23d', 0.7, 6);
         this.burst(p.x, p.y, '#ffd23d', 50, 380, 1, 8);
         this.sfx('evolve');
@@ -751,6 +805,7 @@ export class Game {
       }
       case 'pnew': case 'plvl':
         this.passives[c.id] = (this.passives[c.id] || 0) + 1;
+        this.discover(`p:${c.id}`);
         this.recompute();
         break;
       case 'heal': p.hp = Math.min(p.maxHp, p.hp + p.maxHp * 0.4); break;
@@ -802,6 +857,7 @@ export class Game {
     if (!tipsOn(this.save)) return '';
     const tips = [
       ['evo', cards.some((c) => c.kind === 'evo'), 'Evolution! A max-level weapon plus its partner upgrade becomes a super weapon.'],
+      ['combo', cards.some((c) => c.comboHint), 'Two matching weapons (or perks) at level 3 unlock a COMBO. Watch for the ⚡ line on cards.'],
       ['crate', chest, 'A free pick. Crates are the surest way to evolve a weapon.'],
       ['level', !chest, 'Pick one card. New weapons and upgrades last until the end of this run.'],
     ];
@@ -815,6 +871,7 @@ export class Game {
     return {
       weapons: this.weapons.map((w) => ({ id: w.id, icon: WEAPONS[w.id].icon, color: w.evolved ? '#ffd23d' : WEAPONS[w.id].color, level: w.evolved ? '★' : w.level, name: w.evolved ? WEAPONS[w.id].evo.name : WEAPONS[w.id].name })),
       passives: Object.entries(this.passives).map(([id, l]) => ({ id, icon: PASSIVES[id].icon, color: PASSIVES[id].color, level: l, name: PASSIVES[id].name })),
+      combos: [...this.combos].map((id) => ({ id, name: COMBOS[id].name, color: COMBOS[id].color, desc: COMBOS[id].desc })),
     };
   }
 
@@ -838,9 +895,11 @@ export class Game {
       // announce new combos one at a time once the cards are closed
       this.comboBannerT -= rawDt;
       if (this.comboQueue.length && this.comboBannerT <= 0) {
-        this.ui.banner('COMBO!', COMBOS[this.comboQueue.shift()].name.toUpperCase());
+        const c = COMBOS[this.comboQueue.shift()];
+        this.ui.banner(c.perk ? 'PERK SET!' : 'COMBO!', c.name.toUpperCase());
         this.comboBannerT = 2.2;
       }
+      this.updatePerkSets(dt);
       for (const w of this.weapons) WEAPONS[w.id].update(w, this, dt, weaponStats(w));
       this.directSpawns(dt);
     }
@@ -1044,6 +1103,8 @@ export class Game {
         else { const k = (e.enraged ? 1.5 : 1) * (e.buffT > 0 ? 1.3 : 1); mx *= k; my *= k; }
         e.buffT = Math.max(0, (e.buffT || 0) - dt);
       }
+      // Supernova: slowed to half speed for a while
+      if (e.slowT > 0) { e.slowT -= dt; mx *= 0.5; my *= 0.5; }
       // separation
       let sx = 0, sy = 0;
       if (separate) this.hash.query(e.x, e.y, e.r * 2, near); else near.length = 0;
@@ -1089,7 +1150,15 @@ export class Game {
     let top = contacts[0], best = 0;
     for (const e of contacts) { const v = e.dmg * this.dmgMul(e); if (v > best) { best = v; top = e; } }
     const mul = Math.min(CROWD_MAX, 1 + CROWD_EXTRA * (contacts.length - 1));
-    this.hurtPlayer(best * mul, contacts.length > 1 ? 'crowd' : top.type, CONTACT_INV);
+    // Ram Plating perk set: 30% less contact damage, and whatever touches the ship is knocked away
+    const ram = this.combos.has('ramplating');
+    if (ram) {
+      for (const e of contacts) {
+        const dx = e.x - p.x, dy = e.y - p.y, d = Math.hypot(dx, dy) || 1;
+        e.kx += (dx / d) * 320 * e.kbRes; e.ky += (dy / d) * 320 * e.kbRes;
+      }
+    }
+    this.hurtPlayer(best * mul * (ram ? 0.7 : 1), contacts.length > 1 ? 'crowd' : top.type, CONTACT_INV);
     if (contacts.length >= 4) { this.flash = Math.max(this.flash, 0.45); this.text(p.x, p.y - 30, `CRUSHED x${mul.toFixed(1)}`, '#ff3d6e', true); }
   }
 
@@ -1398,6 +1467,11 @@ export class Game {
           const sp = pr.speed || 1;
           this.damage(e, pr.dmg, (pr.vx / sp) * pr.knock, (pr.vy / sp) * pr.knock);
           pr.hit.push(e.id);
+          if (pr.flak) {
+            // Flak Cannon: a small quiet blast around the hit
+            for (const o of this.enemiesNear(pr.x, pr.y, pr.flak)) if (o !== e) this.damage(o, pr.dmg * 0.6, 0, 0, true);
+            this.addFx(pr.x, pr.y, pr.flak, '#ffd23d', 0.22, 2);
+          }
           if (pr.ion) {
             // Ion Bolts combo: the hit sparks to the nearest other enemy for half damage
             let best = null, bd = 130 * 130;
@@ -1450,6 +1524,7 @@ export class Game {
         r.hit.add(e.id);
         const d = Math.hypot(e.x - r.x, e.y - r.y) || 1;
         this.damage(e, r.dmg, ((e.x - r.x) / d) * r.knock, ((e.y - r.y) / d) * r.knock, true);
+        if (r.slow && !e.boss) e.slowT = r.slow;
       }
       if (r.t >= r.dur + 0.15) this.rings.splice(i, 1);
     }
@@ -1469,14 +1544,23 @@ export class Game {
       m.life -= dt;
       m.arm -= dt;
       let boom = m.life <= 0;
+      if (m.pull && m.arm <= 0) {
+        // Gravity Mines: drag nearby enemies (not bosses) toward the mine
+        for (const e of this.enemiesNear(m.x, m.y, m.pull)) {
+          if (e.boss || e.seg || e.def.speed === 0) continue;
+          const dx = m.x - e.x, dy = m.y - e.y, d = Math.hypot(dx, dy) || 1;
+          const v = 160 * dt * (e.kbRes ?? 0.4);
+          e.x += (dx / d) * v; e.y += (dy / d) * v;
+        }
+      }
       if (!boom && m.arm <= 0 && this.enemiesNear(m.x, m.y, 22).length) boom = true;
       if (boom) {
-        this.explode(m.x, m.y, m.rad, m.dmg, '#ffd23d');
+        this.explode(m.x, m.y, m.rad, m.dmg, m.pull ? '#b06bff' : '#ffd23d');
         this.mines.splice(i, 1);
         // Storm Mines combo: the blast fires chain lightning at Arc Coil's strength
         const coil = this.combos.has('stormmines') && this.wstats('lightning');
         const tgt = coil && this.nearestEnemy(m.x, m.y, 170);
-        if (tgt) this.chainLightning(m.x, m.y, tgt, coil.dmg * this.player.dmgMult * 0.7, 3, '#7df9ff');
+        if (tgt) this.chainLightning(m.x, m.y, tgt, coil.dmg * this.player.dmgMult, 4, '#7df9ff');
       }
     }
   }
@@ -1607,6 +1691,7 @@ export class Game {
     this.ui.results({
       won, stage: st, stars, prevStars, newStars, goals, time: this.time, kills: this.kills, level: this.level,
       elitesKilled: this.elitesKilled, collected, clearBonus, starBonus, worldBonus, total, firstClear,
+      newEntries: this.newEntries,
     });
   }
 
@@ -1649,7 +1734,7 @@ export class Game {
 
     ctx.globalCompositeOperation = 'lighter';
     // mines
-    for (const m of this.mines) if (vis(m)) R.img(mineSprite('#ffd23d', m.arm <= 0 && Math.sin(this.time * 12) > 0), m.x, m.y);
+    for (const m of this.mines) if (vis(m)) R.img(mineSprite(m.pull ? '#b06bff' : '#ffd23d', m.arm <= 0 && Math.sin(this.time * 12) > 0), m.x, m.y);
     // gems & pickups
     for (const g of this.gems) {
       if (!vis(g)) continue;

@@ -10,11 +10,18 @@
 - For a handoff, use the same `claude/...` branch and commit the handoff update with the work. Work sequentially: only one agent edits that branch at a time.
 - Keep the current handoff factual and secret-free. Continue to follow the project branch and Konrad-approval rules below.
 
+## Roadmap (decided by Konrad)
+- 1.2.0: weapon combos, perk sets, evolutions for all weapons, Codex, tougher enemies.
+- 1.3: Android in Google Play + leaderboards (Game Center, Google Play Games) + Endless mode (unlocked after the
+  whole game, full game only, one leaderboard per world, score = kills).
+- 2.0: visual overhaul on PixiJS (same JS + Capacitor code), richer art made with ChatGPT from Claude's prompts,
+  more and more varied worlds. Art lives in `art/2.0/` (see its README).
+
 ## Android (decided by Konrad)
-Version 2.0 launches on the App Store and Google Play together; the Android port starts earlier (closed test from
-1.2.0: Google Play needs 12 testers for 14 days on a new account). Project in `android/`, see README.md. Until Google
+Android launches in 1.3 (Google Play needs 12 testers for 14 days on a new account before publishing). Project in `android/`, see README.md. Until Google
 Play Billing exists, Android is trial-only. This cloud environment cannot build Android (no SDK); Konrad builds in
-Android Studio on his Mac (`npm run android:open`).
+Android Studio on his Mac (`npm run android:open`; `npm run android:play` / `npm run android:test` install and
+launch the normal game / the TEST app "VB Test" on the emulator or phone).
 
 ## Monetization (decided by Konrad)
 Free trial + one non-consumable in-app purchase "Full Game" (USD 3.99, `com.konradlechowicz.voidblaster.fullgame`).
