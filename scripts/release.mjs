@@ -61,8 +61,9 @@ const builds = sh("git log --first-parent -n 30 --format='%H|%cr' origin/main").
   .filter((b) => b.v && !seen.has(b.v.build) && seen.add(b.v.build))
   .slice(0, 8);
 
-// The last released build: changes after it go into the next release.
-const lastBuild = Math.max(0, ...releases.map((r) => r.info?.build || 0));
+// The release before a given build: changes after it go into the next release. A build released again under a new number (e.g. a version that never reached
+// the store) brings the same changes as its first release, so they are counted from the release before it.
+const releaseBefore = (build) => Math.max(0, ...releases.map((r) => r.info?.build || 0).filter((b) => b < build));
 const latestLog = readAt('origin/main');
 console.log('\nZaakceptowane buildy w main:');
 builds.forEach((b, i) => {
@@ -79,8 +80,11 @@ if (!chosen) bye('Nie ma takiego buildu.', 1);
 
 // Everything this release brings, read from the chosen build's own CHANGELOG.md.
 const chosenLog = readAt(chosen.sha);
-const inRelease = buildsBetween(chosenLog, lastBuild, chosen.v.build);
-console.log(`\n━━ Zmiany w tym wydaniu${lastBuild ? ` (od wydanego buildu ${lastBuild})` : ''} ━━`);
+const fromBuild = releaseBefore(chosen.v.build);
+const sameAs = releasedFrom.get(chosen.sha);
+const inRelease = buildsBetween(chosenLog, fromBuild, chosen.v.build);
+if (sameAs) console.log(`\nTen build był już wydany jako ${sameAs}; wydanie powtórzy jego zmiany.`);
+console.log(`\n━━ Zmiany w tym wydaniu${fromBuild ? ` (od wydanego buildu ${fromBuild})` : ''} ━━`);
 console.log(inRelease.length ? grouped(inRelease).replace(/^/gm, '  ') : describe(inRelease, '  '));
 const nextNote = parse(chosenLog).find((s) => s.kind === 'next');
 const news = whatsNew(nextNote);
@@ -124,7 +128,10 @@ run(`node scripts/bump.mjs ${version} --build ${build}`);
 let summary = '';
 if (chosenLog) {
   const date = new Intl.DateTimeFormat('en-CA', { timeZone: 'Europe/Warsaw' }).format(new Date());
-  const stamped = stampRelease(readFileSync(CHANGELOG, 'utf8'), { version, build, date, fromBuild: lastBuild });
+  const stamped = stampRelease(readFileSync(CHANGELOG, 'utf8'), {
+    version, build, date, fromBuild,
+    note: sameAs && `Ten sam build ${chosen.v.build} co ${sameAs}, wydany ponownie jako v${version}.`,
+  });
   writeFileSync(CHANGELOG, stamped);
   const sec = parse(stamped).find((s) => s.kind === 'release' && s.version === version);
   summary = sec ? sec.lines.join('\n').trim() : '';

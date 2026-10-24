@@ -1,5 +1,7 @@
 import { WORLDS, SHIPS, SHOP, DAILY, ALL_STAGES, BOSSES, stageIndex } from './data.js';
 import { WEAPONS } from './weapons.js';
+import { COMBOS } from './combos.js';
+import { codexSections, codexName } from './codex.js';
 import { icon } from './icons.js';
 import { fmtTime } from './util.js';
 import { shipSprite } from './sprites.js';
@@ -37,6 +39,7 @@ export class UI {
             ${__TEST__ ? '<button class="pause-btn test-btn" data-act="testkit" aria-label="Tester">🛠</button>' : ''}
             <button class="pause-btn" data-act="pause" aria-label="Pause"><i></i><i></i></button>
           </div>
+          <div class="hud-combos"></div>
           <div class="bossbar hidden"><div class="bossname"></div><div class="bosstrack"><div class="bossfill"></div></div></div>
         </div>
       </div>
@@ -159,7 +162,10 @@ export class UI {
           <button class="btn" data-act="hangar">HANGAR</button>
           <button class="btn" data-act="shop">UPGRADES</button>
         </div>
-        <button class="btn daily-btn ${d.claimable ? 'glow' : ''}" data-act="daily">DAILY REWARD ${d.claimable ? '<span class="badge">!</span>' : ''}</button>
+        <div class="btn-row">
+          <button class="btn" data-act="codex">CODEX</button>
+          <button class="btn daily-btn ${d.claimable ? 'glow' : ''}" data-act="daily">DAILY ${d.claimable ? '<span class="badge">!</span>' : ''}</button>
+        </div>
         ${this.app.store.isFull() ? '' : '<button class="btn full-btn" data-act="full">UNLOCK FULL GAME</button>'}
       </div>
       <div class="foot">${this.save.settings.control === 'drag' ? 'Drag anywhere to fly' : 'Steer with the joystick at the bottom'} · Weapons fire automatically</div>
@@ -168,6 +174,7 @@ export class UI {
       hangar: () => this.hangar(),
       shop: () => this.shop(),
       daily: () => this.daily(),
+      codex: () => this.codex(() => this.menu()),
       settings: () => this.settings(),
       full: () => this.paywall(),
     }, 'menu');
@@ -321,9 +328,10 @@ export class UI {
     }).join('');
     this.setScreen(`
       <div class="topbar"><button class="icon-btn" data-act="back" aria-label="Back">‹</button><h1 class="title">HANGAR</h1>${this.coinsHtml()}</div>
-      <div class="scroll">${cards}</div>
+      <div class="scroll">${cards}<button class="btn codex-link" data-act="codex">CODEX · weapons, evolutions, combos</button></div>
     `, {
       back,
+      codex: () => this.codex(() => this.hangar(back)),
       full: () => this.paywall(() => this.hangar(back)),
       skin: (ds) => { save.skin = ds.id || null; this.app.persist(); this.hangar(back); },
       select: (ds) => { save.ship = ds.id; this.app.persist(); this.hangar(back); },
@@ -339,6 +347,24 @@ export class UI {
         this.hangar(back);
       },
     }, 'hangar');
+  }
+
+  // ======================= CODEX =======================
+  // Every weapon, evolution, combo, perk and perk set; undiscovered ones as "???" with a hint (js/codex.js).
+  codex(back) {
+    const found = this.save.codex || {};
+    const sections = codexSections();
+    const all = sections.flatMap((s) => s.items);
+    const count = all.filter((x) => found[x.key]).length;
+    const entry = (x) => found[x.key]
+      ? `<div class="codex-item" style="--cc:${x.color}"><img src="${icon(x.icon, x.color, x.evo)}" alt="">
+          <div><b>${esc(x.name)}</b><small>${esc(x.desc)}</small>${x.recipe ? `<em>${esc(x.recipe)}</em>` : ''}</div></div>`
+      : `<div class="codex-item locked"><div class="codex-q">?</div><div><b>???</b><small>${esc(x.hint)}</small></div></div>`;
+    this.setScreen(`
+      <div class="topbar"><button class="icon-btn" data-act="back" aria-label="Back">‹</button><h1 class="title">CODEX</h1><div class="codex-count">${count}/${all.length}</div></div>
+      <p class="muted center">Everything you have found in your runs. Keep playing to fill in the rest.</p>
+      <div class="scroll">${sections.map((s) => `<h3 class="codex-head">${s.title} <span>${s.items.filter((x) => found[x.key]).length}/${s.items.length}</span></h3>${s.items.map(entry).join('')}`).join('')}</div>
+    `, { back }, 'codex');
   }
 
   // ======================= SHOP =======================
@@ -502,6 +528,13 @@ export class UI {
     const t = st.boss ? (g.boss || g.bossDefeated ? g.time : Math.max(0, st.bossAt - g.time)) : Math.max(0, st.duration - g.time);
     set('time', '.hud-timer', fmtTime(t));
     set('boss', '.hud-timer', !!g.boss, (el, v) => el.classList.toggle('boss-mode', v));
+    // active combos and perk sets; a perk set lights up while its effect is on
+    const p = g.player;
+    const on = { overdrive: p.overdrive, laststand: p.laststand, hitrun: p.moving > 40 };
+    const combos = [...g.combos].map((id) => `${id}${on[id] ? '*' : ''}`).join(',');
+    set('combos', '.hud-combos', combos, (el) => {
+      el.innerHTML = [...g.combos].map((id) => `<span class="combo-chip ${on[id] ? 'on' : ''}" style="--cc:${COMBOS[id].color}">${esc(COMBOS[id].name)}</span>`).join('');
+    });
   }
 
   bossBar(name, frac) {
@@ -524,16 +557,18 @@ export class UI {
 
   buildHtml(build) {
     const item = (x) => `<div class="build-item" style="--ic:${x.color}" title="${esc(x.name)}"><img src="${icon(x.icon, x.color)}" alt=""><b>${x.level}</b></div>`;
-    return `<div class="build"><div class="build-row">${build.weapons.map(item).join('')}</div><div class="build-row">${build.passives.map(item).join('')}</div></div>`;
+    const combos = (build.combos || []).map((c) => `<span class="combo-chip" style="--cc:${c.color}" title="${esc(c.desc)}">${esc(c.name)}</span>`).join('');
+    return `<div class="build"><div class="build-row">${build.weapons.map(item).join('')}</div><div class="build-row">${build.passives.map(item).join('')}</div>${combos ? `<div class="build-combos">${combos}</div>` : ''}</div>`;
   }
 
   levelUp({ title, sub, cards, rerolls, build, onPick, onReroll, step = 1, steps = 1, hint = '' }) {
     const html = cards.map((c, i) => `
-      <button class="card ${c.evo ? 'evo' : ''}" style="--cc:${c.color}" data-act="pick" data-i="${i}">
+      <button class="card ${c.evo ? 'evo' : ''} ${c.combo ? 'combo' : ''}" style="--cc:${c.color}" data-act="pick" data-i="${i}">
         <img src="${icon(c.icon, c.color, c.evo)}" alt="">
         <div class="card-info">
           <div class="card-top"><b>${esc(c.name)}</b><span class="tag ${c.tag === 'NEW' ? 'new' : ''}">${c.tag}</span></div>
           <div class="card-desc">${esc(c.desc)}</div>
+          ${c.comboHint ? `<div class="card-combo">${esc(c.comboHint)}</div>` : ''}
         </div>
       </button>`).join('');
     this.modal(`
@@ -560,6 +595,7 @@ export class UI {
     this.modal(`
       <h2>PAUSED</h2>
       ${this.buildHtml(build)}
+      ${build.combos.length ? `<ul class="combo-list">${build.combos.map((c) => `<li style="--cc:${c.color}"><b>${esc(c.name)}</b> ${esc(c.desc)}</li>`).join('')}</ul>` : ''}
       <div class="modal-actions col">
         <button class="btn primary" data-act="resume">RESUME</button>
         <button class="btn" data-act="quit">ABANDON RUN</button>
@@ -680,6 +716,7 @@ export class UI {
         ${canNext ? '<button class="btn primary" data-act="next">NEXT</button>' : ''}
         ${invite ? '<button class="btn primary" data-act="full">CONTINUE</button>' : ''}
       </div>
+      ${r.newEntries?.length ? `<div class="codex-new">NEW IN CODEX: ${r.newEntries.map((k) => esc(codexName(k))).join(', ')}</div>` : ''}
       ${!r.won ? '<p class="tiny muted center">Tip: spend coins on permanent Upgrades to get stronger.</p>' : ''}
     `, {
       map: () => { this.closeModal(); this.app.endRun(); this.map(); },

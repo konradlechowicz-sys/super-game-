@@ -16,23 +16,81 @@ To trwała, asynchroniczna tablica przekazań między Claude’em pracującym na
 
 ## Bieżące przekazanie
 
-**Status:** Gotowe dla Codexa: trzy nowe klipy z prawdziwej rozgrywki (zastępują F01–F03)  
-**Zadanie:** Klipy z prawdziwej rozgrywki zgodnej z buildem premierowym: rój z normalnym spawnem, boss z normalnym HP, Arc Coil → Tempest z prawdziwymi warunkami ewolucji. Bez zmian w kodzie gry, bez publikacji.  
+**Status:** Gotowe dla Codexa / ChatGPT: koncepty statku gracza do wersji 2.0 (grafika)  
+**Zadanie:** Wygenerować koncepty statku gracza w nowym stylu 2.0 według promptów poniżej (krok 1), a po wyborze Konrada arkusz części i modułów broni (kroki 2–3). Tylko obrazki; bez zmian w kodzie gry, bez publikacji.  
 **Gałąź:** `claude/void-blaster-prototype`  
-**Ostatni commit:** `841e5c2` (main, build 32); ten wpis bez nowego buildu  
-**Przekazanie:** Claude → Codex, 2026-10-20  
-**Zmiany:** pliki MP4 przekazane Konradowi jako załączniki w rozmowie z Claude (nie w repozytorium). Wspólne warunki: kod wydania `v1.0.1` (build 29; rozgrywka identyczna z 1.0.0 build 21), prędkość ×1 (każda klatka = 1/30 s czasu gry), bez god mode, bez dodatkowych spawnów, bez zmian HP i bez wymuszonych kart; statkiem steruje autopilot (joystick), karty wybiera prosta reguła; poziom awansu i karty to prawdziwe losowania gry. 1080×1920, 30 fps, H.264 + AAC. Muzyka: utwór świata wyrenderowany syntezatorem gry (`js/audio.js`), bez efektów dźwiękowych. Na dole przez cały klip podpis „REAL GAMEPLAY · SECTOR … · AUTOPILOT”. Plansza końcowa: „VOID BLASTER · COMING SOON TO iPHONE · FREE TO TRY · NO ADS” (bez „available now”).
+**Ostatni commit:** build 50 na tej gałęzi; ten wpis bez nowego buildu  
+**Przekazanie:** Claude → Codex / ChatGPT, 2026-10-24 (na prośbę Konrada)  
+**Kontekst:** Wersja 2.0 to duża zmiana wizualna: zostaje neon (ciemne tło, świecące krawędzie), ale obiekty dostają materiał, bryłę i detal. Statek gracza ma być detalicznym myśliwcem widzianym dokładnie z góry: kabina, wyraźne silniki, punkty montażu broni. Animację (płomienie silników, obroty dział) zrobi Claude w kodzie, dlatego potrzebne są części na przezroczystym tle, nie jedna ilustracja. Wybór wariantu należy do Konrada.
 
-| Plik | Długość | Treść | Stan konta | Montaż |
-|---|---|---|---|---|
-| `real-1-final-wave.mp4` | 20,0 s | Sektor 1-5 „Split Storm” (darmowy świat), końcowa fala 213–230 s gry; Striker | bez pełnej wersji; ulepszenia: Weapon Core 3, Reinforced Hull 3, Engine Tuning 2, Collector Field 2, Nano Repair 2 | jeden ciągły fragment 17,5 s; napis „FINAL WAVE”; ekrany awansu (gra wtedy stoi) pominięte |
-| `real-2-void-heart.mp4` | 19,5 s | Sektor 4-6, Void Heart z normalnym HP 18 000; walka trwała 47,7 s i zakończyła się zwycięstwem; znacznik „FULL GAME” | pełna wersja (zakup symulowany w przeglądarce); ulepszenia: Weapon Core 6, Reinforced Hull 6, Engine Tuning 3, Collector Field 3, Nano Repair 4, Data Mining 3 | dwa fragmenty: wejście bossa 7 s + ostatnie 10 s walki; napis „FIGHT SHORTENED · 48 S IN TOTAL”; „DESTROYED” po zniszczeniu |
-| `real-3-arc-coil-tempest.mp4` | 20,1 s | Sektor 1-4 (darmowy świat): Arc Coil poziom 5 + Power Core, prawdziwa karta awansu „Level 16” z ewolucją Tempest (obok Armor Plating i Scatter Gun), Tempest w akcji, potem druga prawdziwa ewolucja Photon Storm | jak w klipie 1 | jeden ciągły fragment; karty awansu pokazane po 1,6 s (gra wtedy stoi); napisy „ARC COIL · LEVEL 5 + POWER CORE”, „TEMPEST · WEAPON EVOLUTION” |
+Blok stylu (wklej na początku każdego promptu):
 
-**Sprawdzenia:** podgląd klatek z każdego klipu (napisy, plansza, znacznik FULL GAME, brak 🛠 i etykiety TEST), `ffprobe`: 1080×1920, 30 fps, audio AAC; głośność ok. −20 dB średnio, szczyt −1,2 dB. Autopilot przeżył bez god mode we wszystkich nagraniach (wcześniej też w 8 przejściach testowych).  
-**Znane problemy:** gęstość wrogów w klipie 1 jest mniejsza niż w dawnym F01, bo to normalny spawn; nie przedstawiajcie go jako „setek wrogów naraz”. W klipie 3 Tempest pochodzi z karty awansu, nie ze skrzyni elity (obie drogi są w grze). Brak efektów dźwiękowych gry (tylko muzyka). Autopilot to nie człowiek: tak to opisujcie, jeśli ktoś zapyta.  
-**Następny krok:** Codex: podmień F01–F03 w pakiecie na te klipy i przygotuj opisy do akceptacji Konrada; potrzebne inne ujęcia albo wersje „OUT NOW” po premierze wpisz tutaj dla Claude’a.  
-**Decyzja potrzebna od Konrada:** akceptacja klipów przed publikacją.
+```text
+STYLE (keep identical across all images):
+Game art for "Void Blaster", a top-down mobile space shooter (survivors-like).
+Camera: top-down orthographic, looking straight down, no perspective.
+Look: stylized sci-fi with a neon accent. Dark, rich materials (gunmetal, carbon,
+matte ceramic) lit from the top-left, with bright glowing neon edges, engine
+glow and emissive lights. Strong readable silhouette at small size (64-128 px).
+Detail level: high but clean - panel lines, vents, rivets, small lights; no noise,
+no grunge overload.
+Palette: deep navy and violet shadows (#05010f, #16002e), neon accents in cyan
+#2ff3ff, magenta #ff2d95, violet #b04dff and gold #ffd23d.
+Rendering: crisp edges, soft bloom on glowing parts only, no motion blur,
+no depth of field, not photorealistic.
+Output: single object, centered, transparent background (PNG with alpha),
+no ground shadow, no text, no logo, no watermark.
+```
+
+Krok 1, koncepty (dla każdego z 3 statków osobno; 4 warianty na obrazek):
+
+```text
+[STYLE BLOCK]
+TASK: Concept sheet of 4 variants of the player's starfighter "[SHIP]",
+side by side on a dark plain background, each seen from directly above, nose up.
+[SHIP DESCRIPTION]
+Each variant ~25% of the image width, same scale. No text.
+Vary wing shape and engine layout between variants.
+```
+
+| [SHIP] | [SHIP DESCRIPTION] |
+| --- | --- |
+| Striker | Balanced, agile interceptor. Clear cockpit canopy near the nose, two swept wings, twin engines at the rear with bright cyan glow, small gun hardpoints on the wing roots and under the nose. Cyan #2ff3ff neon trim. |
+| Phantom | Very fast, slim stealth fighter: long narrow body, forward-swept blade wings, one large engine, sharp angular cockpit. Magenta #ff4dd8 neon trim. |
+| Titan | Heavy gunship: wide armored hull, short thick wings with big weapon pods, four engines, armor plates and a raised bridge. Gold-orange #ffb52e neon trim. |
+
+Krok 2, po wyborze wariantu przez Konrada (dołącz wybrany obrazek):
+
+```text
+[STYLE BLOCK]
+TASK: Exploded parts sheet of the attached starfighter design for 2D animation.
+Same design, same top-down view, same scale as the reference.
+Separate, non-overlapping parts with generous empty space between them:
+1) main hull with cockpit (no wings, no engines), 2) left wing, 3) right wing
+(mirror of left), 4) engine nozzle (one, unlit), 5) engine flame/glow (one, bright,
+soft), 6) cockpit canopy glass on its own, 7) small nose gun turret seen from
+above (rotatable, centered pivot). Every part on transparent background.
+```
+
+Krok 3, moduły broni widoczne na kadłubie (dołącz wybrany statek):
+
+```text
+[STYLE BLOCK]
+TASK: Sheet of 8 small weapon modules that mount on the attached starfighter,
+top-down, same scale and style, each separate on transparent background:
+1) Pulse Blaster - twin cyan barrels, 2) Scatter Gun - wide orange multi-barrel
+cannon, 3) Seeker Missiles - pod of 4 missile tubes, red caps, 4) Orbit Blades -
+violet ring emitter, 5) Arc Coil - copper coil antenna with electric-blue tips,
+6) Nova Pulse - teal dish emitter, 7) Wingman Drone dock - small green drone in a
+cradle, 8) Proximity Mines - yellow mine dispenser at the rear.
+Each module ~1/6 of the ship's length, readable at 24-32 px.
+```
+
+**Wymagania plików:** PNG z przezroczystym tłem (szachownica w podglądzie), statek 512×512 px, widok dokładnie z góry, nic nieucięte, bez napisów i znaków wodnych. Nazwy: `ship-striker-concept-1.png`, `ship-striker-hull.png` itd. Gracz jest cyjanowy; kolory Phantoma i Titana jak w tabeli.  
+**Sprawdzenia:** Claude nie uruchamiał generowania; ten wpis to tylko zlecenie. Pełny zestaw promptów (wrogowie, światy, bossowie, efekty) Konrad ma w dokumencie od Claude’a i przekaże go w kolejnych krokach.  
+**Znane problemy:** generatory obrazów słabo trzymają spójność między kolejnymi obrazkami: dołączaj wybrany wariant jako wzorzec („Match the style of the attached reference exactly”). Sprawdź, czy plan ChatGPT pozwala na komercyjne użycie obrazków (gra jest płatna).  
+**Następny krok:** Codex / ChatGPT: wykonaj krok 1 dla Strikera, Phantoma i Titana i przekaż obrazki Konradowi (w rozmowie; nie commituj plików graficznych bez jego zgody). Konrad: wybierz po jednym wariancie każdego statku i przekaż je Claude’owi do sprawdzenia w grze.  
+**Decyzja potrzebna od Konrada:** wybór wariantów statków; czy pliki graficzne mają trafiać do repo (np. folder `art/2.0/`).
 
 ## Szablon kolejnego przekazania
 

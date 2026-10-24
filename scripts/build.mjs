@@ -1,4 +1,4 @@
-// Builds the iOS app's web assets into www/ (Capacitor's webDir):
+// Builds the app's web assets (iOS and Android) into www/ (Capacitor's webDir):
 // one bundled script with the native bridge, plus CSS, fonts and icons. No network access needed at runtime.
 import { build } from 'esbuild';
 import { cpSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
@@ -37,4 +37,4 @@ html = html
   .replace('<script type="module" src="js/main.js"></script>', '<script src="app.js"></script>');
 if (!html.includes('src="app.js"')) throw new Error('index.html: could not find the main script tag');
 writeFileSync(`${out}/index.html`, html);
-console.log(`Built www/ for iOS (${channel}${test ? ', TEST variant' : ''})`);
+console.log(`Built www/ for the app (${channel}${test ? ', TEST variant' : ''})`);

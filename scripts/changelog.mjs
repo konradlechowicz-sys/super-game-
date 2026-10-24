@@ -93,13 +93,15 @@ export function addBuild(text, build, date) {
 
 // npm run release: "Następne wydanie" becomes the release's section with a full summary of its builds,
 // and a fresh empty "Następne wydanie" goes on top.
-export function stampRelease(text, { version, build, date, fromBuild }) {
+// note: an optional first line, e.g. that the same build was released before under another version.
+export function stampRelease(text, { version, build, date, fromBuild, note }) {
   const sections = parse(text);
   const next = sections.find((s) => s.kind === 'next');
   const builds = buildsBetween(text, fromBuild, build);
   // Template notes (HTML comments) stay out of the release.
   const summary = next ? next.lines.join('\n').replace(/<!--[\s\S]*?-->/g, '').trim() : '';
   const body = [
+    note && `_${note}_`,
     summary,
     `### Wszystkie zmiany (buildy ${builds.length ? `${builds[builds.length - 1].build}–${builds[0].build}` : '—'})`,
     grouped(builds) || '- (brak opisanych zmian)',

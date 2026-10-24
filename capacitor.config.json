@@ -9,5 +9,10 @@
     "allowsLinkPreview": false,
     "backgroundColor": "#05010f",
     "preferredContentMode": "mobile"
+  },
+  "android": {
+    "backgroundColor": "#05010f",
+    "allowMixedContent": false,
+    "captureInput": true
   }
 }

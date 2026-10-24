@@ -183,9 +183,11 @@ app.applySettings = () => {
 
 // Resets progress, never the purchase: an owned full game stays unlocked and its coin bonus is not paid again.
 app.resetProgress = () => {
-  const owned = app.store.isFull(), bonusPaid = !!app.save.unlockBonus;
+  const owned = app.store.isFull(), bonusPaid = !!app.save.unlockBonus, codex = app.save.codex;
   app.save = resetSave();
   app.save.unlockBonus = bonusPaid;
+  // the Codex is what the player has learned, not sector progress, so it stays
+  app.save.codex = codex || {};
   if (owned) app.store.grant();
   app.persist();
   app.applySettings();
