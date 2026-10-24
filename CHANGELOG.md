@@ -26,6 +26,10 @@ i wersja TEST (gracze tego nie widzą).
 - The new Codex collects every weapon, evolution, combo and perk set you discover. Undiscovered entries stay hidden behind "???".
 - Tougher enemies: they hit harder, especially in worlds 2-4 and late in each sector, and elites and bosses take more punishment.
 
+## Build 51 · 2026-10-24
+- [Narzędzia] Folder `art/2.0/` z pierwszymi grafikami do wersji 2.0 (ChatGPT według promptów Claude'a): Striker (koncepty, wybrany wariant 4, arkusze części i części wycięte do animacji), 6 wrogów świata 1 i elita, koncept świata „technologiczna ruina”, próbny kadr i animacja statku. Gra ich jeszcze nie używa.
+- [Narzędzia] CLAUDE.md: plan wersji (1.2.0, 1.3 z Androidem, rankingami i trybem nieskończonym, 2.0 na PixiJS).
+
 ## Build 50 · 2026-10-24
 - [Balans] Wrogowie mocniejsi, bo combo i nowe ewolucje wzmacniają statek. Każde trafienie w statek (kontakt, pociski, ostrzał, rozbłyski, bossowie) zadaje więcej i rośnie pod koniec sektora: świat 1 ×1,2 (do ×1,44), świat 2 ×1,4 (do ×1,82), świat 3 ×1,6 (do ×2,16), świat 4 ×1,8 (do ×2,52).
 - [Balans] HP wrogów: świat 2 +15%, świat 3 +20%, świat 4 +25% (świat 1 bez zmian). Elity dodatkowo: świat 1 +15%, 2 +30%, 3 +35%, 4 +40%. Bossowie: +10% / +20% / +25% / +30%. Ustawienia w `WORLD_TUNING` w `js/data.js`.
