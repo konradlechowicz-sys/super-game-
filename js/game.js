@@ -69,8 +69,9 @@ export class Game {
     p.maxHp = s.hp + B('hull') + (P.armor || 0) * 20;
     if (oldMax > 1 && p.maxHp > oldMax) p.hp += p.maxHp - oldMax;
     p.speed = s.speed * (1 + B('thrust') + (P.thrusters || 0) * 0.08);
-    p.dmgMult = s.dmg * (1 + B('power') + (P.power || 0) * 0.12);
-    p.cdMult = 1 - (P.overclock || 0) * 0.08;
+    p.baseDmg = s.dmg * (1 + B('power') + (P.power || 0) * 0.12);
+    p.baseCd = 1 - (P.overclock || 0) * 0.08;
+    p.dmgMult = p.baseDmg; p.cdMult = p.baseCd;
     p.areaMult = 1 + (P.amplifier || 0) * 0.12;
     p.magnet = 105 * (1 + B('magnet') + (P.tractor || 0) * 0.3);
     p.regen = B('regen') + (P.armor || 0) * 0.15;
@@ -93,7 +94,7 @@ export class Game {
   checkCombos() {
     const p = this.player;
     for (const id in COMBOS) {
-      if (this.combos.has(id) || !comboActive(this.weapons, id)) continue;
+      if (this.combos.has(id) || !comboActive(this, id)) continue;
       this.combos.add(id);
       this.comboQueue.push(id);
       this.addFx(p.x, p.y, 220, COMBOS[id].color, 0.6, 5);
@@ -123,6 +124,35 @@ export class Game {
       cur = best;
     }
     if (this.bolts.length < 40) this.addBolt(pts, color);
+  }
+
+  // Perk sets that change the ship from moment to moment: Overdrive, Hit & Run, Last Stand, Singularity.
+  updatePerkSets(dt) {
+    const p = this.player, C = this.combos;
+    let dmg = 1, cd = 1;
+    if (C.has('overdrive')) {
+      // a 12 s cycle: the last 4 s fire 50% faster
+      this.overdriveT = ((this.overdriveT || 0) + dt) % 12;
+      const on = this.overdriveT >= 8;
+      if (on && !p.overdrive) { this.text(p.x, p.y - 34, 'OVERDRIVE', COMBOS.overdrive.color, true); this.addFx(p.x, p.y, 90, COMBOS.overdrive.color, 0.4, 3); }
+      p.overdrive = on;
+      if (on) cd /= 1.5;
+    }
+    if (C.has('hitrun') && p.moving > 40) dmg *= 1.15;
+    p.laststand = C.has('laststand') && p.hp < p.maxHp * 0.5;
+    if (p.laststand) dmg *= 1.25;
+    p.dmgMult = p.baseDmg * dmg;
+    p.cdMult = p.baseCd * cd;
+    if (C.has('singularity')) {
+      this.singT = (this.singT ?? 0) + dt;
+      if (this.singT >= 25) {
+        this.singT = 0;
+        for (const gm of this.gems) gm.mag = true;
+        this.addFx(p.x, p.y, 320, COMBOS.singularity.color, 0.7, 4);
+        this.text(p.x, p.y - 34, 'SINGULARITY', COMBOS.singularity.color, true);
+        this.sfx('pickup');
+      }
+    }
   }
 
   // Combo effects of an exploding missile: Cluster Missiles (a ring of pellets) and Minelayer (a mine left behind).
@@ -688,17 +718,19 @@ export class Game {
     for (const w of this.weapons) {
       const def = WEAPONS[w.id];
       if (!w.evolved && def.evo && w.level >= WEAPON_MAX && P[def.evo.with]) opts.push({ kind: 'evo', id: w.id, wt: chest ? 200 : 8 });
-      else if (!w.evolved && w.level < WEAPON_MAX) opts.push({ kind: 'wlvl', id: w.id, wt: 10 + (combosFor(this.weapons, w.id, w.level + 1).length ? 4 : 0) });
+      else if (!w.evolved && w.level < WEAPON_MAX) opts.push({ kind: 'wlvl', id: w.id, wt: 10 + (combosFor(this, false, w.id, w.level + 1).length ? 4 : 0) });
     }
     if (this.weapons.length < MAX_WEAPONS) {
       // a weapon that pairs into a combo with one already owned comes up a little more often
-      for (const id in WEAPONS) if (!this.weapons.some((w) => w.id === id)) opts.push({ kind: 'wnew', id, wt: combosFor(this.weapons, id, 1).length ? 10 : 7 });
+      for (const id in WEAPONS) if (!this.weapons.some((w) => w.id === id)) opts.push({ kind: 'wnew', id, wt: combosFor(this, false, id, 1).length ? 10 : 7 });
     }
     const pc = Object.keys(P).length;
     for (const id in PASSIVES) {
       const l = P[id] || 0;
-      if (l > 0 && l < PASSIVE_MAX) opts.push({ kind: 'plvl', id, wt: 7 });
-      else if (l === 0 && pc < MAX_PASSIVES) opts.push({ kind: 'pnew', id, wt: 5 });
+      // a perk that builds a perk set with one already owned comes up a little more often
+      const set = combosFor(this, true, id, l + 1).length ? 3 : 0;
+      if (l > 0 && l < PASSIVE_MAX) opts.push({ kind: 'plvl', id, wt: 7 + set });
+      else if (l === 0 && pc < MAX_PASSIVES) opts.push({ kind: 'pnew', id, wt: 5 + set });
     }
     const out = [];
     while (out.length < n && opts.length) {
@@ -724,16 +756,21 @@ export class Game {
       const lvl = w ? w.level + 1 : 1;
       let desc = def.desc[lvl - 1];
       if (lvl === WEAPON_MAX && def.evo) desc += ` · Evolves with ${PASSIVES[def.evo.with].name}`;
-      // combo hint: only for a partner the player already has, so the rest stays a discovery
-      const combos = combosFor(this.weapons, c.id, lvl);
-      const done = combos.find((x) => x.done);
-      const comboHint = done ? `Unlocks combo: ${COMBOS[done.id].name}`
-        : combos.length ? `Combo with ${combos.map((x) => x.partner).join(' / ')} at LV ${COMBO_LEVEL}` : '';
-      return { ...c, name: def.name, tag: w ? `LV ${lvl}` : 'NEW', desc, comboHint, combo: !!done, icon: def.icon, color: def.color };
+      return { ...c, name: def.name, tag: w ? `LV ${lvl}` : 'NEW', desc, ...this.comboHint(false, c.id, lvl), icon: def.icon, color: def.color };
     }
     const def = PASSIVES[c.id];
     const lvl = (this.passives[c.id] || 0) + 1;
-    return { ...c, name: def.name, tag: lvl === 1 ? 'NEW' : `LV ${lvl}`, desc: def.desc, icon: def.icon, color: def.color };
+    return { ...c, name: def.name, tag: lvl === 1 ? 'NEW' : `LV ${lvl}`, desc: def.desc, ...this.comboHint(true, c.id, lvl), icon: def.icon, color: def.color };
+  }
+
+  // Combo hint on a card: only for a partner the player already has, so the rest stays a discovery.
+  comboHint(perk, id, lvl) {
+    const combos = combosFor(this, perk, id, lvl);
+    const done = combos.find((x) => x.done);
+    const what = perk ? 'perk set' : 'combo';
+    const comboHint = done ? `Unlocks ${what}: ${COMBOS[done.id].name}`
+      : combos.length ? `${perk ? 'Set' : 'Combo'} with ${combos.map((x) => x.partner).join(' / ')} at LV ${COMBO_LEVEL}` : '';
+    return { comboHint, combo: !!done };
   }
 
   applyCard(c) {
@@ -838,9 +875,11 @@ export class Game {
       // announce new combos one at a time once the cards are closed
       this.comboBannerT -= rawDt;
       if (this.comboQueue.length && this.comboBannerT <= 0) {
-        this.ui.banner('COMBO!', COMBOS[this.comboQueue.shift()].name.toUpperCase());
+        const c = COMBOS[this.comboQueue.shift()];
+        this.ui.banner(c.perk ? 'PERK SET!' : 'COMBO!', c.name.toUpperCase());
         this.comboBannerT = 2.2;
       }
+      this.updatePerkSets(dt);
       for (const w of this.weapons) WEAPONS[w.id].update(w, this, dt, weaponStats(w));
       this.directSpawns(dt);
     }
@@ -1089,7 +1128,15 @@ export class Game {
     let top = contacts[0], best = 0;
     for (const e of contacts) { const v = e.dmg * this.dmgMul(e); if (v > best) { best = v; top = e; } }
     const mul = Math.min(CROWD_MAX, 1 + CROWD_EXTRA * (contacts.length - 1));
-    this.hurtPlayer(best * mul, contacts.length > 1 ? 'crowd' : top.type, CONTACT_INV);
+    // Ram Plating perk set: 30% less contact damage, and whatever touches the ship is knocked away
+    const ram = this.combos.has('ramplating');
+    if (ram) {
+      for (const e of contacts) {
+        const dx = e.x - p.x, dy = e.y - p.y, d = Math.hypot(dx, dy) || 1;
+        e.kx += (dx / d) * 320 * e.kbRes; e.ky += (dy / d) * 320 * e.kbRes;
+      }
+    }
+    this.hurtPlayer(best * mul * (ram ? 0.7 : 1), contacts.length > 1 ? 'crowd' : top.type, CONTACT_INV);
     if (contacts.length >= 4) { this.flash = Math.max(this.flash, 0.45); this.text(p.x, p.y - 30, `CRUSHED x${mul.toFixed(1)}`, '#ff3d6e', true); }
   }
 

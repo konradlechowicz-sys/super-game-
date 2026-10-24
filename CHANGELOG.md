@@ -13,10 +13,17 @@ i wersja TEST (gracze tego nie widzą).
 <!-- Podsumowanie zmian od v1.1.1; uzupełnia Claude przy każdym buildzie. -->
 
 - Combo broni: 6 par broni, które na poziomie 3+ dają dodatkowy efekt; karty podpowiadają pasujące bronie.
+- Zestawy perków: 5 par perków z dodatkowym efektem (Overdrive, Ram Plating, Singularity, Hit & Run, Last Stand).
 
 ### What's New (App Store)
 
 - Weapon combos: pair the right weapons and level both to 3 to unlock a bonus effect, like mines that fire chain lightning or missiles that burst into pellets. Level-up cards tell you which weapons pair up.
+- Perk sets: Overdrive, Ram Plating, Singularity, Hit & Run and Last Stand reward the right pair of perks.
+
+## Build 47 · 2026-10-24
+- [Nowe] Zestawy perków: gdy dwa pasujące perki mają poziom 3+, włącza się dodatkowy efekt do końca przelotu (napis „PERK SET!”). Pięć zestawów: **Overdrive** (Power Core + Overclock: co 12 s przez 4 s bronie strzelają o 50% szybciej, napis „OVERDRIVE”), **Ram Plating** (Armor Plating + Thrusters: tłum zadaje 30% mniej, a dotykający wrogowie są odrzucani), **Singularity** (Tractor Beam + Amplifier: co 25 s wszystkie kryształy XP lecą do statku), **Hit & Run** (Thrusters + Overclock: +15% obrażeń w ruchu), **Last Stand** (Power Core + Armor Plating: +25% obrażeń poniżej 50% kadłuba).
+- [Nowe] Karta perka podpowiada zestaw, gdy masz już pasujący perk („⚡ Set with Power Core at LV 3”), a karta, która go włącza, świeci na turkusowo; takie karty pojawiają się trochę częściej.
+- [Narzędzia] Panel 🛠: przyciski „Give a perk set” (oba perki od razu na poziomie 3).
 
 ## Build 46 · 2026-10-24
 - [Balans] Mocniejsze trzy najsłabsze combo: Storm Mines (piorun z pełną siłą Arc Coil i 4 przeskokami zamiast 70% i 3), Cluster Missiles (8 odłamków zamiast 6), Minelayer (mina przy co drugim wybuchu rakiety zamiast co trzecim). Pomiar na stałym celu (25 wrogów wokół statku, 45 s): każde combo daje teraz +10% do +32% obrażeń pary broni (poziom 3: Storm Mines +18%, Cluster +26%, Blade Nova +11%, Twin Link +32%, Ion Bolts +24%, Minelayer +22%).
