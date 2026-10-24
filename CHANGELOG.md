@@ -16,6 +16,7 @@ i wersja TEST (gracze tego nie widzą).
 - Zestawy perków: 5 par perków z dodatkowym efektem (Overdrive, Ram Plating, Singularity, Hit & Run, Last Stand).
 - Nowe ewolucje: Flak Cannon, Supernova, Drone Squadron, Gravity Mines; każda z 8 broni może teraz ewoluować.
 - Księga ulepszeń CODEX (33 wpisy, nieodkryte pod „???”), aktywne combo w HUD i w pauzie.
+- Trudniej: wrogowie zadają więcej obrażeń (szczególnie w światach 2–4 i pod koniec sektora), elity i bossowie są wytrzymalsi.
 
 ### What's New (App Store)
 
@@ -23,6 +24,12 @@ i wersja TEST (gracze tego nie widzą).
 - Perk sets: Overdrive, Ram Plating, Singularity, Hit & Run and Last Stand reward the right pair of perks.
 - Four new weapon evolutions: Flak Cannon, Supernova, Drone Squadron and Gravity Mines. Every weapon can now evolve.
 - The new Codex collects every weapon, evolution, combo and perk set you discover. Undiscovered entries stay hidden behind "???".
+- Tougher enemies: they hit harder, especially in worlds 2-4 and late in each sector, and elites and bosses take more punishment.
+
+## Build 50 · 2026-10-24
+- [Balans] Wrogowie mocniejsi, bo combo i nowe ewolucje wzmacniają statek. Każde trafienie w statek (kontakt, pociski, ostrzał, rozbłyski, bossowie) zadaje więcej i rośnie pod koniec sektora: świat 1 ×1,2 (do ×1,44), świat 2 ×1,4 (do ×1,82), świat 3 ×1,6 (do ×2,16), świat 4 ×1,8 (do ×2,52).
+- [Balans] HP wrogów: świat 2 +15%, świat 3 +20%, świat 4 +25% (świat 1 bez zmian). Elity dodatkowo: świat 1 +15%, 2 +30%, 3 +35%, 4 +40%. Bossowie: +10% / +20% / +25% / +30%. Ustawienia w `WORLD_TUNING` w `js/data.js`.
+- [Balans] Pomiar autopilotem (wszystkie 24 sektory po 2 razy; ulepszenia 3 w świecie 1, 6 w światach 2–4): w światach 2–4 kadłub tracony w sektorze wzrósł z 0–15% do zwykle 20–60%, bot wygrywa 26 z 36 przejść (było 32 z 36); najtrudniejsze: 2-6 (boss), 3-4 (Bulwark + Berserker), 3-2 (Bulwark + Shielded). Świat 1 nadal łagodny (bot traci 0–4%).
 
 ## Build 49 · 2026-10-24
 - [Nowe] Księga ulepszeń „CODEX” (przycisk w menu głównym i w hangarze): 33 wpisy w pięciu działach: bronie (8), ewolucje (8), combo broni (6), perki (6), zestawy perków (5). Odkryte wpisy mają ikonę, opis i przepis (np. „Arc Coil + Proximity Mines (both LV 3)”), a nieodkryte są pod „???” z jedną podpowiedzią (np. „Evolves from Pulse Blaster”). Licznik odkryć ogólny i w każdym dziale.

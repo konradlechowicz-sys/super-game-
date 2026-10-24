@@ -1,5 +1,5 @@
 import { TAU, rand, randi, clamp, lerp, pick, weightedPick, angleLerp, SpatialHash } from './util.js';
-import { ENEMIES, BOSSES, PASSIVES, PASSIVE_MAX, SHIPS, TRAITS, xpFor, stageIndex, shopBonus } from './data.js';
+import { ENEMIES, BOSSES, PASSIVES, PASSIVE_MAX, SHIPS, TRAITS, WORLD_TUNING, xpFor, stageIndex, shopBonus } from './data.js';
 import { WEAPONS, WEAPON_MAX, weaponStats } from './weapons.js';
 import { COMBOS, COMBO_LEVEL, comboActive, combosFor } from './combos.js';
 import { shipLook } from './store.js';
@@ -26,6 +26,7 @@ export class Game {
     this.app = app;
     this.ui = app.ui;
     this.stage = stage;
+    this.tune = WORLD_TUNING[stage.world?.id] || WORLD_TUNING[1];
     this.save = app.save;
     this.ship = shipLook(SHIPS[this.save.ship] || SHIPS.striker, this.save);
     const { vw, vh } = this.viewSize();
@@ -335,6 +336,9 @@ export class Game {
   hurtPlayer(dmg, src = '?', inv = 0.6) {
     const p = this.player;
     if (p.inv > 0 || this.state !== 'play' || this.app.god) return;
+    // the world's damage level, rising towards the end of the sector
+    const T = this.tune;
+    dmg *= T.dmg * (1 + T.ramp * clamp(this.time / this.stage.duration, 0, 1));
     dmg = Math.max(1, dmg - p.armor);
     p.hp -= dmg;
     (this.dmgLog ||= {})[src] = (this.dmgLog[src] || 0) + dmg;
@@ -402,7 +406,7 @@ export class Game {
   spawnEnemy(type, x, y, elite = false, traits = []) {
     const d = ENEMIES[type], st = this.stage;
     // Enemy toughness ramps from 1x to the stage's peak, since every run starts with a fresh build.
-    const hpMul = lerp(st.hp0 || 1, st.hp, clamp(this.time / st.duration, 0, 1));
+    const hpMul = lerp(st.hp0 || 1, st.hp, clamp(this.time / st.duration, 0, 1)) * this.tune.hp * (elite ? this.tune.elite : 1);
     const e = {
       id: nextId++, type, def: d, x, y, kx: 0, ky: 0, color: d.color, shape: d.shape,
       hp: d.hp * hpMul * (elite ? 7 : 1), r: d.r * (elite ? 1.6 : 1), speed: d.speed * st.speed * (elite ? 0.9 : 1),
@@ -635,7 +639,7 @@ export class Game {
     const hh = this.arena.h / 2 - 80;
     const b = {
       id: nextId++, boss: true, def, name: def.name, x: p.x, y: clamp(p.y - vh * 0.4, -hh, hh), kx: 0, ky: 0,
-      hp: def.hp, r: def.r, speed: def.speed, dmg: def.dmg, color: def.color, flash: 0, spawnT: 1.2,
+      hp: def.hp * this.tune.boss, r: def.r, speed: def.speed, dmg: def.dmg, color: def.color, flash: 0, spawnT: 1.2,
       rot: 0, rot2: 0, phase: 1, atk: 0, atkT: 2.5, mode: 'idle', modeT: 0, spin: 0, kbRes: 0, alpha: 1,
       heading: Math.PI / 2, lunge: 0,
     };

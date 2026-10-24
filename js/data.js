@@ -280,6 +280,16 @@ for (const st of [...W1, ...W2, ...W3, ...W4]) {
   });
 }
 
+// Difficulty of each world on top of the sector settings (v1.2: weapon combos make the ship much stronger, so the paid
+// worlds hit harder). dmg: every hit on the ship, rising by `ramp` towards the end of a sector; hp: all enemies;
+// elite: elites on top of that; boss: bosses.
+export const WORLD_TUNING = {
+  1: { dmg: 1.2, ramp: 0.2, hp: 1, elite: 1.15, boss: 1.1 },
+  2: { dmg: 1.4, ramp: 0.3, hp: 1.15, elite: 1.3, boss: 1.2 },
+  3: { dmg: 1.6, ramp: 0.35, hp: 1.2, elite: 1.35, boss: 1.25 },
+  4: { dmg: 1.8, ramp: 0.4, hp: 1.25, elite: 1.4, boss: 1.3 },
+};
+
 export const WORLDS = [
   {
     id: 1, name: 'Neon Nebula', color: '#ff2d95', stages: W1, music: 'game',
