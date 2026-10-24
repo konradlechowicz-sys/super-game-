@@ -43,6 +43,8 @@ export class Game {
     this.weapons = []; this.passives = {};
     // weapon combos active this run, and the ones still to announce once the level-up cards close
     this.combos = new Set(); this.comboQueue = []; this.comboBannerT = 0;
+    // Codex entries found for the first time in this run
+    this.newEntries = [];
     this.spawnAcc = 0; this.eventsDone = new Set(); this.surge = null;
     this.boss = null; this.bossDefeated = false;
     this.shake = 0; this.slowmo = 1; this.flash = 0; this.endTimer = 0;
@@ -82,6 +84,15 @@ export class Game {
 
   addWeapon(id) {
     this.weapons.push({ id, level: 1, evolved: false, t: 0.3 });
+    this.discover(`w:${id}`);
+  }
+
+  // Marks a Codex entry as discovered (saved when the run ends).
+  discover(key) {
+    const codex = (this.save.codex ||= {});
+    if (codex[key]) return;
+    codex[key] = 1;
+    this.newEntries.push(key);
   }
 
   // Stats of an owned weapon, or null.
@@ -97,6 +108,7 @@ export class Game {
       if (this.combos.has(id) || !comboActive(this, id)) continue;
       this.combos.add(id);
       this.comboQueue.push(id);
+      this.discover(`c:${id}`);
       this.addFx(p.x, p.y, 220, COMBOS[id].color, 0.6, 5);
       this.burst(p.x, p.y, COMBOS[id].color, 36, 340, 0.9, 7);
       this.sfx('evolve');
@@ -780,6 +792,7 @@ export class Game {
       case 'wlvl': this.weapons.find((w) => w.id === c.id).level++; break;
       case 'evo': {
         this.weapons.find((w) => w.id === c.id).evolved = true;
+        this.discover(`e:${c.id}`);
         this.addFx(p.x, p.y, 260, '#ffd23d', 0.7, 6);
         this.burst(p.x, p.y, '#ffd23d', 50, 380, 1, 8);
         this.sfx('evolve');
@@ -788,6 +801,7 @@ export class Game {
       }
       case 'pnew': case 'plvl':
         this.passives[c.id] = (this.passives[c.id] || 0) + 1;
+        this.discover(`p:${c.id}`);
         this.recompute();
         break;
       case 'heal': p.hp = Math.min(p.maxHp, p.hp + p.maxHp * 0.4); break;
@@ -839,6 +853,7 @@ export class Game {
     if (!tipsOn(this.save)) return '';
     const tips = [
       ['evo', cards.some((c) => c.kind === 'evo'), 'Evolution! A max-level weapon plus its partner upgrade becomes a super weapon.'],
+      ['combo', cards.some((c) => c.comboHint), 'Two matching weapons (or perks) at level 3 unlock a COMBO. Watch for the ⚡ line on cards.'],
       ['crate', chest, 'A free pick. Crates are the surest way to evolve a weapon.'],
       ['level', !chest, 'Pick one card. New weapons and upgrades last until the end of this run.'],
     ];
@@ -852,6 +867,7 @@ export class Game {
     return {
       weapons: this.weapons.map((w) => ({ id: w.id, icon: WEAPONS[w.id].icon, color: w.evolved ? '#ffd23d' : WEAPONS[w.id].color, level: w.evolved ? '★' : w.level, name: w.evolved ? WEAPONS[w.id].evo.name : WEAPONS[w.id].name })),
       passives: Object.entries(this.passives).map(([id, l]) => ({ id, icon: PASSIVES[id].icon, color: PASSIVES[id].color, level: l, name: PASSIVES[id].name })),
+      combos: [...this.combos].map((id) => ({ id, name: COMBOS[id].name, color: COMBOS[id].color, desc: COMBOS[id].desc })),
     };
   }
 
@@ -1671,6 +1687,7 @@ export class Game {
     this.ui.results({
       won, stage: st, stars, prevStars, newStars, goals, time: this.time, kills: this.kills, level: this.level,
       elitesKilled: this.elitesKilled, collected, clearBonus, starBonus, worldBonus, total, firstClear,
+      newEntries: this.newEntries,
     });
   }
 

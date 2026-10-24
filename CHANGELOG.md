@@ -15,12 +15,21 @@ i wersja TEST (gracze tego nie widzą).
 - Combo broni: 6 par broni, które na poziomie 3+ dają dodatkowy efekt; karty podpowiadają pasujące bronie.
 - Zestawy perków: 5 par perków z dodatkowym efektem (Overdrive, Ram Plating, Singularity, Hit & Run, Last Stand).
 - Nowe ewolucje: Flak Cannon, Supernova, Drone Squadron, Gravity Mines; każda z 8 broni może teraz ewoluować.
+- Księga ulepszeń CODEX (33 wpisy, nieodkryte pod „???”), aktywne combo w HUD i w pauzie.
 
 ### What's New (App Store)
 
 - Weapon combos: pair the right weapons and level both to 3 to unlock a bonus effect, like mines that fire chain lightning or missiles that burst into pellets. Level-up cards tell you which weapons pair up.
 - Perk sets: Overdrive, Ram Plating, Singularity, Hit & Run and Last Stand reward the right pair of perks.
 - Four new weapon evolutions: Flak Cannon, Supernova, Drone Squadron and Gravity Mines. Every weapon can now evolve.
+- The new Codex collects every weapon, evolution, combo and perk set you discover. Undiscovered entries stay hidden behind "???".
+
+## Build 49 · 2026-10-24
+- [Nowe] Księga ulepszeń „CODEX” (przycisk w menu głównym i w hangarze): 33 wpisy w pięciu działach: bronie (8), ewolucje (8), combo broni (6), perki (6), zestawy perków (5). Odkryte wpisy mają ikonę, opis i przepis (np. „Arc Coil + Proximity Mines (both LV 3)”), a nieodkryte są pod „???” z jedną podpowiedzią (np. „Evolves from Pulse Blaster”). Licznik odkryć ogólny i w każdym dziale.
+- [Nowe] Wpis odkrywa się, gdy pierwszy raz zdobędziesz go w dowolnym przelocie; ekran wyników pokazuje „NEW IN CODEX: …”. Odkrycia zostają po „Reset progress”.
+- [Nowe] Aktywne combo i zestawy perków widać pod licznikiem czasu w HUD (zestaw świeci, gdy jego efekt właśnie działa, np. Overdrive, Last Stand, Hit & Run w ruchu), a pauza i ekran awansu pokazują je z opisem efektu.
+- [Nowe] Samouczek: podpowiedź przy pierwszej karcie z combo i dymek „YOUR CODEX” w menu po kilku odkryciach.
+- [Zmiana] Przycisk „DAILY REWARD” w menu skrócony do „DAILY” (obok nowego przycisku „CODEX”).
 
 ## Build 48 · 2026-10-24
 - [Nowe] Ewolucje dla czterech kolejnych broni (teraz wszystkie 8 broni ma ewolucję; broń na poziomie 5 + perk): **Flak Cannon** (Scatter Gun + Armor Plating: 9 złotych śrutów, każdy wybucha przy trafieniu i rani wrogów obok), **Supernova** (Nova Pulse + Amplifier: ogromna fala co 2 s, spowalnia trafionych wrogów o połowę na 2 s; bossów nie), **Drone Squadron** (Wingman Drone + Overclock: 5 dronów, szybszy ogień, pociski przebijają jednego wroga), **Gravity Mines** (Proximity Mines + Tractor Beam: fioletowe miny przyciągają wrogów z okolicy, zanim wybuchną; bossów nie).

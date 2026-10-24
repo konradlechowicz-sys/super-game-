@@ -119,6 +119,7 @@ and `.../site/support.html`, and the web version of the game at `https://konradl
 ## Code map
 - `js/game.js` — run logic: player, enemies, boss, spawning, combat, rendering
 - `js/weapons.js` — weapon stats, behaviours and evolutions
+- `js/codex.js` — the Codex (v1.2): its sections and entries; discoveries are saved in `save.codex` (kept by Reset progress)
 - `js/combos.js` — weapon combos and perk sets (v1.2): which pairs exist and when they are active; their effects live in weapons.js and game.js (`updatePerkSets`, `missileCombos`, `crowdHit`)
 - `js/data.js` — ships, enemies, sectors, elite traits (fixed per sector), shop, daily rewards
 - `js/ui.js` — menus, HUD, level-up cards, results
