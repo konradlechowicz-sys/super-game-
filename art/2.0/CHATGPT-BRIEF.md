@@ -111,21 +111,33 @@ SWIFT (mint #3dffd8 speed streamlines; not cyan, which is the player's), BULWARK
 BERSERKER (red #ff3d3d spikes and cracked glow), COMMANDER (gold #ffd23d antenna crown), SHIELDED (violet #b06bff
 hexagon energy bubble).
 
-### Ten worlds (6 sectors each; each world has its own floor, props, 6 enemy types and a boss)
-Enemies are abstract alien machines/creatures with a glowing core: geometric silhouettes, never realistic animals.
+### The story (it drives every design choice)
+**The Void Collective** is a highly advanced machine intelligence. It does not conquer worlds, it **rewrites** them:
+it threads its own circuitry through metal, rock and living tissue. Its signature is a **magenta core** in every
+unit. The deeper the player goes, the more organic its creations become: at Earth it is pure machinery (drones,
+probes, hard angular hulls); in the middle of the journey machines start growing living tissue; at its heart machine
+and organism can no longer be told apart. The player is the pilot of Earth's last starfighter: first defending Earth,
+then following the enemy across the Solar System, through a rift gate, to the heart of the Collective.
 
-| # | World | Look (floor and props) | Enemy colors | Enemies (size on screen) | Boss |
-| --- | --- | --- | --- | --- | --- |
-| 1 | Ruined Megastructure (DONE: concept + enemies) | broken circuit floor plates, fallen pylons, sparking cables, dead screens, rubble frame | magenta, violet, pink, yellow, acid green | drone 32, swarmer 24, dasher 32, shooter 36, tank 64, splitter 60 | Hive Mother: bloated machine queen with egg pods and spawning ports |
-| 2 | Biological Hive | living organic floor, pulsing membranes, egg clusters, acid pools, bioluminescent veins | toxic green #3dff8a, sickly yellow, flesh pink | larva 26, spitter 36, leech 30, carapace beetle 64, spore pod (stationary) 48, brood sac 60 | Hive Queen: huge armored queen, tail of egg sacs, acid glands |
-| 3 | Rock Wastes | canyons, mesas, cracked dry ground, boulders, dust | rust #ff6a2a, ochre, amber | rock crawler 32, dust devil 30, sand burrower 40, scorpion turret (stationary) 48, boulder golem 66, meteor 56 | Canyon Colossus: walking rock fortress with drill arms |
-| 4 | Verdant World (Earth-like, seen from low orbit) | oceans, coastlines, forest patches, drifting cloud layer | hot pink, white, sky blue (no cyan) | hunter drone 32, storm kite 34, hover gunship 44, armored rover 56, cloud ray 50, satellite turret (stationary) 48 | Sky Fortress: flying citadel with rotating gun rings |
-| 5 | Frozen Expanse | ice sheets, crevasses, frost crystals, aurora light | ice white, pale violet, deep blue | shard 30, ice wisp 28, frost crab 40, prism 40, snowflake mine 34, glacier golem 66 | Crystal Serpent: long segmented crystal snake |
-| 6 | Volcanic Forge | lava rivers, obsidian plates, giant furnaces, ember storms | orange #ff8a2a, red, black | bomber 44, ember swarm 22, magma slug 40, forge turret (stationary) 48, lava eel 50, golem 64 | Forge Titan: walking furnace with magma cannons and armor plates |
-| 7 | Crystal Caverns | towering prisms, refracted light beams, glowing geodes | turquoise #2fffc8, violet, white | gem beetle 32, echo bat 30, refractor 40, resonator (stationary) 48, crystal sentinel 60, prism swarm 22 | Prism Leviathan: crystalline whale-like construct |
-| 8 | Derelict Station | dark corridors, emergency lights, debris, broken hull plates | warning red, sodium orange, gray | security drone 32, maintenance bot 36, crawler 34, wall turret (stationary) 48, mimic crate 44, ghost 40 | Station AI Core: giant core with orbiting drone arms |
-| 9 | Storm Giant | swirling gas cloud bands, lightning, floating metal platforms | yellow, bronze, storm purple | storm jelly 36, gas mine 34, lightning kite 32, ion ray 46, vortex 50, cloud whale 66 | Storm Eye: cyclone creature with a lightning core |
-| 10 | Void Core (finale) | fractured space, black holes, impossible geometry, violet energy | violet #b04dff, magenta, black | voidling 26, wraith 40, eye 44, phase walker 40, rift spawner (stationary) 52, null orb 48 | Void Heart: pulsing heart of darkness in a cage of broken rings, orbiting eyes |
+Enemies are abstract machines/creatures with a glowing magenta core: geometric silhouettes, never realistic animals.
+Every world adds its own accent colors and its own **tech/organic mix** (column below).
+
+### Ten worlds, in the order of the journey (6 sectors each; each world has its own floor, props, 6 enemy types and a boss)
+
+| # | World | Story beat | Look (floor and props) | Unique mechanic | Enemy colors (+ magenta core) | Tech / organic | Enemies (size on screen in px) | Boss |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 1 | Orbital Ruins (DONE: concept + enemies) | the first attack: Earth's orbital defense grid lies in ruins | ruined human defense stations: broken circuit floor plates, fallen pylons, sparking cables, dead screens, rubble frame | falling station debris | magenta, violet, pink, yellow, acid green | 100% machine (scout drones) | drone 32, swarmer 24, dasher 32, shooter 36, tank 64, splitter 60 | Harvester: mothership that drops pods full of drones |
+| 2 | Siege of Earth | the Collective lands; the fight is right above Earth | low orbit over Earth at night: oceans, coastlines, burning city lights, cloud layers | cloud banks hide enemies, lightning storms | magenta, white-hot, fire red | 100% machine (landing force) | interceptor 30, lander pod 34 (releases swarmers), gunship 44, sky mine 30, bomber 44, siege walker 64 | Landing Citadel: flying fortress with rotating gun rings |
+| 3 | Lunar Bridgehead | counterattack: the Moon is the enemy's forward base | gray regolith, craters, alien conduits growing into the rock | craters as cover, mortar fire from crater nodes | magenta, pale gray-violet | 90% machine, first "living" conduits | probe swarm 22, conduit crawler 32, lunar hopper 34, mortar node (stationary) 44, crater turret (stationary) 48, regolith golem 64 | Moon Spire: a cannon tower growing out of a crater |
+| 4 | Red Conversion | Mars in the middle of being rewritten | red dust plains, black crystal network spreading over the ground | dust storms cut visibility; the crystal network grows during the sector | magenta, black crystal, ember red | 80% machine, crystal growths | crystal mite 24, shard drone 32, dust stalker 36, prism node 40, spreader 50 (lays crystal), crystal golem 66 | Red Colossus: a walking fortress made of alien crystal |
+| 5 | Foundry Belt | the asteroid belt turned into factories | drifting asteroids, conveyor rails, furnaces, half-built hulls | drifting asteroids as moving cover, destructible machinery | magenta, molten orange, steel | 80% machine (worker units) | forge drone 32, welder 34, assembler turret (stationary) 48, rock drifter 56, ore hauler 60, worker mech 40 | Foundry Mother: a factory that builds enemies during the fight |
+| 6 | Storm Relay | Jupiter: the Collective transmits deep into space from here | swirling storm bands, lightning, floating relay platforms | wind pushes the ship and projectiles | magenta, electric yellow, bronze | 70/30: relay jellies with grown tissue | ion kite 32, gas mine 34, relay jelly 36, static ray 46, vortex 50, cloud whale 66 | Storm Eye: a cyclone creature with a lightning core |
+| 7 | Abyss of Europa | under Europa's ice the Collective rewrote alien sea life | ice sheets, crevasses, light glowing under the ice, circuit-vines | slippery ice (the ship slides), enemies surface from below | magenta, toxic green, deep blue-violet | 50/50: first animal-machine hybrids | ice wisp 28, frost crab 40, tentacle mine 36, spore lantern (stationary) 44, eel hybrid 50, leviathan spawn 62 | Abyss Leviathan: a huge squid-like hybrid |
+| 8 | The Rift Gate | the gateway out of the Solar System | warped space, gate rings, shards of broken reality | rifts teleport the ship and projectiles | magenta, rift white, violet | 50/50: gate guardians | shard swarm 22, echo 32 (copies itself), phase walker 40, null orb 48, rift spawner (stationary) 52, gate sentinel 60 | Gatekeeper: a guardian made of rings that opens portals |
+| 9 | Brood World | the Collective's breeding world | living tissue fused with metal, nests, acid pools, bioluminescence | nests spawn enemies (destroy them to weaken the waves), acid pools | flesh pink, acid green, violet | 30/70: mostly organic | larva 26, leech 30, spitter 36, nest (stationary) 56, brood sac 60, carapace beetle 64 | Brood Matriarch: queen of the brood with egg sacs |
+| 10 | The Nexus (finale) | the heart of the Collective: a living mind of circuits and neurons | neural tissue tangled with circuit boards, black holes, impossible geometry | everything at once: shifting gravity, portals, nests | violet #b04dff, magenta, black | full fusion | synapse swarm 22, voidling 26, wraith 40, eye 44, neuron node (stationary) 48, overseer 64 | Void Heart: a pulsing heart in a cage of broken rings, orbiting eyes, three phases |
+
+Free trial = worlds 1–2 (the defense of Earth); the purchase is the journey to the enemy's heart.
 
 ---
 
@@ -147,8 +159,8 @@ as references.
   of its body (for the death animation), one sheet.
 - **A5 Elite trait overlays:** the 5 trait rings/auras from Part 3 as separate overlays (256x256, transparent
   center so any enemy fits inside) + 5 small badge icons (64x64).
-- **A6 World-1 boss, Hive Mother:** full boss (about 300 px in game; deliver 1024x1024), 3–4 glowing destructible weak
-  points (spawning ports, core, armor plates). Then a parts sheet: body, each weak point, each moving part.
+- **A6 World-1 boss, Harvester:** full boss (about 300 px in game; deliver 1024x1024), 3–4 glowing destructible weak
+  points (pod launch bays, core, armor plates). Then a parts sheet: body, each weak point, each moving part.
 
 ### B — Player ships
 - **B1 Phantom concepts:** 4 variants side by side (dark plain background allowed for concept sheets).
@@ -189,9 +201,10 @@ as references.
 - **E3 Logo:** "VOID BLASTER" wordmark is drawn in code — instead draw a **logo emblem** (the Striker in a neon
   ring) 1024x1024 transparent.
 - **E4 Menu backgrounds:** main menu (1290x2796, deep space with nebula, the Striker small in the center, empty
-  space for buttons at the bottom), hangar background, galaxy map background.
-- **E5 Galaxy map:** 10 world nodes as planet/region tokens (one per world, 256x256, transparent), a locked
-  version of each (dimmed, chained), and a path connector piece.
+  space for buttons at the bottom), hangar background, journey map background (Earth at the bottom, the Nexus at the top).
+- **E5 Journey map:** 10 world nodes as planet/region tokens in the order of the journey (Earth orbit, Earth, Moon,
+  Mars, asteroid belt, Jupiter, Europa, rift gate, brood world, Nexus; 256x256 each, transparent), a locked version of
+  each (dimmed, corrupted by magenta circuitry), and a path connector piece.
 - **E6 Ship hangar turntable:** each ship (Striker, Phantom, Titan, Gold Striker) at 3/4 view, large and detailed,
   for the hangar screen only (the only non-top-down images).
 
@@ -211,7 +224,7 @@ For each world:
 - **G1 App icon:** 1024x1024, full bleed (no transparency, no rounded corners), the Striker in a dramatic pose with
   neon glow on a dark nebula; must read at 60 px.
 - **G2 Google Play feature graphic:** 1024x500, the Striker and a swarm, space on the left for a title added later.
-- **G3 Key art:** 2048x2048 square, the Striker fighting a boss in world 1, for social media.
+- **G3 Key art:** 2048x2048 square, the Striker defending Earth against the Harvester, for social media.
 
 ---
 

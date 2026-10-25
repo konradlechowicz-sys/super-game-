@@ -16,6 +16,9 @@ i wersja TEST (gracze tego nie widzą).
 
 - 
 
+## Build 55 · 2026-10-25
+- [Narzędzia] Instrukcja dla ChatGPT (`art/2.0/CHATGPT-BRIEF.md`): fabuła 2.0 (Void Collective, podróż od orbity Ziemi do serca wroga), 10 światów w kolejności podróży z mechaniką, kolorami, proporcją techniki i organiki, 6 wrogami i bossem każdy; boss świata 1 to Harvester; mapa podróży zamiast mapy galaktyki. CLAUDE.md i README grafik uzupełnione.
+
 ## Build 54 · 2026-10-25
 - [Narzędzia] `art/2.0/CHATGPT-BRIEF.md`: kompletna instrukcja dla ChatGPT do grafiki wersji 2.0 (blok stylu, zasady, 10 światów z wrogami i bossami, 11 broni z ewolucjami, combo, interfejs, efekty jako paski klatek, materiały do sklepów; zadania A–G w kolejności produkcji).
 

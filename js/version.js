@@ -1,7 +1,7 @@
 // Single source of truth for the game version. Updated by `npm run bump` (scripts/bump.mjs) — do not edit by hand.
 //   version: public release number (App Store "Version", CFBundleShortVersionString)
 //   build:   increases with every change (App Store "Build", CFBundleVersion)
-export const VERSION = { version: '1.2.0', build: 54, date: '2026-10-25' };
+export const VERSION = { version: '1.2.0', build: 55, date: '2026-10-25' };
 
 // 'dev' for test builds; release builds are made with `--release`, which esbuild injects as __CHANNEL__.
 /* global __CHANNEL__ */

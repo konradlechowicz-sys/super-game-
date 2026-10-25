@@ -15,7 +15,9 @@
 - 1.3: Android in Google Play + leaderboards (Game Center, Google Play Games) + Endless mode (unlocked after the
   whole game, full game only, one leaderboard per world, score = kills).
 - 2.0: visual overhaul on PixiJS (same JS + Capacitor code), richer art made with ChatGPT from Claude's prompts,
-  10 worlds of 6 sectors each. Work on 2.0 starts only after 1.3 is released. Art lives in `art/2.0/` (see its
+  10 worlds of 6 sectors each, one journey: the Void Collective (a machine intelligence that rewrites worlds, more
+  organic the deeper you go) attacks Earth; the player fights from Earth's orbit to its heart, the Nexus (worlds and
+  enemies in `art/2.0/CHATGPT-BRIEF.md`; free trial = worlds 1-2). Work on 2.0 starts only after 1.3 is released. Art lives in `art/2.0/` (see its
   README); the PixiJS prototype is `proto2/`.
 
 ## Android (decided by Konrad)

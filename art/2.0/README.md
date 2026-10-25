@@ -15,7 +15,7 @@ image tool's plan allows commercial use.
 | `ship/` | Striker: 4 concepts (`striker-concepts.webp`, Konrad picked variant 4), the redrawn variant 4 (`striker.webp`), two parts sheets (`-v1` = first try) | 1024+ px, transparent background |
 | `ship/parts/` | Striker cut from `striker-parts-sheet.webp`: hull, wings, engines, flame, cockpit glass, side gun | `assembly.json` = where each part sits on `striker.webp` (scale + top-left, found by matching) |
 | `enemies/world1/` | sheet of 6 enemies (drone, swarmer, dasher, shooter, tank, splitter) + elite drone, and each enemy cut out | facing up, transparent background |
-| `worlds/` | world concepts (`tech-ruin-concept.webp`: technological ruin, full screen 941x1672) | a concept, not yet a tileable floor |
+| `worlds/` | world concepts (`tech-ruin-concept.webp`: world 1 "Orbital Ruins", Earth's ruined defense grid; 941x1672) | a concept, not yet a tileable floor |
 | `previews/` | test frame of the current game with this art; Striker animation built from the parts | previews only |
 
 Findings from the test frame: enemies need a glow in their color to stand out on dark floors; small enemies
