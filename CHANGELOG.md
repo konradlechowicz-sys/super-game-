@@ -12,9 +12,22 @@ i wersja TEST (gracze tego nie widzą).
 
 <!-- Podsumowanie zmian od v1.2.0; uzupełnia Claude przy każdym buildzie. -->
 
+- Tryb Endless w każdym świecie: po pokonaniu Void Heart (pełna wersja) gra trwa do zniszczenia statku, wynik to liczba zabitych wrogów. Co minutę fala, co 2,5 minuty elita, co 5 minut boss świata, wrogowie stale mocniejsi. Monety z przelotu plus 40 za każdą minutę, rekord każdego świata zapisany.
+- Rankingi Game Center: osobny ranking Endless dla każdego świata.
+
 ### What's New (App Store)
 
-- 
+- Endless mode: beat the Void Heart to open Endless in every world. The swarm never stops: a wave every minute, an elite every 2.5 minutes and the world's boss every 5 minutes, and enemies keep getting tougher. Your score is your kill count.
+- Game Center leaderboards: one Endless leaderboard per world. How long can you last?
+- Coins from every Endless run, plus a bonus for each minute survived.
+
+## Build 62 · 2026-10-25
+- [Nowe] Tryb Endless (pełna wersja, otwiera się po pokonaniu Void Heart): karta „∞ ENDLESS” pod sektorami każdego świata, z rekordem. Przelot trwa do zniszczenia statku, a wynik to liczba zabitych wrogów. Wrogowie świata (jak w jego 5. sektorze), wytrzymałość i obrażenia rosną przez pierwsze 6 minut i dalej. Co minutę fala (pierścień, natarcie albo zagrożenie świata: asteroidy, ostrzał, rozbłyski, studnie grawitacyjne), co 2,5 minuty elita z cechą (po 10 minutach z dwiema), co 5 minut boss świata, za każdym razem o połowę wytrzymalszy; po jego zniszczeniu gra toczy się dalej. Licznik czasu liczy w górę.
+- [Nowe] Ekran wyników Endless: wynik, „NEW BEST”, czas, liczba bossów, monety z przelotu i premia 40 monet za każdą minutę. Rekord każdego świata zapisany (`save.endless`).
+- [Nowe] Rankingi Game Center (iOS): wynik Endless trafia do rankingu świata; przycisk rankingu w odprawie i na ekranie wyników. Logowanie do Game Center dopiero po odblokowaniu Endless. Na stronie w przeglądarce i na Androidzie rankingów nie ma (przyciski ukryte). Rankingi trzeba założyć w App Store Connect: instrukcja w `appstore/GAME-CENTER.md`.
+- [Zmiana] Na koniec gry (po Void Heart) wyniki mówią, że Endless jest otwarty w każdym świecie.
+- [Narzędzia] Panel 🛠 w Endless: „BOSS NOW” przywołuje bossa, „SKIP 30 S” przesuwa czas, „END RUN” kończy przelot z wynikiem.
+- [Narzędzia] Projekt iOS: nowy plik `GameCenterPlugin.swift` i uprawnienie Game Center (`App.entitlements`). Plan 1.3: najpierw iOS (Endless + Game Center), potem Android.
 
 ## Build 61 · 2026-10-25
 - [Narzędzia] `art/2.0/audio/SUNO-PROMPTS.md`: katalog promptów do Suno dla całej muzyki 2.0. Każdy z 10 światów ma własny temat (utwór sektora i utwór bossa robiony funkcją Cover z sektora), do tego menu i hangar, mapa podróży, tryb Endless, intro, zakończenie i porażka. Zawiera zasady (płatny plan, WAV, nazwy plików, pętle) i tabelę postępu. Dokument koncepcji 2.0 uzupełniony o muzykę.

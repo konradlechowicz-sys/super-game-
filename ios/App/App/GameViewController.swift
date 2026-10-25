@@ -5,5 +5,6 @@ import Capacitor
 class GameViewController: CAPBridgeViewController {
     override open func capacitorDidLoad() {
         bridge?.registerPluginInstance(StorePlugin())
+        bridge?.registerPluginInstance(GameCenterPlugin())
     }
 }

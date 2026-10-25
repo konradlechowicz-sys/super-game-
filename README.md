@@ -127,7 +127,8 @@ and `.../site/support.html`, and the web version of the game at `https://konradl
 - `js/weapons.js` — weapon stats, behaviours and evolutions
 - `js/codex.js` — the Codex (v1.2): its sections and entries; discoveries are saved in `save.codex` (kept by Reset progress)
 - `js/combos.js` — weapon combos and perk sets (v1.2): which pairs exist and when they are active; their effects live in weapons.js and game.js (`updatePerkSets`, `missileCombos`, `crowdHit`)
-- `js/data.js` — ships, enemies, sectors, elite traits (fixed per sector), shop, daily rewards
+- `js/data.js` — ships, enemies, sectors, elite traits (fixed per sector), shop, daily rewards, Endless mode (`ENDLESS`, `endlessStage`)
+- `js/leaderboard.js` — Endless leaderboards (v1.3, one per world, score = kills): Game Center through `ios/App/App/GameCenterPlugin.swift` (registered by `GameViewController.swift`, entitlement in `App.entitlements`); does nothing on the web and Android. Setup in App Store Connect: `appstore/GAME-CENTER.md`
 - `js/ui.js` — menus, HUD, level-up cards, results
 - `js/testkit.js` — TEST variant only: the tester's panel (removed from normal and App Store builds)
 - `js/tutorial.js` — first-run hints (in-game with slow motion, level-up cards, map and menu); SKIP turns them off, Settings → Tutorial → Replay brings them back

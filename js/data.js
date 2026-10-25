@@ -318,3 +318,21 @@ export function stageIndex(id) {
 export function xpFor(level) {
   return Math.floor(4 + (level - 1) * 4 + Math.pow(level - 1, 1.6));
 }
+
+// Endless mode (v1.3, decided by Konrad): one per world, opened by beating the whole game (the Void Heart), full game
+// only; the score is the number of kills. It runs as a sector that never ends, built from the world's own sectors: the
+// enemies of its fifth sector, toughness rising from its first to its fifth sector over the first `ramp` seconds and
+// on past that. A wave every minute, an elite every 2.5 minutes (two traits after 10 minutes), the world's boss every
+// 5 minutes (half again as tough each time). Coins: what the run collects plus `minuteCoins` per minute survived.
+export const ENDLESS = { ramp: 360, wave: 60, elite: 150, boss: 300, twoTraits: 600, bossGrowth: 0.5, minuteCoins: 40 };
+
+export function endlessStage(world) {
+  const s = world.stages, ref = s[4];
+  // the world's own hazards (asteroids, mortars, flares, gravity wells) join the waves
+  const hazards = [...new Set(s.flatMap((st) => st.events.map((e) => e.type)))].filter((t) => !['ring', 'elite', 'surge'].includes(t));
+  return {
+    id: `E${world.id}`, name: 'Endless', endless: true, world, duration: ENDLESS.ramp,
+    hp0: s[0].hp0 || 1, hp: ref.hp, speed: ref.speed, rate: ref.rate, max: ref.max + 20, enemies: ref.enemies,
+    events: [], boss: s[s.length - 1].boss, kills: 0, elites: 0, hazards,
+  };
+}

@@ -9,6 +9,8 @@ const fresh = () => ({
   // worlds whose 18 stars already paid the full-set bonus (id -> true)
   worldStars: {},
   cleared: {},
+  // Endless mode best per world (id -> { kills, time })
+  endless: {},
   ships: ['striker'],
   ship: 'striker',
   fullGame: false,
