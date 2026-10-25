@@ -5,7 +5,7 @@
 // by frame and encodes an MP4. Built into one file by teaser/build.mjs.
 import { Application, Container, Graphics, Sprite, Texture, Text, Rectangle, TilingSprite } from 'pixi.js';
 import ASSETS from './assets.gen.js';
-import { renderAudio, wavBase64 } from './audio.js';
+import { renderSoundtrack, wavBase64 } from './audio.js';
 
 const W = 1080, H = 1920, STEP = 1 / 60, LENGTH = 10;
 const RECORD = new URLSearchParams(location.search).has('record');
@@ -353,7 +353,7 @@ function removeEnemy(e) {
 }
 function kill(e) {
   g.kills++;
-  logEvent('kill');
+  logEvent(e.T.size >= 60 ? 'killbig' : 'kill');
   spark(gameFx, e.x, e.y, e.T.color, 14, 260, 0.5, 14);
   spark(gameFx, e.x, e.y, 0xffffff, 4, 120, 0.25, 26);
   ring(gameFx, e.x, e.y, e.T.color, e.r * 2.6);
@@ -387,7 +387,7 @@ function shoot(x, y, a) {
   const s = new Sprite(dot);
   s.anchor.set(0.5); s.tint = g.ion ? 0xc8ffff : 0x2ff3ff; s.width = g.ion ? 46 : 32; s.height = g.ion ? 14 : 9; s.rotation = a;
   shotLayer.addChild(s);
-  logEvent('shot');
+  logEvent(g.ion ? 'ionshot' : 'shot');
   shots.push({ x, y, vx: Math.cos(a) * 900, vy: Math.sin(a) * 900, life: 0.8, s });
 }
 
@@ -468,6 +468,7 @@ function updateGame(t) {
       const e = spawn('drone', x, y);
       e.vx = rand(-80, 80); e.vy = 340;
       ring(gameFx, x, y, 0xff3df0, 60, 0.3, 4);
+      logEvent('pod');
     }
     g.shake = Math.max(g.shake, 2 + 7 * bossK);
   }
@@ -626,12 +627,12 @@ function step() {
 
 if (RECORD) {
   // teaser/record.mjs: advance(n) moves the clock n steps of 1/60 s and draws one frame; at the end, soundtrack()
-  // renders the music and effects for the events of this run and returns them as a WAV (base64)
+  // renders the music and effects for the events of this run: the mix and each stem as a WAV (base64)
   window.teaser = {
     length: LENGTH,
     advance(n) { for (let i = 0; i < n; i++) step(); app.render(); return time; },
     events: () => events,
-    soundtrack: async () => wavBase64(await renderAudio(events, LENGTH)),
+    soundtrack: async () => { const s = await renderSoundtrack(events, LENGTH); return { mix: wavBase64(s.mix), music: wavBase64(s.music), sfx: wavBase64(s.sfx) }; },
   };
 } else {
   // the soundtrack is rendered from the events of the recorded run (teaser/events.json), so it matches this run
@@ -639,7 +640,7 @@ if (RECORD) {
   hint.textContent = 'TAP TO PLAY WITH SOUND';
   hint.classList.add('on');
   step();
-  const buffer = ASSETS.events ? await renderAudio(ASSETS.events, LENGTH, 44100) : null;
+  const buffer = ASSETS.events ? (await renderSoundtrack(ASSETS.events, LENGTH, 44100)).mix : null;
   let audio = null, start = 0, playing = false;
   window.addEventListener('pointerdown', () => {
     if (playing && time < LENGTH) return;

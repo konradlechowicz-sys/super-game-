@@ -16,6 +16,9 @@ i wersja TEST (gracze tego nie widzą).
 
 - 
 
+## Build 59 · 2026-10-25
+- [Narzędzia] Zwiastun 2.0: efekty dźwiękowe zaprojektowane od nowa, każdy z kilku warstw (uderzenie, przesterowane „ciało”, niski bas, ogon w pogłosie, iskry, odłamki, stereo). Lasery z modulacją FM (jonowe z trzaskiem), wybuchy z odłamkami (duże wrogowie mocniej), trzaskające pioruny, cyfrowe przejmowanie satelitów, robotyczny szept Kolektywu, klakson alarmu, zapłon i ryk silników, dopalacz przy starcie, wyrzutnie dronów Harvestera, metaliczne trafienia w bossa, fala uderzeniowa combo, filmowe uderzenia na cięciach. Muzyka i efekty są teraz osobnymi ścieżkami (muzyka czeka na Suno); nagranie zostawia obraz bez dźwięku i obie ścieżki, więc muzykę można podłożyć bez ponownego nagrywania.
+
 ## Build 58 · 2026-10-25
 - [Narzędzia] Nowe grafiki 2.0 od ChatGPT w `art/2.0/`: podłoga świata 1 (A1; z podglądu 2×2 wycięty kafel bez szwów), boss Harvester (A6: cały, kadłub, arkusz i 16 wyciętych części), emblemat logo (E3). Zwiastun używa ich zamiast zastępstw: prawdziwy Harvester z pulsującym rdzeniem, silnikami i wyrzutniami, z których wypadają drony, emblemat na planszy tytułowej i nowa podłoga w walce. Gra bez zmian.
 
