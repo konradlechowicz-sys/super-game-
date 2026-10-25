@@ -16,6 +16,9 @@ i wersja TEST (gracze tego nie widzą).
 
 - 
 
+## Build 57 · 2026-10-25
+- [Narzędzia] Zwiastun 2.0 dostał dźwięk: muzykę i efekty syntezowane w Web Audio, jak w grze (bez plików i licencji), zgrane co do klatki z animacją. Ciemny dron i szept Kolektywu nad Ziemią, alarm, silniki i start w hangarze, rytm 141 BPM w walce z uderzeniem na combo, „braam”, syrena i ładowanie rdzenia przy bossie, wielkie uderzenie i jasny akord na tytule. Strzały, wybuchy, pioruny i przejęcia satelitów brzmią dokładnie wtedy, gdy dzieją się na ekranie. MP4 ma dźwięk AAC wyrównany do -14 LUFS (standard serwisów społecznościowych); strona zwiastuna gra z dźwiękiem po dotknięciu.
+
 ## Build 56 · 2026-10-25
 - [Narzędzia] Zwiastun 2.0 (10 s, pionowy 1080×1920) zrobiony w silniku PixiJS z grafik `art/2.0/teaser/` (zadania T1–T4 od ChatGPT): Kolektyw przejmuje orbitę Ziemi, start Strikera z hangaru, walka z combo ION BOLTS, nadlatujący boss (na razie sylwetka elitarnego drona, dopóki nie ma Harvestera), plansza tytułowa. `npm run teaser` buduje stronę, `npm run teaser:video` nagrywa MP4. Gra bez zmian.
 

@@ -5,6 +5,7 @@
 // by frame and encodes an MP4. Built into one file by teaser/build.mjs.
 import { Application, Container, Graphics, Sprite, Texture, Text, Rectangle } from 'pixi.js';
 import ASSETS from './assets.gen.js';
+import { renderAudio, wavBase64 } from './audio.js';
 
 const W = 1080, H = 1920, STEP = 1 / 60, LENGTH = 10;
 const RECORD = new URLSearchParams(location.search).has('record');
@@ -134,6 +135,11 @@ function makeShip(height) {
   return s;
 }
 
+// what happened when, for the soundtrack (teaser/audio.js): [time, kind]
+const events = [];
+let time = 0;
+const logEvent = (kind) => events.push([Math.round(time * 1000) / 1000, kind]);
+
 // ---------- particles, rings, lightning (shared by all shots) ----------
 const fx = [];
 function spark(layer, x, y, color, n, speed, life, size, dir = null, spread = TAU) {
@@ -240,6 +246,7 @@ function updateEarth(t) {
     s.c.rotation = s.rot + t * 0.06 * (s.i % 2 ? 1 : -1);
     if (s.at === null && front > s.y + 40) {
       s.at = t;
+      logEvent('sat');
       spark(earthFx, s.c.x, s.c.y, 0xff3df0, 26, 380, 0.6, 26);
       ring(earthFx, s.c.x, s.c.y, 0xff3df0, 190, 0.5, 6);
     }
@@ -346,6 +353,7 @@ function removeEnemy(e) {
 }
 function kill(e) {
   g.kills++;
+  logEvent('kill');
   spark(gameFx, e.x, e.y, e.T.color, 14, 260, 0.5, 14);
   spark(gameFx, e.x, e.y, 0xffffff, 4, 120, 0.25, 26);
   ring(gameFx, e.x, e.y, e.T.color, e.r * 2.6);
@@ -372,12 +380,14 @@ function chain(x, y, from, n, reach, dmg, color, width) {
     done.add(nx); pts.push(nx.x, nx.y); cur = nx;
   }
   arc(gameFx, pts, color, width);
+  logEvent('arc');
   for (const e of done) hit(e, dmg);
 }
 function shoot(x, y, a) {
   const s = new Sprite(dot);
   s.anchor.set(0.5); s.tint = g.ion ? 0xc8ffff : 0x2ff3ff; s.width = g.ion ? 46 : 32; s.height = g.ion ? 14 : 9; s.rotation = a;
   shotLayer.addChild(s);
+  logEvent('shot');
   shots.push({ x, y, vx: Math.cos(a) * 900, vy: Math.sin(a) * 900, life: 0.8, s });
 }
 
@@ -471,6 +481,7 @@ function updateGame(t) {
     let gone = s.life <= 0;
     if (!gone && bossK > 0.35 && (s.x - boss.x) ** 2 + (s.y - boss.y) ** 2 < 150 ** 2) {
       spark(gameFx, s.x, s.y, 0xff3df0, 5, 220, 0.25, 16);
+      logEvent('bosshit');
       gone = true;
     }
     if (!gone) {
@@ -575,7 +586,6 @@ function updateTitle(t) {
 scenes.addChild(earthScene, hangarScene, gameScene, titleScene);
 
 // ---------- the clock ----------
-let time = 0;
 function step() {
   time += STEP;
   const t = time;
@@ -596,14 +606,42 @@ function step() {
 }
 
 if (RECORD) {
-  // teaser/record.mjs: advance(n) moves the clock n steps of 1/60 s and draws one frame
-  window.teaser = { length: LENGTH, advance(n) { for (let i = 0; i < n; i++) step(); app.render(); return time; } };
+  // teaser/record.mjs: advance(n) moves the clock n steps of 1/60 s and draws one frame; at the end, soundtrack()
+  // renders the music and effects for the events of this run and returns them as a WAV (base64)
+  window.teaser = {
+    length: LENGTH,
+    advance(n) { for (let i = 0; i < n; i++) step(); app.render(); return time; },
+    events: () => events,
+    soundtrack: async () => wavBase64(await renderAudio(events, LENGTH)),
+  };
 } else {
-  let acc = 0;
-  app.ticker.add((tk) => {
-    if (time >= LENGTH) { document.getElementById('replay').classList.add('on'); return; }
-    acc += Math.min(0.1, tk.deltaMS / 1000);
-    while (acc >= STEP && time < LENGTH) { step(); acc -= STEP; }
+  // the soundtrack is rendered from the events of the recorded run (teaser/events.json), so it matches this run
+  const hint = document.getElementById('replay');
+  hint.textContent = 'TAP TO PLAY WITH SOUND';
+  hint.classList.add('on');
+  step();
+  const buffer = ASSETS.events ? await renderAudio(ASSETS.events, LENGTH, 44100) : null;
+  let audio = null, start = 0, playing = false;
+  window.addEventListener('pointerdown', () => {
+    if (playing && time < LENGTH) return;
+    if (time >= LENGTH) { location.reload(); return; }
+    playing = true;
+    hint.classList.remove('on');
+    if (buffer) {
+      audio = new (window.AudioContext || window.webkitAudioContext)();
+      const src = audio.createBufferSource();
+      src.buffer = buffer;
+      src.connect(audio.destination);
+      start = audio.currentTime + 0.05;
+      src.start(start);
+    }
   });
-  window.addEventListener('pointerdown', () => { if (time >= LENGTH) location.reload(); });
+  let clock = 0;
+  app.ticker.add((tk) => {
+    if (!playing) return;
+    if (time >= LENGTH) { hint.textContent = 'TAP TO REPLAY'; hint.classList.add('on'); return; }
+    // follow the audio clock when there is sound, so picture and sound stay together
+    clock = audio ? Math.max(0, audio.currentTime - start) : clock + Math.min(0.1, tk.deltaMS / 1000);
+    while (time + STEP <= clock && time < LENGTH) step();
+  });
 }
