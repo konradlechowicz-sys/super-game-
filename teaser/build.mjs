@@ -6,6 +6,7 @@ import { readdirSync, readFileSync, writeFileSync, mkdirSync, existsSync } from 
 const images = {};
 for (const dir of ['proto2/assets', 'teaser/assets']) {
   for (const f of readdirSync(dir)) {
+    if (f.startsWith('floor-tech-ruin')) continue; // the teaser has its own floor
     if (f.endsWith('.webp')) images[f.replace('.webp', '')] = `data:image/webp;base64,${readFileSync(`${dir}/${f}`).toString('base64')}`;
   }
 }

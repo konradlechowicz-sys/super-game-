@@ -3,7 +3,7 @@
 // gameplay with a combo, the boss arrives, the title. It runs on a fixed 60 Hz clock with a seeded random, so every
 // run is the same: in a browser it plays in real time (tap to replay); with ?record, teaser/record.mjs steps it frame
 // by frame and encodes an MP4. Built into one file by teaser/build.mjs.
-import { Application, Container, Graphics, Sprite, Texture, Text, Rectangle } from 'pixi.js';
+import { Application, Container, Graphics, Sprite, Texture, Text, Rectangle, TilingSprite } from 'pixi.js';
 import ASSETS from './assets.gen.js';
 import { renderAudio, wavBase64 } from './audio.js';
 
@@ -299,10 +299,10 @@ function updateHangar(t) {
 const gameScene = new Container();
 const world = new Container();
 gameScene.addChild(world);
-const floor = new Sprite(tex['floor-tech-ruin']);
-floor.scale.set(1.5);
+const AW = 1800, AH = 3000;
+const floor = new TilingSprite({ texture: tex.floor, width: AW, height: AH });
+floor.tileScale.set(0.6);
 world.addChild(floor);
-const AW = floor.width, AH = floor.height;
 const glowLayer = new Container(); glowLayer.blendMode = 'add';
 const enemyLayer = new Container(), bossLayer = new Container(), shipLayer = new Container();
 const shotLayer = new Container(); shotLayer.blendMode = 'add';
@@ -391,13 +391,23 @@ function shoot(x, y, a) {
   shots.push({ x, y, vx: Math.cos(a) * 900, vy: Math.sin(a) * 900, life: 0.8, s });
 }
 
-// the boss: a stand-in silhouette (the elite drone, dark) until the Harvester art (brief task A6) exists
-const boss = { x: 0, y: 0, on: false, glow: new Sprite(tex['boss-glow']), body: new Sprite(tex.boss), core: glowDot(0xff2dd0, 150) };
-boss.glow.anchor.set(0.5); boss.body.anchor.set(0.5); boss.body.tint = 0x2a0a3a;
-boss.glow.blendMode = 'add';
-boss.body.scale.set(0.9); boss.glow.scale.set(0.9);
-bossLayer.addChild(boss.glow, boss.body, boss.core);
+// the world-1 boss, the Harvester (brief task A6): the drawing, with pulsing light on its core and launch bays and
+// engine flames; points on it are given in the pixels of its 1254 px sheet
+const HK = 640 / 1254, BOSS_SCALE = 0.9;
+const at = (x, y) => [(x - 627) * HK, (y - 627) * HK];
+const bossC = new Container();
+const hBody = new Sprite(tex.harvester);
+hBody.anchor.set(0.5);
+const hFlames = [455, 790].map((x) => { const f = new Sprite(tex['h-flame']); f.anchor.set(0.5, 0.15); f.position.set(...at(x, 1045)); f.blendMode = 'add'; return f; });
+const hHalo = glowDot(0xff2dd0, 900, 0.08);
+const hCore = glowDot(0xff3df0, 220);
+hCore.position.set(...at(627, 612));
+const hPods = [290, 965].map((x) => { const p = glowDot(0xff3df0, 120); p.height = 380; p.position.set(...at(x, 640)); return p; });
+bossC.addChild(hHalo, ...hFlames, hBody, hCore, ...hPods);
+bossC.scale.set(BOSS_SCALE);
+bossLayer.addChild(bossC);
 bossLayer.visible = false;
+const boss = { x: 0, y: 0, podT: 0, side: 0 };
 const hudKills = label('0 KILLS', 54, 0xe9e6ff, 'Rajdhani', '700', 0x2ff3ff);
 hudKills.anchor.set(0, 0.5); hudKills.position.set(48, 110);
 const comboCard = new Container();
@@ -441,12 +451,24 @@ function updateGame(t) {
   bossLayer.visible = bossK > 0;
   if (bossK > 0) {
     boss.x = g.x;
-    boss.y = g.y - 470 + (1 - easeOut(bossK)) * -420;
-    const pulse = 0.5 + 0.5 * Math.sin(t * 12);
-    for (const s of [boss.glow, boss.body]) s.position.set(boss.x, boss.y);
-    boss.core.position.set(boss.x, boss.y + 10);
-    boss.core.width = boss.core.height = 110 + 50 * pulse + 420 * seg(t, 8.1, 8.45);
-    boss.glow.alpha = 0.3 + 0.25 * pulse;
+    boss.y = g.y - 480 + (1 - easeOut(bossK)) * -500;
+    bossC.position.set(boss.x, boss.y + Math.sin(t * 2.2) * 6);
+    const pulse = 0.5 + 0.5 * Math.sin(t * 12), charge = seg(t, 8.1, 8.45);
+    hCore.width = hCore.height = 200 + 70 * pulse + 900 * charge;
+    hCore.alpha = 0.55 + 0.35 * pulse;
+    hPods.forEach((p, i) => { p.alpha = 0.3 + 0.3 * Math.sin(t * 9 + i * 2); });
+    hHalo.alpha = 0.05 + 0.04 * pulse + 0.4 * charge;
+    hFlames.forEach((f, i) => { f.scale.set(1.15, 1.15 * (1 + 0.15 * Math.sin(t * 31 + i * 1.7))); });
+    // the launch bays drop drones
+    boss.podT -= STEP;
+    if (t > 7.45 && t < 8.15 && boss.podT <= 0) {
+      boss.podT = 0.12; boss.side ^= 1;
+      const [px2, py2] = at(boss.side ? 965 : 290, 760);
+      const x = bossC.x + px2 * BOSS_SCALE, y = bossC.y + py2 * BOSS_SCALE;
+      const e = spawn('drone', x, y);
+      e.vx = rand(-80, 80); e.vy = 340;
+      ring(gameFx, x, y, 0xff3df0, 60, 0.3, 4);
+    }
     g.shake = Math.max(g.shake, 2 + 7 * bossK);
   }
 
@@ -479,7 +501,7 @@ function updateGame(t) {
     const s = shots[i];
     s.x += s.vx * STEP; s.y += s.vy * STEP; s.life -= STEP;
     let gone = s.life <= 0;
-    if (!gone && bossK > 0.35 && (s.x - boss.x) ** 2 + (s.y - boss.y) ** 2 < 150 ** 2) {
+    if (!gone && bossK > 0.35 && (s.x - boss.x) ** 2 + (s.y - boss.y) ** 2 < 190 ** 2) {
       spark(gameFx, s.x, s.y, 0xff3df0, 5, 220, 0.25, 16);
       logEvent('bosshit');
       gone = true;
@@ -551,31 +573,28 @@ titleWeb.alpha = 0.22;
 const stars = new Container();
 const starList = [];
 for (let i = 0; i < 140; i++) { const s = glowDot(0xffffff, rand(4, 11), rand(0.3, 0.9)); s.position.set(rand(0, W), rand(0, H)); stars.addChild(s); starList.push({ s, v: rand(20, 90) }); }
-const emblem = new Graphics();
-const ship3 = makeShip(330);
-ship3.body.position.set(W / 2, 760);
+// the logo emblem (brief task E3), with its engine glows pulsing; points on it in the pixels of its 1254 px sheet
+const EK = 760 / 1254, EY = 720;
+const emblemGlow = glowDot(0x2ff3ff, 1000, 0);
+const emblem = new Sprite(tex.emblem);
+emblem.anchor.set(0.5); emblem.position.set(W / 2, EY);
+const emblemFlames = [480, 772].map(() => glowDot(0x2ff3ff, 110, 0));
 const title = label('VOID BLASTER', 92, 0xffffff, 'Orbitron', '900', 0x2ff3ff);
 const version = label('2.0', 170, 0xff3df0, 'Orbitron', '900');
 const tagline = label('THE COLLECTIVE IS COMING', 54, 0xe9e6ff, 'Rajdhani', '700', 0xff3df0);
 title.position.set(W / 2, 1180); version.position.set(W / 2, 1345); tagline.position.set(W / 2, 1510);
-titleScene.addChild(stars, titleWeb, emblem, ship3.body, title, version, tagline);
+titleScene.addChild(stars, titleWeb, emblemGlow, emblem, ...emblemFlames, title, version, tagline);
 
 function updateTitle(t) {
   for (const s of starList) { s.s.y += s.v * STEP; if (s.s.y > H + 10) s.s.y = -10; }
-  const p = easeOut(seg(t, 8.55, 9.1));
-  emblem.clear();
-  if (p > 0) {
-    const cx = W / 2, cy = 760, R = 270, a0 = -Math.PI / 2;
-    emblem.moveTo(cx + R * Math.cos(a0), cy + R * Math.sin(a0)).arc(cx, cy, R, a0, a0 + TAU * p).stroke({ width: 26, color: 0x2ff3ff, alpha: 0.18 });
-    emblem.moveTo(cx + R * Math.cos(a0), cy + R * Math.sin(a0)).arc(cx, cy, R, a0, a0 + TAU * p).stroke({ width: 7, color: 0x2ff3ff });
-    for (let i = 0; i < 24; i++) {
-      const a = a0 + (i / 24) * TAU + t * 0.4;
-      if ((i / 24) > p) continue;
-      emblem.moveTo(cx + (R + 22) * Math.cos(a), cy + (R + 22) * Math.sin(a)).lineTo(cx + (R + 42) * Math.cos(a), cy + (R + 42) * Math.sin(a)).stroke({ width: 4, color: i % 6 ? 0x2ff3ff : 0xff3df0, alpha: 0.8 });
-    }
-  }
-  ship3.body.scale.set((330 / (SHIP.k * 1201)) * lerp(0.55, 1, easeOut(seg(t, 8.5, 8.95))));
-  ship3.animate(t, 1.0);
+  const p = easeOut(seg(t, 8.5, 8.95)), sc = lerp(0.6, 1, p);
+  emblem.alpha = seg(t, 8.5, 8.62);
+  emblem.scale.set(sc);
+  emblemGlow.alpha = 0.22 * p + 0.06 * Math.sin(t * 6);
+  emblemFlames.forEach((f, i) => {
+    f.position.set(W / 2 + ([480, 772][i] - 627) * EK * sc, EY + (1050 - 627) * EK * sc);
+    f.alpha = emblem.alpha * (0.6 + 0.3 * Math.sin(t * 31 + i * 1.7));
+  });
   const tk = easeOut(seg(t, 8.75, 9.1));
   title.alpha = tk; title.scale.set(lerp(1.25, 1, tk));
   const vk = seg(t, 8.95, 9.2);

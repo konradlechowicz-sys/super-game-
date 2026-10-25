@@ -16,6 +16,9 @@ image tool's plan allows commercial use.
 | `ship/parts/` | Striker cut from `striker-parts-sheet.webp`: hull, wings, engines, flame, cockpit glass, side gun | `assembly.json` = where each part sits on `striker.webp` (scale + top-left, found by matching) |
 | `enemies/world1/` | sheet of 6 enemies (drone, swarmer, dasher, shooter, tank, splitter) + elite drone, and each enemy cut out | facing up, transparent background |
 | `worlds/` | world concepts (`tech-ruin-concept.webp`: world 1 "Orbital Ruins", Earth's ruined defense grid; 941x1672) | a concept, not yet a tileable floor |
+| `worlds/world1/` | `floor-tile.webp`: seamless 1024x1024 floor of world 1 (task A1; ChatGPT sent only a 2x2 preview, the tile was cut from one repeat with blended seams) | tiles on all four edges |
+| `bosses/world1/` | Harvester, the world-1 boss (task A6): full drawing `harvester.webp`, the bare hull, the parts sheet; `parts/` = the 16 parts cut out (hull, wings, core, launch pods, nose, engines, armor plates, flame, glows) | the parts are not drawn to one scale; the full drawing is the reference |
+| `ui/` | `logo-emblem.webp`: the Striker in a neon ring (task E3) | transparent |
 | `teaser/` | art for the 10-second 2.0 teaser (ChatGPT tasks T1–T4): Earth at night, launch bay, the Collective's web, satellites sheet; `satellites/` = each satellite cut out, normal and "rewritten" (same crop, for a cross-fade) | animated in code by `teaser/` (`npm run teaser`, `npm run teaser:video` records the MP4) |
 | `previews/` | test frame of the current game with this art; Striker animation built from the parts | previews only |
 
