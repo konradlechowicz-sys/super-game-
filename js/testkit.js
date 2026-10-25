@@ -115,8 +115,8 @@ export function installTestKit(app) {
         ${Object.entries(TRAITS).map(([id, t]) => btn('elite', t.name, `data-trait="${id}" style="color:${t.color}"`)).join('')}
         ${btn('skip', 'SKIP 30 S')}
         ${st.boss && !g.boss && !g.bossDefeated ? btn('summon', 'BOSS NOW') : ''}
-        ${btn('win', 'WIN SECTOR')}
-        ${btn('win3', 'WIN · 3 STARS')}
+        ${btn('win', st.endless ? 'END RUN' : 'WIN SECTOR')}
+        ${st.endless ? '' : btn('win3', 'WIN · 3 STARS')}
       </div>
       <div class="tk-head">Give a combo (both weapons to LV ${COMBO_LEVEL})</div>
       <div class="tk-row">
@@ -143,11 +143,14 @@ export function installTestKit(app) {
         g.spawnElite(types[types.length - 1] || st.enemies[0][0], g.player.x + Math.cos(a) * 260, g.player.y + Math.sin(a) * 260, ds.trait ? [ds.trait] : []);
       })(),
       skip: act(() => {
-        const end = st.boss ? st.bossAt : st.duration;
+        const end = st.endless ? Infinity : st.boss ? st.bossAt : st.duration;
         g.time = Math.min(g.time + 30, end - 1);
         st.events.forEach((e, i) => { if (e.t < g.time) g.eventsDone.add(i); });
       }),
-      summon: act(() => { st.events.forEach((e, i) => g.eventsDone.add(i)); g.time = st.bossAt; }),
+      summon: act(() => {
+        if (st.endless) { g.endless.nextBoss = g.time; return; }
+        st.events.forEach((e, i) => g.eventsDone.add(i)); g.time = st.bossAt;
+      }),
       evolve: (ds) => act(() => {
         let w = g.weapons.find((x) => x.id === ds.id);
         if (!w) { g.addWeapon(ds.id); w = g.weapons[g.weapons.length - 1]; }
@@ -177,6 +180,7 @@ export function installTestKit(app) {
 
   function winNow() {
     const g = app.game, st = g.stage;
+    if (st.endless) { g.finish(false); return; } // Endless has no win: end the run with its score
     if (g.boss) g.kill(g.boss);
     else if (!st.boss) g.win();
     else { g.bossDefeated = true; g.win(); }

@@ -4,9 +4,10 @@ import { AudioEngine } from './audio.js';
 import { Background } from './background.js';
 import { loadSave, writeSave, resetSave, hasLocalSave, importSave, SAVE_KEY } from './save.js';
 import { setSpriteScale, shipSprite, glowDot } from './sprites.js';
-import { ALL_STAGES, DAILY, SHIPS, WORLDS, stageIndex } from './data.js';
+import { ALL_STAGES, DAILY, SHIPS, WORLDS, stageIndex, endlessStage } from './data.js';
 import { clamp, todayStr } from './util.js';
 import { createStore, shipLook } from './store.js';
+import { createLeaderboard } from './leaderboard.js';
 import { installTestKit } from './testkit.js';
 
 const params = new URLSearchParams(location.search);
@@ -152,6 +153,9 @@ app.isUnlocked = (id) => {
   return !!app.save.cleared[ALL_STAGES[i - 1].id];
 };
 
+// Endless mode (v1.3): full game only, opened by beating the Void Heart (the last sector).
+app.endlessOpen = () => app.store.isFull() && (DEV || app.testUnlockAll || !!app.save.cleared[ALL_STAGES[ALL_STAGES.length - 1].id]);
+
 app.dailyStatus = () => {
   const d = app.save.daily;
   const today = todayStr();
@@ -202,6 +206,18 @@ app.startStage = (id) => {
   app.ui.showHud();
   app.game = new Game(app, stage);
   app.audio.setTrack(st.world.music || 'game');
+};
+
+app.startEndless = (worldId) => {
+  if (!app.store.isFull()) { app.ui.paywall(); return; }
+  if (!app.endlessOpen()) return;
+  const world = WORLDS.find((w) => w.id === worldId);
+  app.bg.setTheme(world.theme);
+  input.resetDrag();
+  app.ui.showHud();
+  app.game = new Game(app, endlessStage(world));
+  app.leaderboard.signIn();
+  app.audio.setTrack(world.music || 'game');
 };
 
 app.endRun = () => {
@@ -331,7 +347,12 @@ app.store = createStore(app, DEV || PREVIEW);
 if (DEV && params.has('full')) app.store.grant();
 // Refresh whatever screen is open when the purchase state changes from outside (refund, Ask to Buy approval).
 app.onFullGameChanged = () => { if (!app.game) app.ui.menu(); };
-app.store.init().then(() => { if (!app.game && document.querySelector('.screen.menu')) app.ui.menu(); });
+app.leaderboard = createLeaderboard(app);
+app.store.init().then(() => {
+  if (!app.game && document.querySelector('.screen.menu')) app.ui.menu();
+  // Game Center sign-in only once Endless is open, so new players are not asked at the first launch
+  if (app.endlessOpen()) app.leaderboard.signIn();
+});
 // TEST variant only. __TEST__ is replaced by the build (true/false), so normal and App Store builds drop this call and
 // js/testkit.js entirely; on the unbundled dev page index.html sets it from ?test.
 if (__TEST__) installTestKit(app);
