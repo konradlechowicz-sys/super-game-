@@ -16,6 +16,7 @@ image tool's plan allows commercial use.
 | `ship/parts/` | Striker cut from `striker-parts-sheet.webp`: hull, wings, engines, flame, cockpit glass, side gun | `assembly.json` = where each part sits on `striker.webp` (scale + top-left, found by matching) |
 | `enemies/world1/` | sheet of 6 enemies (drone, swarmer, dasher, shooter, tank, splitter) + elite drone, and each enemy cut out | facing up, transparent background |
 | `worlds/` | world concepts (`tech-ruin-concept.webp`: world 1 "Orbital Ruins", Earth's ruined defense grid; 941x1672) | a concept, not yet a tileable floor |
+| `teaser/` | art for the 10-second 2.0 teaser (ChatGPT tasks T1–T4): Earth at night, launch bay, the Collective's web, satellites sheet; `satellites/` = each satellite cut out, normal and "rewritten" (same crop, for a cross-fade) | animated in code by `teaser/` (`npm run teaser`, `npm run teaser:video` records the MP4) |
 | `previews/` | test frame of the current game with this art; Striker animation built from the parts | previews only |
 
 Findings from the test frame: enemies need a glow in their color to stand out on dark floors; small enemies

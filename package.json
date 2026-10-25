@@ -23,7 +23,9 @@
     "android:open": "node scripts/build.mjs && npx cap sync android && npx cap open android",
     "android:play": "node scripts/android.mjs play",
     "android:test": "node scripts/android.mjs test",
-    "proto2": "python3 proto2/make-assets.py && node proto2/build.mjs"
+    "proto2": "python3 proto2/make-assets.py && node proto2/build.mjs",
+    "teaser": "python3 teaser/make-assets.py && node teaser/build.mjs",
+    "teaser:video": "node teaser/record.mjs"
   },
   "dependencies": {
     "@capacitor/android": "^8.5.3",

@@ -16,6 +16,9 @@ i wersja TEST (gracze tego nie widzą).
 
 - 
 
+## Build 56 · 2026-10-25
+- [Narzędzia] Zwiastun 2.0 (10 s, pionowy 1080×1920) zrobiony w silniku PixiJS z grafik `art/2.0/teaser/` (zadania T1–T4 od ChatGPT): Kolektyw przejmuje orbitę Ziemi, start Strikera z hangaru, walka z combo ION BOLTS, nadlatujący boss (na razie sylwetka elitarnego drona, dopóki nie ma Harvestera), plansza tytułowa. `npm run teaser` buduje stronę, `npm run teaser:video` nagrywa MP4. Gra bez zmian.
+
 ## Build 55 · 2026-10-25
 - [Narzędzia] Instrukcja dla ChatGPT (`art/2.0/CHATGPT-BRIEF.md`): fabuła 2.0 (Void Collective, podróż od orbity Ziemi do serca wroga), 10 światów w kolejności podróży z mechaniką, kolorami, proporcją techniki i organiki, 6 wrogami i bossem każdy; boss świata 1 to Harvester; mapa podróży zamiast mapy galaktyki. CLAUDE.md i README grafik uzupełnione.
 
