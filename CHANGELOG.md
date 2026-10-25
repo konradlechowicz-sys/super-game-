@@ -16,6 +16,9 @@ i wersja TEST (gracze tego nie widzą).
 
 - 
 
+## Build 54 · 2026-10-25
+- [Narzędzia] `art/2.0/CHATGPT-BRIEF.md`: kompletna instrukcja dla ChatGPT do grafiki wersji 2.0 (blok stylu, zasady, 10 światów z wrogami i bossami, 11 broni z ewolucjami, combo, interfejs, efekty jako paski klatek, materiały do sklepów; zadania A–G w kolejności produkcji).
+
 ## Build 53 · 2026-10-24
 - [Narzędzia] CHANGELOG.md: sekcja wydania v1.2.0 (build 52) skopiowana z gałęzi release, „Następne wydanie” wyczyszczone. CLAUDE.md: 1.2.0 wydane, 2.0 dopiero po 1.3, w 2.0 10 światów po 6 sektorów.
 
