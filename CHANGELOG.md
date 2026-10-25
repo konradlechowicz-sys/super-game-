@@ -16,6 +16,9 @@ i wersja TEST (gracze tego nie widzą).
 
 - 
 
+## Build 60 · 2026-10-25
+- [Narzędzia] Zwiastun 2.0 ma 15 sekund i muzykę z Suno (`art/2.0/audio/`), a cięcia leżą na taktach utworu (142 BPM): Ziemia na mrocznym wstępie, start Strikera w ostatnim takcie przed wejściem bitu, walka od wejścia bitu, combo na pierwszą miarę taktu, boss, a plansza tytułowa na końcowym uderzeniu utworu. Z efektów zostały tylko subtelne strzały pod muzyką (decyzja Konrada); pełny zestaw efektów można włączyć opcją. Czasy ujęć są w jednym miejscu (`teaser/timeline.js`), a fragment muzyki wycina `npm run teaser`.
+
 ## Build 59 · 2026-10-25
 - [Narzędzia] Zwiastun 2.0: efekty dźwiękowe zaprojektowane od nowa, każdy z kilku warstw (uderzenie, przesterowane „ciało”, niski bas, ogon w pogłosie, iskry, odłamki, stereo). Lasery z modulacją FM (jonowe z trzaskiem), wybuchy z odłamkami (duże wrogowie mocniej), trzaskające pioruny, cyfrowe przejmowanie satelitów, robotyczny szept Kolektywu, klakson alarmu, zapłon i ryk silników, dopalacz przy starcie, wyrzutnie dronów Harvestera, metaliczne trafienia w bossa, fala uderzeniowa combo, filmowe uderzenia na cięciach. Muzyka i efekty są teraz osobnymi ścieżkami (muzyka czeka na Suno); nagranie zostawia obraz bez dźwięku i obie ścieżki, więc muzykę można podłożyć bez ponownego nagrywania.
 

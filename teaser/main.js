@@ -1,4 +1,5 @@
-// Void Blaster 2.0 teaser: a 10-second promo built in the game engine (PixiJS) from art/2.0, to show the 2.0 look.
+// Void Blaster 2.0 teaser: a 15-second promo built in the game engine (PixiJS) from art/2.0, to show the 2.0 look,
+// cut to the music (the shot times are in teaser/timeline.js).
 // Five shots, as in the storyboard of the 2.0 concept doc: Earth falls to the Collective, the Striker launches,
 // gameplay with a combo, the boss arrives, the title. It runs on a fixed 60 Hz clock with a seeded random, so every
 // run is the same: in a browser it plays in real time (tap to replay); with ?record, teaser/record.mjs steps it frame
@@ -6,8 +7,9 @@
 import { Application, Container, Graphics, Sprite, Texture, Text, Rectangle, TilingSprite } from 'pixi.js';
 import ASSETS from './assets.gen.js';
 import { renderSoundtrack, wavBase64 } from './audio.js';
+import { T } from './timeline.js';
 
-const W = 1080, H = 1920, STEP = 1 / 60, LENGTH = 10;
+const W = 1080, H = 1920, STEP = 1 / 60, LENGTH = T.end;
 const RECORD = new URLSearchParams(location.search).has('record');
 const TAU = Math.PI * 2;
 let seed = 20261025;
@@ -232,10 +234,10 @@ const cap1 = label('IT DOES NOT CONQUER.', 70, 0xe9e6ff, 'Rajdhani', '700', 0x2f
 const cap2 = label('IT REWRITES.', 96, 0xff3df0, 'Orbitron', '900');
 cap1.position.set(W / 2, H - 330); cap2.position.set(W / 2, H - 210);
 captions.addChild(capShade, cap1, cap2);
-const webFront = (t) => lerp(-160, 1180, easeInOut(seg(t, 0.15, 1.7)));
+const webFront = (t) => lerp(-160, 1180, easeInOut(seg(t, 0.1, T.hangar - 0.6)));
 
 function updateEarth(t) {
-  earthScene.scale.set(1 + 0.1 * easeOut(seg(t, 0, 2)));
+  earthScene.scale.set(1 + 0.12 * easeOut(seg(t, 0, T.hangar)));
   const front = webFront(t);
   for (const s of webStrips) {
     s.a.alpha = clamp((front - s.y) / 170, 0, 1);
@@ -254,14 +256,14 @@ function updateEarth(t) {
     s.n.alpha = 1 - k;
     s.r.alpha = k < 1 ? k * (0.55 + 0.45 * Math.sin(t * 70)) : 1;
   }
-  const fade = 1 - seg(t, 1.72, 1.92);
-  capShade.alpha = seg(t, 0.2, 0.5) * fade;
-  cap1.alpha = seg(t, 0.3, 0.55) * fade;
-  cap2.alpha = seg(t, 0.95, 1.15) * fade;
-  cap2.scale.set(1 + 0.25 * (1 - easeOut(seg(t, 0.95, 1.2))));
+  const fade = 1 - seg(t, T.hangar - 0.28, T.hangar - 0.08);
+  capShade.alpha = seg(t, 0.3, 0.6) * fade;
+  cap1.alpha = seg(t, 0.45, 0.75) * fade;
+  cap2.alpha = seg(t, 1.55, 1.75) * fade;
+  cap2.scale.set(1 + 0.25 * (1 - easeOut(seg(t, 1.55, 1.8))));
 }
 
-// ---------- shot 2: the Striker launches (2-3.5 s) ----------
+// ---------- shot 2: the Striker launches ----------
 const hangarScene = new Container();
 hangarScene.pivot.set(W / 2, H / 2); hangarScene.position.set(W / 2, H / 2);
 hangarScene.addChild(new Sprite(tex.hangar));
@@ -274,7 +276,7 @@ ship1.body.position.set(W / 2, 1480);
 hangarScene.addChild(railLights, hangarFx, ship1.body);
 
 function updateHangar(t) {
-  const ignite = seg(t, 2.05, 2.5), go = seg(t, 2.55, 3.35);
+  const ignite = seg(t, T.hangar + 0.05, T.hangar + 0.5), go = seg(t, T.game - 0.85, T.game - 0.12);
   const y = 1480 - easeIn(go) * 2200;
   ship1.body.y = y;
   ship1.animate(t, 0.15 + 1.1 * ignite + 1.8 * go);
@@ -284,18 +286,18 @@ function updateHangar(t) {
       spark(hangarFx, p.x, p.y, 0x2ff3ff, go > 0 ? 3 : 1, 380 + 600 * go, 0.4, 30, Math.PI / 2, 0.6);
     }
   }
-  const on = seg(t, 2.15, 2.35);
+  const on = seg(t, T.hangar + 0.15, T.hangar + 0.35);
   for (const l of lights) {
-    l.d.position.set(l.x, H + 80 - (((t - 2.15) * 2600 + l.i * 175) % 2200));
+    l.d.position.set(l.x, H + 80 - (((t - T.hangar - 0.15) * 2600 + l.i * 175) % 2200));
     l.d.alpha = on * 0.9;
   }
   const shake = 3 * ignite + 9 * go;
-  hangarScene.scale.set(1.06 - 0.06 * seg(t, 2, 3.5));
+  hangarScene.scale.set(1.06 - 0.06 * seg(t, T.hangar, T.game));
   hangarScene.position.set(W / 2 + rand(-shake, shake), H / 2 + easeIn(go) * 260 + rand(-shake, shake));
   alarm.alpha = 0.09 + 0.07 * Math.sin(t * 16);
 }
 
-// ---------- shots 3-4: gameplay with a combo, then the boss (3.5-8.5 s) ----------
+// ---------- shots 3-4: gameplay with a combo, then the boss ----------
 const gameScene = new Container();
 const world = new Container();
 gameScene.addChild(world);
@@ -425,17 +427,17 @@ captions.addChild(hudKills, comboCard, warning, warnSub);
 let started = false;
 
 function updateGame(t) {
-  const k = t - 3.5;
+  const k = t - T.game, fight = T.boss - T.game;
   if (!started) { started = true; spawnAround(46, 130, 480); spawnAround(16, 520, 720); }
-  const bossK = seg(t, 7.0, 8.2);
+  const bossK = seg(t, T.boss, T.boss + 1.4);
   // the ship weaves up the arena, then slows to face the boss
   const px = AW / 2 + 150 * Math.sin(k * 1.35);
-  const py = AH * 0.74 - Math.min(k, 3.5) * 75 - Math.max(0, k - 3.5) * 25;
+  const py = AH * 0.74 - Math.min(k, fight) * 75 - Math.max(0, k - fight) * 25;
   g.vx = (px - g.x) / STEP; g.vy = (py - g.y) / STEP;
   g.x = px; g.y = py;
   if (k > 0) {
     let want = Math.atan2(g.vy, g.vx);
-    if (bossK > 0) want = lerp(want, -Math.PI / 2, seg(t, 7.0, 7.4));
+    if (bossK > 0) want = lerp(want, -Math.PI / 2, seg(t, T.boss, T.boss + 0.4));
     let d = want - g.a;
     while (d > Math.PI) d -= TAU;
     while (d < -Math.PI) d += TAU;
@@ -453,7 +455,7 @@ function updateGame(t) {
     boss.x = g.x;
     boss.y = g.y - 480 + (1 - easeOut(bossK)) * -500;
     bossC.position.set(boss.x, boss.y + Math.sin(t * 2.2) * 6);
-    const pulse = 0.5 + 0.5 * Math.sin(t * 12), charge = seg(t, 8.1, 8.45);
+    const pulse = 0.5 + 0.5 * Math.sin(t * 12), charge = seg(t, T.title - 0.4, T.title - 0.05);
     hCore.width = hCore.height = 200 + 70 * pulse + 900 * charge;
     hCore.alpha = 0.55 + 0.35 * pulse;
     hPods.forEach((p, i) => { p.alpha = 0.3 + 0.3 * Math.sin(t * 9 + i * 2); });
@@ -461,7 +463,7 @@ function updateGame(t) {
     hFlames.forEach((f, i) => { f.scale.set(1.15, 1.15 * (1 + 0.15 * Math.sin(t * 31 + i * 1.7))); });
     // the launch bays drop drones
     boss.podT -= STEP;
-    if (t > 7.45 && t < 8.15 && boss.podT <= 0) {
+    if (t > T.boss + 0.45 && t < T.title - 0.4 && boss.podT <= 0) {
       boss.podT = 0.12; boss.side ^= 1;
       const [px2, py2] = at(boss.side ? 965 : 290, 760);
       const x = bossC.x + px2 * BOSS_SCALE, y = bossC.y + py2 * BOSS_SCALE;
@@ -490,7 +492,7 @@ function updateGame(t) {
     if (first) { g.arcT = 0.6; chain(g.x, g.y, first, 4, 190, 45, 0x7df9ff, 3); }
   }
   // the combo moment: a storm of lightning and a shockwave
-  if (!g.combo && t >= 5.2) {
+  if (!g.combo && t >= T.combo) {
     g.combo = true; g.ion = true; g.shake = 16;
     ring(gameFx, g.x, g.y, 0x3dffc8, 330, 0.6, 10);
     ring(gameFx, g.x, g.y, 0xc8ffff, 220, 0.45, 6);
@@ -557,16 +559,17 @@ function updateGame(t) {
 
   hudKills.text = `${g.kills} KILLS`;
   hudKills.alpha = 1;
-  const ck = seg(t, 5.2, 5.45), cOut = 1 - seg(t, 6.3, 6.55);
+  const ck = seg(t, T.combo, T.combo + 0.25), cOut = 1 - seg(t, T.combo + 1.1, T.combo + 1.35);
   comboCard.alpha = ck * cOut;
   comboCard.scale.set(lerp(0.4, 1, backOut(ck)));
   const blink = Math.sin(t * 18) > -0.3 ? 1 : 0.35;
-  warning.alpha = seg(t, 7.0, 7.1) * (1 - seg(t, 7.9, 8.05)) * blink;
-  warnSub.alpha = seg(t, 7.1, 7.25) * (1 - seg(t, 7.9, 8.05));
+  const warnOut = 1 - seg(t, T.boss + 0.9, T.boss + 1.05);
+  warning.alpha = seg(t, T.boss, T.boss + 0.1) * warnOut * blink;
+  warnSub.alpha = seg(t, T.boss + 0.1, T.boss + 0.25) * warnOut;
   alarm.alpha = bossK > 0 ? 0.06 + 0.06 * Math.sin(t * 18) : 0;
 }
 
-// ---------- shot 5: the title (8.5-10 s) ----------
+// ---------- shot 5: the title ----------
 const titleScene = new Container();
 titleScene.addChild(new Graphics().rect(0, 0, W, H).fill(0x05010f));
 const titleWeb = new Sprite(tex.web);
@@ -588,19 +591,19 @@ titleScene.addChild(stars, titleWeb, emblemGlow, emblem, ...emblemFlames, title,
 
 function updateTitle(t) {
   for (const s of starList) { s.s.y += s.v * STEP; if (s.s.y > H + 10) s.s.y = -10; }
-  const p = easeOut(seg(t, 8.5, 8.95)), sc = lerp(0.6, 1, p);
-  emblem.alpha = seg(t, 8.5, 8.62);
+  const p = easeOut(seg(t, T.title, T.title + 0.45)), sc = lerp(0.6, 1, p);
+  emblem.alpha = seg(t, T.title, T.title + 0.12);
   emblem.scale.set(sc);
   emblemGlow.alpha = 0.22 * p + 0.06 * Math.sin(t * 6);
   emblemFlames.forEach((f, i) => {
     f.position.set(W / 2 + ([480, 772][i] - 627) * EK * sc, EY + (1050 - 627) * EK * sc);
     f.alpha = emblem.alpha * (0.6 + 0.3 * Math.sin(t * 31 + i * 1.7));
   });
-  const tk = easeOut(seg(t, 8.75, 9.1));
+  const tk = easeOut(seg(t, T.title + 0.25, T.title + 0.6));
   title.alpha = tk; title.scale.set(lerp(1.25, 1, tk));
-  const vk = seg(t, 8.95, 9.2);
+  const vk = seg(t, T.title + 0.45, T.title + 0.7);
   version.alpha = vk; version.scale.set(lerp(1.6, 1, backOut(vk)));
-  tagline.alpha = seg(t, 9.2, 9.5);
+  tagline.alpha = seg(t, T.title + 0.7, T.title + 1.0);
 }
 
 scenes.addChild(earthScene, hangarScene, gameScene, titleScene);
@@ -609,10 +612,10 @@ scenes.addChild(earthScene, hangarScene, gameScene, titleScene);
 function step() {
   time += STEP;
   const t = time;
-  earthScene.visible = t < 2;
-  hangarScene.visible = t >= 2 && t < 3.5;
-  gameScene.visible = t >= 3.5 && t < 8.5;
-  titleScene.visible = t >= 8.5;
+  earthScene.visible = t < T.hangar;
+  hangarScene.visible = t >= T.hangar && t < T.game;
+  gameScene.visible = t >= T.game && t < T.title;
+  titleScene.visible = t >= T.title;
   for (const c of [cap1, cap2, capShade]) c.visible = earthScene.visible;
   for (const c of [hudKills, comboCard, warning, warnSub]) c.visible = gameScene.visible;
   if (earthScene.visible) updateEarth(t);
@@ -621,9 +624,12 @@ function step() {
   if (titleScene.visible) updateTitle(t);
   if (!hangarScene.visible && !gameScene.visible) alarm.alpha = 0;
   updateFx();
-  flashMagenta.alpha = 0.85 * bump(t, 1.98, 0.14);
-  flashWhite.alpha = Math.max(bump(t, 3.47, 0.12), bump(t, 8.47, 0.18));
+  flashMagenta.alpha = 0.85 * bump(t, T.hangar - 0.02, 0.14);
+  flashWhite.alpha = Math.max(bump(t, T.game - 0.03, 0.12), bump(t, T.title - 0.03, 0.18));
 }
+
+// the music, cut to the teaser by teaser/build.mjs (MP3 inside the page)
+const musicBytes = async () => (ASSETS.music ? (await fetch(ASSETS.music)).arrayBuffer() : null);
 
 if (RECORD) {
   // teaser/record.mjs: advance(n) moves the clock n steps of 1/60 s and draws one frame; at the end, soundtrack()
@@ -632,7 +638,7 @@ if (RECORD) {
     length: LENGTH,
     advance(n) { for (let i = 0; i < n; i++) step(); app.render(); return time; },
     events: () => events,
-    soundtrack: async () => { const s = await renderSoundtrack(events, LENGTH); return { mix: wavBase64(s.mix), music: wavBase64(s.music), sfx: wavBase64(s.sfx) }; },
+    soundtrack: async () => { const s = await renderSoundtrack(events, LENGTH, await musicBytes()); return { mix: wavBase64(s.mix), music: wavBase64(s.music), sfx: wavBase64(s.sfx) }; },
   };
 } else {
   // the soundtrack is rendered from the events of the recorded run (teaser/events.json), so it matches this run
@@ -640,7 +646,7 @@ if (RECORD) {
   hint.textContent = 'TAP TO PLAY WITH SOUND';
   hint.classList.add('on');
   step();
-  const buffer = ASSETS.events ? (await renderSoundtrack(ASSETS.events, LENGTH, 44100)).mix : null;
+  const buffer = ASSETS.events ? (await renderSoundtrack(ASSETS.events, LENGTH, await musicBytes(), { rate: 44100 })).mix : null;
   let audio = null, start = 0, playing = false;
   window.addEventListener('pointerdown', () => {
     if (playing && time < LENGTH) return;
