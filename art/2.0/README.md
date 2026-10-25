@@ -19,7 +19,7 @@ image tool's plan allows commercial use.
 | `worlds/world1/` | `floor-tile.webp`: seamless 1024x1024 floor of world 1 (task A1; ChatGPT sent only a 2x2 preview, the tile was cut from one repeat with blended seams) | tiles on all four edges |
 | `bosses/world1/` | Harvester, the world-1 boss (task A6): full drawing `harvester.webp`, the bare hull, the parts sheet; `parts/` = the 16 parts cut out (hull, wings, core, launch pods, nose, engines, armor plates, flame, glows) | the parts are not drawn to one scale; the full drawing is the reference |
 | `ui/` | `logo-emblem.webp`: the Striker in a neon ring (task E3) | transparent |
-| `audio/` | `void-blaster-theme-suno.mp3`: the 2.0 theme, made by Konrad with Suno from Claude's prompt (198 s, about 142 BPM; the drop at 35.5 s, the final hit at 188.5 s) | the teaser cuts it to 15 s (`teaser/timeline.js`) |
+| `audio/` | `void-blaster-theme-suno.mp3`: the 2.0 theme, made by Konrad with Suno from Claude's prompt (198 s, about 142 BPM; the drop at 35.5 s, the final hit at 188.5 s) | the teaser cuts it to 15 s (`teaser/timeline.js`). `SUNO-PROMPTS.md`: the catalog of Suno prompts for all 2.0 music (a theme for every world: sector + boss, menu, journey map, Endless, films) with a progress table |
 | `teaser/` | art for the 10-second 2.0 teaser (ChatGPT tasks T1–T4): Earth at night, launch bay, the Collective's web, satellites sheet; `satellites/` = each satellite cut out, normal and "rewritten" (same crop, for a cross-fade) | animated in code by `teaser/` (`npm run teaser`, `npm run teaser:video` records the MP4) |
 | `previews/` | test frame of the current game with this art; Striker animation built from the parts | previews only |
 

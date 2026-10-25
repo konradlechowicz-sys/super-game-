@@ -16,6 +16,9 @@ i wersja TEST (gracze tego nie widzą).
 
 - 
 
+## Build 61 · 2026-10-25
+- [Narzędzia] `art/2.0/audio/SUNO-PROMPTS.md`: katalog promptów do Suno dla całej muzyki 2.0. Każdy z 10 światów ma własny temat (utwór sektora i utwór bossa robiony funkcją Cover z sektora), do tego menu i hangar, mapa podróży, tryb Endless, intro, zakończenie i porażka. Zawiera zasady (płatny plan, WAV, nazwy plików, pętle) i tabelę postępu. Dokument koncepcji 2.0 uzupełniony o muzykę.
+
 ## Build 60 · 2026-10-25
 - [Narzędzia] Zwiastun 2.0 ma 15 sekund i muzykę z Suno (`art/2.0/audio/`), a cięcia leżą na taktach utworu (142 BPM): Ziemia na mrocznym wstępie, start Strikera w ostatnim takcie przed wejściem bitu, walka od wejścia bitu, combo na pierwszą miarę taktu, boss, a plansza tytułowa na końcowym uderzeniu utworu. Z efektów zostały tylko subtelne strzały pod muzyką (decyzja Konrada); pełny zestaw efektów można włączyć opcją. Czasy ujęć są w jednym miejscu (`teaser/timeline.js`), a fragment muzyki wycina `npm run teaser`.
 
