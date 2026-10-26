@@ -14,12 +14,16 @@ i wersja TEST (gracze tego nie widzą).
 
 - Tryb Endless w każdym świecie: po pokonaniu Void Heart (pełna wersja) gra trwa do zniszczenia statku, wynik to liczba zabitych wrogów. Co minutę fala, co 2,5 minuty elita, co 5 minut boss świata, wrogowie stale mocniejsi. Monety z przelotu plus 40 za każdą minutę, rekord każdego świata zapisany.
 - Rankingi Game Center: osobny ranking Endless dla każdego świata.
+- Wersja tylko na iOS; Android dopiero z 2.0.
 
 ### What's New (App Store)
 
 - Endless mode: beat the Void Heart to open Endless in every world. The swarm never stops: a wave every minute, an elite every 2.5 minutes and the world's boss every 5 minutes, and enemies keep getting tougher. Your score is your kill count.
 - Game Center leaderboards: one Endless leaderboard per world. How long can you last?
 - Coins from every Endless run, plus a bonus for each minute survived.
+
+## Build 63 · 2026-10-26
+- [Narzędzia] Plan wersji (CLAUDE.md, decyzja Konrada): 1.3 wychodzi tylko na iOS (tryb Endless i rankingi Game Center, gotowe w buildzie 62), a premiera na Androidzie (Google Play, zakupy, Google Play Games) przesuwa się do 2.0. Zamknięte testy Google Play (12 testerów przez 14 dni) warto zacząć w trakcie prac nad 2.0. Gra bez zmian.
 
 ## Build 62 · 2026-10-25
 - [Nowe] Tryb Endless (pełna wersja, otwiera się po pokonaniu Void Heart): karta „∞ ENDLESS” pod sektorami każdego świata, z rekordem. Przelot trwa do zniszczenia statku, a wynik to liczba zabitych wrogów. Wrogowie świata (jak w jego 5. sektorze), wytrzymałość i obrażenia rosną przez pierwsze 6 minut i dalej. Co minutę fala (pierścień, natarcie albo zagrożenie świata: asteroidy, ostrzał, rozbłyski, studnie grawitacyjne), co 2,5 minuty elita z cechą (po 10 minutach z dwiema), co 5 minut boss świata, za każdym razem o połowę wytrzymalszy; po jego zniszczeniu gra toczy się dalej. Licznik czasu liczy w górę.

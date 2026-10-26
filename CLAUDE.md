@@ -12,9 +12,10 @@
 
 ## Roadmap (decided by Konrad)
 - 1.2.0 (released as build 52): weapon combos, perk sets, evolutions for all weapons, Codex, tougher enemies.
-- 1.3: Android in Google Play + leaderboards (Game Center, Google Play Games) + Endless mode (unlocked after the
-  whole game, full game only, one leaderboard per world, score = kills). Order: first the iOS content (Endless +
-  Game Center), then the Android step (Google Play, Billing, Google Play Games).
+- 1.3 (iOS only): Endless mode (unlocked after the whole game, full game only, one leaderboard per world,
+  score = kills) + Game Center leaderboards. Done in build 62.
+- Android moved to 2.0 (decided by Konrad, 2026-10-26: the Google Play developer account is not paid yet, and 2.0
+  takes a while anyway): Google Play, Billing and Google Play Games launch with 2.0.
 - 2.0: visual overhaul on PixiJS (same JS + Capacitor code), richer art made with ChatGPT from Claude's prompts,
   10 worlds of 6 sectors each, one journey: the Void Collective (a machine intelligence that rewrites worlds, more
   organic the deeper you go) attacks Earth; the player fights from Earth's orbit to its heart, the Nexus (worlds and
@@ -22,7 +23,8 @@
   README); the PixiJS prototype is `proto2/`.
 
 ## Android (decided by Konrad)
-Android launches in 1.3 (Google Play needs 12 testers for 14 days on a new account before publishing). Project in `android/`, see README.md. Until Google
+Android launches with 2.0 (Google Play needs 12 testers for 14 days on a new account before publishing, so closed
+testing should start during 2.0 work). Project in `android/`, see README.md. Until Google
 Play Billing exists, Android is trial-only. This cloud environment cannot build Android (no SDK); Konrad builds in
 Android Studio on his Mac (`npm run android:open`; `npm run android:play` / `npm run android:test` install and
 launch the normal game / the TEST app "VB Test" on the emulator or phone).
