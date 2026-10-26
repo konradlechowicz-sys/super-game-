@@ -22,6 +22,9 @@ i wersja TEST (gracze tego nie widzą).
 - Game Center leaderboards: one Endless leaderboard per world. How long can you last?
 - Coins from every Endless run, plus a bonus for each minute survived.
 
+## Build 65 · 2026-10-26
+- [Narzędzia] CLAUDE.md: decyzje Konrada o 2.0 (10 nowych światów zamiast 4, wszystkie naraz na iOS i Androidzie, zawartość „1.4” w 2.0, aktualizacja za darmo dla kupujących 1.x, postęp od nowa z bonusem dla weteranów, cena ok. 4,99 USD dla nowych graczy, 2.0 za przełącznikiem widocznym tylko w wersji TEST do premiery). Plan wykonawczy w dokumencie „Void Blaster 2.0 – plan wykonawczy”. Gra bez zmian.
+
 ## Build 64 · 2026-10-26
 - [Narzędzia] `art/2.0/audio/SUNO-PROMPTS.md`: nowe prompty do Suno dla światów 1–4 (sektor i boss). Wszystkie mają wspólny rdzeń stylu tematu głównego ze zwiastuna (kinowy sci-fi, orkiestra z synthwave, braamy, chóry, arpeggia), a różnią się tempem, tonacją, instrumentem prowadzącym i teksturą świata: zimny syntezator i szum radia (W1, 140 BPM), bohaterskie dęciaki i taiko w burzy (W2, 146 BPM), chór bez słów i daleki ostrzał w pustce (W3, 128 BPM), kryształowe dzwonki, pustynny wiatr i pierwsze „oddechy” (W4, 136 BPM). Gra bez zmian.
 
