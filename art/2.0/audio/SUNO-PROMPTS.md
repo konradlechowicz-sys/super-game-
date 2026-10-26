@@ -110,39 +110,60 @@ Lyrics:
 
 Każdy świat: najpierw **sektor**, potem **boss** jako Cover wybranego sektora.
 
+### Wspólne DNA (światy 1–4, wersja 2 po zwiastunie)
+Temat główny ze zwiastuna (`void-blaster-theme-suno.mp3`) spodobał się Konradowi, więc światy 1–4 mają **ten sam rdzeń
+stylu** co on, a różnią się tempem, tonacją, instrumentem prowadzącym i jedną charakterystyczną teksturą:
+
+```
+dark cinematic sci-fi, hybrid orchestral synthwave, deep sub bass, pulsing analog arpeggios, massive brass braams, heavy cinematic drums, ethereal choir pads, glitchy cyberpunk textures, epic video game soundtrack, instrumental
+```
+
+Ten rdzeń jest już wpisany na początku każdego promptu poniżej, więc wklejasz prompty bez zmian.
+
+| Świat | Tempo, tonacja | Prowadzi | Tekstura świata | Nastrój |
+| --- | --- | --- | --- | --- |
+| 1 Orbital Ruins | 140 BPM, D minor (jak temat główny) | samotny syntezator | metaliczne stuki, szum radia | zimno, pustka po bitwie |
+| 2 Siege of Earth | 146 BPM, C minor | bohaterska sekcja dęta | taiko, werble, grzmoty | desperacka obrona domu |
+| 3 Lunar Bridgehead | 128 BPM, rytm o połowę wolniejszy, F minor | chór bez słów | dalekie dudnienie, przestrzeń | ogrom, napięcie, cisza |
+| 4 Red Conversion | 136 BPM, E phrygian | szklane dzwonki | wiatr i piasek, pierwsze „oddechy” | coś obcego zaczyna rosnąć |
+
+Wskazówka: jeśli któraś wersja sektora brzmi zbyt podobnie do tematu głównego, zostaw ją na menu; do świata wybierz tę,
+która ma najwyraźniej słyszalną teksturę z tabeli.
+
 ### W1 Orbital Ruins: ruiny ziemskiej obrony na orbicie (100% maszyny)
 Sektor (`w01-orbital-ruins-sector`):
 ```
 Style of Music:
-cold industrial synthwave, 128 BPM, D minor, metallic percussion, pulsing analog bass, glitchy machine textures, distant radio static, lonely synth lead, broken space station atmosphere, dark sci-fi video game music, instrumental, steady energy, loopable
+dark cinematic sci-fi, hybrid orchestral synthwave, deep sub bass, pulsing analog arpeggios, massive brass braams, heavy cinematic drums, ethereal choir pads, glitchy cyberpunk textures, epic video game soundtrack, instrumental, 140 BPM, D minor, cold and lonely, lead: a lonely analog synth melody, metallic percussion like debris hitting a hull, distant radio static and broken transmissions, steady energy, loopable
 ```
 ```
 Exclude Styles:
-vocals, singing, rap, lo-fi, acoustic guitar, happy pop, orchestral choir
+vocals, singing, rap, lo-fi, acoustic guitar, happy pop, dubstep wobble
 ```
 ```
 Lyrics:
-[Intro: radio static, metallic clicks]
-[Groove: steady drums, pulsing bass]
-[Theme: cold synth lead melody]
+[Intro: radio static, metallic clicks, cold pads]
+[Groove: steady drums, pulsing arpeggio, sub bass]
+[Theme: lonely synth lead melody]
+[Build: braams, rising arpeggio]
+[Theme: full drums, choir pads, steady]
 [Groove: glitch textures, steady]
-[Theme: full energy, steady]
 [End]
 ```
 Boss (`w01-orbital-ruins-boss`, Cover sektora):
 ```
 Style of Music:
-heavy industrial boss battle, 140 BPM, distorted bass, massive brass braams, pounding metallic drums, alarm-like synths, mechanical menace, dark sci-fi video game boss music, instrumental, steady energy, loopable
+dark cinematic sci-fi, hybrid orchestral synthwave, deep distorted sub bass, massive brass braams, pounding metallic war drums, alarm-like synth stabs, glitchy cyberpunk textures, epic video game boss music, instrumental, 148 BPM, D minor, mechanical menace, the sector melody played by heavy brass, steady energy, loopable
 ```
 ```
 Exclude Styles:
-vocals, singing, rap, lo-fi, acoustic guitar, calm ambient
+vocals, singing, rap, lo-fi, acoustic guitar, calm ambient, happy pop
 ```
 ```
 Lyrics:
-[Intro: alarm synths, braam]
-[Battle: pounding drums, distorted bass, theme melody]
-[Breakdown: heavy half-time, braams]
+[Intro: alarm stabs, huge braam]
+[Battle: pounding drums, distorted bass, theme on brass]
+[Breakdown: half-time stomp, braams]
 [Battle: full energy]
 [End]
 ```
@@ -151,35 +172,36 @@ Lyrics:
 Sektor (`w02-siege-of-earth-sector`):
 ```
 Style of Music:
-epic hybrid orchestral war theme, 140 BPM, C minor, thundering taiko and snare, heroic brass, driving string ostinato, storm and thunder textures, analog synth bass, desperate defense of home, cinematic sci-fi video game music, instrumental, steady energy, loopable
+dark cinematic sci-fi, hybrid orchestral synthwave, deep sub bass, pulsing analog arpeggios, massive brass braams, heavy cinematic drums, ethereal choir pads, glitchy cyberpunk textures, epic video game soundtrack, instrumental, 146 BPM, C minor, desperate heroic defense, lead: heroic brass melody, driving taiko and snare ostinato, fast string ostinato, thunder and storm textures, steady energy, loopable
 ```
 ```
 Exclude Styles:
-vocals, singing, rap, lo-fi, acoustic guitar, happy pop
+vocals with lyrics, rap, lo-fi, acoustic guitar, happy pop, dubstep wobble
 ```
 ```
 Lyrics:
-[Intro: distant thunder, low strings]
-[March: snare and taiko, string ostinato]
+[Intro: distant thunder, low strings, pulse]
+[March: taiko and snare, string ostinato, arpeggio]
 [Theme: heroic brass melody]
-[March: storm textures, steady]
-[Theme: full orchestra, steady]
+[Build: storm rising, braams]
+[Theme: full orchestra and synths, steady]
+[March: thunder hits, steady]
 [End]
 ```
 Boss (`w02-siege-of-earth-boss`, Cover sektora):
 ```
 Style of Music:
-colossal orchestral siege battle, 146 BPM, massive war drums, choir shouts, brass braams, relentless string ostinato, thunder hits, distorted synth bass, epic sci-fi boss music, instrumental, steady energy, loopable
+dark cinematic sci-fi, hybrid orchestral synthwave, colossal war drums, choir shouts without words, massive brass braams, relentless string ostinato, distorted synth bass, thunder impacts, epic video game boss music, instrumental, 152 BPM, C minor, siege of a flying fortress, the sector melody in full orchestra, steady energy, loopable
 ```
 ```
 Exclude Styles:
-vocals with lyrics, rap, lo-fi, acoustic guitar, calm ambient
+vocals with lyrics, rap, lo-fi, acoustic guitar, calm ambient, happy pop
 ```
 ```
 Lyrics:
 [Intro: thunder, braams]
 [Battle: war drums, choir shouts, brass theme]
-[Breakdown: half-time, low brass]
+[Breakdown: half-time, low brass, thunder]
 [Battle: full energy]
 [End]
 ```
@@ -188,34 +210,35 @@ Lyrics:
 Sektor (`w03-lunar-bridgehead-sector`):
 ```
 Style of Music:
-eerie spacious sci-fi, 120 BPM, F minor, sparse deep percussion like distant mortar impacts, low gravity floating pads, sub bass pulses, cold moonlit synth melody, silence and tension, dark ambient action, video game music, instrumental, steady, loopable
+dark cinematic sci-fi, hybrid orchestral synthwave, deep sub bass, pulsing analog arpeggios, massive brass braams, heavy cinematic drums, ethereal choir pads, glitchy cyberpunk textures, epic video game soundtrack, instrumental, 128 BPM half-time feel, F minor, vast and tense, lead: a wordless female choir over slow floating arpeggios, distant booming impacts like mortars on the Moon, wide empty space and silence between hits, steady energy, loopable
 ```
 ```
 Exclude Styles:
-vocals, singing, rap, lo-fi, acoustic guitar, happy pop, dubstep
+vocals with lyrics, rap, lo-fi, acoustic guitar, happy pop, dubstep wobble
 ```
 ```
 Lyrics:
-[Intro: empty space, low hum]
-[Pulse: sparse heavy percussion, sub bass]
-[Theme: cold floating synth melody]
-[Pulse: distant impacts, steady]
-[Theme: fuller, steady]
+[Intro: empty space, low hum, distant impact]
+[Pulse: half-time drums, sub bass, floating arpeggio]
+[Theme: wordless choir melody]
+[Build: braams, booming impacts]
+[Theme: full drums, choir and synths, steady]
+[Pulse: space and silence, steady]
 [End]
 ```
 Boss (`w03-lunar-bridgehead-boss`, Cover sektora):
 ```
 Style of Music:
-menacing lunar fortress battle, 132 BPM, huge booming drums, deep brass, charging laser synths, sub bass drops, cold and massive, dark sci-fi boss music, instrumental, steady energy, loopable
+dark cinematic sci-fi, hybrid orchestral synthwave, huge booming drums, deep brass, charging laser synths, sub bass drops, choir, massive brass braams, epic video game boss music, instrumental, 136 BPM, F minor, a cannon tower rising from a crater, cold and massive, the choir melody turned menacing, steady energy, loopable
 ```
 ```
 Exclude Styles:
-vocals, singing, rap, lo-fi, acoustic guitar, calm ambient
+vocals with lyrics, rap, lo-fi, acoustic guitar, calm ambient, happy pop
 ```
 ```
 Lyrics:
 [Intro: charging synth, booming hit]
-[Battle: huge drums, deep brass theme]
+[Battle: huge drums, deep brass, choir theme]
 [Breakdown: sub drops, laser synths]
 [Battle: full energy]
 [End]
@@ -225,35 +248,36 @@ Lyrics:
 Sektor (`w04-red-conversion-sector`):
 ```
 Style of Music:
-crystalline desert sci-fi, 132 BPM, phrygian mode, glassy bell arpeggios, dusty low drums, warm distorted bass, wind and sand textures, haunting synth lead, alien crystal growth, cinematic video game music, instrumental, steady energy, loopable
+dark cinematic sci-fi, hybrid orchestral synthwave, deep sub bass, pulsing analog arpeggios, massive brass braams, heavy cinematic drums, ethereal choir pads, glitchy cyberpunk textures, epic video game soundtrack, instrumental, 136 BPM, E phrygian, alien and haunting, lead: glassy crystal bell arpeggios, dusty low drums, warm distorted bass, desert wind and sand textures, subtle organic breathing sounds, steady energy, loopable
 ```
 ```
 Exclude Styles:
-vocals, singing, rap, lo-fi, acoustic guitar, happy pop
+vocals with lyrics, rap, lo-fi, acoustic guitar, happy pop, dubstep wobble
 ```
 ```
 Lyrics:
-[Intro: desert wind, glass chimes]
-[Groove: dusty drums, crystal arpeggios]
-[Theme: haunting lead melody]
-[Groove: sand storm textures, steady]
-[Theme: full energy, steady]
+[Intro: desert wind, glass chimes, breathing]
+[Groove: dusty drums, crystal arpeggios, sub bass]
+[Theme: haunting crystal bell melody]
+[Build: braams, sand storm rising]
+[Theme: full drums, choir and synths, steady]
+[Groove: crystal and breath textures, steady]
 [End]
 ```
 Boss (`w04-red-conversion-boss`, Cover sektora):
 ```
 Style of Music:
-colossal crystal titan battle, 138 BPM, shattering glass percussion, heavy war drums, distorted bass, choir, brass braams, phrygian menace, epic sci-fi boss music, instrumental, steady energy, loopable
+dark cinematic sci-fi, hybrid orchestral synthwave, shattering glass percussion, heavy war drums, distorted sub bass, dark choir, massive brass braams, epic video game boss music, instrumental, 142 BPM, E phrygian, a walking crystal colossus, phrygian menace, the crystal melody played by low brass and choir, steady energy, loopable
 ```
 ```
 Exclude Styles:
-vocals with lyrics, rap, lo-fi, acoustic guitar, calm ambient
+vocals with lyrics, rap, lo-fi, acoustic guitar, calm ambient, happy pop
 ```
 ```
 Lyrics:
 [Intro: cracking crystal, braam]
 [Battle: heavy drums, glass hits, choir]
-[Breakdown: slow stomp, brass]
+[Breakdown: slow stomp, low brass]
 [Battle: full energy]
 [End]
 ```

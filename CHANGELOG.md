@@ -22,6 +22,9 @@ i wersja TEST (gracze tego nie widzą).
 - Game Center leaderboards: one Endless leaderboard per world. How long can you last?
 - Coins from every Endless run, plus a bonus for each minute survived.
 
+## Build 64 · 2026-10-26
+- [Narzędzia] `art/2.0/audio/SUNO-PROMPTS.md`: nowe prompty do Suno dla światów 1–4 (sektor i boss). Wszystkie mają wspólny rdzeń stylu tematu głównego ze zwiastuna (kinowy sci-fi, orkiestra z synthwave, braamy, chóry, arpeggia), a różnią się tempem, tonacją, instrumentem prowadzącym i teksturą świata: zimny syntezator i szum radia (W1, 140 BPM), bohaterskie dęciaki i taiko w burzy (W2, 146 BPM), chór bez słów i daleki ostrzał w pustce (W3, 128 BPM), kryształowe dzwonki, pustynny wiatr i pierwsze „oddechy” (W4, 136 BPM). Gra bez zmian.
+
 ## Build 63 · 2026-10-26
 - [Narzędzia] Plan wersji (CLAUDE.md, decyzja Konrada): 1.3 wychodzi tylko na iOS (tryb Endless i rankingi Game Center, gotowe w buildzie 62), a premiera na Androidzie (Google Play, zakupy, Google Play Games) przesuwa się do 2.0. Zamknięte testy Google Play (12 testerów przez 14 dni) warto zacząć w trakcie prac nad 2.0. Gra bez zmian.
 
