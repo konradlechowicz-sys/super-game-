@@ -2,8 +2,9 @@
 // high orbit, no floor. Far below: black space with stars in two depths and the dark crescent of night-side Earth
 // (parallax). At the arena level: a sparse field of small wreckage, a few broken deck fragments of the defense
 // stations (the old floor tile, cut to jagged islands), dead satellites that drift and keep being "rewritten" by the
-// Collective, and a broken amber energy barrier along the arena edge. Until the ChatGPT art for world 1 arrives this
-// is built from what exists (teaser Earth and satellites, the station floor tile) plus shapes drawn in code.
+// Collective, and a broken amber energy barrier along the arena edge. ChatGPT's world-1 art replaces the stand-ins as
+// it arrives (so far the debris tile, W1 P3a); the rest is built from the teaser Earth and satellites, the station
+// floor tile and shapes drawn in code.
 import { Container, Graphics, Rectangle, Sprite, Texture, TilingSprite } from 'pixi.js';
 
 const TAU = Math.PI * 2;
@@ -72,8 +73,10 @@ export function makeOrbitalRuins(tex) {
 
   // ---- arena layer (world space, above the floor) ----
   const arena = new Container();
-  const debris = new TilingSprite({ texture: debrisTexture(), width: 10, height: 10 });
-  debris.alpha = 0.45; // background: well below the enemies' metal
+  // the field of small wreckage: ChatGPT's tile (W1 P3a, proto2/make-world1.py), else one drawn here
+  const debris = new TilingSprite({ texture: tex['w1-debris'] || debrisTexture(), width: 10, height: 10 });
+  if (tex['w1-debris']) debris.tileScale.set(1024 / 768);
+  debris.alpha = tex['w1-debris'] ? 0.7 : 0.45; // background: well below the enemies' metal
   const islands = new Container();
   const sats = new Container();
   const barrier = new Graphics();

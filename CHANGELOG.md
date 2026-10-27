@@ -16,6 +16,9 @@ i wersja TEST (gracze tego nie widzą).
 
 - 
 
+## Build 83 · 2026-10-27
+- [Nowe] Wersja 2.0, świat 1: pole drobnego wraku z grafiki ChatGPT (zadanie W1 P3a): odłamki płyt, kable, śruby i pierścienie zamiast kształtów rysowanych w kodzie. Kafel łączy się bez szwu, a wrak jest na tyle ciemny, że wrogowie wyraźnie się od niego odcinają.
+
 ## Build 82 · 2026-10-27
 - [Narzędzia] Zaakceptowany koncept areny świata 1 „Orbital Ruins” (ChatGPT, zadanie W1 P1) zapisany w art/2.0/worlds/world1/concept-orbital-ruins.webp; jest wzorem dla kolejnych grafik świata 1. Gra bez zmian.
 
