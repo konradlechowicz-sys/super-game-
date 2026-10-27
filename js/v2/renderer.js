@@ -139,23 +139,27 @@ export async function createV2Renderer(app) {
     return { body, spr, shadow, glow, base: (o.r * PROP_SIZE[o.prop]) / spr.texture.width };
   }
 
-  function bossSprites(b) {
+  // the world-1 boss, the Harvester (W1 P8): the assembled ship with its glowing parts laid over it and animated (core,
+  // pods, nose) and two engine flames; positions are in the art's 1254 px frame, the textures are stored at 1024 px
+  function bossSprites() {
     const c = new Container();
+    const at = (s, x, y) => { s.position.set(((x - 627) / 1254) * 1024, ((y - 627) / 1254) * 1024); return s; };
+    const part = (name, x, y, ax = 0.5, ay = 0.5) => {
+      const s = new Sprite(tex[`w1-boss-${name}`]);
+      s.anchor.set(ax, ay); s.blendMode = 'add';
+      return at(s, x, y);
+    };
     const halo = new Sprite(tex['glow-tank']);
-    halo.anchor.set(0.5); halo.tint = 0xff2dd0; halo.blendMode = 'add';
-    const flames = [455, 790].map((x) => {
-      const f = new Sprite(tex['h-flame']);
-      f.anchor.set(0.5, 0.15); f.blendMode = 'add';
-      f.position.set(((x - 627) / 1254) * 640, ((1045 - 627) / 1254) * 640);
-      return f;
-    });
-    const body = new Sprite(tex.harvester);
+    halo.anchor.set(0.5); halo.tint = 0xff2dd0; halo.blendMode = 'add'; halo.scale.set(6.4);
+    const flames = [455, 800].map((x) => part('flame', x, 1045, 0.5, 0.15));
+    const body = new Sprite(tex['w1-boss']);
     body.anchor.set(0.5);
-    c.addChild(halo, ...flames, body);
-    halo.scale.set(4);
-    c.scale.set((b.r * 4.6) / 640);
+    const core = part('glow-core', 627, 619);
+    const pods = [part('glow-pod-left', 285, 643), part('glow-pod-right', 967, 643)];
+    const nose = part('glow-nose', 627, 266);
+    c.addChild(halo, ...flames, body, core, ...pods, nose);
     bossLayer.addChild(c);
-    return { body: c, inner: body, flames, halo };
+    return { body: c, inner: body, flames, halo, core, pods, nose };
   }
 
   const fitScreen = () => {
@@ -231,14 +235,22 @@ export async function createV2Renderer(app) {
       if (e.boss) {
         if (e.def !== BOSSES.hive) continue;
         e.v2 = true;
-        const s = spritesFor(e, () => bossSprites(e));
-        s.body.position.set(e.x, e.y);
-        s.body.alpha = e.alpha ?? 1;
+        const s = spritesFor(e, () => bossSprites());
+        // the entrance (spawnT 1.2 s): it rises from the depth on the side of the Earth (lower left), growing
+        const k = Math.max(0, e.spawnT) / 1.2, rise = k * k;
+        s.body.position.set(e.x - rise * 520, e.y + rise * 900);
+        s.body.alpha = (e.alpha ?? 1) * (1 - k * 0.6);
         s.inner.tint = e.flash > 0 ? 0xffb0ff : 0xffffff;
-        s.body.rotation = Math.PI + Math.sin(game.time * 1.3) * 0.05;
-        s.flames.forEach((f, i) => f.scale.set(1.1, 1.1 * (1 + 0.15 * Math.sin(game.time * 31 + i * 1.7))));
-        s.halo.alpha = 0.25 + 0.1 * Math.sin(game.time * 6);
-        s.body.scale.set(((e.r * 4.6) / 640) * sc);
+        s.body.rotation = Math.PI + Math.sin(game.time * 1.3) * 0.05 - rise * 0.5;
+        s.body.scale.set(((e.r * 4.6) / 1024) * (1 - rise * 0.65));
+        // engines burn harder while it rises; the glows beat faster and brighter once it is enraged
+        const rage = e.phase > 1 ? 1 : 0, t = game.time * (rage ? 7 : 4);
+        s.flames.forEach((f, i) => f.scale.set(1.1, (1.1 + rise * 1.2) * (1 + 0.15 * Math.sin(game.time * 31 + i * 1.7))));
+        s.halo.alpha = (0.22 + 0.1 * Math.sin(game.time * 6)) * (1 + rage * 0.6);
+        s.core.alpha = 0.55 + 0.35 * Math.sin(t) + rage * 0.2;
+        s.core.scale.set(1 + 0.08 * Math.sin(t) + rage * 0.15);
+        s.pods.forEach((p, i) => { p.alpha = 0.5 + 0.4 * Math.sin(t * 0.8 + i * Math.PI) + rage * 0.2; });
+        s.nose.alpha = 0.45 + 0.3 * Math.sin(t * 1.3) + rage * 0.3;
         continue;
       }
       const glowCol = ENEMY_ART[e.type];

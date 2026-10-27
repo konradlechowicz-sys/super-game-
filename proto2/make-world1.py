@@ -79,3 +79,15 @@ print('w1-earth', earth.size, 'circle', round(ecx), round(ecy), round(er))
 # so it keeps its black background. A seamless 1024 tile.
 Image.open(f'{SRC}/near-overlay.webp').convert('RGB').save(f'{OUT}/w1-near.webp', 'WEBP', quality=90, method=6)
 print('w1-near')
+
+# P8: the world-1 boss, the Harvester (art/2.0/bosses/world1, made before the Art Bible and kept): the assembled ship,
+# plus its glowing parts from the parts sheet, which the game lays over it and animates (core, pods, nose) and the
+# engine flame. Everything shares the assembled ship's 1254 px frame, stored at 1024 px (scale 1024/1254).
+BOSS = 'art/2.0/bosses/world1'
+k = 1024 / 1254
+Image.open(f'{BOSS}/harvester.webp').convert('RGBA').resize((1024, 1024), Image.LANCZOS).save(f'{OUT}/w1-boss.webp', 'WEBP', quality=90, method=6)
+for part in ('glow-core', 'glow-pod-left', 'glow-pod-right', 'glow-nose', 'flame'):
+    im = Image.open(f'{BOSS}/parts/harvester-{part}.png').convert('RGBA')
+    im = im.resize((round(im.width * k), round(im.height * k)), Image.LANCZOS)
+    im.save(f'{OUT}/w1-boss-{part}.webp', 'WEBP', quality=90, method=6)
+print('w1-boss + 5 parts')

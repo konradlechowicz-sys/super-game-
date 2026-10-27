@@ -16,6 +16,9 @@ i wersja TEST (gracze tego nie widzą).
 
 - 
 
+## Build 89 · 2026-10-27
+- [Nowe] 2.0, boss świata 1 (Harvester, W1 P8): ostrzejsza grafika i świecące części z arkusza – rdzeń pulsuje, boczne kapsuły na zmianę, dziób się rozjaśnia; w szale (druga faza) wszystko świeci mocniej i szybciej. Boss wlatuje od strony Ziemi, z głębi, rosnąc, z silnikami na pełnej mocy.
+
 ## Build 88 · 2026-10-27
 - [Nowe] 2.0, świat 1: nakładka bliska z ChatGPT (W1 P4) – pył, drobne odłamki i iskry tuż przed kamerą, nad akcją; przesuwają się szybciej niż arena, więc widać głębię. Delikatna, nie zasłania wrogów.
 
