@@ -689,7 +689,7 @@ export class UI {
     const buyLabel = store.mode === 'none' ? 'AVAILABLE IN THE iOS APP'
       : `UNLOCK${price ? ` — ${esc(price)}` : ''}${store.mode === 'dev' ? ' (TEST)' : ''}`;
     this.modal(`
-      <div class="modal-kicker" style="color:var(--gold)">${afterBoss ? 'HIVE MOTHER DEFEATED' : 'VOID BLASTER'}</div>
+      <div class="modal-kicker" style="color:var(--gold)">${afterBoss ? 'HARVESTER DEFEATED' : 'VOID BLASTER'}</div>
       <h2>${afterBoss ? 'THE GALAXY NEEDS YOU' : 'UNLOCK THE FULL GAME'}</h2>
       <p class="muted center">${afterBoss ? 'Three more worlds are waiting beyond the Neon Nebula.' : 'One purchase, no ads, no subscriptions.'}</p>
       <ul class="perks">

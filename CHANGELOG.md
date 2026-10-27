@@ -16,6 +16,9 @@ i wersja TEST (gracze tego nie widzą).
 
 - 
 
+## Build 91 · 2026-10-27
+- [Zmiana] 2.0: boss świata 1 nazywa się teraz HARVESTER (wcześniej Hive Mother) – na pasku życia, w nazwie sektora 1-6 i na ekranie po jego pokonaniu.
+
 ## Build 90 · 2026-10-27
 - [Nowe] 2.0: szczątki wrogów z ChatGPT (W1 P7) – zestrzelony wróg rozpada się na 2–3 kawałki swojego kadłuba (elita na 4), które rozlatują się, obracają i gasną w około sekundę. Każdy z 6 typów wrogów ma własne szczątki; naraz leci najwyżej 160 kawałków, więc wydajność przy dużych falach się nie zmienia.
 
