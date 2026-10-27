@@ -19,6 +19,7 @@ const TAU = Math.PI * 2;
 const ENEMY_ART = { drone: 0xff2d95, swarmer: 0xffe23d, dasher: 0xff3d9a, shooter: 0xff2d95, tank: 0xb04dff, splitter: 0x9dff3d };
 const ENEMY_SIZE = 2.8; // sprite size in enemy radii
 const PROP_SIZE = { tank: 3.4, crate: 3 }; // length of a world-1 prop in its radii
+const DEBRIS_MAX = 160; // enemy debris fragments flying at once (W1 P7); the oldest is reused past that
 const SHIP_H = 46; // the Striker's length in world units
 const FLOOR_SCALE = 0.5;
 const TITLE_SHIP_H = 120; // the Striker on the title screen, in points
@@ -64,7 +65,7 @@ export async function createV2Renderer(app) {
   const border = new Graphics();
   const lootLayer = add(new Container()), ringG = add(new Graphics());
   const glowLayer = add(new Container());
-  const propLayer = new Container();
+  const propLayer = new Container(), debrisLayer = new Container();
   const enemyLayer = new Container(), bossLayer = new Container(), shipLayer = new Container();
   const shotLayer = add(new Container()), fxLayer = add(new Container()), fxG = add(new Graphics());
   const weaponLayer = add(new Container()), weaponG = new Graphics();
@@ -72,7 +73,7 @@ export async function createV2Renderer(app) {
   // world 1 "Orbital Ruins" (js/v2/orbit.js): far layer under the arena, wreckage on it; other worlds use the floor
   const orbit = makeOrbitalRuins(tex);
   px.stage.addChildAt(orbit.far, 0);
-  world.addChild(floor, border, orbit.arena, propLayer, lootLayer, ringG, glowLayer, enemyLayer, bossLayer, shotLayer, weaponLayer, shipLayer, fxLayer, fxG);
+  world.addChild(floor, border, orbit.arena, propLayer, debrisLayer, lootLayer, ringG, glowLayer, enemyLayer, bossLayer, shotLayer, weaponLayer, shipLayer, fxLayer, fxG);
   // reusable sprites: each frame takes as many as it needs and hides the rest (no per-object create/destroy)
   const lootHalo = pool(lootLayer), loot = pool(lootLayer);
   const shotHalo = pool(shotLayer), shots = pool(shotLayer);
@@ -141,6 +142,45 @@ export async function createV2Renderer(app) {
 
   // the world-1 boss, the Harvester (W1 P8): the assembled ship with its glowing parts laid over it and animated (core,
   // pods, nose) and two engine flames; positions are in the art's 1254 px frame, the textures are stored at 1024 px
+  // a destroyed enemy breaks into its own fragments (W1 P7: 4 per enemy type), which fly apart, spin and fade
+  const debris = [];
+  let debrisGame = null, debrisTime = 0;
+  function shatter(e) {
+    if (!tex[`w1-debris-${e.type}-1`]) return;
+    const n = e.elite ? 4 : 2 + Math.floor(Math.random() * 2), first = Math.floor(Math.random() * 4);
+    for (let i = 0; i < n; i++) {
+      let d;
+      if (debris.length < DEBRIS_MAX) {
+        d = { s: new Sprite() };
+        d.s.anchor.set(0.5);
+        debrisLayer.addChild(d.s);
+      } else d = debris.shift();
+      const t = tex[`w1-debris-${e.type}-${((first + i) % 4) + 1}`];
+      const a = Math.random() * TAU, v = 70 + Math.random() * 120;
+      d.s.texture = t;
+      d.base = (e.r * ENEMY_SIZE * 0.55) / Math.max(t.width, t.height);
+      Object.assign(d, { x: e.x, y: e.y, vx: Math.cos(a) * v + e.kx * 0.3, vy: Math.sin(a) * v + e.ky * 0.3, rot: Math.random() * TAU, spin: (Math.random() - 0.5) * 6, t: 0, life: 0.8 + Math.random() * 0.5 });
+      debris.push(d);
+    }
+  }
+  function updateDebris(game) {
+    if (game !== debrisGame) { debrisGame = game; debrisTime = game.time; for (const d of debris) d.t = d.life; }
+    const dt = Math.min(0.05, Math.max(0, game.time - debrisTime));
+    debrisTime = game.time;
+    const drag = Math.exp(-2.5 * dt);
+    for (const d of debris) {
+      d.t += dt;
+      const k = d.t / d.life;
+      d.s.visible = k < 1;
+      if (k >= 1) continue;
+      d.vx *= drag; d.vy *= drag;
+      d.x += d.vx * dt; d.y += d.vy * dt; d.rot += d.spin * dt;
+      d.s.position.set(d.x, d.y); d.s.rotation = d.rot;
+      d.s.scale.set(d.base * (1 - k * 0.25));
+      d.s.alpha = k < 0.4 ? 1 : 1 - (k - 0.4) / 0.6;
+    }
+  }
+
   function bossSprites() {
     const c = new Container();
     const at = (s, x, y) => { s.position.set(((x - 627) / 1254) * 1024, ((y - 627) / 1254) * 1024); return s; };
@@ -270,11 +310,13 @@ export async function createV2Renderer(app) {
     // drop the sprites of objects that are gone
     for (const [obj, s] of drawn) {
       if (s.frame === frameNo) continue;
+      if (obj.dead && !obj.boss && !obj.prop && ENEMY_ART[obj.type] !== undefined) shatter(obj);
       s.body.destroy({ children: true });
       s.glow?.destroy();
       drawn.delete(obj);
     }
 
+    updateDebris(game);
     drawCrowd(game);
 
     // the ship the player flies (game.ship: its id, and skinName for the Gold Striker)

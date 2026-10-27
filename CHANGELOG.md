@@ -16,6 +16,9 @@ i wersja TEST (gracze tego nie widzą).
 
 - 
 
+## Build 90 · 2026-10-27
+- [Nowe] 2.0: szczątki wrogów z ChatGPT (W1 P7) – zestrzelony wróg rozpada się na 2–3 kawałki swojego kadłuba (elita na 4), które rozlatują się, obracają i gasną w około sekundę. Każdy z 6 typów wrogów ma własne szczątki; naraz leci najwyżej 160 kawałków, więc wydajność przy dużych falach się nie zmienia.
+
 ## Build 89 · 2026-10-27
 - [Nowe] 2.0, boss świata 1 (Harvester, W1 P8): ostrzejsza grafika i świecące części z arkusza – rdzeń pulsuje, boczne kapsuły na zmianę, dziób się rozjaśnia; w szale (druga faza) wszystko świeci mocniej i szybciej. Boss wlatuje od strony Ziemi, z głębi, rosnąc, z silnikami na pełnej mocy.
 
