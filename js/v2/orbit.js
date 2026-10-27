@@ -3,7 +3,7 @@
 // (parallax). At the arena level: a sparse field of small wreckage, a few broken deck fragments of the defense
 // stations (the old floor tile, cut to jagged islands), dead satellites that drift and keep being "rewritten" by the
 // Collective, and a broken amber energy barrier along the arena edge. ChatGPT's world-1 art replaces the stand-ins as
-// it arrives (so far the debris tile, W1 P3a); the rest is built from the teaser Earth and satellites, the station
+// it arrives (so far the debris tile W1 P3a and the deck fragments W1 P3b); the rest is built from the teaser Earth and satellites, the station
 // floor tile and shapes drawn in code.
 import { Container, Graphics, Rectangle, Sprite, Texture, TilingSprite } from 'pixi.js';
 
@@ -120,7 +120,15 @@ export function makeOrbitalRuins(tex) {
       const size = 380 + r() * 260;
       let x, y;
       do { x = (r() - 0.5) * (w - size); y = (r() - 0.5) * (h - size); } while (Math.hypot(x, y) < 320);
-      const c = island(r, size);
+      // ChatGPT's deck fragments (W1 P3b), else a jagged cut of the station floor tile
+      const art = tex[`w1-island-${(i % 4) + 1}`];
+      let c;
+      if (art) {
+        c = new Sprite(art);
+        c.anchor.set(0.5);
+        c.scale.set(size / Math.max(art.width, art.height));
+        c.rotation = r() * TAU;
+      } else c = island(r, size);
       c.position.set(x, y);
       islands.addChild(c);
     }

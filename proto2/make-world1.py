@@ -19,3 +19,15 @@ def key(im):
 debris = key(Image.open(f'{SRC}/debris-tile.webp')).resize((768, 768), Image.LANCZOS)
 debris.save(f'{OUT}/w1-debris.webp', 'WEBP', quality=90, method=6)
 print('w1-debris', debris.size)
+
+# P3b: 4 broken deck fragments of the defense stations, one per quadrant of the sheet, each cut to its own bounding
+# box (stored at most 640 px; the game draws them 380-640 world units across)
+sheet = key(Image.open(f'{SRC}/deck-islands-sheet.webp'))
+W, H = sheet.size
+for i, (qx, qy) in enumerate([(0, 0), (1, 0), (0, 1), (1, 1)]):
+    part = sheet.crop((qx * W // 2, qy * H // 2, (qx + 1) * W // 2, (qy + 1) * H // 2))
+    part = part.crop(part.getchannel('A').point(lambda v: 255 if v > 40 else 0).getbbox())
+    k = min(1, 640 / max(part.size))
+    part = part.resize((round(part.width * k), round(part.height * k)), Image.LANCZOS)
+    part.save(f'{OUT}/w1-island-{i + 1}.webp', 'WEBP', quality=90, method=6)
+    print(f'w1-island-{i + 1}', part.size)

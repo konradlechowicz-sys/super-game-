@@ -16,6 +16,9 @@ i wersja TEST (gracze tego nie widzą).
 
 - 
 
+## Build 84 · 2026-10-27
+- [Nowe] 2.0, świat 1 (Orbital Ruins): wyspy pokładów stacji obronnych to teraz grafika z ChatGPT (W1 P3b) – ciemny metal z bursztynowymi pasami, odsłonięte kratownice i magentowe ślady Kolektywu zamiast prowizorycznych wycinków podłogi.
+
 ## Build 83 · 2026-10-27
 - [Nowe] Wersja 2.0, świat 1: pole drobnego wraku z grafiki ChatGPT (zadanie W1 P3a): odłamki płyt, kable, śruby i pierścienie zamiast kształtów rysowanych w kodzie. Kafel łączy się bez szwu, a wrak jest na tyle ciemny, że wrogowie wyraźnie się od niego odcinają.
 
