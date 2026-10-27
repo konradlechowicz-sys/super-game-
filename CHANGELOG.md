@@ -16,6 +16,9 @@ i wersja TEST (gracze tego nie widzą).
 
 - 
 
+## Build 69 · 2026-10-27
+- [Narzędzia] Uporządkowane uruchamianie testów: 3 miejsca (przeglądarka, symulator, iPhone) × 2 warianty (zwykła gra, TEST). `npm start` pyta gdzie i którą wersję; skróty `npm run web|sim|phone` oraz `:test`. Każde uruchomienie wypisuje ramkę: build, gałąź (zaakceptowana czy kandydat), miejsce, wariant. `npm run review` pyta też: symulator czy iPhone. `npm run xcode` przygotowuje zwykłą grę i otwiera Xcode. Ściągawka po polsku: JAK-TESTOWAC.md. Stare `play`/`play:test` nadal działają. Gra bez zmian.
+
 ## Build 68 · 2026-10-27
 - [Narzędzia] Wersja 2.0, etap 1 (tylko wariant TEST): w panelu 🛠 przełącznik „2.0 look (PixiJS, world 1 art)”. Włącza nową warstwę PixiJS (WebGL): podłoga świata 1 z kafla, Striker złożony z części (przechyla się w skrętach, płomienie silników rosną z prędkością), wrogowie z grafiki 2.0 z poświatą, Harvester jako boss świata 1. Strzały, efekty, paski i HUD na razie po staremu, na wierzchu.
 - [Narzędzia] Przycisk STRESS +300 w panelu 🛠: 300 wrogów naraz, do pomiaru FPS na telefonie (bramka 1: stałe 60 FPS).

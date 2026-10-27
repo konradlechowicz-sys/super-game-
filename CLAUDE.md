@@ -101,9 +101,11 @@ Konrad decides what becomes the real game: **never push to `main`**. `main` hold
 3. **Tell Konrad the build number and to run `npm run review` on his Mac.** The script lists every `claude/...`
    branch with commits not in `main`, builds the chosen one, launches it in the iOS Simulator and asks:
    accept (merged into `main` and pushed), reject (hidden until the branch gets new commits) or later.
-   It also asks whether to launch the normal or the TEST variant.
-   `npm run play` launches the accepted version (`main`) in the simulator; `npm run play:test` its TEST variant,
-   `npm run phone:test` the TEST variant on the connected iPhone (asks for the Team ID once, saved in `.vb-team`).
+   It also asks simulator or iPhone, and the normal or the TEST variant.
+   Launchers (Konrad's cheat sheet `JAK-TESTOWAC.md`, logic `scripts/run.mjs`): `npm start` asks where and which
+   variant; `npm run web|sim|phone` + `:test` for the TEST variant (browser on the Mac / iOS Simulator / connected
+   iPhone; the phone asks for the Team ID once, saved in `.vb-team`). Each prints build, branch, place and variant.
+   `review` also asks simulator or iPhone. Use these names when telling Konrad what to run.
 - GitHub Pages should serve `main`, so `https://konradlechowicz-sys.github.io/super-game-/` is the accepted version.
 - If a branch's commits are already in `main`, start new work from the latest `main`.
 

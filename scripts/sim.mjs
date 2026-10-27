@@ -1,6 +1,6 @@
 // Builds the iOS app and runs it in the iOS Simulator using Apple's own tools (xcodebuild + simctl),
 // so it works whatever the simulator app is called in the installed Xcode ("Simulator", "Device Hub", …).
-// Used by `npm run play` and `npm run review`; assumes www/ was already built and synced (cap sync).
+// Used by scripts/run.mjs (npm start, npm run sim, npm run sim:test); assumes www/ was already built and synced.
 // --test (or runInSimulator({ test: true })): installs it as a separate app "VB Test" with its own bundle id and save.
 import { execSync } from 'node:child_process';
 import { readFileSync } from 'node:fs';

@@ -1,7 +1,7 @@
 // npm run review — test new game versions prepared in the cloud, then accept or reject them.
 //
 // Cloud sessions push their work to `claude/...` branches. This script lists those with changes not yet in `main`,
-// builds the chosen one, launches it in the iOS Simulator and asks Konrad for a decision:
+// builds the chosen one, launches it in the iOS Simulator or on the iPhone (scripts/run.mjs) and asks Konrad for a decision:
 //   accept -> merged into main and pushed (main is the version that gets released),
 //   reject -> back to main; this exact version is not offered again (new commits on the branch will be),
 //   later  -> back to main, nothing changes.
@@ -51,12 +51,14 @@ function switchToMain() {
 
 // Build and launch with the tools of the version being tested (it is checked out at this point), so fixes to the
 // build/launch scripts take effect immediately instead of only after they reach main.
-// test = TEST variant (tester's panel, separate "VB Test" app); versions from before the TEST line ignore the flag.
-function buildAndLaunch(test) {
+// place = sim | phone; test = TEST variant (tester's panel, separate "VB Test" app). Versions from before
+// scripts/run.mjs can only go to the simulator; versions from before the TEST line ignore the flag.
+function buildAndLaunch(place, test) {
   run('npm install --no-audit --no-fund');
+  if (process.env.VB_NO_SIM) return run(`node scripts/build.mjs${test ? ' --test' : ''}`);
+  if (existsSync('scripts/run.mjs')) return run(`node scripts/run.mjs ${place} --keep --yes${test ? ' --test' : ''}`);
   run(`node scripts/build.mjs${test ? ' --test' : ''}`);
   run('npx cap sync ios');
-  if (process.env.VB_NO_SIM) return;
   if (existsSync('scripts/sim.mjs')) run(`node scripts/sim.mjs${test ? ' --test' : ''}`);
   else run('npx cap run ios');
 }
@@ -90,7 +92,7 @@ if (!candidates.length) {
     syncAcceptedVersion();
     console.log('Wróciłeś do zaakceptowanej wersji (main).');
   }
-  bye('Brak nowych wersji do sprawdzenia. Zaakceptowaną wersję uruchomisz komendą: npm run play');
+  bye('Brak nowych wersji do sprawdzenia. Zaakceptowaną wersję uruchomisz komendą: npm start');
 }
 
 console.log('Nowe wersje do sprawdzenia:');
@@ -99,11 +101,16 @@ const pick = candidates.length === 1 ? '1' : await ask(`\nKtórą wersję urucho
 const c = candidates[(+pick || 1) - 1];
 if (!c) bye('Nie ma takiej wersji.', 1);
 
-const variant = await ask('Jak uruchomić? [Enter] zwykła wersja  [t] wersja TEST (panel testera, osobna aplikacja „VB Test”): ');
+const where = await ask('Gdzie uruchomić? [Enter] symulator iOS  [i] Twój iPhone: ');
+const variant = await ask('Która wersja?    [Enter] zwykła gra  [t] TEST (panel testera 🛠, osobna aplikacja „VB Test”): ');
+if (where === 'i' && variant !== 't') {
+  console.log('Uwaga: zwykła wersja na telefonie zastąpi grę z App Store (zapis zostaje). Do testów zwykle lepsza jest wersja TEST.');
+  if ((await ask('Kontynuować? [t/N] ')) !== 't') bye('Przerwane, nic nie zmieniono.');
+}
 console.log(`\nPrzygotowuję ${c.label}${variant === 't' ? ' (TEST)' : ''} z gałęzi ${c.branch}…`);
 run(`git checkout -q --detach ${c.sha}`);
 try {
-  buildAndLaunch(variant === 't');
+  buildAndLaunch(where === 'i' ? 'phone' : 'sim', variant === 't');
 } catch {
   console.log('\nNie udało się zbudować albo uruchomić tej wersji. Możesz ją odrzucić albo spróbować później.');
 }
