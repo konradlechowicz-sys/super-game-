@@ -17,7 +17,7 @@ export function frameCamera(game) {
 }
 
 // overlay: the 2.0 look (js/v2/) has drawn the background, the floor, the ship, every enemy or boss it has art for
-// (marked e.v2), shots, enemy bullets, gems, pickups, particles, rings and lightning on its own canvas below; this
+// (marked e.v2), shots, enemy bullets, gems, pickups, mines, weapons, particles, rings and lightning on its own canvas below; this
 // canvas is cleared and draws everything else on top.
 export function renderGame(game, ctx, overlay = false) {
   const app = game.app;
@@ -50,7 +50,7 @@ export function renderGame(game, ctx, overlay = false) {
 
   ctx.globalCompositeOperation = 'lighter';
   // mines
-  for (const m of game.mines) if (vis(m)) R.img(mineSprite(m.pull ? '#b06bff' : '#ffd23d', m.arm <= 0 && Math.sin(game.time * 12) > 0), m.x, m.y);
+  if (!overlay) for (const m of game.mines) if (vis(m)) R.img(mineSprite(m.pull ? '#b06bff' : '#ffd23d', m.arm <= 0 && Math.sin(game.time * 12) > 0), m.x, m.y);
   // gems & pickups
   if (!overlay) for (const g of game.gems) {
     if (!vis(g)) continue;
@@ -115,7 +115,7 @@ export function renderGame(game, ctx, overlay = false) {
   if (!overlay) for (const b of game.ebullets) if (vis(b)) R.img(b.homing ? ehs : ebs, b.x, b.y);
 
   // weapon visuals (blades, drones)
-  for (const w of game.weapons) {
+  if (!overlay) for (const w of game.weapons) {
     const def = WEAPONS[w.id];
     if (def.render && game.state !== 'dying' && game.state !== 'over') def.render(w, game, R, weaponStats(w));
   }

@@ -16,6 +16,9 @@ i wersja TEST (gracze tego nie widzą).
 
 - 
 
+## Build 74 · 2026-10-27
+- [Zmiana] Wersja 2.0: bronie wokół statku (ostrza i aura Orbit, drony) i miny rysuje teraz warstwa PixiJS (karta graficzna). Wyglądają tak samo jak wcześniej. Na starym rysowaniu zostały już tylko paski życia, liczby obrażeń, strzałki do elit i bossa oraz czerwony ekran przy niskim zdrowiu. To kończy przenoszenie obrazu w etapie 1.
+
 ## Build 73 · 2026-10-27
 - [Nowe] Pierwszy build linii 2.0 (`v2`): nowy wygląd (PixiJS, grafika świata 1) jest teraz zwykłym wyglądem gry, bez włączania w 🛠. Przy numerze builda widać „2.0 dev” (w TEST: „TEST 2.0 dev · build N”), w Ustawieniach też.
 - [Narzędzia] W panelu 🛠 przełącznik „1.x look (compare with 2.0)” zamiast „2.0 look”: pozwala porównać ze starym wyglądem.

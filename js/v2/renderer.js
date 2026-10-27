@@ -1,12 +1,14 @@
 // The 2.0 look on PixiJS (WebGL), stage 1 of the 2.0 plan. It reads the same game state as js/render-canvas.js and
 // draws, on its own canvas under the game's: the background, the world-1 floor, the Striker built from its parts,
 // every enemy or boss that already has 2.0 art (marked e.v2), and the GPU-heavy crowd: shots, enemy bullets, gems,
-// pickups, particles, blast rings and lightning, each with a soft glow. The 1.x renderer (js/render-canvas.js), drawing
-// on its transparent canvas on top, skips all of that and adds the rest (weapons, mines, bars, numbers). Loaded only by the TEST
+// pickups, mines, particles, blast rings and lightning, each with a soft glow, plus the weapons around the ship (their
+// own render functions in js/weapons.js, through an adapter). The 1.x renderer (js/render-canvas.js), drawing on its
+// transparent canvas on top, skips all of that and adds the rest (bars, numbers, arrows). Loaded only by the TEST
 // variant (js/testkit.js), so normal and App Store builds contain no PixiJS. Textures: scripts/v2-assets.mjs.
 import { Application, Container, Sprite, Texture, TilingSprite, Graphics } from 'pixi.js';
 import { BOSSES } from '../data.js';
-import { boltSprite, missileSprite, orbSprite, gemSprite, glowDot, pickupSprite } from '../sprites.js';
+import { boltSprite, missileSprite, orbSprite, gemSprite, glowDot, pickupSprite, mineSprite } from '../sprites.js';
+import { WEAPONS, weaponStats } from '../weapons.js';
 import ASSETS from './assets.gen.js';
 
 const TAU = Math.PI * 2;
@@ -54,11 +56,24 @@ export async function createV2Renderer(app) {
   const glowLayer = add(new Container());
   const enemyLayer = new Container(), bossLayer = new Container(), shipLayer = new Container();
   const shotLayer = add(new Container()), fxLayer = add(new Container()), fxG = add(new Graphics());
-  world.addChild(floor, border, lootLayer, ringG, glowLayer, enemyLayer, bossLayer, shotLayer, shipLayer, fxLayer, fxG);
+  const weaponLayer = add(new Container()), weaponG = new Graphics();
+  weaponLayer.addChild(weaponG);
+  world.addChild(floor, border, lootLayer, ringG, glowLayer, enemyLayer, bossLayer, shotLayer, weaponLayer, shipLayer, fxLayer, fxG);
   // reusable sprites: each frame takes as many as it needs and hides the rest (no per-object create/destroy)
   const lootHalo = pool(lootLayer), loot = pool(lootLayer);
   const shotHalo = pool(shotLayer), shots = pool(shotLayer);
   const sparks = pool(fxLayer);
+  const weaponSprites = pool(weaponLayer);
+  const weaponR = weaponAdapter(weaponG, (spr, x, y, a, sc, alpha) => { put(weaponSprites.next(), spr, x, y, a, sc).alpha = alpha; });
+
+  // a pooled sprite showing one of the 1.x neon sprites
+  function put(s, spr, x, y, rot = 0, sc = 1) {
+    const t = texOf(spr);
+    if (s.texture !== t) s.texture = t;
+    s.position.set(x, y); s.rotation = rot; s.alpha = 1;
+    s.scale.set((spr.half * 2 * sc) / t.width);
+    return s;
+  }
   const ship = makeShip(tex, ASSETS.ship, SHIP_H);
   shipLayer.addChild(ship.body);
 
@@ -189,21 +204,26 @@ export async function createV2Renderer(app) {
     const { cx, cy } = game.frameCam;
     const x0 = cx - vw / 2 - 60, x1 = cx + vw / 2 + 60, y0 = cy - vh / 2 - 60, y1 = cy + vh / 2 + 60;
     const vis = (o) => o.x > x0 && o.x < x1 && o.y > y0 && o.y < y1;
-    const put = (s, spr, x, y, rot = 0, sc = 1) => {
-      const t = texOf(spr);
-      if (s.texture !== t) s.texture = t;
-      s.position.set(x, y); s.rotation = rot; s.alpha = 1;
-      s.scale.set((spr.half * 2 * sc) / t.width);
-      return s;
-    };
     const glow = (pl, x, y, color, size, alpha) => {
       const s = pl.next();
       if (s.texture !== halo) s.texture = halo;
       s.position.set(x, y); s.rotation = 0; s.tint = color; s.alpha = alpha;
       s.scale.set(size / halo.width);
     };
-    for (const pl of [lootHalo, loot, shotHalo, shots, sparks]) pl.begin();
+    for (const pl of [lootHalo, loot, shotHalo, shots, sparks, weaponSprites]) pl.begin();
     const t = game.time;
+
+    // mines
+    for (const m of game.mines) if (vis(m)) put(loot.next(), mineSprite(m.pull ? '#b06bff' : '#ffd23d', m.arm <= 0 && Math.sin(t * 12) > 0), m.x, m.y);
+
+    // weapons around the ship (blades, drones, aura), drawn by their own render functions
+    weaponG.clear();
+    if (game.state !== 'dying' && game.state !== 'over') {
+      for (const w of game.weapons) {
+        const def = WEAPONS[w.id];
+        if (def.render) def.render(w, game, weaponR, weaponStats(w));
+      }
+    }
 
     // gems and pickups, with a slow glowing pulse
     for (const g of game.gems) {
@@ -266,7 +286,7 @@ export async function createV2Renderer(app) {
         fxG.stroke({ width: w, color: col, alpha: al * a, join: 'round', cap: 'round' });
       }
     }
-    for (const pl of [lootHalo, loot, shotHalo, shots, sparks]) pl.end();
+    for (const pl of [lootHalo, loot, shotHalo, shots, sparks, weaponSprites]) pl.end();
   }
 
   return {
@@ -348,4 +368,29 @@ function softDot() {
   g.fillStyle = gr;
   g.fillRect(0, 0, 64, 64);
   return Texture.from(c);
+}
+
+// The drawing interface the weapons' render functions use (R in js/render-canvas.js): rot/img for the 1.x neon
+// sprites and a small part of a 2D context (alpha, colours, circles and lines) for auras, drawn into a Graphics.
+function weaponAdapter(g, sprite) {
+  const ctx = {
+    globalAlpha: 1, fillStyle: '#ffffff', strokeStyle: '#ffffff', lineWidth: 1, path: [],
+    beginPath() { this.path = []; },
+    arc(x, y, r) { this.path.push({ circle: [x, y, r] }); },
+    moveTo(x, y) { this.path.push({ line: [x, y] }); },
+    lineTo(x, y) { const last = this.path.at(-1); if (last?.line) last.line.push(x, y); else this.path.push({ line: [x, y] }); },
+    trace() {
+      for (const p of this.path) {
+        if (p.circle) g.circle(...p.circle);
+        else { g.moveTo(p.line[0], p.line[1]); for (let i = 2; i < p.line.length; i += 2) g.lineTo(p.line[i], p.line[i + 1]); }
+      }
+    },
+    fill() { this.trace(); g.fill({ color: this.fillStyle, alpha: this.globalAlpha }); },
+    stroke() { this.trace(); g.stroke({ width: this.lineWidth, color: this.strokeStyle, alpha: this.globalAlpha }); },
+  };
+  return {
+    ctx,
+    rot(spr, x, y, a, sc = 1) { sprite(spr, x, y, a, sc, ctx.globalAlpha); },
+    img(spr, x, y, sc = 1) { sprite(spr, x, y, 0, sc, ctx.globalAlpha); },
+  };
 }
