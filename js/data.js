@@ -75,7 +75,8 @@ export const ENEMIES = {
 export const BOSSES = {
   hive: {
     // First boss: deliberately forgiving (weaker, slower bullets, fewer minions, long pauses).
-    name: 'HIVE MOTHER', hp: 5000, speed: 42, dmg: 18, r: 58, color: '#ff2d6f', inner: '#ff8ad0', sides: 6,
+    // 2.0 (decided by Konrad, 2026-10-27): the world-1 boss is the Harvester; its id stays 'hive' (saves, Codex)
+    name: 'HARVESTER', hp: 5000, speed: 42, dmg: 18, r: 58, color: '#ff2d6f', inner: '#ff8ad0', sides: 6,
     move: 'chase', rest: 1.9, phases: [0.5], attacks: ['spiral', 'burst', 'summon', 'charge'], summon: ['drone', 'swarmer'],
     bulletDmg: 7, bulletSpeed: 0.85, burstN: 16, summonN: 5, bgSpawn: 0.2,
   },
@@ -146,7 +147,7 @@ const W1 = [
     ],
   },
   {
-    id: '1-6', name: 'Hive Mother', duration: 150, bossAt: 150, boss: 'hive', hp: 2.3, speed: 1.1, rate: [1, 3.4], max: 130, kills: 600,
+    id: '1-6', name: 'Harvester', duration: 150, bossAt: 150, boss: 'hive', hp: 2.3, speed: 1.1, rate: [1, 3.4], max: 130, kills: 600,
     enemies: [['drone', 0, 9], ['swarmer', 10, 5], ['dasher', 25, 4], ['shooter', 40, 2], ['splitter', 45, 3], ['tank', 70, 1]],
     events: [
       { t: 50, type: 'ring', enemy: 'drone', count: 20, msg: 'INCOMING SWARM' },

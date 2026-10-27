@@ -19,6 +19,7 @@ const TAU = Math.PI * 2;
 const ENEMY_ART = { drone: 0xff2d95, swarmer: 0xffe23d, dasher: 0xff3d9a, shooter: 0xff2d95, tank: 0xb04dff, splitter: 0x9dff3d };
 const ENEMY_SIZE = 2.8; // sprite size in enemy radii
 const PROP_SIZE = { tank: 3.4, crate: 3 }; // length of a world-1 prop in its radii
+const DEBRIS_MAX = 160; // enemy debris fragments flying at once (W1 P7); the oldest is reused past that
 const SHIP_H = 46; // the Striker's length in world units
 const FLOOR_SCALE = 0.5;
 const TITLE_SHIP_H = 120; // the Striker on the title screen, in points
@@ -64,7 +65,7 @@ export async function createV2Renderer(app) {
   const border = new Graphics();
   const lootLayer = add(new Container()), ringG = add(new Graphics());
   const glowLayer = add(new Container());
-  const propLayer = new Container();
+  const propLayer = new Container(), debrisLayer = new Container();
   const enemyLayer = new Container(), bossLayer = new Container(), shipLayer = new Container();
   const shotLayer = add(new Container()), fxLayer = add(new Container()), fxG = add(new Graphics());
   const weaponLayer = add(new Container()), weaponG = new Graphics();
@@ -72,7 +73,7 @@ export async function createV2Renderer(app) {
   // world 1 "Orbital Ruins" (js/v2/orbit.js): far layer under the arena, wreckage on it; other worlds use the floor
   const orbit = makeOrbitalRuins(tex);
   px.stage.addChildAt(orbit.far, 0);
-  world.addChild(floor, border, orbit.arena, propLayer, lootLayer, ringG, glowLayer, enemyLayer, bossLayer, shotLayer, weaponLayer, shipLayer, fxLayer, fxG);
+  world.addChild(floor, border, orbit.arena, propLayer, debrisLayer, lootLayer, ringG, glowLayer, enemyLayer, bossLayer, shotLayer, weaponLayer, shipLayer, fxLayer, fxG);
   // reusable sprites: each frame takes as many as it needs and hides the rest (no per-object create/destroy)
   const lootHalo = pool(lootLayer), loot = pool(lootLayer);
   const shotHalo = pool(shotLayer), shots = pool(shotLayer);
@@ -100,7 +101,7 @@ export async function createV2Renderer(app) {
   // the title screen behind the menus (js/v2/title.js), with its own, bigger ships
   const title = makeTitle(tex, halo, makeShips(TITLE_SHIP_H / SHIP_H));
   title.scene.visible = false;
-  px.stage.addChild(title.scene);
+  px.stage.addChild(orbit.near, title.scene);
 
   let arenaKey = '';
   const drawn = new Map(); // game object -> its sprites
@@ -139,23 +140,66 @@ export async function createV2Renderer(app) {
     return { body, spr, shadow, glow, base: (o.r * PROP_SIZE[o.prop]) / spr.texture.width };
   }
 
-  function bossSprites(b) {
+  // the world-1 boss, the Harvester (W1 P8): the assembled ship with its glowing parts laid over it and animated (core,
+  // pods, nose) and two engine flames; positions are in the art's 1254 px frame, the textures are stored at 1024 px
+  // a destroyed enemy breaks into its own fragments (W1 P7: 4 per enemy type), which fly apart, spin and fade
+  const debris = [];
+  let debrisGame = null, debrisTime = 0;
+  function shatter(e) {
+    if (!tex[`w1-debris-${e.type}-1`]) return;
+    const n = e.elite ? 4 : 2 + Math.floor(Math.random() * 2), first = Math.floor(Math.random() * 4);
+    for (let i = 0; i < n; i++) {
+      let d;
+      if (debris.length < DEBRIS_MAX) {
+        d = { s: new Sprite() };
+        d.s.anchor.set(0.5);
+        debrisLayer.addChild(d.s);
+      } else d = debris.shift();
+      const t = tex[`w1-debris-${e.type}-${((first + i) % 4) + 1}`];
+      const a = Math.random() * TAU, v = 70 + Math.random() * 120;
+      d.s.texture = t;
+      d.base = (e.r * ENEMY_SIZE * 0.55) / Math.max(t.width, t.height);
+      Object.assign(d, { x: e.x, y: e.y, vx: Math.cos(a) * v + e.kx * 0.3, vy: Math.sin(a) * v + e.ky * 0.3, rot: Math.random() * TAU, spin: (Math.random() - 0.5) * 6, t: 0, life: 0.8 + Math.random() * 0.5 });
+      debris.push(d);
+    }
+  }
+  function updateDebris(game) {
+    if (game !== debrisGame) { debrisGame = game; debrisTime = game.time; for (const d of debris) d.t = d.life; }
+    const dt = Math.min(0.05, Math.max(0, game.time - debrisTime));
+    debrisTime = game.time;
+    const drag = Math.exp(-2.5 * dt);
+    for (const d of debris) {
+      d.t += dt;
+      const k = d.t / d.life;
+      d.s.visible = k < 1;
+      if (k >= 1) continue;
+      d.vx *= drag; d.vy *= drag;
+      d.x += d.vx * dt; d.y += d.vy * dt; d.rot += d.spin * dt;
+      d.s.position.set(d.x, d.y); d.s.rotation = d.rot;
+      d.s.scale.set(d.base * (1 - k * 0.25));
+      d.s.alpha = k < 0.4 ? 1 : 1 - (k - 0.4) / 0.6;
+    }
+  }
+
+  function bossSprites() {
     const c = new Container();
+    const at = (s, x, y) => { s.position.set(((x - 627) / 1254) * 1024, ((y - 627) / 1254) * 1024); return s; };
+    const part = (name, x, y, ax = 0.5, ay = 0.5) => {
+      const s = new Sprite(tex[`w1-boss-${name}`]);
+      s.anchor.set(ax, ay); s.blendMode = 'add';
+      return at(s, x, y);
+    };
     const halo = new Sprite(tex['glow-tank']);
-    halo.anchor.set(0.5); halo.tint = 0xff2dd0; halo.blendMode = 'add';
-    const flames = [455, 790].map((x) => {
-      const f = new Sprite(tex['h-flame']);
-      f.anchor.set(0.5, 0.15); f.blendMode = 'add';
-      f.position.set(((x - 627) / 1254) * 640, ((1045 - 627) / 1254) * 640);
-      return f;
-    });
-    const body = new Sprite(tex.harvester);
+    halo.anchor.set(0.5); halo.tint = 0xff2dd0; halo.blendMode = 'add'; halo.scale.set(6.4);
+    const flames = [455, 800].map((x) => part('flame', x, 1045, 0.5, 0.15));
+    const body = new Sprite(tex['w1-boss']);
     body.anchor.set(0.5);
-    c.addChild(halo, ...flames, body);
-    halo.scale.set(4);
-    c.scale.set((b.r * 4.6) / 640);
+    const core = part('glow-core', 627, 619);
+    const pods = [part('glow-pod-left', 285, 643), part('glow-pod-right', 967, 643)];
+    const nose = part('glow-nose', 627, 266);
+    c.addChild(halo, ...flames, body, core, ...pods, nose);
     bossLayer.addChild(c);
-    return { body: c, inner: body, flames, halo };
+    return { body: c, inner: body, flames, halo, core, pods, nose };
   }
 
   const fitScreen = () => {
@@ -168,7 +212,7 @@ export async function createV2Renderer(app) {
   // the menus: the title scene; main = the main menu (full brightness, the ship), showShip = the 2.0 ship is the one chosen
   function renderTitle(time, opts) {
     fitScreen();
-    world.visible = false;
+    world.visible = orbit.near.visible = false;
     title.scene.visible = true;
     title.update(time, app.W, app.H, opts);
     px.render();
@@ -181,6 +225,7 @@ export async function createV2Renderer(app) {
     title.scene.visible = false;
     const w1 = game.stage.world.id === 1;
     orbit.far.visible = orbit.arena.visible = w1;
+    orbit.near.visible = w1 && !!tex['w1-near'];
     floor.visible = border.visible = !w1;
     const { cx, cy } = game.frameCam;
     const z = app.zoom;
@@ -230,14 +275,22 @@ export async function createV2Renderer(app) {
       if (e.boss) {
         if (e.def !== BOSSES.hive) continue;
         e.v2 = true;
-        const s = spritesFor(e, () => bossSprites(e));
-        s.body.position.set(e.x, e.y);
-        s.body.alpha = e.alpha ?? 1;
+        const s = spritesFor(e, () => bossSprites());
+        // the entrance (spawnT 1.2 s): it rises from the depth on the side of the Earth (lower left), growing
+        const k = Math.max(0, e.spawnT) / 1.2, rise = k * k;
+        s.body.position.set(e.x - rise * 520, e.y + rise * 900);
+        s.body.alpha = (e.alpha ?? 1) * (1 - k * 0.6);
         s.inner.tint = e.flash > 0 ? 0xffb0ff : 0xffffff;
-        s.body.rotation = Math.PI + Math.sin(game.time * 1.3) * 0.05;
-        s.flames.forEach((f, i) => f.scale.set(1.1, 1.1 * (1 + 0.15 * Math.sin(game.time * 31 + i * 1.7))));
-        s.halo.alpha = 0.25 + 0.1 * Math.sin(game.time * 6);
-        s.body.scale.set(((e.r * 4.6) / 640) * sc);
+        s.body.rotation = Math.PI + Math.sin(game.time * 1.3) * 0.05 - rise * 0.5;
+        s.body.scale.set(((e.r * 4.6) / 1024) * (1 - rise * 0.65));
+        // engines burn harder while it rises; the glows beat faster and brighter once it is enraged
+        const rage = e.phase > 1 ? 1 : 0, t = game.time * (rage ? 7 : 4);
+        s.flames.forEach((f, i) => f.scale.set(1.1, (1.1 + rise * 1.2) * (1 + 0.15 * Math.sin(game.time * 31 + i * 1.7))));
+        s.halo.alpha = (0.22 + 0.1 * Math.sin(game.time * 6)) * (1 + rage * 0.6);
+        s.core.alpha = 0.55 + 0.35 * Math.sin(t) + rage * 0.2;
+        s.core.scale.set(1 + 0.08 * Math.sin(t) + rage * 0.15);
+        s.pods.forEach((p, i) => { p.alpha = 0.5 + 0.4 * Math.sin(t * 0.8 + i * Math.PI) + rage * 0.2; });
+        s.nose.alpha = 0.45 + 0.3 * Math.sin(t * 1.3) + rage * 0.3;
         continue;
       }
       const glowCol = ENEMY_ART[e.type];
@@ -257,11 +310,13 @@ export async function createV2Renderer(app) {
     // drop the sprites of objects that are gone
     for (const [obj, s] of drawn) {
       if (s.frame === frameNo) continue;
+      if (obj.dead && !obj.boss && !obj.prop && ENEMY_ART[obj.type] !== undefined) shatter(obj);
       s.body.destroy({ children: true });
       s.glow?.destroy();
       drawn.delete(obj);
     }
 
+    updateDebris(game);
     drawCrowd(game);
 
     // the ship the player flies (game.ship: its id, and skinName for the Gold Striker)

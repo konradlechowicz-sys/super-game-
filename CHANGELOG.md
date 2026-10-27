@@ -16,6 +16,21 @@ i wersja TEST (gracze tego nie widzą).
 
 - 
 
+## Build 91 · 2026-10-27
+- [Zmiana] 2.0: boss świata 1 nazywa się teraz HARVESTER (wcześniej Hive Mother) – na pasku życia, w nazwie sektora 1-6 i na ekranie po jego pokonaniu.
+
+## Build 90 · 2026-10-27
+- [Nowe] 2.0: szczątki wrogów z ChatGPT (W1 P7) – zestrzelony wróg rozpada się na 2–3 kawałki swojego kadłuba (elita na 4), które rozlatują się, obracają i gasną w około sekundę. Każdy z 6 typów wrogów ma własne szczątki; naraz leci najwyżej 160 kawałków, więc wydajność przy dużych falach się nie zmienia.
+
+## Build 89 · 2026-10-27
+- [Nowe] 2.0, boss świata 1 (Harvester, W1 P8): ostrzejsza grafika i świecące części z arkusza – rdzeń pulsuje, boczne kapsuły na zmianę, dziób się rozjaśnia; w szale (druga faza) wszystko świeci mocniej i szybciej. Boss wlatuje od strony Ziemi, z głębi, rosnąc, z silnikami na pełnej mocy.
+
+## Build 88 · 2026-10-27
+- [Nowe] 2.0, świat 1: nakładka bliska z ChatGPT (W1 P4) – pył, drobne odłamki i iskry tuż przed kamerą, nad akcją; przesuwają się szybciej niż arena, więc widać głębię. Delikatna, nie zasłania wrogów.
+
+## Build 87 · 2026-10-27
+- [Nowe] 2.0, świat 1: tło dalekie z ChatGPT (W1 P2) – Ziemia nocą w lewym dolnym rogu, z niebieską poświatą atmosfery i światłami miast, przesuwa się wolniej niż arena (głębia). Zastępuje wycinek Ziemi ze zwiastuna.
+
 ## Build 86 · 2026-10-27
 - [Nowe] 2.0, świat 1: krawędź areny z ChatGPT (W1 P6) – pierścień wraków stacji, paneli słonecznych i satelitów z bursztynową heksagonalną tarczą od strony areny, która powoli pulsuje. Zastępuje przerywaną linię.
 

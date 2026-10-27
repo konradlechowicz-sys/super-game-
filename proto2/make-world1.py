@@ -59,3 +59,67 @@ for name in ('top', 'bottom', 'left', 'right'):
 for name in ('top-left', 'top-right', 'bottom-left', 'bottom-right'):
     key(Image.open(f'{SRC}/border/W1-P6-corner-{name}-256.png')).save(f'{OUT}/w1-edge-{name}.webp', 'WEBP', quality=92, method=6)
 print('w1-edge: 4 strips, 4 corners')
+
+# P2: the far background, night-side Earth from high orbit. The stars are left out (the game draws its own, with
+# parallax): the Earth's circle is found from its blue rim and everything outside it, past a soft edge that keeps
+# the rim's glow, becomes transparent. Stored at 1280 px.
+src = Image.open(f'{SRC}/earth-far.webp').convert('RGB')
+a = np.asarray(src).astype(np.float32)
+ys, xs = np.nonzero((a[..., 2] > 140) & (a[..., 2] > a[..., 0] + 50))
+A = np.c_[2 * xs, 2 * ys, np.ones(len(xs))]
+ecx, ecy, c = np.linalg.lstsq(A, xs ** 2 + ys ** 2, rcond=None)[0]
+er = np.sqrt(c + ecx ** 2 + ecy ** 2)
+yy, xx = np.mgrid[0:a.shape[0], 0:a.shape[1]]
+alpha = np.clip(1 - (np.hypot(xx - ecx, yy - ecy) - er) / 40, 0, 1)
+earth = Image.fromarray(np.dstack([a, alpha * 255]).astype(np.uint8), 'RGBA').resize((1280, 1280), Image.LANCZOS)
+earth.save(f'{OUT}/w1-earth.webp', 'WEBP', quality=90, method=6)
+print('w1-earth', earth.size, 'circle', round(ecx), round(ecy), round(er))
+
+# P4: the near overlay (dust and small shards just in front of the camera), on black: the game adds it as light,
+# so it keeps its black background. A seamless 1024 tile.
+Image.open(f'{SRC}/near-overlay.webp').convert('RGB').save(f'{OUT}/w1-near.webp', 'WEBP', quality=90, method=6)
+print('w1-near')
+
+# P8: the world-1 boss, the Harvester (art/2.0/bosses/world1, made before the Art Bible and kept): the assembled ship,
+# plus its glowing parts from the parts sheet, which the game lays over it and animates (core, pods, nose) and the
+# engine flame. Everything shares the assembled ship's 1254 px frame, stored at 1024 px (scale 1024/1254).
+BOSS = 'art/2.0/bosses/world1'
+k = 1024 / 1254
+Image.open(f'{BOSS}/harvester.webp').convert('RGBA').resize((1024, 1024), Image.LANCZOS).save(f'{OUT}/w1-boss.webp', 'WEBP', quality=90, method=6)
+for part in ('glow-core', 'glow-pod-left', 'glow-pod-right', 'glow-nose', 'flame'):
+    im = Image.open(f'{BOSS}/parts/harvester-{part}.png').convert('RGBA')
+    im = im.resize((round(im.width * k), round(im.height * k)), Image.LANCZOS)
+    im.save(f'{OUT}/w1-boss-{part}.webp', 'WEBP', quality=90, method=6)
+print('w1-boss + 5 parts')
+
+# P7: enemy debris, 4 fragments per enemy (one row each: drone, swarmer, dasher, shooter, tank, splitter) that fly
+# apart when an enemy is destroyed. The sheet's rows and columns are not an even grid, so each row is found as a band
+# of non-empty pixel rows, and each fragment as a band of non-empty columns inside it; each is cut to its own box, at
+# most 160 px.
+def bands(profile, gap=10, min_size=24):
+    out, start, empty = [], None, 0
+    for i, v in enumerate(list(profile) + [0] * (gap + 1)):
+        if v:
+            if start is None: start = i
+            empty = 0
+        elif start is not None:
+            empty += 1
+            if empty > gap:
+                if i - empty - start + 1 >= min_size: out.append((start, i - empty + 1))
+                start, empty = None, 0
+    return out
+
+
+sheet = key(Image.open(f'{SRC}/enemy-debris-sheet.webp'))
+mask = np.asarray(sheet.getchannel('A')) > 40
+rows = sorted(bands(mask.sum(axis=1) > 2), key=lambda b: b[1] - b[0])[-6:]
+for (y0, y1), enemy in zip(sorted(rows), ('drone', 'swarmer', 'dasher', 'shooter', 'tank', 'splitter')):
+    cols = sorted(sorted(bands(mask[y0:y1].sum(axis=0) > 1), key=lambda b: b[1] - b[0])[-4:])
+    assert len(cols) == 4, (enemy, cols)
+    for n, (x0, x1) in enumerate(cols):
+        part = sheet.crop((x0, y0, x1, y1))
+        part = part.crop(part.getchannel('A').point(lambda v: 255 if v > 40 else 0).getbbox())
+        f = min(1, 160 / max(part.size))
+        part = part.resize((round(part.width * f), round(part.height * f)), Image.LANCZOS)
+        part.save(f'{OUT}/w1-debris-{enemy}-{n + 1}.webp', 'WEBP', quality=88, method=6)
+print('w1-debris: 6 enemies x 4 fragments')

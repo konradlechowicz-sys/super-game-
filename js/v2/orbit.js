@@ -1,10 +1,9 @@
 // World 1 "Orbital Ruins" in the 2.0 look, as the Art Bible describes it (Claude Doc "Void Blaster 2.0 – Art Bible"):
-// high orbit, no floor. Far below: black space with stars in two depths and the dark crescent of night-side Earth
-// (parallax). At the arena level: a sparse field of small wreckage, a few broken deck fragments of the defense
-// stations (the old floor tile, cut to jagged islands), dead satellites that drift and keep being "rewritten" by the
-// Collective, and a broken amber energy barrier along the arena edge. ChatGPT's world-1 art replaces the stand-ins as
-// it arrives (so far the debris tile W1 P3a, the deck fragments W1 P3b, the props W1 P5 and the arena edge W1 P6); the rest is built from the teaser Earth and satellites, the station
-// floor tile and shapes drawn in code.
+// high orbit, no floor. Far below: black space with stars in two depths and night-side Earth (parallax). At the arena
+// level: a sparse field of small wreckage, broken deck fragments of the defense stations, props (masts, solar wings,
+// wrecked turrets, pods, cables), dead satellites that drift and keep being "rewritten" by the Collective, and a ring
+// of wreckage with the amber hexagonal shield along the arena edge. The art is ChatGPT's (tasks W1 P2, P3a, P3b, P4,
+// P5, P6, cut by proto2/make-world1.py); while a texture is missing, a stand-in drawn here or taken from the teaser is used.
 import { Container, Graphics, Rectangle, Sprite, Texture, TilingSprite } from 'pixi.js';
 
 const TAU = Math.PI * 2;
@@ -68,11 +67,19 @@ export function makeOrbitalRuins(tex) {
   const starsNear = new TilingSprite({ texture: starTexture(13, 90, 0.08), width: 10, height: 10 });
   starsNear.alpha = 0.8;
   // the dark crescent of Earth: the lower part of the teaser's Earth (horizon and night side)
-  const earthTex = new Texture({ source: tex.earth.source, frame: new Rectangle(0, 700, 1080, 1220) });
-  const earth = new Sprite(earthTex);
-  earth.anchor.set(0.5, 0);
-  earth.alpha = 0.32; // far below and dark: it must never compete with the action
+  // ChatGPT's night-side Earth (W1 P2) in the lower left corner, else the lower part of the teaser's Earth
+  const earthArt = tex['w1-earth'];
+  const earth = new Sprite(earthArt || new Texture({ source: tex.earth.source, frame: new Rectangle(0, 700, 1080, 1220) }));
+  earth.anchor.set(earthArt ? 0 : 0.5, earthArt ? 1 : 0);
+  earth.alpha = earthArt ? 0.75 : 0.32; // far below and dark: it must never compete with the action
   far.addChild(starsFar, earth, starsNear);
+
+  // ---- near layer (screen space, over the action): dust and small shards close to the camera (W1 P4), added as
+  // light and moving faster than the arena ----
+  const near = new TilingSprite({ texture: tex['w1-near'] || Texture.EMPTY, width: 10, height: 10 });
+  near.blendMode = 'add';
+  near.alpha = 0.85;
+  near.visible = !!tex['w1-near'];
 
   // ---- arena layer (world space, above the floor) ----
   const arena = new Container();
@@ -222,10 +229,17 @@ export function makeOrbitalRuins(tex) {
     starsFar.width = starsNear.width = W; starsFar.height = starsNear.height = H;
     starsFar.tilePosition.set(-cx * z * 0.08, -cy * z * 0.08);
     starsNear.tilePosition.set(-cx * z * 0.2, -cy * z * 0.2);
+    near.width = W; near.height = H;
+    near.tilePosition.set(-cx * z * 1.35, -cy * z * 1.35);
     const ew = Math.max(W, H) * 1.5;
-    earth.scale.set(ew / 1080);
-    earth.rotation = 0.42;
-    earth.position.set(-W * 0.05 - cx * z * 0.04, H * 0.72 - cy * z * 0.04);
+    if (earthArt) {
+      earth.scale.set((Math.max(W, H) * 0.95) / earthArt.width);
+      earth.position.set(-W * 0.06 - cx * z * 0.04, H * 1.05 - cy * z * 0.04);
+    } else {
+      earth.scale.set(ew / 1080);
+      earth.rotation = 0.42;
+      earth.position.set(-W * 0.05 - cx * z * 0.04, H * 0.72 - cy * z * 0.04);
+    }
     for (const f of floaters) f.s.rotation += f.spin / 60;
     // satellites drift, turn and get rewritten for a while every cycle
     for (const s of satList) {
@@ -242,5 +256,5 @@ export function makeOrbitalRuins(tex) {
     edgeGlow.alpha = 0.12 + 0.12 * Math.sin(time * 2.1);
   }
 
-  return { far, arena, setArena, update };
+  return { far, arena, near, setArena, update };
 }
