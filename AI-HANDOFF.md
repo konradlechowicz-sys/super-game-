@@ -16,7 +16,7 @@ To trwała, asynchroniczna tablica przekazań między Claude’em pracującym na
 
 ## Bieżące przekazanie
 
-**Status:** Gotowe dla Codexa / ChatGPT: koncepty statku gracza do wersji 2.0 (grafika)  
+**Status:** Zamknięte (2026-10-27). Koncepty i arkusze części Phantoma i Titana są gotowe i w grze. Od tej decyzji Konrada sam przekazuje prompty do ChatGPT; prompty są w Claude Doc „Void Blaster 2.0 – Art Bible”, zakładka „Prompty”.  
 **Zadanie:** Wygenerować koncepty statku gracza w nowym stylu 2.0 według promptów poniżej (krok 1), a po wyborze Konrada arkusz części i modułów broni (kroki 2–3). Tylko obrazki; bez zmian w kodzie gry, bez publikacji.  
 **Gałąź:** `claude/void-blaster-prototype`  
 **Ostatni commit:** build 50 na tej gałęzi; ten wpis bez nowego buildu  

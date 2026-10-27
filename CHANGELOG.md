@@ -16,6 +16,35 @@ i wersja TEST (gracze tego nie widzą).
 
 - 
 
+## Build 81 · 2026-10-27
+- [Nowe] Wersja 2.0, świat 1 „Orbital Ruins” według Art Bible: zamiast płyt podłogi na całej arenie walczymy w próżni wysoko nad Ziemią. Czarny kosmos z gwiazdami w dwóch warstwach głębi, daleki ciemny sierp Ziemi (przesuwa się wolniej niż arena), przyciemnione pole drobnego wraku, 3–5 „wysp” z połamanych płyt pokładów stacji, dryfujące martwe satelity, które co chwilę migają w wersję Kolektywu, i przerywana bursztynowa bariera na brzegu areny. Na razie z dostępnych grafik (zwiastun, kafel płyt); po grafikach z ChatGPT podmienimy tekstury.
+- [Narzędzia] Notatki projektu: Konrad sam pośredniczy między Claude'em a ChatGPT (AI-HANDOFF.md zamknięty), źródłem promptów jest Claude Doc „Void Blaster 2.0 – Art Bible”, temat główny zostaje muzyką menu na stałe.
+
+## Build 80 · 2026-10-27
+- [Nowe] Wersja 2.0: muzyka świata 1 od Konrada (Suno). W sektorach świata 1 gra „Orbital Ruins”: intro raz, potem w pętli główna część utworu (takty 27–65, ok. 65 s). Przy bossie gra jego wersja bossowa: intro, potem pętla walki (ok. 42 s). Pętle są dobrane analizą (tempo ~140 i ~148 BPM, najbardziej podobny dźwięk na obu końcach, dopasowanie do uderzeń perkusji), a szew przygotowany tak, żeby przeskok był niesłyszalny. Pozostałe światy na razie grają dawną muzykę; boss każdego świata gra utwór bossa świata 1.
+
+## Build 79 · 2026-10-27
+- [Zmiana] W aplikacji (iPhone, Android) muzyka menu gra od razu po uruchomieniu gry, bez czekania na pierwsze dotknięcie. W przeglądarce, także w podglądzie w Claude, nadal startuje po pierwszym kliknięciu, bo przeglądarki nie pozwalają inaczej.
+
+## Build 78 · 2026-10-27
+- [Poprawka] Muzyka menu 2.0: plik muzyki jest wczytywany bez pobierania (fetch), które zabezpieczone strony mogą blokować. Gdy nagranie nie da się odtworzyć na danym urządzeniu, gra przechodzi na dawną muzykę z syntezatora zamiast milczeć.
+- [Narzędzia] Panel 🛠 pokazuje na górze stan muzyki (np. „recording "menu"”, „synth …”, „waiting for the first tap”) i powód, jeśli nagranie się nie wczytało.
+
+## Build 77 · 2026-10-27
+- [Poprawka] Wersja 2.0: hangar i odprawa przed sektorem pokazują statki w nowej grafice (Striker, Phantom, Titan, z płomieniami silników); złoty Striker ma złoty odcień.
+- [Poprawka] Muzyka w menu 2.0 była za cicha: głośność tematu prawie dwa razy większa. Jak każda muzyka w przeglądarce i w aplikacji, startuje po pierwszym dotknięciu ekranu.
+
+## Build 76 · 2026-10-27
+- [Nowe] Wersja 2.0: Phantom i Titan w nowej grafice (z arkuszy ChatGPT, warianty wybrane przez Konrada: Phantom 1, Titan 4). W walce widać teraz zawsze wybrany statek, a nie Strikera; Phantom ma magentowy płomień, Titan cztery złote, płomienie rosną z prędkością, a w skrętach statek się przechyla. Złoty Striker ma złoty odcień.
+- [Nowe] Ekran startowy 2.0: emblemat (Striker w neonowym pierścieniu) nad napisem VOID BLASTER, z pulsującą poświatą; na ekranie startowym stoi wybrany statek. Ciemny pas pod logo jest teraz dłuższy (logo czytelne na sieci Kolektywu), satelity krążą niżej, przy horyzoncie.
+- [Nowe] Muzyka w menu 2.0: temat główny z Suno zamiast syntezatora. Intro gra raz, potem w pętli 24 takty po dropie (35,5–76 s), szew pętli wypada na początku frazy. W walce na razie gra dawna muzyka; utwór menu M1 z Suno zastąpi temat, gdy powstanie.
+
+## Build 75 · 2026-10-27
+- [Nowe] Wersja 2.0: nowy ekran startowy w duchu zwiastuna. Ziemia nocą pod siecią Kolektywu, po której nitkach płyną impulsy; satelity na orbicie co chwilę są „przepisywane” (migają w wersję Kolektywu z różowym błyskiem i wracają); Striker 2.0 unosi się przed Ziemią z pracującymi silnikami; migoczące gwiazdy. Ciemne pasy pod logo i przyciskami, żeby wszystko było czytelne. Na pozostałych ekranach menu (mapa, hangar, ulepszenia…) ta sama scena jest przyciemniona i bez statku. Phantom, Titan i złoty Striker na razie w starym wyglądzie, do czasu ich grafiki 2.0.
+
+## Build 74 · 2026-10-27
+- [Zmiana] Wersja 2.0: bronie wokół statku (ostrza i aura Orbit, drony) i miny rysuje teraz warstwa PixiJS (karta graficzna). Wyglądają tak samo jak wcześniej. Na starym rysowaniu zostały już tylko paski życia, liczby obrażeń, strzałki do elit i bossa oraz czerwony ekran przy niskim zdrowiu. To kończy przenoszenie obrazu w etapie 1.
+
 ## Build 73 · 2026-10-27
 - [Nowe] Pierwszy build linii 2.0 (`v2`): nowy wygląd (PixiJS, grafika świata 1) jest teraz zwykłym wyglądem gry, bez włączania w 🛠. Przy numerze builda widać „2.0 dev” (w TEST: „TEST 2.0 dev · build N”), w Ustawieniach też.
 - [Narzędzia] W panelu 🛠 przełącznik „1.x look (compare with 2.0)” zamiast „2.0 look”: pozwala porównać ze starym wyglądem.

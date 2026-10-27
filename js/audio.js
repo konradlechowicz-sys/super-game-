@@ -1,4 +1,5 @@
-// All sound is synthesized with Web Audio: no files, no licensing.
+// Sound effects are synthesized with Web Audio. Music is synthesized too, unless a track has a recording (2.0 music
+// made with Suno, registered by setRecording): then the recording plays instead, its intro once and then its loop.
 const midi = (n) => 440 * Math.pow(2, (n - 69) / 12);
 
 const TRACKS = {
@@ -17,7 +18,12 @@ export class AudioEngine {
     this.sfxOn = true;
     this.musicOn = true;
     this.last = {};
-    this.track = null;
+    this.track = null; // the synthesized track being played
+    this.wanted = null; // the track the game asked for
+    this.recordings = {}; // name -> { url, loopStart, loopEnd, gain }
+    this.buffers = {}; // name -> Promise<AudioBuffer>
+    this.playing = null; // { name, src, gain } of the recording being played
+    this.recError = ''; // why the last recording failed to load (shown in the TEST panel)
     this.step = 0;
     this.nextTime = 0;
     this.xpPitch = 0;
@@ -51,6 +57,7 @@ export class AudioEngine {
       this.delay.connect(fb).connect(this.delay);
       this.delay.connect(this.musicGain);
       this.timer = setInterval(() => this.schedule(), 25);
+      if (this.recordings[this.wanted]) this.playRecording(this.wanted);
     }
     if (this.ctx.state === 'suspended') this.ctx.resume();
   }
@@ -61,10 +68,71 @@ export class AudioEngine {
   }
 
   setTrack(name) {
-    if (this.track === name) return;
+    if (this.wanted === name) return;
+    this.wanted = name;
+    if (this.recordings[name]) {
+      this.track = null;
+      this.playRecording(name);
+      return;
+    }
+    this.stopRecording();
     this.track = name;
     this.step = 0;
     if (this.ctx) this.nextTime = this.ctx.currentTime + 0.1;
+  }
+
+  // A recording for a track: from now on it plays instead of the synthesized one.
+  setRecording(name, rec) {
+    this.recordings[name] = rec;
+    if (this.wanted === name) { this.wanted = null; this.setTrack(name); }
+  }
+
+  playRecording(name) {
+    if (!this.ctx || this.playing?.name === name) return;
+    this.stopRecording();
+    const rec = this.recordings[name];
+    this.buffers[name] ??= bytesOf(rec.url).then((b) => this.ctx.decodeAudioData(b));
+    this.buffers[name].then((buf) => {
+      if (this.wanted !== name || this.playing?.name === name) return;
+      const src = this.ctx.createBufferSource();
+      src.buffer = buf;
+      src.loop = true;
+      src.loopStart = rec.loopStart;
+      src.loopEnd = Math.min(rec.loopEnd, buf.duration);
+      const gain = this.ctx.createGain();
+      const t = this.ctx.currentTime;
+      gain.gain.setValueAtTime(0, t);
+      gain.gain.linearRampToValueAtTime(rec.gain ?? 1, t + 0.6);
+      src.connect(gain).connect(this.musicGain);
+      src.start(t);
+      this.playing = { name, src, gain };
+    }).catch((e) => {
+      // a recording that cannot be decoded here: fall back to the synthesized track, so there is never silence
+      this.recError = `${name}: ${e?.message || e}`;
+      delete this.recordings[name];
+      delete this.buffers[name];
+      if (this.wanted === name) { this.wanted = null; this.setTrack(name); }
+    });
+  }
+
+  // For the TEST panel: what the music is doing right now.
+  musicStatus() {
+    if (!this.ctx) return 'waiting for the first tap';
+    if (this.playing) return `recording "${this.playing.name}" (${this.ctx.state})`;
+    const failed = this.recError ? ` · recording failed: ${this.recError}` : '';
+    if (this.wanted && this.recordings[this.wanted]) return `loading "${this.wanted}"…${failed}`;
+    return `synth "${this.track}" (${this.ctx.state})${failed}`;
+  }
+
+  stopRecording() {
+    const p = this.playing;
+    if (!p) return;
+    this.playing = null;
+    const t = this.ctx.currentTime;
+    p.gain.gain.cancelScheduledValues(t);
+    p.gain.gain.setValueAtTime(p.gain.gain.value, t);
+    p.gain.gain.linearRampToValueAtTime(0, t + 0.4);
+    p.src.stop(t + 0.45);
   }
 
   // ---------- primitives ----------
@@ -215,4 +283,16 @@ export class AudioEngine {
       if (s % 2 === 1) this.noise({ dur: 0.04, vol: tr.hard ? 0.07 : 0.05, type: 'highpass', f0: 8000, at: t, dest: M });
     }
   }
+}
+
+// The bytes of a recording. Embedded data: URLs are decoded here instead of fetched, because sandboxed pages (the
+// preview on claude.ai) may forbid fetch even for data: URLs.
+function bytesOf(url) {
+  if (!url.startsWith('data:')) return fetch(url).then((r) => r.arrayBuffer());
+  return new Promise((resolve) => {
+    const bin = atob(url.slice(url.indexOf(',') + 1));
+    const bytes = new Uint8Array(bin.length);
+    for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+    resolve(bytes.buffer);
+  });
 }

@@ -569,10 +569,10 @@ Lyrics:
 | Plik | Utwór | Status |
 | --- | --- | --- |
 | `void-blaster-theme-suno.mp3` | temat główny | gotowy, użyty w zwiastunie |
-| `menu-hangar` | M1 menu i hangar | do zrobienia |
+| `menu-hangar` | M1 menu i hangar | niepotrzebny: menu gra temat główny na stałe (decyzja Konrada, 2026-10-27) |
 | `journey-map` | M2 mapa podróży | do zrobienia |
 | `endless` | M3 tryb Endless | do zrobienia |
-| `w01-orbital-ruins-sector` / `-boss` | W1 | do zrobienia |
+| `w01-orbital-ruins-sector` / `-boss` | W1 | gotowe (2026-10-27), w grze: pętle w `proto2/make-music.py` |
 | `w02-siege-of-earth-sector` / `-boss` | W2 | do zrobienia |
 | `w03-lunar-bridgehead-sector` / `-boss` | W3 | do zrobienia |
 | `w04-red-conversion-sector` / `-boss` | W4 | do zrobienia |

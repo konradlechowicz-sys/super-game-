@@ -132,6 +132,23 @@ export class UI {
     el.querySelectorAll('canvas[data-ship]').forEach((c) => {
       const s = SHIPS[c.dataset.ship];
       const g = c.getContext('2d');
+      // the 2.0 look has a picture of every ship (js/v2/renderer.js); a skin colour other than the ship's tints it
+      const art = this.app.v2 && !this.app.oldLook && this.app.shipArt?.(s.id);
+      if (art) {
+        g.clearRect(0, 0, c.width, c.height);
+        const k = (c.width * 0.92) / Math.max(art.width, art.height);
+        const w = art.width * k, h = art.height * k;
+        g.drawImage(art, (c.width - w) / 2, (c.height - h) / 2, w, h);
+        if (c.dataset.color && c.dataset.color !== s.color) {
+          g.globalCompositeOperation = 'source-atop';
+          g.globalAlpha = 0.4;
+          g.fillStyle = c.dataset.color;
+          g.fillRect(0, 0, c.width, c.height);
+          g.globalAlpha = 1;
+          g.globalCompositeOperation = 'source-over';
+        }
+        return;
+      }
       const spr = shipSprite(s.shape, c.dataset.color || s.color);
       g.clearRect(0, 0, c.width, c.height);
       g.translate(c.width / 2, c.height / 2);

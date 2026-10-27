@@ -1,13 +1,18 @@
 // The 2.0 look on PixiJS (WebGL), stage 1 of the 2.0 plan. It reads the same game state as js/render-canvas.js and
-// draws, on its own canvas under the game's: the background, the world-1 floor, the Striker built from its parts,
+// draws, on its own canvas under the game's: the background (world 1: the orbital wreck field, js/v2/orbit.js; other
+// worlds: a floor tile), the Striker built from its parts,
 // every enemy or boss that already has 2.0 art (marked e.v2), and the GPU-heavy crowd: shots, enemy bullets, gems,
-// pickups, particles, blast rings and lightning, each with a soft glow. The 1.x renderer (js/render-canvas.js), drawing
-// on its transparent canvas on top, skips all of that and adds the rest (weapons, mines, bars, numbers). Loaded only by the TEST
+// pickups, mines, particles, blast rings and lightning, each with a soft glow, plus the weapons around the ship (their
+// own render functions in js/weapons.js, through an adapter). The 1.x renderer (js/render-canvas.js), drawing on its
+// transparent canvas on top, skips all of that and adds the rest (bars, numbers, arrows). Loaded only by the TEST
 // variant (js/testkit.js), so normal and App Store builds contain no PixiJS. Textures: scripts/v2-assets.mjs.
 import { Application, Container, Sprite, Texture, TilingSprite, Graphics } from 'pixi.js';
 import { BOSSES } from '../data.js';
-import { boltSprite, missileSprite, orbSprite, gemSprite, glowDot, pickupSprite } from '../sprites.js';
+import { boltSprite, missileSprite, orbSprite, gemSprite, glowDot, pickupSprite, mineSprite } from '../sprites.js';
+import { WEAPONS, weaponStats } from '../weapons.js';
 import ASSETS from './assets.gen.js';
+import { makeTitle } from './title.js';
+import { makeOrbitalRuins } from './orbit.js';
 
 const TAU = Math.PI * 2;
 // enemy types with 2.0 art, and the colour of their glow
@@ -15,6 +20,9 @@ const ENEMY_ART = { drone: 0xff2d95, swarmer: 0xffe23d, dasher: 0xff3d9a, shoote
 const ENEMY_SIZE = 2.8; // sprite size in enemy radii
 const SHIP_H = 46; // the Striker's length in world units
 const FLOOR_SCALE = 0.5;
+const TITLE_SHIP_H = 120; // the Striker on the title screen, in points
+const PHANTOM_L = 44, TITAN_L = 40; // nose to nozzle, in world units (the Striker is SHIP_H long)
+const GOLD = 0xffd98a; // tint of the Gold Striker skin
 
 export async function createV2Renderer(app) {
   const canvas = document.createElement('canvas');
@@ -27,13 +35,16 @@ export async function createV2Renderer(app) {
     canvas, width: app.W, height: app.H, resolution: app.dpr, autoDensity: true, background: 0x05010f,
     antialias: true, autoStart: false, powerPreference: 'high-performance',
   });
-  const tex = {};
+  const tex = {}, imgs = {};
   await Promise.all(Object.entries(ASSETS.images).map(async ([name, url]) => {
     const img = new Image();
     img.src = url;
     await img.decode();
+    imgs[name] = img;
     tex[name] = Texture.from(img);
   }));
+  // the 2.0 pictures of the ships for the HTML screens (hangar, sector briefing; js/ui.js paintCanvases)
+  app.shipArt = (id) => imgs[`ship-card-${id}`] || null;
 
   const halo = softDot();
   // the 1.x neon sprites (pre-rendered canvases, js/sprites.js) as GPU textures, made once per canvas
@@ -54,13 +65,40 @@ export async function createV2Renderer(app) {
   const glowLayer = add(new Container());
   const enemyLayer = new Container(), bossLayer = new Container(), shipLayer = new Container();
   const shotLayer = add(new Container()), fxLayer = add(new Container()), fxG = add(new Graphics());
-  world.addChild(floor, border, lootLayer, ringG, glowLayer, enemyLayer, bossLayer, shotLayer, shipLayer, fxLayer, fxG);
+  const weaponLayer = add(new Container()), weaponG = new Graphics();
+  weaponLayer.addChild(weaponG);
+  // world 1 "Orbital Ruins" (js/v2/orbit.js): far layer under the arena, wreckage on it; other worlds use the floor
+  const orbit = makeOrbitalRuins(tex);
+  px.stage.addChildAt(orbit.far, 0);
+  world.addChild(floor, border, orbit.arena, lootLayer, ringG, glowLayer, enemyLayer, bossLayer, shotLayer, weaponLayer, shipLayer, fxLayer, fxG);
   // reusable sprites: each frame takes as many as it needs and hides the rest (no per-object create/destroy)
   const lootHalo = pool(lootLayer), loot = pool(lootLayer);
   const shotHalo = pool(shotLayer), shots = pool(shotLayer);
   const sparks = pool(fxLayer);
-  const ship = makeShip(tex, ASSETS.ship, SHIP_H);
-  shipLayer.addChild(ship.body);
+  const weaponSprites = pool(weaponLayer);
+  const weaponR = weaponAdapter(weaponG, (spr, x, y, a, sc, alpha) => { put(weaponSprites.next(), spr, x, y, a, sc).alpha = alpha; });
+
+  // a pooled sprite showing one of the 1.x neon sprites
+  function put(s, spr, x, y, rot = 0, sc = 1) {
+    const t = texOf(spr);
+    if (s.texture !== t) s.texture = t;
+    s.position.set(x, y); s.rotation = rot; s.alpha = 1;
+    s.scale.set((spr.half * 2 * sc) / t.width);
+    return s;
+  }
+  // the three ships: the Striker built from its parts, Phantom and Titan as a body with animated flames
+  const makeShips = (scale) => ({
+    striker: makeShip(tex, ASSETS.ship, SHIP_H * scale),
+    phantom: makeBodyShip(tex, 'phantom', ASSETS.ships.phantom, PHANTOM_L * scale),
+    titan: makeBodyShip(tex, 'titan', ASSETS.ships.titan, TITAN_L * scale),
+  });
+  const ships = makeShips(1);
+  for (const s of Object.values(ships)) { s.body.visible = false; shipLayer.addChild(s.body); }
+  let ship = ships.striker;
+  // the title screen behind the menus (js/v2/title.js), with its own, bigger ships
+  const title = makeTitle(tex, halo, makeShips(TITLE_SHIP_H / SHIP_H));
+  title.scene.visible = false;
+  px.stage.addChild(title.scene);
 
   let arenaKey = '';
   const drawn = new Map(); // game object -> its sprites
@@ -102,26 +140,47 @@ export async function createV2Renderer(app) {
     return { body: c, inner: body, flames, halo };
   }
 
-  function render(game) {
-    frameNo++;
+  const fitScreen = () => {
     if (px.renderer.width !== Math.round(app.W * app.dpr) || px.renderer.height !== Math.round(app.H * app.dpr)) {
       px.renderer.resolution = app.dpr;
       px.renderer.resize(app.W, app.H);
     }
+  };
+
+  // the menus: the title scene; main = the main menu (full brightness, the ship), showShip = the 2.0 ship is the one chosen
+  function renderTitle(time, opts) {
+    fitScreen();
+    world.visible = false;
+    title.scene.visible = true;
+    title.update(time, app.W, app.H, opts);
+    px.render();
+  }
+
+  function render(game) {
+    frameNo++;
+    fitScreen();
+    world.visible = true;
+    title.scene.visible = false;
+    const w1 = game.stage.world.id === 1;
+    orbit.far.visible = orbit.arena.visible = w1;
+    floor.visible = border.visible = !w1;
     const { cx, cy } = game.frameCam;
     const z = app.zoom;
     world.scale.set(z);
     world.position.set(app.W / 2 - cx * z, app.H / 2 - cy * z);
 
-    // the arena: the floor tile and a glowing border in the world's colour
+    // the arena: world 1 is the orbital wreck field, the others a floor tile with a border in the world's colour
     const { w, h } = game.arena;
-    const key = `${w}x${h}:${game.stage.world.theme.grid}`;
+    const key = `${w}x${h}:${game.stage.world.theme.grid}:${game.stage.id}`;
     if (key !== arenaKey) {
       arenaKey = key;
+      if (w1) orbit.setArena(w, h, [...String(game.stage.id)].reduce((a, c) => a * 31 + c.charCodeAt(0), 7));
       floor.width = w; floor.height = h; floor.position.set(-w / 2, -h / 2);
       const col = Number.parseInt(game.stage.world.theme.grid.slice(1), 16);
       border.clear().rect(-w / 2, -h / 2, w, h).stroke({ width: 12, color: col, alpha: 0.2 }).rect(-w / 2, -h / 2, w, h).stroke({ width: 2.5, color: col, alpha: 0.9 });
     }
+
+    if (w1) orbit.update(game.time, cx, cy, z, app.W, app.H);
 
     // enemies and bosses with 2.0 art
     for (const e of game.enemies) {
@@ -164,9 +223,12 @@ export async function createV2Renderer(app) {
 
     drawCrowd(game);
 
-    // the ship
+    // the ship the player flies (game.ship: its id, and skinName for the Gold Striker)
     const p = game.player;
     const alive = game.state !== 'dying' && game.state !== 'over';
+    const flying = ships[game.ship.id] || ships.striker;
+    if (flying !== ship) { ship.body.visible = false; ship = flying; ship.lastFacing = null; }
+    const base = game.ship.skinName ? GOLD : 0xffffff;
     ship.body.visible = alive;
     if (alive) {
       let turn = p.facing - (ship.lastFacing ?? p.facing);
@@ -177,7 +239,7 @@ export async function createV2Renderer(app) {
       ship.body.position.set(p.x, p.y);
       ship.body.rotation = p.facing + Math.PI / 2;
       ship.body.alpha = p.inv > 0 && Math.floor(game.time * 20) % 2 === 0 ? 0.35 : 1;
-      ship.setTint(game.flash > 0.15 ? 0xff8080 : 0xffffff);
+      ship.setTint(game.flash > 0.15 ? 0xff8080 : base);
       ship.animate(game.time, 0.6 + Math.min(1, p.moving / 300) * 0.8, ship.bank);
     }
     px.render();
@@ -189,21 +251,26 @@ export async function createV2Renderer(app) {
     const { cx, cy } = game.frameCam;
     const x0 = cx - vw / 2 - 60, x1 = cx + vw / 2 + 60, y0 = cy - vh / 2 - 60, y1 = cy + vh / 2 + 60;
     const vis = (o) => o.x > x0 && o.x < x1 && o.y > y0 && o.y < y1;
-    const put = (s, spr, x, y, rot = 0, sc = 1) => {
-      const t = texOf(spr);
-      if (s.texture !== t) s.texture = t;
-      s.position.set(x, y); s.rotation = rot; s.alpha = 1;
-      s.scale.set((spr.half * 2 * sc) / t.width);
-      return s;
-    };
     const glow = (pl, x, y, color, size, alpha) => {
       const s = pl.next();
       if (s.texture !== halo) s.texture = halo;
       s.position.set(x, y); s.rotation = 0; s.tint = color; s.alpha = alpha;
       s.scale.set(size / halo.width);
     };
-    for (const pl of [lootHalo, loot, shotHalo, shots, sparks]) pl.begin();
+    for (const pl of [lootHalo, loot, shotHalo, shots, sparks, weaponSprites]) pl.begin();
     const t = game.time;
+
+    // mines
+    for (const m of game.mines) if (vis(m)) put(loot.next(), mineSprite(m.pull ? '#b06bff' : '#ffd23d', m.arm <= 0 && Math.sin(t * 12) > 0), m.x, m.y);
+
+    // weapons around the ship (blades, drones, aura), drawn by their own render functions
+    weaponG.clear();
+    if (game.state !== 'dying' && game.state !== 'over') {
+      for (const w of game.weapons) {
+        const def = WEAPONS[w.id];
+        if (def.render) def.render(w, game, weaponR, weaponStats(w));
+      }
+    }
 
     // gems and pickups, with a slow glowing pulse
     for (const g of game.gems) {
@@ -266,11 +333,12 @@ export async function createV2Renderer(app) {
         fxG.stroke({ width: w, color: col, alpha: al * a, join: 'round', cap: 'round' });
       }
     }
-    for (const pl of [lootHalo, loot, shotHalo, shots, sparks]) pl.end();
+    for (const pl of [lootHalo, loot, shotHalo, shots, sparks, weaponSprites]) pl.end();
   }
 
   return {
     render,
+    renderTitle,
     show(on) { canvas.style.display = on ? 'block' : 'none'; },
   };
 }
@@ -348,4 +416,59 @@ function softDot() {
   g.fillStyle = gr;
   g.fillRect(0, 0, 64, 64);
   return Texture.from(c);
+}
+
+// The drawing interface the weapons' render functions use (R in js/render-canvas.js): rot/img for the 1.x neon
+// sprites and a small part of a 2D context (alpha, colours, circles and lines) for auras, drawn into a Graphics.
+function weaponAdapter(g, sprite) {
+  const ctx = {
+    globalAlpha: 1, fillStyle: '#ffffff', strokeStyle: '#ffffff', lineWidth: 1, path: [],
+    beginPath() { this.path = []; },
+    arc(x, y, r) { this.path.push({ circle: [x, y, r] }); },
+    moveTo(x, y) { this.path.push({ line: [x, y] }); },
+    lineTo(x, y) { const last = this.path.at(-1); if (last?.line) last.line.push(x, y); else this.path.push({ line: [x, y] }); },
+    trace() {
+      for (const p of this.path) {
+        if (p.circle) g.circle(...p.circle);
+        else { g.moveTo(p.line[0], p.line[1]); for (let i = 2; i < p.line.length; i += 2) g.lineTo(p.line[i], p.line[i + 1]); }
+      }
+    },
+    fill() { this.trace(); g.fill({ color: this.fillStyle, alpha: this.globalAlpha }); },
+    stroke() { this.trace(); g.stroke({ width: this.lineWidth, color: this.strokeStyle, alpha: this.globalAlpha }); },
+  };
+  return {
+    ctx,
+    rot(spr, x, y, a, sc = 1) { sprite(spr, x, y, a, sc, ctx.globalAlpha); },
+    img(spr, x, y, sc = 1) { sprite(spr, x, y, 0, sc, ctx.globalAlpha); },
+  };
+}
+
+// Phantom and Titan (proto2/make-ships.py): the assembled drawing as one body, the flames on its nozzles animated.
+// Banking squeezes the body a little, so turns read as a roll. Same interface as makeShip.
+function makeBodyShip(tex, name, def, length) {
+  const body = new Container();
+  const hull = new Sprite(tex[`ship-${name}-body`]);
+  const mid = def.length / 2; // the ship turns around the middle between nose and nozzles
+  hull.anchor.set(0.5, mid / def.size[1]);
+  const flames = def.nozzles.map(([x, y]) => {
+    const f = new Sprite(tex[`ship-${name}-flame`]);
+    f.anchor.set(0.5, 0.12); f.blendMode = 'add';
+    f.position.set(x - def.size[0] / 2, y - mid);
+    return f;
+  });
+  body.addChild(...flames, hull);
+  const k = length / def.length;
+  body.scale.set(k);
+  return {
+    body, bank: 0, lastFacing: null,
+    setTint(t) { hull.tint = t; },
+    animate(time, boost, bank) {
+      hull.scale.x = 1 - 0.12 * Math.abs(bank);
+      flames.forEach((f, i) => {
+        f.x = (def.nozzles[i][0] - def.size[0] / 2) * hull.scale.x;
+        f.scale.set(1, boost * (1 + 0.16 * Math.sin(time * 31 + i * 1.7) + 0.08 * Math.sin(time * 53 + i)));
+        f.alpha = 0.85 + 0.15 * Math.sin(time * 40 + i);
+      });
+    },
+  };
 }

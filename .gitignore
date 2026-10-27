@@ -16,4 +16,5 @@ xcuserdata/
 **/xcshareddata/swiftpm/
 proto2/assets.gen.js
 js/v2/assets.gen.js
+js/v2/music.gen.js
 teaser/assets.gen.js
