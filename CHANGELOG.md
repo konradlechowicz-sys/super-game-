@@ -16,6 +16,9 @@ i wersja TEST (gracze tego nie widzą).
 
 - 
 
+## Build 80 · 2026-10-27
+- [Nowe] Wersja 2.0: muzyka świata 1 od Konrada (Suno). W sektorach świata 1 gra „Orbital Ruins”: intro raz, potem w pętli główna część utworu (takty 27–65, ok. 65 s). Przy bossie gra jego wersja bossowa: intro, potem pętla walki (ok. 42 s). Pętle są dobrane analizą (tempo ~140 i ~148 BPM, najbardziej podobny dźwięk na obu końcach, dopasowanie do uderzeń perkusji), a szew przygotowany tak, żeby przeskok był niesłyszalny. Pozostałe światy na razie grają dawną muzykę; boss każdego świata gra utwór bossa świata 1.
+
 ## Build 79 · 2026-10-27
 - [Zmiana] W aplikacji (iPhone, Android) muzyka menu gra od razu po uruchomieniu gry, bez czekania na pierwsze dotknięcie. W przeglądarce, także w podglądzie w Claude, nadal startuje po pierwszym kliknięciu, bo przeglądarki nie pozwalają inaczej.
 
