@@ -16,6 +16,10 @@ i wersja TEST (gracze tego nie widzą).
 
 - 
 
+## Build 81 · 2026-10-27
+- [Nowe] Wersja 2.0, świat 1 „Orbital Ruins” według Art Bible: zamiast płyt podłogi na całej arenie walczymy w próżni wysoko nad Ziemią. Czarny kosmos z gwiazdami w dwóch warstwach głębi, daleki ciemny sierp Ziemi (przesuwa się wolniej niż arena), przyciemnione pole drobnego wraku, 3–5 „wysp” z połamanych płyt pokładów stacji, dryfujące martwe satelity, które co chwilę migają w wersję Kolektywu, i przerywana bursztynowa bariera na brzegu areny. Na razie z dostępnych grafik (zwiastun, kafel płyt); po grafikach z ChatGPT podmienimy tekstury.
+- [Narzędzia] Notatki projektu: Konrad sam pośredniczy między Claude'em a ChatGPT (AI-HANDOFF.md zamknięty), źródłem promptów jest Claude Doc „Void Blaster 2.0 – Art Bible”, temat główny zostaje muzyką menu na stałe.
+
 ## Build 80 · 2026-10-27
 - [Nowe] Wersja 2.0: muzyka świata 1 od Konrada (Suno). W sektorach świata 1 gra „Orbital Ruins”: intro raz, potem w pętli główna część utworu (takty 27–65, ok. 65 s). Przy bossie gra jego wersja bossowa: intro, potem pętla walki (ok. 42 s). Pętle są dobrane analizą (tempo ~140 i ~148 BPM, najbardziej podobny dźwięk na obu końcach, dopasowanie do uderzeń perkusji), a szew przygotowany tak, żeby przeskok był niesłyszalny. Pozostałe światy na razie grają dawną muzykę; boss każdego świata gra utwór bossa świata 1.
 

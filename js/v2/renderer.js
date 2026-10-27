@@ -1,5 +1,6 @@
 // The 2.0 look on PixiJS (WebGL), stage 1 of the 2.0 plan. It reads the same game state as js/render-canvas.js and
-// draws, on its own canvas under the game's: the background, the world-1 floor, the Striker built from its parts,
+// draws, on its own canvas under the game's: the background (world 1: the orbital wreck field, js/v2/orbit.js; other
+// worlds: a floor tile), the Striker built from its parts,
 // every enemy or boss that already has 2.0 art (marked e.v2), and the GPU-heavy crowd: shots, enemy bullets, gems,
 // pickups, mines, particles, blast rings and lightning, each with a soft glow, plus the weapons around the ship (their
 // own render functions in js/weapons.js, through an adapter). The 1.x renderer (js/render-canvas.js), drawing on its
@@ -11,6 +12,7 @@ import { boltSprite, missileSprite, orbSprite, gemSprite, glowDot, pickupSprite,
 import { WEAPONS, weaponStats } from '../weapons.js';
 import ASSETS from './assets.gen.js';
 import { makeTitle } from './title.js';
+import { makeOrbitalRuins } from './orbit.js';
 
 const TAU = Math.PI * 2;
 // enemy types with 2.0 art, and the colour of their glow
@@ -65,7 +67,10 @@ export async function createV2Renderer(app) {
   const shotLayer = add(new Container()), fxLayer = add(new Container()), fxG = add(new Graphics());
   const weaponLayer = add(new Container()), weaponG = new Graphics();
   weaponLayer.addChild(weaponG);
-  world.addChild(floor, border, lootLayer, ringG, glowLayer, enemyLayer, bossLayer, shotLayer, weaponLayer, shipLayer, fxLayer, fxG);
+  // world 1 "Orbital Ruins" (js/v2/orbit.js): far layer under the arena, wreckage on it; other worlds use the floor
+  const orbit = makeOrbitalRuins(tex);
+  px.stage.addChildAt(orbit.far, 0);
+  world.addChild(floor, border, orbit.arena, lootLayer, ringG, glowLayer, enemyLayer, bossLayer, shotLayer, weaponLayer, shipLayer, fxLayer, fxG);
   // reusable sprites: each frame takes as many as it needs and hides the rest (no per-object create/destroy)
   const lootHalo = pool(lootLayer), loot = pool(lootLayer);
   const shotHalo = pool(shotLayer), shots = pool(shotLayer);
@@ -156,20 +161,26 @@ export async function createV2Renderer(app) {
     fitScreen();
     world.visible = true;
     title.scene.visible = false;
+    const w1 = game.stage.world.id === 1;
+    orbit.far.visible = orbit.arena.visible = w1;
+    floor.visible = border.visible = !w1;
     const { cx, cy } = game.frameCam;
     const z = app.zoom;
     world.scale.set(z);
     world.position.set(app.W / 2 - cx * z, app.H / 2 - cy * z);
 
-    // the arena: the floor tile and a glowing border in the world's colour
+    // the arena: world 1 is the orbital wreck field, the others a floor tile with a border in the world's colour
     const { w, h } = game.arena;
-    const key = `${w}x${h}:${game.stage.world.theme.grid}`;
+    const key = `${w}x${h}:${game.stage.world.theme.grid}:${game.stage.id}`;
     if (key !== arenaKey) {
       arenaKey = key;
+      if (w1) orbit.setArena(w, h, [...String(game.stage.id)].reduce((a, c) => a * 31 + c.charCodeAt(0), 7));
       floor.width = w; floor.height = h; floor.position.set(-w / 2, -h / 2);
       const col = Number.parseInt(game.stage.world.theme.grid.slice(1), 16);
       border.clear().rect(-w / 2, -h / 2, w, h).stroke({ width: 12, color: col, alpha: 0.2 }).rect(-w / 2, -h / 2, w, h).stroke({ width: 2.5, color: col, alpha: 0.9 });
     }
+
+    if (w1) orbit.update(game.time, cx, cy, z, app.W, app.H);
 
     // enemies and bosses with 2.0 art
     for (const e of game.enemies) {

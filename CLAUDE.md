@@ -4,7 +4,16 @@
   Talk to Konrad in Polish; the game itself is in English.
 - Neon space survivor for iPhone. Vanilla JS + Canvas, no framework. Code map is in README.md.
 
-## Shared handoff with Codex
+## Art direction and ChatGPT (decided by Konrad, 2026-10-27)
+
+- Konrad relays everything between Claude and ChatGPT himself: Claude writes prompts, Konrad pastes them, reviews and
+  sends the images back. `AI-HANDOFF.md` is no longer used for new assignments.
+- The source of all 2.0 visuals and ChatGPT prompts is the Claude Doc "Void Blaster 2.0 – Art Bible"
+  (https://claude.ai/artifact/A6CDwwg4WSEQ3v99p9ZbMc): tab "Art Bible" (world cards, shared rules) and tab "Prompty"
+  (style block, a world block per world, tasks P1-P8). Change a world's card and its prompts together.
+- Music: the 2.0 theme is the menu music for good; no separate M1 track.
+
+## Shared handoff with Codex (paused, see above)
 
 - Before starting a task, read the root `AI-HANDOFF.md` for a pending assignment or status from Codex.
 - For a handoff, use the same `claude/...` branch and commit the handoff update with the work. Work sequentially: only one agent edits that branch at a time.
