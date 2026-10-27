@@ -9,6 +9,7 @@ import { clamp, todayStr } from './util.js';
 import { createStore, shipLook } from './store.js';
 import { createLeaderboard } from './leaderboard.js';
 import { frameCamera } from './render-canvas.js';
+import { EDITION } from './edition.js';
 import { installTestKit } from './testkit.js';
 
 const params = new URLSearchParams(location.search);
@@ -18,8 +19,8 @@ const LOCAL = /^(localhost|127\.0\.0\.1|\[::1\]|10\.\d+\.\d+\.\d+|192\.168\.\d+\
 const DEV = params.has('dev') && (LOCAL || __TEST__);
 
 const canvas = document.getElementById('game');
-// opaque in normal builds (cheapest to composite); the TEST variant needs a transparent canvas over the 2.0 look (js/v2/)
-const ctx = canvas.getContext('2d', { alpha: !!__TEST__ });
+// transparent: on the 2.0 line (js/edition.js) this canvas draws over the 2.0 look (js/v2/, PixiJS) below it
+const ctx = canvas.getContext('2d', { alpha: EDITION === 2 || !!__TEST__ });
 
 // ---------------- input: joystick / relative drag + keyboard ----------------
 const JOY_R = 52; // knob travel radius in CSS px
@@ -248,8 +249,8 @@ function frame(now) {
   if (app.game) {
     for (let i = 0; i < app.timeScale && app.game; i++) app.game.update(dt);
     if (app.game) {
-      // the 2.0 look (TEST variant only, js/v2/): PixiJS draws below, this canvas draws the rest on top
-      const v2 = app.v2 && app.v2r;
+      // the 2.0 look (js/v2/): PixiJS draws below, this canvas draws the rest on top
+      const v2 = app.v2 && !app.oldLook && app.v2r;
       if (v2) { app.game.frameCam = frameCamera(app.game); app.v2r.render(app.game); }
       app.game.render(ctx, !!v2);
       app.game.frameCam = null;
@@ -258,7 +259,7 @@ function frame(now) {
   } else {
     renderMenu(dt);
   }
-  app.v2r?.show(!!(app.v2 && app.game));
+  app.v2r?.show(!!(app.v2 && !app.oldLook && app.game));
   requestAnimationFrame(frame);
 }
 
@@ -365,6 +366,13 @@ app.store.init().then(() => {
 });
 // TEST variant only. __TEST__ is replaced by the build (true/false), so normal and App Store builds drop this call and
 // js/testkit.js entirely; on the unbundled dev page index.html sets it from ?test.
+// Void Blaster 2.0 (js/edition.js): the PixiJS look is the normal look; until it has loaded, the 1.x look is drawn.
+// A dynamic import, so the unbundled dev page (which cannot resolve 'pixi.js') falls back to the 1.x look.
+if (EDITION === 2) {
+  app.v2 = true;
+  import('./v2/renderer.js').then((m) => m.createV2Renderer(app)).then((r) => { app.v2r = r; })
+    .catch((e) => { app.v2 = false; console.warn('2.0 look not loaded, using the 1.x look:', e.message); });
+}
 if (__TEST__) installTestKit(app);
 app.applySettings();
 if (DEV && params.get('coins')) app.save.coins = +params.get('coins');

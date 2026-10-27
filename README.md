@@ -83,7 +83,9 @@ the back button, signing for Google Play, Android in `npm run review`.
   via `npm start` / `sim` / `review`, which install the app without the scheme. In the browser, `?dev` simulates the purchase and `?dev&full` starts unlocked.
 
 ## Three lines: R&D, TEST, RELEASE
-- **R&D** — `claude/...` branches: proposals from cloud sessions; `main`: builds accepted with `npm run review`.
+- **R&D** — `claude/...` branches: proposals from cloud sessions; `main`: 1.x builds accepted with `npm run review`;
+  `v2`: accepted 2.0 builds (from `claude/v2-...` branches, also via `npm run review`; never released directly, merged
+  into `main` for the 2.0 launch).
 - **TEST** — not a branch but a build variant of the same code: the game plus the tester's panel 🛠 (`js/testkit.js`):
   god mode, all sectors, full game on/off, boss now (with 0–20 level-ups), coins, 3 stars everywhere, reset tutorial
   or progress, game speed ×2/×4, level up, full hull, spawn elite, skip 30 s, win sector, FPS counter.
@@ -130,7 +132,8 @@ and `.../site/support.html`, and the web version of the game at `https://konradl
 ## Code map
 - `js/game.js` — run logic: player, enemies, boss, spawning, combat
 - `js/render-canvas.js` — the 1.x look: draws a game's state on the 2D canvas (also as a transparent overlay over the 2.0 look)
-- `js/v2/` — the 2.0 look on PixiJS (TEST variant only, switched on in 🛠); textures come from `js/v2/assets.gen.js`, written by `scripts/v2-assets.mjs` from `proto2/assets` and `teaser/assets` (not committed). Release and normal web builds fail if the marker `VB-V2LOOK` is found
+- `js/edition.js` — which game this line builds (`v2` line: Void Blaster 2.0, tag *2.0 dev* next to the build number)
+- `js/v2/` — the 2.0 look on PixiJS, the normal look on the `v2` line (🛠 → *1.x look* compares); textures come from `js/v2/assets.gen.js`, written by `scripts/v2-assets.mjs` from `proto2/assets` and `teaser/assets` (not committed). Release and normal web builds fail if the marker `VB-V2LOOK` is found
 - `js/weapons.js` — weapon stats, behaviours and evolutions
 - `js/codex.js` — the Codex (v1.2): its sections and entries; discoveries are saved in `save.codex` (kept by Reset progress)
 - `js/combos.js` — weapon combos and perk sets (v1.2): which pairs exist and when they are active; their effects live in weapons.js and game.js (`updatePerkSets`, `missileCombos`, `crowdHit`)

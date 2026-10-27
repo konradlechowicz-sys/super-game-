@@ -16,6 +16,13 @@ i wersja TEST (gracze tego nie widzą).
 
 - 
 
+## Build 73 · 2026-10-27
+- [Nowe] Pierwszy build linii 2.0 (`v2`): nowy wygląd (PixiJS, grafika świata 1) jest teraz zwykłym wyglądem gry, bez włączania w 🛠. Przy numerze builda widać „2.0 dev” (w TEST: „TEST 2.0 dev · build N”), w Ustawieniach też.
+- [Narzędzia] W panelu 🛠 przełącznik „1.x look (compare with 2.0)” zamiast „2.0 look”: pozwala porównać ze starym wyglądem.
+
+## Build 72 · 2026-10-27
+- [Narzędzia] Dwie linie: `main` = Void Blaster 1.x (tylko poprawki, z niej wydania), `v2` = zaakceptowane buildy wersji 2.0. `npm run review` pokazuje nowe buildy w dwóch grupach („1.x → main” i „2.0 → v2”) i sam akceptuje do właściwej linii; po wszystkim wraca na `main`. `npm run release` wydaje tylko `main`. Ramka `npm start` pokazuje, czy to 1.x czy 2.0. Opis w JAK-TESTOWAC.md. Gra bez zmian.
+
 ## Build 71 · 2026-10-27
 - [Narzędzia] Testowanie i akceptacja buildów działa też na Windowsie: `npm start`, `npm run web` / `web:test`, `npm run review` (uruchamia build w przeglądarce albo na Androidzie) i komendy Androida. Symulator, iPhone i wydanie do App Store zostają na Macu (na Windowsie skrypt mówi to wprost). `npm start` i `review` mają też opcję [a] Android. Instrukcja instalacji na Windowsie: JAK-TESTOWAC.md. Gra bez zmian.
 
