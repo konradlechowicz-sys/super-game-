@@ -1,8 +1,11 @@
 // npm run review — test new game versions prepared in the cloud, then accept or reject them.
 //
-// Cloud sessions push their work to `claude/...` branches. This script lists those with changes not yet in `main`,
+// Two accepted lines (decided by Konrad, 2026-10-27): `main` = Void Blaster 1.x (releasable, bug fixes only) and
+// `v2` = the accepted builds of 2.0 (never released from there; it is merged into main for the 2.0 launch).
+// Cloud sessions push their work to `claude/...` branches: `claude/v2-...` are 2.0 candidates for `v2`, every other
+// `claude/...` branch is a 1.x candidate for `main`. This script lists those with changes not yet in their line,
 // builds the chosen one, launches it in the iOS Simulator or on the iPhone (scripts/run.mjs) and asks Konrad for a decision:
-//   accept -> merged into main and pushed (main is the version that gets released),
+//   accept -> merged into its line (main or v2) and pushed (main is the version that gets released),
 //   reject -> back to main; this exact version is not offered again (new commits on the branch will be),
 //   later  -> back to main, nothing changes.
 // Set VB_NO_SIM=1 to skip the simulator (for testing this script on a machine without Xcode).
@@ -40,15 +43,21 @@ function buildLabel(ref) {
   }
 }
 
+// claude/v2-... (or claude/v2/...) goes to the 2.0 line once it exists on GitHub; everything else to main.
+const LINES = { main: 'Void Blaster 1.x → main', v2: 'Wersja 2.0 → v2' };
+let hasV2 = false;
+const lineOf = (branch) => (hasV2 && /^claude\/v2[-/]/.test(branch) ? 'v2' : 'main');
+
 const buildOf = (ref) => { try { return +(sh(`git show ${ref}:js/version.js`).match(/build: (\d+)/) || [])[1] || 0; } catch { return 0; } };
 // What a version changes compared with the accepted one, from its CHANGELOG.md.
-const changesOf = (ref, max) => describe(buildsBetween(readAt(ref), buildOf('origin/main'), buildOf(ref)), '     ', max);
+const changesOf = (ref, max, line = 'main') => describe(buildsBetween(readAt(ref), buildOf(`origin/${line}`), buildOf(ref)), '     ', max);
 
-function switchToMain() {
-  const hasLocalMain = sh('git branch --list main') !== '';
-  run(hasLocalMain ? 'git checkout -q main' : 'git checkout -q -b main origin/main');
-  run('git merge -q --ff-only origin/main');
+function switchTo(line) {
+  const hasLocal = sh(`git branch --list ${line}`) !== '';
+  run(hasLocal ? `git checkout -q ${line}` : `git checkout -q -b ${line} origin/${line}`);
+  run(`git merge -q --ff-only origin/${line}`);
 }
+const switchToMain = () => switchTo('main');
 
 // Build and launch with the tools of the version being tested (it is checked out at this point), so fixes to the
 // build/launch scripts take effect immediately instead of only after they reach main.
@@ -71,22 +80,30 @@ const startBranch = sh('git branch --show-current');
 const startSha = sh('git rev-parse HEAD');
 console.log('Sprawdzam nowe wersje na GitHubie…');
 run('git fetch -q --prune origin');
+hasV2 = (() => { try { sh('git rev-parse --verify -q origin/v2'); return true; } catch { return false; } })();
 
 const candidates = sh('git for-each-ref --sort=-committerdate --format="%(refname:short)" refs/remotes/origin/claude/')
   .split('\n').filter(Boolean)
-  .map((ref) => ({
+  .map((ref) => ({ ref, branch: ref.replace(/^origin\//, '') }))
+  .map((c) => ({ ...c, line: lineOf(c.branch) }))
+  .map(({ ref, branch, line }) => ({
     ref,
-    branch: ref.replace(/^origin\//, ''),
+    branch,
+    line,
     sha: sh(`git rev-parse ${ref}`),
-    ahead: +sh(`git rev-list --count origin/main..${ref}`),
+    ahead: +sh(`git rev-list --count origin/${line}..${ref}`),
     subject: sh(`git log -1 --format=%s ${ref}`),
     when: sh(`git log -1 --format=%cr ${ref}`),
     label: buildLabel(ref),
   }))
-  .filter((c) => c.ahead > 0 && !rejected.has(c.sha));
+  .filter((c) => c.ahead > 0 && !rejected.has(c.sha))
+  // 1.x first, then 2.0; newest first within each line
+  .sort((a, b) => (a.line === b.line ? 0 : a.line === 'main' ? -1 : 1));
 
 const mainHasGame = (() => { try { sh('git cat-file -e origin/main:package.json'); return true; } catch { return false; } })();
-console.log(`Zaakceptowana wersja (main): ${mainHasGame ? buildLabel('origin/main') : 'jeszcze żadna'}\n`);
+console.log(`Zaakceptowana wersja 1.x (main): ${mainHasGame ? buildLabel('origin/main') : 'jeszcze żadna'}`);
+if (hasV2) console.log(`Zaakceptowana wersja 2.0 (v2): ${buildLabel('origin/v2')}`);
+console.log('');
 if (!candidates.length) {
   if (mainHasGame && startBranch !== 'main') {
     // e.g. still on `release` after an App Store upload: come back to the accepted version
@@ -98,7 +115,10 @@ if (!candidates.length) {
 }
 
 console.log('Nowe wersje do sprawdzenia:');
-candidates.forEach((c, i) => console.log(`  ${i + 1}) ${c.label} · ${c.when}\n     gałąź: ${c.branch}\n${changesOf(c.ref, 4)}\n`));
+candidates.forEach((c, i) => {
+  if (hasV2 && (i === 0 || candidates[i - 1].line !== c.line)) console.log(`\n  ── ${LINES[c.line]} ──`);
+  console.log(`  ${i + 1}) ${c.label} · ${c.when}\n     gałąź: ${c.branch}\n${changesOf(c.ref, 4, c.line)}\n`);
+});
 const pick = candidates.length === 1 ? '1' : await ask(`\nKtórą wersję uruchomić? [1-${candidates.length}, Enter = 1] `);
 const c = candidates[(+pick || 1) - 1];
 if (!c) bye('Nie ma takiej wersji.', 1);
@@ -120,21 +140,24 @@ try {
   console.log('\nNie udało się zbudować albo uruchomić tej wersji. Możesz ją odrzucić albo spróbować później.');
 }
 
-console.log(`\nZmiany w ${c.label} względem zaakceptowanej wersji:\n${changesOf(c.sha)}`);
-const decision = await ask('\nCo z tą wersją? [a] akceptuj  [o] odrzuć  [p] później: ');
+console.log(`\nZmiany w ${c.label} względem zaakceptowanej wersji (${c.line}):\n${changesOf(c.sha, undefined, c.line)}`);
+const decision = await ask(`\nCo z tą wersją? [a] akceptuj (trafi do ${c.line})  [o] odrzuć  [p] później: `);
 // Normally return to main. Until the first version is accepted main has no game (not even this script),
 // so in that case go back to the branch the script was started from.
-if (decision === 'a' || mainHasGame) switchToMain();
+if (decision === 'a') switchTo(c.line);
+else if (mainHasGame) switchToMain();
 else run(startBranch ? `git checkout -q ${startBranch}` : `git checkout -q --detach ${startSha}`);
 
 if (decision === 'a') {
   run(`git merge -q --no-ff --no-edit -m "Accept ${c.label} from ${c.branch}" ${c.sha}`);
   try {
-    run('git push -q origin main');
-    console.log(`\n✔ Zaakceptowano ${c.label}. Jest teraz w main i na GitHubie.`);
+    run(`git push -q origin ${c.line}`);
+    console.log(`\n✔ Zaakceptowano ${c.label}. Jest teraz w ${c.line} i na GitHubie.`);
   } catch {
-    console.log('\n✔ Zaakceptowano lokalnie, ale nie udało się wysłać na GitHub (git push). Spróbuj później: git push origin main');
+    console.log(`\n✔ Zaakceptowano lokalnie, ale nie udało się wysłać na GitHub (git push). Spróbuj później: git push origin ${c.line}`);
   }
+  // the folder (and the Xcode project) always ends on the releasable 1.x line
+  if (c.line !== 'main') switchToMain();
   syncAcceptedVersion();
 } else if (decision === 'o') {
   appendFileSync(REJECTED, `${c.sha}\n`);

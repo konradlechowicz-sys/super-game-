@@ -83,7 +83,9 @@ the back button, signing for Google Play, Android in `npm run review`.
   via `npm start` / `sim` / `review`, which install the app without the scheme. In the browser, `?dev` simulates the purchase and `?dev&full` starts unlocked.
 
 ## Three lines: R&D, TEST, RELEASE
-- **R&D** — `claude/...` branches: proposals from cloud sessions; `main`: builds accepted with `npm run review`.
+- **R&D** — `claude/...` branches: proposals from cloud sessions; `main`: 1.x builds accepted with `npm run review`;
+  `v2`: accepted 2.0 builds (from `claude/v2-...` branches, also via `npm run review`; never released directly, merged
+  into `main` for the 2.0 launch).
 - **TEST** — not a branch but a build variant of the same code: the game plus the tester's panel 🛠 (`js/testkit.js`):
   god mode, all sectors, full game on/off, boss now (with 0–20 level-ups), coins, 3 stars everywhere, reset tutorial
   or progress, game speed ×2/×4, level up, full hull, spawn elite, skip 30 s, win sector, FPS counter.

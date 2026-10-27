@@ -41,8 +41,12 @@ export function describeCheckout() {
   const branch = tryTo(() => sh('git branch --show-current'));
   const head = tryTo(() => sh('git rev-parse HEAD'));
   const main = tryTo(() => sh('git rev-parse origin/main'));
+  const v2 = tryTo(() => sh('git rev-parse origin/v2'));
   let what;
-  if (head && head === main) what = 'zaakceptowana wersja (main)';
+  if (head && head === main) what = 'zaakceptowana wersja 1.x (main)';
+  else if (head && head === v2) what = 'zaakceptowana wersja 2.0 (v2)';
+  else if (branch === 'v2') what = 'v2 (lokalnie inny niż na GitHubie)';
+  else if (branch.startsWith('claude/v2')) what = `kandydat 2.0 z chmury, jeszcze nie zaakceptowany (gałąź ${branch})`;
   else if (branch === 'main') what = 'main (lokalnie inny niż na GitHubie)';
   else if (branch.startsWith('claude/')) what = `kandydat z chmury, jeszcze nie zaakceptowany (gałąź ${branch})`;
   else if (branch) what = `gałąź ${branch}`;
