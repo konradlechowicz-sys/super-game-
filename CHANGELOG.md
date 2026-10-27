@@ -10,13 +10,15 @@ i wersja TEST (gracze tego nie widzą).
 
 ## Następne wydanie
 
-<!-- Podsumowanie zmian od v1.2.1; uzupełnia Claude przy każdym buildzie. -->
+<!-- Podsumowanie zmian od v1.3.0; uzupełnia Claude przy każdym buildzie. -->
 
 ### What's New (App Store)
 
 - 
 
-## v1.2.1 · build 65 · 2026-10-27 · App Store
+## v1.3.0 · build 66 · 2026-10-27 · App Store
+
+_Ten sam build 65 co v1.2.1, wydany ponownie jako v1.3.0._
 
 - Tryb Endless w każdym świecie: po pokonaniu Void Heart (pełna wersja) gra trwa do zniszczenia statku, wynik to liczba zabitych wrogów. Co minutę fala, co 2,5 minuty elita, co 5 minut boss świata, wrogowie stale mocniejsi. Monety z przelotu plus 40 za każdą minutę, rekord każdego świata zapisany.
 - Rankingi Game Center: osobny ranking Endless dla każdego świata.
