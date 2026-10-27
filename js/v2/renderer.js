@@ -33,13 +33,16 @@ export async function createV2Renderer(app) {
     canvas, width: app.W, height: app.H, resolution: app.dpr, autoDensity: true, background: 0x05010f,
     antialias: true, autoStart: false, powerPreference: 'high-performance',
   });
-  const tex = {};
+  const tex = {}, imgs = {};
   await Promise.all(Object.entries(ASSETS.images).map(async ([name, url]) => {
     const img = new Image();
     img.src = url;
     await img.decode();
+    imgs[name] = img;
     tex[name] = Texture.from(img);
   }));
+  // the 2.0 pictures of the ships for the HTML screens (hangar, sector briefing; js/ui.js paintCanvases)
+  app.shipArt = (id) => imgs[`ship-card-${id}`] || null;
 
   const halo = softDot();
   // the 1.x neon sprites (pre-rendered canvases, js/sprites.js) as GPU textures, made once per canvas

@@ -1,8 +1,9 @@
 # Prepares the 2.0 Phantom and Titan for the game from their ChatGPT parts sheets (art/2.0/ship/*-parts-sheet.webp).
 # Each sheet carries the assembled ship in its bottom-right corner, drawn at one scale; that drawing becomes the ship's
 # body, with its painted engine flames erased, and the sheet's separate flame part is placed on every nozzle so the
-# game can animate it (js/v2/renderer.js). Writes proto2/assets/ship-<name>-body.webp, ship-<name>-flame.webp and
-# ships.json (flame positions in body pixels). Run from the repo root: python3 proto2/make-ships.py
+# game can animate it (js/v2/renderer.js). Writes proto2/assets/ship-<name>-body.webp, ship-<name>-flame.webp,
+# ships.json (flame positions in body pixels) and ship-card-<name>.webp: the whole ship with its flames for the
+# hangar and the sector briefing (the Striker's card is its full drawing, art/2.0/ship/striker.webp). Run from the repo root: python3 proto2/make-ships.py
 import json
 import numpy as np
 from PIL import Image
@@ -62,4 +63,23 @@ for name, s in SHIPS.items():
         'flame': [f.width, f.height],
     }
 json.dump(out, open(f'{OUT}/ships.json', 'w'))
+
+CARD = 240  # height of the hangar pictures, in pixels
+
+
+def card(im, name):
+    im = im.crop(im.getbbox())
+    k = CARD / max(im.size)
+    im.resize((round(im.width * k), round(im.height * k)), Image.LANCZOS).save(f'{OUT}/ship-card-{name}.webp', 'WEBP', quality=90, method=6)
+
+
+card(Image.open(f'{ART}/striker.webp').convert('RGBA'), 'striker')
+for name, d in out.items():
+    b = Image.open(f'{OUT}/ship-{name}-body.webp').convert('RGBA')
+    f = Image.open(f'{OUT}/ship-{name}-flame.webp').convert('RGBA')
+    c = Image.new('RGBA', (b.width, b.height + f.height), (0, 0, 0, 0))
+    for x, y in d['nozzles']:
+        c.alpha_composite(f, (round(x - f.width / 2), round(y - 0.12 * f.height)))
+    c.alpha_composite(b, (0, 0))
+    card(c, name)
 print(json.dumps(out))

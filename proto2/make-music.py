@@ -13,5 +13,5 @@ LOOP_BARS = 24
 end = DROP + LOOP_BARS * BAR
 subprocess.run(['ffmpeg', '-v', 'error', '-y', '-i', SRC, '-t', f'{end + 0.5:.3f}', '-ac', '2', '-ar', '44100',
                 '-b:a', '112k', 'proto2/assets/music-menu.mp3'], check=True)
-json.dump({'menu': {'loopStart': DROP, 'loopEnd': round(end, 4), 'gain': 0.55}}, open('proto2/assets/music.json', 'w'))
+json.dump({'menu': {'loopStart': DROP, 'loopEnd': round(end, 4), 'gain': 1.0}}, open('proto2/assets/music.json', 'w'))
 print('menu loop', DROP, '->', round(end, 3), 's')
