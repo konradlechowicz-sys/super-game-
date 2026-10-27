@@ -134,9 +134,11 @@ and `.../site/support.html`, and the web version of the game at `https://konradl
 - `js/render-canvas.js` — the 1.x look: draws a game's state on the 2D canvas (also as a transparent overlay over the 2.0 look)
 - `js/edition.js` — which game this line builds (`v2` line: Void Blaster 2.0, tag *2.0 dev* next to the build number)
 - `js/v2/` — the 2.0 look on PixiJS, the normal look on the `v2` line (🛠 → *1.x look* compares); `title.js` = the
-  title screen behind the menus (Earth, the Collective's web, rewritten satellites, emblem, the chosen ship); recorded
+  title screen behind the menus (Earth, the Collective's web, rewritten satellites, emblem, the chosen ship); `orbit.js` =
+  world 1 "Orbital Ruins" (ChatGPT art cut by `proto2/make-world1.py`); recorded
   2.0 music (`js/v2/music.gen.js` from `proto2/make-music.py`, needs ffmpeg) replaces the synthesized track it covers
   (`setRecording` in `js/audio.js`); textures come from `js/v2/assets.gen.js`, written by `scripts/v2-assets.mjs` from `proto2/assets` and `teaser/assets` (not committed). Release and normal web builds fail if the marker `VB-V2LOOK` is found
+- `js/props.js` — 2.0, world 1: destructible fuel tanks (blast hurts enemies and the ship) and ammo crates (coins, pickups)
 - `js/weapons.js` — weapon stats, behaviours and evolutions
 - `js/codex.js` — the Codex (v1.2): its sections and entries; discoveries are saved in `save.codex` (kept by Reset progress)
 - `js/combos.js` — weapon combos and perk sets (v1.2): which pairs exist and when they are active; their effects live in weapons.js and game.js (`updatePerkSets`, `missileCombos`, `crowdHit`)

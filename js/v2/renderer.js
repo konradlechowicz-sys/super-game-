@@ -18,6 +18,7 @@ const TAU = Math.PI * 2;
 // enemy types with 2.0 art, and the colour of their glow
 const ENEMY_ART = { drone: 0xff2d95, swarmer: 0xffe23d, dasher: 0xff3d9a, shooter: 0xff2d95, tank: 0xb04dff, splitter: 0x9dff3d };
 const ENEMY_SIZE = 2.8; // sprite size in enemy radii
+const PROP_SIZE = { tank: 3.4, crate: 3 }; // length of a world-1 prop in its radii
 const SHIP_H = 46; // the Striker's length in world units
 const FLOOR_SCALE = 0.5;
 const TITLE_SHIP_H = 120; // the Striker on the title screen, in points
@@ -63,6 +64,7 @@ export async function createV2Renderer(app) {
   const border = new Graphics();
   const lootLayer = add(new Container()), ringG = add(new Graphics());
   const glowLayer = add(new Container());
+  const propLayer = new Container();
   const enemyLayer = new Container(), bossLayer = new Container(), shipLayer = new Container();
   const shotLayer = add(new Container()), fxLayer = add(new Container()), fxG = add(new Graphics());
   const weaponLayer = add(new Container()), weaponG = new Graphics();
@@ -70,7 +72,7 @@ export async function createV2Renderer(app) {
   // world 1 "Orbital Ruins" (js/v2/orbit.js): far layer under the arena, wreckage on it; other worlds use the floor
   const orbit = makeOrbitalRuins(tex);
   px.stage.addChildAt(orbit.far, 0);
-  world.addChild(floor, border, orbit.arena, lootLayer, ringG, glowLayer, enemyLayer, bossLayer, shotLayer, weaponLayer, shipLayer, fxLayer, fxG);
+  world.addChild(floor, border, orbit.arena, propLayer, lootLayer, ringG, glowLayer, enemyLayer, bossLayer, shotLayer, weaponLayer, shipLayer, fxLayer, fxG);
   // reusable sprites: each frame takes as many as it needs and hides the rest (no per-object create/destroy)
   const lootHalo = pool(lootLayer), loot = pool(lootLayer);
   const shotHalo = pool(shotLayer), shots = pool(shotLayer);
@@ -119,6 +121,22 @@ export async function createV2Renderer(app) {
     glow.anchor.set(0.5);
     enemyLayer.addChild(body); glowLayer.addChild(glow);
     return { body, glow, base: (e.r * ENEMY_SIZE) / Math.max(body.texture.width, body.texture.height) };
+  }
+
+  // world 1: a fuel tank or an ammo crate (js/props.js) on a dark shadow, so it stands out from the deck metal, and a
+  // soft amber glow: the tank's weak point, a faint halo round the crate
+  function propSprites(o) {
+    const body = new Container();
+    const shadow = new Sprite(halo), spr = new Sprite(tex[`w1-prop-${o.prop}`]);
+    shadow.anchor.set(0.5); spr.anchor.set(0.5);
+    shadow.tint = 0x000000; shadow.alpha = 0.8;
+    shadow.scale.set((spr.texture.width * 1.5) / 64, (spr.texture.height * 1.7) / 64);
+    body.addChild(shadow, spr);
+    propLayer.addChild(body);
+    const glow = new Sprite(halo);
+    glow.anchor.set(0.5); glow.tint = 0xffb02e;
+    glowLayer.addChild(glow);
+    return { body, spr, shadow, glow, base: (o.r * PROP_SIZE[o.prop]) / spr.texture.width };
   }
 
   function bossSprites(b) {
@@ -181,6 +199,29 @@ export async function createV2Renderer(app) {
     }
 
     if (w1) orbit.update(game.time, cx, cy, z, app.W, app.H);
+
+    // world 1: fuel tanks and ammo crates, whole or broken (js/props.js)
+    if (tex['w1-prop-tank']) for (const o of game.props) {
+      const s = spritesFor(o, () => propSprites(o));
+      const t = tex[`w1-prop-${o.prop}${o.dead ? '-broken' : ''}`];
+      if (s.spr.texture !== t) s.spr.texture = t;
+      s.body.position.set(o.x, o.y); s.body.rotation = o.rot; s.body.scale.set(s.base);
+      s.spr.tint = o.flash > 0 ? 0xffb0ff : 0xffffff;
+      s.shadow.alpha = o.dead ? 0.4 : 0.8;
+      s.glow.visible = !o.dead;
+      const pulse = Math.sin(game.time * 5 + o.id);
+      if (o.prop === 'tank') {
+        // the weak point sits right of the tank's middle
+        const off = o.r * PROP_SIZE.tank * 0.14;
+        s.glow.position.set(o.x + Math.cos(o.rot) * off, o.y + Math.sin(o.rot) * off);
+        s.glow.scale.set(1.3);
+        s.glow.alpha = 0.7 + 0.3 * pulse;
+      } else {
+        s.glow.position.set(o.x, o.y);
+        s.glow.scale.set((o.r * 4) / 64);
+        s.glow.alpha = 0.24 + 0.1 * pulse;
+      }
+    }
 
     // enemies and bosses with 2.0 art
     for (const e of game.enemies) {

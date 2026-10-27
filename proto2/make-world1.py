@@ -31,3 +31,21 @@ for i, (qx, qy) in enumerate([(0, 0), (1, 0), (0, 1), (1, 1)]):
     part = part.resize((round(part.width * k), round(part.height * k)), Image.LANCZOS)
     part.save(f'{OUT}/w1-island-{i + 1}.webp', 'WEBP', quality=90, method=6)
     print(f'w1-island-{i + 1}', part.size)
+
+# P5: props, cut by their place on the sheet (3 large, 3 small, then the fuel tank and the ammo crate, each whole and
+# destroyed), each to its own bounding box. Large ones are stored at most 320 px, the rest at most 200 px.
+props = key(Image.open(f'{SRC}/props-sheet.webp'))
+BOXES = {
+    'mast': (100, 160, 420, 500), 'solar': (480, 180, 760, 480), 'turret': (840, 210, 1160, 470),
+    'sat': (180, 640, 340, 790), 'pod': (560, 650, 690, 760), 'cables': (910, 660, 1090, 760),
+    'tank': (90, 920, 300, 1080), 'tank-broken': (380, 920, 590, 1080),
+    'crate': (670, 920, 860, 1080), 'crate-broken': (960, 920, 1150, 1080),
+}
+for name, box in BOXES.items():
+    part = props.crop(box)
+    part = part.crop(part.getchannel('A').point(lambda v: 255 if v > 40 else 0).getbbox())
+    cap = 320 if name in ('mast', 'solar', 'turret') else 200
+    k = min(1, cap / max(part.size))
+    part = part.resize((round(part.width * k), round(part.height * k)), Image.LANCZOS)
+    part.save(f'{OUT}/w1-prop-{name}.webp', 'WEBP', quality=90, method=6)
+    print(f'w1-prop-{name}', part.size)

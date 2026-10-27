@@ -3,7 +3,7 @@
 // (parallax). At the arena level: a sparse field of small wreckage, a few broken deck fragments of the defense
 // stations (the old floor tile, cut to jagged islands), dead satellites that drift and keep being "rewritten" by the
 // Collective, and a broken amber energy barrier along the arena edge. ChatGPT's world-1 art replaces the stand-ins as
-// it arrives (so far the debris tile W1 P3a and the deck fragments W1 P3b); the rest is built from the teaser Earth and satellites, the station
+// it arrives (so far the debris tile W1 P3a, the deck fragments W1 P3b and the props W1 P5); the rest is built from the teaser Earth and satellites, the station
 // floor tile and shapes drawn in code.
 import { Container, Graphics, Rectangle, Sprite, Texture, TilingSprite } from 'pixi.js';
 
@@ -78,10 +78,11 @@ export function makeOrbitalRuins(tex) {
   if (tex['w1-debris']) debris.tileScale.set(1024 / 768);
   debris.alpha = tex['w1-debris'] ? 0.7 : 0.45; // background: well below the enemies' metal
   const islands = new Container();
+  const decor = new Container();
   const sats = new Container();
   const barrier = new Graphics();
-  arena.addChild(debris, islands, sats, barrier);
-  let satList = [];
+  arena.addChild(debris, islands, decor, sats, barrier);
+  let satList = [], floaters = [];
 
   function island(r, size) {
     const c = new Container();
@@ -114,6 +115,20 @@ export function makeOrbitalRuins(tex) {
     debris.width = w; debris.height = h; debris.position.set(-w / 2, -h / 2);
     islands.removeChildren().forEach((c) => c.destroy({ children: true }));
     sats.removeChildren().forEach((c) => c.destroy({ children: true }));
+    decor.removeChildren().forEach((c) => c.destroy({ children: true }));
+    floaters = [];
+    // a prop of W1 P5 (world units across), on a deck fragment or floating free
+    const prop = (name, size, x, y, spin = 0) => {
+      const t = tex[`w1-prop-${name}`];
+      if (!t) return;
+      const s = new Sprite(t);
+      s.anchor.set(0.5);
+      s.scale.set(size / Math.max(t.width, t.height));
+      s.rotation = r() * TAU;
+      s.position.set(x, y);
+      decor.addChild(s);
+      if (spin) floaters.push({ s, spin: (r() - 0.5) * spin });
+    };
     // 3-5 deck fragments, away from the start point in the middle
     const count = 3 + Math.floor(r() * 3);
     for (let i = 0; i < count; i++) {
@@ -131,6 +146,16 @@ export function makeOrbitalRuins(tex) {
       } else c = island(r, size);
       c.position.set(x, y);
       islands.addChild(c);
+      // a wrecked defense turret or a sparking cable bundle on some of the decks
+      const on = r();
+      if (on < 0.45) prop('turret', size * 0.38, x + (r() - 0.5) * size * 0.2, y + (r() - 0.5) * size * 0.2);
+      else if (on < 0.75) prop('cables', 70, x + (r() - 0.5) * size * 0.3, y + (r() - 0.5) * size * 0.3);
+    }
+    // floating free: snapped masts and solar wings, then dead satellites, escape pods and cable bundles
+    for (let i = 0; i < 3; i++) prop(i % 2 ? 'solar' : 'mast', 220 + r() * 80, (r() - 0.5) * (w - 300), (r() - 0.5) * (h - 300), 0.04);
+    for (let i = 0; i < 7; i++) {
+      const name = ['sat', 'pod', 'cables'][i % 3];
+      prop(name, name === 'sat' ? 80 : 55, (r() - 0.5) * (w - 120), (r() - 0.5) * (h - 120), 0.3);
     }
     // dead satellites that drift and flicker into the Collective's version
     satList = [];
@@ -172,6 +197,7 @@ export function makeOrbitalRuins(tex) {
     earth.scale.set(ew / 1080);
     earth.rotation = 0.42;
     earth.position.set(-W * 0.05 - cx * z * 0.04, H * 0.72 - cy * z * 0.04);
+    for (const f of floaters) f.s.rotation += f.spin / 60;
     // satellites drift, turn and get rewritten for a while every cycle
     for (const s of satList) {
       s.c.x = s.x + Math.sin(time * 0.15 + s.drift) * 30;

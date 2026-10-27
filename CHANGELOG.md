@@ -16,6 +16,10 @@ i wersja TEST (gracze tego nie widzą).
 
 - 
 
+## Build 85 · 2026-10-27
+- [Nowe] 2.0, świat 1: rekwizyty z ChatGPT (W1 P5) – złamane maszty i skrzydła paneli słonecznych, wraki ludzkich wieżyczek na pokładach, martwe satelity, kapsuły ratunkowe i iskrzące wiązki kabli dryfują po arenie.
+- [Nowe] 2.0, świat 1: zbiorniki paliwa z bursztynowym słabym punktem – zestrzelony wybucha (promień 150) i rani wrogów wokół, ale też statek, jeśli jest za blisko; zbiorniki odpalają się nawzajem. Skrzynie z amunicją rozpadają się na 3–5 monet, czasem z apteczką albo magnesem. Zniszczone zostają jako wraki, co 30 s pojawia się nowy (do 9 naraz). Bronie trafiają je jak wrogów, ale ich nie celują.
+
 ## Build 84 · 2026-10-27
 - [Nowe] 2.0, świat 1 (Orbital Ruins): wyspy pokładów stacji obronnych to teraz grafika z ChatGPT (W1 P3b) – ciemny metal z bursztynowymi pasami, odsłonięte kratownice i magentowe ślady Kolektywu zamiast prowizorycznych wycinków podłogi.
 
