@@ -13,7 +13,9 @@
 ## Roadmap (decided by Konrad)
 - 1.2.0 (released as build 52): weapon combos, perk sets, evolutions for all weapons, Codex, tougher enemies.
 - 1.3 (iOS only): Endless mode (unlocked after the whole game, full game only, one leaderboard per world,
-  score = kills) + Game Center leaderboards. Done in build 62; released as v1.2.1 (build 65, 2026-10-27).
+  score = kills) + Game Center leaderboards. Done in build 62; released as v1.3.0 (the build first tagged v1.2.1,
+  which never went out), 2026-10-27.
+- After 1.3.0 the 1.x line is frozen (decided by Konrad, 2026-10-27): only bug fixes; all new work is 2.0.
 - Android moved to 2.0 (decided by Konrad, 2026-10-26: the Google Play developer account is not paid yet, and 2.0
   takes a while anyway): Google Play, Billing and Google Play Games launch with 2.0.
 - 2.0: visual overhaul on PixiJS (same JS + Capacitor code), richer art made with ChatGPT from Claude's prompts,
