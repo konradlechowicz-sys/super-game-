@@ -16,6 +16,11 @@ i wersja TEST (gracze tego nie widzą).
 
 - 
 
+## Build 68 · 2026-10-27
+- [Narzędzia] Wersja 2.0, etap 1 (tylko wariant TEST): w panelu 🛠 przełącznik „2.0 look (PixiJS, world 1 art)”. Włącza nową warstwę PixiJS (WebGL): podłoga świata 1 z kafla, Striker złożony z części (przechyla się w skrętach, płomienie silników rosną z prędkością), wrogowie z grafiki 2.0 z poświatą, Harvester jako boss świata 1. Strzały, efekty, paski i HUD na razie po staremu, na wierzchu.
+- [Narzędzia] Przycisk STRESS +300 w panelu 🛠: 300 wrogów naraz, do pomiaru FPS na telefonie (bramka 1: stałe 60 FPS).
+- [Zmiana] Rysowanie gry wydzielone z logiki (js/render-canvas.js), żeby wersja 2.0 mogła rysować ten sam stan gry. Wygląd i rozgrywka 1.x bez zmian; normalna i sklepowa wersja nie zawierają PixiJS.
+
 ## Build 67 · 2026-10-27
 - [Narzędzia] CHANGELOG.md: sekcja wydania v1.3.0 skopiowana z gałęzi release, v1.2.1 oznaczone jako niewydane (ten sam build wyszedł jako 1.3.0). CLAUDE.md: 1.3.0 wydane, linia 1.x zamrożona (tylko poprawki błędów), cała nowa praca to 2.0. Gra bez zmian.
 
