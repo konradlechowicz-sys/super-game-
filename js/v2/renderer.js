@@ -100,7 +100,7 @@ export async function createV2Renderer(app) {
   // the title screen behind the menus (js/v2/title.js), with its own, bigger ships
   const title = makeTitle(tex, halo, makeShips(TITLE_SHIP_H / SHIP_H));
   title.scene.visible = false;
-  px.stage.addChild(title.scene);
+  px.stage.addChild(orbit.near, title.scene);
 
   let arenaKey = '';
   const drawn = new Map(); // game object -> its sprites
@@ -168,7 +168,7 @@ export async function createV2Renderer(app) {
   // the menus: the title scene; main = the main menu (full brightness, the ship), showShip = the 2.0 ship is the one chosen
   function renderTitle(time, opts) {
     fitScreen();
-    world.visible = false;
+    world.visible = orbit.near.visible = false;
     title.scene.visible = true;
     title.update(time, app.W, app.H, opts);
     px.render();
@@ -181,6 +181,7 @@ export async function createV2Renderer(app) {
     title.scene.visible = false;
     const w1 = game.stage.world.id === 1;
     orbit.far.visible = orbit.arena.visible = w1;
+    orbit.near.visible = w1 && !!tex['w1-near'];
     floor.visible = border.visible = !w1;
     const { cx, cy } = game.frameCam;
     const z = app.zoom;

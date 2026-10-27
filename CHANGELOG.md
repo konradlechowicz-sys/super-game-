@@ -16,6 +16,9 @@ i wersja TEST (gracze tego nie widzą).
 
 - 
 
+## Build 88 · 2026-10-27
+- [Nowe] 2.0, świat 1: nakładka bliska z ChatGPT (W1 P4) – pył, drobne odłamki i iskry tuż przed kamerą, nad akcją; przesuwają się szybciej niż arena, więc widać głębię. Delikatna, nie zasłania wrogów.
+
 ## Build 87 · 2026-10-27
 - [Nowe] 2.0, świat 1: tło dalekie z ChatGPT (W1 P2) – Ziemia nocą w lewym dolnym rogu, z niebieską poświatą atmosfery i światłami miast, przesuwa się wolniej niż arena (głębia). Zastępuje wycinek Ziemi ze zwiastuna.
 

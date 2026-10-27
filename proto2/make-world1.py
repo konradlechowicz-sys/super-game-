@@ -74,3 +74,8 @@ alpha = np.clip(1 - (np.hypot(xx - ecx, yy - ecy) - er) / 40, 0, 1)
 earth = Image.fromarray(np.dstack([a, alpha * 255]).astype(np.uint8), 'RGBA').resize((1280, 1280), Image.LANCZOS)
 earth.save(f'{OUT}/w1-earth.webp', 'WEBP', quality=90, method=6)
 print('w1-earth', earth.size, 'circle', round(ecx), round(ecy), round(er))
+
+# P4: the near overlay (dust and small shards just in front of the camera), on black: the game adds it as light,
+# so it keeps its black background. A seamless 1024 tile.
+Image.open(f'{SRC}/near-overlay.webp').convert('RGB').save(f'{OUT}/w1-near.webp', 'WEBP', quality=90, method=6)
+print('w1-near')
