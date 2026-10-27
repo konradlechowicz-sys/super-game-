@@ -23,6 +23,7 @@ export class AudioEngine {
     this.recordings = {}; // name -> { url, loopStart, loopEnd, gain }
     this.buffers = {}; // name -> Promise<AudioBuffer>
     this.playing = null; // { name, src, gain } of the recording being played
+    this.recError = ''; // why the last recording failed to load (shown in the TEST panel)
     this.step = 0;
     this.nextTime = 0;
     this.xpPitch = 0;
@@ -90,7 +91,7 @@ export class AudioEngine {
     if (!this.ctx || this.playing?.name === name) return;
     this.stopRecording();
     const rec = this.recordings[name];
-    this.buffers[name] ??= fetch(rec.url).then((r) => r.arrayBuffer()).then((b) => this.ctx.decodeAudioData(b));
+    this.buffers[name] ??= bytesOf(rec.url).then((b) => this.ctx.decodeAudioData(b));
     this.buffers[name].then((buf) => {
       if (this.wanted !== name || this.playing?.name === name) return;
       const src = this.ctx.createBufferSource();
@@ -105,7 +106,22 @@ export class AudioEngine {
       src.connect(gain).connect(this.musicGain);
       src.start(t);
       this.playing = { name, src, gain };
-    }).catch(() => { delete this.buffers[name]; });
+    }).catch((e) => {
+      // a recording that cannot be decoded here: fall back to the synthesized track, so there is never silence
+      this.recError = `${name}: ${e?.message || e}`;
+      delete this.recordings[name];
+      delete this.buffers[name];
+      if (this.wanted === name) { this.wanted = null; this.setTrack(name); }
+    });
+  }
+
+  // For the TEST panel: what the music is doing right now.
+  musicStatus() {
+    if (!this.ctx) return 'waiting for the first tap';
+    if (this.playing) return `recording "${this.playing.name}" (${this.ctx.state})`;
+    const failed = this.recError ? ` · recording failed: ${this.recError}` : '';
+    if (this.wanted && this.recordings[this.wanted]) return `loading "${this.wanted}"…${failed}`;
+    return `synth "${this.track}" (${this.ctx.state})${failed}`;
   }
 
   stopRecording() {
@@ -267,4 +283,16 @@ export class AudioEngine {
       if (s % 2 === 1) this.noise({ dur: 0.04, vol: tr.hard ? 0.07 : 0.05, type: 'highpass', f0: 8000, at: t, dest: M });
     }
   }
+}
+
+// The bytes of a recording. Embedded data: URLs are decoded here instead of fetched, because sandboxed pages (the
+// preview on claude.ai) may forbid fetch even for data: URLs.
+function bytesOf(url) {
+  if (!url.startsWith('data:')) return fetch(url).then((r) => r.arrayBuffer());
+  return new Promise((resolve) => {
+    const bin = atob(url.slice(url.indexOf(',') + 1));
+    const bytes = new Uint8Array(bin.length);
+    for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+    resolve(bytes.buffer);
+  });
 }

@@ -57,6 +57,7 @@ export function installTestKit(app) {
     ui.modal(`
       <div class="modal-kicker tk-kicker" data-kit="${MARKER}">TEST PANEL</div>
       <h2>TESTER</h2>
+      <div class="tk-head">Music: ${app.audio.musicStatus()}</div>
       ${tog('god', 'God mode (no damage)')}
       ${tog('oldLook', '1.x look (compare with 2.0)')}
       ${tog('unlockAll', 'All sectors unlocked')}

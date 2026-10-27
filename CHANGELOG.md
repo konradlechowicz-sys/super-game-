@@ -16,6 +16,10 @@ i wersja TEST (gracze tego nie widzą).
 
 - 
 
+## Build 78 · 2026-10-27
+- [Poprawka] Muzyka menu 2.0: plik muzyki jest wczytywany bez pobierania (fetch), które zabezpieczone strony mogą blokować. Gdy nagranie nie da się odtworzyć na danym urządzeniu, gra przechodzi na dawną muzykę z syntezatora zamiast milczeć.
+- [Narzędzia] Panel 🛠 pokazuje na górze stan muzyki (np. „recording "menu"”, „synth …”, „waiting for the first tap”) i powód, jeśli nagranie się nie wczytało.
+
 ## Build 77 · 2026-10-27
 - [Poprawka] Wersja 2.0: hangar i odprawa przed sektorem pokazują statki w nowej grafice (Striker, Phantom, Titan, z płomieniami silników); złoty Striker ma złoty odcień.
 - [Poprawka] Muzyka w menu 2.0 była za cicha: głośność tematu prawie dwa razy większa. Jak każda muzyka w przeglądarce i w aplikacji, startuje po pierwszym dotknięciu ekranu.
