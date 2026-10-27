@@ -16,6 +16,11 @@ i wersja TEST (gracze tego nie widzą).
 
 - 
 
+## Build 76 · 2026-10-27
+- [Nowe] Wersja 2.0: Phantom i Titan w nowej grafice (z arkuszy ChatGPT, warianty wybrane przez Konrada: Phantom 1, Titan 4). W walce widać teraz zawsze wybrany statek, a nie Strikera; Phantom ma magentowy płomień, Titan cztery złote, płomienie rosną z prędkością, a w skrętach statek się przechyla. Złoty Striker ma złoty odcień.
+- [Nowe] Ekran startowy 2.0: emblemat (Striker w neonowym pierścieniu) nad napisem VOID BLASTER, z pulsującą poświatą; na ekranie startowym stoi wybrany statek. Ciemny pas pod logo jest teraz dłuższy (logo czytelne na sieci Kolektywu), satelity krążą niżej, przy horyzoncie.
+- [Nowe] Muzyka w menu 2.0: temat główny z Suno zamiast syntezatora. Intro gra raz, potem w pętli 24 takty po dropie (35,5–76 s), szew pętli wypada na początku frazy. W walce na razie gra dawna muzyka; utwór menu M1 z Suno zastąpi temat, gdy powstanie.
+
 ## Build 75 · 2026-10-27
 - [Nowe] Wersja 2.0: nowy ekran startowy w duchu zwiastuna. Ziemia nocą pod siecią Kolektywu, po której nitkach płyną impulsy; satelity na orbicie co chwilę są „przepisywane” (migają w wersję Kolektywu z różowym błyskiem i wracają); Striker 2.0 unosi się przed Ziemią z pracującymi silnikami; migoczące gwiazdy. Ciemne pasy pod logo i przyciskami, żeby wszystko było czytelne. Na pozostałych ekranach menu (mapa, hangar, ulepszenia…) ta sama scena jest przyciemniona i bez statku. Phantom, Titan i złoty Striker na razie w starym wyglądzie, do czasu ich grafiki 2.0.
 

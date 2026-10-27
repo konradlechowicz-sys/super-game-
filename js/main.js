@@ -241,6 +241,7 @@ app.quitRun = () => {
 // ---------------- main loop ----------------
 let last = performance.now();
 let menuCam = 0;
+let lookV2 = false; // body class 'look-v2' while the 2.0 look draws the menus
 function frame(now) {
   const dt = Math.min(0.05, (now - last) / 1000);
   last = now;
@@ -318,15 +319,20 @@ function renderMenu(dt) {
   menuCam += dt * 40;
   const onMenu = !!document.querySelector('.screen.menu');
   const ship = shipLook(SHIPS[app.save.ship] || SHIPS.striker, app.save);
-  // the 2.0 title screen (js/v2/title.js) below; the 2.0 Striker has art, other ships and skins keep the 1.x look on top
+  // the 2.0 title screen (js/v2/title.js), with the chosen ship, below this (cleared) canvas
   const v2 = app.v2 && !app.oldLook && app.v2r;
+  if (lookV2 !== !!v2) { lookV2 = !!v2; document.body.classList.toggle('look-v2', lookV2); }
   if (v2) {
-    const ship2 = ship.id === 'striker' && !ship.skinName;
-    app.v2r.renderTitle(app.time, { main: onMenu, showShip: ship2 });
+    // the emblem goes into the room the CSS keeps above the logo (.look-v2 .logo::before)
+    const logo = onMenu && document.querySelector('.menu .logo');
+    const r = logo && logo.getBoundingClientRect();
+    const emblem = r ? { y: r.top + parseFloat(getComputedStyle(logo, '::before').height || 0) / 2, size: parseFloat(getComputedStyle(logo, '::before').height || 0) } : null;
+    app.v2r.renderTitle(app.time, { main: onMenu, shipId: ship.id, gold: !!ship.skinName, emblem });
     ctx.setTransform(1, 0, 0, 1, 0, 0);
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    if (ship2) return;
-  } else app.bg.draw(ctx, menuCam * 0.3, -menuCam, app.time);
+    return;
+  }
+  app.bg.draw(ctx, menuCam * 0.3, -menuCam, app.time);
   if (!onMenu) return;
   const { W, H, dpr } = app;
   const x = W / 2, y = H * 0.47 + Math.sin(app.time * 1.6) * 8;
@@ -380,6 +386,9 @@ if (EDITION === 2) {
   app.v2 = true;
   import('./v2/renderer.js').then((m) => m.createV2Renderer(app)).then((r) => { app.v2r = r; })
     .catch((e) => { app.v2 = false; console.warn('2.0 look not loaded, using the 1.x look:', e.message); });
+  // the recorded 2.0 music (js/v2/music.gen.js, from proto2/make-music.py) replaces the synthesized tracks it covers
+  import('./v2/music.gen.js').then((m) => { for (const [name, rec] of Object.entries(m.default)) app.audio.setRecording(name, rec); })
+    .catch(() => { /* the unbundled dev page has no generated music: the synthesized tracks play */ });
 }
 if (__TEST__) installTestKit(app);
 app.applySettings();

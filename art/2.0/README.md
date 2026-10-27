@@ -13,13 +13,14 @@ image tool's plan allows commercial use.
 | Folder | What | Notes |
 | --- | --- | --- |
 | `ship/` | Striker: 4 concepts (`striker-concepts.webp`, Konrad picked variant 4), the redrawn variant 4 (`striker.webp`), two parts sheets (`-v1` = first try) | 1024+ px, transparent background |
+| `ship/` (Phantom, Titan) | `phantom-concepts.webp` / `titan-concepts.webp` (Konrad picked variant 1 / 4), `*-parts-sheet.webp`: parts plus the assembled ship at one scale (bottom right) | `proto2/make-ships.py` cuts the assembled ship as the body (painted flames erased) and the flame part for the nozzles |
 | `ship/parts/` | Striker cut from `striker-parts-sheet.webp`: hull, wings, engines, flame, cockpit glass, side gun | `assembly.json` = where each part sits on `striker.webp` (scale + top-left, found by matching) |
 | `enemies/world1/` | sheet of 6 enemies (drone, swarmer, dasher, shooter, tank, splitter) + elite drone, and each enemy cut out | facing up, transparent background |
 | `worlds/` | world concepts (`tech-ruin-concept.webp`: world 1 "Orbital Ruins", Earth's ruined defense grid; 941x1672) | a concept, not yet a tileable floor |
 | `worlds/world1/` | `floor-tile.webp`: seamless 1024x1024 floor of world 1 (task A1; ChatGPT sent only a 2x2 preview, the tile was cut from one repeat with blended seams) | tiles on all four edges |
 | `bosses/world1/` | Harvester, the world-1 boss (task A6): full drawing `harvester.webp`, the bare hull, the parts sheet; `parts/` = the 16 parts cut out (hull, wings, core, launch pods, nose, engines, armor plates, flame, glows) | the parts are not drawn to one scale; the full drawing is the reference |
 | `ui/` | `logo-emblem.webp`: the Striker in a neon ring (task E3) | transparent |
-| `audio/` | `void-blaster-theme-suno.mp3`: the 2.0 theme, made by Konrad with Suno from Claude's prompt (198 s, about 142 BPM; the drop at 35.5 s, the final hit at 188.5 s) | the teaser cuts it to 15 s (`teaser/timeline.js`). `SUNO-PROMPTS.md`: the catalog of Suno prompts for all 2.0 music (a theme for every world: sector + boss, menu, journey map, Endless, films) with a progress table |
+| `audio/` | until the M1 menu track exists, the menu plays the theme (`proto2/make-music.py`: intro once, then the 24 bars after the drop, 35.5-76.0 s, in a loop). `void-blaster-theme-suno.mp3`: the 2.0 theme, made by Konrad with Suno from Claude's prompt (198 s, about 142 BPM; the drop at 35.5 s, the final hit at 188.5 s) | the teaser cuts it to 15 s (`teaser/timeline.js`). `SUNO-PROMPTS.md`: the catalog of Suno prompts for all 2.0 music (a theme for every world: sector + boss, menu, journey map, Endless, films) with a progress table |
 | `teaser/` | art for the 10-second 2.0 teaser (ChatGPT tasks T1–T4): Earth at night, launch bay, the Collective's web, satellites sheet; `satellites/` = each satellite cut out, normal and "rewritten" (same crop, for a cross-fade) | animated in code by `teaser/` (`npm run teaser`, `npm run teaser:video` records the MP4) |
 | `previews/` | test frame of the current game with this art; Striker animation built from the parts | previews only |
 

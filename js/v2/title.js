@@ -2,16 +2,16 @@
 // Collective's web, data pulses running down its strands, satellites in orbit that keep being "rewritten" (they
 // flicker into the Collective's version and back), and the Striker built from its parts hovering in front.
 // The menu's buttons and logo stay HTML on top (js/ui.js). On the other menu screens (map, hangar, ...) the same
-// scene is shown dimmed, without the ship. Drawn by js/v2/renderer.js.
+// scene is shown dimmed, without the ship. The chosen ship (Striker, Phantom, Titan) is shown. Drawn by js/v2/renderer.js.
 import { Container, Graphics, Rectangle, Sprite, Texture } from 'pixi.js';
 
 const ART_W = 1080, ART_H = 1920; // the teaser's art is drawn for this frame
 const TAU = Math.PI * 2;
 // satellites in art pixels: x, y, scale, rotation; low over the horizon and to the sides, clear of the logo and ship
-const SATS = [[215, 690, 0.85, -0.25], [870, 640, 0.8, 0.1], [250, 880, 0.75, 0.22], [850, 900, 0.7, -0.08]];
+const SATS = [[215, 790, 0.85, -0.25], [870, 750, 0.8, 0.1], [235, 960, 0.75, 0.22], [860, 990, 0.7, -0.08]];
 const CYCLE = 9; // seconds between two rewrites of one satellite
 
-export function makeTitle(tex, halo, ship) {
+export function makeTitle(tex, halo, ships) {
   const scene = new Container();
   const art = new Container();
   scene.addChild(art);
@@ -67,8 +67,17 @@ export function makeTitle(tex, halo, ship) {
   topShade.scale.y = -1;
   scene.addChild(shade, topShade);
 
+  // the emblem above the logo (the Striker in a neon ring), with a pulsing glow behind it
+  const emblemC = new Container();
+  const emblemGlow = new Sprite(halo);
+  emblemGlow.anchor.set(0.5); emblemGlow.tint = 0x2ff3ff; emblemGlow.blendMode = 'add';
+  const emblem = new Sprite(tex.emblem);
+  emblem.anchor.set(0.5);
+  emblemC.addChild(emblemGlow, emblem);
+  scene.addChild(emblemC);
+
   const shipC = new Container();
-  shipC.addChild(ship.body);
+  for (const s of Object.values(ships)) { s.body.visible = false; shipC.addChild(s.body); }
   scene.addChild(shipC);
 
   const bursts = [];
@@ -88,8 +97,10 @@ export function makeTitle(tex, halo, ship) {
   let lastTime = null;
   return {
     scene,
-    // time: seconds; W, H: screen in points; main: the main menu (ship, full brightness); showShip: draw the 2.0 ship
-    update(time, W, H, { main, showShip }) {
+    // time: seconds; W, H: screen in points; main: the main menu (ship, full brightness); shipId: the chosen ship;
+    // gold: the Gold Striker skin
+    // emblem: { y, size } of the room above the logo, in points (null: no emblem)
+    update(time, W, H, { main, shipId, gold, emblem: em }) {
       const dt = lastTime === null ? 0 : Math.min(0.05, time - lastTime);
       lastTime = time;
       // cover the screen with the portrait art, Earth kept at the bottom; a slow breathing zoom
@@ -141,14 +152,25 @@ export function makeTitle(tex, halo, ship) {
 
       shade.width = W; shade.height = H * 0.5; shade.y = H * 0.5;
       shade.alpha = main ? 0.85 : 0.6;
-      topShade.width = W; topShade.height = -H * 0.36; topShade.y = H * 0.36;
-      topShade.alpha = main ? 0.8 : 0.5;
+      topShade.width = W; topShade.height = H * 0.46; topShade.y = H * 0.46; // flipped (scale.y < 0): spans up to the top
+      topShade.alpha = main ? 0.9 : 0.5;
 
       // the ship hovers in the middle, nose up, engines breathing
-      shipC.visible = !!(main && showShip);
+      emblemC.visible = !!(main && em && em.size > 0);
+      if (emblemC.visible) {
+        emblemC.position.set(W / 2, em.y);
+        emblem.scale.set(em.size / emblem.texture.height);
+        emblemGlow.scale.set((em.size * 1.9) / halo.width);
+        emblemGlow.alpha = 0.35 + 0.15 * Math.sin(time * 2.2);
+      }
+
+      shipC.visible = !!main;
       if (shipC.visible) {
+        const ship = ships[shipId] || ships.striker;
+        for (const s of Object.values(ships)) s.body.visible = s === ship;
         shipC.position.set(W / 2, H * 0.47 + Math.sin(time * 1.6) * 8);
         ship.body.rotation = 0;
+        ship.setTint(gold ? 0xffd98a : 0xffffff);
         ship.animate(time, 0.9 + 0.25 * Math.sin(time * 2.3), Math.sin(time * 0.7) * 0.25);
       }
     },

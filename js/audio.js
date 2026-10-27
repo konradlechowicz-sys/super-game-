@@ -1,4 +1,5 @@
-// All sound is synthesized with Web Audio: no files, no licensing.
+// Sound effects are synthesized with Web Audio. Music is synthesized too, unless a track has a recording (2.0 music
+// made with Suno, registered by setRecording): then the recording plays instead, its intro once and then its loop.
 const midi = (n) => 440 * Math.pow(2, (n - 69) / 12);
 
 const TRACKS = {
@@ -17,7 +18,11 @@ export class AudioEngine {
     this.sfxOn = true;
     this.musicOn = true;
     this.last = {};
-    this.track = null;
+    this.track = null; // the synthesized track being played
+    this.wanted = null; // the track the game asked for
+    this.recordings = {}; // name -> { url, loopStart, loopEnd, gain }
+    this.buffers = {}; // name -> Promise<AudioBuffer>
+    this.playing = null; // { name, src, gain } of the recording being played
     this.step = 0;
     this.nextTime = 0;
     this.xpPitch = 0;
@@ -51,6 +56,7 @@ export class AudioEngine {
       this.delay.connect(fb).connect(this.delay);
       this.delay.connect(this.musicGain);
       this.timer = setInterval(() => this.schedule(), 25);
+      if (this.recordings[this.wanted]) this.playRecording(this.wanted);
     }
     if (this.ctx.state === 'suspended') this.ctx.resume();
   }
@@ -61,10 +67,56 @@ export class AudioEngine {
   }
 
   setTrack(name) {
-    if (this.track === name) return;
+    if (this.wanted === name) return;
+    this.wanted = name;
+    if (this.recordings[name]) {
+      this.track = null;
+      this.playRecording(name);
+      return;
+    }
+    this.stopRecording();
     this.track = name;
     this.step = 0;
     if (this.ctx) this.nextTime = this.ctx.currentTime + 0.1;
+  }
+
+  // A recording for a track: from now on it plays instead of the synthesized one.
+  setRecording(name, rec) {
+    this.recordings[name] = rec;
+    if (this.wanted === name) { this.wanted = null; this.setTrack(name); }
+  }
+
+  playRecording(name) {
+    if (!this.ctx || this.playing?.name === name) return;
+    this.stopRecording();
+    const rec = this.recordings[name];
+    this.buffers[name] ??= fetch(rec.url).then((r) => r.arrayBuffer()).then((b) => this.ctx.decodeAudioData(b));
+    this.buffers[name].then((buf) => {
+      if (this.wanted !== name || this.playing?.name === name) return;
+      const src = this.ctx.createBufferSource();
+      src.buffer = buf;
+      src.loop = true;
+      src.loopStart = rec.loopStart;
+      src.loopEnd = Math.min(rec.loopEnd, buf.duration);
+      const gain = this.ctx.createGain();
+      const t = this.ctx.currentTime;
+      gain.gain.setValueAtTime(0, t);
+      gain.gain.linearRampToValueAtTime(rec.gain ?? 1, t + 0.6);
+      src.connect(gain).connect(this.musicGain);
+      src.start(t);
+      this.playing = { name, src, gain };
+    }).catch(() => { delete this.buffers[name]; });
+  }
+
+  stopRecording() {
+    const p = this.playing;
+    if (!p) return;
+    this.playing = null;
+    const t = this.ctx.currentTime;
+    p.gain.gain.cancelScheduledValues(t);
+    p.gain.gain.setValueAtTime(p.gain.gain.value, t);
+    p.gain.gain.linearRampToValueAtTime(0, t + 0.4);
+    p.src.stop(t + 0.45);
   }
 
   // ---------- primitives ----------

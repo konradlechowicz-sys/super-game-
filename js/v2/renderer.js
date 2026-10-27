@@ -19,6 +19,8 @@ const ENEMY_SIZE = 2.8; // sprite size in enemy radii
 const SHIP_H = 46; // the Striker's length in world units
 const FLOOR_SCALE = 0.5;
 const TITLE_SHIP_H = 120; // the Striker on the title screen, in points
+const PHANTOM_L = 44, TITAN_L = 40; // nose to nozzle, in world units (the Striker is SHIP_H long)
+const GOLD = 0xffd98a; // tint of the Gold Striker skin
 
 export async function createV2Renderer(app) {
   const canvas = document.createElement('canvas');
@@ -76,10 +78,17 @@ export async function createV2Renderer(app) {
     s.scale.set((spr.half * 2 * sc) / t.width);
     return s;
   }
-  const ship = makeShip(tex, ASSETS.ship, SHIP_H);
-  shipLayer.addChild(ship.body);
-  // the title screen behind the menus (js/v2/title.js), with its own, bigger Striker
-  const title = makeTitle(tex, halo, makeShip(tex, ASSETS.ship, TITLE_SHIP_H));
+  // the three ships: the Striker built from its parts, Phantom and Titan as a body with animated flames
+  const makeShips = (scale) => ({
+    striker: makeShip(tex, ASSETS.ship, SHIP_H * scale),
+    phantom: makeBodyShip(tex, 'phantom', ASSETS.ships.phantom, PHANTOM_L * scale),
+    titan: makeBodyShip(tex, 'titan', ASSETS.ships.titan, TITAN_L * scale),
+  });
+  const ships = makeShips(1);
+  for (const s of Object.values(ships)) { s.body.visible = false; shipLayer.addChild(s.body); }
+  let ship = ships.striker;
+  // the title screen behind the menus (js/v2/title.js), with its own, bigger ships
+  const title = makeTitle(tex, halo, makeShips(TITLE_SHIP_H / SHIP_H));
   title.scene.visible = false;
   px.stage.addChild(title.scene);
 
@@ -200,9 +209,12 @@ export async function createV2Renderer(app) {
 
     drawCrowd(game);
 
-    // the ship
+    // the ship the player flies (game.ship: its id, and skinName for the Gold Striker)
     const p = game.player;
     const alive = game.state !== 'dying' && game.state !== 'over';
+    const flying = ships[game.ship.id] || ships.striker;
+    if (flying !== ship) { ship.body.visible = false; ship = flying; ship.lastFacing = null; }
+    const base = game.ship.skinName ? GOLD : 0xffffff;
     ship.body.visible = alive;
     if (alive) {
       let turn = p.facing - (ship.lastFacing ?? p.facing);
@@ -213,7 +225,7 @@ export async function createV2Renderer(app) {
       ship.body.position.set(p.x, p.y);
       ship.body.rotation = p.facing + Math.PI / 2;
       ship.body.alpha = p.inv > 0 && Math.floor(game.time * 20) % 2 === 0 ? 0.35 : 1;
-      ship.setTint(game.flash > 0.15 ? 0xff8080 : 0xffffff);
+      ship.setTint(game.flash > 0.15 ? 0xff8080 : base);
       ship.animate(game.time, 0.6 + Math.min(1, p.moving / 300) * 0.8, ship.bank);
     }
     px.render();
@@ -414,5 +426,35 @@ function weaponAdapter(g, sprite) {
     ctx,
     rot(spr, x, y, a, sc = 1) { sprite(spr, x, y, a, sc, ctx.globalAlpha); },
     img(spr, x, y, sc = 1) { sprite(spr, x, y, 0, sc, ctx.globalAlpha); },
+  };
+}
+
+// Phantom and Titan (proto2/make-ships.py): the assembled drawing as one body, the flames on its nozzles animated.
+// Banking squeezes the body a little, so turns read as a roll. Same interface as makeShip.
+function makeBodyShip(tex, name, def, length) {
+  const body = new Container();
+  const hull = new Sprite(tex[`ship-${name}-body`]);
+  const mid = def.length / 2; // the ship turns around the middle between nose and nozzles
+  hull.anchor.set(0.5, mid / def.size[1]);
+  const flames = def.nozzles.map(([x, y]) => {
+    const f = new Sprite(tex[`ship-${name}-flame`]);
+    f.anchor.set(0.5, 0.12); f.blendMode = 'add';
+    f.position.set(x - def.size[0] / 2, y - mid);
+    return f;
+  });
+  body.addChild(...flames, hull);
+  const k = length / def.length;
+  body.scale.set(k);
+  return {
+    body, bank: 0, lastFacing: null,
+    setTint(t) { hull.tint = t; },
+    animate(time, boost, bank) {
+      hull.scale.x = 1 - 0.12 * Math.abs(bank);
+      flames.forEach((f, i) => {
+        f.x = (def.nozzles[i][0] - def.size[0] / 2) * hull.scale.x;
+        f.scale.set(1, boost * (1 + 0.16 * Math.sin(time * 31 + i * 1.7) + 0.08 * Math.sin(time * 53 + i)));
+        f.alpha = 0.85 + 0.15 * Math.sin(time * 40 + i);
+      });
+    },
   };
 }
