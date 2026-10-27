@@ -259,7 +259,7 @@ function frame(now) {
   } else {
     renderMenu(dt);
   }
-  app.v2r?.show(!!(app.v2 && !app.oldLook && app.game));
+  app.v2r?.show(!!(app.v2 && !app.oldLook));
   requestAnimationFrame(frame);
 }
 
@@ -316,11 +316,19 @@ function drawJoystick() {
 
 function renderMenu(dt) {
   menuCam += dt * 40;
-  app.bg.draw(ctx, menuCam * 0.3, -menuCam, app.time);
   const onMenu = !!document.querySelector('.screen.menu');
+  const ship = shipLook(SHIPS[app.save.ship] || SHIPS.striker, app.save);
+  // the 2.0 title screen (js/v2/title.js) below; the 2.0 Striker has art, other ships and skins keep the 1.x look on top
+  const v2 = app.v2 && !app.oldLook && app.v2r;
+  if (v2) {
+    const ship2 = ship.id === 'striker' && !ship.skinName;
+    app.v2r.renderTitle(app.time, { main: onMenu, showShip: ship2 });
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    if (ship2) return;
+  } else app.bg.draw(ctx, menuCam * 0.3, -menuCam, app.time);
   if (!onMenu) return;
   const { W, H, dpr } = app;
-  const ship = shipLook(SHIPS[app.save.ship] || SHIPS.striker, app.save);
   const x = W / 2, y = H * 0.47 + Math.sin(app.time * 1.6) * 8;
   const sc = 2.6;
   ctx.setTransform(dpr, 0, 0, dpr, 0, 0);

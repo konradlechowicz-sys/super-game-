@@ -16,6 +16,9 @@ i wersja TEST (gracze tego nie widzą).
 
 - 
 
+## Build 75 · 2026-10-27
+- [Nowe] Wersja 2.0: nowy ekran startowy w duchu zwiastuna. Ziemia nocą pod siecią Kolektywu, po której nitkach płyną impulsy; satelity na orbicie co chwilę są „przepisywane” (migają w wersję Kolektywu z różowym błyskiem i wracają); Striker 2.0 unosi się przed Ziemią z pracującymi silnikami; migoczące gwiazdy. Ciemne pasy pod logo i przyciskami, żeby wszystko było czytelne. Na pozostałych ekranach menu (mapa, hangar, ulepszenia…) ta sama scena jest przyciemniona i bez statku. Phantom, Titan i złoty Striker na razie w starym wyglądzie, do czasu ich grafiki 2.0.
+
 ## Build 74 · 2026-10-27
 - [Zmiana] Wersja 2.0: bronie wokół statku (ostrza i aura Orbit, drony) i miny rysuje teraz warstwa PixiJS (karta graficzna). Wyglądają tak samo jak wcześniej. Na starym rysowaniu zostały już tylko paski życia, liczby obrażeń, strzałki do elit i bossa oraz czerwony ekran przy niskim zdrowiu. To kończy przenoszenie obrazu w etapie 1.
 

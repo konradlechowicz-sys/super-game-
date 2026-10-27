@@ -10,6 +10,7 @@ import { BOSSES } from '../data.js';
 import { boltSprite, missileSprite, orbSprite, gemSprite, glowDot, pickupSprite, mineSprite } from '../sprites.js';
 import { WEAPONS, weaponStats } from '../weapons.js';
 import ASSETS from './assets.gen.js';
+import { makeTitle } from './title.js';
 
 const TAU = Math.PI * 2;
 // enemy types with 2.0 art, and the colour of their glow
@@ -17,6 +18,7 @@ const ENEMY_ART = { drone: 0xff2d95, swarmer: 0xffe23d, dasher: 0xff3d9a, shoote
 const ENEMY_SIZE = 2.8; // sprite size in enemy radii
 const SHIP_H = 46; // the Striker's length in world units
 const FLOOR_SCALE = 0.5;
+const TITLE_SHIP_H = 120; // the Striker on the title screen, in points
 
 export async function createV2Renderer(app) {
   const canvas = document.createElement('canvas');
@@ -76,6 +78,10 @@ export async function createV2Renderer(app) {
   }
   const ship = makeShip(tex, ASSETS.ship, SHIP_H);
   shipLayer.addChild(ship.body);
+  // the title screen behind the menus (js/v2/title.js), with its own, bigger Striker
+  const title = makeTitle(tex, halo, makeShip(tex, ASSETS.ship, TITLE_SHIP_H));
+  title.scene.visible = false;
+  px.stage.addChild(title.scene);
 
   let arenaKey = '';
   const drawn = new Map(); // game object -> its sprites
@@ -117,12 +123,27 @@ export async function createV2Renderer(app) {
     return { body: c, inner: body, flames, halo };
   }
 
-  function render(game) {
-    frameNo++;
+  const fitScreen = () => {
     if (px.renderer.width !== Math.round(app.W * app.dpr) || px.renderer.height !== Math.round(app.H * app.dpr)) {
       px.renderer.resolution = app.dpr;
       px.renderer.resize(app.W, app.H);
     }
+  };
+
+  // the menus: the title scene; main = the main menu (full brightness, the ship), showShip = the 2.0 ship is the one chosen
+  function renderTitle(time, opts) {
+    fitScreen();
+    world.visible = false;
+    title.scene.visible = true;
+    title.update(time, app.W, app.H, opts);
+    px.render();
+  }
+
+  function render(game) {
+    frameNo++;
+    fitScreen();
+    world.visible = true;
+    title.scene.visible = false;
     const { cx, cy } = game.frameCam;
     const z = app.zoom;
     world.scale.set(z);
@@ -291,6 +312,7 @@ export async function createV2Renderer(app) {
 
   return {
     render,
+    renderTitle,
     show(on) { canvas.style.display = on ? 'block' : 'none'; },
   };
 }
