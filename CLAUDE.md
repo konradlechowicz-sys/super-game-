@@ -26,9 +26,10 @@
   new worlds replace the 4 of 1.x; all 10 ship at once, iOS and Android the same day; the "1.4" content (OVERLOAD
   minute, Railgun, Flamethrower, Singularity Cannon, 12 combos, 8 perk sets, 3 super combos) goes into 2.0; 2.0 is a
   free update for Full Game owners (same app, same product); progress starts over, with a bonus for 1.x veterans;
-  the full game costs more for new players (about USD 4.99). 2.0 is built in the same app behind a switch that only
-  the TEST variant shows, so `main` stays releasable as 1.x until launch. Art lives in `art/2.0/` (see its
-  README); the PixiJS prototype is `proto2/`.
+  the full game costs more for new players (about USD 4.99). 2.0 is built in the same app on its own accepted line
+  `v2` (decided by Konrad, 2026-10-27; see "Two lines" below), so `main` stays releasable as 1.x until launch. Stage 1
+  (builds 68-70, in `main`) put the PixiJS look behind a switch in the TEST panel; on `v2` 2.0 becomes the normal game.
+  Art lives in `art/2.0/` (see its README); the PixiJS prototype is `proto2/`.
 - 2.0 performance gate 1 passed (Konrad, 2026-10-27, iPhone 17 Pro Max, TEST variant with the 2.0 look): a steady
   60 FPS with about 180 enemies on screen. 2.0 balance must use this: noticeably more enemies at once than 1.x
   (bigger waves and swarms), keeping a margin for older iPhones.
@@ -55,7 +56,14 @@ tested (purchase works in the simulator from Xcode); never hand-write them in an
 | **R&D** | `claude/...` → `main` | ideas, fixes; tested in browser, simulator, phone; accepted with `npm run review` | Konrad accepts |
 | **TEST** | same code as R&D, built as the TEST variant | the game plus the tester's panel 🛠 (`js/testkit.js`) | Claude builds, Konrad tests |
 | **RELEASE** | `release` + tags `vX.Y.Z` | exactly what was sent to the App Store (`npm run release`), no test tools | Konrad only |
-Claude never pushes to `main` or `release` and never creates `v*` tags.
+Claude never pushes to `main`, `v2` or `release` and never creates `v*` tags.
+
+**Two accepted lines (decided by Konrad, 2026-10-27):** `main` = Void Blaster 1.x (releasable, bug fixes only) and
+`v2` = accepted 2.0 builds. All 2.0 work goes on `claude/v2-...` branches cut from `origin/v2`; `npm run review` offers
+them under "Wersja 2.0 → v2" and merges accepted ones into `v2`. Every other `claude/...` branch is a 1.x candidate
+for `main`. 1.x fixes accepted into `main` are brought into `v2` by Claude (merge `origin/main` into a `claude/v2-...`
+branch). `npm run release` only releases `main`; for the 2.0 launch `v2` is merged into `main` first. Build numbers
+stay one shared counter across both lines.
 
 TEST is a build variant, not a branch, so it always contains the newest game:
 - Test tools (god mode, unlock all, boss now, coins, stars, speed, level up, spawn elite, skip, win, FPS) belong in
@@ -96,7 +104,8 @@ Konrad wants to see what every build changes when he reviews and releases, and a
 
 ## Shipping a change (do all three after every gameplay change)
 Konrad decides what becomes the real game: **never push to `main`**. `main` holds only versions he accepted.
-1. **Repo:** commit and push to a `claude/...` branch (this session's working branch). Do not merge into `main`.
+1. **Repo:** commit and push to a `claude/...` branch: `claude/v2-...` (from `origin/v2`) for 2.0 work, another
+   `claude/...` branch (from `origin/main`) for 1.x fixes and tools. Do not merge into `main` or `v2`.
 2. **Shareable previews:** `npm run build:web` produces `dist/void-blaster.html` and `dist/void-blaster-test.html`
    (whole game in one file each). Republish them to the existing artifacts (keep the URLs):
    normal https://claude.ai/artifact/LvvWrttnsoUNQZYBt7HgDo, TEST https://claude.ai/artifact/T9TmADoewKYcxJgXLp4YCk.
@@ -113,7 +122,7 @@ Konrad decides what becomes the real game: **never push to `main`**. `main` hold
    Android commands work; simulator, iPhone and `npm run release` are Mac only. Keep `scripts/` cross-platform (no
    single quotes in shell commands, no Mac-only tools outside Mac-only paths).
 - GitHub Pages should serve `main`, so `https://konradlechowicz-sys.github.io/super-game-/` is the accepted version.
-- If a branch's commits are already in `main`, start new work from the latest `main`.
+- If a branch's commits are already in its line (`main` or `v2`), start new work from the latest of that line.
 
 ## Checks before pushing
 - `node --check js/*.js`, then load the game with Playwright (`index.html?dev&god`) and confirm no page errors.

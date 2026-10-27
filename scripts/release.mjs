@@ -4,6 +4,7 @@
 // release = exactly what goes to the App Store, one tag vX.Y.Z per release.
 // The script picks an accepted build from main, merges it into `release`, stamps the public version and a build
 // number (the accepted build's own, if possible), tags it vX.Y.Z, pushes branch + tag and opens Xcode for Archive.
+// Only main is ever released: the 2.0 line (`v2`) is not offered here; for the 2.0 launch it is first merged into main.
 // main is never modified, so cloud work keeps merging cleanly.
 // CHANGELOG.md: each build is listed with its changes, the release shows everything since the previous release and
 // stamps a full summary into the release's CHANGELOG.md and tag, plus the App Store "What's New" text.

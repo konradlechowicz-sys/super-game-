@@ -36,6 +36,17 @@ Przed uruchomieniem zawsze wypisuje ramkę, żebyś wiedział, co testujesz:
 
 Po decyzji wracasz do zaakceptowanej wersji (main).
 
+## Dwie linie: 1.x i 2.0
+
+| Linia | Co to jest | Do czego |
+|---|---|---|
+| **`main`** | Void Blaster 1.x, gotowy do wydania | tylko poprawki błędów; z niej robisz `npm run release` |
+| **`v2`** | zaakceptowane buildy wersji 2.0 | cała nowa praca; nigdy nie idzie prosto do App Store |
+
+`npm run review` pokazuje nowe buildy w dwóch grupach: **„Void Blaster 1.x → main”** i **„Wersja 2.0 → v2”**.
+Akceptujesz jak zwykle **[a]**, a skrypt sam wie, do której linii trafi build. Po wszystkim folder projektu wraca
+na `main`, więc Xcode i `npm run release` zawsze mają 1.x. Na premierę 2.0 linia `v2` zostanie scalona do `main`.
+
 ## Ważne
 
 - **TEST to osobna aplikacja „VB Test”** z własnym zapisem. Możesz w niej psuć, co chcesz: Twój prawdziwy postęp zostaje nietknięty.
