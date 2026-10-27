@@ -29,6 +29,9 @@
   the full game costs more for new players (about USD 4.99). 2.0 is built in the same app behind a switch that only
   the TEST variant shows, so `main` stays releasable as 1.x until launch. Art lives in `art/2.0/` (see its
   README); the PixiJS prototype is `proto2/`.
+- 2.0 performance gate 1 passed (Konrad, 2026-10-27, iPhone 17 Pro Max, TEST variant with the 2.0 look): a steady
+  60 FPS with about 180 enemies on screen. 2.0 balance must use this: noticeably more enemies at once than 1.x
+  (bigger waves and swarms), keeping a margin for older iPhones.
 
 ## Android (decided by Konrad)
 Android launches with 2.0 (Google Play needs 12 testers for 14 days on a new account before publishing, so closed

@@ -16,6 +16,10 @@ i wersja TEST (gracze tego nie widzą).
 
 - 
 
+## Build 70 · 2026-10-27
+- [Narzędzia] Wersja 2.0, etap 1 (tylko wariant TEST, „2.0 look” w 🛠): strzały, pociski wrogów, kryształy, monety i apteczki, cząsteczki, fale uderzeniowe i błyskawice rysuje teraz warstwa PixiJS (karta graficzna). Strzały, pociski i kryształy dostały miękką poświatę w swoim kolorze. Na starym rysowaniu zostały tylko bronie wokół statku, miny, paski życia, liczby obrażeń i HUD.
+- [Narzędzia] CLAUDE.md: zapisana bramka 1 wersji 2.0 (stałe 60 FPS przy ok. 180 wrogach na iPhonie 17 Pro Max) i decyzja Konrada: balans 2.0 ma mieć wyraźnie więcej przeciwników naraz niż 1.x. Zwykła gra bez zmian.
+
 ## Build 69 · 2026-10-27
 - [Narzędzia] Uporządkowane uruchamianie testów: 3 miejsca (przeglądarka, symulator, iPhone) × 2 warianty (zwykła gra, TEST). `npm start` pyta gdzie i którą wersję; skróty `npm run web|sim|phone` oraz `:test`. Każde uruchomienie wypisuje ramkę: build, gałąź (zaakceptowana czy kandydat), miejsce, wariant. `npm run review` pyta też: symulator czy iPhone. `npm run xcode` przygotowuje zwykłą grę i otwiera Xcode. Ściągawka po polsku: JAK-TESTOWAC.md. Stare `play`/`play:test` nadal działają. Gra bez zmian.
 
