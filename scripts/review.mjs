@@ -10,6 +10,7 @@ import { execSync } from 'node:child_process';
 import { appendFileSync, existsSync, readFileSync } from 'node:fs';
 import { createInterface } from 'node:readline/promises';
 import { buildsBetween, describe, readAt } from './changelog.mjs';
+const MAC = process.platform === 'darwin';
 import { clearLocalChanges } from './localchanges.mjs';
 
 const sh = (cmd, opts = {}) => execSync(cmd, { encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'], ...opts }).trim();
@@ -51,12 +52,13 @@ function switchToMain() {
 
 // Build and launch with the tools of the version being tested (it is checked out at this point), so fixes to the
 // build/launch scripts take effect immediately instead of only after they reach main.
-// place = sim | phone; test = TEST variant (tester's panel, separate "VB Test" app). Versions from before
+// place = sim | phone (Mac only) | web | android; test = TEST variant (tester's panel, separate "VB Test" app). Versions from before
 // scripts/run.mjs can only go to the simulator; versions from before the TEST line ignore the flag.
 function buildAndLaunch(place, test) {
   run('npm install --no-audit --no-fund');
   if (process.env.VB_NO_SIM) return run(`node scripts/build.mjs${test ? ' --test' : ''}`);
   if (existsSync('scripts/run.mjs')) return run(`node scripts/run.mjs ${place} --keep --yes${test ? ' --test' : ''}`);
+  if (!MAC) throw new Error('ta wersja nie ma jeszcze skryptów dla Windowsa');
   run(`node scripts/build.mjs${test ? ' --test' : ''}`);
   run('npx cap sync ios');
   if (existsSync('scripts/sim.mjs')) run(`node scripts/sim.mjs${test ? ' --test' : ''}`);
@@ -70,7 +72,7 @@ const startSha = sh('git rev-parse HEAD');
 console.log('Sprawdzam nowe wersje na GitHubie…');
 run('git fetch -q --prune origin');
 
-const candidates = sh("git for-each-ref --sort=-committerdate --format='%(refname:short)' refs/remotes/origin/claude/")
+const candidates = sh('git for-each-ref --sort=-committerdate --format="%(refname:short)" refs/remotes/origin/claude/')
   .split('\n').filter(Boolean)
   .map((ref) => ({
     ref,
@@ -101,16 +103,19 @@ const pick = candidates.length === 1 ? '1' : await ask(`\nKtórą wersję urucho
 const c = candidates[(+pick || 1) - 1];
 if (!c) bye('Nie ma takiej wersji.', 1);
 
-const where = await ask('Gdzie uruchomić? [Enter] symulator iOS  [i] Twój iPhone: ');
+const where = await ask(MAC
+  ? 'Gdzie uruchomić? [Enter] symulator iOS  [i] Twój iPhone  [p] przeglądarka  [a] Android: '
+  : 'Gdzie uruchomić? [Enter] przeglądarka  [a] Android (emulator albo telefon): ');
+const place = MAC ? ({ i: 'phone', p: 'web', a: 'android' }[where] || 'sim') : (where === 'a' ? 'android' : 'web');
 const variant = await ask('Która wersja?    [Enter] zwykła gra  [t] TEST (panel testera 🛠, osobna aplikacja „VB Test”): ');
-if (where === 'i' && variant !== 't') {
+if (place === 'phone' && variant !== 't') {
   console.log('Uwaga: zwykła wersja na telefonie zastąpi grę z App Store (zapis zostaje). Do testów zwykle lepsza jest wersja TEST.');
   if ((await ask('Kontynuować? [t/N] ')) !== 't') bye('Przerwane, nic nie zmieniono.');
 }
 console.log(`\nPrzygotowuję ${c.label}${variant === 't' ? ' (TEST)' : ''} z gałęzi ${c.branch}…`);
 run(`git checkout -q --detach ${c.sha}`);
 try {
-  buildAndLaunch(where === 'i' ? 'phone' : 'sim', variant === 't');
+  buildAndLaunch(place, variant === 't');
 } catch {
   console.log('\nNie udało się zbudować albo uruchomić tej wersji. Możesz ją odrzucić albo spróbować później.');
 }
@@ -149,5 +154,5 @@ function syncAcceptedVersion() {
   }
   run('npm install --no-audit --no-fund --silent');
   run('node scripts/build.mjs');
-  run('npx cap sync ios');
+  if (MAC) run('npx cap sync ios');
 }

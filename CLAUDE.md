@@ -109,6 +109,9 @@ Konrad decides what becomes the real game: **never push to `main`**. `main` hold
    variant; `npm run web|sim|phone` + `:test` for the TEST variant (browser on the Mac / iOS Simulator / connected
    iPhone; the phone asks for the Team ID once, saved in `.vb-team`). Each prints build, branch, place and variant.
    `review` also asks simulator or iPhone. Use these names when telling Konrad what to run.
+   Konrad also works on a Windows desktop (no Xcode): there `npm start`, `web`, `review` (browser or Android) and the
+   Android commands work; simulator, iPhone and `npm run release` are Mac only. Keep `scripts/` cross-platform (no
+   single quotes in shell commands, no Mac-only tools outside Mac-only paths).
 - GitHub Pages should serve `main`, so `https://konradlechowicz-sys.github.io/super-game-/` is the accepted version.
 - If a branch's commits are already in `main`, start new work from the latest `main`.
 

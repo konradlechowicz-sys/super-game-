@@ -41,7 +41,8 @@ npm run ios:release  # build www/ with the release label and copy it into Xcode 
 ```
 All launchers live in `scripts/run.mjs` (simulator: `scripts/sim.mjs`). They print which build, branch, place and
 variant they start, launch whatever is checked out, and after a TEST launch put the normal game back into the Xcode
-project. `npm run play` / `play:test` remain as old names for `sim` / `sim:test`. Konrad's Polish cheat sheet:
+project. `npm run play` / `play:test` remain as old names for `sim` / `sim:test`. On Windows (no Xcode) `npm start`, `web`, `review` (browser or Android) and the Android commands work;
+the simulator, the iPhone and `npm run release` need the Mac. Konrad's Polish cheat sheet:
 `JAK-TESTOWAC.md`.
 In Xcode: select the **App** target → *Signing & Capabilities* → pick your Team, then Run on a device or simulator.
 **Xcode's own changes.** Xcode rewrites files under `ios/` by itself (e.g. the signing team). `review` and `release`

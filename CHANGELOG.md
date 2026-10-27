@@ -16,6 +16,9 @@ i wersja TEST (gracze tego nie widzą).
 
 - 
 
+## Build 71 · 2026-10-27
+- [Narzędzia] Testowanie i akceptacja buildów działa też na Windowsie: `npm start`, `npm run web` / `web:test`, `npm run review` (uruchamia build w przeglądarce albo na Androidzie) i komendy Androida. Symulator, iPhone i wydanie do App Store zostają na Macu (na Windowsie skrypt mówi to wprost). `npm start` i `review` mają też opcję [a] Android. Instrukcja instalacji na Windowsie: JAK-TESTOWAC.md. Gra bez zmian.
+
 ## Build 70 · 2026-10-27
 - [Narzędzia] Wersja 2.0, etap 1 (tylko wariant TEST, „2.0 look” w 🛠): strzały, pociski wrogów, kryształy, monety i apteczki, cząsteczki, fale uderzeniowe i błyskawice rysuje teraz warstwa PixiJS (karta graficzna). Strzały, pociski i kryształy dostały miękką poświatę w swoim kolorze. Na starym rysowaniu zostały tylko bronie wokół statku, miny, paski życia, liczby obrażeń i HUD.
 - [Narzędzia] CLAUDE.md: zapisana bramka 1 wersji 2.0 (stałe 60 FPS przy ok. 180 wrogach na iPhonie 17 Pro Max) i decyzja Konrada: balans 2.0 ma mieć wyraźnie więcej przeciwników naraz niż 1.x. Zwykła gra bez zmian.
