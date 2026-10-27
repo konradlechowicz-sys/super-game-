@@ -16,6 +16,9 @@ i wersja TEST (gracze tego nie widzą).
 
 - 
 
+## Build 79 · 2026-10-27
+- [Zmiana] W aplikacji (iPhone, Android) muzyka menu gra od razu po uruchomieniu gry, bez czekania na pierwsze dotknięcie. W przeglądarce, także w podglądzie w Claude, nadal startuje po pierwszym kliknięciu, bo przeglądarki nie pozwalają inaczej.
+
 ## Build 78 · 2026-10-27
 - [Poprawka] Muzyka menu 2.0: plik muzyki jest wczytywany bez pobierania (fetch), które zabezpieczone strony mogą blokować. Gdy nagranie nie da się odtworzyć na danym urządzeniu, gra przechodzi na dawną muzykę z syntezatora zamiast milczeć.
 - [Narzędzia] Panel 🛠 pokazuje na górze stan muzyki (np. „recording "menu"”, „synth …”, „waiting for the first tap”) i powód, jeśli nagranie się nie wczytało.

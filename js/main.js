@@ -394,6 +394,9 @@ if (__TEST__) installTestKit(app);
 app.applySettings();
 if (DEV && params.get('coins')) app.save.coins = +params.get('coins');
 app.audio.setTrack('menu');
+// In the app (iOS and Android) sound may start without a tap (Capacitor allows playback without a user gesture), so
+// the menu music plays right after launch. Browsers forbid that: there it starts on the first tap (pointerdown above).
+if (app.native) app.audio.unlock();
 app.ui.menu();
 if (app.dailyStatus().claimable && app.save.stats.runs > 0) app.ui.daily();
 requestAnimationFrame(frame);
