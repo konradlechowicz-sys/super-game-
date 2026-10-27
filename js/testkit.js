@@ -11,13 +11,24 @@ export function installTestKit(app) {
   const BOSS_STAGES = ALL_STAGES.filter((s) => s.boss);
   const titleCase = (s) => s.toLowerCase().replace(/\b\w/g, (c) => c.toUpperCase());
   const ui = app.ui;
-  let opts = { god: false, unlockAll: true, fps: false, levels: 12 };
+  let opts = { god: false, unlockAll: true, fps: false, v2: false, levels: 12 };
   try { opts = { ...opts, ...JSON.parse(localStorage.getItem(KEY) || '{}') }; } catch { /* defaults */ }
   const keep = () => { try { localStorage.setItem(KEY, JSON.stringify(opts)); } catch { /* not saved */ } };
+  // the 2.0 look (js/v2/, PixiJS) is loaded the first time it is switched on; only this panel loads it
+  let v2Loading = false;
+  const loadV2 = () => {
+    if (app.v2r || v2Loading) return;
+    v2Loading = true;
+    import('./v2/renderer.js').then((m) => m.createV2Renderer(app)).then((r) => { app.v2r = r; })
+      .catch((e) => { opts.v2 = false; app.v2 = false; keep(); ui.toast?.(`2.0 look failed to load: ${e.message}`); console.error(e); })
+      .finally(() => { v2Loading = false; });
+  };
   const apply = () => {
     app.god = opts.god;
     app.testUnlockAll = opts.unlockAll;
     fpsEl.hidden = !opts.fps;
+    app.v2 = opts.v2;
+    if (opts.v2) loadV2();
   };
 
   document.body.classList.add('test-build');
@@ -56,6 +67,7 @@ export function installTestKit(app) {
       <div class="modal-kicker tk-kicker" data-kit="${MARKER}">TEST PANEL</div>
       <h2>TESTER</h2>
       ${tog('god', 'God mode (no damage)')}
+      ${tog('v2', '2.0 look (PixiJS, world 1 art)')}
       ${tog('unlockAll', 'All sectors unlocked')}
       <button class="toggle ${app.store.isFull() ? 'on' : ''}" data-act="tkfull"><span>Full game (simulated)</span><i></i></button>
       ${tog('fps', 'FPS counter')}
@@ -101,6 +113,7 @@ export function installTestKit(app) {
       <div class="modal-kicker tk-kicker">TEST PANEL · ${st.id} · ${Math.floor(g.time)} s</div>
       <h2>TESTER</h2>
       ${tog('god', 'God mode (no damage)')}
+      ${tog('v2', '2.0 look (PixiJS, world 1 art)')}
       ${tog('fps', 'FPS counter')}
       <div class="tk-head">Game speed</div>
       <div class="tk-row">${[1, 2, 4].map((n) => `<button class="btn small ${n === app.timeScale ? 'primary' : ''}" data-act="speed" data-n="${n}">×${n}</button>`).join('')}</div>
@@ -114,6 +127,7 @@ export function installTestKit(app) {
       <div class="tk-row">
         ${Object.entries(TRAITS).map(([id, t]) => btn('elite', t.name, `data-trait="${id}" style="color:${t.color}"`)).join('')}
         ${btn('skip', 'SKIP 30 S')}
+        ${btn('stress', 'STRESS +300')}
         ${st.boss && !g.boss && !g.bossDefeated ? btn('summon', 'BOSS NOW') : ''}
         ${btn('win', st.endless ? 'END RUN' : 'WIN SECTOR')}
         ${st.endless ? '' : btn('win3', 'WIN · 3 STARS')}
@@ -172,6 +186,16 @@ export function installTestKit(app) {
         }
         g.checkCombos();
       })(),
+      // performance test for the 2.0 plan's gate 1: 300 more enemies of this sector around the ship
+      stress: act(() => {
+        const pool = st.enemies.map((e) => e[0]);
+        const hw = g.arena.w / 2 - 40, hh = g.arena.h / 2 - 40;
+        for (let i = 0; i < 300; i++) {
+          const a = Math.random() * Math.PI * 2, d = 160 + Math.random() * 520;
+          const x = Math.max(-hw, Math.min(hw, g.player.x + Math.cos(a) * d)), y = Math.max(-hh, Math.min(hh, g.player.y + Math.sin(a) * d));
+          g.spawnEnemy(pool[i % pool.length], x, y);
+        }
+      }),
       win: act(() => winNow()),
       // as if every goal was met: kill goal reached and every elite of the sector destroyed
       win3: act(() => { g.kills = Math.max(g.kills, st.kills); g.elitesKilled = st.elites; winNow(); }),

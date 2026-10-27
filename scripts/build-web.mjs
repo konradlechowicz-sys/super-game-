@@ -7,11 +7,14 @@ import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 // tester's panel, js/testkit.js). __PREVIEW__: both may simulate the full-game purchase (labelled TEST).
 const css = readFileSync('css/style.css', 'utf8').replace(/\/\* fonts:start[\s\S]*?\/\* fonts:end \*\/\n*/, '');
 mkdirSync('dist', { recursive: true });
+// the 2.0 textures for the TEST page's 2.0 look (js/v2/)
+await import('./v2-assets.mjs');
 
 for (const test of [false, true]) {
   const define = { __PREVIEW__: 'true', __TEST__: String(test) };
   const js = (await build({ entryPoints: ['js/main.js'], bundle: true, format: 'iife', minify: true, write: false, define })).outputFiles[0].text;
   if (!test && js.includes('VB-TESTKIT')) throw new Error('The normal preview contains the TEST panel. Stopping.');
+  if (!test && js.includes('VB-V2LOOK')) throw new Error('The normal preview contains the 2.0 look (PixiJS). Stopping.');
   const html = `<title>${test ? 'Void Blaster TEST' : 'Void Blaster'}</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">

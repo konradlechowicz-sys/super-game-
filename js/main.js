@@ -8,6 +8,7 @@ import { ALL_STAGES, DAILY, SHIPS, WORLDS, stageIndex, endlessStage } from './da
 import { clamp, todayStr } from './util.js';
 import { createStore, shipLook } from './store.js';
 import { createLeaderboard } from './leaderboard.js';
+import { frameCamera } from './render-canvas.js';
 import { installTestKit } from './testkit.js';
 
 const params = new URLSearchParams(location.search);
@@ -17,7 +18,8 @@ const LOCAL = /^(localhost|127\.0\.0\.1|\[::1\]|10\.\d+\.\d+\.\d+|192\.168\.\d+\
 const DEV = params.has('dev') && (LOCAL || __TEST__);
 
 const canvas = document.getElementById('game');
-const ctx = canvas.getContext('2d', { alpha: false });
+// opaque in normal builds (cheapest to composite); the TEST variant needs a transparent canvas over the 2.0 look (js/v2/)
+const ctx = canvas.getContext('2d', { alpha: !!__TEST__ });
 
 // ---------------- input: joystick / relative drag + keyboard ----------------
 const JOY_R = 52; // knob travel radius in CSS px
@@ -245,10 +247,18 @@ function frame(now) {
   app.onFrame?.(dt);
   if (app.game) {
     for (let i = 0; i < app.timeScale && app.game; i++) app.game.update(dt);
-    if (app.game) { app.game.render(ctx); drawJoystick(); }
+    if (app.game) {
+      // the 2.0 look (TEST variant only, js/v2/): PixiJS draws below, this canvas draws the rest on top
+      const v2 = app.v2 && app.v2r;
+      if (v2) { app.game.frameCam = frameCamera(app.game); app.v2r.render(app.game); }
+      app.game.render(ctx, !!v2);
+      app.game.frameCam = null;
+      drawJoystick();
+    }
   } else {
     renderMenu(dt);
   }
+  app.v2r?.show(!!(app.v2 && app.game));
   requestAnimationFrame(frame);
 }
 

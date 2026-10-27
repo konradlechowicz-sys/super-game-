@@ -30,15 +30,19 @@ The game ships as a native iOS app via [Capacitor](https://capacitorjs.com). The
 
 ```
 npm install        # once
-npm run review     # test new versions from the cloud in the simulator, then accept or reject them
-npm run play       # launch the accepted version (main) in the simulator
-npm run play:test  # the same as the TEST variant (tester's panel) — separate app "VB Test"
-npm run phone:test # the TEST variant on the connected iPhone (asks for your Team ID once)
+npm start          # asks where (browser / simulator / iPhone) and which variant (normal / TEST), then launches
+npm run web        # the checked-out build in the Mac's browser;            npm run web:test   = TEST variant
+npm run sim        # ... in the iOS Simulator;                              npm run sim:test   = TEST variant
+npm run phone      # ... on the connected iPhone (replaces the App Store app); npm run phone:test = TEST variant
+npm run review     # test new versions from the cloud (simulator or iPhone, normal or TEST), then accept or reject
+npm run xcode      # build the normal game into the Xcode project and open Xcode (for ▶ by hand)
 npm run release    # turn an accepted build into an App Store release (tag vX.Y.Z), then open Xcode to Archive
-npm run ios        # build www/ (test label) and copy it into the Xcode project
-npm run ios:release  # same, with the release label (use for App Store uploads)
-npm run open       # open Xcode
+npm run ios:release  # build www/ with the release label and copy it into Xcode (App Store uploads)
 ```
+All launchers live in `scripts/run.mjs` (simulator: `scripts/sim.mjs`). They print which build, branch, place and
+variant they start, launch whatever is checked out, and after a TEST launch put the normal game back into the Xcode
+project. `npm run play` / `play:test` remain as old names for `sim` / `sim:test`. Konrad's Polish cheat sheet:
+`JAK-TESTOWAC.md`.
 In Xcode: select the **App** target → *Signing & Capabilities* → pick your Team, then Run on a device or simulator.
 **Xcode's own changes.** Xcode rewrites files under `ios/` by itself (e.g. the signing team). `review` and `release`
 offer to discard such changes (a backup patch goes to `.git/vb-xcode-changes-*.patch`); changes elsewhere still stop them.
@@ -75,15 +79,15 @@ the back button, signing for Google Play, Android in `npm run review`.
 - Test without real money: run the game from Xcode (▶). The shared scheme
   (`ios/App/App.xcodeproj/xcshareddata/xcschemes/App.xcscheme`) already selects the local StoreKit configuration
   `VoidBlaster.storekit`, so the purchase works in the simulator for free. It only works when launched from Xcode, not
-  via `npm run play` / `review`, which install the app without the scheme. In the browser, `?dev` simulates the purchase and `?dev&full` starts unlocked.
+  via `npm start` / `sim` / `review`, which install the app without the scheme. In the browser, `?dev` simulates the purchase and `?dev&full` starts unlocked.
 
 ## Three lines: R&D, TEST, RELEASE
 - **R&D** — `claude/...` branches: proposals from cloud sessions; `main`: builds accepted with `npm run review`.
 - **TEST** — not a branch but a build variant of the same code: the game plus the tester's panel 🛠 (`js/testkit.js`):
   god mode, all sectors, full game on/off, boss now (with 0–20 level-ups), coins, 3 stars everywhere, reset tutorial
   or progress, game speed ×2/×4, level up, full hull, spawn elite, skip 30 s, win sector, FPS counter.
-  It shows *TEST · build N* in red. Browser: `dist/void-blaster-test.html` (from `npm run build:web`) or `?test`;
-  iOS: `npm run play:test`, `npm run phone:test`, or [t] in `npm run review` — always a separate app "VB Test"
+  It shows *TEST · build N* in red. Browser: `npm run web:test` (`dist/void-blaster-test.html`) or `?test`;
+  iOS: `npm run sim:test`, `npm run phone:test`, or [t] in `npm run review` — always a separate app "VB Test"
   with its own save. Normal and App Store builds contain none of it: the build removes `js/testkit.js`, and
   `build.mjs --release` stops if any trace of it is left.
 - **RELEASE** — `release` + tags `v1.0.0`, `v1.0.1`, …: exactly what was sent to the App Store. `npm run release` picks
@@ -123,7 +127,9 @@ and `.../site/support.html`, and the web version of the game at `https://konradl
 - `&fast=1` — sectors 6× shorter · `&ts=4` — 4× game speed · `&god` — invulnerable · `&coins=1000`
 
 ## Code map
-- `js/game.js` — run logic: player, enemies, boss, spawning, combat, rendering
+- `js/game.js` — run logic: player, enemies, boss, spawning, combat
+- `js/render-canvas.js` — the 1.x look: draws a game's state on the 2D canvas (also as a transparent overlay over the 2.0 look)
+- `js/v2/` — the 2.0 look on PixiJS (TEST variant only, switched on in 🛠); textures come from `js/v2/assets.gen.js`, written by `scripts/v2-assets.mjs` from `proto2/assets` and `teaser/assets` (not committed). Release and normal web builds fail if the marker `VB-V2LOOK` is found
 - `js/weapons.js` — weapon stats, behaviours and evolutions
 - `js/codex.js` — the Codex (v1.2): its sections and entries; discoveries are saved in `save.codex` (kept by Reset progress)
 - `js/combos.js` — weapon combos and perk sets (v1.2): which pairs exist and when they are active; their effects live in weapons.js and game.js (`updatePerkSets`, `missileCombos`, `crowdHit`)
