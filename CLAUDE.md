@@ -11,14 +11,26 @@
 - Keep the current handoff factual and secret-free. Continue to follow the project branch and Konrad-approval rules below.
 
 ## Roadmap (decided by Konrad)
-- 1.2.0: weapon combos, perk sets, evolutions for all weapons, Codex, tougher enemies.
-- 1.3: Android in Google Play + leaderboards (Game Center, Google Play Games) + Endless mode (unlocked after the
-  whole game, full game only, one leaderboard per world, score = kills).
+- 1.2.0 (released as build 52): weapon combos, perk sets, evolutions for all weapons, Codex, tougher enemies.
+- 1.3 (iOS only): Endless mode (unlocked after the whole game, full game only, one leaderboard per world,
+  score = kills) + Game Center leaderboards. Done in build 62.
+- Android moved to 2.0 (decided by Konrad, 2026-10-26: the Google Play developer account is not paid yet, and 2.0
+  takes a while anyway): Google Play, Billing and Google Play Games launch with 2.0.
 - 2.0: visual overhaul on PixiJS (same JS + Capacitor code), richer art made with ChatGPT from Claude's prompts,
-  more and more varied worlds. Art lives in `art/2.0/` (see its README).
+  10 worlds of 6 sectors each, one journey: the Void Collective (a machine intelligence that rewrites worlds, more
+  organic the deeper you go) attacks Earth; the player fights from Earth's orbit to its heart, the Nexus (worlds and
+  enemies in `art/2.0/CHATGPT-BRIEF.md`; free trial = worlds 1-2). Work on 2.0 starts only after 1.3 is released.
+  2.0 decisions (Konrad, 2026-10-26; execution plan in the Claude Doc "Void Blaster 2.0 – plan wykonawczy"): the 10
+  new worlds replace the 4 of 1.x; all 10 ship at once, iOS and Android the same day; the "1.4" content (OVERLOAD
+  minute, Railgun, Flamethrower, Singularity Cannon, 12 combos, 8 perk sets, 3 super combos) goes into 2.0; 2.0 is a
+  free update for Full Game owners (same app, same product); progress starts over, with a bonus for 1.x veterans;
+  the full game costs more for new players (about USD 4.99). 2.0 is built in the same app behind a switch that only
+  the TEST variant shows, so `main` stays releasable as 1.x until launch. Art lives in `art/2.0/` (see its
+  README); the PixiJS prototype is `proto2/`.
 
 ## Android (decided by Konrad)
-Android launches in 1.3 (Google Play needs 12 testers for 14 days on a new account before publishing). Project in `android/`, see README.md. Until Google
+Android launches with 2.0 (Google Play needs 12 testers for 14 days on a new account before publishing, so closed
+testing should start during 2.0 work). Project in `android/`, see README.md. Until Google
 Play Billing exists, Android is trial-only. This cloud environment cannot build Android (no SDK); Konrad builds in
 Android Studio on his Mac (`npm run android:open`; `npm run android:play` / `npm run android:test` install and
 launch the normal game / the TEST app "VB Test" on the emulator or phone).

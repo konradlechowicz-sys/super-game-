@@ -1,5 +1,5 @@
 import { TAU, rand, randi, clamp, lerp, pick, weightedPick, angleLerp, SpatialHash } from './util.js';
-import { ENEMIES, BOSSES, PASSIVES, PASSIVE_MAX, SHIPS, TRAITS, WORLD_TUNING, xpFor, stageIndex, shopBonus } from './data.js';
+import { ENEMIES, BOSSES, PASSIVES, PASSIVE_MAX, SHIPS, TRAITS, WORLD_TUNING, ENDLESS, xpFor, stageIndex, shopBonus } from './data.js';
 import { WEAPONS, WEAPON_MAX, weaponStats } from './weapons.js';
 import { COMBOS, COMBO_LEVEL, comboActive, combosFor } from './combos.js';
 import { shipLook } from './store.js';
@@ -48,6 +48,8 @@ export class Game {
     this.newEntries = [];
     this.spawnAcc = 0; this.eventsDone = new Set(); this.surge = null;
     this.boss = null; this.bossDefeated = false;
+    // Endless mode: when the next wave, elite and boss come, and how many have come so far
+    if (stage.endless) this.endless = { nextWave: ENDLESS.wave, nextElite: ENDLESS.elite, nextBoss: ENDLESS.boss, waves: 0, bosses: 0 };
     this.shake = 0; this.slowmo = 1; this.flash = 0; this.endTimer = 0;
     this.cam = { x: 0, y: 0 };
     const shop = this.save.shop;
@@ -58,7 +60,14 @@ export class Game {
     this.player.hp = this.player.maxHp;
     this.addWeapon(this.ship.weapon);
     this.tut = new Tutorial(this);
-    this.ui.banner(`STAGE ${stage.id}`, stage.name.toUpperCase());
+    if (stage.endless) this.ui.banner('ENDLESS', stage.world.name.toUpperCase());
+    else this.ui.banner(`STAGE ${stage.id}`, stage.name.toUpperCase());
+  }
+
+  // How far into the sector the run is, 0 to 1; Endless keeps going past 1, so enemies keep getting tougher.
+  progress() {
+    const t = this.time / this.stage.duration;
+    return this.stage.endless ? t : clamp(t, 0, 1);
   }
 
   viewSize() {
@@ -338,7 +347,7 @@ export class Game {
     if (p.inv > 0 || this.state !== 'play' || this.app.god) return;
     // the world's damage level, rising towards the end of the sector
     const T = this.tune;
-    dmg *= T.dmg * (1 + T.ramp * clamp(this.time / this.stage.duration, 0, 1));
+    dmg *= T.dmg * (1 + T.ramp * this.progress());
     dmg = Math.max(1, dmg - p.armor);
     p.hp -= dmg;
     (this.dmgLog ||= {})[src] = (this.dmgLog[src] || 0) + dmg;
@@ -387,6 +396,7 @@ export class Game {
 
   onBossDeath(b) {
     this.boss = null;
+    if (this.endless) return this.onEndlessBossDeath(b);
     this.bossDefeated = true;
     this.ui.bossBar(null);
     this.sfx('bigboom');
@@ -402,11 +412,26 @@ export class Game {
     this.endTimer = 2.8;
   }
 
+  // Endless: the boss drops its rewards and the run goes on; the next one comes 5 minutes later.
+  onEndlessBossDeath(b) {
+    this.ui.bossBar(null);
+    this.sfx('bigboom');
+    this.app.haptic('heavy');
+    this.shake = 20;
+    for (let i = 0; i < 30; i++) this.pickups.push({ x: b.x + rand(-80, 80), y: b.y + rand(-80, 80), kind: 'coin', v: 3 });
+    for (let i = 0; i < 12; i++) this.dropGem(b.x + rand(-60, 60), b.y + rand(-60, 60), 10);
+    this.hazards.length = 0;
+    this.endless.nextBoss = this.time + ENDLESS.boss;
+    this.endless.nextWave = Math.max(this.endless.nextWave, this.time + 10);
+    this.ui.banner('BOSS DESTROYED', 'THE SWARM KEEPS COMING');
+    this.app.audio.setTrack(this.stage.world.music || 'game');
+  }
+
   // ---------------- spawning ----------------
   spawnEnemy(type, x, y, elite = false, traits = []) {
     const d = ENEMIES[type], st = this.stage;
     // Enemy toughness ramps from 1x to the stage's peak, since every run starts with a fresh build.
-    const hpMul = lerp(st.hp0 || 1, st.hp, clamp(this.time / st.duration, 0, 1)) * this.tune.hp * (elite ? this.tune.elite : 1);
+    const hpMul = lerp(st.hp0 || 1, st.hp, this.progress()) * this.tune.hp * (elite ? this.tune.elite : 1);
     const e = {
       id: nextId++, type, def: d, x, y, kx: 0, ky: 0, color: d.color, shape: d.shape,
       hp: d.hp * hpMul * (elite ? 7 : 1), r: d.r * (elite ? 1.6 : 1), speed: d.speed * st.speed * (elite ? 0.9 : 1),
@@ -445,7 +470,7 @@ export class Game {
     const d = e.def;
     // tougher than a plain elite, more so later in the sector: x10 health at the start, up to x14 at the end;
     // heavy enemies (tank, golem...) x8 to x11, or they take minutes to bring down
-    const late = clamp(this.time / this.stage.duration, 0, 1);
+    const late = clamp(this.progress(), 0, 1);
     e.hp *= (d.hp >= 100 ? 8 + 3 * late : 10 + 4 * late) / 7;
     if (e.traits.has('swift') && d.speed > 0) { e.speed = (e.speed / 0.9) * 1.7; e.sw = { cd: 2, t: 0, phase: 'run' }; }
     if (e.traits.has('bulwark')) { e.hp *= 1.2; e.r *= 1.25; e.kbRes = 0; }
@@ -639,7 +664,7 @@ export class Game {
     const hh = this.arena.h / 2 - 80;
     const b = {
       id: nextId++, boss: true, def, name: def.name, x: p.x, y: clamp(p.y - vh * 0.4, -hh, hh), kx: 0, ky: 0,
-      hp: def.hp * this.tune.boss, r: def.r, speed: def.speed, dmg: def.dmg, color: def.color, flash: 0, spawnT: 1.2,
+      hp: def.hp * this.tune.boss * (this.endless ? 1 + ENDLESS.bossGrowth * this.endless.bosses++ : 1), r: def.r, speed: def.speed, dmg: def.dmg, color: def.color, flash: 0, spawnT: 1.2,
       rot: 0, rot2: 0, phase: 1, atk: 0, atkT: 2.5, mode: 'idle', modeT: 0, spin: 0, kbRes: 0, alpha: 1,
       heading: Math.PI / 2, lunge: 0,
     };
@@ -682,8 +707,7 @@ export class Game {
 
   directSpawns(dt) {
     const st = this.stage;
-    const prog = clamp(this.time / st.duration, 0, 1);
-    let rate = lerp(st.rate[0], st.rate[1], prog);
+    let rate = lerp(st.rate[0], st.rate[1], this.progress());
     if (this.surge && this.time < this.surge.until) rate *= this.surge.mul;
     if (this.boss) rate *= this.boss.def.bgSpawn ?? 0.35;
     if (this.bossDefeated) rate = 0;
@@ -698,10 +722,44 @@ export class Game {
         this.runEvent(st.events[i]);
       }
     }
-    if (st.boss) {
+    if (st.endless) {
+      this.endlessEvents();
+    } else if (st.boss) {
       if (!this.boss && !this.bossDefeated && this.time >= st.bossAt) this.spawnBoss();
     } else if (this.time >= st.duration) {
       this.win();
+    }
+  }
+
+  // Endless mode: a wave every minute (a ring, a surge or one of the world's hazards, growing), an elite every
+  // 2.5 minutes and the boss every 5 minutes, counted from the last boss's death; no waves while a boss is up.
+  endlessEvents() {
+    const E = ENDLESS, k = this.endless, st = this.stage, t = this.time;
+    if (!this.boss && t >= k.nextBoss) { this.spawnBoss(); return; }
+    if (this.boss) { k.nextWave = Math.max(k.nextWave, t + 20); return; }
+    if (t >= k.nextWave) {
+      k.nextWave += E.wave;
+      const n = k.waves++;
+      const kinds = ['ring', 'surge', ...st.hazards];
+      const kind = kinds[n % kinds.length];
+      const min = Math.floor(t / 60);
+      if (kind === 'ring') {
+        const pool = st.enemies.filter((e) => t >= e[1] && !ENEMIES[e[0]].pack && ENEMIES[e[0]].speed > 0);
+        this.runEvent({ type: 'ring', enemy: pick(pool)[0], count: 16 + 4 * min, msg: `WAVE ${n + 1}` });
+      } else if (kind === 'surge') this.runEvent({ type: 'surge', dur: 25, mul: 2, msg: `WAVE ${n + 1}` });
+      else {
+        // flares and gravity wells are dangerous in numbers, so they grow slower than asteroids and mortars
+        const count = kind === 'flare' ? Math.min(5, 2 + (min >> 1)) : kind === 'well' ? Math.min(4, 1 + Math.floor(min / 3)) : Math.min(12, 4 + min);
+        this.runEvent({ type: kind, count, msg: `WAVE ${n + 1}` });
+      }
+    }
+    if (t >= k.nextElite) {
+      k.nextElite += E.elite;
+      const pool = st.enemies.filter((e) => t >= e[1] && !ENEMIES[e[0]].pack);
+      const names = Object.keys(TRAITS);
+      const traits = [pick(names)];
+      if (t >= E.twoTraits) traits.push(pick(names.filter((x) => x !== traits[0])));
+      this.runEvent({ type: 'elite', enemy: pick(pool)[0], traits, msg: `${traits.map((x) => TRAITS[x].name).join(' ')} ELITE` });
     }
   }
 
@@ -1657,6 +1715,7 @@ export class Game {
     const p = this.player;
     this.state = 'over';
     if (this.tut.tip) this.tut.close(false);
+    if (st.endless) return this.finishEndless();
     // 3 stars: clear the sector, reach the kill goal, destroy every elite (and the boss, which clearing a boss sector needs)
     const goals = [won, this.kills >= st.kills, won && this.elitesKilled >= st.elites];
     const stars = won ? goals.filter(Boolean).length : 0;
@@ -1692,6 +1751,29 @@ export class Game {
       won, stage: st, stars, prevStars, newStars, goals, time: this.time, kills: this.kills, level: this.level,
       elitesKilled: this.elitesKilled, collected, clearBonus, starBonus, worldBonus, total, firstClear,
       newEntries: this.newEntries,
+    });
+  }
+
+  // Endless ends only when the ship is destroyed: the score is the kills, coins are the run's plus a bonus per minute.
+  finishEndless() {
+    const st = this.stage, save = this.save, w = st.world.id;
+    const minutes = Math.floor(this.time / 60);
+    const collected = Math.round(this.coinsRun);
+    const minuteBonus = Math.round(minutes * ENDLESS.minuteCoins * this.player.coinMult);
+    const total = collected + minuteBonus;
+    const prev = save.endless[w] || { kills: 0, time: 0 };
+    const best = this.kills > prev.kills;
+    if (best) save.endless[w] = { kills: this.kills, time: Math.floor(this.time) };
+    save.coins += total;
+    save.stats.kills += this.kills;
+    save.stats.runs += 1;
+    this.app.persist();
+    this.app.leaderboard?.submit(w, this.kills);
+    this.app.audio.sfx(best ? 'win' : 'lose');
+    this.ui.bossBar(null);
+    this.ui.endlessResults({
+      stage: st, time: this.time, kills: this.kills, level: this.level, bosses: this.endless.bosses, best, prev,
+      collected, minutes, minuteBonus, total, newEntries: this.newEntries,
     });
   }
 

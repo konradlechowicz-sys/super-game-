@@ -10,11 +10,93 @@ i wersja TEST (gracze tego nie widzą).
 
 ## Następne wydanie
 
-<!-- Podsumowanie zmian od v1.2.0; uzupełnia Claude przy każdym buildzie. -->
+<!-- Podsumowanie zmian od v1.2.1; uzupełnia Claude przy każdym buildzie. -->
 
 ### What's New (App Store)
 
 - 
+
+## v1.2.1 · build 65 · 2026-10-27 · App Store
+
+- Tryb Endless w każdym świecie: po pokonaniu Void Heart (pełna wersja) gra trwa do zniszczenia statku, wynik to liczba zabitych wrogów. Co minutę fala, co 2,5 minuty elita, co 5 minut boss świata, wrogowie stale mocniejsi. Monety z przelotu plus 40 za każdą minutę, rekord każdego świata zapisany.
+- Rankingi Game Center: osobny ranking Endless dla każdego świata.
+- Wersja tylko na iOS; Android dopiero z 2.0.
+
+### What's New (App Store)
+
+- Endless mode: beat the Void Heart to open Endless in every world. The swarm never stops: a wave every minute, an elite every 2.5 minutes and the world's boss every 5 minutes, and enemies keep getting tougher. Your score is your kill count.
+- Game Center leaderboards: one Endless leaderboard per world. How long can you last?
+- Coins from every Endless run, plus a bonus for each minute survived.
+
+### Wszystkie zmiany (buildy 53–65)
+
+**Nowe**
+- Tryb Endless (pełna wersja, otwiera się po pokonaniu Void Heart): karta „∞ ENDLESS” pod sektorami każdego świata, z rekordem. Przelot trwa do zniszczenia statku, a wynik to liczba zabitych wrogów. Wrogowie świata (jak w jego 5. sektorze), wytrzymałość i obrażenia rosną przez pierwsze 6 minut i dalej. Co minutę fala (pierścień, natarcie albo zagrożenie świata: asteroidy, ostrzał, rozbłyski, studnie grawitacyjne), co 2,5 minuty elita z cechą (po 10 minutach z dwiema), co 5 minut boss świata, za każdym razem o połowę wytrzymalszy; po jego zniszczeniu gra toczy się dalej. Licznik czasu liczy w górę. (build 62)
+- Ekran wyników Endless: wynik, „NEW BEST”, czas, liczba bossów, monety z przelotu i premia 40 monet za każdą minutę. Rekord każdego świata zapisany (`save.endless`). (build 62)
+- Rankingi Game Center (iOS): wynik Endless trafia do rankingu świata; przycisk rankingu w odprawie i na ekranie wyników. Logowanie do Game Center dopiero po odblokowaniu Endless. Na stronie w przeglądarce i na Androidzie rankingów nie ma (przyciski ukryte). Rankingi trzeba założyć w App Store Connect: instrukcja w `appstore/GAME-CENTER.md`. (build 62)
+
+**Zmiana**
+- Na koniec gry (po Void Heart) wyniki mówią, że Endless jest otwarty w każdym świecie. (build 62)
+
+**Narzędzia**
+- CHANGELOG.md: sekcja wydania v1.2.0 (build 52) skopiowana z gałęzi release, „Następne wydanie” wyczyszczone. CLAUDE.md: 1.2.0 wydane, 2.0 dopiero po 1.3, w 2.0 10 światów po 6 sektorów. (build 53)
+- `art/2.0/CHATGPT-BRIEF.md`: kompletna instrukcja dla ChatGPT do grafiki wersji 2.0 (blok stylu, zasady, 10 światów z wrogami i bossami, 11 broni z ewolucjami, combo, interfejs, efekty jako paski klatek, materiały do sklepów; zadania A–G w kolejności produkcji). (build 54)
+- Instrukcja dla ChatGPT (`art/2.0/CHATGPT-BRIEF.md`): fabuła 2.0 (Void Collective, podróż od orbity Ziemi do serca wroga), 10 światów w kolejności podróży z mechaniką, kolorami, proporcją techniki i organiki, 6 wrogami i bossem każdy; boss świata 1 to Harvester; mapa podróży zamiast mapy galaktyki. CLAUDE.md i README grafik uzupełnione. (build 55)
+- Zwiastun 2.0 (10 s, pionowy 1080×1920) zrobiony w silniku PixiJS z grafik `art/2.0/teaser/` (zadania T1–T4 od ChatGPT): Kolektyw przejmuje orbitę Ziemi, start Strikera z hangaru, walka z combo ION BOLTS, nadlatujący boss (na razie sylwetka elitarnego drona, dopóki nie ma Harvestera), plansza tytułowa. `npm run teaser` buduje stronę, `npm run teaser:video` nagrywa MP4. Gra bez zmian. (build 56)
+- Zwiastun 2.0 dostał dźwięk: muzykę i efekty syntezowane w Web Audio, jak w grze (bez plików i licencji), zgrane co do klatki z animacją. Ciemny dron i szept Kolektywu nad Ziemią, alarm, silniki i start w hangarze, rytm 141 BPM w walce z uderzeniem na combo, „braam”, syrena i ładowanie rdzenia przy bossie, wielkie uderzenie i jasny akord na tytule. Strzały, wybuchy, pioruny i przejęcia satelitów brzmią dokładnie wtedy, gdy dzieją się na ekranie. MP4 ma dźwięk AAC wyrównany do -14 LUFS (standard serwisów społecznościowych); strona zwiastuna gra z dźwiękiem po dotknięciu. (build 57)
+- Nowe grafiki 2.0 od ChatGPT w `art/2.0/`: podłoga świata 1 (A1; z podglądu 2×2 wycięty kafel bez szwów), boss Harvester (A6: cały, kadłub, arkusz i 16 wyciętych części), emblemat logo (E3). Zwiastun używa ich zamiast zastępstw: prawdziwy Harvester z pulsującym rdzeniem, silnikami i wyrzutniami, z których wypadają drony, emblemat na planszy tytułowej i nowa podłoga w walce. Gra bez zmian. (build 58)
+- Zwiastun 2.0: efekty dźwiękowe zaprojektowane od nowa, każdy z kilku warstw (uderzenie, przesterowane „ciało”, niski bas, ogon w pogłosie, iskry, odłamki, stereo). Lasery z modulacją FM (jonowe z trzaskiem), wybuchy z odłamkami (duże wrogowie mocniej), trzaskające pioruny, cyfrowe przejmowanie satelitów, robotyczny szept Kolektywu, klakson alarmu, zapłon i ryk silników, dopalacz przy starcie, wyrzutnie dronów Harvestera, metaliczne trafienia w bossa, fala uderzeniowa combo, filmowe uderzenia na cięciach. Muzyka i efekty są teraz osobnymi ścieżkami (muzyka czeka na Suno); nagranie zostawia obraz bez dźwięku i obie ścieżki, więc muzykę można podłożyć bez ponownego nagrywania. (build 59)
+- Zwiastun 2.0 ma 15 sekund i muzykę z Suno (`art/2.0/audio/`), a cięcia leżą na taktach utworu (142 BPM): Ziemia na mrocznym wstępie, start Strikera w ostatnim takcie przed wejściem bitu, walka od wejścia bitu, combo na pierwszą miarę taktu, boss, a plansza tytułowa na końcowym uderzeniu utworu. Z efektów zostały tylko subtelne strzały pod muzyką (decyzja Konrada); pełny zestaw efektów można włączyć opcją. Czasy ujęć są w jednym miejscu (`teaser/timeline.js`), a fragment muzyki wycina `npm run teaser`. (build 60)
+- `art/2.0/audio/SUNO-PROMPTS.md`: katalog promptów do Suno dla całej muzyki 2.0. Każdy z 10 światów ma własny temat (utwór sektora i utwór bossa robiony funkcją Cover z sektora), do tego menu i hangar, mapa podróży, tryb Endless, intro, zakończenie i porażka. Zawiera zasady (płatny plan, WAV, nazwy plików, pętle) i tabelę postępu. Dokument koncepcji 2.0 uzupełniony o muzykę. (build 61)
+- Panel 🛠 w Endless: „BOSS NOW” przywołuje bossa, „SKIP 30 S” przesuwa czas, „END RUN” kończy przelot z wynikiem. (build 62)
+- Projekt iOS: nowy plik `GameCenterPlugin.swift` i uprawnienie Game Center (`App.entitlements`). Plan 1.3: najpierw iOS (Endless + Game Center), potem Android. (build 62)
+- Plan wersji (CLAUDE.md, decyzja Konrada): 1.3 wychodzi tylko na iOS (tryb Endless i rankingi Game Center, gotowe w buildzie 62), a premiera na Androidzie (Google Play, zakupy, Google Play Games) przesuwa się do 2.0. Zamknięte testy Google Play (12 testerów przez 14 dni) warto zacząć w trakcie prac nad 2.0. Gra bez zmian. (build 63)
+- `art/2.0/audio/SUNO-PROMPTS.md`: nowe prompty do Suno dla światów 1–4 (sektor i boss). Wszystkie mają wspólny rdzeń stylu tematu głównego ze zwiastuna (kinowy sci-fi, orkiestra z synthwave, braamy, chóry, arpeggia), a różnią się tempem, tonacją, instrumentem prowadzącym i teksturą świata: zimny syntezator i szum radia (W1, 140 BPM), bohaterskie dęciaki i taiko w burzy (W2, 146 BPM), chór bez słów i daleki ostrzał w pustce (W3, 128 BPM), kryształowe dzwonki, pustynny wiatr i pierwsze „oddechy” (W4, 136 BPM). Gra bez zmian. (build 64)
+- CLAUDE.md: decyzje Konrada o 2.0 (10 nowych światów zamiast 4, wszystkie naraz na iOS i Androidzie, zawartość „1.4” w 2.0, aktualizacja za darmo dla kupujących 1.x, postęp od nowa z bonusem dla weteranów, cena ok. 4,99 USD dla nowych graczy, 2.0 za przełącznikiem widocznym tylko w wersji TEST do premiery). Plan wykonawczy w dokumencie „Void Blaster 2.0 – plan wykonawczy”. Gra bez zmian. (build 65)
+
+## Build 65 · 2026-10-26
+- [Narzędzia] CLAUDE.md: decyzje Konrada o 2.0 (10 nowych światów zamiast 4, wszystkie naraz na iOS i Androidzie, zawartość „1.4” w 2.0, aktualizacja za darmo dla kupujących 1.x, postęp od nowa z bonusem dla weteranów, cena ok. 4,99 USD dla nowych graczy, 2.0 za przełącznikiem widocznym tylko w wersji TEST do premiery). Plan wykonawczy w dokumencie „Void Blaster 2.0 – plan wykonawczy”. Gra bez zmian.
+
+## Build 64 · 2026-10-26
+- [Narzędzia] `art/2.0/audio/SUNO-PROMPTS.md`: nowe prompty do Suno dla światów 1–4 (sektor i boss). Wszystkie mają wspólny rdzeń stylu tematu głównego ze zwiastuna (kinowy sci-fi, orkiestra z synthwave, braamy, chóry, arpeggia), a różnią się tempem, tonacją, instrumentem prowadzącym i teksturą świata: zimny syntezator i szum radia (W1, 140 BPM), bohaterskie dęciaki i taiko w burzy (W2, 146 BPM), chór bez słów i daleki ostrzał w pustce (W3, 128 BPM), kryształowe dzwonki, pustynny wiatr i pierwsze „oddechy” (W4, 136 BPM). Gra bez zmian.
+
+## Build 63 · 2026-10-26
+- [Narzędzia] Plan wersji (CLAUDE.md, decyzja Konrada): 1.3 wychodzi tylko na iOS (tryb Endless i rankingi Game Center, gotowe w buildzie 62), a premiera na Androidzie (Google Play, zakupy, Google Play Games) przesuwa się do 2.0. Zamknięte testy Google Play (12 testerów przez 14 dni) warto zacząć w trakcie prac nad 2.0. Gra bez zmian.
+
+## Build 62 · 2026-10-25
+- [Nowe] Tryb Endless (pełna wersja, otwiera się po pokonaniu Void Heart): karta „∞ ENDLESS” pod sektorami każdego świata, z rekordem. Przelot trwa do zniszczenia statku, a wynik to liczba zabitych wrogów. Wrogowie świata (jak w jego 5. sektorze), wytrzymałość i obrażenia rosną przez pierwsze 6 minut i dalej. Co minutę fala (pierścień, natarcie albo zagrożenie świata: asteroidy, ostrzał, rozbłyski, studnie grawitacyjne), co 2,5 minuty elita z cechą (po 10 minutach z dwiema), co 5 minut boss świata, za każdym razem o połowę wytrzymalszy; po jego zniszczeniu gra toczy się dalej. Licznik czasu liczy w górę.
+- [Nowe] Ekran wyników Endless: wynik, „NEW BEST”, czas, liczba bossów, monety z przelotu i premia 40 monet za każdą minutę. Rekord każdego świata zapisany (`save.endless`).
+- [Nowe] Rankingi Game Center (iOS): wynik Endless trafia do rankingu świata; przycisk rankingu w odprawie i na ekranie wyników. Logowanie do Game Center dopiero po odblokowaniu Endless. Na stronie w przeglądarce i na Androidzie rankingów nie ma (przyciski ukryte). Rankingi trzeba założyć w App Store Connect: instrukcja w `appstore/GAME-CENTER.md`.
+- [Zmiana] Na koniec gry (po Void Heart) wyniki mówią, że Endless jest otwarty w każdym świecie.
+- [Narzędzia] Panel 🛠 w Endless: „BOSS NOW” przywołuje bossa, „SKIP 30 S” przesuwa czas, „END RUN” kończy przelot z wynikiem.
+- [Narzędzia] Projekt iOS: nowy plik `GameCenterPlugin.swift` i uprawnienie Game Center (`App.entitlements`). Plan 1.3: najpierw iOS (Endless + Game Center), potem Android.
+
+## Build 61 · 2026-10-25
+- [Narzędzia] `art/2.0/audio/SUNO-PROMPTS.md`: katalog promptów do Suno dla całej muzyki 2.0. Każdy z 10 światów ma własny temat (utwór sektora i utwór bossa robiony funkcją Cover z sektora), do tego menu i hangar, mapa podróży, tryb Endless, intro, zakończenie i porażka. Zawiera zasady (płatny plan, WAV, nazwy plików, pętle) i tabelę postępu. Dokument koncepcji 2.0 uzupełniony o muzykę.
+
+## Build 60 · 2026-10-25
+- [Narzędzia] Zwiastun 2.0 ma 15 sekund i muzykę z Suno (`art/2.0/audio/`), a cięcia leżą na taktach utworu (142 BPM): Ziemia na mrocznym wstępie, start Strikera w ostatnim takcie przed wejściem bitu, walka od wejścia bitu, combo na pierwszą miarę taktu, boss, a plansza tytułowa na końcowym uderzeniu utworu. Z efektów zostały tylko subtelne strzały pod muzyką (decyzja Konrada); pełny zestaw efektów można włączyć opcją. Czasy ujęć są w jednym miejscu (`teaser/timeline.js`), a fragment muzyki wycina `npm run teaser`.
+
+## Build 59 · 2026-10-25
+- [Narzędzia] Zwiastun 2.0: efekty dźwiękowe zaprojektowane od nowa, każdy z kilku warstw (uderzenie, przesterowane „ciało”, niski bas, ogon w pogłosie, iskry, odłamki, stereo). Lasery z modulacją FM (jonowe z trzaskiem), wybuchy z odłamkami (duże wrogowie mocniej), trzaskające pioruny, cyfrowe przejmowanie satelitów, robotyczny szept Kolektywu, klakson alarmu, zapłon i ryk silników, dopalacz przy starcie, wyrzutnie dronów Harvestera, metaliczne trafienia w bossa, fala uderzeniowa combo, filmowe uderzenia na cięciach. Muzyka i efekty są teraz osobnymi ścieżkami (muzyka czeka na Suno); nagranie zostawia obraz bez dźwięku i obie ścieżki, więc muzykę można podłożyć bez ponownego nagrywania.
+
+## Build 58 · 2026-10-25
+- [Narzędzia] Nowe grafiki 2.0 od ChatGPT w `art/2.0/`: podłoga świata 1 (A1; z podglądu 2×2 wycięty kafel bez szwów), boss Harvester (A6: cały, kadłub, arkusz i 16 wyciętych części), emblemat logo (E3). Zwiastun używa ich zamiast zastępstw: prawdziwy Harvester z pulsującym rdzeniem, silnikami i wyrzutniami, z których wypadają drony, emblemat na planszy tytułowej i nowa podłoga w walce. Gra bez zmian.
+
+## Build 57 · 2026-10-25
+- [Narzędzia] Zwiastun 2.0 dostał dźwięk: muzykę i efekty syntezowane w Web Audio, jak w grze (bez plików i licencji), zgrane co do klatki z animacją. Ciemny dron i szept Kolektywu nad Ziemią, alarm, silniki i start w hangarze, rytm 141 BPM w walce z uderzeniem na combo, „braam”, syrena i ładowanie rdzenia przy bossie, wielkie uderzenie i jasny akord na tytule. Strzały, wybuchy, pioruny i przejęcia satelitów brzmią dokładnie wtedy, gdy dzieją się na ekranie. MP4 ma dźwięk AAC wyrównany do -14 LUFS (standard serwisów społecznościowych); strona zwiastuna gra z dźwiękiem po dotknięciu.
+
+## Build 56 · 2026-10-25
+- [Narzędzia] Zwiastun 2.0 (10 s, pionowy 1080×1920) zrobiony w silniku PixiJS z grafik `art/2.0/teaser/` (zadania T1–T4 od ChatGPT): Kolektyw przejmuje orbitę Ziemi, start Strikera z hangaru, walka z combo ION BOLTS, nadlatujący boss (na razie sylwetka elitarnego drona, dopóki nie ma Harvestera), plansza tytułowa. `npm run teaser` buduje stronę, `npm run teaser:video` nagrywa MP4. Gra bez zmian.
+
+## Build 55 · 2026-10-25
+- [Narzędzia] Instrukcja dla ChatGPT (`art/2.0/CHATGPT-BRIEF.md`): fabuła 2.0 (Void Collective, podróż od orbity Ziemi do serca wroga), 10 światów w kolejności podróży z mechaniką, kolorami, proporcją techniki i organiki, 6 wrogami i bossem każdy; boss świata 1 to Harvester; mapa podróży zamiast mapy galaktyki. CLAUDE.md i README grafik uzupełnione.
+
+## Build 54 · 2026-10-25
+- [Narzędzia] `art/2.0/CHATGPT-BRIEF.md`: kompletna instrukcja dla ChatGPT do grafiki wersji 2.0 (blok stylu, zasady, 10 światów z wrogami i bossami, 11 broni z ewolucjami, combo, interfejs, efekty jako paski klatek, materiały do sklepów; zadania A–G w kolejności produkcji).
+
+## Build 53 · 2026-10-24
+- [Narzędzia] CHANGELOG.md: sekcja wydania v1.2.0 (build 52) skopiowana z gałęzi release, „Następne wydanie” wyczyszczone. CLAUDE.md: 1.2.0 wydane, 2.0 dopiero po 1.3, w 2.0 10 światów po 6 sektorów.
 
 ## v1.2.0 · build 52 · 2026-10-24 · App Store
 

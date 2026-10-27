@@ -15,3 +15,4 @@ xcuserdata/
 # Xcode's Swift Package Manager cache (Package.resolved etc.), created on the first build
 **/xcshareddata/swiftpm/
 proto2/assets.gen.js
+teaser/assets.gen.js

@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<title>Void Blaster 2.0 Teaser</title>
+<style>
+  :root { color-scheme: dark; }
+  html, body { margin: 0; height: 100%; background: #000; overflow: hidden; user-select: none; -webkit-user-select: none; }
+  #stage { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; }
+  #stage canvas { display: block; width: min(100vw, 56.25vh); height: auto; aspect-ratio: 9 / 16; }
+  #replay { position: fixed; left: 0; right: 0; bottom: calc(env(safe-area-inset-bottom) + 18px); text-align: center;
+    font: 600 14px system-ui, sans-serif; letter-spacing: 0.12em; color: rgba(233, 230, 255, 0.75); opacity: 0; transition: opacity 0.4s; pointer-events: none; }
+  #replay.on { opacity: 1; }
+  .record #replay { display: none; }
+  .record #stage canvas { width: 100vw; height: 100vh; }
+</style>
+</head>
+<body>
+<div id="stage"></div>
+<div id="replay">TAP TO REPLAY</div>
+<script type="module" src="./main.js"></script>
+</body>
+</html>

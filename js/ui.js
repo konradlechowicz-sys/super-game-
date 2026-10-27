@@ -1,4 +1,4 @@
-import { WORLDS, SHIPS, SHOP, DAILY, ALL_STAGES, BOSSES, stageIndex } from './data.js';
+import { WORLDS, SHIPS, SHOP, DAILY, ALL_STAGES, BOSSES, ENDLESS, stageIndex } from './data.js';
 import { WEAPONS } from './weapons.js';
 import { COMBOS } from './combos.js';
 import { codexSections, codexName } from './codex.js';
@@ -251,7 +251,7 @@ export class UI {
           </button>
           <div class="node-info"><div class="node-name">${esc(s.name)}</div><div class="node-stars">${starHtml}</div></div>
         </div>`;
-      }).join('') + '</div>';
+      }).join('') + '</div>' + this.endlessCard(world);
     }
     this.setScreen(`
       <div class="topbar"><button class="icon-btn" data-act="back" aria-label="Back">‹</button><h1 class="title">SECTORS</h1>${this.coinsHtml()}</div>
@@ -262,8 +262,47 @@ export class UI {
       full: () => this.paywall(() => this.map()),
       world: (ds) => this.map(+ds.id),
       stage: (ds) => this.briefing(ds.id),
+      endless: (ds) => this.endlessBriefing(+ds.id),
     }, 'map');
     this.coach('map');
+  }
+
+  // Endless mode under a world's sectors: open after the Void Heart (full game), with the world's best score.
+  endlessCard(world) {
+    const best = this.save.endless[world.id];
+    if (!this.app.endlessOpen()) {
+      const why = this.app.store.isFull() ? 'Defeat the Void Heart to open Endless in every world.' : 'Part of the full game.';
+      return `<div class="endless-card locked" style="--wc:${world.color}"><b>∞ ENDLESS</b><span>${why}</span></div>`;
+    }
+    const sub = best ? `Best: ${best.kills} kills · ${fmtTime(best.time)}` : 'Survive as long as you can. Score: kills.';
+    return `<button class="endless-card" style="--wc:${world.color}" data-act="endless" data-id="${world.id}"><b>∞ ENDLESS</b><span>${sub}</span></button>`;
+  }
+
+  endlessBriefing(worldId) {
+    const world = WORLDS.find((w) => w.id === worldId);
+    const best = this.save.endless[worldId];
+    const ship = SHIPS[this.save.ship];
+    const boss = titleCase(BOSSES[world.stages[world.stages.length - 1].boss].name);
+    this.modal(`
+      <div class="modal-kicker" style="color:${world.color}">ENDLESS · ${esc(world.name.toUpperCase())}</div>
+      <h2>The swarm never stops</h2>
+      <p class="muted">A wave every minute, an elite every ${ENDLESS.elite / 60} minutes and the ${esc(boss)} every ${ENDLESS.boss / 60} minutes. Enemies keep getting tougher. Your score is the number of kills.</p>
+      <ul class="goals">
+        <li class="${best ? 'done' : ''}">${STAR}<span>${best ? `Best: ${best.kills} kills in ${fmtTime(best.time)}` : 'No score yet'}</span></li>
+        <li>${COIN}<span>Coins you collect + ${ENDLESS.minuteCoins} for every minute survived</span></li>
+      </ul>
+      ${this.app.leaderboard.available ? '<button class="btn small lb-btn" data-act="board">🏆 LEADERBOARD</button>' : ''}
+      <div class="brief-ship"><canvas data-ship="${ship.id}" width="96" height="96"></canvas><div><b>${esc(ship.name)}</b><br><small>${esc(WEAPONS[ship.weapon].name)}</small></div><button class="btn small" data-act="hangar">CHANGE</button></div>
+      <div class="modal-actions">
+        <button class="btn" data-act="close">BACK</button>
+        <button class="btn primary" data-act="launch">LAUNCH</button>
+      </div>
+    `, {
+      close: () => this.closeModal(),
+      hangar: () => { this.closeModal(); this.hangar(() => this.map()); },
+      board: () => this.app.leaderboard.show(worldId),
+      launch: () => { this.closeModal(); this.app.startEndless(worldId); },
+    });
   }
 
   briefing(id) {
@@ -525,7 +564,8 @@ export class UI {
     set('kills', '.hud-kills', g.kills);
     set('coins', '.hud-coins', Math.floor(g.coinsRun));
     const st = g.stage;
-    const t = st.boss ? (g.boss || g.bossDefeated ? g.time : Math.max(0, st.bossAt - g.time)) : Math.max(0, st.duration - g.time);
+    // Endless counts up; a sector counts down to its end or its boss, then up during the boss fight
+    const t = st.endless || (st.boss && (g.boss || g.bossDefeated)) ? g.time : st.boss ? Math.max(0, st.bossAt - g.time) : Math.max(0, st.duration - g.time);
     set('time', '.hud-timer', fmtTime(t));
     set('boss', '.hud-timer', !!g.boss, (el, v) => el.classList.toggle('boss-mode', v));
     // active combos and perk sets; a perk set lights up while its effect is on
@@ -697,7 +737,7 @@ export class UI {
     this.hideHud();
     this.modal(`
       <div class="lu-title ${r.won ? '' : 'lose'}">${r.won ? (next ? 'SECTOR CLEAR' : 'GALAXY SAVED') : 'SHIP DESTROYED'}</div>
-      ${r.won && !next ? '<p class="muted center">The Void Heart is destroyed. Replay any sector to collect every star.</p>' : ''}
+      ${r.won && !next ? `<p class="muted center">The Void Heart is destroyed. Replay any sector to collect every star.${this.app.endlessOpen() ? ' <b>Endless mode is open in every world.</b>' : ''}</p>` : ''}
       <div class="muted center">${esc(r.stage.id)} · ${esc(r.stage.name)}</div>
       ${r.won ? `<div class="rstars">${stars}</div>` : ''}
       <ul class="goals progress">${goals}</ul>
@@ -723,6 +763,35 @@ export class UI {
       retry: () => { this.closeModal(); this.app.startStage(r.stage.id); },
       next: () => { this.closeModal(); this.app.startStage(next.id); },
       full: () => { this.closeModal(); this.app.endRun(); this.paywall(() => this.map(), true); },
+    }, 'results', 700);
+  }
+
+  endlessResults(r) {
+    const w = r.stage.world;
+    this.hideHud();
+    this.modal(`
+      <div class="lu-title ${r.best ? '' : 'lose'}">${r.best ? 'NEW BEST' : 'SHIP DESTROYED'}</div>
+      <div class="muted center">ENDLESS · ${esc(w.name)}</div>
+      <div class="endless-score" style="--wc:${w.color}"><b>${r.kills}</b><span>KILLS</span></div>
+      <p class="tiny muted center">${r.best ? (r.prev.kills ? `Previous best: ${r.prev.kills}` : 'Your first Endless score.') : `Best: ${r.prev.kills} kills`}</p>
+      <div class="rtable">
+        <div><span>Survived</span><b>${fmtTime(r.time)}</b></div>
+        <div><span>Bosses faced</span><b>${r.bosses}</b></div>
+        <div><span>Level reached</span><b>${r.level}</b></div>
+        <div><span>Coins collected</span><b>${r.collected}</b></div>
+        <div><span>Minute bonus (${r.minutes} min)</span><b>${r.minuteBonus}</b></div>
+        <div class="total"><span>Total</span><b>${COIN}${r.total}</b></div>
+      </div>
+      <div class="modal-actions">
+        <button class="btn" data-act="map">SECTORS</button>
+        ${this.app.leaderboard.available ? '<button class="btn" data-act="board">🏆</button>' : ''}
+        <button class="btn primary" data-act="retry">RETRY</button>
+      </div>
+      ${r.newEntries?.length ? `<div class="codex-new">NEW IN CODEX: ${r.newEntries.map((k) => esc(codexName(k))).join(', ')}</div>` : ''}
+    `, {
+      map: () => { this.closeModal(); this.app.endRun(); this.map(); },
+      board: () => this.app.leaderboard.show(w.id),
+      retry: () => { this.closeModal(); this.app.startEndless(w.id); },
     }, 'results', 700);
   }
 }
