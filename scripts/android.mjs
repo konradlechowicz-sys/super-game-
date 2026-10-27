@@ -15,17 +15,20 @@ const run = (cmd, opts = {}) => execSync(cmd, { stdio: 'inherit', ...opts });
 const sh = (cmd) => execSync(cmd, { encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'] }).trim();
 const bye = (msg) => { console.log(`\n${msg}`); process.exit(1); };
 
-// Android Studio's own Java and SDK, so nothing else has to be installed.
+// Android Studio's own Java and SDK (default install places on the Mac and on Windows), so nothing else has to be installed.
+const WIN = process.platform === 'win32';
 const env = { ...process.env };
-const studioJava = '/Applications/Android Studio.app/Contents/jbr/Contents/Home';
+const studioJava = WIN ? 'C:\\Program Files\\Android\\Android Studio\\jbr' : '/Applications/Android Studio.app/Contents/jbr/Contents/Home';
 if (!env.JAVA_HOME && existsSync(studioJava)) env.JAVA_HOME = studioJava;
-const sdk = env.ANDROID_HOME || env.ANDROID_SDK_ROOT || `${homedir()}/Library/Android/sdk`;
+const defaultSdk = WIN ? `${env.LOCALAPPDATA}\\Android\\Sdk` : `${homedir()}/Library/Android/sdk`;
+const sdk = env.ANDROID_HOME || env.ANDROID_SDK_ROOT || defaultSdk;
 if (!existsSync(sdk)) bye(`Nie widzę Android SDK w ${sdk}. Otwórz raz Android Studio (npm run android:open), żeby je zainstalowało.`);
 env.ANDROID_HOME = sdk;
-if (!existsSync('android/local.properties')) writeFileSync('android/local.properties', `sdk.dir=${sdk}\n`);
-const adb = `"${sdk}/platform-tools/adb"`;
+// local.properties needs forward slashes (or escaped backslashes) on Windows
+if (!existsSync('android/local.properties')) writeFileSync('android/local.properties', `sdk.dir=${sdk.replaceAll('\\', '/')}\n`);
+const adb = `"${sdk}/platform-tools/adb${WIN ? '.exe' : ''}"`;
 
-const devices = sh(`${adb} devices`).split('\n').slice(1).filter((l) => /\tdevice$/.test(l));
+const devices = sh(`${adb} devices`).split(/\r?\n/).slice(1).filter((l) => /\tdevice\s*$/.test(l));
 if (!devices.length) {
   bye('Nie widzę emulatora ani telefonu. Uruchom emulator (Android Studio → Device Manager → ▶)\n' +
     'albo podłącz telefon z włączonym debugowaniem USB, potem spróbuj ponownie.');
@@ -45,6 +48,6 @@ run('npx cap sync android');
 const flavor = test ? 'Vbtest' : 'Game';
 const appId = `com.konradlechowicz.voidblaster${test ? '.test' : ''}`;
 console.log(`\nBuduję i instaluję ${test ? '„VB Test”' : 'Void Blaster'} (pierwszy raz trwa kilka minut)…`);
-run(`./gradlew -q install${flavor}Debug`, { cwd: 'android', env });
+run(`${WIN ? 'gradlew.bat' : './gradlew'} -q install${flavor}Debug`, { cwd: 'android', env });
 run(`${adb} shell monkey -p ${appId} -c android.intent.category.LAUNCHER 1`, { stdio: 'ignore' });
 console.log(`\n▶ ${test ? '„VB Test” (wersja TEST z panelem 🛠)' : 'Void Blaster'} działa na: ${devices[0].split('\t')[0]}`);

@@ -15,6 +15,10 @@ import { buildsBetween, describe, FILE as CHANGELOG, grouped, parse, readAt, sta
 import { clearLocalChanges } from './localchanges.mjs';
 
 const sh = (cmd) => execSync(cmd, { encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'] }).trim();
+if (process.platform !== 'darwin') {
+  console.log('Wydanie do App Store robi się tylko na Macu (Xcode → Archive). Uruchom npm run release na Macu.');
+  process.exit(1);
+}
 const run = (cmd) => execSync(cmd, { stdio: 'inherit' });
 // Answers are queued line by line, so typed-ahead or piped answers are never lost between questions.
 const rl = createInterface({ input: process.stdin });
@@ -46,8 +50,8 @@ run('git fetch -q --prune --tags origin');
 if (!versionAt('origin/main')) bye('W main nie ma jeszcze zaakceptowanej wersji gry. Najpierw: npm run review', 1);
 
 // Earlier releases: tags vX.Y.Z, each annotated with the accepted commit it came from.
-const tags = sh("git tag -l 'v*.*.*'").split('\n').filter(Boolean).sort(cmpVer).reverse();
-const releases = tags.map((t) => ({ tag: t, info: versionAt(t), note: sh(`git tag -l --format='%(contents)' ${t}`) }));
+const tags = sh('git tag -l "v*.*.*"').split('\n').filter(Boolean).sort(cmpVer).reverse();
+const releases = tags.map((t) => ({ tag: t, info: versionAt(t), note: sh(`git tag -l --format="%(contents)" ${t}`) }));
 const releasedFrom = new Map(releases.map((r) => [(r.note.match(/from ([0-9a-f]{40})/) || [])[1], r.tag]));
 
 console.log(releases.length
@@ -56,7 +60,7 @@ console.log(releases.length
 
 // Accepted builds on main, newest first, one entry per build number.
 const seen = new Set();
-const builds = sh("git log --first-parent -n 30 --format='%H|%cr' origin/main").split('\n').filter(Boolean)
+const builds = sh('git log --first-parent -n 30 --format="%H|%cr" origin/main').split('\n').filter(Boolean)
   .map((l) => { const [sha, when] = l.split('|'); return { sha, when, v: versionAt(sha) }; })
   .filter((b) => b.v && !seen.has(b.v.build) && seen.add(b.v.build))
   .slice(0, 8);

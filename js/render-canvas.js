@@ -16,8 +16,9 @@ export function frameCamera(game) {
   return { cx: game.cam.x + shx, cy: game.cam.y + shy };
 }
 
-// overlay: the 2.0 look (js/v2/) has drawn the background, the floor, the ship and every enemy or boss it has art for
-// (marked e.v2) on its own canvas below; this canvas is cleared and draws everything else on top.
+// overlay: the 2.0 look (js/v2/) has drawn the background, the floor, the ship, every enemy or boss it has art for
+// (marked e.v2), shots, enemy bullets, gems, pickups, particles, rings and lightning on its own canvas below; this
+// canvas is cleared and draws everything else on top.
 export function renderGame(game, ctx, overlay = false) {
   const app = game.app;
   const { W, H, dpr, zoom } = app;
@@ -51,18 +52,18 @@ export function renderGame(game, ctx, overlay = false) {
   // mines
   for (const m of game.mines) if (vis(m)) R.img(mineSprite(m.pull ? '#b06bff' : '#ffd23d', m.arm <= 0 && Math.sin(game.time * 12) > 0), m.x, m.y);
   // gems & pickups
-  for (const g of game.gems) {
+  if (!overlay) for (const g of game.gems) {
     if (!vis(g)) continue;
     const col = g.v >= 10 ? '#ff4dd8' : g.v >= 3 ? '#3dff8a' : '#2fd2ff';
     R.img(gemSprite(col), g.x, g.y, g.v >= 10 ? 1.4 : g.v >= 3 ? 1.15 : 1);
   }
-  for (const pk of game.pickups) {
+  if (!overlay) for (const pk of game.pickups) {
     if (!vis(pk)) continue;
     const bob = pk.kind === 'coin' ? 1 : 1 + Math.sin(game.time * 5) * 0.1;
     R.img(pickupSprite(pk.kind), pk.x, pk.y, bob);
   }
   // damaging rings
-  for (const r of game.rings) {
+  if (!overlay) for (const r of game.rings) {
     const a = 1 - Math.max(0, r.t - r.dur) / 0.15;
     ctx.globalAlpha = 0.85 * a;
     ctx.strokeStyle = r.color;
@@ -98,7 +99,7 @@ export function renderGame(game, ctx, overlay = false) {
 
   // player bullets / enemy bullets
   ctx.globalCompositeOperation = 'lighter';
-  for (const pr of game.proj) {
+  if (!overlay) for (const pr of game.proj) {
     if (!vis(pr)) continue;
     let spr;
     switch (pr.look) {
@@ -111,7 +112,7 @@ export function renderGame(game, ctx, overlay = false) {
     R.rot(spr, pr.x, pr.y, pr.a, 1);
   }
   const ebs = orbSprite('#ff2d55', 6), ehs = orbSprite('#ff4dd8', 7);
-  for (const b of game.ebullets) if (vis(b)) R.img(b.homing ? ehs : ebs, b.x, b.y);
+  if (!overlay) for (const b of game.ebullets) if (vis(b)) R.img(b.homing ? ehs : ebs, b.x, b.y);
 
   // weapon visuals (blades, drones)
   for (const w of game.weapons) {
@@ -140,19 +141,19 @@ export function renderGame(game, ctx, overlay = false) {
 
   // particles, explosions, lightning
   ctx.globalCompositeOperation = 'lighter';
-  for (const q of game.particles) {
+  if (!overlay) for (const q of game.particles) {
     if (!vis(q)) continue;
     ctx.globalAlpha = q.life / q.max;
     R.img(glowDot(q.color, 8), q.x, q.y, (q.size / 8) * (0.4 + 0.6 * (q.life / q.max)));
   }
-  for (const f of game.fx) {
+  if (!overlay) for (const f of game.fx) {
     const t = f.t / f.dur;
     ctx.globalAlpha = (1 - t) * 0.9;
     ctx.strokeStyle = f.color;
     ctx.lineWidth = f.width * (1 - t) + 1;
     ctx.beginPath(); ctx.arc(f.x, f.y, f.max * (0.2 + 0.8 * Math.sqrt(t)), 0, TAU); ctx.stroke();
   }
-  for (const b of game.bolts) {
+  if (!overlay) for (const b of game.bolts) {
     const a = b.t / 0.2;
     for (const [lw, col, al] of [[7, b.color, 0.35], [2, '#ffffff', 1]]) {
       ctx.globalAlpha = al * a;

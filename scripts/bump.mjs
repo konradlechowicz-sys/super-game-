@@ -20,7 +20,7 @@ const forcedBuild = bi >= 0 ? +args.splice(bi, 2)[1] : null;
 // release shows e.g. 1.0.1 instead of the version main had before it; npm run release sets the next one.
 function latestReleased() {
   try {
-    const tags = execSync("git tag -l 'v*.*.*'", { encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] })
+    const tags = execSync('git tag -l "v*.*.*"', { encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] })
       .split('\n').map((t) => t.trim().replace(/^v/, '')).filter((v) => /^\d+\.\d+\.\d+$/.test(v));
     return tags.sort(cmpVer).pop() || null;
   } catch {
@@ -38,7 +38,7 @@ if (!/^\d+\.\d+\.\d+$/.test(newVersion)) throw new Error(`Version must look like
 // Build numbers are never reused: also count builds on other branches (e.g. test/... builds that never reach main).
 function highestBuildOnBranches() {
   try {
-    const refs = execSync("git for-each-ref --format='%(refname)' refs/remotes/origin/ refs/heads/", { encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] })
+    const refs = execSync('git for-each-ref --format="%(refname)" refs/remotes/origin/ refs/heads/', { encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] })
       .split('\n').filter((r) => r && !r.endsWith('/HEAD'));
     let max = 0;
     for (const ref of refs) {

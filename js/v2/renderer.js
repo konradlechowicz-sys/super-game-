@@ -1,10 +1,12 @@
 // The 2.0 look on PixiJS (WebGL), stage 1 of the 2.0 plan. It reads the same game state as js/render-canvas.js and
-// draws, on its own canvas under the game's: the background, the world-1 floor, the Striker built from its parts and
-// every enemy or boss that already has 2.0 art. What it draws is marked (e.v2), so the 1.x renderer, drawing on its
-// transparent canvas on top, skips it and adds the rest (shots, effects, bars, numbers). Loaded only by the TEST
+// draws, on its own canvas under the game's: the background, the world-1 floor, the Striker built from its parts,
+// every enemy or boss that already has 2.0 art (marked e.v2), and the GPU-heavy crowd: shots, enemy bullets, gems,
+// pickups, particles, blast rings and lightning, each with a soft glow. The 1.x renderer (js/render-canvas.js), drawing
+// on its transparent canvas on top, skips all of that and adds the rest (weapons, mines, bars, numbers). Loaded only by the TEST
 // variant (js/testkit.js), so normal and App Store builds contain no PixiJS. Textures: scripts/v2-assets.mjs.
 import { Application, Container, Sprite, Texture, TilingSprite, Graphics } from 'pixi.js';
 import { BOSSES } from '../data.js';
+import { boltSprite, missileSprite, orbSprite, gemSprite, glowDot, pickupSprite } from '../sprites.js';
 import ASSETS from './assets.gen.js';
 
 const TAU = Math.PI * 2;
@@ -33,14 +35,30 @@ export async function createV2Renderer(app) {
     tex[name] = Texture.from(img);
   }));
 
+  const halo = softDot();
+  // the 1.x neon sprites (pre-rendered canvases, js/sprites.js) as GPU textures, made once per canvas
+  const canvasTex = new WeakMap();
+  const texOf = (spr) => {
+    let t = canvasTex.get(spr.canvas);
+    if (!t) { t = Texture.from(spr.canvas); canvasTex.set(spr.canvas, t); }
+    return t;
+  };
+
+  const add = (c) => { c.blendMode = 'add'; return c; };
   const world = new Container();
   px.stage.addChild(world);
   const floor = new TilingSprite({ texture: tex.floor, width: 10, height: 10 });
   floor.tileScale.set(FLOOR_SCALE);
   const border = new Graphics();
-  const glowLayer = new Container(); glowLayer.blendMode = 'add';
+  const lootLayer = add(new Container()), ringG = add(new Graphics());
+  const glowLayer = add(new Container());
   const enemyLayer = new Container(), bossLayer = new Container(), shipLayer = new Container();
-  world.addChild(floor, border, glowLayer, enemyLayer, bossLayer, shipLayer);
+  const shotLayer = add(new Container()), fxLayer = add(new Container()), fxG = add(new Graphics());
+  world.addChild(floor, border, lootLayer, ringG, glowLayer, enemyLayer, bossLayer, shotLayer, shipLayer, fxLayer, fxG);
+  // reusable sprites: each frame takes as many as it needs and hides the rest (no per-object create/destroy)
+  const lootHalo = pool(lootLayer), loot = pool(lootLayer);
+  const shotHalo = pool(shotLayer), shots = pool(shotLayer);
+  const sparks = pool(fxLayer);
   const ship = makeShip(tex, ASSETS.ship, SHIP_H);
   shipLayer.addChild(ship.body);
 
@@ -144,6 +162,8 @@ export async function createV2Renderer(app) {
       drawn.delete(obj);
     }
 
+    drawCrowd(game);
+
     // the ship
     const p = game.player;
     const alive = game.state !== 'dying' && game.state !== 'over';
@@ -161,6 +181,92 @@ export async function createV2Renderer(app) {
       ship.animate(game.time, 0.6 + Math.min(1, p.moving / 300) * 0.8, ship.bank);
     }
     px.render();
+  }
+
+  // everything that comes in hundreds: drawn from pooled sprites, culled to the view
+  function drawCrowd(game) {
+    const { vw, vh } = game.viewSize();
+    const { cx, cy } = game.frameCam;
+    const x0 = cx - vw / 2 - 60, x1 = cx + vw / 2 + 60, y0 = cy - vh / 2 - 60, y1 = cy + vh / 2 + 60;
+    const vis = (o) => o.x > x0 && o.x < x1 && o.y > y0 && o.y < y1;
+    const put = (s, spr, x, y, rot = 0, sc = 1) => {
+      const t = texOf(spr);
+      if (s.texture !== t) s.texture = t;
+      s.position.set(x, y); s.rotation = rot; s.alpha = 1;
+      s.scale.set((spr.half * 2 * sc) / t.width);
+      return s;
+    };
+    const glow = (pl, x, y, color, size, alpha) => {
+      const s = pl.next();
+      if (s.texture !== halo) s.texture = halo;
+      s.position.set(x, y); s.rotation = 0; s.tint = color; s.alpha = alpha;
+      s.scale.set(size / halo.width);
+    };
+    for (const pl of [lootHalo, loot, shotHalo, shots, sparks]) pl.begin();
+    const t = game.time;
+
+    // gems and pickups, with a slow glowing pulse
+    for (const g of game.gems) {
+      if (!vis(g)) continue;
+      const col = g.v >= 10 ? '#ff4dd8' : g.v >= 3 ? '#3dff8a' : '#2fd2ff';
+      const sc = g.v >= 10 ? 1.4 : g.v >= 3 ? 1.15 : 1;
+      glow(lootHalo, g.x, g.y, col, 34 * sc, 0.28 + 0.1 * Math.sin(t * 5 + g.x * 0.05));
+      put(loot.next(), gemSprite(col), g.x, g.y, 0, sc);
+    }
+    for (const pk of game.pickups) {
+      if (!vis(pk)) continue;
+      const bob = pk.kind === 'coin' ? 1 : 1 + Math.sin(t * 5) * 0.1;
+      put(loot.next(), pickupSprite(pk.kind), pk.x, pk.y, 0, bob);
+    }
+
+    // damaging rings (shockwaves of weapons) under the enemies
+    ringG.clear();
+    for (const r of game.rings) {
+      const a = 1 - Math.max(0, r.t - r.dur) / 0.15;
+      ringG.circle(r.x, r.y, Math.max(1, r.r)).fill({ color: r.color, alpha: 0.15 * a }).stroke({ width: 5, color: r.color, alpha: 0.85 * a });
+    }
+
+    // player shots and enemy bullets, each with a halo in its colour
+    for (const pr of game.proj) {
+      if (!vis(pr)) continue;
+      let spr, size = 26;
+      switch (pr.look) {
+        case 'bolt': spr = boltSprite(pr.color, 12, 3); break;
+        case 'photon': spr = boltSprite(pr.color, 22, 4); size = 40; break;
+        case 'pellet': spr = orbSprite(pr.color, 4); size = 20; break;
+        case 'missile': spr = missileSprite(pr.color); size = 34; break;
+        default: spr = boltSprite(pr.color, 8, 2.5); size = 20;
+      }
+      glow(shotHalo, pr.x, pr.y, pr.color, size, 0.35);
+      put(shots.next(), spr, pr.x, pr.y, pr.a);
+    }
+    const ebs = orbSprite('#ff2d55', 6), ehs = orbSprite('#ff4dd8', 7);
+    for (const b of game.ebullets) {
+      if (!vis(b)) continue;
+      glow(shotHalo, b.x, b.y, b.homing ? '#ff4dd8' : '#ff2d55', 34, 0.4);
+      put(shots.next(), b.homing ? ehs : ebs, b.x, b.y);
+    }
+
+    // particles, blast rings and lightning above everything
+    for (const q of game.particles) {
+      if (!vis(q)) continue;
+      const l = q.life / q.max;
+      put(sparks.next(), glowDot(q.color, 8), q.x, q.y, 0, (q.size / 8) * (0.4 + 0.6 * l)).alpha = l;
+    }
+    fxG.clear();
+    for (const f of game.fx) {
+      const k = f.t / f.dur;
+      fxG.circle(f.x, f.y, f.max * (0.2 + 0.8 * Math.sqrt(k))).stroke({ width: f.width * (1 - k) + 1, color: f.color, alpha: (1 - k) * 0.9 });
+    }
+    for (const b of game.bolts) {
+      const a = b.t / 0.2;
+      for (const [w, col, al] of [[7, b.color, 0.35], [2, '#ffffff', 1]]) {
+        fxG.moveTo(b.pts[0], b.pts[1]);
+        for (let i = 2; i < b.pts.length; i += 2) fxG.lineTo(b.pts[i], b.pts[i + 1]);
+        fxG.stroke({ width: w, color: col, alpha: al * a, join: 'round', cap: 'round' });
+      }
+    }
+    for (const pl of [lootHalo, loot, shotHalo, shots, sparks]) pl.end();
   }
 
   return {
@@ -211,4 +317,35 @@ function makeShip(tex, SHIP, height) {
       });
     },
   };
+}
+
+// A pool of sprites in one layer: begin() each frame, next() for every object drawn, end() hides the unused rest.
+function pool(layer) {
+  const list = [];
+  let n = 0;
+  return {
+    begin() { n = 0; },
+    next() {
+      let s = list[n];
+      if (!s) { s = new Sprite(); s.anchor.set(0.5); layer.addChild(s); list.push(s); }
+      s.visible = true;
+      n++;
+      return s;
+    },
+    end() { for (let i = n; i < list.length; i++) list[i].visible = false; },
+  };
+}
+
+// A soft white round glow, tinted per use (halos of shots and gems).
+function softDot() {
+  const c = document.createElement('canvas');
+  c.width = c.height = 64;
+  const g = c.getContext('2d');
+  const gr = g.createRadialGradient(32, 32, 0, 32, 32, 32);
+  gr.addColorStop(0, 'rgba(255,255,255,1)');
+  gr.addColorStop(0.35, 'rgba(255,255,255,0.55)');
+  gr.addColorStop(1, 'rgba(255,255,255,0)');
+  g.fillStyle = gr;
+  g.fillRect(0, 0, 64, 64);
+  return Texture.from(c);
 }

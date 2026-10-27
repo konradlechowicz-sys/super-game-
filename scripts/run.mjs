@@ -1,7 +1,8 @@
-// npm start — one launcher for every way of testing the game on the Mac. With no arguments it asks two questions:
-//   where:   [p] browser   [s] iOS Simulator   [i] the connected iPhone
+// npm start — one launcher for every way of testing the game, on the Mac and on Windows. With no arguments it asks:
+//   where:   [p] browser   [s] iOS Simulator   [i] the connected iPhone   [a] Android (emulator or phone)
+//            (the simulator and the iPhone need Xcode, so only the Mac offers them)
 //   variant: [Enter] normal game   [t] TEST (tester's panel 🛠, a separate app "VB Test" with its own save)
-// Shortcuts skip the questions: npm run web | web:test | sim | sim:test | phone | phone:test.
+// Shortcuts skip the questions: npm run web | web:test | sim | sim:test | phone | phone:test (android: android:play|test).
 // It always launches the code that is checked out right now and says first which build and branch that is
 // (main = accepted, claude/... = a candidate). New candidates from the cloud: npm run review (it uses this script).
 // After a TEST launch the Xcode project gets the normal game back, so Xcode's ▶ and Archive always mean the normal game.
@@ -9,6 +10,7 @@
 // --yes (skip the question before replacing the App Store game on the phone; npm run review asks it itself).
 import { execSync } from 'node:child_process';
 import { existsSync, readFileSync, writeFileSync } from 'node:fs';
+import { resolve } from 'node:path';
 import { createInterface } from 'node:readline/promises';
 import { pathToFileURL } from 'node:url';
 import { runInSimulator, TEST_APP, testOverrides } from './sim.mjs';
@@ -17,11 +19,20 @@ const sh = (cmd) => execSync(cmd, { encoding: 'utf8', stdio: ['ignore', 'pipe', 
 const run = (cmd) => execSync(cmd, { stdio: 'inherit' });
 const tryTo = (fn, fallback = '') => { try { return fn(); } catch { return fallback; } };
 
+export const MAC = process.platform === 'darwin';
 export const PLACES = {
-  web: 'przeglądarka na Macu',
+  web: 'przeglądarka',
   sim: 'symulator iOS',
   phone: 'Twój iPhone',
+  android: 'Android (emulator albo telefon)',
 };
+
+// Opens a file with the system's default app (the browser for .html).
+function openFile(file) {
+  const full = resolve(file);
+  if (process.platform === 'win32') run(`start "" "${full}"`);
+  else run(`${MAC ? 'open' : 'xdg-open'} "${full}"`);
+}
 
 // Which code is checked out, in words: build number and whether it is the accepted version or a candidate.
 export function describeCheckout() {
@@ -94,7 +105,7 @@ async function runOnPhone(test) {
 function runInBrowser(test) {
   run('node scripts/build-web.mjs');
   const file = `dist/void-blaster${test ? '-test' : ''}.html`;
-  run(`open "${file}"`);
+  openFile(file);
   console.log(`\n▶ Otworzyłem ${file} w przeglądarce (cała gra w jednym pliku, ta sama co podgląd w Claude).`);
 }
 
@@ -115,6 +126,8 @@ function question(q) {
 export async function launch(place, test, { keep = false, yes = false } = {}) {
   banner(place, test);
   if (place === 'web') return runInBrowser(test);
+  if (place === 'android') return run(`node scripts/android.mjs ${test ? 'test' : 'play'}`);
+  if (!MAC) throw new Error('Symulator iOS i iPhone działają tylko na Macu (potrzebny Xcode). Tutaj: przeglądarka albo Android.');
   if (place === 'phone' && !test && !yes) {
     console.log('Uwaga: zwykła wersja na telefonie zastąpi grę z App Store (ten sam identyfikator aplikacji; zapis zostaje).\n' +
       'Wrócisz do wersji ze sklepu, instalując ją ponownie z App Store. Do testów zwykle lepsza jest wersja TEST.');
@@ -142,9 +155,11 @@ export async function launch(place, test, { keep = false, yes = false } = {}) {
 async function menu() {
   const { build, what } = describeCheckout();
   console.log(`\nVoid Blaster · ${build}\nKod: ${what}\n`);
-  const where = (await question('Gdzie uruchomić?  [p] przeglądarka  [s] symulator iOS  [i] iPhone: ')).trim().toLowerCase();
-  const place = { p: 'web', s: 'sim', i: 'phone' }[where[0]];
-  if (!place) throw new Error('Wybierz p, s albo i.');
+  const where = (await question(MAC
+    ? 'Gdzie uruchomić?  [p] przeglądarka  [s] symulator iOS  [i] iPhone  [a] Android: '
+    : 'Gdzie uruchomić?  [p] przeglądarka  [a] Android (emulator albo telefon): ')).trim().toLowerCase();
+  const place = (MAC ? { p: 'web', s: 'sim', i: 'phone', a: 'android' } : { p: 'web', a: 'android' })[where[0]];
+  if (!place) throw new Error(MAC ? 'Wybierz p, s, i albo a.' : 'Wybierz p albo a.');
   const variant = (await question('Która wersja?    [Enter] zwykła gra  [t] TEST (panel testera 🛠): ')).trim().toLowerCase();
   return { place, test: variant.startsWith('t') };
 }
