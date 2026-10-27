@@ -16,6 +16,9 @@ i wersja TEST (gracze tego nie widzą).
 
 - 
 
+## Build 87 · 2026-10-27
+- [Nowe] 2.0, świat 1: tło dalekie z ChatGPT (W1 P2) – Ziemia nocą w lewym dolnym rogu, z niebieską poświatą atmosfery i światłami miast, przesuwa się wolniej niż arena (głębia). Zastępuje wycinek Ziemi ze zwiastuna.
+
 ## Build 86 · 2026-10-27
 - [Nowe] 2.0, świat 1: krawędź areny z ChatGPT (W1 P6) – pierścień wraków stacji, paneli słonecznych i satelitów z bursztynową heksagonalną tarczą od strony areny, która powoli pulsuje. Zastępuje przerywaną linię.
 

@@ -59,3 +59,18 @@ for name in ('top', 'bottom', 'left', 'right'):
 for name in ('top-left', 'top-right', 'bottom-left', 'bottom-right'):
     key(Image.open(f'{SRC}/border/W1-P6-corner-{name}-256.png')).save(f'{OUT}/w1-edge-{name}.webp', 'WEBP', quality=92, method=6)
 print('w1-edge: 4 strips, 4 corners')
+
+# P2: the far background, night-side Earth from high orbit. The stars are left out (the game draws its own, with
+# parallax): the Earth's circle is found from its blue rim and everything outside it, past a soft edge that keeps
+# the rim's glow, becomes transparent. Stored at 1280 px.
+src = Image.open(f'{SRC}/earth-far.webp').convert('RGB')
+a = np.asarray(src).astype(np.float32)
+ys, xs = np.nonzero((a[..., 2] > 140) & (a[..., 2] > a[..., 0] + 50))
+A = np.c_[2 * xs, 2 * ys, np.ones(len(xs))]
+ecx, ecy, c = np.linalg.lstsq(A, xs ** 2 + ys ** 2, rcond=None)[0]
+er = np.sqrt(c + ecx ** 2 + ecy ** 2)
+yy, xx = np.mgrid[0:a.shape[0], 0:a.shape[1]]
+alpha = np.clip(1 - (np.hypot(xx - ecx, yy - ecy) - er) / 40, 0, 1)
+earth = Image.fromarray(np.dstack([a, alpha * 255]).astype(np.uint8), 'RGBA').resize((1280, 1280), Image.LANCZOS)
+earth.save(f'{OUT}/w1-earth.webp', 'WEBP', quality=90, method=6)
+print('w1-earth', earth.size, 'circle', round(ecx), round(ecy), round(er))
