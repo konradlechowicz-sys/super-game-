@@ -14,7 +14,6 @@ for (const test of [false, true]) {
   const define = { __PREVIEW__: 'true', __TEST__: String(test) };
   const js = (await build({ entryPoints: ['js/main.js'], bundle: true, format: 'iife', minify: true, write: false, define })).outputFiles[0].text;
   if (!test && js.includes('VB-TESTKIT')) throw new Error('The normal preview contains the TEST panel. Stopping.');
-  if (!test && js.includes('VB-V2LOOK')) throw new Error('The normal preview contains the 2.0 look (PixiJS). Stopping.');
   const html = `<title>${test ? 'Void Blaster TEST' : 'Void Blaster'}</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">

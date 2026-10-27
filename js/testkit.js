@@ -11,24 +11,15 @@ export function installTestKit(app) {
   const BOSS_STAGES = ALL_STAGES.filter((s) => s.boss);
   const titleCase = (s) => s.toLowerCase().replace(/\b\w/g, (c) => c.toUpperCase());
   const ui = app.ui;
-  let opts = { god: false, unlockAll: true, fps: false, v2: false, levels: 12 };
+  let opts = { god: false, unlockAll: true, fps: false, oldLook: false, levels: 12 };
   try { opts = { ...opts, ...JSON.parse(localStorage.getItem(KEY) || '{}') }; } catch { /* defaults */ }
   const keep = () => { try { localStorage.setItem(KEY, JSON.stringify(opts)); } catch { /* not saved */ } };
-  // the 2.0 look (js/v2/, PixiJS) is loaded the first time it is switched on; only this panel loads it
-  let v2Loading = false;
-  const loadV2 = () => {
-    if (app.v2r || v2Loading) return;
-    v2Loading = true;
-    import('./v2/renderer.js').then((m) => m.createV2Renderer(app)).then((r) => { app.v2r = r; })
-      .catch((e) => { opts.v2 = false; app.v2 = false; keep(); ui.toast?.(`2.0 look failed to load: ${e.message}`); console.error(e); })
-      .finally(() => { v2Loading = false; });
-  };
   const apply = () => {
     app.god = opts.god;
     app.testUnlockAll = opts.unlockAll;
     fpsEl.hidden = !opts.fps;
-    app.v2 = opts.v2;
-    if (opts.v2) loadV2();
+    // the 2.0 line loads its look itself (js/main.js); this only switches back to the 1.x look to compare
+    app.oldLook = opts.oldLook;
   };
 
   document.body.classList.add('test-build');
@@ -67,7 +58,7 @@ export function installTestKit(app) {
       <div class="modal-kicker tk-kicker" data-kit="${MARKER}">TEST PANEL</div>
       <h2>TESTER</h2>
       ${tog('god', 'God mode (no damage)')}
-      ${tog('v2', '2.0 look (PixiJS, world 1 art)')}
+      ${tog('oldLook', '1.x look (compare with 2.0)')}
       ${tog('unlockAll', 'All sectors unlocked')}
       <button class="toggle ${app.store.isFull() ? 'on' : ''}" data-act="tkfull"><span>Full game (simulated)</span><i></i></button>
       ${tog('fps', 'FPS counter')}
@@ -113,7 +104,7 @@ export function installTestKit(app) {
       <div class="modal-kicker tk-kicker">TEST PANEL · ${st.id} · ${Math.floor(g.time)} s</div>
       <h2>TESTER</h2>
       ${tog('god', 'God mode (no damage)')}
-      ${tog('v2', '2.0 look (PixiJS, world 1 art)')}
+      ${tog('oldLook', '1.x look (compare with 2.0)')}
       ${tog('fps', 'FPS counter')}
       <div class="tk-head">Game speed</div>
       <div class="tk-row">${[1, 2, 4].map((n) => `<button class="btn small ${n === app.timeScale ? 'primary' : ''}" data-act="speed" data-n="${n}">×${n}</button>`).join('')}</div>

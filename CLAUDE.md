@@ -126,6 +126,7 @@ Konrad decides what becomes the real game: **never push to `main`**. `main` hold
 
 ## Checks before pushing
 - `node --check js/*.js`, then load the game with Playwright (`index.html?dev&god`) and confirm no page errors.
+  On the `v2` line the unbundled dev page cannot load PixiJS and shows the 1.x look; check the 2.0 look in `dist/`.
 - Also load `dist/void-blaster-test.html` and open the 🛠 panel; confirm the normal page has no 🛠 button.
 - Dev URL flags: `?test` turns on the TEST variant on the unbundled page, `?dev` unlocks all sectors of the purchased content, `&full` grants the full game (simulated purchase),
   `&fast=1`, `&ts=4`, `&god`, `&coins=1000`. Without `&full`, worlds 2-4 show the paywall.
