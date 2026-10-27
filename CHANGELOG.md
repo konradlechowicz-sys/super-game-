@@ -16,6 +16,9 @@ i wersja TEST (gracze tego nie widzą).
 
 - 
 
+## Build 86 · 2026-10-27
+- [Nowe] 2.0, świat 1: krawędź areny z ChatGPT (W1 P6) – pierścień wraków stacji, paneli słonecznych i satelitów z bursztynową heksagonalną tarczą od strony areny, która powoli pulsuje. Zastępuje przerywaną linię.
+
 ## Build 85 · 2026-10-27
 - [Nowe] 2.0, świat 1: rekwizyty z ChatGPT (W1 P5) – złamane maszty i skrzydła paneli słonecznych, wraki ludzkich wieżyczek na pokładach, martwe satelity, kapsuły ratunkowe i iskrzące wiązki kabli dryfują po arenie.
 - [Nowe] 2.0, świat 1: zbiorniki paliwa z bursztynowym słabym punktem – zestrzelony wybucha (promień 150) i rani wrogów wokół, ale też statek, jeśli jest za blisko; zbiorniki odpalają się nawzajem. Skrzynie z amunicją rozpadają się na 3–5 monet, czasem z apteczką albo magnesem. Zniszczone zostają jako wraki, co 30 s pojawia się nowy (do 9 naraz). Bronie trafiają je jak wrogów, ale ich nie celują.

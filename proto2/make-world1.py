@@ -49,3 +49,13 @@ for name, box in BOXES.items():
     part = part.resize((round(part.width * k), round(part.height * k)), Image.LANCZOS)
     part.save(f'{OUT}/w1-prop-{name}.webp', 'WEBP', quality=90, method=6)
     print(f'w1-prop-{name}', part.size)
+
+# P6: the arena edge, a ring of station wreckage with amber hexagonal shield fragments on the arena side. ChatGPT
+# delivered the pieces ready (art/2.0/worlds/world1/border, see its README): 4 strips that repeat lengthwise
+# (1024 x 160) and 4 corners (256); only the background becomes transparent.
+for name in ('top', 'bottom', 'left', 'right'):
+    size = '1024x160' if name in ('top', 'bottom') else '160x1024'
+    key(Image.open(f'{SRC}/border/W1-P6-border-{name}-{size}.png')).save(f'{OUT}/w1-edge-{name}.webp', 'WEBP', quality=92, method=6)
+for name in ('top-left', 'top-right', 'bottom-left', 'bottom-right'):
+    key(Image.open(f'{SRC}/border/W1-P6-corner-{name}-256.png')).save(f'{OUT}/w1-edge-{name}.webp', 'WEBP', quality=92, method=6)
+print('w1-edge: 4 strips, 4 corners')

@@ -3,12 +3,15 @@
 // (parallax). At the arena level: a sparse field of small wreckage, a few broken deck fragments of the defense
 // stations (the old floor tile, cut to jagged islands), dead satellites that drift and keep being "rewritten" by the
 // Collective, and a broken amber energy barrier along the arena edge. ChatGPT's world-1 art replaces the stand-ins as
-// it arrives (so far the debris tile W1 P3a, the deck fragments W1 P3b and the props W1 P5); the rest is built from the teaser Earth and satellites, the station
+// it arrives (so far the debris tile W1 P3a, the deck fragments W1 P3b, the props W1 P5 and the arena edge W1 P6); the rest is built from the teaser Earth and satellites, the station
 // floor tile and shapes drawn in code.
 import { Container, Graphics, Rectangle, Sprite, Texture, TilingSprite } from 'pixi.js';
 
 const TAU = Math.PI * 2;
 const SAT_CYCLE = 12; // seconds between two rewrites of one satellite
+// the arena edge of W1 P6: world units per pixel of its pieces, and how deep into a 160 px strip (from its outer side)
+// the arena's edge runs, so the amber shield sits on the edge and the wreckage lies outside
+const EDGE_SCALE = 1.2, EDGE_IN = 135;
 
 // a small seeded random, so every stage keeps the same layout
 function rng(seed) {
@@ -81,7 +84,10 @@ export function makeOrbitalRuins(tex) {
   const decor = new Container();
   const sats = new Container();
   const barrier = new Graphics();
-  arena.addChild(debris, islands, decor, sats, barrier);
+  // ChatGPT's arena edge (W1 P6), and an amber copy of it added as light, breathing like a live shield
+  const edge = new Container(), edgeGlow = new Container();
+  edgeGlow.blendMode = 'add';
+  arena.addChild(debris, islands, decor, sats, barrier, edge, edgeGlow);
   let satList = [], floaters = [];
 
   function island(r, size) {
@@ -171,11 +177,34 @@ export function makeOrbitalRuins(tex) {
       sats.addChild(c);
       satList.push({ c, a, b, x, y, spin: (r() - 0.5) * 0.2, drift: r() * TAU, off: r() * SAT_CYCLE });
     }
-    // the broken amber barrier of the defense grid along the arena edge
+    // the arena edge: 4 strips repeating along the sides and 4 corners (W1 P6), else a broken amber line
+    for (const c of [edge, edgeGlow]) c.removeChildren().forEach((s) => s.destroy());
     barrier.clear();
+    if (tex['w1-edge-top']) {
+      const s = EDGE_SCALE, o = EDGE_IN * s, t = 160 * s, k = 256 * s;
+      const L = -w / 2 - o, T = -h / 2 - o, R = w / 2 + o, B = h / 2 + o; // outer bounds of the ring
+      const pieces = [
+        ['top', L + k, T, R - L - 2 * k, t], ['bottom', L + k, B - t, R - L - 2 * k, t],
+        ['left', L, T + k, t, B - T - 2 * k], ['right', R - t, T + k, t, B - T - 2 * k],
+      ];
+      for (const c of [edge, edgeGlow]) {
+        for (const [name, x, y, pw, ph] of pieces) {
+          const strip = new TilingSprite({ texture: tex[`w1-edge-${name}`], width: pw / s, height: ph / s });
+          strip.scale.set(s); strip.position.set(x, y);
+          c.addChild(strip);
+        }
+        for (const [name, x, y] of [['top-left', L, T], ['top-right', R - k, T], ['bottom-left', L, B - k], ['bottom-right', R - k, B - k]]) {
+          const corner = new Sprite(tex[`w1-edge-${name}`]);
+          corner.scale.set(s); corner.position.set(x, y);
+          c.addChild(corner);
+        }
+      }
+      edgeGlow.children.forEach((c) => { c.tint = 0xffb02e; });
+      return;
+    }
     barrier.rect(-w / 2, -h / 2, w, h).stroke({ width: 48, color: 0x0b0920, alpha: 0.55 });
     const dash = 26, gap = 18;
-    const edge = (x0, y0, x1, y1) => {
+    const side = (x0, y0, x1, y1) => {
       const len = Math.hypot(x1 - x0, y1 - y0), ux = (x1 - x0) / len, uy = (y1 - y0) / len;
       for (let s = 0; s < len; s += dash + gap) {
         if (r() < 0.12) continue; // broken segments
@@ -183,8 +212,8 @@ export function makeOrbitalRuins(tex) {
         barrier.moveTo(x0 + ux * s, y0 + uy * s).lineTo(x0 + ux * e, y0 + uy * e);
       }
     };
-    edge(-w / 2, -h / 2, w / 2, -h / 2); edge(w / 2, -h / 2, w / 2, h / 2);
-    edge(w / 2, h / 2, -w / 2, h / 2); edge(-w / 2, h / 2, -w / 2, -h / 2);
+    side(-w / 2, -h / 2, w / 2, -h / 2); side(w / 2, -h / 2, w / 2, h / 2);
+    side(w / 2, h / 2, -w / 2, h / 2); side(-w / 2, h / 2, -w / 2, -h / 2);
     barrier.stroke({ width: 3, color: 0xffb02e, alpha: 0.85 });
   }
 
@@ -210,6 +239,7 @@ export function makeOrbitalRuins(tex) {
       s.b.alpha = k; s.a.alpha = 1 - k;
     }
     barrier.alpha = 0.7 + 0.2 * Math.sin(time * 2.1);
+    edgeGlow.alpha = 0.12 + 0.12 * Math.sin(time * 2.1);
   }
 
   return { far, arena, setArena, update };
