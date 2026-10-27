@@ -6,7 +6,7 @@ import { readdirSync, readFileSync, writeFileSync } from 'node:fs';
 
 const images = {};
 const add = (dir, file) => { images[file.replace('.webp', '')] = `data:image/webp;base64,${readFileSync(`${dir}/${file}`).toString('base64')}`; };
-for (const f of readdirSync('proto2/assets')) if (/^(ship|enemy|glow)-.*\.webp$/.test(f)) add('proto2/assets', f);
+for (const f of readdirSync('proto2/assets')) if (/^(ship|enemy|glow|w1)-.*\.webp$/.test(f)) add('proto2/assets', f);
 for (const f of ['floor.webp', 'harvester.webp', 'h-flame.webp']) add('teaser/assets', f);
 // the title screen (js/v2/title.js): the teaser's Earth at night, the Collective's web and the satellites
 for (const f of ['earth.webp', 'web.webp', 'emblem.webp']) add('teaser/assets', f);

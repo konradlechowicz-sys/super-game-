@@ -47,6 +47,16 @@ export function renderGame(game, ctx, overlay = false) {
   const vis = (o, m = 0) => o.x > x0 - m && o.x < x1 + m && o.y > y0 - m && o.y < y1 + m;
 
   if (!overlay) drawArena(game, ctx, x0, x1, y0, y1);
+  // 2.0 world-1 props (js/props.js) as plain shapes; the 2.0 look draws them with their art
+  if (!overlay) for (const o of game.props) {
+    if (!vis(o, 40)) continue;
+    ctx.globalAlpha = o.dead ? 0.35 : 1;
+    ctx.fillStyle = o.flash > 0 ? '#ffffff' : '#3a4152';
+    ctx.strokeStyle = o.prop === 'tank' ? '#ffb02e' : '#8a94aa';
+    ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.rect(o.x - o.r * 1.4, o.y - o.r * 0.8, o.r * 2.8, o.r * 1.6); ctx.fill(); ctx.stroke();
+    ctx.globalAlpha = 1;
+  }
 
   ctx.globalCompositeOperation = 'lighter';
   // mines

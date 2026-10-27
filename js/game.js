@@ -5,6 +5,8 @@ import { COMBOS, COMBO_LEVEL, comboActive, combosFor } from './combos.js';
 import { shipLook } from './store.js';
 import { Tutorial, tipsOn, tipSeen, markTip } from './tutorial.js';
 import { renderGame } from './render-canvas.js';
+import { EDITION } from './edition.js';
+import { initProps, updateProps, breakProp } from './props.js';
 
 const MAX_WEAPONS = 4;
 const MAX_PASSIVES = 4;
@@ -56,6 +58,9 @@ export class Game {
     this.recompute();
     this.player.hp = this.player.maxHp;
     this.addWeapon(this.ship.weapon);
+    // 2.0, world 1: fuel tanks and ammo crates to shoot (js/props.js)
+    this.props = [];
+    if (EDITION === 2 && stage.world?.id === 1) initProps(this);
     this.tut = new Tutorial(this);
     if (stage.endless) this.ui.banner('ENDLESS', stage.world.name.toUpperCase());
     else this.ui.banner(`STAGE ${stage.id}`, stage.name.toUpperCase());
@@ -295,6 +300,7 @@ export class Game {
   }
 
   kill(e) {
+    if (e.prop) { breakProp(this, e); return; }
     e.dead = true;
     this.kills++;
     if (e.stageElite) this.elitesKilled++;
@@ -945,6 +951,7 @@ export class Game {
 
     this.hash.clear();
     for (const e of this.enemies) if (!e.dead) this.hash.insert(e);
+    for (const o of this.props) if (!o.dead) this.hash.insert(o);
 
     if (this.state === 'play') {
       // announce new combos one at a time once the cards are closed
@@ -957,6 +964,7 @@ export class Game {
       this.updatePerkSets(dt);
       for (const w of this.weapons) WEAPONS[w.id].update(w, this, dt, weaponStats(w));
       this.directSpawns(dt);
+      if (this.props.length) updateProps(this, dt);
     }
 
     this.updateEnemies(dt);
@@ -1249,7 +1257,7 @@ export class Game {
       e.wardT = 5;
       const near = this.tmp4 || (this.tmp4 = []);
       this.hash.query(e.x, e.y, 180, near);
-      for (const o of near) if (o !== e && !o.boss && !o.seg && !o.dead && !(o.shield > 0)) { o.shield = o.maxHp * 0.3; o.warded = true; }
+      for (const o of near) if (o !== e && !o.boss && !o.seg && !o.prop && !o.dead && !(o.shield > 0)) { o.shield = o.maxHp * 0.3; o.warded = true; }
       this.addFx(e.x, e.y, 180, TRAITS.shielded.color, 0.35, 3);
     }
     if (t.has('shielded') && e.maxShield && this.time - e.lastHit > 4) e.shield = Math.min(e.maxShield, e.shield + e.maxShield * 0.1 * dt);
@@ -1258,7 +1266,7 @@ export class Game {
       const near = this.tmp3 || (this.tmp3 = []);
       this.hash.query(e.x, e.y, 220, near);
       e.led = 0;
-      for (const o of near) if (o !== e && !o.boss && !o.seg && !o.elite && (o.x - e.x) ** 2 + (o.y - e.y) ** 2 < 220 * 220) { o.buffT = 0.25; e.led++; }
+      for (const o of near) if (o !== e && !o.boss && !o.seg && !o.prop && !o.elite && (o.x - e.x) ** 2 + (o.y - e.y) ** 2 < 220 * 220) { o.buffT = 0.25; e.led++; }
     }
     if (t.has('bulwark') && d < e.r + 160) this.slowNext = Math.min(this.slowNext ?? 1, 0.5);
     // a commander stays in sight: a ranged one does not back off past 190 px like a plain shooter

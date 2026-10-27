@@ -2,12 +2,16 @@
 // high orbit, no floor. Far below: black space with stars in two depths and the dark crescent of night-side Earth
 // (parallax). At the arena level: a sparse field of small wreckage, a few broken deck fragments of the defense
 // stations (the old floor tile, cut to jagged islands), dead satellites that drift and keep being "rewritten" by the
-// Collective, and a broken amber energy barrier along the arena edge. Until the ChatGPT art for world 1 arrives this
-// is built from what exists (teaser Earth and satellites, the station floor tile) plus shapes drawn in code.
+// Collective, and a broken amber energy barrier along the arena edge. ChatGPT's world-1 art replaces the stand-ins as
+// it arrives (so far the debris tile W1 P3a, the deck fragments W1 P3b, the props W1 P5 and the arena edge W1 P6); the rest is built from the teaser Earth and satellites, the station
+// floor tile and shapes drawn in code.
 import { Container, Graphics, Rectangle, Sprite, Texture, TilingSprite } from 'pixi.js';
 
 const TAU = Math.PI * 2;
 const SAT_CYCLE = 12; // seconds between two rewrites of one satellite
+// the arena edge of W1 P6: world units per pixel of its pieces, and how deep into a 160 px strip (from its outer side)
+// the arena's edge runs, so the amber shield sits on the edge and the wreckage lies outside
+const EDGE_SCALE = 1.2, EDGE_IN = 135;
 
 // a small seeded random, so every stage keeps the same layout
 function rng(seed) {
@@ -72,13 +76,19 @@ export function makeOrbitalRuins(tex) {
 
   // ---- arena layer (world space, above the floor) ----
   const arena = new Container();
-  const debris = new TilingSprite({ texture: debrisTexture(), width: 10, height: 10 });
-  debris.alpha = 0.45; // background: well below the enemies' metal
+  // the field of small wreckage: ChatGPT's tile (W1 P3a, proto2/make-world1.py), else one drawn here
+  const debris = new TilingSprite({ texture: tex['w1-debris'] || debrisTexture(), width: 10, height: 10 });
+  if (tex['w1-debris']) debris.tileScale.set(1024 / 768);
+  debris.alpha = tex['w1-debris'] ? 0.7 : 0.45; // background: well below the enemies' metal
   const islands = new Container();
+  const decor = new Container();
   const sats = new Container();
   const barrier = new Graphics();
-  arena.addChild(debris, islands, sats, barrier);
-  let satList = [];
+  // ChatGPT's arena edge (W1 P6), and an amber copy of it added as light, breathing like a live shield
+  const edge = new Container(), edgeGlow = new Container();
+  edgeGlow.blendMode = 'add';
+  arena.addChild(debris, islands, decor, sats, barrier, edge, edgeGlow);
+  let satList = [], floaters = [];
 
   function island(r, size) {
     const c = new Container();
@@ -111,15 +121,47 @@ export function makeOrbitalRuins(tex) {
     debris.width = w; debris.height = h; debris.position.set(-w / 2, -h / 2);
     islands.removeChildren().forEach((c) => c.destroy({ children: true }));
     sats.removeChildren().forEach((c) => c.destroy({ children: true }));
+    decor.removeChildren().forEach((c) => c.destroy({ children: true }));
+    floaters = [];
+    // a prop of W1 P5 (world units across), on a deck fragment or floating free
+    const prop = (name, size, x, y, spin = 0) => {
+      const t = tex[`w1-prop-${name}`];
+      if (!t) return;
+      const s = new Sprite(t);
+      s.anchor.set(0.5);
+      s.scale.set(size / Math.max(t.width, t.height));
+      s.rotation = r() * TAU;
+      s.position.set(x, y);
+      decor.addChild(s);
+      if (spin) floaters.push({ s, spin: (r() - 0.5) * spin });
+    };
     // 3-5 deck fragments, away from the start point in the middle
     const count = 3 + Math.floor(r() * 3);
     for (let i = 0; i < count; i++) {
       const size = 380 + r() * 260;
       let x, y;
       do { x = (r() - 0.5) * (w - size); y = (r() - 0.5) * (h - size); } while (Math.hypot(x, y) < 320);
-      const c = island(r, size);
+      // ChatGPT's deck fragments (W1 P3b), else a jagged cut of the station floor tile
+      const art = tex[`w1-island-${(i % 4) + 1}`];
+      let c;
+      if (art) {
+        c = new Sprite(art);
+        c.anchor.set(0.5);
+        c.scale.set(size / Math.max(art.width, art.height));
+        c.rotation = r() * TAU;
+      } else c = island(r, size);
       c.position.set(x, y);
       islands.addChild(c);
+      // a wrecked defense turret or a sparking cable bundle on some of the decks
+      const on = r();
+      if (on < 0.45) prop('turret', size * 0.38, x + (r() - 0.5) * size * 0.2, y + (r() - 0.5) * size * 0.2);
+      else if (on < 0.75) prop('cables', 70, x + (r() - 0.5) * size * 0.3, y + (r() - 0.5) * size * 0.3);
+    }
+    // floating free: snapped masts and solar wings, then dead satellites, escape pods and cable bundles
+    for (let i = 0; i < 3; i++) prop(i % 2 ? 'solar' : 'mast', 220 + r() * 80, (r() - 0.5) * (w - 300), (r() - 0.5) * (h - 300), 0.04);
+    for (let i = 0; i < 7; i++) {
+      const name = ['sat', 'pod', 'cables'][i % 3];
+      prop(name, name === 'sat' ? 80 : 55, (r() - 0.5) * (w - 120), (r() - 0.5) * (h - 120), 0.3);
     }
     // dead satellites that drift and flicker into the Collective's version
     satList = [];
@@ -135,11 +177,34 @@ export function makeOrbitalRuins(tex) {
       sats.addChild(c);
       satList.push({ c, a, b, x, y, spin: (r() - 0.5) * 0.2, drift: r() * TAU, off: r() * SAT_CYCLE });
     }
-    // the broken amber barrier of the defense grid along the arena edge
+    // the arena edge: 4 strips repeating along the sides and 4 corners (W1 P6), else a broken amber line
+    for (const c of [edge, edgeGlow]) c.removeChildren().forEach((s) => s.destroy());
     barrier.clear();
+    if (tex['w1-edge-top']) {
+      const s = EDGE_SCALE, o = EDGE_IN * s, t = 160 * s, k = 256 * s;
+      const L = -w / 2 - o, T = -h / 2 - o, R = w / 2 + o, B = h / 2 + o; // outer bounds of the ring
+      const pieces = [
+        ['top', L + k, T, R - L - 2 * k, t], ['bottom', L + k, B - t, R - L - 2 * k, t],
+        ['left', L, T + k, t, B - T - 2 * k], ['right', R - t, T + k, t, B - T - 2 * k],
+      ];
+      for (const c of [edge, edgeGlow]) {
+        for (const [name, x, y, pw, ph] of pieces) {
+          const strip = new TilingSprite({ texture: tex[`w1-edge-${name}`], width: pw / s, height: ph / s });
+          strip.scale.set(s); strip.position.set(x, y);
+          c.addChild(strip);
+        }
+        for (const [name, x, y] of [['top-left', L, T], ['top-right', R - k, T], ['bottom-left', L, B - k], ['bottom-right', R - k, B - k]]) {
+          const corner = new Sprite(tex[`w1-edge-${name}`]);
+          corner.scale.set(s); corner.position.set(x, y);
+          c.addChild(corner);
+        }
+      }
+      edgeGlow.children.forEach((c) => { c.tint = 0xffb02e; });
+      return;
+    }
     barrier.rect(-w / 2, -h / 2, w, h).stroke({ width: 48, color: 0x0b0920, alpha: 0.55 });
     const dash = 26, gap = 18;
-    const edge = (x0, y0, x1, y1) => {
+    const side = (x0, y0, x1, y1) => {
       const len = Math.hypot(x1 - x0, y1 - y0), ux = (x1 - x0) / len, uy = (y1 - y0) / len;
       for (let s = 0; s < len; s += dash + gap) {
         if (r() < 0.12) continue; // broken segments
@@ -147,8 +212,8 @@ export function makeOrbitalRuins(tex) {
         barrier.moveTo(x0 + ux * s, y0 + uy * s).lineTo(x0 + ux * e, y0 + uy * e);
       }
     };
-    edge(-w / 2, -h / 2, w / 2, -h / 2); edge(w / 2, -h / 2, w / 2, h / 2);
-    edge(w / 2, h / 2, -w / 2, h / 2); edge(-w / 2, h / 2, -w / 2, -h / 2);
+    side(-w / 2, -h / 2, w / 2, -h / 2); side(w / 2, -h / 2, w / 2, h / 2);
+    side(w / 2, h / 2, -w / 2, h / 2); side(-w / 2, h / 2, -w / 2, -h / 2);
     barrier.stroke({ width: 3, color: 0xffb02e, alpha: 0.85 });
   }
 
@@ -161,6 +226,7 @@ export function makeOrbitalRuins(tex) {
     earth.scale.set(ew / 1080);
     earth.rotation = 0.42;
     earth.position.set(-W * 0.05 - cx * z * 0.04, H * 0.72 - cy * z * 0.04);
+    for (const f of floaters) f.s.rotation += f.spin / 60;
     // satellites drift, turn and get rewritten for a while every cycle
     for (const s of satList) {
       s.c.x = s.x + Math.sin(time * 0.15 + s.drift) * 30;
@@ -173,6 +239,7 @@ export function makeOrbitalRuins(tex) {
       s.b.alpha = k; s.a.alpha = 1 - k;
     }
     barrier.alpha = 0.7 + 0.2 * Math.sin(time * 2.1);
+    edgeGlow.alpha = 0.12 + 0.12 * Math.sin(time * 2.1);
   }
 
   return { far, arena, setArena, update };

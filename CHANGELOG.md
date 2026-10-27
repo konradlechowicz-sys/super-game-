@@ -16,6 +16,22 @@ i wersja TEST (gracze tego nie widzą).
 
 - 
 
+## Build 86 · 2026-10-27
+- [Nowe] 2.0, świat 1: krawędź areny z ChatGPT (W1 P6) – pierścień wraków stacji, paneli słonecznych i satelitów z bursztynową heksagonalną tarczą od strony areny, która powoli pulsuje. Zastępuje przerywaną linię.
+
+## Build 85 · 2026-10-27
+- [Nowe] 2.0, świat 1: rekwizyty z ChatGPT (W1 P5) – złamane maszty i skrzydła paneli słonecznych, wraki ludzkich wieżyczek na pokładach, martwe satelity, kapsuły ratunkowe i iskrzące wiązki kabli dryfują po arenie.
+- [Nowe] 2.0, świat 1: zbiorniki paliwa z bursztynowym słabym punktem – zestrzelony wybucha (promień 150) i rani wrogów wokół, ale też statek, jeśli jest za blisko; zbiorniki odpalają się nawzajem. Skrzynie z amunicją rozpadają się na 3–5 monet, czasem z apteczką albo magnesem. Zniszczone zostają jako wraki, co 30 s pojawia się nowy (do 9 naraz). Bronie trafiają je jak wrogów, ale ich nie celują.
+
+## Build 84 · 2026-10-27
+- [Nowe] 2.0, świat 1 (Orbital Ruins): wyspy pokładów stacji obronnych to teraz grafika z ChatGPT (W1 P3b) – ciemny metal z bursztynowymi pasami, odsłonięte kratownice i magentowe ślady Kolektywu zamiast prowizorycznych wycinków podłogi.
+
+## Build 83 · 2026-10-27
+- [Nowe] Wersja 2.0, świat 1: pole drobnego wraku z grafiki ChatGPT (zadanie W1 P3a): odłamki płyt, kable, śruby i pierścienie zamiast kształtów rysowanych w kodzie. Kafel łączy się bez szwu, a wrak jest na tyle ciemny, że wrogowie wyraźnie się od niego odcinają.
+
+## Build 82 · 2026-10-27
+- [Narzędzia] Zaakceptowany koncept areny świata 1 „Orbital Ruins” (ChatGPT, zadanie W1 P1) zapisany w art/2.0/worlds/world1/concept-orbital-ruins.webp; jest wzorem dla kolejnych grafik świata 1. Gra bez zmian.
+
 ## Build 81 · 2026-10-27
 - [Nowe] Wersja 2.0, świat 1 „Orbital Ruins” według Art Bible: zamiast płyt podłogi na całej arenie walczymy w próżni wysoko nad Ziemią. Czarny kosmos z gwiazdami w dwóch warstwach głębi, daleki ciemny sierp Ziemi (przesuwa się wolniej niż arena), przyciemnione pole drobnego wraku, 3–5 „wysp” z połamanych płyt pokładów stacji, dryfujące martwe satelity, które co chwilę migają w wersję Kolektywu, i przerywana bursztynowa bariera na brzegu areny. Na razie z dostępnych grafik (zwiastun, kafel płyt); po grafikach z ChatGPT podmienimy tekstury.
 - [Narzędzia] Notatki projektu: Konrad sam pośredniczy między Claude'em a ChatGPT (AI-HANDOFF.md zamknięty), źródłem promptów jest Claude Doc „Void Blaster 2.0 – Art Bible”, temat główny zostaje muzyką menu na stałe.
