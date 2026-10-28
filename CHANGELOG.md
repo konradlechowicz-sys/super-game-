@@ -16,6 +16,9 @@ i wersja TEST (gracze tego nie widzą).
 
 - 
 
+## Build 101 · 2026-10-28
+- [Narzędzia] Plan nowego arsenału 2.0 na później (`PLAN-2.0-ARSENAL.md`): 3 bronie (Railgun, Flamethrower, Singularity Cannon), 3 perki (Targeting Matrix, Thermal Core, Phase Shield), ich ewolucje, 6 kombosów, 3 zestawy perków i 3 super kombosy. Gra bez zmian.
+
 ## Build 100 · 2026-10-28
 - [Poprawka] 2.0, świat 2: muzyka nie przeskakuje już nienaturalnie przy zapętleniu. Tempo nagrań z Suno lekko „pływa”, a koniec pętli był przesunięty o 80–100 ms względem rytmu (perkusja się potykała). Nowe punkty pętli znalezione przeszukaniem całych utworów i wyrównane co do milisekundy: sektor zapętla 48 taktów od 54 s (ok. 79 s muzyki), boss 24 takty o najbardziej zgodnym brzmieniu (ok. 38 s) po ok. 13 s wstępu.
 
