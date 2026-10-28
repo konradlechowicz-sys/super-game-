@@ -67,12 +67,15 @@ Next, in this order unless Konrad says otherwise:
 4. The new 2.0 arsenal in `PLAN-2.0-ARSENAL.md` (Railgun, Flamethrower, Singularity Cannon, 3 new perks, their
    evolutions, 6 combos, 3 perk sets, 3 super combos).
 
-Next session (Konrad, 2026-10-28: tasks for tomorrow):
+Next session (Konrad, 2026-10-28: tasks for tomorrow), in this order:
+- Konrad's report from the iPhone: performance (FPS in big waves), difficulty, the music loops, clouds and lightning
+  of world 2. Tune from it.
+- World 3 "Lunar Bridgehead": Konrad has the complete W3 art and music ready and sends them; build it like world 2
+  (see the item below for the previews).
 - Rework the weapon system: build the arsenal of point 4 (new mechanics: crits, burning, the ship's shield, black
   holes, super combos of 3 weapons, burning ground), on the current neon effects until ChatGPT's icons and effects
   come; check the balance with headless runs.
-- World 3 "Lunar Bridgehead": from ChatGPT's W3 set (Art Bible P1-P8) and Suno's W3 music when Konrad sends them,
-  built like world 2. Before it, split the web previews into separate files (the one-file preview is near the
+- For world 3 (ChatGPT's W3 set, Art Bible P1-P8, and Suno's W3 music): before adding it, split the web previews into separate files (the one-file preview is near the
   16 MB artifact limit: 15.3 MB at build 100).
 
 ## Android (decided by Konrad)
