@@ -11,6 +11,9 @@
 - The source of all 2.0 visuals and ChatGPT prompts is the Claude Doc "Void Blaster 2.0 – Art Bible"
   (https://claude.ai/artifact/A6CDwwg4WSEQ3v99p9ZbMc): tab "Art Bible" (world cards, shared rules) and tab "Prompty"
   (style block, a world block per world, tasks P1-P8). Change a world's card and its prompts together.
+- Sector names of all 10 worlds (6 each, the 6th is the boss): Art Bible tab "Art Bible", table "Nazwy sektorów".
+  World 1 approved by Konrad (2026-10-28, in `js/data.js`); worlds 2-10 are proposals to review. Use them when a
+  world is built.
 - Music: the 2.0 theme is the menu music for good; no separate M1 track.
 
 ## Shared handoff with Codex (paused, see above)

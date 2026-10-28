@@ -16,6 +16,9 @@ i wersja TEST (gracze tego nie widzą).
 
 - 
 
+## Build 95 · 2026-10-28
+- [Narzędzia] Nazwy sektorów wszystkich 10 światów 2.0 zapisane w Art Bible (tabela „Nazwy sektorów”) i w notatkach projektu. Świat 1 zatwierdzony, światy 2–10 to propozycja. Gra bez zmian.
+
 ## Build 94 · 2026-10-28
 - [Zmiana] 2.0: świat 1 nazywa się teraz ORBITAL RUINS (wcześniej Neon Nebula), a jego sektory: 1-1 Dead Orbit, 1-2 Debris Field, 1-3 Broken Ring, 1-4 Rewritten Signal, 1-5 Last Picket, 1-6 Harvester. Nowe nazwy widać na mapie sektorów, w odprawie, na banerze na starcie i na ekranie wyników.
 
