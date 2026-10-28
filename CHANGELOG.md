@@ -16,6 +16,12 @@ i wersja TEST (gracze tego nie widzą).
 
 - 
 
+## Build 103 · 2026-10-28
+- [Narzędzia] Kolejność zadań na następną sesję: najpierw raport z telefonu (wydajność, trudność, pętle muzyki, chmury i błyskawice), potem świat 3 „Lunar Bridgehead” (grafiki i muzyka gotowe), potem przebudowa systemu broni. Gra bez zmian.
+
+## Build 102 · 2026-10-28
+- [Narzędzia] Lista zadań na następną sesję w notatkach projektu: przebudowa systemu broni (nowy arsenał z `PLAN-2.0-ARSENAL.md`) i świat 3 „Lunar Bridgehead”. Gra bez zmian.
+
 ## Build 101 · 2026-10-28
 - [Narzędzia] Plan nowego arsenału 2.0 na później (`PLAN-2.0-ARSENAL.md`): 3 bronie (Railgun, Flamethrower, Singularity Cannon), 3 perki (Targeting Matrix, Thermal Core, Phase Shield), ich ewolucje, 6 kombosów, 3 zestawy perków i 3 super kombosy. Gra bez zmian.
 
