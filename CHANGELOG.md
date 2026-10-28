@@ -16,6 +16,11 @@ i wersja TEST (gracze tego nie widzą).
 
 - 
 
+## Build 96 · 2026-10-28
+- [Zmiana] 2.0: mapa sektorów pokazuje całą podróż – 10 światów (Orbital Ruins, Siege of Earth, Lunar Bridgehead, Red Conversion, Foundry Belt, Storm Relay, Abyss of Europa, The Rift Gate, Brood World, The Nexus) w dwóch rzędach zakładek. Światy 2–10 mają kartę „UNDER CONSTRUCTION” z krótką historią i sześcioma zaplanowanymi sektorami (szósty to boss). Stare światy 2–4 z 1.x nie są już grywalne.
+- [Zmiana] 2.0: po pokonaniu Harvestera ekran wyników mówi „WORLD CLEAR” i zapowiada następny świat (w budowie) zamiast „Galaxy saved”. Endless otwiera się po pokonaniu ostatniego zbudowanego bossa (na razie Harvestera).
+- [Zmiana] 2.0: darmowa część to światy 1–2 (decyzja z planu 2.0); okno zakupu opisuje pełną podróż: światy 3–10 i 8 bossów.
+
 ## Build 95 · 2026-10-28
 - [Narzędzia] Nazwy sektorów wszystkich 10 światów 2.0 zapisane w Art Bible (tabela „Nazwy sektorów”) i w notatkach projektu. Świat 1 zatwierdzony, światy 2–10 to propozycja. Gra bez zmian.
 

@@ -145,8 +145,8 @@ window.addEventListener('resize', resize);
 resize();
 
 // ---------------- progression helpers ----------------
-// Worlds 2-4 are part of the full game.
-app.needsFullGame = (id) => ALL_STAGES.find((s) => s.id === id)?.world.id > 1 && !app.store.isFull();
+// 2.0 (decided by Konrad, 2026-10-26): worlds 1-2 are the free trial, worlds 3-10 are part of the full game.
+app.needsFullGame = (id) => ALL_STAGES.find((s) => s.id === id)?.world.id > 2 && !app.store.isFull();
 
 app.isUnlocked = (id) => {
   if (app.needsFullGame(id)) return false;

@@ -141,12 +141,27 @@ h1, h2, h3 { font-family: 'Orbitron', sans-serif; font-weight: 700; margin: 0; l
 .version-tag { flex: 1; min-width: 0; text-align: center; color: var(--muted); font-size: 12px; letter-spacing: 0.1em; font-variant-numeric: tabular-nums; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
 /* ---------- map ---------- */
-.world-tabs { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-top: 10px; }
-.world-tab { padding: 8px 4px; border-radius: 3px; border: 1px solid var(--line); background: var(--panel-2); display: flex; flex-direction: column; align-items: center; gap: 2px; }
+.world-tabs { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 5px; margin-top: 10px; }
+.world-tab { min-width: 0; padding: 6px 3px; border-radius: 3px; border: 1px solid var(--line); background: var(--panel-2); display: flex; flex-direction: column; align-items: center; gap: 2px; }
 .world-tab .wnum { font-family: 'Orbitron', sans-serif; font-weight: 700; font-size: 15px; color: color-mix(in srgb, var(--wc) 55%, var(--text)); }
-.world-tab .wname { font-size: 11px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
+.world-tab .wname { font-size: 10px; line-height: 1.1; color: var(--muted); text-align: center; overflow: hidden; max-width: 100%; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; min-height: 2.2em; }
 .world-tab.active { border-color: var(--line-2); box-shadow: inset 0 -2px 0 var(--amber); }
 .world-tab.locked { opacity: 0.45; }
+.world-tab.wip .wnum { color: var(--muted); }
+.world-tab.wip.active { opacity: 0.9; }
+/* a 2.0 world still being built (js/ui.js map): its story and planned sectors */
+.construct { margin: 14px 4px; padding: 18px 16px; border-radius: 3px; border: 1px dashed var(--line-2); background: var(--panel-2); }
+.construct-kicker { font: 600 10px 'Orbitron', sans-serif; letter-spacing: 0.32em; color: var(--amber); display: flex; align-items: center; gap: 8px; }
+.construct-kicker::before { content: ''; width: 8px; height: 8px; background: repeating-linear-gradient(45deg, var(--amber) 0 2px, transparent 2px 4px); }
+.construct h3 { margin: 10px 0 6px; font-size: 18px; letter-spacing: 0.16em; display: flex; align-items: center; gap: 10px; }
+.construct h3::before { content: ''; width: 8px; height: 8px; background: var(--wc); transform: rotate(45deg); flex: none; }
+.construct p { margin: 0 0 14px; color: #aeb7c4; font-size: 15px; line-height: 1.3; }
+.construct-sectors { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 4px; }
+.construct-sectors li { display: flex; align-items: center; gap: 12px; padding: 9px 12px; border-radius: 2px; background: rgba(255, 255, 255, 0.02); border: 1px solid var(--line); color: #c3cad6; }
+.construct-sectors b { font: 600 11px 'Orbitron', sans-serif; letter-spacing: 0.08em; color: var(--muted); min-width: 30px; }
+.construct-sectors span { flex: 1; font-size: 16px; }
+.construct-sectors em { font: 600 9px 'Orbitron', sans-serif; font-style: normal; letter-spacing: 0.2em; color: #f2a6cc; border: 1px solid rgba(232, 51, 140, 0.45); padding: 2px 6px; border-radius: 2px; }
+.construct-sectors li.boss { border-color: rgba(232, 51, 140, 0.3); }
 .world-head { display: flex; align-items: center; justify-content: space-between; margin: 12px 0 4px; }
 .world-head h2 { font-size: 16px; letter-spacing: 0.18em; color: var(--text); display: flex; align-items: center; gap: 10px; }
 .world-head h2::before { content: ''; width: 8px; height: 8px; background: var(--wc); transform: rotate(45deg); }

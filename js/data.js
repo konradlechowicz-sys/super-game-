@@ -292,11 +292,40 @@ export const WORLD_TUNING = {
   4: { dmg: 1.8, ramp: 0.4, hp: 1.25, elite: 1.4, boss: 1.3 },
 };
 
+// The 2.0 journey (decided by Konrad, 2026-10-28): world 1 is built; worlds 2-10 are under construction. The map
+// shows them with their story and planned sectors (Art Bible, table "Nazwy sektorów"); when a world is built, it gets
+// its stages and drops `soon`. The 1.x worlds 2-4 below (W2-W4, LEGACY_WORLDS) are no longer played; they stay as a
+// starting point for tuning the new worlds.
+const PLANNED_WORLDS = [
+  [2, 'Siege of Earth', '#ff6a3d', 'The Collective lands. The last defense of home, above burning cities.',
+    ['Burning Sky', 'Tether Storm', 'Cloud Wall', 'City of Fire', 'Home Front', 'Landing Citadel']],
+  [3, 'Lunar Bridgehead', '#a9b8d0', 'The counterattack: the Moon is the enemy\'s forward base.',
+    ['Dark Side', 'Sea of Tranquility', 'Crater Run', 'Rooted Base', 'Mortar Fields', 'Moon Spire']],
+  [4, 'Red Conversion', '#e0452b', 'Mars in the middle of being rewritten.',
+    ['Red Dust', 'Black Veins', 'Dust Storm', 'Glass Canyon', 'Olympus Shadow', 'Red Colossus']],
+  [5, 'Foundry Belt', '#ff8a2a', 'The asteroid belt, turned into the Collective\'s factories.',
+    ['Ore Drift', 'Assembly Line', 'Smelter Ring', 'Drone Yards', 'Hull Forge', 'Foundry Mother']],
+  [6, 'Storm Relay', '#e3b778', 'In Jupiter\'s storms, a relay calls into deep space.',
+    ['Gas Giant', 'Ion Winds', 'Antenna Field', 'Living Signal', 'Deep Transmission', 'Storm Eye']],
+  [7, 'Abyss of Europa', '#4fd1e0', 'Under Europa\'s ice, alien sea life has been rewritten.',
+    ['Ice Shelf', 'Thin Ice', 'Glow Beneath', 'Cold Hatchery', 'The Deep Call', 'Abyss Leviathan']],
+  [8, 'The Rift Gate', '#b9a8ff', 'The gate out of the Solar System. There is no way back.',
+    ['Shattered Space', 'Mirror Shards', 'Echoes of Home', 'Gate Rings', 'No Return', 'Gatekeeper']],
+  [9, 'Brood World', '#8fd35a', 'The Collective\'s breeding world. The ground breathes.',
+    ['Living Ground', 'Breathing Fields', 'Spawning Pits', 'Acid Marsh', 'Egg Chambers', 'Brood Matriarch']],
+  [10, 'The Nexus', '#ff2d95', 'The heart of the Collective, and the end of the journey.',
+    ['Neural Shore', 'Synapse Storm', 'Broken Geometry', 'Heartbeat', 'The Cage', 'Void Heart']],
+];
+
 export const WORLDS = [
   {
     id: 1, name: 'Orbital Ruins', color: '#ff2d95', stages: W1, music: 'game',
     theme: { top: '#16002e', bottom: '#030010', neb: ['#ff2d95', '#7a2dff', '#00b3ff'], grid: '#b04dff' },
   },
+  ...PLANNED_WORLDS.map(([id, name, color, story, plan]) => ({ id, name, color, story, plan, stages: [], soon: true })),
+];
+
+export const LEGACY_WORLDS = [
   {
     id: 2, name: 'Crystal Belt', color: '#2ff3ff', stages: W2, music: 'game2',
     theme: { top: '#001a2e', bottom: '#000812', neb: ['#2ff3ff', '#3d7bff', '#b4fff0'], grid: '#2fd2ff' },
