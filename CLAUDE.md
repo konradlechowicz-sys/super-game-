@@ -64,6 +64,9 @@ Next, in this order unless Konrad says otherwise:
    First pass done (build 93, 2026-10-28): the style is described at the top of `css/style.css` (one amber accent,
    magenta for the Collective, gold for coins and stars, hairlines, sharp corners, bracket corners on pop-ups, almost no
    glow); the title scene and the joystick follow it. Konrad reviews it; further changes build on it.
+4. Later (Konrad, 2026-10-28: "na później"): the new 2.0 arsenal in `PLAN-2.0-ARSENAL.md` (Railgun, Flamethrower,
+   Singularity Cannon, 3 new perks, their evolutions, 6 combos, 3 perk sets, 3 super combos). Do not start it until
+   Konrad asks.
 
 ## Android (decided by Konrad)
 Android launches with 2.0 (Google Play needs 12 testers for 14 days on a new account before publishing, so closed
