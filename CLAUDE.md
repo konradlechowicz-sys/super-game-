@@ -64,9 +64,16 @@ Next, in this order unless Konrad says otherwise:
    First pass done (build 93, 2026-10-28): the style is described at the top of `css/style.css` (one amber accent,
    magenta for the Collective, gold for coins and stars, hairlines, sharp corners, bracket corners on pop-ups, almost no
    glow); the title scene and the joystick follow it. Konrad reviews it; further changes build on it.
-4. Later (Konrad, 2026-10-28: "na później"): the new 2.0 arsenal in `PLAN-2.0-ARSENAL.md` (Railgun, Flamethrower,
-   Singularity Cannon, 3 new perks, their evolutions, 6 combos, 3 perk sets, 3 super combos). Do not start it until
-   Konrad asks.
+4. The new 2.0 arsenal in `PLAN-2.0-ARSENAL.md` (Railgun, Flamethrower, Singularity Cannon, 3 new perks, their
+   evolutions, 6 combos, 3 perk sets, 3 super combos).
+
+Next session (Konrad, 2026-10-28: tasks for tomorrow):
+- Rework the weapon system: build the arsenal of point 4 (new mechanics: crits, burning, the ship's shield, black
+  holes, super combos of 3 weapons, burning ground), on the current neon effects until ChatGPT's icons and effects
+  come; check the balance with headless runs.
+- World 3 "Lunar Bridgehead": from ChatGPT's W3 set (Art Bible P1-P8) and Suno's W3 music when Konrad sends them,
+  built like world 2. Before it, split the web previews into separate files (the one-file preview is near the
+  16 MB artifact limit: 15.3 MB at build 100).
 
 ## Android (decided by Konrad)
 Android launches with 2.0 (Google Play needs 12 testers for 14 days on a new account before publishing, so closed
