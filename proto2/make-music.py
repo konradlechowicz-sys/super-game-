@@ -5,10 +5,14 @@
 #   menu: the 2.0 theme (Konrad chose it for the menu): the 24 bars after the drop (142 BPM, drop at 35.5 s)
 #   game: world 1 "Orbital Ruins" sector (140.6 BPM): bars 27-65 of the section after the intro (about 65 s)
 #   boss: world 1 boss (147.6 BPM): bars 23-49 (about 42 s)
-#   game2: world 2 "Siege of Earth" sector (146.4 BPM): from the drop (bar 24) 48 bars (about 79 s); quieter (0.72):
-#          its loop is louder than world 1's, the gains match the two (loop RMS 0.207 vs 0.173)
-#   boss2: world 2 boss (150.8 BPM): from bar 24 48 bars (about 76 s); its first 16 bars are cut (`trim`), so the
-#          fight gets 8 bars of build-up (about 13 s) instead of 38 s
+#   game2: world 2 "Siege of Earth" sector (about 146 BPM): 48 bars of the main part (about 79 s); quieter (0.72): its
+#          loop is louder than world 1's, the gains match the two (loop RMS 0.207 vs 0.173)
+#   boss2: world 2 boss (about 151 BPM, the tempo drifts through the track): 24 bars (about 38 s) where both ends
+#          sound most alike; the track starts 8 bars before the loop (`trim`), so the fight gets about 13 s of build-up
+# The world-2 points (build 100, after Konrad heard a jump): Suno's tempo is not exact, so a loop end taken from the
+# bar grid can sit a fraction of a beat off and the drums stumble at the jump. The ends were searched instead: every
+# beat as a start, whole-bar lengths, the end tuned in 2.9 ms steps to the best match of the onset envelope (rhythm)
+# and band energies (sound) over the 4 s after both points.
 # A track's optional 5th value `trim` drops that many seconds from the start (the loop points are in the original's
 # time and are moved with it).
 # Writes proto2/assets/music-<name>.mp3 and music.json. Run from the repo root: python3 proto2/make-music.py
@@ -22,8 +26,8 @@ TRACKS = {
     'menu': ('art/2.0/audio/void-blaster-theme-suno.mp3', 35.5, 35.5 + 24 * 1.6875, 1.0),
     'game': ('art/2.0/audio/w01-orbital-ruins-sector.mp3', 46.686, 111.542, 0.85),
     'boss': ('art/2.0/audio/w01-orbital-ruins-boss.mp3', 37.7818, 80.0374, 0.85),
-    'game2': ('art/2.0/audio/w02-siege-of-earth-sector.mp3', 39.6348, 118.3056, 0.72),
-    'boss2': ('art/2.0/audio/w02-siege-of-earth-boss.mp3', 38.3124, 114.6934, 1.0, 25.58),
+    'game2': ('art/2.0/audio/w02-siege-of-earth-sector.mp3', 54.3387, 133.1107, 0.72),
+    'boss2': ('art/2.0/audio/w02-siege-of-earth-boss.mp3', 75.2972, 113.5889, 1.0, 62.567),
 }
 
 out = {}

@@ -16,6 +16,9 @@ i wersja TEST (gracze tego nie widzą).
 
 - 
 
+## Build 100 · 2026-10-28
+- [Poprawka] 2.0, świat 2: muzyka nie przeskakuje już nienaturalnie przy zapętleniu. Tempo nagrań z Suno lekko „pływa”, a koniec pętli był przesunięty o 80–100 ms względem rytmu (perkusja się potykała). Nowe punkty pętli znalezione przeszukaniem całych utworów i wyrównane co do milisekundy: sektor zapętla 48 taktów od 54 s (ok. 79 s muzyki), boss 24 takty o najbardziej zgodnym brzmieniu (ok. 38 s) po ok. 13 s wstępu.
+
 ## Build 99 · 2026-10-28
 - [Nowe] 2.0, świat 2: własna muzyka „Siege of Earth” (Suno) – w sektorach utwór oblężenia (146 BPM; wstęp ok. 39 s, potem zapętlone 48 taktów od wejścia na pełną moc, ok. 79 s), przy Landing Citadel utwór bossa (151 BPM; wstęp skrócony do ok. 13 s, potem zapętlone ok. 76 s). Pętle z płynnym szwem, głośność dopasowana do świata 1.
 - [Zmiana] 2.0: przy bossie gra muzyka bossa danego świata (świat 1: Harvester, świat 2: Landing Citadel).
