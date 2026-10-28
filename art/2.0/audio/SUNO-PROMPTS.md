@@ -573,7 +573,7 @@ Lyrics:
 | `journey-map` | M2 mapa podróży | do zrobienia |
 | `endless` | M3 tryb Endless | do zrobienia |
 | `w01-orbital-ruins-sector` / `-boss` | W1 | gotowe (2026-10-27), w grze: pętle w `proto2/make-music.py` |
-| `w02-siege-of-earth-sector` / `-boss` | W2 | do zrobienia |
+| `w02-siege-of-earth-sector` / `-boss` | W2 | gotowe (2026-10-28), w grze (`game2`, `boss2`): pętle w `proto2/make-music.py` |
 | `w03-lunar-bridgehead-sector` / `-boss` | W3 | do zrobienia |
 | `w04-red-conversion-sector` / `-boss` | W4 | do zrobienia |
 | `w05-foundry-belt-sector` / `-boss` | W5 | do zrobienia |

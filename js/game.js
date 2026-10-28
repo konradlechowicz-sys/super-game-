@@ -731,7 +731,7 @@ export class Game {
     this.text(p.x, p.y - 24, 'HULL RESTORED', '#3dff8a');
     this.ui.banner('WARNING', `${def.name} APPROACHES`);
     this.ui.bossBar(def.name, 1);
-    this.app.audio.setTrack('boss');
+    this.app.audio.setTrack(this.stage.world.bossMusic || 'boss');
     this.sfx('boss');
     this.app.haptic('heavy');
     this.shake = 14;

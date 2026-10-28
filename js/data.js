@@ -404,8 +404,8 @@ export const WORLDS = [
     theme: { top: '#16002e', bottom: '#030010', neb: ['#ff2d95', '#7a2dff', '#00b3ff'], grid: '#b04dff' },
   },
   {
-    // music: the world-1 recording until world 2 has its own (Art Bible: W2, to be made)
-    id: 2, name: 'Siege of Earth', color: '#ff6a3d', stages: W2_2, music: 'game',
+    // its own recorded sector and boss music (proto2/make-music.py: game2, boss2)
+    id: 2, name: 'Siege of Earth', color: '#ff6a3d', stages: W2_2, music: 'game2', bossMusic: 'boss2',
     theme: { top: '#0a1024', bottom: '#03050c', neb: ['#3a4566', '#ff5a2e', '#ff2d95'], grid: '#3a4566' },
   },
   ...PLANNED_WORLDS.map(([id, name, color, story, plan]) => ({ id, name, color, story, plan, stages: [], soon: true })),
