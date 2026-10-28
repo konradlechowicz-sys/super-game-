@@ -16,6 +16,9 @@ i wersja TEST (gracze tego nie widzą).
 
 - 
 
+## Build 104 · 2026-10-28
+- [Narzędzia] Kompendium wiedzy o grze dla marketingu (`marketing/KOMPENDIUM-VOID-BLASTER.md`): fakty o 1.x i 2.0, fabuła, światy, marka, historia powstania, gotowe materiały i pytania do Konrada; do pracy z ChatGPT. Gra bez zmian.
+
 ## Build 103 · 2026-10-28
 - [Narzędzia] Kolejność zadań na następną sesję: najpierw raport z telefonu (wydajność, trudność, pętle muzyki, chmury i błyskawice), potem świat 3 „Lunar Bridgehead” (grafiki i muzyka gotowe), potem przebudowa systemu broni. Gra bez zmian.
 
