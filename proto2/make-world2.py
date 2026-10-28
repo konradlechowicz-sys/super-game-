@@ -42,7 +42,7 @@ def save(im, name, q=90):
 save(Image.open(f'{SRC}/W2-P2-earth-night-2048.webp').convert('RGB').resize((1024, 1024), Image.LANCZOS), 'w2-earth', 86)
 
 # P3: the cloud layer we fly over, a seamless tile; its black gaps become see-through (alpha from brightness)
-save(key(Image.open(f'{SRC}/W2-P3-cloud-tile-1024.webp'), 6, 70), 'w2-clouds', 88)
+save(key(Image.open(f'{SRC}/W2-P3-cloud-tile-1024.webp'), 6, 70), 'w2-clouds', 80)
 
 # P4: near overlay (cloud shreds, sparks, rain) on black, added as light: kept opaque
 save(Image.open(f'{SRC}/W2-P4-foreground-overlay-1024.webp').convert('RGB'), 'w2-near', 86)
@@ -84,10 +84,9 @@ for gid, (art, size) in ENEMIES.items():
         save(fit(trim(cut(Image.open(f'{SRC}/W2-P7-elite-and-shards/W2-P7-{art}-shard-{n}.webp'))), 160), f'w2-debris-{gid}-{n}', 88)
 save(fit(trim(cut(Image.open(f'{SRC}/W2-P7-elite-and-shards/W2-P7-interceptor-elite.webp'))), 300), 'enemy-interceptor-elite')
 
-# P8: the Landing Citadel. The assembled boss (1024 px frame) and its parts cut to their content, so each part's
-# center in that frame is its position + half its size (metadata/P8-assembly.json); written to w2-boss.json.
-boss = cut(Image.open(f'{SRC}/W2-P8-landing-citadel-1024.webp'))
-save(boss, 'w2-boss')
+# P8: the Landing Citadel, built in the game from its parts (the assembled drawing is only the reference, so it is not
+# bundled). Each part is cut to its content, so its center in the boss's 1024 px frame is its position + half its
+# size (metadata/P8-assembly.json); written to w2-boss.json.
 asm = json.load(open('art/2.0/worlds/world2/metadata/P8-assembly.json'))
 parts = {}
 for p in asm['parts']:

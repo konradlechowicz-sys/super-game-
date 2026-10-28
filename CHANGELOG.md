@@ -16,6 +16,11 @@ i wersja TEST (gracze tego nie widzą).
 
 - 
 
+## Build 99 · 2026-10-28
+- [Nowe] 2.0, świat 2: własna muzyka „Siege of Earth” (Suno) – w sektorach utwór oblężenia (146 BPM; wstęp ok. 39 s, potem zapętlone 48 taktów od wejścia na pełną moc, ok. 79 s), przy Landing Citadel utwór bossa (151 BPM; wstęp skrócony do ok. 13 s, potem zapętlone ok. 76 s). Pętle z płynnym szwem, głośność dopasowana do świata 1.
+- [Zmiana] 2.0: przy bossie gra muzyka bossa danego świata (świat 1: Harvester, świat 2: Landing Citadel).
+- [Narzędzia] Podgląd w przeglądarce odchudzony o nieużywany obraz bossa świata 2 i lżejszy kafel chmur, żeby z nową muzyką zmieścił się w limicie (15,8 MB).
+
 ## Build 98 · 2026-10-28
 - [Nowe] 2.0: świat 2 „Siege of Earth” jest grywalny – 6 sektorów (Burning Sky, Tether Storm, Cloud Wall, City of Fire, Home Front, Landing Citadel), cały z grafik ChatGPT (komplet W2 P1–P8). Walczymy nocą nad burzą: pod nami Ziemia ze światłami miast, która powoli przesuwa się w dole, półprzezroczyste chmury, płonące wraki obrony i magentowe węzły lin Kolektywu, na brzegu ściany burzowych chmur, a tuż przed kamerą strzępy chmur, iskry i deszcz.
 - [Nowe] 2.0, świat 2: mechanika świata – wały chmur zasłaniają wrogów (widać tylko ich magentowe rdzenie), a co 5–9 s uderza błyskawica: ekran błyska, burzowe ściany się rozświetlają, a chmury na chwilę rzedną i odsłaniają wszystko.
