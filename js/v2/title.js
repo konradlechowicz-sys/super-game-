@@ -70,7 +70,7 @@ export function makeTitle(tex, halo, ships) {
   // the emblem above the logo (the Striker in a neon ring), with a pulsing glow behind it
   const emblemC = new Container();
   const emblemGlow = new Sprite(halo);
-  emblemGlow.anchor.set(0.5); emblemGlow.tint = 0x2ff3ff; emblemGlow.blendMode = 'add';
+  emblemGlow.anchor.set(0.5); emblemGlow.tint = 0x9fd8ff; emblemGlow.blendMode = 'add';
   const emblem = new Sprite(tex.emblem);
   emblem.anchor.set(0.5);
   emblemC.addChild(emblemGlow, emblem);
@@ -107,7 +107,7 @@ export function makeTitle(tex, halo, ships) {
       const k = Math.max(W / ART_W, H / ART_H) * (1.02 + 0.02 * Math.sin(time * 0.15));
       art.scale.set(k);
       art.position.set((W - ART_W * k) / 2, H - ART_H * k);
-      art.alpha = main ? 1 : 0.4;
+      art.alpha = main ? 1 : 0.28;
 
       for (const st of starList) st.s.alpha = 0.35 + 0.65 * (0.5 + 0.5 * Math.sin(time * st.speed + st.phase));
       // two pulses run down the web, one after another
@@ -115,9 +115,9 @@ export function makeTitle(tex, halo, ships) {
       for (const s of strips) {
         let a = 0;
         for (const f of fronts) a += Math.exp(-(((s.y - f) / 70) ** 2));
-        s.s.alpha = 0.12 + 0.85 * Math.min(1, a);
+        s.s.alpha = 0.05 + 0.45 * Math.min(1, a); // the 2.0 interface is calm: the web only hints at the Collective
       }
-      web.alpha = 0.6 + 0.1 * Math.sin(time * 1.3);
+      web.alpha = 0.32 + 0.06 * Math.sin(time * 1.3);
 
       // satellites: drift, then get rewritten for a while (flicker in, hold, flicker out)
       fx.clear();
@@ -139,14 +139,14 @@ export function makeTitle(tex, halo, ships) {
         g.t += dt;
         const q = g.t / 0.5;
         if (q >= 1) { rings.splice(i, 1); continue; }
-        fx.circle(g.x, g.y, 30 + 170 * q).stroke({ width: 6 * (1 - q) + 1, color: 0xff3df0, alpha: 1 - q });
+        fx.circle(g.x, g.y, 30 + 170 * q).stroke({ width: 4 * (1 - q) + 1, color: 0xff3df0, alpha: 0.6 * (1 - q) });
       }
       for (let i = bursts.length - 1; i >= 0; i--) {
         const b = bursts[i];
         b.life -= dt;
         if (b.life <= 0) { b.s.destroy(); bursts.splice(i, 1); continue; }
         b.s.x += b.vx * dt; b.s.y += b.vy * dt; b.vx *= 0.93; b.vy *= 0.93;
-        b.s.alpha = b.life / b.max;
+        b.s.alpha = (0.6 * b.life) / b.max;
         b.s.scale.set(b.size / halo.width);
       }
 
@@ -161,7 +161,7 @@ export function makeTitle(tex, halo, ships) {
         emblemC.position.set(W / 2, em.y);
         emblem.scale.set(em.size / emblem.texture.height);
         emblemGlow.scale.set((em.size * 1.9) / halo.width);
-        emblemGlow.alpha = 0.35 + 0.15 * Math.sin(time * 2.2);
+        emblemGlow.alpha = 0.14 + 0.06 * Math.sin(time * 2.2);
       }
 
       shipC.visible = !!main;

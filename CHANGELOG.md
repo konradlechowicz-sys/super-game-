@@ -16,6 +16,12 @@ i wersja TEST (gracze tego nie widzą).
 
 - 
 
+## Build 93 · 2026-10-28
+- [Zmiana] 2.0: nowy, stonowany i bardziej technologiczny styl interfejsu – grafitowe panele, cienkie linie, ostre narożniki, narożne „klamry” na okienkach, prawie bez neonowej poświaty. Jeden akcent – bursztyn ze świata 1 – oznacza akcje i wybór (PLAY, LAUNCH, RESUME, aktywne przełączniki); magenta tylko dla Kolektywu (boss, porażka); złoto tylko dla monet i gwiazdek. Dotyczy ekranu startowego, mapy sektorów, hangaru, ulepszeń, Codexu, codziennej nagrody, ustawień, okna zakupu, kart level-up, pauzy, wyników, HUD-u, banerów i podpowiedzi.
+- [Zmiana] 2.0: logo w nowym stylu – „VOID” jasnym metalem, „BLASTER” bursztynem między cienkimi liniami.
+- [Zmiana] 2.0: tło ekranu tytułowego spokojniejsze – sieć Kolektywu i jej impulsy przygaszone, delikatniejsza poświata emblematu, ciemniejsze tło za ekranami sektorów, hangaru i ulepszeń.
+- [Zmiana] 2.0: joystick jak celownik – ciemny dysk z cienkim pierścieniem, bursztynowe znaczniki i płaska gałka z bursztynowym środkiem, bez neonowego blasku.
+
 ## Build 92 · 2026-10-28
 - [Narzędzia] Lista zadań 2.0 w notatkach projektu: mechanika świata 1, tempo i balans, ciemniejszy, spokojniejszy ekran startowy i okienka (dopasowane do świata 1). Gra bez zmian.
 

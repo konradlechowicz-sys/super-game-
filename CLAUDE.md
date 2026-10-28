@@ -53,6 +53,9 @@ Next, in this order unless Konrad says otherwise:
 3. Redesign the start screen and the pop-ups (level-up cards, crates, results, paywall and other modals): today they
    are too colourful for the mature, darker palette of world 1 and the character of 2.0. Make them darker and calmer,
    in the Art Bible's colours (gunmetal, deep space, amber and magenta accents), keeping them readable.
+   First pass done (build 93, 2026-10-28): the style is described at the top of `css/style.css` (one amber accent,
+   magenta for the Collective, gold for coins and stars, hairlines, sharp corners, bracket corners on pop-ups, almost no
+   glow); the title scene and the joystick follow it. Konrad reviews it; further changes build on it.
 
 ## Android (decided by Konrad)
 Android launches with 2.0 (Google Play needs 12 testers for 14 days on a new account before publishing, so closed
