@@ -16,6 +16,11 @@ i wersja TEST (gracze tego nie widzą).
 
 - 
 
+## Build 97 · 2026-10-28
+- [Nowe] 2.0, świat 1: spadający wrak – co 25–35 s przez arenę, blisko statku, przelatuje duży fragment pokładu stacji. Najpierw przez ok. 1,8 s bursztynowy korytarz z biegnącymi szewronami i rosnącym cieniem (plus dźwięk ostrzeżenia), potem szybki przelot z obrotem: drobni wrogowie giną od razu, ciężcy dostają mocno, zbiorniki paliwa wybuchają, a statek, który został w korytarzu, traci ok. 19 punktów. Działa też w Endless świata 1.
+- [Balans] 2.0, świat 1: szybsze tempo – ok. 45% więcej wrogów od pierwszej sekundy, większe fale (np. 1-1: 24 i 40 zamiast 16 i 28; 1-5: 56 swarmerów), wrogowie o ok. 8% szybsi i wcześniej w grze, limit na polu 140–200 (zapas względem bramki wydajności 180 przy 60 FPS). Harvester pojawia się po 2:00 zamiast 2:30.
+- [Balans] 2.0, świat 1: cele zabójstw do gwiazdek podniesione do nowej liczby wrogów (1-1: 900, 1-2: 1250, 1-3: 1400, 1-4: 1650, 1-5: 1700, 1-6: 700) – sprawdzone symulacją, tak samo trudne jak w 1.x.
+
 ## Build 96 · 2026-10-28
 - [Zmiana] 2.0: mapa sektorów pokazuje całą podróż – 10 światów (Orbital Ruins, Siege of Earth, Lunar Bridgehead, Red Conversion, Foundry Belt, Storm Relay, Abyss of Europa, The Rift Gate, Brood World, The Nexus) w dwóch rzędach zakładek. Światy 2–10 mają kartę „UNDER CONSTRUCTION” z krótką historią i sześcioma zaplanowanymi sektorami (szósty to boss). Stare światy 2–4 z 1.x nie są już grywalne.
 - [Zmiana] 2.0: po pokonaniu Harvestera ekran wyników mówi „WORLD CLEAR” i zapowiada następny świat (w budowie) zamiast „Galaxy saved”. Endless otwiera się po pokonaniu ostatniego zbudowanego bossa (na razie Harvestera).

@@ -65,7 +65,7 @@ export async function createV2Renderer(app) {
   const border = new Graphics();
   const lootLayer = add(new Container()), ringG = add(new Graphics());
   const glowLayer = add(new Container());
-  const propLayer = new Container(), debrisLayer = new Container();
+  const propLayer = new Container(), debrisLayer = new Container(), wreckLayer = new Container();
   const enemyLayer = new Container(), bossLayer = new Container(), shipLayer = new Container();
   const shotLayer = add(new Container()), fxLayer = add(new Container()), fxG = add(new Graphics());
   const weaponLayer = add(new Container()), weaponG = new Graphics();
@@ -73,7 +73,7 @@ export async function createV2Renderer(app) {
   // world 1 "Orbital Ruins" (js/v2/orbit.js): far layer under the arena, wreckage on it; other worlds use the floor
   const orbit = makeOrbitalRuins(tex);
   px.stage.addChildAt(orbit.far, 0);
-  world.addChild(floor, border, orbit.arena, propLayer, debrisLayer, lootLayer, ringG, glowLayer, enemyLayer, bossLayer, shotLayer, weaponLayer, shipLayer, fxLayer, fxG);
+  world.addChild(floor, border, orbit.arena, propLayer, debrisLayer, lootLayer, ringG, glowLayer, enemyLayer, bossLayer, shotLayer, weaponLayer, shipLayer, wreckLayer, fxLayer, fxG);
   // reusable sprites: each frame takes as many as it needs and hides the rest (no per-object create/destroy)
   const lootHalo = pool(lootLayer), loot = pool(lootLayer);
   const shotHalo = pool(shotLayer), shots = pool(shotLayer);
@@ -307,6 +307,19 @@ export async function createV2Renderer(app) {
       s.glow.tint = e.elite ? 0xffd23d : 0xffffff;
       s.glow.alpha = (0.7 + 0.2 * Math.sin(game.time * 4 + (e.id || 0))) * s.body.alpha;
     }
+    // world 1: the falling wreck (Game.fallingWreck), a deck fragment (W1 P3b) tumbling across the arena
+    for (const h of game.hazards) {
+      if (h.kind !== 'wreck' || h.t < h.warn || h.t > h.warn + h.dur) continue;
+      const s = spritesFor(h, () => {
+        const body = new Sprite(tex[`w1-island-${h.art}`] || tex['w1-prop-mast']);
+        body.anchor.set(0.5);
+        wreckLayer.addChild(body);
+        return { body };
+      });
+      s.body.position.set(h.x, h.y);
+      s.body.rotation = h.a + (h.t - h.warn) * h.spin;
+      s.body.scale.set((h.w * 2.1) / Math.max(s.body.texture.width, s.body.texture.height));
+    }
     // drop the sprites of objects that are gone
     for (const [obj, s] of drawn) {
       if (s.frame === frameNo) continue;
@@ -318,6 +331,7 @@ export async function createV2Renderer(app) {
 
     updateDebris(game);
     drawCrowd(game);
+
 
     // the ship the player flies (game.ship: its id, and skinName for the Gold Striker)
     const p = game.player;

@@ -96,63 +96,68 @@ export const BOSSES = {
   },
 };
 
-// World 1 of 2.0, "Orbital Ruins" (Art Bible; sector names decided 2026-10-28, Konrad can rename them)
+// World 1 of 2.0, "Orbital Ruins" (Art Bible; sector names decided 2026-10-28, Konrad can rename them).
+// 2.0 pace (Konrad, 2026-10-28: the game felt a bit slow; performance gate 1: about 180 enemies at 60 FPS): about
+// 45% more spawns than 1.x from the first second, bigger rings, enemies 8% faster and in play sooner, at most 200
+// on the field (a margin for older iPhones), a shorter wait for the Harvester. Kill goals keep the share of 1.x: in a
+// headless run (god mode, the ship idle, always the first card) 1.x reached about 1.4x its goal, so does 2.0.
+// wrecks: [first, every] seconds of the falling wreck (Game.fallingWreck), the world's own hazard.
 const W1 = [
   {
-    id: '1-1', name: 'Dead Orbit', duration: 180, hp: 1.5, speed: 1, rate: [0.9, 3.2], max: 110, kills: 600,
-    enemies: [['drone', 0, 10], ['swarmer', 45, 5]],
+    id: '1-1', name: 'Dead Orbit', duration: 180, hp: 1.5, speed: 1.08, rate: [1.3, 4.6], max: 140, kills: 900, wrecks: [50, 34],
+    enemies: [['drone', 0, 10], ['swarmer', 25, 5]],
     events: [
-      { t: 60, type: 'ring', enemy: 'drone', count: 16, msg: 'INCOMING SWARM' },
+      { t: 50, type: 'ring', enemy: 'drone', count: 24, msg: 'INCOMING SWARM' },
       { t: 100, type: 'elite', enemy: 'drone', msg: 'ELITE DETECTED' },
-      { t: 150, type: 'ring', enemy: 'swarmer', count: 28, msg: 'FINAL WAVE' },
+      { t: 150, type: 'ring', enemy: 'swarmer', count: 40, msg: 'FINAL WAVE' },
     ],
   },
   {
-    id: '1-2', name: 'Debris Field', duration: 195, hp: 1.8, speed: 1.03, rate: [1, 3.6], max: 130, kills: 850,
-    enemies: [['drone', 0, 10], ['swarmer', 10, 6], ['dasher', 35, 4]],
+    id: '1-2', name: 'Debris Field', duration: 195, hp: 1.8, speed: 1.11, rate: [1.5, 5.2], max: 160, kills: 1250, wrecks: [40, 30],
+    enemies: [['drone', 0, 10], ['swarmer', 8, 6], ['dasher', 25, 4]],
     events: [
-      { t: 70, type: 'ring', enemy: 'swarmer', count: 30, msg: 'SWARM INCOMING' },
+      { t: 60, type: 'ring', enemy: 'swarmer', count: 44, msg: 'SWARM INCOMING' },
       { t: 110, type: 'elite', enemy: 'dasher', msg: 'ELITE DETECTED' },
       { t: 165, type: 'surge', dur: 25, mul: 2, msg: 'FINAL WAVE' },
     ],
   },
   {
-    id: '1-3', name: 'Broken Ring', duration: 210, hp: 2.1, speed: 1.05, rate: [1.1, 4], max: 150, kills: 950,
-    enemies: [['drone', 0, 10], ['swarmer', 10, 5], ['dasher', 25, 4], ['shooter', 40, 4]],
+    id: '1-3', name: 'Broken Ring', duration: 210, hp: 2.1, speed: 1.13, rate: [1.6, 5.8], max: 175, kills: 1400, wrecks: [35, 28],
+    enemies: [['drone', 0, 10], ['swarmer', 8, 5], ['dasher', 18, 4], ['shooter', 30, 4]],
     events: [
-      { t: 60, type: 'ring', enemy: 'drone', count: 24, msg: 'INCOMING SWARM' },
+      { t: 55, type: 'ring', enemy: 'drone', count: 36, msg: 'INCOMING SWARM' },
       { t: 105, type: 'elite', enemy: 'shooter', msg: 'ELITE DETECTED' },
-      { t: 150, type: 'ring', enemy: 'swarmer', count: 36, msg: 'SWARM INCOMING' },
+      { t: 145, type: 'ring', enemy: 'swarmer', count: 52, msg: 'SWARM INCOMING' },
       { t: 180, type: 'surge', dur: 30, mul: 2, msg: 'FINAL WAVE' },
     ],
   },
   {
-    id: '1-4', name: 'Rewritten Signal', duration: 225, hp: 2.4, speed: 1.07, rate: [1.1, 4.3], max: 165, kills: 1050,
-    enemies: [['drone', 0, 10], ['swarmer', 10, 5], ['dasher', 25, 4], ['shooter', 40, 3], ['tank', 50, 3]],
+    id: '1-4', name: 'Rewritten Signal', duration: 225, hp: 2.4, speed: 1.15, rate: [1.6, 6.2], max: 190, kills: 1650, wrecks: [35, 26],
+    enemies: [['drone', 0, 10], ['swarmer', 8, 5], ['dasher', 18, 4], ['shooter', 30, 3], ['tank', 40, 3]],
     events: [
-      { t: 80, type: 'elite', enemy: 'tank', msg: 'ELITE DETECTED' },
-      { t: 120, type: 'ring', enemy: 'dasher', count: 14, msg: 'DASHER PACK' },
+      { t: 75, type: 'elite', enemy: 'tank', msg: 'ELITE DETECTED' },
+      { t: 115, type: 'ring', enemy: 'dasher', count: 20, msg: 'DASHER PACK' },
       { t: 160, type: 'elite', enemy: 'tank', msg: 'ELITE DETECTED' },
       { t: 195, type: 'surge', dur: 30, mul: 2, msg: 'FINAL WAVE' },
     ],
   },
   {
-    id: '1-5', name: 'Last Picket', duration: 240, hp: 2.8, speed: 1.09, rate: [1.2, 4.6], max: 180, kills: 1200,
-    enemies: [['drone', 0, 9], ['swarmer', 10, 5], ['dasher', 25, 4], ['shooter', 40, 3], ['tank', 55, 3], ['splitter', 30, 5]],
+    id: '1-5', name: 'Last Picket', duration: 240, hp: 2.8, speed: 1.17, rate: [1.7, 6.6], max: 200, kills: 1700, wrecks: [30, 24],
+    enemies: [['drone', 0, 9], ['swarmer', 8, 5], ['dasher', 18, 4], ['shooter', 30, 3], ['tank', 45, 3], ['splitter', 22, 5]],
     events: [
-      { t: 70, type: 'ring', enemy: 'splitter', count: 12, msg: 'SPLITTERS INCOMING' },
+      { t: 65, type: 'ring', enemy: 'splitter', count: 16, msg: 'SPLITTERS INCOMING' },
       { t: 110, type: 'elite', enemy: 'splitter', msg: 'ELITE DETECTED' },
-      { t: 150, type: 'ring', enemy: 'swarmer', count: 40, msg: 'SWARM INCOMING' },
+      { t: 150, type: 'ring', enemy: 'swarmer', count: 56, msg: 'SWARM INCOMING' },
       { t: 180, type: 'elite', enemy: 'tank', msg: 'ELITE DETECTED' },
       { t: 210, type: 'surge', dur: 30, mul: 2, msg: 'FINAL WAVE' },
     ],
   },
   {
-    id: '1-6', name: 'Harvester', duration: 150, bossAt: 150, boss: 'hive', hp: 2.3, speed: 1.1, rate: [1, 3.4], max: 130, kills: 600,
-    enemies: [['drone', 0, 9], ['swarmer', 10, 5], ['dasher', 25, 4], ['shooter', 40, 2], ['splitter', 45, 3], ['tank', 70, 1]],
+    id: '1-6', name: 'Harvester', duration: 120, bossAt: 120, boss: 'hive', hp: 2.3, speed: 1.18, rate: [1.5, 5], max: 170, kills: 700, wrecks: [40, 30],
+    enemies: [['drone', 0, 9], ['swarmer', 8, 5], ['dasher', 20, 4], ['shooter', 30, 2], ['splitter', 35, 3], ['tank', 55, 1]],
     events: [
-      { t: 50, type: 'ring', enemy: 'drone', count: 20, msg: 'INCOMING SWARM' },
-      { t: 100, type: 'elite', enemy: 'drone', msg: 'ELITE DETECTED' },
+      { t: 40, type: 'ring', enemy: 'drone', count: 30, msg: 'INCOMING SWARM' },
+      { t: 80, type: 'elite', enemy: 'drone', msg: 'ELITE DETECTED' },
     ],
   },
 ];
@@ -364,6 +369,6 @@ export function endlessStage(world) {
   return {
     id: `E${world.id}`, name: 'Endless', endless: true, world, duration: ENDLESS.ramp,
     hp0: s[0].hp0 || 1, hp: ref.hp, speed: ref.speed, rate: ref.rate, max: ref.max + 20, enemies: ref.enemies,
-    events: [], boss: s[s.length - 1].boss, kills: 0, elites: 0, hazards,
+    events: [], boss: s[s.length - 1].boss, kills: 0, elites: 0, hazards, wrecks: ref.wrecks,
   };
 }

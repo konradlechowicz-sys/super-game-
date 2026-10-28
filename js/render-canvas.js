@@ -84,7 +84,7 @@ export function renderGame(game, ctx, overlay = false) {
     ctx.fill();
   }
   ctx.globalAlpha = 1;
-  drawHazards(game, ctx);
+  drawHazards(game, ctx, overlay);
   ctx.globalCompositeOperation = 'source-over';
 
   // enemies
@@ -254,10 +254,13 @@ function drawBoss(game, R, b, sc) {
   }
 }
 
-function drawHazards(game, ctx) {
+function drawHazards(game, ctx, overlay) {
   const t = game.time;
   for (const h of game.hazards) {
-    if (h.kind === 'beam') {
+    if (h.kind === 'wreck') {
+      drawWreck(h, ctx, t, overlay);
+      ctx.globalCompositeOperation = 'lighter';
+    } else if (h.kind === 'beam') {
       const [x0, y0, x1, y1] = game.beamEnds(h);
       const col = h.centered ? '#ffb52e' : '#ff2d55';
       ctx.beginPath();
@@ -319,6 +322,55 @@ function drawHazards(game, ctx) {
         ctx.beginPath(); ctx.arc(h.x, h.y, h.r * 1.4, a, a + 1.2); ctx.stroke();
       }
     }
+  }
+  ctx.globalAlpha = 1;
+}
+
+// The falling wreck of world 1 (Game.fallingWreck): while it warns, an amber corridor along its path with chevrons
+// running its way and a shadow growing where it will pass the ship; then the wreck itself (the 2.0 look draws it as
+// a sprite, js/v2/renderer.js, so the overlay skips it).
+function drawWreck(h, ctx, t, overlay) {
+  const k = Math.min(1, h.t / h.warn), c = Math.cos(h.a), s = Math.sin(h.a);
+  const len = Math.hypot(h.x1 - h.x0, h.y1 - h.y0), mx = (h.x0 + h.x1) / 2, my = (h.y0 + h.y1) / 2;
+  ctx.save();
+  ctx.translate(mx, my); ctx.rotate(h.a);
+  const fade = h.t < h.warn ? 1 : Math.max(0, 1 - (h.t - h.warn) / h.dur);
+  ctx.globalCompositeOperation = 'source-over';
+  ctx.globalAlpha = (0.1 + 0.06 * Math.sin(t * 14)) * fade;
+  ctx.fillStyle = '#ffb02e';
+  ctx.fillRect(-len / 2, -h.w / 2, len, h.w);
+  ctx.globalAlpha = 0.75 * fade;
+  ctx.strokeStyle = '#ffb02e';
+  ctx.lineWidth = 2;
+  ctx.setLineDash([18, 12]); ctx.lineDashOffset = -t * 120;
+  ctx.beginPath(); ctx.moveTo(-len / 2, -h.w / 2); ctx.lineTo(len / 2, -h.w / 2); ctx.moveTo(-len / 2, h.w / 2); ctx.lineTo(len / 2, h.w / 2); ctx.stroke();
+  ctx.setLineDash([]);
+  if (h.t < h.warn) {
+    // chevrons running the wreck's way
+    ctx.globalAlpha = 0.55 + 0.3 * k;
+    ctx.lineWidth = 3;
+    const step = 90, off = (t * 260) % step;
+    for (let x = -len / 2 + off; x < len / 2; x += step) {
+      ctx.beginPath(); ctx.moveTo(x - 12, -16); ctx.lineTo(x + 4, 0); ctx.lineTo(x - 12, 16); ctx.stroke();
+    }
+  }
+  ctx.restore();
+  // its shadow: grows at the middle of the path while it warns, then runs with the wreck
+  const sx = h.t < h.warn ? mx : h.x, sy = h.t < h.warn ? my : h.y;
+  ctx.globalCompositeOperation = 'source-over';
+  ctx.globalAlpha = 0.5 * (h.t < h.warn ? k : 1) * fade;
+  const g = ctx.createRadialGradient(sx, sy, 0, sx, sy, h.w);
+  g.addColorStop(0, 'rgba(0,0,0,0.9)'); g.addColorStop(1, 'rgba(0,0,0,0)');
+  ctx.fillStyle = g;
+  ctx.beginPath(); ctx.ellipse(sx, sy, h.w * (0.6 + 0.4 * k), h.w * 0.6 * (0.6 + 0.4 * k), h.a, 0, TAU); ctx.fill();
+  if (!overlay && h.t >= h.warn) {
+    // the 1.x look: a plain dark slab
+    ctx.save();
+    ctx.translate(h.x, h.y); ctx.rotate(h.a + (h.t - h.warn) * h.spin);
+    ctx.globalAlpha = 1;
+    ctx.fillStyle = '#3a4152'; ctx.strokeStyle = '#ffb02e'; ctx.lineWidth = 2;
+    ctx.fillRect(-h.w * 0.8, -h.w * 0.45, h.w * 1.6, h.w * 0.9); ctx.strokeRect(-h.w * 0.8, -h.w * 0.45, h.w * 1.6, h.w * 0.9);
+    ctx.restore();
   }
   ctx.globalAlpha = 1;
 }

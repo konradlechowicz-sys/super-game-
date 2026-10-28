@@ -54,6 +54,9 @@ Next, in this order unless Konrad says otherwise:
    waves (see the performance gate).
 2. Game speed and balance: Konrad finds the game a bit slow; ask him what exactly (ship, enemies, shots, level-ups,
    sectors, the Harvester, fuel-tank blast) before changing numbers.
+   First pass of 1 and 2 done (build 97, 2026-10-28): `Game.fallingWreck` (stage field `wrecks`), world-1 sectors
+   rebalanced in `js/data.js` (more and faster enemies, bigger rings, max 200 on the field, kill goals checked with a
+   headless run). Konrad tests on the iPhone; tune from his notes.
 3. Redesign the start screen and the pop-ups (level-up cards, crates, results, paywall and other modals): today they
    are too colourful for the mature, darker palette of world 1 and the character of 2.0. Make them darker and calmer,
    in the Art Bible's colours (gunmetal, deep space, amber and magenta accents), keeping them readable.
