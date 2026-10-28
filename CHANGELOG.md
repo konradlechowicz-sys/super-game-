@@ -16,6 +16,9 @@ i wersja TEST (gracze tego nie widzą).
 
 - 
 
+## Build 94 · 2026-10-28
+- [Zmiana] 2.0: świat 1 nazywa się teraz ORBITAL RUINS (wcześniej Neon Nebula), a jego sektory: 1-1 Dead Orbit, 1-2 Debris Field, 1-3 Broken Ring, 1-4 Rewritten Signal, 1-5 Last Picket, 1-6 Harvester. Nowe nazwy widać na mapie sektorów, w odprawie, na banerze na starcie i na ekranie wyników.
+
 ## Build 93 · 2026-10-28
 - [Zmiana] 2.0: nowy, stonowany i bardziej technologiczny styl interfejsu – grafitowe panele, cienkie linie, ostre narożniki, narożne „klamry” na okienkach, prawie bez neonowej poświaty. Jeden akcent – bursztyn ze świata 1 – oznacza akcje i wybór (PLAY, LAUNCH, RESUME, aktywne przełączniki); magenta tylko dla Kolektywu (boss, porażka); złoto tylko dla monet i gwiazdek. Dotyczy ekranu startowego, mapy sektorów, hangaru, ulepszeń, Codexu, codziennej nagrody, ustawień, okna zakupu, kart level-up, pauzy, wyników, HUD-u, banerów i podpowiedzi.
 - [Zmiana] 2.0: logo w nowym stylu – „VOID” jasnym metalem, „BLASTER” bursztynem między cienkimi liniami.

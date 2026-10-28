@@ -96,9 +96,10 @@ export const BOSSES = {
   },
 };
 
+// World 1 of 2.0, "Orbital Ruins" (Art Bible; sector names decided 2026-10-28, Konrad can rename them)
 const W1 = [
   {
-    id: '1-1', name: 'First Contact', duration: 180, hp: 1.5, speed: 1, rate: [0.9, 3.2], max: 110, kills: 600,
+    id: '1-1', name: 'Dead Orbit', duration: 180, hp: 1.5, speed: 1, rate: [0.9, 3.2], max: 110, kills: 600,
     enemies: [['drone', 0, 10], ['swarmer', 45, 5]],
     events: [
       { t: 60, type: 'ring', enemy: 'drone', count: 16, msg: 'INCOMING SWARM' },
@@ -107,7 +108,7 @@ const W1 = [
     ],
   },
   {
-    id: '1-2', name: 'Swarm Front', duration: 195, hp: 1.8, speed: 1.03, rate: [1, 3.6], max: 130, kills: 850,
+    id: '1-2', name: 'Debris Field', duration: 195, hp: 1.8, speed: 1.03, rate: [1, 3.6], max: 130, kills: 850,
     enemies: [['drone', 0, 10], ['swarmer', 10, 6], ['dasher', 35, 4]],
     events: [
       { t: 70, type: 'ring', enemy: 'swarmer', count: 30, msg: 'SWARM INCOMING' },
@@ -116,7 +117,7 @@ const W1 = [
     ],
   },
   {
-    id: '1-3', name: 'Glass Fields', duration: 210, hp: 2.1, speed: 1.05, rate: [1.1, 4], max: 150, kills: 950,
+    id: '1-3', name: 'Broken Ring', duration: 210, hp: 2.1, speed: 1.05, rate: [1.1, 4], max: 150, kills: 950,
     enemies: [['drone', 0, 10], ['swarmer', 10, 5], ['dasher', 25, 4], ['shooter', 40, 4]],
     events: [
       { t: 60, type: 'ring', enemy: 'drone', count: 24, msg: 'INCOMING SWARM' },
@@ -126,7 +127,7 @@ const W1 = [
     ],
   },
   {
-    id: '1-4', name: 'Heavy Metal', duration: 225, hp: 2.4, speed: 1.07, rate: [1.1, 4.3], max: 165, kills: 1050,
+    id: '1-4', name: 'Rewritten Signal', duration: 225, hp: 2.4, speed: 1.07, rate: [1.1, 4.3], max: 165, kills: 1050,
     enemies: [['drone', 0, 10], ['swarmer', 10, 5], ['dasher', 25, 4], ['shooter', 40, 3], ['tank', 50, 3]],
     events: [
       { t: 80, type: 'elite', enemy: 'tank', msg: 'ELITE DETECTED' },
@@ -136,7 +137,7 @@ const W1 = [
     ],
   },
   {
-    id: '1-5', name: 'Split Storm', duration: 240, hp: 2.8, speed: 1.09, rate: [1.2, 4.6], max: 180, kills: 1200,
+    id: '1-5', name: 'Last Picket', duration: 240, hp: 2.8, speed: 1.09, rate: [1.2, 4.6], max: 180, kills: 1200,
     enemies: [['drone', 0, 9], ['swarmer', 10, 5], ['dasher', 25, 4], ['shooter', 40, 3], ['tank', 55, 3], ['splitter', 30, 5]],
     events: [
       { t: 70, type: 'ring', enemy: 'splitter', count: 12, msg: 'SPLITTERS INCOMING' },
@@ -293,7 +294,7 @@ export const WORLD_TUNING = {
 
 export const WORLDS = [
   {
-    id: 1, name: 'Neon Nebula', color: '#ff2d95', stages: W1, music: 'game',
+    id: 1, name: 'Orbital Ruins', color: '#ff2d95', stages: W1, music: 'game',
     theme: { top: '#16002e', bottom: '#030010', neb: ['#ff2d95', '#7a2dff', '#00b3ff'], grid: '#b04dff' },
   },
   {

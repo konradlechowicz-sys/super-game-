@@ -691,7 +691,7 @@ export class UI {
     this.modal(`
       <div class="modal-kicker" style="color:var(--gold)">${afterBoss ? 'HARVESTER DEFEATED' : 'VOID BLASTER'}</div>
       <h2>${afterBoss ? 'THE GALAXY NEEDS YOU' : 'UNLOCK THE FULL GAME'}</h2>
-      <p class="muted center">${afterBoss ? 'Three more worlds are waiting beyond the Neon Nebula.' : 'One purchase, no ads, no subscriptions.'}</p>
+      <p class="muted center">${afterBoss ? 'Three more worlds are waiting beyond the Orbital Ruins.' : 'One purchase, no ads, no subscriptions.'}</p>
       <ul class="perks">
         <li><b>3 new worlds</b><span>Crystal Belt, Solar Forge, Void Core: 18 sectors</span></li>
         <li><b>3 epic bosses</b><span>Crystal Serpent, Forge Titan and the Void Heart</span></li>
