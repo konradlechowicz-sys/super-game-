@@ -13,8 +13,9 @@
   (style block, a world block per world, tasks P1-P8). Change a world's card and its prompts together.
 - Sector names of all 10 worlds (6 each, the 6th is the boss): Art Bible tab "Art Bible", table "Nazwy sektorów".
   World 1 approved by Konrad (2026-10-28, in `js/data.js`); worlds 2-10 are proposals to review. On `v2` the map
-  shows all 10 worlds; 2-10 are "under construction" (`PLANNED_WORLDS` in `js/data.js`: story + planned sectors)
-  until built. The 1.x worlds 2-4 (`LEGACY_WORLDS`) are no longer played. 2.0 free trial = worlds 1-2.
+  shows all 10 worlds; worlds not built yet are "under construction" (`PLANNED_WORLDS` in `js/data.js`: story +
+  planned sectors). Built: world 1 (build 91) and world 2 "Siege of Earth" (build 98, from ChatGPT's approved W2 set
+  in `art/2.0/worlds/world2`, textures by `proto2/make-world2.py`, look `js/v2/siege.js`). The 1.x worlds 2-4 (`LEGACY_WORLDS`) are no longer played. 2.0 free trial = worlds 1-2.
 - Music: the 2.0 theme is the menu music for good; no separate M1 track.
 
 ## Shared handoff with Codex (paused, see above)

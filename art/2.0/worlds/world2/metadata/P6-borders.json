@@ -1,0 +1,71 @@
+{
+  "background": "#05010f",
+  "pieces": [
+    {
+      "name": "top",
+      "file": "graphics/W2-P6-border-pieces/W2-P6-border-top.png",
+      "size": [
+        1024,
+        160
+      ]
+    },
+    {
+      "name": "bottom",
+      "file": "graphics/W2-P6-border-pieces/W2-P6-border-bottom.png",
+      "size": [
+        1024,
+        160
+      ]
+    },
+    {
+      "name": "left",
+      "file": "graphics/W2-P6-border-pieces/W2-P6-border-left.png",
+      "size": [
+        160,
+        1024
+      ]
+    },
+    {
+      "name": "right",
+      "file": "graphics/W2-P6-border-pieces/W2-P6-border-right.png",
+      "size": [
+        160,
+        1024
+      ]
+    },
+    {
+      "name": "top-left",
+      "file": "graphics/W2-P6-border-pieces/W2-P6-corner-top-left.png",
+      "size": [
+        256,
+        256
+      ]
+    },
+    {
+      "name": "top-right",
+      "file": "graphics/W2-P6-border-pieces/W2-P6-corner-top-right.png",
+      "size": [
+        256,
+        256
+      ]
+    },
+    {
+      "name": "bottom-left",
+      "file": "graphics/W2-P6-border-pieces/W2-P6-corner-bottom-left.png",
+      "size": [
+        256,
+        256
+      ]
+    },
+    {
+      "name": "bottom-right",
+      "file": "graphics/W2-P6-border-pieces/W2-P6-corner-bottom-right.png",
+      "size": [
+        256,
+        256
+      ]
+    }
+  ],
+  "straight_pieces_repeat_along_length": true,
+  "corner_join_profiles_match": true
+}

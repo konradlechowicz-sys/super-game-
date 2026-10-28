@@ -1,0 +1,25 @@
+{
+  "world": "W2 - Siege of Earth",
+  "date": "2026-10-28",
+  "choices": {
+    "P1": "A",
+    "P2": "B",
+    "P3": "A",
+    "P4": "A",
+    "P5": "A",
+    "P6": "B",
+    "P7": "A",
+    "P8": "B"
+  },
+  "generation_order": [
+    "P1",
+    "P3",
+    "P2",
+    "P4",
+    "P5",
+    "P6",
+    "P7",
+    "P8"
+  ],
+  "selection_source": "Konrad replied to the A/B question after every stage."
+}

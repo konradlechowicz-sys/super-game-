@@ -6,7 +6,7 @@ import { shipLook } from './store.js';
 import { Tutorial, tipsOn, tipSeen, markTip } from './tutorial.js';
 import { renderGame } from './render-canvas.js';
 import { EDITION } from './edition.js';
-import { initProps, updateProps, breakProp } from './props.js';
+import { initProps, updateProps, breakProp, hasProps } from './props.js';
 
 const MAX_WEAPONS = 4;
 const MAX_PASSIVES = 4;
@@ -58,9 +58,9 @@ export class Game {
     this.recompute();
     this.player.hp = this.player.maxHp;
     this.addWeapon(this.ship.weapon);
-    // 2.0, world 1: fuel tanks and ammo crates to shoot (js/props.js)
+    // 2.0: each world's props to shoot (js/props.js)
     this.props = [];
-    if (EDITION === 2 && stage.world?.id === 1) initProps(this);
+    if (EDITION === 2 && hasProps(stage.world?.id)) initProps(this);
     this.tut = new Tutorial(this);
     if (stage.endless) this.ui.banner('ENDLESS', stage.world.name.toUpperCase());
     else this.ui.banner(`STAGE ${stage.id}`, stage.name.toUpperCase());

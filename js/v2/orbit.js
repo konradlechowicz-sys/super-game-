@@ -5,6 +5,7 @@
 // of wreckage with the amber hexagonal shield along the arena edge. The art is ChatGPT's (tasks W1 P2, P3a, P3b, P4,
 // P5, P6, cut by proto2/make-world1.py); while a texture is missing, a stand-in drawn here or taken from the teaser is used.
 import { Container, Graphics, Rectangle, Sprite, Texture, TilingSprite } from 'pixi.js';
+import { buildEdge } from './edge.js';
 
 const TAU = Math.PI * 2;
 const SAT_CYCLE = 12; // seconds between two rewrites of one satellite
@@ -185,27 +186,9 @@ export function makeOrbitalRuins(tex) {
       satList.push({ c, a, b, x, y, spin: (r() - 0.5) * 0.2, drift: r() * TAU, off: r() * SAT_CYCLE });
     }
     // the arena edge: 4 strips repeating along the sides and 4 corners (W1 P6), else a broken amber line
-    for (const c of [edge, edgeGlow]) c.removeChildren().forEach((s) => s.destroy());
     barrier.clear();
-    if (tex['w1-edge-top']) {
-      const s = EDGE_SCALE, o = EDGE_IN * s, t = 160 * s, k = 256 * s;
-      const L = -w / 2 - o, T = -h / 2 - o, R = w / 2 + o, B = h / 2 + o; // outer bounds of the ring
-      const pieces = [
-        ['top', L + k, T, R - L - 2 * k, t], ['bottom', L + k, B - t, R - L - 2 * k, t],
-        ['left', L, T + k, t, B - T - 2 * k], ['right', R - t, T + k, t, B - T - 2 * k],
-      ];
-      for (const c of [edge, edgeGlow]) {
-        for (const [name, x, y, pw, ph] of pieces) {
-          const strip = new TilingSprite({ texture: tex[`w1-edge-${name}`], width: pw / s, height: ph / s });
-          strip.scale.set(s); strip.position.set(x, y);
-          c.addChild(strip);
-        }
-        for (const [name, x, y] of [['top-left', L, T], ['top-right', R - k, T], ['bottom-left', L, B - k], ['bottom-right', R - k, B - k]]) {
-          const corner = new Sprite(tex[`w1-edge-${name}`]);
-          corner.scale.set(s); corner.position.set(x, y);
-          c.addChild(corner);
-        }
-      }
+    if (buildEdge(tex, 'w1', w, h, EDGE_SCALE, EDGE_IN, edge)) {
+      buildEdge(tex, 'w1', w, h, EDGE_SCALE, EDGE_IN, edgeGlow);
       edgeGlow.children.forEach((c) => { c.tint = 0xffb02e; });
       return;
     }

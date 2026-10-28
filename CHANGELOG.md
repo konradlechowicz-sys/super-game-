@@ -16,6 +16,14 @@ i wersja TEST (gracze tego nie widzą).
 
 - 
 
+## Build 98 · 2026-10-28
+- [Nowe] 2.0: świat 2 „Siege of Earth” jest grywalny – 6 sektorów (Burning Sky, Tether Storm, Cloud Wall, City of Fire, Home Front, Landing Citadel), cały z grafik ChatGPT (komplet W2 P1–P8). Walczymy nocą nad burzą: pod nami Ziemia ze światłami miast, która powoli przesuwa się w dole, półprzezroczyste chmury, płonące wraki obrony i magentowe węzły lin Kolektywu, na brzegu ściany burzowych chmur, a tuż przed kamerą strzępy chmur, iskry i deszcz.
+- [Nowe] 2.0, świat 2: mechanika świata – wały chmur zasłaniają wrogów (widać tylko ich magentowe rdzenie), a co 5–9 s uderza błyskawica: ekran błyska, burzowe ściany się rozświetlają, a chmury na chwilę rzedną i odsłaniają wszystko.
+- [Nowe] 2.0, świat 2: sześciu nowych wrogów z siły desantowej – Interceptor (szybkie klucze po 3–5), Lander Pod (zniszczony wypuszcza 3 interceptory), Gunship (salwy po 3 pociski z dystansu), Sky Mine (podlatuje i wybucha), Raider (celuje i szarżuje), Siege Walker (wolny, bardzo wytrzymały); elita interceptora ma własną grafikę, każdy wróg własne szczątki.
+- [Nowe] 2.0, świat 2: boss LANDING CITADEL – latająca forteca z dwoma pierścieniami dział, które obracają się w przeciwne strony (w kolejnych fazach coraz szybciej), z czterema pulsującymi słabymi punktami; trzy fazy, spirale i wirujące promienie, ostrzał moździerzowy, desant interceptorów i min; wynurza się z chmur.
+- [Nowe] 2.0, świat 2: rekwizyty do zestrzelenia – baterie przeciwlotnicze (amunicja wybucha i rani wszystko wokół) i pylony-nadajniki Kolektywu (póki stoją, wzmacniają i przyspieszają wrogów w promieniu ok. 240; zniszczone wyrzucają monety i czasem apteczkę albo magnes).
+- [Balans] 2.0, świat 2: tempo świata 1 o stopień trudniej; cele zabójstw i wytrzymałość bossa ustawione symulacją (walka z Citadel zwykle poniżej minuty, najwyżej ok. 2:20). Muzyka: na razie utwór świata 1, dopóki świat 2 nie ma własnego.
+
 ## Build 97 · 2026-10-28
 - [Nowe] 2.0, świat 1: spadający wrak – co 25–35 s przez arenę, blisko statku, przelatuje duży fragment pokładu stacji. Najpierw przez ok. 1,8 s bursztynowy korytarz z biegnącymi szewronami i rosnącym cieniem (plus dźwięk ostrzeżenia), potem szybki przelot z obrotem: drobni wrogowie giną od razu, ciężcy dostają mocno, zbiorniki paliwa wybuchają, a statek, który został w korytarzu, traci ok. 19 punktów. Działa też w Endless świata 1.
 - [Balans] 2.0, świat 1: szybsze tempo – ok. 45% więcej wrogów od pierwszej sekundy, większe fale (np. 1-1: 24 i 40 zamiast 16 i 28; 1-5: 56 swarmerów), wrogowie o ok. 8% szybsi i wcześniej w grze, limit na polu 140–200 (zapas względem bramki wydajności 180 przy 60 FPS). Harvester pojawia się po 2:00 zamiast 2:30.

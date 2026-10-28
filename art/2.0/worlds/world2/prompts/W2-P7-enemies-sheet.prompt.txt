@@ -1,0 +1,40 @@
+STYLE (keep identical across all images):
+Game art for "Void Blaster", a top-down mobile space shooter (survivors-like).
+Camera: top-down orthographic, looking straight down, no perspective.
+Look: stylized sci-fi with a neon accent. Dark, rich materials (gunmetal, carbon,
+matte ceramic) lit from the top-left, glowing edges and emissive lights only where
+noted. Detail level: high but clean - panel lines, vents, rivets; no grunge overload.
+The background must stay dark and calm so bright game objects read on top of it:
+no bright cyan anywhere (cyan belongs to the player), magenta only as thin traces.
+Rendering: crisp edges, soft bloom on glowing parts only, no motion blur, no depth of
+field, not photorealistic. No text, no logo, no watermark.
+
+WORLD 2 "SIEGE OF EARTH": low orbit, 400 km above night-side Earth, during the
+landing of the Void Collective (an alien machine intelligence). We fight above a cloud
+layer; under it, coastlines and city lights, some cities burning. Colors: night
+#070b1a, clouds #222b44-#3a4566, tiny warm city lights #ffb347, fires #ff5a2e,
+lightning #e8f0ff, the Collective's tethers and web in magenta #ff2d95.
+No sun (night): clouds lit from below by cities and fires, from above by lightning.
+Mood: siege, storm, the last defense of home. 100% machine.
+
+TASK: Enemy sheet, 6 enemies of the landing force, facing up (nose to the top of the
+image), each seen from directly above, one scale, plain flat dark background (#05010f),
+well apart. Hard angular machines with a glowing magenta #ff2d95 core, accents in fire
+red and white-hot. Relative sizes: interceptor 30, lander pod 34 (it opens to release
+small drones), gunship 44, sky mine 30, bomber 44, siege walker 64 (the biggest drawn
+about 300 px). Then, on a second image: an elite interceptor (1.6x, heavier armor, a
+gold ring) and, for each of the 6, 3-4 broken shards of its body for the death
+animation, in one row per enemy. No text.
+
+USE CASE: stylized-concept, production enemy sprites for W2. Derive a heavier armored landing force from the supplied W2 reference aesthetic, replacing all scenery and props with exactly SIX COMPLETE UNDAMAGED enemy units on uniform flat #05010f. Hard angular purely mechanical construction, gunmetal/carbon/matte armor, magenta #ff2d95 cores, restrained small fire-red and white-hot lights. Clean stylized game art compatible with the reference, no organic shapes. Crisp outlines, top-left lighting. Strict 90-degree overhead ORTHOGRAPHIC camera, no isometric perspective or visible front/side elevation. EVERY unit's nose/front points UP toward the top edge, including gunship, bomber, lander and walker. No text, labels, numbers, frame, ground, scenery, fire damage, separate debris, motion blur, cyan, green or gold. Wide clear gaps around every unit including all guns and legs.
+
+THIS CALL DELIVERS ONLY THE FIRST ENEMY SHEET; the elite and shards will be prepared as the matching second sheet afterward.
+Exactly six sprites in a THREE-COLUMN, TWO-ROW square sheet, no extra ships. Reading order left to right:
+TOP LEFT: interceptor (relative size 30), a small fast armored angular attack craft with sharp upward nose and bright magenta central core.
+TOP CENTER: lander pod (34), a compact armored drop pod with visible segmented opening hatch and folded small drone bays, front pointing up; no drones outside the hull.
+TOP RIGHT: gunship (44), broad heavy armored gun platform craft with twin forward guns and magenta core, upward bow.
+BOTTOM LEFT: sky mine (30), compact angular spiked floating explosive machine, magenta center, directional small nose/index spike at 12 o'clock.
+BOTTOM CENTER: bomber (44), clearly distinct broad-winged armored bomber with enclosed bomb bays and an upward-pointing front, magenta core.
+BOTTOM RIGHT: siege walker (64), the largest: heavy armored machine with sturdy splayed mechanical legs, central magenta core, armored forward prow and paired cannons pointing UP. Seen straight down at its back, not looking into its front.
+All six use the same world scale; largest around 300 px and visibly about twice the interceptor's size. One complete square sheet, preferably 1536x1536, no crops.
+VARIANT A: thick rectilinear armor plates and clipped-corner industrial housings. Interceptor has a single arrowhead nose and short swept wings. Lander is hexagonal. Gunship has twin side engine blocks. Sky mine is a compact four-point diamond. Bomber has broad trapezoidal wings. Siege walker has four sturdy angular legs and a broad octagonal back plate.

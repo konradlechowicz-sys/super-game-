@@ -70,6 +70,13 @@ export const ENEMIES = {
   wraith: { hp: 30, speed: 80, dmg: 7, r: 12, xp: 3, color: '#c86bff', shape: 'wraith', ai: 'blink' },
   eye: { hp: 50, speed: 40, dmg: 8, r: 15, xp: 4, color: '#ff4dd8', shape: 'eye', ai: 'seeker' },
   voidling: { hp: 10, speed: 130, dmg: 4, r: 8, xp: 1, color: '#9d4dff', shape: 'dart', pack: [4, 6] },
+  // 2.0 world 2 "Siege of Earth": the landing force (art: proto2/make-world2.py; shapes are the 1.x look's fallback)
+  interceptor: { hp: 10, speed: 135, dmg: 5, r: 10, xp: 1, color: '#ff2d95', shape: 'dart', pack: [3, 5] },
+  lander: { hp: 50, speed: 52, dmg: 10, r: 12, xp: 3, color: '#ff4dd8', shape: 'circle', split: 'interceptor' },
+  gunship: { hp: 48, speed: 46, dmg: 9, r: 15, xp: 4, color: '#ff3d9a', shape: 'hex', ai: 'shoot', shots: 3, fire: 3.6 },
+  skymine: { hp: 22, speed: 92, dmg: 6, r: 11, xp: 2, color: '#ff6ab4', shape: 'bomb', ai: 'fuse', spin: 2 },
+  raider: { hp: 40, speed: 62, dmg: 10, r: 15, xp: 3, color: '#ff2d6f', shape: 'diamond', ai: 'dash' },
+  walker: { hp: 230, speed: 30, dmg: 14, r: 22, xp: 8, color: '#c84dff', shape: 'square' },
 };
 
 export const BOSSES = {
@@ -79,6 +86,14 @@ export const BOSSES = {
     name: 'HARVESTER', hp: 5000, speed: 42, dmg: 18, r: 58, color: '#ff2d6f', inner: '#ff8ad0', sides: 6,
     move: 'chase', rest: 1.9, phases: [0.5], attacks: ['spiral', 'burst', 'summon', 'charge'], summon: ['drone', 'swarmer'],
     bulletDmg: 7, bulletSpeed: 0.85, burstN: 16, summonN: 5, bgSpawn: 0.2,
+  },
+  // 2.0 world 2: the Landing Citadel, a flying fortress with turning gun rings over a burning city. Three phases:
+  // spirals and turning beams from the rings, shelling (mortars), and drops of interceptors and sky mines. Its health is
+  // close to the Harvester's: the three phases make it the harder fight (a headless run: 20-140 s with the boss, most under a minute).
+  citadel: {
+    name: 'LANDING CITADEL', hp: 4800, speed: 30, dmg: 20, r: 70, color: '#ff2d95', inner: '#ff8ad0', sides: 8,
+    move: 'chase', rest: 1.6, phases: [0.6, 0.3], attacks: ['spiral', 'summon', 'beams', 'burst', 'mortar', 'spiral'],
+    summon: ['interceptor', 'skymine'], bulletDmg: 8, bulletSpeed: 0.9, burstN: 18, summonN: 4, bgSpawn: 0.1,
   },
   serpent: {
     name: 'CRYSTAL SERPENT', hp: 15000, speed: 120, dmg: 22, r: 34, color: '#2ff3ff', inner: '#b4fff0', sides: 5,
@@ -158,6 +173,69 @@ const W1 = [
     events: [
       { t: 40, type: 'ring', enemy: 'drone', count: 30, msg: 'INCOMING SWARM' },
       { t: 80, type: 'elite', enemy: 'drone', msg: 'ELITE DETECTED' },
+    ],
+  },
+];
+
+// World 2 of 2.0, "Siege of Earth" (Art Bible; sector names from its table "Nazwy sektorów"). The 2.0 pace of world 1,
+// a step tougher: the landing force arrives one type per sector, the Siege Walker in 2-4. The world's mechanic is
+// in its look (js/v2/siege.js): cloud banks hide enemies until lightning strikes.
+const W2_2 = [
+  {
+    id: '2-1', name: 'Burning Sky', duration: 195, hp0: 1.4, hp: 3.0, speed: 1.12, rate: [1.5, 5.0], max: 160, kills: 1550,
+    enemies: [['interceptor', 0, 10], ['lander', 20, 4], ['skymine', 40, 3]],
+    events: [
+      { t: 55, type: 'ring', enemy: 'interceptor', count: 30, msg: 'INTERCEPTORS INCOMING' },
+      { t: 100, type: 'elite', enemy: 'interceptor', msg: 'ELITE DETECTED' },
+      { t: 150, type: 'ring', enemy: 'skymine', count: 24, msg: 'MINEFIELD' },
+    ],
+  },
+  {
+    id: '2-2', name: 'Tether Storm', duration: 210, hp0: 1.5, hp: 3.2, speed: 1.14, rate: [1.6, 5.6], max: 175, kills: 1850,
+    enemies: [['interceptor', 0, 10], ['lander', 10, 4], ['skymine', 25, 3], ['gunship', 30, 4]],
+    events: [
+      { t: 60, type: 'ring', enemy: 'lander', count: 16, msg: 'LANDING WAVE' },
+      { t: 110, type: 'elite', enemy: 'gunship', msg: 'ELITE DETECTED' },
+      { t: 175, type: 'surge', dur: 30, mul: 2, msg: 'FINAL WAVE' },
+    ],
+  },
+  {
+    id: '2-3', name: 'Cloud Wall', duration: 225, hp0: 1.6, hp: 3.4, speed: 1.15, rate: [1.7, 6.0], max: 180, kills: 2000,
+    enemies: [['interceptor', 0, 10], ['lander', 10, 4], ['skymine', 20, 3], ['gunship', 30, 3], ['raider', 20, 4]],
+    events: [
+      { t: 55, type: 'ring', enemy: 'interceptor', count: 44, msg: 'INTERCEPTORS INCOMING' },
+      { t: 105, type: 'elite', enemy: 'raider', msg: 'ELITE DETECTED' },
+      { t: 150, type: 'ring', enemy: 'raider', count: 18, msg: 'RAIDER PACK' },
+      { t: 190, type: 'surge', dur: 30, mul: 2, msg: 'FINAL WAVE' },
+    ],
+  },
+  {
+    id: '2-4', name: 'City of Fire', duration: 240, hp0: 1.7, hp: 3.6, speed: 1.17, rate: [1.7, 6.4], max: 185, kills: 2100,
+    enemies: [['interceptor', 0, 10], ['lander', 10, 4], ['skymine', 20, 3], ['gunship', 30, 3], ['raider', 20, 4], ['walker', 40, 3]],
+    events: [
+      { t: 80, type: 'elite', enemy: 'walker', msg: 'ELITE DETECTED' },
+      { t: 120, type: 'ring', enemy: 'lander', count: 20, msg: 'LANDING WAVE' },
+      { t: 165, type: 'elite', enemy: 'walker', msg: 'ELITE DETECTED' },
+      { t: 205, type: 'surge', dur: 30, mul: 2, msg: 'FINAL WAVE' },
+    ],
+  },
+  {
+    id: '2-5', name: 'Home Front', duration: 255, hp0: 1.8, hp: 3.9, speed: 1.19, rate: [1.8, 6.8], max: 185, kills: 2100,
+    enemies: [['interceptor', 0, 9], ['lander', 10, 4], ['skymine', 15, 3], ['gunship', 25, 3], ['raider', 20, 4], ['walker', 40, 3]],
+    events: [
+      { t: 60, type: 'ring', enemy: 'skymine', count: 30, msg: 'MINEFIELD' },
+      { t: 105, type: 'elite', enemy: 'gunship', msg: 'ELITE DETECTED' },
+      { t: 150, type: 'ring', enemy: 'interceptor', count: 56, msg: 'INTERCEPTORS INCOMING' },
+      { t: 185, type: 'elite', enemy: 'walker', msg: 'ELITE DETECTED' },
+      { t: 225, type: 'surge', dur: 30, mul: 2, msg: 'FINAL WAVE' },
+    ],
+  },
+  {
+    id: '2-6', name: 'Landing Citadel', duration: 120, bossAt: 120, boss: 'citadel', hp0: 1.6, hp: 3.4, speed: 1.2, rate: [1.6, 5.2], max: 175, kills: 900,
+    enemies: [['interceptor', 0, 9], ['lander', 10, 4], ['skymine', 20, 3], ['gunship', 30, 2], ['raider', 35, 3], ['walker', 55, 1]],
+    events: [
+      { t: 40, type: 'ring', enemy: 'interceptor', count: 30, msg: 'INTERCEPTORS INCOMING' },
+      { t: 80, type: 'elite', enemy: 'raider', msg: 'ELITE DETECTED' },
     ],
   },
 ];
@@ -297,13 +375,11 @@ export const WORLD_TUNING = {
   4: { dmg: 1.8, ramp: 0.4, hp: 1.25, elite: 1.4, boss: 1.3 },
 };
 
-// The 2.0 journey (decided by Konrad, 2026-10-28): world 1 is built; worlds 2-10 are under construction. The map
+// The 2.0 journey (decided by Konrad, 2026-10-28): worlds 1-2 are built; worlds 3-10 are under construction. The map
 // shows them with their story and planned sectors (Art Bible, table "Nazwy sektorów"); when a world is built, it gets
 // its stages and drops `soon`. The 1.x worlds 2-4 below (W2-W4, LEGACY_WORLDS) are no longer played; they stay as a
 // starting point for tuning the new worlds.
 const PLANNED_WORLDS = [
-  [2, 'Siege of Earth', '#ff6a3d', 'The Collective lands. The last defense of home, above burning cities.',
-    ['Burning Sky', 'Tether Storm', 'Cloud Wall', 'City of Fire', 'Home Front', 'Landing Citadel']],
   [3, 'Lunar Bridgehead', '#a9b8d0', 'The counterattack: the Moon is the enemy\'s forward base.',
     ['Dark Side', 'Sea of Tranquility', 'Crater Run', 'Rooted Base', 'Mortar Fields', 'Moon Spire']],
   [4, 'Red Conversion', '#e0452b', 'Mars in the middle of being rewritten.',
@@ -326,6 +402,11 @@ export const WORLDS = [
   {
     id: 1, name: 'Orbital Ruins', color: '#ff2d95', stages: W1, music: 'game',
     theme: { top: '#16002e', bottom: '#030010', neb: ['#ff2d95', '#7a2dff', '#00b3ff'], grid: '#b04dff' },
+  },
+  {
+    // music: the world-1 recording until world 2 has its own (Art Bible: W2, to be made)
+    id: 2, name: 'Siege of Earth', color: '#ff6a3d', stages: W2_2, music: 'game',
+    theme: { top: '#0a1024', bottom: '#03050c', neb: ['#3a4566', '#ff5a2e', '#ff2d95'], grid: '#3a4566' },
   },
   ...PLANNED_WORLDS.map(([id, name, color, story, plan]) => ({ id, name, color, story, plan, stages: [], soon: true })),
 ];
