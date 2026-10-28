@@ -43,6 +43,17 @@
   60 FPS with about 180 enemies on screen. 2.0 balance must use this: noticeably more enemies at once than 1.x
   (bigger waves and swarms), keeping a margin for older iPhones.
 
+## 2.0 to-do (Konrad, 2026-10-28)
+World 1 is complete in the 2.0 look (build 91, accepted; Konrad played it on his iPhone and is very happy with it).
+Next, in this order unless Konrad says otherwise:
+1. World-1 mechanics: falling wrecks (shadow + amber warning, then the pass; hurts enemies and the ship) and bigger
+   waves (see the performance gate).
+2. Game speed and balance: Konrad finds the game a bit slow; ask him what exactly (ship, enemies, shots, level-ups,
+   sectors, the Harvester, fuel-tank blast) before changing numbers.
+3. Redesign the start screen and the pop-ups (level-up cards, crates, results, paywall and other modals): today they
+   are too colourful for the mature, darker palette of world 1 and the character of 2.0. Make them darker and calmer,
+   in the Art Bible's colours (gunmetal, deep space, amber and magenta accents), keeping them readable.
+
 ## Android (decided by Konrad)
 Android launches with 2.0 (Google Play needs 12 testers for 14 days on a new account before publishing, so closed
 testing should start during 2.0 work). Project in `android/`, see README.md. Until Google

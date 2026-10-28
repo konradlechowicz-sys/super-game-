@@ -16,6 +16,9 @@ i wersja TEST (gracze tego nie widzą).
 
 - 
 
+## Build 92 · 2026-10-28
+- [Narzędzia] Lista zadań 2.0 w notatkach projektu: mechanika świata 1, tempo i balans, ciemniejszy, spokojniejszy ekran startowy i okienka (dopasowane do świata 1). Gra bez zmian.
+
 ## Build 91 · 2026-10-27
 - [Zmiana] 2.0: boss świata 1 nazywa się teraz HARVESTER (wcześniej Hive Mother) – na pasku życia, w nazwie sektora 1-6 i na ekranie po jego pokonaniu.
 
