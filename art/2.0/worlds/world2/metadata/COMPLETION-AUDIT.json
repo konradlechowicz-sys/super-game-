@@ -1,0 +1,92 @@
+{
+  "scope": "All selected P1-P8 assets, both variant sets, actual stored PNG geometry, repetition boundaries, RGB assembly and prompt availability.",
+  "result": "passed",
+  "asset_png_count": 67,
+  "prompt_count": 9,
+  "stages": {
+    "P1": {
+      "selected_variant": "A",
+      "two_distinct_variants_exist": true,
+      "human_choice_recorded": true,
+      "selected_file_count": 1,
+      "exact_required_dimensions": [
+        941,
+        1672
+      ]
+    },
+    "P2": {
+      "selected_variant": "B",
+      "two_distinct_variants_exist": true,
+      "human_choice_recorded": true,
+      "selected_file_count": 1,
+      "exact_required_dimensions": [
+        2048,
+        2048
+      ],
+      "stored_opposite_edges_match": true
+    },
+    "P3": {
+      "selected_variant": "A",
+      "two_distinct_variants_exist": true,
+      "human_choice_recorded": true,
+      "selected_file_count": 1,
+      "exact_required_dimensions": [
+        1024,
+        1024
+      ],
+      "stored_opposite_edges_match": true,
+      "black_gaps_preserved": true
+    },
+    "P4": {
+      "selected_variant": "A",
+      "two_distinct_variants_exist": true,
+      "human_choice_recorded": true,
+      "selected_file_count": 1,
+      "exact_required_dimensions": [
+        1024,
+        1024
+      ],
+      "stored_opposite_edges_match": true,
+      "black_gaps_preserved": true
+    },
+    "P5": {
+      "selected_variant": "A",
+      "two_distinct_variants_exist": true,
+      "human_choice_recorded": true,
+      "selected_file_count": 11,
+      "ten_named_props_and_damage_states": true,
+      "required_size_ranges": true,
+      "state_pairs_same_scale": true
+    },
+    "P6": {
+      "selected_variant": "B",
+      "two_distinct_variants_exist": true,
+      "human_choice_recorded": true,
+      "selected_file_count": 9,
+      "eight_parts_at_exact_dimensions": true,
+      "strip_repetition_and_eight_corner_connections": true
+    },
+    "P7": {
+      "selected_variant": "A",
+      "two_distinct_variants_exist": true,
+      "human_choice_recorded": true,
+      "selected_file_count": 33,
+      "six_required_roles_and_relative_sizes": true,
+      "elite_1_6x": true,
+      "six_rows_four_shards": true,
+      "stored_rgb_fragments_reconstruct_each_body": true
+    },
+    "P8": {
+      "selected_variant": "B",
+      "two_distinct_variants_exist": true,
+      "human_choice_recorded": true,
+      "selected_file_count": 10,
+      "boss_1024_square": true,
+      "two_rings_four_weak_points_and_flame": true,
+      "stored_rgb_parts_reconstruct_boss": true,
+      "assembled_reference_bottom_right_same_scale": true
+    }
+  },
+  "visual_checks": "Approved stages and final boss/parts sheets were visually inspected during creation; final selected overview reviewed separately.",
+  "archive_checks": "Performed after packaging; verification report saved beside the ZIP in the project."
+}

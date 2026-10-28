@@ -1,0 +1,35 @@
+STYLE (keep identical across all images):
+Game art for "Void Blaster", a top-down mobile space shooter (survivors-like).
+Camera: top-down orthographic, looking straight down, no perspective.
+Look: stylized sci-fi with a neon accent. Dark, rich materials (gunmetal, carbon,
+matte ceramic) lit from the top-left, glowing edges and emissive lights only where
+noted. Detail level: high but clean - panel lines, vents, rivets; no grunge overload.
+The background must stay dark and calm so bright game objects read on top of it:
+no bright cyan anywhere (cyan belongs to the player), magenta only as thin traces.
+Rendering: crisp edges, soft bloom on glowing parts only, no motion blur, no depth of
+field, not photorealistic. No text, no logo, no watermark.
+
+WORLD 2 "SIEGE OF EARTH": low orbit, 400 km above night-side Earth, during the
+landing of the Void Collective (an alien machine intelligence). We fight above a cloud
+layer; under it, coastlines and city lights, some cities burning. Colors: night
+#070b1a, clouds #222b44-#3a4566, tiny warm city lights #ffb347, fires #ff5a2e,
+lightning #e8f0ff, the Collective's tethers and web in magenta #ff2d95.
+No sun (night): clouds lit from below by cities and fires, from above by lightning.
+Mood: siege, storm, the last defense of home. 100% machine.
+
+TASK: Props sheet seen from directly above, plain flat dark background (#05010f), one
+scale, generous space between items. Large (200-320 px): the top of a Collective tether
+(a glowing magenta node where the tether pierces the clouds), a crashed burning lander
+pod, a wrecked human anti-air platform. Small (60-120 px): a downed human fighter, a
+falling burning debris chunk, an air-defense drone wreck. Destructible (2): a human
+flak battery and a Collective beacon pylon, each also shown destroyed. No text.
+
+USE CASE: stylized-concept, production prop sprite sheet. Derive the reference arena's machine wreck and tether-node aesthetic into a clean isolated props sheet; replace the arena completely with a uniform solid #05010f background, no surface, no clouds, no horizon, no stars, no background haze or gradients. Camera exactly 90 degrees overhead orthographic, no visible upright front faces or isometric view. Every item is fully visible, entirely separate, with generous empty padding including all fire and fragments. Crisp clean game sprite rendering, upper-left lighting. Human hardware is gunmetal, steel, muted military gray; Collective hardware is dark angular armor with thin magenta emitters. Orange fire only where requested. Do not add cyan, labels, numbers, text, captions, grid lines or extra objects.
+
+EXACTLY TEN distinct isolated sprites in FOUR clear rows, laid out left to right as follows:
+ROW 1, three LARGE props approximately 240-300 pixels each: (1) top face of a Collective tether penetration node, magenta central emitter and radial machine struts, no long side-view vertical cable; (2) crashed burning armored lander pod with breached plating; (3) wrecked human anti-air platform with broken guns and damaged circular base.
+ROW 2, three SMALL props approximately 80-110 pixels each, visibly about one third as wide as row-1 props: (4) downed human fighter wreck; (5) single burning falling chunk of machine debris seen from above, with short sparse embers; (6) wrecked air-defense drone.
+ROW 3, two medium props side by side at identical scale: (7) intact human flak battery with twin barrels; (8) destroyed version of EXACTLY that battery, same base silhouette and footprint with broken barrels, open hull and a few attached fragments.
+ROW 4, two medium props side by side at identical scale: (9) intact Collective beacon pylon seen only as an overhead machine assembly with small magenta beacon; (10) destroyed version of EXACTLY that same pylon, same footprint with broken supports and a dim damaged beacon.
+One common world scale across all ten; large vs small size difference must remain obvious. Sprites must not touch one another. One single square props sheet, preferably 1536x1536. No perspective or scenery.
+VARIANT A: sturdy industrial angular hardware, rectilinear plate divisions, clipped-corner hexagonal lander pod, eight-spoke tether node and blocky mechanical housings. Match the restrained metallic wreck details of the approved reference.

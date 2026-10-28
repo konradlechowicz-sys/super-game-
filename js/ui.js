@@ -236,19 +236,24 @@ export class UI {
   }
 
   // ======================= MAP =======================
-  map(worldId = this.mapWorld || [...WORLDS].reverse().find((w) => this.app.isUnlocked(w.stages[0].id)).id) {
+  map(worldId = this.mapWorld || [...WORLDS].reverse().find((w) => !w.soon && this.app.isUnlocked(w.stages[0].id)).id) {
     this.mapWorld = worldId;
     const save = this.save;
     const world = WORLDS.find((w) => w.id === worldId);
-    const open = (w) => this.app.isUnlocked(w.stages[0].id);
+    const open = (w) => !w.soon && this.app.isUnlocked(w.stages[0].id);
     const tabs = WORLDS.map((w) => `
-      <button class="world-tab ${w.id === worldId ? 'active' : ''} ${open(w) ? '' : 'locked'}" style="--wc:${w.color}" data-act="world" data-id="${w.id}">
+      <button class="world-tab ${w.id === worldId ? 'active' : ''} ${open(w) ? '' : 'locked'} ${w.soon ? 'wip' : ''}" style="--wc:${w.color}" data-act="world" data-id="${w.id}">
         <span class="wnum">${w.id}</span><span class="wname">${esc(w.name)}</span>
       </button>`).join('');
     let body;
-    if (world.id > 1 && !this.app.store.isFull()) {
+    if (world.soon) {
+      // a 2.0 world still being built: its story and planned sectors (js/data.js PLANNED_WORLDS)
+      body = `<div class="construct" style="--wc:${world.color}"><div class="construct-kicker">UNDER CONSTRUCTION</div>
+        <h3>${esc(world.name)}</h3><p>${esc(world.story)}</p>
+        <ol class="construct-sectors">${world.plan.map((n, i) => `<li class="${i === world.plan.length - 1 ? 'boss' : ''}"><b>${world.id}-${i + 1}</b><span>${esc(n)}</span>${i === world.plan.length - 1 ? '<em>BOSS</em>' : ''}</li>`).join('')}</ol></div>`;
+    } else if (world.id > 2 && !this.app.store.isFull()) {
       body = `<div class="soon"><img src="${icon('lock', world.color)}" alt=""><h3>${esc(world.name)}</h3>
-        <p>Part of the full game: worlds 2–4, 18 sectors and 3 more bosses.</p>
+        <p>Part of the full game: the journey from the Moon to the Nexus.</p>
         <button class="btn full-btn" data-act="full">UNLOCK FULL GAME</button></div>`;
     } else if (!open(world)) {
       const prev = WORLDS.find((w) => w.id === world.id - 1);
@@ -288,7 +293,8 @@ export class UI {
   endlessCard(world) {
     const best = this.save.endless[world.id];
     if (!this.app.endlessOpen()) {
-      const why = this.app.store.isFull() ? 'Defeat the Void Heart to open Endless in every world.' : 'Part of the full game.';
+      const last = ALL_STAGES[ALL_STAGES.length - 1];
+      const why = this.app.store.isFull() ? `Defeat the ${titleCase(BOSSES[last.boss].name)} to open Endless.` : 'Part of the full game.';
       return `<div class="endless-card locked" style="--wc:${world.color}"><b>∞ ENDLESS</b><span>${why}</span></div>`;
     }
     const sub = best ? `Best: ${best.kills} kills · ${fmtTime(best.time)}` : 'Survive as long as you can. Score: kills.';
@@ -691,10 +697,10 @@ export class UI {
     this.modal(`
       <div class="modal-kicker" style="color:var(--gold)">${afterBoss ? 'HARVESTER DEFEATED' : 'VOID BLASTER'}</div>
       <h2>${afterBoss ? 'THE GALAXY NEEDS YOU' : 'UNLOCK THE FULL GAME'}</h2>
-      <p class="muted center">${afterBoss ? 'Three more worlds are waiting beyond the Neon Nebula.' : 'One purchase, no ads, no subscriptions.'}</p>
+      <p class="muted center">${afterBoss ? 'The journey to the heart of the Collective goes on.' : 'One purchase, no ads, no subscriptions.'}</p>
       <ul class="perks">
-        <li><b>3 new worlds</b><span>Crystal Belt, Solar Forge, Void Core: 18 sectors</span></li>
-        <li><b>3 epic bosses</b><span>Crystal Serpent, Forge Titan and the Void Heart</span></li>
+        <li><b>The whole journey</b><span>From the Moon to the Nexus: worlds 3–10, 48 sectors</span></li>
+        <li><b>8 more bosses</b><span>From the Moon Spire to the Void Heart</span></li>
         <li><b>2 new ships</b><span>Phantom and Titan, unlocked right away</span></li>
         <li><b>Every upgrade level</b><span>Past level ${FREE_SHOP_CAP} in the Upgrades shop</span></li>
         <li><b>Welcome bonus</b><span>${UNLOCK_COINS.toLocaleString('en-US')} coins and the Gold Striker skin</span></li>
@@ -737,6 +743,8 @@ export class UI {
     const next = ALL_STAGES[idx + 1];
     const canNext = r.won && next && this.app.isUnlocked(next.id);
     const invite = r.won && next && this.app.needsFullGame(next.id);
+    // 2.0: past the last built world the journey goes on in a world under construction
+    const ahead = !next && WORLDS.find((w) => w.id === r.stage.world.id + 1);
     // a star earned for the first time in this run is marked NEW
     const stars = [0, 1, 2].map((k) => `<span class="rstar ${k < r.stars ? 'on' : ''} ${k >= r.prevStars && k < r.stars ? 'new' : ''}" style="animation-delay:${0.3 + k * 0.25}s">${STAR}</span>`).join('');
     // every goal with its progress, so the player sees which one was missed
@@ -753,8 +761,9 @@ export class UI {
     }).join('');
     this.hideHud();
     this.modal(`
-      <div class="lu-title ${r.won ? '' : 'lose'}">${r.won ? (next ? 'SECTOR CLEAR' : 'GALAXY SAVED') : 'SHIP DESTROYED'}</div>
-      ${r.won && !next ? `<p class="muted center">The Void Heart is destroyed. Replay any sector to collect every star.${this.app.endlessOpen() ? ' <b>Endless mode is open in every world.</b>' : ''}</p>` : ''}
+      <div class="lu-title ${r.won ? '' : 'lose'}">${r.won ? (next ? 'SECTOR CLEAR' : ahead ? 'WORLD CLEAR' : 'GALAXY SAVED') : 'SHIP DESTROYED'}</div>
+      ${r.won && ahead ? `<p class="muted center">Next on the journey: ${esc(ahead.name)}, under construction.</p>` : ''}
+      ${r.won && !next && !ahead ? `<p class="muted center">The Void Heart is destroyed. Replay any sector to collect every star.${this.app.endlessOpen() ? ' <b>Endless mode is open in every world.</b>' : ''}</p>` : ''}
       <div class="muted center">${esc(r.stage.id)} · ${esc(r.stage.name)}</div>
       ${r.won ? `<div class="rstars">${stars}</div>` : ''}
       <ul class="goals progress">${goals}</ul>

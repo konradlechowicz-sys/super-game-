@@ -1,0 +1,123 @@
+{
+  "background": "#05010f",
+  "boss": "graphics/W2-P8-landing-citadel-1024.png",
+  "boss_size": [
+    1024,
+    1024
+  ],
+  "parts_sheet": "graphics/W2-P8-parts-sheet.png",
+  "assembled_reference_box": [
+    2048,
+    2048,
+    3072,
+    3072
+  ],
+  "assembled_reference_scale": 1.0,
+  "individual_png_padding_px": 12,
+  "parts": [
+    {
+      "name": "core-hull",
+      "file": "graphics/W2-P8-parts/W2-P8-core-hull.png",
+      "position_on_boss_png": [
+        311,
+        269
+      ],
+      "content_size": [
+        379,
+        457
+      ],
+      "scale": 1.0
+    },
+    {
+      "name": "inner-gun-ring",
+      "file": "graphics/W2-P8-parts/W2-P8-inner-gun-ring.png",
+      "position_on_boss_png": [
+        152,
+        161
+      ],
+      "content_size": [
+        691,
+        667
+      ],
+      "scale": 1.0
+    },
+    {
+      "name": "outer-gun-ring",
+      "file": "graphics/W2-P8-parts/W2-P8-outer-gun-ring.png",
+      "position_on_boss_png": [
+        52,
+        61
+      ],
+      "content_size": [
+        895,
+        880
+      ],
+      "scale": 1.0
+    },
+    {
+      "name": "weak-point-nw",
+      "file": "graphics/W2-P8-parts/W2-P8-weak-point-nw.png",
+      "position_on_boss_png": [
+        359,
+        357
+      ],
+      "content_size": [
+        90,
+        93
+      ],
+      "scale": 1.0
+    },
+    {
+      "name": "weak-point-ne",
+      "file": "graphics/W2-P8-parts/W2-P8-weak-point-ne.png",
+      "position_on_boss_png": [
+        553,
+        356
+      ],
+      "content_size": [
+        93,
+        93
+      ],
+      "scale": 1.0
+    },
+    {
+      "name": "weak-point-sw",
+      "file": "graphics/W2-P8-parts/W2-P8-weak-point-sw.png",
+      "position_on_boss_png": [
+        357,
+        539
+      ],
+      "content_size": [
+        93,
+        93
+      ],
+      "scale": 1.0
+    },
+    {
+      "name": "weak-point-se",
+      "file": "graphics/W2-P8-parts/W2-P8-weak-point-se.png",
+      "position_on_boss_png": [
+        552,
+        541
+      ],
+      "content_size": [
+        90,
+        91
+      ],
+      "scale": 1.0
+    },
+    {
+      "name": "engine-flame",
+      "file": "graphics/W2-P8-parts/W2-P8-engine-flame.png",
+      "position_on_boss_png": [
+        477,
+        684
+      ],
+      "content_size": [
+        48,
+        65
+      ],
+      "scale": 1.0
+    }
+  ]
+}

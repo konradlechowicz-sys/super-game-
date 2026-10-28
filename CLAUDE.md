@@ -11,6 +11,11 @@
 - The source of all 2.0 visuals and ChatGPT prompts is the Claude Doc "Void Blaster 2.0 – Art Bible"
   (https://claude.ai/artifact/A6CDwwg4WSEQ3v99p9ZbMc): tab "Art Bible" (world cards, shared rules) and tab "Prompty"
   (style block, a world block per world, tasks P1-P8). Change a world's card and its prompts together.
+- Sector names of all 10 worlds (6 each, the 6th is the boss): Art Bible tab "Art Bible", table "Nazwy sektorów".
+  World 1 approved by Konrad (2026-10-28, in `js/data.js`); worlds 2-10 are proposals to review. On `v2` the map
+  shows all 10 worlds; worlds not built yet are "under construction" (`PLANNED_WORLDS` in `js/data.js`: story +
+  planned sectors). Built: world 1 (build 91) and world 2 "Siege of Earth" (build 98, from ChatGPT's approved W2 set
+  in `art/2.0/worlds/world2`, textures by `proto2/make-world2.py`, look `js/v2/siege.js`). The 1.x worlds 2-4 (`LEGACY_WORLDS`) are no longer played. 2.0 free trial = worlds 1-2.
 - Music: the 2.0 theme is the menu music for good; no separate M1 track.
 
 ## Shared handoff with Codex (paused, see above)
@@ -42,6 +47,23 @@
 - 2.0 performance gate 1 passed (Konrad, 2026-10-27, iPhone 17 Pro Max, TEST variant with the 2.0 look): a steady
   60 FPS with about 180 enemies on screen. 2.0 balance must use this: noticeably more enemies at once than 1.x
   (bigger waves and swarms), keeping a margin for older iPhones.
+
+## 2.0 to-do (Konrad, 2026-10-28)
+World 1 is complete in the 2.0 look (build 91, accepted; Konrad played it on his iPhone and is very happy with it).
+Next, in this order unless Konrad says otherwise:
+1. World-1 mechanics: falling wrecks (shadow + amber warning, then the pass; hurts enemies and the ship) and bigger
+   waves (see the performance gate).
+2. Game speed and balance: Konrad finds the game a bit slow; ask him what exactly (ship, enemies, shots, level-ups,
+   sectors, the Harvester, fuel-tank blast) before changing numbers.
+   First pass of 1 and 2 done (build 97, 2026-10-28): `Game.fallingWreck` (stage field `wrecks`), world-1 sectors
+   rebalanced in `js/data.js` (more and faster enemies, bigger rings, max 200 on the field, kill goals checked with a
+   headless run). Konrad tests on the iPhone; tune from his notes.
+3. Redesign the start screen and the pop-ups (level-up cards, crates, results, paywall and other modals): today they
+   are too colourful for the mature, darker palette of world 1 and the character of 2.0. Make them darker and calmer,
+   in the Art Bible's colours (gunmetal, deep space, amber and magenta accents), keeping them readable.
+   First pass done (build 93, 2026-10-28): the style is described at the top of `css/style.css` (one amber accent,
+   magenta for the Collective, gold for coins and stars, hairlines, sharp corners, bracket corners on pop-ups, almost no
+   glow); the title scene and the joystick follow it. Konrad reviews it; further changes build on it.
 
 ## Android (decided by Konrad)
 Android launches with 2.0 (Google Play needs 12 testers for 14 days on a new account before publishing, so closed

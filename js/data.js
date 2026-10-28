@@ -70,6 +70,13 @@ export const ENEMIES = {
   wraith: { hp: 30, speed: 80, dmg: 7, r: 12, xp: 3, color: '#c86bff', shape: 'wraith', ai: 'blink' },
   eye: { hp: 50, speed: 40, dmg: 8, r: 15, xp: 4, color: '#ff4dd8', shape: 'eye', ai: 'seeker' },
   voidling: { hp: 10, speed: 130, dmg: 4, r: 8, xp: 1, color: '#9d4dff', shape: 'dart', pack: [4, 6] },
+  // 2.0 world 2 "Siege of Earth": the landing force (art: proto2/make-world2.py; shapes are the 1.x look's fallback)
+  interceptor: { hp: 10, speed: 135, dmg: 5, r: 10, xp: 1, color: '#ff2d95', shape: 'dart', pack: [3, 5] },
+  lander: { hp: 50, speed: 52, dmg: 10, r: 12, xp: 3, color: '#ff4dd8', shape: 'circle', split: 'interceptor' },
+  gunship: { hp: 48, speed: 46, dmg: 9, r: 15, xp: 4, color: '#ff3d9a', shape: 'hex', ai: 'shoot', shots: 3, fire: 3.6 },
+  skymine: { hp: 22, speed: 92, dmg: 6, r: 11, xp: 2, color: '#ff6ab4', shape: 'bomb', ai: 'fuse', spin: 2 },
+  raider: { hp: 40, speed: 62, dmg: 10, r: 15, xp: 3, color: '#ff2d6f', shape: 'diamond', ai: 'dash' },
+  walker: { hp: 230, speed: 30, dmg: 14, r: 22, xp: 8, color: '#c84dff', shape: 'square' },
 };
 
 export const BOSSES = {
@@ -79,6 +86,14 @@ export const BOSSES = {
     name: 'HARVESTER', hp: 5000, speed: 42, dmg: 18, r: 58, color: '#ff2d6f', inner: '#ff8ad0', sides: 6,
     move: 'chase', rest: 1.9, phases: [0.5], attacks: ['spiral', 'burst', 'summon', 'charge'], summon: ['drone', 'swarmer'],
     bulletDmg: 7, bulletSpeed: 0.85, burstN: 16, summonN: 5, bgSpawn: 0.2,
+  },
+  // 2.0 world 2: the Landing Citadel, a flying fortress with turning gun rings over a burning city. Three phases:
+  // spirals and turning beams from the rings, shelling (mortars), and drops of interceptors and sky mines. Its health is
+  // close to the Harvester's: the three phases make it the harder fight (a headless run: 20-140 s with the boss, most under a minute).
+  citadel: {
+    name: 'LANDING CITADEL', hp: 4800, speed: 30, dmg: 20, r: 70, color: '#ff2d95', inner: '#ff8ad0', sides: 8,
+    move: 'chase', rest: 1.6, phases: [0.6, 0.3], attacks: ['spiral', 'summon', 'beams', 'burst', 'mortar', 'spiral'],
+    summon: ['interceptor', 'skymine'], bulletDmg: 8, bulletSpeed: 0.9, burstN: 18, summonN: 4, bgSpawn: 0.1,
   },
   serpent: {
     name: 'CRYSTAL SERPENT', hp: 15000, speed: 120, dmg: 22, r: 34, color: '#2ff3ff', inner: '#b4fff0', sides: 5,
@@ -96,62 +111,131 @@ export const BOSSES = {
   },
 };
 
+// World 1 of 2.0, "Orbital Ruins" (Art Bible; sector names decided 2026-10-28, Konrad can rename them).
+// 2.0 pace (Konrad, 2026-10-28: the game felt a bit slow; performance gate 1: about 180 enemies at 60 FPS): about
+// 45% more spawns than 1.x from the first second, bigger rings, enemies 8% faster and in play sooner, at most 200
+// on the field (a margin for older iPhones), a shorter wait for the Harvester. Kill goals keep the share of 1.x: in a
+// headless run (god mode, the ship idle, always the first card) 1.x reached about 1.4x its goal, so does 2.0.
+// wrecks: [first, every] seconds of the falling wreck (Game.fallingWreck), the world's own hazard.
 const W1 = [
   {
-    id: '1-1', name: 'First Contact', duration: 180, hp: 1.5, speed: 1, rate: [0.9, 3.2], max: 110, kills: 600,
-    enemies: [['drone', 0, 10], ['swarmer', 45, 5]],
+    id: '1-1', name: 'Dead Orbit', duration: 180, hp: 1.5, speed: 1.08, rate: [1.3, 4.6], max: 140, kills: 900, wrecks: [50, 34],
+    enemies: [['drone', 0, 10], ['swarmer', 25, 5]],
     events: [
-      { t: 60, type: 'ring', enemy: 'drone', count: 16, msg: 'INCOMING SWARM' },
+      { t: 50, type: 'ring', enemy: 'drone', count: 24, msg: 'INCOMING SWARM' },
       { t: 100, type: 'elite', enemy: 'drone', msg: 'ELITE DETECTED' },
-      { t: 150, type: 'ring', enemy: 'swarmer', count: 28, msg: 'FINAL WAVE' },
+      { t: 150, type: 'ring', enemy: 'swarmer', count: 40, msg: 'FINAL WAVE' },
     ],
   },
   {
-    id: '1-2', name: 'Swarm Front', duration: 195, hp: 1.8, speed: 1.03, rate: [1, 3.6], max: 130, kills: 850,
-    enemies: [['drone', 0, 10], ['swarmer', 10, 6], ['dasher', 35, 4]],
+    id: '1-2', name: 'Debris Field', duration: 195, hp: 1.8, speed: 1.11, rate: [1.5, 5.2], max: 160, kills: 1250, wrecks: [40, 30],
+    enemies: [['drone', 0, 10], ['swarmer', 8, 6], ['dasher', 25, 4]],
     events: [
-      { t: 70, type: 'ring', enemy: 'swarmer', count: 30, msg: 'SWARM INCOMING' },
+      { t: 60, type: 'ring', enemy: 'swarmer', count: 44, msg: 'SWARM INCOMING' },
       { t: 110, type: 'elite', enemy: 'dasher', msg: 'ELITE DETECTED' },
       { t: 165, type: 'surge', dur: 25, mul: 2, msg: 'FINAL WAVE' },
     ],
   },
   {
-    id: '1-3', name: 'Glass Fields', duration: 210, hp: 2.1, speed: 1.05, rate: [1.1, 4], max: 150, kills: 950,
-    enemies: [['drone', 0, 10], ['swarmer', 10, 5], ['dasher', 25, 4], ['shooter', 40, 4]],
+    id: '1-3', name: 'Broken Ring', duration: 210, hp: 2.1, speed: 1.13, rate: [1.6, 5.8], max: 175, kills: 1400, wrecks: [35, 28],
+    enemies: [['drone', 0, 10], ['swarmer', 8, 5], ['dasher', 18, 4], ['shooter', 30, 4]],
     events: [
-      { t: 60, type: 'ring', enemy: 'drone', count: 24, msg: 'INCOMING SWARM' },
+      { t: 55, type: 'ring', enemy: 'drone', count: 36, msg: 'INCOMING SWARM' },
       { t: 105, type: 'elite', enemy: 'shooter', msg: 'ELITE DETECTED' },
-      { t: 150, type: 'ring', enemy: 'swarmer', count: 36, msg: 'SWARM INCOMING' },
+      { t: 145, type: 'ring', enemy: 'swarmer', count: 52, msg: 'SWARM INCOMING' },
       { t: 180, type: 'surge', dur: 30, mul: 2, msg: 'FINAL WAVE' },
     ],
   },
   {
-    id: '1-4', name: 'Heavy Metal', duration: 225, hp: 2.4, speed: 1.07, rate: [1.1, 4.3], max: 165, kills: 1050,
-    enemies: [['drone', 0, 10], ['swarmer', 10, 5], ['dasher', 25, 4], ['shooter', 40, 3], ['tank', 50, 3]],
+    id: '1-4', name: 'Rewritten Signal', duration: 225, hp: 2.4, speed: 1.15, rate: [1.6, 6.2], max: 190, kills: 1650, wrecks: [35, 26],
+    enemies: [['drone', 0, 10], ['swarmer', 8, 5], ['dasher', 18, 4], ['shooter', 30, 3], ['tank', 40, 3]],
     events: [
-      { t: 80, type: 'elite', enemy: 'tank', msg: 'ELITE DETECTED' },
-      { t: 120, type: 'ring', enemy: 'dasher', count: 14, msg: 'DASHER PACK' },
+      { t: 75, type: 'elite', enemy: 'tank', msg: 'ELITE DETECTED' },
+      { t: 115, type: 'ring', enemy: 'dasher', count: 20, msg: 'DASHER PACK' },
       { t: 160, type: 'elite', enemy: 'tank', msg: 'ELITE DETECTED' },
       { t: 195, type: 'surge', dur: 30, mul: 2, msg: 'FINAL WAVE' },
     ],
   },
   {
-    id: '1-5', name: 'Split Storm', duration: 240, hp: 2.8, speed: 1.09, rate: [1.2, 4.6], max: 180, kills: 1200,
-    enemies: [['drone', 0, 9], ['swarmer', 10, 5], ['dasher', 25, 4], ['shooter', 40, 3], ['tank', 55, 3], ['splitter', 30, 5]],
+    id: '1-5', name: 'Last Picket', duration: 240, hp: 2.8, speed: 1.17, rate: [1.7, 6.6], max: 200, kills: 1700, wrecks: [30, 24],
+    enemies: [['drone', 0, 9], ['swarmer', 8, 5], ['dasher', 18, 4], ['shooter', 30, 3], ['tank', 45, 3], ['splitter', 22, 5]],
     events: [
-      { t: 70, type: 'ring', enemy: 'splitter', count: 12, msg: 'SPLITTERS INCOMING' },
+      { t: 65, type: 'ring', enemy: 'splitter', count: 16, msg: 'SPLITTERS INCOMING' },
       { t: 110, type: 'elite', enemy: 'splitter', msg: 'ELITE DETECTED' },
-      { t: 150, type: 'ring', enemy: 'swarmer', count: 40, msg: 'SWARM INCOMING' },
+      { t: 150, type: 'ring', enemy: 'swarmer', count: 56, msg: 'SWARM INCOMING' },
       { t: 180, type: 'elite', enemy: 'tank', msg: 'ELITE DETECTED' },
       { t: 210, type: 'surge', dur: 30, mul: 2, msg: 'FINAL WAVE' },
     ],
   },
   {
-    id: '1-6', name: 'Harvester', duration: 150, bossAt: 150, boss: 'hive', hp: 2.3, speed: 1.1, rate: [1, 3.4], max: 130, kills: 600,
-    enemies: [['drone', 0, 9], ['swarmer', 10, 5], ['dasher', 25, 4], ['shooter', 40, 2], ['splitter', 45, 3], ['tank', 70, 1]],
+    id: '1-6', name: 'Harvester', duration: 120, bossAt: 120, boss: 'hive', hp: 2.3, speed: 1.18, rate: [1.5, 5], max: 170, kills: 700, wrecks: [40, 30],
+    enemies: [['drone', 0, 9], ['swarmer', 8, 5], ['dasher', 20, 4], ['shooter', 30, 2], ['splitter', 35, 3], ['tank', 55, 1]],
     events: [
-      { t: 50, type: 'ring', enemy: 'drone', count: 20, msg: 'INCOMING SWARM' },
-      { t: 100, type: 'elite', enemy: 'drone', msg: 'ELITE DETECTED' },
+      { t: 40, type: 'ring', enemy: 'drone', count: 30, msg: 'INCOMING SWARM' },
+      { t: 80, type: 'elite', enemy: 'drone', msg: 'ELITE DETECTED' },
+    ],
+  },
+];
+
+// World 2 of 2.0, "Siege of Earth" (Art Bible; sector names from its table "Nazwy sektorów"). The 2.0 pace of world 1,
+// a step tougher: the landing force arrives one type per sector, the Siege Walker in 2-4. The world's mechanic is
+// in its look (js/v2/siege.js): cloud banks hide enemies until lightning strikes.
+const W2_2 = [
+  {
+    id: '2-1', name: 'Burning Sky', duration: 195, hp0: 1.4, hp: 3.0, speed: 1.12, rate: [1.5, 5.0], max: 160, kills: 1550,
+    enemies: [['interceptor', 0, 10], ['lander', 20, 4], ['skymine', 40, 3]],
+    events: [
+      { t: 55, type: 'ring', enemy: 'interceptor', count: 30, msg: 'INTERCEPTORS INCOMING' },
+      { t: 100, type: 'elite', enemy: 'interceptor', msg: 'ELITE DETECTED' },
+      { t: 150, type: 'ring', enemy: 'skymine', count: 24, msg: 'MINEFIELD' },
+    ],
+  },
+  {
+    id: '2-2', name: 'Tether Storm', duration: 210, hp0: 1.5, hp: 3.2, speed: 1.14, rate: [1.6, 5.6], max: 175, kills: 1850,
+    enemies: [['interceptor', 0, 10], ['lander', 10, 4], ['skymine', 25, 3], ['gunship', 30, 4]],
+    events: [
+      { t: 60, type: 'ring', enemy: 'lander', count: 16, msg: 'LANDING WAVE' },
+      { t: 110, type: 'elite', enemy: 'gunship', msg: 'ELITE DETECTED' },
+      { t: 175, type: 'surge', dur: 30, mul: 2, msg: 'FINAL WAVE' },
+    ],
+  },
+  {
+    id: '2-3', name: 'Cloud Wall', duration: 225, hp0: 1.6, hp: 3.4, speed: 1.15, rate: [1.7, 6.0], max: 180, kills: 2000,
+    enemies: [['interceptor', 0, 10], ['lander', 10, 4], ['skymine', 20, 3], ['gunship', 30, 3], ['raider', 20, 4]],
+    events: [
+      { t: 55, type: 'ring', enemy: 'interceptor', count: 44, msg: 'INTERCEPTORS INCOMING' },
+      { t: 105, type: 'elite', enemy: 'raider', msg: 'ELITE DETECTED' },
+      { t: 150, type: 'ring', enemy: 'raider', count: 18, msg: 'RAIDER PACK' },
+      { t: 190, type: 'surge', dur: 30, mul: 2, msg: 'FINAL WAVE' },
+    ],
+  },
+  {
+    id: '2-4', name: 'City of Fire', duration: 240, hp0: 1.7, hp: 3.6, speed: 1.17, rate: [1.7, 6.4], max: 185, kills: 2100,
+    enemies: [['interceptor', 0, 10], ['lander', 10, 4], ['skymine', 20, 3], ['gunship', 30, 3], ['raider', 20, 4], ['walker', 40, 3]],
+    events: [
+      { t: 80, type: 'elite', enemy: 'walker', msg: 'ELITE DETECTED' },
+      { t: 120, type: 'ring', enemy: 'lander', count: 20, msg: 'LANDING WAVE' },
+      { t: 165, type: 'elite', enemy: 'walker', msg: 'ELITE DETECTED' },
+      { t: 205, type: 'surge', dur: 30, mul: 2, msg: 'FINAL WAVE' },
+    ],
+  },
+  {
+    id: '2-5', name: 'Home Front', duration: 255, hp0: 1.8, hp: 3.9, speed: 1.19, rate: [1.8, 6.8], max: 185, kills: 2100,
+    enemies: [['interceptor', 0, 9], ['lander', 10, 4], ['skymine', 15, 3], ['gunship', 25, 3], ['raider', 20, 4], ['walker', 40, 3]],
+    events: [
+      { t: 60, type: 'ring', enemy: 'skymine', count: 30, msg: 'MINEFIELD' },
+      { t: 105, type: 'elite', enemy: 'gunship', msg: 'ELITE DETECTED' },
+      { t: 150, type: 'ring', enemy: 'interceptor', count: 56, msg: 'INTERCEPTORS INCOMING' },
+      { t: 185, type: 'elite', enemy: 'walker', msg: 'ELITE DETECTED' },
+      { t: 225, type: 'surge', dur: 30, mul: 2, msg: 'FINAL WAVE' },
+    ],
+  },
+  {
+    id: '2-6', name: 'Landing Citadel', duration: 120, bossAt: 120, boss: 'citadel', hp0: 1.6, hp: 3.4, speed: 1.2, rate: [1.6, 5.2], max: 175, kills: 900,
+    enemies: [['interceptor', 0, 9], ['lander', 10, 4], ['skymine', 20, 3], ['gunship', 30, 2], ['raider', 35, 3], ['walker', 55, 1]],
+    events: [
+      { t: 40, type: 'ring', enemy: 'interceptor', count: 30, msg: 'INTERCEPTORS INCOMING' },
+      { t: 80, type: 'elite', enemy: 'raider', msg: 'ELITE DETECTED' },
     ],
   },
 ];
@@ -291,11 +375,43 @@ export const WORLD_TUNING = {
   4: { dmg: 1.8, ramp: 0.4, hp: 1.25, elite: 1.4, boss: 1.3 },
 };
 
+// The 2.0 journey (decided by Konrad, 2026-10-28): worlds 1-2 are built; worlds 3-10 are under construction. The map
+// shows them with their story and planned sectors (Art Bible, table "Nazwy sektorów"); when a world is built, it gets
+// its stages and drops `soon`. The 1.x worlds 2-4 below (W2-W4, LEGACY_WORLDS) are no longer played; they stay as a
+// starting point for tuning the new worlds.
+const PLANNED_WORLDS = [
+  [3, 'Lunar Bridgehead', '#a9b8d0', 'The counterattack: the Moon is the enemy\'s forward base.',
+    ['Dark Side', 'Sea of Tranquility', 'Crater Run', 'Rooted Base', 'Mortar Fields', 'Moon Spire']],
+  [4, 'Red Conversion', '#e0452b', 'Mars in the middle of being rewritten.',
+    ['Red Dust', 'Black Veins', 'Dust Storm', 'Glass Canyon', 'Olympus Shadow', 'Red Colossus']],
+  [5, 'Foundry Belt', '#ff8a2a', 'The asteroid belt, turned into the Collective\'s factories.',
+    ['Ore Drift', 'Assembly Line', 'Smelter Ring', 'Drone Yards', 'Hull Forge', 'Foundry Mother']],
+  [6, 'Storm Relay', '#e3b778', 'In Jupiter\'s storms, a relay calls into deep space.',
+    ['Gas Giant', 'Ion Winds', 'Antenna Field', 'Living Signal', 'Deep Transmission', 'Storm Eye']],
+  [7, 'Abyss of Europa', '#4fd1e0', 'Under Europa\'s ice, alien sea life has been rewritten.',
+    ['Ice Shelf', 'Thin Ice', 'Glow Beneath', 'Cold Hatchery', 'The Deep Call', 'Abyss Leviathan']],
+  [8, 'The Rift Gate', '#b9a8ff', 'The gate out of the Solar System. There is no way back.',
+    ['Shattered Space', 'Mirror Shards', 'Echoes of Home', 'Gate Rings', 'No Return', 'Gatekeeper']],
+  [9, 'Brood World', '#8fd35a', 'The Collective\'s breeding world. The ground breathes.',
+    ['Living Ground', 'Breathing Fields', 'Spawning Pits', 'Acid Marsh', 'Egg Chambers', 'Brood Matriarch']],
+  [10, 'The Nexus', '#ff2d95', 'The heart of the Collective, and the end of the journey.',
+    ['Neural Shore', 'Synapse Storm', 'Broken Geometry', 'Heartbeat', 'The Cage', 'Void Heart']],
+];
+
 export const WORLDS = [
   {
-    id: 1, name: 'Neon Nebula', color: '#ff2d95', stages: W1, music: 'game',
+    id: 1, name: 'Orbital Ruins', color: '#ff2d95', stages: W1, music: 'game',
     theme: { top: '#16002e', bottom: '#030010', neb: ['#ff2d95', '#7a2dff', '#00b3ff'], grid: '#b04dff' },
   },
+  {
+    // music: the world-1 recording until world 2 has its own (Art Bible: W2, to be made)
+    id: 2, name: 'Siege of Earth', color: '#ff6a3d', stages: W2_2, music: 'game',
+    theme: { top: '#0a1024', bottom: '#03050c', neb: ['#3a4566', '#ff5a2e', '#ff2d95'], grid: '#3a4566' },
+  },
+  ...PLANNED_WORLDS.map(([id, name, color, story, plan]) => ({ id, name, color, story, plan, stages: [], soon: true })),
+];
+
+export const LEGACY_WORLDS = [
   {
     id: 2, name: 'Crystal Belt', color: '#2ff3ff', stages: W2, music: 'game2',
     theme: { top: '#001a2e', bottom: '#000812', neb: ['#2ff3ff', '#3d7bff', '#b4fff0'], grid: '#2fd2ff' },
@@ -334,6 +450,6 @@ export function endlessStage(world) {
   return {
     id: `E${world.id}`, name: 'Endless', endless: true, world, duration: ENDLESS.ramp,
     hp0: s[0].hp0 || 1, hp: ref.hp, speed: ref.speed, rate: ref.rate, max: ref.max + 20, enemies: ref.enemies,
-    events: [], boss: s[s.length - 1].boss, kills: 0, elites: 0, hazards,
+    events: [], boss: s[s.length - 1].boss, kills: 0, elites: 0, hazards, wrecks: ref.wrecks,
   };
 }

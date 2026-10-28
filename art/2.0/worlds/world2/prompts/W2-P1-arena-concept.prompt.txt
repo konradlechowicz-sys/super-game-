@@ -1,0 +1,26 @@
+STYLE (keep identical across all images):
+Game art for "Void Blaster", a top-down mobile space shooter (survivors-like).
+Camera: top-down orthographic, looking straight down, no perspective.
+Look: stylized sci-fi with a neon accent. Dark, rich materials (gunmetal, carbon,
+matte ceramic) lit from the top-left, glowing edges and emissive lights only where
+noted. Detail level: high but clean - panel lines, vents, rivets; no grunge overload.
+The background must stay dark and calm so bright game objects read on top of it:
+no bright cyan anywhere (cyan belongs to the player), magenta only as thin traces.
+Rendering: crisp edges, soft bloom on glowing parts only, no motion blur, no depth of
+field, not photorealistic. No text, no logo, no watermark.
+
+WORLD 2 "SIEGE OF EARTH": low orbit, 400 km above night-side Earth, during the
+landing of the Void Collective (an alien machine intelligence). We fight above a cloud
+layer; under it, coastlines and city lights, some cities burning. Colors: night
+#070b1a, clouds #222b44-#3a4566, tiny warm city lights #ffb347, fires #ff5a2e,
+lightning #e8f0ff, the Collective's tethers and web in magenta #ff2d95.
+No sun (night): clouds lit from below by cities and fires, from above by lightning.
+Mood: siege, storm, the last defense of home. 100% machine.
+
+TASK: Concept of the battle arena, 941x1672 portrait, seen from directly above: night
+Earth far below (coastline, city lights, two burning cities), a semi-transparent cloud
+layer we fly over, magenta tethers of the Collective plunging down through the clouds
+into the burning cities, wrecks of human fighters, storm walls with lightning framing
+the arena edges. Calm, dark center. No ships, no enemies.
+
+VARIANT A — composition guidance: Frame a broad, very dark open central play area with broken banks of dense blue-gray storm clouds concentrated along the outer margins. The coastline and the two burning cities are peripheral and glimpsed through cloud gaps. Thin magenta tether nodes appear embedded in the cloud layer, viewed from vertically above, with subtle fine traces leading into the peripheral cities. Scatter only a few tiny inert human fighter wrecks at the edges. The night Earth fills the frame from edge to edge: no horizon, no stars, no planet limb. No intact or flying ships. Keep lightning restrained to edges and the central 60% calm. Render a single full-frame portrait concept without labels or a border.

@@ -145,8 +145,8 @@ window.addEventListener('resize', resize);
 resize();
 
 // ---------------- progression helpers ----------------
-// Worlds 2-4 are part of the full game.
-app.needsFullGame = (id) => ALL_STAGES.find((s) => s.id === id)?.world.id > 1 && !app.store.isFull();
+// 2.0 (decided by Konrad, 2026-10-26): worlds 1-2 are the free trial, worlds 3-10 are part of the full game.
+app.needsFullGame = (id) => ALL_STAGES.find((s) => s.id === id)?.world.id > 2 && !app.store.isFull();
 
 app.isUnlocked = (id) => {
   if (app.needsFullGame(id)) return false;
@@ -275,25 +275,21 @@ function drawJoystick() {
   if (app.game.tut.joyTarget() && !input.joy) {
     const p = 0.5 + 0.5 * Math.sin(app.time * 6);
     ctx.globalAlpha = 0.5 + p * 0.5;
-    ctx.strokeStyle = '#ffd23d';
-    ctx.lineWidth = 3;
-    ctx.shadowColor = '#ffd23d';
-    ctx.shadowBlur = 14;
+    ctx.strokeStyle = '#ffb02e';
+    ctx.lineWidth = 2;
     ctx.beginPath(); ctx.arc(h.x, h.y, JOY_R + 22 + p * 8, 0, Math.PI * 2); ctx.stroke();
-    ctx.shadowBlur = 0;
   }
   if (mode === 'float' && !input.joy) { ctx.globalAlpha = 1; return; }
-  ctx.globalAlpha = input.joy ? 0.9 : 0.45;
-  ctx.fillStyle = 'rgba(20, 8, 50, 0.45)';
+  // the 2.0 interface (css/style.css): a dark disc with a hairline ring, amber ticks and a flat knob, no glow
+  ctx.globalAlpha = input.joy ? 0.9 : 0.5;
+  ctx.fillStyle = 'rgba(6, 9, 14, 0.5)';
   ctx.beginPath(); ctx.arc(h.x, h.y, JOY_R + 14, 0, Math.PI * 2); ctx.fill();
-  ctx.strokeStyle = '#2ff3ff';
-  ctx.lineWidth = 2;
-  ctx.shadowColor = '#2ff3ff';
-  ctx.shadowBlur = 12;
+  ctx.strokeStyle = 'rgba(190, 205, 225, 0.55)';
+  ctx.lineWidth = 1.5;
   ctx.stroke();
   // direction ticks
-  ctx.shadowBlur = 0;
-  ctx.globalAlpha *= 0.6;
+  ctx.strokeStyle = '#ffb02e';
+  ctx.globalAlpha *= 0.8;
   for (let i = 0; i < 4; i++) {
     const a = (i * Math.PI) / 2;
     ctx.beginPath();
@@ -303,15 +299,12 @@ function drawJoystick() {
   }
   ctx.globalAlpha = input.joy ? 1 : 0.6;
   const kx = h.x + input.kx, ky = h.y + input.ky;
-  const g = ctx.createRadialGradient(kx, ky, 2, kx, ky, 26);
-  g.addColorStop(0, '#ffffff');
-  g.addColorStop(0.35, '#2ff3ff');
-  g.addColorStop(1, 'rgba(47, 243, 255, 0.15)');
-  ctx.fillStyle = g;
-  ctx.shadowColor = '#2ff3ff';
-  ctx.shadowBlur = 18;
-  ctx.beginPath(); ctx.arc(kx, ky, 26, 0, Math.PI * 2); ctx.fill();
-  ctx.shadowBlur = 0;
+  ctx.fillStyle = 'rgba(24, 30, 42, 0.92)';
+  ctx.strokeStyle = 'rgba(223, 229, 238, 0.85)';
+  ctx.lineWidth = 1.5;
+  ctx.beginPath(); ctx.arc(kx, ky, 24, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
+  ctx.fillStyle = '#ffb02e';
+  ctx.beginPath(); ctx.arc(kx, ky, 5, 0, Math.PI * 2); ctx.fill();
   ctx.globalAlpha = 1;
 }
 

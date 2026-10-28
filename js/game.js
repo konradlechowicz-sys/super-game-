@@ -6,7 +6,7 @@ import { shipLook } from './store.js';
 import { Tutorial, tipsOn, tipSeen, markTip } from './tutorial.js';
 import { renderGame } from './render-canvas.js';
 import { EDITION } from './edition.js';
-import { initProps, updateProps, breakProp } from './props.js';
+import { initProps, updateProps, breakProp, hasProps } from './props.js';
 
 const MAX_WEAPONS = 4;
 const MAX_PASSIVES = 4;
@@ -58,9 +58,9 @@ export class Game {
     this.recompute();
     this.player.hp = this.player.maxHp;
     this.addWeapon(this.ship.weapon);
-    // 2.0, world 1: fuel tanks and ammo crates to shoot (js/props.js)
+    // 2.0: each world's props to shoot (js/props.js)
     this.props = [];
-    if (EDITION === 2 && stage.world?.id === 1) initProps(this);
+    if (EDITION === 2 && hasProps(stage.world?.id)) initProps(this);
     this.tut = new Tutorial(this);
     if (stage.endless) this.ui.banner('ENDLESS', stage.world.name.toUpperCase());
     else this.ui.banner(`STAGE ${stage.id}`, stage.name.toUpperCase());
@@ -603,6 +603,19 @@ export class Game {
     }
   }
 
+  // World 1 "Orbital Ruins" (Art Bible): a big fragment of a station falls through the arena. First a shadowed amber
+  // corridor warns for `warn` seconds, then the wreck crosses it in `dur` seconds, crushing enemies (and props: fuel
+  // tanks go off) and hurting the ship if it is still inside. Aimed at a point near the ship, from off-screen.
+  fallingWreck() {
+    const p = this.player, { vw, vh } = this.viewSize();
+    const a = rand(0, TAU), L = Math.hypot(vw, vh) / 2 + 260;
+    const tx = p.x + rand(-160, 160), ty = p.y + rand(-160, 160);
+    const c = Math.cos(a), s = Math.sin(a);
+    this.addHazard({ kind: 'wreck', x0: tx - c * L, y0: ty - s * L, x1: tx + c * L, y1: ty + s * L, a, w: 96, warn: 1.8, dur: 1.1,
+      art: randi(1, 4), spin: rand(-2.5, 2.5), hit: new Set(), x: tx - c * L, y: ty - s * L });
+    this.sfx('warn');
+  }
+
   beamEnds(h) {
     const c = Math.cos(h.a), s = Math.sin(h.a);
     return h.centered ? [h.x - c * h.len, h.y - s * h.len, h.x + c * h.len, h.y + s * h.len] : [h.x, h.y, h.x + c * h.len, h.y + s * h.len];
@@ -631,6 +644,22 @@ export class Game {
           }
         }
         if (h.t > h.warn + h.dur) done = true;
+      } else if (h.kind === 'wreck') {
+        const k = (h.t - h.warn) / h.dur;
+        if (k >= 0) {
+          if (!h.fired) { h.fired = true; this.sfx('boom'); this.shake = Math.max(this.shake, 7); }
+          h.x = lerp(h.x0, h.x1, Math.min(1, k)); h.y = lerp(h.y0, h.y1, Math.min(1, k));
+          // crushes what it passes, once each, and throws it along its way
+          const st = this.stage, tough = lerp(st.hp0 || 1, st.hp, this.progress()) * this.tune.hp;
+          for (const e of this.enemiesNear(h.x, h.y, h.w / 2)) {
+            if (h.hit.has(e)) continue;
+            h.hit.add(e);
+            this.damage(e, 90 * tough, Math.cos(h.a) * 500, Math.sin(h.a) * 500, true);
+          }
+          if (live && !h.hit.has(p) && Math.hypot(p.x - h.x, p.y - h.y) < h.w * 0.42 + p.r) { h.hit.add(p); this.hurtPlayer(16, 'wreck'); }
+          if (this.particles.length < 600) this.burst(h.x, h.y, '#ffb02e', 3, 200, 0.4, 5);
+          if (k >= 1) done = true;
+        }
       } else if (h.kind === 'mortar') {
         if (h.t >= h.warn) {
           done = true;
@@ -718,6 +747,11 @@ export class Game {
     while (this.spawnAcc >= 1) {
       this.spawnAcc -= 1;
       if (this.enemies.length < st.max) this.spawnOne();
+    }
+    // world 1 (2.0): a falling wreck every `wrecks[1]` seconds (±20%), the first at `wrecks[0]`
+    if (st.wrecks && !this.bossDefeated) {
+      this.wreckAt ??= st.wrecks[0];
+      if (this.time >= this.wreckAt) { this.wreckAt = this.time + st.wrecks[1] * rand(0.8, 1.2); this.fallingWreck(); }
     }
     for (let i = 0; i < st.events.length; i++) {
       if (!this.eventsDone.has(i) && this.time >= st.events[i].t) {
