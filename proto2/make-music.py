@@ -13,7 +13,11 @@
 #          match the others (loop RMS 0.181)
 #   boss3: world 3 boss (about 136.6 BPM): 40 bars (about 70 s); the track starts 30 bars before the loop (`trim`),
 #          so the fight gets about 13 s of build-up
-# World 3's points were searched the same way as world 2's (below).
+#   game4: world 4 "Red Conversion" sector (about 136.5 BPM): 44 bars (about 77 s) of the main part; 0.85 (loop RMS
+#          0.177)
+#   boss4: world 4 boss (about 140.5 BPM): 36 bars (about 61.5 s); the track starts 30 beats before the loop (`trim`),
+#          about 13 s of build-up; 0.93 (loop RMS 0.162)
+# World 3's and 4's points were searched the same way as world 2's (below).
 # The world-2 points (build 100, after Konrad heard a jump): Suno's tempo is not exact, so a loop end taken from the
 # bar grid can sit a fraction of a beat off and the drums stumble at the jump. The ends were searched instead: every
 # beat as a start, whole-bar lengths, the end tuned in 2.9 ms steps to the best match of the onset envelope (rhythm)
@@ -35,6 +39,8 @@ TRACKS = {
     'boss2': ('art/2.0/audio/w02-siege-of-earth-boss.mp3', 75.2972, 113.5889, 1.0, 62.567),
     'game3': ('art/2.0/audio/w03-lunar-bridgehead-sector.mp3', 54.6367, 121.4150, 0.83),
     'boss3': ('art/2.0/audio/w03-lunar-bridgehead-boss.mp3', 44.6934, 114.8890, 1.0, 31.5114),
+    'game4': ('art/2.0/audio/w04-red-conversion-sector.mp3', 63.3850, 140.7244, 0.85),
+    'boss4': ('art/2.0/audio/w04-red-conversion-boss.mp3', 56.9360, 118.4317, 0.93, 44.1260),
 }
 
 out = {}

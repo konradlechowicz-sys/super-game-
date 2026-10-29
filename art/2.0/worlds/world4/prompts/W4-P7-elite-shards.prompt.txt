@@ -1,0 +1,28 @@
+STYLE (keep identical across all images):
+Game art for "Void Blaster", a top-down mobile space shooter (survivors-like).
+Camera: top-down orthographic, looking straight down, no perspective.
+Look: stylized sci-fi with a neon accent. Dark, rich materials (gunmetal, carbon,
+matte ceramic) lit from the top-left, glowing edges and emissive lights only where
+noted. Detail level: high but clean - panel lines, vents, rivets; no grunge overload.
+The background must stay dark and calm so bright game objects read on top of it:
+no bright cyan anywhere (cyan belongs to the player), magenta only as thin traces.
+Rendering: crisp edges, soft bloom on glowing parts only, no motion blur, no depth of
+field, not photorealistic. No text, no logo, no watermark.
+
+WORLD 4 "RED CONVERSION": low above a Mars plain in the middle of being rewritten by the
+Void Collective (an alien machine intelligence): a network of black crystal spreads over
+the red dust. Matte rust dust #4a1d14/#6e2b1c with highlights #9c4a30, black crystal
+#0d0a12 with facets #3b2a4a and an ember glow #ff5a2e inside, magenta #ff2d95 veins in
+the crystal, brown dusty haze #5a2a1f. Weak reddish sun from the top-left, diffused by
+dust. Mood: unease, a planet being converted. 80% machine, crystal growths.
+Mars is dusty and matte, never bright orange.
+
+TASK: Enemy sheet, 6 enemies, facing up, seen from directly above, one scale, plain
+flat dark background (#05010f), well apart. Machines growing black crystal, with a
+glowing magenta core and ember-red accents. Relative sizes: crystal mite 24, shard
+drone 32, dust stalker 36, prism node 40, spreader 50 (lays crystal), crystal golem 66
+(the biggest drawn about 300 px). Then, on a second image: an elite shard drone (1.6x,
+heavier crystal armor, a gold ring) and, for each of the 6, 3-4 broken shards of its
+body for the death animation, one row per enemy. No text.
+
+Execution direction for this invocation: generate ONLY the SECOND image: elite plus death shards. Image1 is the exact six W4 enemy designs to preserve, arranged top-left mite, top-right shard drone, middle-left stalker, middle-right prism node, bottom-left spreader, bottom-right golem. Image2 is approved arena for W4 materials. Produce portrait sheet on uniform #05010f. TOP QUARTER: one elite version of the top-right shard drone, same pointed tri-wing shape and circular magenta core, 1.6x relative to standard drone, heavier obsidian armor, clear thin GOLD ring around the complete unit. BELOW it, exactly SIX distinct horizontal rows with FOUR isolated broken body fragments in EACH row (24 shards total), each row well separated: row1 crystal mite; row2 shard drone; row3 dust stalker; row4 prism node; row5 spreader; row6 crystal golem. Each shard recognizably from that exact design: broken black crystal armor with magenta slivers, a fractured mechanical core segment, a severed machine joint/limb, a distinct casing fragment. Broken core is not a whole circular intact drone. Larger enemy shards larger than mite fragments. No full regular enemies, no extra variants, no whole corpses, no tiny rubble clouds, just 4 usable isolated chunks per row. Equal 4-column layout in fragment rows, large dark gutters. Consistent top-left light, top-down, aggressive sharply faceted forms. No text, no numbered labels, no grid.

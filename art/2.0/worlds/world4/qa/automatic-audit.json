@@ -1,0 +1,679 @@
+{
+  "status": "automatic-checks-passed",
+  "production_png": 70,
+  "individual_sprites": 60,
+  "texture_checks": {
+    "P3a-dust": {
+      "mean_luminance": 0.15461535372864965,
+      "max_luminance": 0.2999929411764706,
+      "p99_luminance": 0.29667843137254907,
+      "exact_opposite_edges": true,
+      "near_black_fraction": 1.71661376953125e-05
+    },
+    "P3b-converted": {
+      "mean_luminance": 0.09723342372819489,
+      "max_luminance": 0.29999686274509807,
+      "p99_luminance": 0.29792156862745095,
+      "exact_opposite_edges": true,
+      "near_black_fraction": 0.053297996520996094
+    },
+    "P4-overlay": {
+      "mean_luminance": 0.007345947585012399,
+      "max_luminance": 0.3978674509803921,
+      "p99_luminance": 0.08240392156862746,
+      "exact_opposite_edges": true,
+      "near_black_fraction": 0.771031379699707
+    }
+  },
+  "dust_correspondence": {
+    "unchanged_dust_pixels": 216616,
+    "crystal_mask_coverage": 0.7287607192993164,
+    "unconverted_dunes_and_rocks_exact": true,
+    "opposite_edges_identical": true,
+    "method": "Generated periodic crystal isolated as overlay; original dust retained at identical positions."
+  },
+  "border_connections_checked": 8,
+  "all_individual_assets_have_clear_margins": true,
+  "enemy_relative_sizes": [
+    109,
+    145,
+    164,
+    182,
+    227,
+    300
+  ],
+  "elite_content_max_px": 232,
+  "exact_bible_prompt_blocks_preserved": true,
+  "graphics": [
+    {
+      "file": "graphics/W4-P1-arena-concept.png",
+      "role": "P1-concept",
+      "size": [
+        941,
+        1672
+      ],
+      "sha256": "e7023c60ecc999ae089cd2a4d4a55d37d0f6131cdd2d0da82e71a099e3b6b48d"
+    },
+    {
+      "file": "graphics/W4-P3a-martian-dust-1024.png",
+      "role": "P3a-dust",
+      "size": [
+        1024,
+        1024
+      ],
+      "sha256": "531c4d8439f42bc45a94b1ab884f3858f478b7d943296e62a5b4ddcef67ae928"
+    },
+    {
+      "file": "graphics/W4-P3b-crystal-conversion-1024.png",
+      "role": "P3b-converted",
+      "size": [
+        1024,
+        1024
+      ],
+      "sha256": "b19839973df5ed53e29aa4e31df4abff66b3882b4d124112ec20a68a19c58a38"
+    },
+    {
+      "file": "graphics/W4-P4-dust-overlay-1024.png",
+      "role": "P4-overlay",
+      "size": [
+        1024,
+        1024
+      ],
+      "sha256": "20ad344af0f8355774e3c6e848ecc4c47d9fb6f1d4b0ef9683ec7d3da8061a0a"
+    },
+    {
+      "file": "graphics/W4-P5-props-sheet.png",
+      "role": "P5-props-sheet",
+      "size": [
+        1536,
+        1536
+      ],
+      "sha256": "1ba3f10e0599edec895dd3f948c79fcf02406b0ed4267d605a32e85af92af85c"
+    },
+    {
+      "file": "graphics/W4-P5-props/W4-P5-buried-rover.png",
+      "role": "individual-sprite",
+      "size": [
+        124,
+        113
+      ],
+      "sha256": "9d6594be1985347a4dca64bc447b765f61a6add9312dd55ae2b7bc3d1d4fbfc1"
+    },
+    {
+      "file": "graphics/W4-P5-props/W4-P5-crystal-destroyed.png",
+      "role": "individual-sprite",
+      "size": [
+        261,
+        193
+      ],
+      "sha256": "871e516ba873e92e76a6d92772cd00cf800a32417262859fd75b48486c4dd0d1"
+    },
+    {
+      "file": "graphics/W4-P5-props/W4-P5-crystal-intact.png",
+      "role": "individual-sprite",
+      "size": [
+        244,
+        204
+      ],
+      "sha256": "8bc737588df3f4d6e5c6f39f120a39941d5ae91385ae3faf503b2097d59e4c8f"
+    },
+    {
+      "file": "graphics/W4-P5-props/W4-P5-crystal-shards.png",
+      "role": "individual-sprite",
+      "size": [
+        124,
+        104
+      ],
+      "sha256": "92ed8ae64bd2b08ef9a09fd64ffbb8a9ddccd3c0ff6d6673de20e39c24addeb9"
+    },
+    {
+      "file": "graphics/W4-P5-props/W4-P5-crystal-spires.png",
+      "role": "individual-sprite",
+      "size": [
+        291,
+        304
+      ],
+      "sha256": "526441d42a8f8823070831e7a7f8d65f62305f02aeec754580b6cbdd188a0863"
+    },
+    {
+      "file": "graphics/W4-P5-props/W4-P5-growth-node.png",
+      "role": "individual-sprite",
+      "size": [
+        287,
+        304
+      ],
+      "sha256": "e7633505173a33cb27eb91d767f53f469fab269a4e26bc01ccce347555c3b2fd"
+    },
+    {
+      "file": "graphics/W4-P5-props/W4-P5-half-converted-habitat.png",
+      "role": "individual-sprite",
+      "size": [
+        291,
+        304
+      ],
+      "sha256": "c971bba736b638d6329055dde18e756572e0b0b36efbd98e73e5b14e4a7f4a1b"
+    },
+    {
+      "file": "graphics/W4-P5-props/W4-P5-pylon-destroyed.png",
+      "role": "individual-sprite",
+      "size": [
+        254,
+        254
+      ],
+      "sha256": "60d1f8969a1aa9fad36997d9eb19021002bbc61caf6d3ff86a3a8a5683f871cf"
+    },
+    {
+      "file": "graphics/W4-P5-props/W4-P5-pylon-intact.png",
+      "role": "individual-sprite",
+      "size": [
+        208,
+        274
+      ],
+      "sha256": "6706b52cfcf96d672d687d01b8395cf89d0d642a28d2acbea23927964a86a495"
+    },
+    {
+      "file": "graphics/W4-P5-props/W4-P5-supply-drop.png",
+      "role": "individual-sprite",
+      "size": [
+        124,
+        100
+      ],
+      "sha256": "7802626e8f6286e78587e6c9a0653dc4a2eeefa9e71795238d1fb98552584a0d"
+    },
+    {
+      "file": "graphics/W4-P6-border-pieces-sheet.png",
+      "role": "P6-border-sheet",
+      "size": [
+        1536,
+        1536
+      ],
+      "sha256": "d009132ca64e79c9badcc6138b9fbff622af6db5abbdf39c8fea9ee456285fe0"
+    },
+    {
+      "file": "graphics/W4-P6-border-pieces/W4-P6-border-bottom.png",
+      "role": "individual-sprite",
+      "size": [
+        1024,
+        160
+      ],
+      "sha256": "2a6ad87d6d07dd1c6e13733049f5f395b7260a393c2bba8bd1953881939d20c2"
+    },
+    {
+      "file": "graphics/W4-P6-border-pieces/W4-P6-border-left.png",
+      "role": "individual-sprite",
+      "size": [
+        160,
+        1024
+      ],
+      "sha256": "6a2ec24325ddfe5bed5500624fb2c5f1786fba0e4b5ba41323808f7898575777"
+    },
+    {
+      "file": "graphics/W4-P6-border-pieces/W4-P6-border-right.png",
+      "role": "individual-sprite",
+      "size": [
+        160,
+        1024
+      ],
+      "sha256": "fb61abcf07740c040b1688bc66c447dc9b363470eee6c3c707ee8c624294c771"
+    },
+    {
+      "file": "graphics/W4-P6-border-pieces/W4-P6-border-top.png",
+      "role": "individual-sprite",
+      "size": [
+        1024,
+        160
+      ],
+      "sha256": "75bf8506a5e3105a118472915db5ed2800e594082cffdcda9c260872905affbf"
+    },
+    {
+      "file": "graphics/W4-P6-border-pieces/W4-P6-corner-bottom-left.png",
+      "role": "individual-sprite",
+      "size": [
+        256,
+        256
+      ],
+      "sha256": "9a9fb4ad61928fd564f7524dbb1b4519f65e7a5ca8992336bc3df4ea798ac93f"
+    },
+    {
+      "file": "graphics/W4-P6-border-pieces/W4-P6-corner-bottom-right.png",
+      "role": "individual-sprite",
+      "size": [
+        256,
+        256
+      ],
+      "sha256": "a7e199f42d2b9c10754389f1c905117b7d023b1c761d1310b1c1f6d2b70e5a04"
+    },
+    {
+      "file": "graphics/W4-P6-border-pieces/W4-P6-corner-top-left.png",
+      "role": "individual-sprite",
+      "size": [
+        256,
+        256
+      ],
+      "sha256": "7ad0154727f95c2ff7caa28789df5672108288973454054ad217496b31acc240"
+    },
+    {
+      "file": "graphics/W4-P6-border-pieces/W4-P6-corner-top-right.png",
+      "role": "individual-sprite",
+      "size": [
+        256,
+        256
+      ],
+      "sha256": "0fe8407345a37a5767a0172fcfbd14ba1944d46d2cbd72392cb2e100d69496f0"
+    },
+    {
+      "file": "graphics/W4-P7-elite-and-shards-sheet.png",
+      "role": "P7-elite-shards-sheet",
+      "size": [
+        1024,
+        1536
+      ],
+      "sha256": "0ba721e2ca836d0c1c9a736838382b7ca9cc5c4a5ce750c8a08eacbb3e3111e8"
+    },
+    {
+      "file": "graphics/W4-P7-elite-and-shards/W4-P7-crystal-golem-shard-1.png",
+      "role": "individual-sprite",
+      "size": [
+        137,
+        183
+      ],
+      "sha256": "6e2ca29b31c3c471959eeeae5b35b0dca8dbc406661b8137f0eeea0a6db6624a"
+    },
+    {
+      "file": "graphics/W4-P7-elite-and-shards/W4-P7-crystal-golem-shard-2.png",
+      "role": "individual-sprite",
+      "size": [
+        151,
+        170
+      ],
+      "sha256": "4705b41492760561a0da75bd955e179eca0e3040f5472b0352af6f3e8fb4222f"
+    },
+    {
+      "file": "graphics/W4-P7-elite-and-shards/W4-P7-crystal-golem-shard-3.png",
+      "role": "individual-sprite",
+      "size": [
+        119,
+        184
+      ],
+      "sha256": "b2c5ee399bb551478b8eda213146b89d2de07edc0c6d58d3296478e79970ce3f"
+    },
+    {
+      "file": "graphics/W4-P7-elite-and-shards/W4-P7-crystal-golem-shard-4.png",
+      "role": "individual-sprite",
+      "size": [
+        137,
+        177
+      ],
+      "sha256": "9d6a950ebc5d7c8f659d425192dd44ec2bb7bead9d49dcd6d5fd27eb0682e3b4"
+    },
+    {
+      "file": "graphics/W4-P7-elite-and-shards/W4-P7-crystal-mite-shard-1.png",
+      "role": "individual-sprite",
+      "size": [
+        62,
+        57
+      ],
+      "sha256": "bf837123c72cca2e7183a2a16edfb64b97c7f84561bcb98437f988ba1865f442"
+    },
+    {
+      "file": "graphics/W4-P7-elite-and-shards/W4-P7-crystal-mite-shard-2.png",
+      "role": "individual-sprite",
+      "size": [
+        68,
+        65
+      ],
+      "sha256": "78483c629373261629d3948a30921d35364e128398cbb80b596eae86a52591af"
+    },
+    {
+      "file": "graphics/W4-P7-elite-and-shards/W4-P7-crystal-mite-shard-3.png",
+      "role": "individual-sprite",
+      "size": [
+        84,
+        62
+      ],
+      "sha256": "1c2dc7cff0a363c761386c4ac4403e9493d82df2aa23a2084b594c08b64a393c"
+    },
+    {
+      "file": "graphics/W4-P7-elite-and-shards/W4-P7-crystal-mite-shard-4.png",
+      "role": "individual-sprite",
+      "size": [
+        56,
+        61
+      ],
+      "sha256": "1f2c5466e5fbaec83cc7c7c9430c70801a8eb4c166ca6fb104ea105a8a71954c"
+    },
+    {
+      "file": "graphics/W4-P7-elite-and-shards/W4-P7-dust-stalker-shard-1.png",
+      "role": "individual-sprite",
+      "size": [
+        89,
+        119
+      ],
+      "sha256": "70de88d284fc9c8ac53877c148d5f408ef5446abb28cd0285aa070ad8dc72163"
+    },
+    {
+      "file": "graphics/W4-P7-elite-and-shards/W4-P7-dust-stalker-shard-2.png",
+      "role": "individual-sprite",
+      "size": [
+        100,
+        106
+      ],
+      "sha256": "72304d831144b11b8d05bd3c8289de93f84ec6d96fea21c8d5967906bff8dbf7"
+    },
+    {
+      "file": "graphics/W4-P7-elite-and-shards/W4-P7-dust-stalker-shard-3.png",
+      "role": "individual-sprite",
+      "size": [
+        117,
+        110
+      ],
+      "sha256": "080bcb5149de9ac12b204f75e469721dfa487a4b176e55937fa596d15a019da0"
+    },
+    {
+      "file": "graphics/W4-P7-elite-and-shards/W4-P7-dust-stalker-shard-4.png",
+      "role": "individual-sprite",
+      "size": [
+        69,
+        89
+      ],
+      "sha256": "ee0d7dfe6fa03f5167d7201212b1fcca3e277d95d4bb4e32dd4dda8eecd51b85"
+    },
+    {
+      "file": "graphics/W4-P7-elite-and-shards/W4-P7-prism-node-shard-1.png",
+      "role": "individual-sprite",
+      "size": [
+        88,
+        94
+      ],
+      "sha256": "9971c303c8eb291eeb837b2777a4e3f6b564f94738cebe602106b2cbd79dff6f"
+    },
+    {
+      "file": "graphics/W4-P7-elite-and-shards/W4-P7-prism-node-shard-2.png",
+      "role": "individual-sprite",
+      "size": [
+        115,
+        100
+      ],
+      "sha256": "65ee8c3712d0db5a8a0271db902a71ca7737276e2d59e81aa83dee4b027dc970"
+    },
+    {
+      "file": "graphics/W4-P7-elite-and-shards/W4-P7-prism-node-shard-3.png",
+      "role": "individual-sprite",
+      "size": [
+        124,
+        92
+      ],
+      "sha256": "e58cdae6472a9eafaf158de1affd7b3ff29bc2a14acfa764aa5697a1fba1df57"
+    },
+    {
+      "file": "graphics/W4-P7-elite-and-shards/W4-P7-prism-node-shard-4.png",
+      "role": "individual-sprite",
+      "size": [
+        86,
+        92
+      ],
+      "sha256": "ee061d6635a7e83ede94dd92760ffaa941d566ae51f1139e91d96ca9b179a1cb"
+    },
+    {
+      "file": "graphics/W4-P7-elite-and-shards/W4-P7-shard-drone-elite.png",
+      "role": "individual-sprite",
+      "size": [
+        256,
+        229
+      ],
+      "sha256": "1ecbff338f4d1b3b22e289d4edaf381ef0d7c0d9ab4e60febd5eb5f85424b5e6"
+    },
+    {
+      "file": "graphics/W4-P7-elite-and-shards/W4-P7-shard-drone-shard-1.png",
+      "role": "individual-sprite",
+      "size": [
+        97,
+        74
+      ],
+      "sha256": "6e086f888150deae2e597edbcff1e052055ae2b3e873f947f8a118213a3c94ac"
+    },
+    {
+      "file": "graphics/W4-P7-elite-and-shards/W4-P7-shard-drone-shard-2.png",
+      "role": "individual-sprite",
+      "size": [
+        104,
+        77
+      ],
+      "sha256": "8dfce24f75032cf5b2956be9180dac353e13edc8fb1ceddb51bd4ab12d30af74"
+    },
+    {
+      "file": "graphics/W4-P7-elite-and-shards/W4-P7-shard-drone-shard-3.png",
+      "role": "individual-sprite",
+      "size": [
+        104,
+        79
+      ],
+      "sha256": "6290948a32bd62f12da4ac70b37f2bf96032c0cf12f46389d8636842b0989eff"
+    },
+    {
+      "file": "graphics/W4-P7-elite-and-shards/W4-P7-shard-drone-shard-4.png",
+      "role": "individual-sprite",
+      "size": [
+        75,
+        77
+      ],
+      "sha256": "bbcb7929eac66242adad40d404ec784d2ce2a8e9f1fb483e5e4c8a6f27144642"
+    },
+    {
+      "file": "graphics/W4-P7-elite-and-shards/W4-P7-spreader-shard-1.png",
+      "role": "individual-sprite",
+      "size": [
+        142,
+        105
+      ],
+      "sha256": "77fb60bafc1d6f3d30692fef030a526e8b9473f2e4a5ac07a026864489742813"
+    },
+    {
+      "file": "graphics/W4-P7-elite-and-shards/W4-P7-spreader-shard-2.png",
+      "role": "individual-sprite",
+      "size": [
+        142,
+        105
+      ],
+      "sha256": "bcc300580f9eb1fc034ce89df641b7513d594d787644dd08c9852754172e6d16"
+    },
+    {
+      "file": "graphics/W4-P7-elite-and-shards/W4-P7-spreader-shard-3.png",
+      "role": "individual-sprite",
+      "size": [
+        144,
+        96
+      ],
+      "sha256": "bb76706b34f9554a322ae5e9cf3f87873171c1295d76f4753fc7a273237f4ec3"
+    },
+    {
+      "file": "graphics/W4-P7-elite-and-shards/W4-P7-spreader-shard-4.png",
+      "role": "individual-sprite",
+      "size": [
+        125,
+        116
+      ],
+      "sha256": "bb5ec624db6af5e1b027944a1fa4049e026bf97f9f07ef82ff7916d9db062fe3"
+    },
+    {
+      "file": "graphics/W4-P7-enemies-sheet.png",
+      "role": "P7-enemies-sheet",
+      "size": [
+        1024,
+        1024
+      ],
+      "sha256": "7354586984fa15a1649277be517caada8e183b3b80e1b7d9a01f0f97ac3c9ba0"
+    },
+    {
+      "file": "graphics/W4-P7-enemies/W4-P7-crystal-golem.png",
+      "role": "individual-sprite",
+      "size": [
+        276,
+        324
+      ],
+      "sha256": "9899dc199bf2873c53d48e0acb3d51cd71c07186fef6b6709cb6f8e4a75f7ec8"
+    },
+    {
+      "file": "graphics/W4-P7-enemies/W4-P7-crystal-mite.png",
+      "role": "individual-sprite",
+      "size": [
+        126,
+        133
+      ],
+      "sha256": "21f97a5c477a659170d9c4cf52320dc03873b5ba682f9bf68f5da453dccb671a"
+    },
+    {
+      "file": "graphics/W4-P7-enemies/W4-P7-dust-stalker.png",
+      "role": "individual-sprite",
+      "size": [
+        140,
+        188
+      ],
+      "sha256": "b34ba9d3bcc65c0cf25a490d663e93e035f6247e50987bbf6dc13c4bfa620746"
+    },
+    {
+      "file": "graphics/W4-P7-enemies/W4-P7-prism-node.png",
+      "role": "individual-sprite",
+      "size": [
+        204,
+        206
+      ],
+      "sha256": "cd2a73ab2b0eb8cee91243468e9acd11f13a7c41405825a4ebddfcbb4c277905"
+    },
+    {
+      "file": "graphics/W4-P7-enemies/W4-P7-shard-drone.png",
+      "role": "individual-sprite",
+      "size": [
+        162,
+        169
+      ],
+      "sha256": "87556b6f43099205daf64c494c7972f1ebea63372fee2faabda8a7dd19c3de3a"
+    },
+    {
+      "file": "graphics/W4-P7-enemies/W4-P7-spreader.png",
+      "role": "individual-sprite",
+      "size": [
+        212,
+        251
+      ],
+      "sha256": "ae9812efb72f186c2c9a391e31a2baac0f20a5aedacb35628f096ecaada08bba"
+    },
+    {
+      "file": "graphics/W4-P8-parts-sheet.png",
+      "role": "P8-parts-sheet",
+      "size": [
+        3072,
+        3072
+      ],
+      "sha256": "5461b4e45a59b63cd2550634926e4e8732a0dcf80ca75737ee297eed740c16c4"
+    },
+    {
+      "file": "graphics/W4-P8-parts/W4-P8-body.png",
+      "role": "individual-sprite",
+      "size": [
+        724,
+        674
+      ],
+      "sha256": "2db9b5494c15e2e1ab93ca1d9ef9da6de887fb99573339e8b402cba900069fed"
+    },
+    {
+      "file": "graphics/W4-P8-parts/W4-P8-cannon-east.png",
+      "role": "individual-sprite",
+      "size": [
+        140,
+        379
+      ],
+      "sha256": "a59b5dd8d67f3c665b449d5c9dc795ec804669ae2cf6fa21ad5f350704964d18"
+    },
+    {
+      "file": "graphics/W4-P8-parts/W4-P8-cannon-west.png",
+      "role": "individual-sprite",
+      "size": [
+        142,
+        379
+      ],
+      "sha256": "d02db626e38f1f95b8c98b284991ae87f46a2670c4aadd4b34c5811df5305a79"
+    },
+    {
+      "file": "graphics/W4-P8-parts/W4-P8-leg-ne.png",
+      "role": "individual-sprite",
+      "size": [
+        262,
+        324
+      ],
+      "sha256": "a15a395a9dd0e88080b57af8b4d4d442bd877324e862b04937fc72580ebd7d42"
+    },
+    {
+      "file": "graphics/W4-P8-parts/W4-P8-leg-nw.png",
+      "role": "individual-sprite",
+      "size": [
+        263,
+        324
+      ],
+      "sha256": "1693d409696babe2b73df342ae26b92e3fd58305f327622cf4b89ff2e3cebb34"
+    },
+    {
+      "file": "graphics/W4-P8-parts/W4-P8-leg-se.png",
+      "role": "individual-sprite",
+      "size": [
+        350,
+        424
+      ],
+      "sha256": "1937d8e76101f25506821d91135ba92462b453e8962cb4436d15276278475f01"
+    },
+    {
+      "file": "graphics/W4-P8-parts/W4-P8-leg-sw.png",
+      "role": "individual-sprite",
+      "size": [
+        349,
+        424
+      ],
+      "sha256": "a28247fb87901624f543f25e8ba560ac3bd8e8d82197248fc011f40963853b87"
+    },
+    {
+      "file": "graphics/W4-P8-parts/W4-P8-weak-point-ne.png",
+      "role": "individual-sprite",
+      "size": [
+        108,
+        114
+      ],
+      "sha256": "aa391d2b7d2bd9eee74e3e2f10b0ddae551c4ed142adf8fd2c8d9c44b5c113fd"
+    },
+    {
+      "file": "graphics/W4-P8-parts/W4-P8-weak-point-nw.png",
+      "role": "individual-sprite",
+      "size": [
+        106,
+        114
+      ],
+      "sha256": "4fd7f454f0232416c7a5de14f8f8c4edae4b5cdf7e958f57e499be8751b024f8"
+    },
+    {
+      "file": "graphics/W4-P8-parts/W4-P8-weak-point-se.png",
+      "role": "individual-sprite",
+      "size": [
+        107,
+        114
+      ],
+      "sha256": "b0a02aaa12e52b998261979ec2f74eaea567a659ead363966ac2139bf625aaa0"
+    },
+    {
+      "file": "graphics/W4-P8-parts/W4-P8-weak-point-sw.png",
+      "role": "individual-sprite",
+      "size": [
+        108,
+        114
+      ],
+      "sha256": "1c60cbe71a1d8cdf7a3ef08495fb77027c3cf554394ff2c138a305857f31ed55"
+    },
+    {
+      "file": "graphics/W4-P8-red-colossus-1024.png",
+      "role": "P8-boss",
+      "size": [
+        1024,
+        1024
+      ],
+      "sha256": "1b6bf4b1846ba060c8ba388803628f892d9e2c964ebfba0c6d95c704a839b4bd"
+    }
+  ]
+}

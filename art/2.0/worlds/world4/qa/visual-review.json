@@ -1,0 +1,68 @@
+{
+  "status": "passed",
+  "reviewer": "Codex visual inspection",
+  "evidence": [
+    {
+      "file": "qa/W4-complete-overview.png",
+      "sha256": "922c42bc6f2b0ad5c3e649bf9f4611ff4719d5fb02a18e841fa12b0919aba465"
+    },
+    {
+      "file": "qa/W4-individual-assets-contact.png",
+      "sha256": "529ab1eef1a10ce1fdb71edf81241df55306de7a6cdcacafbaf6d0c798d86ceb"
+    },
+    {
+      "file": "qa/W4-P3a-repeat-3x3.png",
+      "sha256": "5ffeb7643520f733835d5836f49f20b7881b8230124a016215d58ba45eafc269"
+    },
+    {
+      "file": "qa/W4-P3a-offset.png",
+      "sha256": "8598947945570a7ff160952312e98f921bc817e20f30bda51af07d29ac12921b"
+    },
+    {
+      "file": "qa/W4-P3b-repeat-3x3.png",
+      "sha256": "20c99bf86931d242f5603ac44cda99fb93b452d4dc9a2e2e89b0dff01eae11b2"
+    },
+    {
+      "file": "qa/W4-P3b-offset.png",
+      "sha256": "538116cf621999d6252b33f344a4ff82c13021cfb8e47f3956212cb29f899e1b"
+    },
+    {
+      "file": "qa/W4-P3ab-transition.png",
+      "sha256": "016bb552c80851e420be5ab70f07c57c724baf76f1830b8a026fe0749053a01c"
+    },
+    {
+      "file": "qa/W4-P4-repeat-3x3.png",
+      "sha256": "019c785489007b8eb376cd71efa6a3ca5e998a49f2d15016cb82656f5667c330"
+    },
+    {
+      "file": "qa/W4-P4-offset.png",
+      "sha256": "e37b6e378f2c8a6ec57ab5064ca20143d0af2d56690508edd203ee4dd3f7d60d"
+    },
+    {
+      "file": "qa/W4-P4-additive-on-dust.png",
+      "sha256": "c22421a3c9eb1a7fc17f46d5d1076d7c8540218570d2d13f49ee86a11574776c"
+    },
+    {
+      "file": "qa/W4-P6-A-assembled-frame.png",
+      "sha256": "54ab6d900c900d590805177f16c1730b52f9df4bccab58486761735136a82a7b"
+    },
+    {
+      "file": "qa/W4-P6-A-strip-repeat.png",
+      "sha256": "37db2ac01c24b06d8dd98a949e4ebf9030ecb3e54817e9438b77d48a8df780c5"
+    }
+  ],
+  "findings": {
+    "P1": "User-selected A: radial crystal node and human habitat domes; retained without composition changes.",
+    "P3": "Low flat rust dunes; second tile has connected flat black crystal, scarce magenta and ember. Final repeat and offset views have no hard seam. Uncovered ground pixels retain their exact positions.",
+    "P4": "Sparse diagonal red dust on pure black; soft wisps fade at the perimeter for periodicity. No vertical processing streaks or sharp joins remain.",
+    "P5": "Ten separated props, clear small/large scale, recognizable half-converted dome, matching destruction pairs. No clipped neighboring marks after cleanup.",
+    "P6": "Four strips plus four corners, proper inward-facing edges, complete assembled canyon/crystal frame, all eight corner joins checked.",
+    "P7": "Six distinct up-facing machine/crystal designs in required size ratios; elite shard drone with heavier armor and gold reactor ring; six rows of four distinct body shards.",
+    "P8": "Four heavy legs, two parallel artillery cannons, four magenta hip weak points; isolated body, legs, cannons and weak points plus the original complete boss in lower-right at production scale.",
+    "style": "Aggressive blade silhouettes, heavy machinery, black violet crystal, rust dust, no cyan background or text in production art."
+  },
+  "limitations": [
+    "Boss attachment guide provides reference centers for integration; it is not a pixel-perfect automatic rig."
+  ],
+  "open_required_issues": []
+}
