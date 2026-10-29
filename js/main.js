@@ -107,6 +107,7 @@ const up = (e) => { if (e.pointerId === input.pid) input.resetDrag(); };
 canvas.addEventListener('pointerup', up);
 canvas.addEventListener('pointercancel', up);
 document.addEventListener('pointerdown', () => app.audio.unlock(), { capture: true });
+document.addEventListener('pointerup', () => app.audio.unlock(), { capture: true });
 window.addEventListener('keydown', (e) => {
   app.audio.unlock();
   input.keys.add(e.code);
@@ -121,9 +122,9 @@ document.addEventListener('dblclick', (e) => e.preventDefault());
 document.addEventListener('visibilitychange', () => {
   if (document.hidden) {
     app.game?.pause();
-    app.audio.ctx?.suspend();
-  } else if (app.audio.ctx) {
-    app.audio.ctx.resume();
+    app.audio.sleep();
+  } else {
+    app.audio.wake();
   }
 });
 
