@@ -1,0 +1,91 @@
+{
+  "status": "passed",
+  "reviewer": "Codex visual inspection",
+  "date": "2026-10-29",
+  "evidence": [
+    {
+      "file": "qa/W5-complete-overview.png",
+      "sha256": "9876816017b7bef7ae3696b36a68e591e6e478f8b14ec8088b8ac9ba4101f251",
+      "finding": "All principal stages present, coherent dark steel and asteroid palette, aggressive forms, no text in game images."
+    },
+    {
+      "file": "qa/W5-individual-assets-contact.png",
+      "sha256": "45245b3909b39658654691ea97413e2e27f7b72386b882432ec2ea9a77b14eef",
+      "finding": "All 63 individual objects reviewed; clear crops, six distinct enemies seen from above, 24 recognizable shards, 13 props, four boss arms, two bays and four weak modules."
+    },
+    {
+      "file": "qa/W5-P2-repeat-3x3.png",
+      "sha256": "ec9f09665fae38c4eb64e4eb64dd113012746c423c096f998f449eb70ffbd1a2",
+      "finding": "Deep space stays very dark; small factory asteroids repeat without broad blurred edge bands."
+    },
+    {
+      "file": "qa/W5-P2-offset.png",
+      "sha256": "8c1dd8fdb2f8204943fec5b5cf319f367c139655796f9f542c9e9f395f65e53f",
+      "finding": "Reviewed after replacing broad edge blending with minimum-error source overlaps; no stretched asteroid smear across joins."
+    },
+    {
+      "file": "qa/W5-P3-repeat-3x3.png",
+      "sha256": "c4f870a64ca10ab2bc9283564250403dcd8c00b29b1d5fef1e18c7305983b43d",
+      "finding": "Rock, inset panels and rails form repeating traversable floor with three enclosed chasm openings per tile."
+    },
+    {
+      "file": "qa/W5-P3-offset.png",
+      "sha256": "fcf07d04f388239162b3e3cfdbd40feca1907be875ec1a89ad5fd7e819bfa053",
+      "finding": "Opposing edge transition inspected at tile center; no visible open gap or exterior border."
+    },
+    {
+      "file": "qa/W5-P3-over-P2.png",
+      "sha256": "49f52c30503617179584e1f03dd5d07b37aa3aa130000f52e1e3ee258cb7e7a2",
+      "finding": "Real alpha chasms reveal the separate distant space and factory layer."
+    },
+    {
+      "file": "qa/W5-P4-additive-composite.png",
+      "sha256": "4bdaccc657889b64c2eae9939969226ed63740a7a4aec817c877394112949f8c",
+      "finding": "Sparse fine embers and welding sparks remain readable without obscuring the combat surface."
+    },
+    {
+      "file": "qa/W5-P4-repeat-3x3.png",
+      "sha256": "a0841515b4cd7edc332e21649882b88ff357d01d39c1d2284327cef90c9e7fcb",
+      "finding": "Additive overlay repeats on black, mostly empty, no abrupt bright border."
+    },
+    {
+      "file": "qa/W5-P6-B-assembled-frame.png",
+      "sha256": "273820fd59830137cbfd084fe959ac9f7466ed9e06f3cf8bc4e08b2464e32831",
+      "finding": "All eight border pieces assembled, correctly oriented inward; industrial cliff and scaffolding form a closed arena."
+    },
+    {
+      "file": "qa/W5-P6-B-strip-repeat.png",
+      "sha256": "023e16c1c33468f4160ece15b2684dc6e6d1e86741d05348332a105b4eb45ff8",
+      "finding": "All four strips repeat along their length with consistent silhouettes and light tracks."
+    }
+  ],
+  "corrections": [
+    "Worker mech regenerated from overhead camera.",
+    "Chasm coverage increased from 6.3% to 12.1% while retaining generated true alpha.",
+    "Ordinary enemy row boundary corrected to exclude adjacent sprites.",
+    "Boss module crops retain their principal connected part, excluding neighboring slivers.",
+    "P2 uses source overlap cuts to remove stretched seam artifacts."
+  ],
+  "checks": {
+    "p1_approved": "B",
+    "p2": true,
+    "p3": true,
+    "p4": true,
+    "p5_all_13": true,
+    "p6_all_8": true,
+    "p7_all_6": true,
+    "p7_elite": true,
+    "p7_24_shards": true,
+    "p8_two_bays": true,
+    "p8_four_arms": true,
+    "p8_four_weak_modules": true,
+    "p8_11_parts": true,
+    "no_game_text": true,
+    "aggressive_industrial_style": true
+  },
+  "open_required_issues": [],
+  "limitations": [
+    "Boss modules are generated views with approximate mounting coordinates, not a pixel-perfect rig.",
+    "P2 2048 output is resized from periodic source; native generation was 1254 square."
+  ]
+}

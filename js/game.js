@@ -7,7 +7,7 @@ import { Tutorial, tipsOn, tipSeen, markTip } from './tutorial.js';
 import { renderGame } from './render-canvas.js';
 import { EDITION } from './edition.js';
 import { initProps, updateProps, breakProp, hasProps } from './props.js';
-import { initCover, hasCover, coverAt } from './cover.js';
+import { initCover, hasCover, coverAt, updateCover } from './cover.js';
 import { initCrystal, hasCrystal, updateCrystal, layCrystal } from './crystal.js';
 
 const MAX_WEAPONS = 4;
@@ -1019,6 +1019,7 @@ export class Game {
       this.directSpawns(dt);
       if (this.props.length) updateProps(this, dt);
       if (this.crystal) updateCrystal(this, dt);
+      if (this.cover.length) updateCover(this, dt);
     }
 
     this.updateEnemies(dt);
@@ -1511,6 +1512,21 @@ export class Game {
         }
         const n = (b.def.burstN || 18) + enr * 4, off = rand(0, TAU);
         for (let k = 0; k < n; k++) this.enemyShoot(b.x, b.y, off + (k / n) * TAU, 140 * (b.def.bulletSpeed || 1), b.def.bulletDmg || 8);
+        this.sfx('warn');
+        break;
+      }
+      // build (Foundry Mother): its two assembly bays put out a squad each, left and right of it
+      case 'build': {
+        b.modeT = 1.0; b.built = this.time;
+        const a = Math.atan2(dy, dx), types = b.def.summon, n = (b.def.summonN || 4) + enr * 2;
+        for (const side of [-1, 1]) {
+          const bx = b.x + Math.cos(a + side * Math.PI / 2) * b.r * 1.05, by = b.y + Math.sin(a + side * Math.PI / 2) * b.r * 1.05;
+          for (let i = 0; i < n; i++) {
+            const e = this.spawnEnemy(types[i % types.length], bx + rand(-20, 20), by + rand(-20, 20));
+            e.spawnT = 0.3;
+          }
+          this.addFx(bx, by, 60, '#ff7a1a', 0.4, 4);
+        }
         this.sfx('warn');
         break;
       }

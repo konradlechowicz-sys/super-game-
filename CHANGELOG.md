@@ -16,6 +16,14 @@ i wersja TEST (gracze tego nie widzą).
 
 - 
 
+## Build 109 · 2026-10-29
+- [Nowe] Świat 5 „Foundry Belt” (pełna wersja): 6 sektorów (Ore Drift, Assembly Line, Smelter Ring, Drone Yards, Hull Forge, Foundry Mother) w grafice ChatGPT. Lot nad wydrążoną planetoidą-fabryką: skała cięta w tarasy, szyny i stalowe płyty, a przez rozpadliny widać kosmos z dalekimi planetoidami-fabrykami. Do tego pulsujące piece, suwnice z niedokończonymi kadłubami, taśmociągi, ramiona spawalnicze sypiące iskrami, krawędzie tarasów z rusztowaniami, żar i popiół w powietrzu.
+- [Nowe] Mechanika świata 5: dryfujące planetoidy są ruchomą osłoną. Pociski wrogów rozbijają się na nich, ale planetoidy powoli płyną i odbijają się od brzegu areny, więc trzeba się z nimi przesuwać. Maszyny da się niszczyć: zbiorniki paliwa wybuchają, kondensatory wzmacniają wrogów wokół, a rozbite dają łup.
+- [Nowe] 6 wrogów świata 5: Forge Drone (roje, elita w złotym pierścieniu), Welder (szarżuje), Assembler Turret (osadzona, obraca się i strzela w statek), Rock Drifter (przelatuje przez arenę jak planetoida), Ore Hauler (ciężki, rozpada się na drony), Worker Mech (trzyma dystans i strzela). Wszyscy z odłamkami i cieniami.
+- [Nowe] Boss FOUNDRY MOTHER: pancerna fabryka, która buduje armię w trakcie walki. Z dwóch zatok po bokach wypuszcza oddziały dronów, welderów i mechów (zatoki rozbłyskują przy budowie). Do tego płynny żużel (ostrzał), iskry (spirale, salwy) i wiązki. 3 fazy, pulsujące słabe punkty (zamki zatok i wyloty pieców).
+- [Nowe] Muzyka świata 5 (Suno): sektor i boss, z płynnie dobranymi pętlami.
+- [Balans] Sektory świata 5 sprawdzone symulacją: cele zestrzeleń osiągalne, boss pokonywany w ok. 1 min przy aktywnym statku.
+
 ## Build 108 · 2026-10-29
 - [Nowe] Świat 4 „Red Conversion” (pełna wersja): 6 sektorów (Red Dust, Black Veins, Dust Storm, Glass Canyon, Olympus Shadow, Red Colossus) w grafice ChatGPT. Matowy czerwony pył Marsa z wydmami, kryształowe iglice, przejęta ludzka kopuła, zakopane łaziki, ściany kanionu z czarnymi kryształowymi klifami, pył niesiony wiatrem.
 - [Nowe] Mechanika świata 4: sieć czarnego kryształu rośnie w trakcie sektora z kilku węzłów, a Spreadery kładą świeży kryształ tam, gdzie idą (po chwili zanika). Na krysztale statek jest spowolniony. Co jakiś czas nadchodzi burza pyłowa: widok zamyka się wokół statku, a Dust Stalkery znikają w pyle.
