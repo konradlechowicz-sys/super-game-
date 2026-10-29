@@ -1,0 +1,27 @@
+STYLE (keep identical across all images):
+Game art for "Void Blaster", a top-down mobile space shooter (survivors-like).
+Camera: top-down orthographic, looking straight down, no perspective.
+Look: stylized sci-fi with a neon accent. Dark, rich materials (gunmetal, carbon,
+matte ceramic) lit from the top-left, glowing edges and emissive lights only where
+noted. Detail level: high but clean - panel lines, vents, rivets; no grunge overload.
+The background must stay dark and calm so bright game objects read on top of it:
+no bright cyan anywhere (cyan belongs to the player), magenta only as thin traces.
+Rendering: crisp edges, soft bloom on glowing parts only, no motion blur, no depth of
+field, not photorealistic. No text, no logo, no watermark.
+
+WORLD 5 "FOUNDRY BELT": the asteroid belt turned into factories by the Void Collective
+(an alien machine intelligence); here it builds its army. We fly over the surface of a
+hollowed factory asteroid: dark rock cut into geometric terraces, rails and steel
+plates, glowing furnace pits; through chasms we see space and other factory asteroids
+far below. Rock #241f1b/#3e3630 (highlights #5e5248), steel #4a525c/#7a8490, molten
+metal #ff7a1a with a #ffc070 center, magenta #ff2d95 on the Collective's assembly lines.
+Warm light from the furnaces (from below and the side), weak sun from the top-left.
+Mood: industrial, relentless production. 80% machine (worker units).
+
+TASK: The world-5 boss "Foundry Mother": a living factory seen from directly above,
+1024x1024, plain flat dark background (#05010f): a huge armored hull with a magenta
+core, two assembly bays that build and release enemies, robotic arms, furnace vents,
+3-4 glowing weak points (bay doors, furnace vents, core). Then a second image: exploded
+parts sheet at one scale with generous space: hull, each bay door, each arm, each weak
+point; plus the complete assembled boss at the same scale in the bottom-right corner.
+No text.

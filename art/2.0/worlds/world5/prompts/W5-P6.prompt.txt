@@ -1,0 +1,27 @@
+STYLE (keep identical across all images):
+Game art for "Void Blaster", a top-down mobile space shooter (survivors-like).
+Camera: top-down orthographic, looking straight down, no perspective.
+Look: stylized sci-fi with a neon accent. Dark, rich materials (gunmetal, carbon,
+matte ceramic) lit from the top-left, glowing edges and emissive lights only where
+noted. Detail level: high but clean - panel lines, vents, rivets; no grunge overload.
+The background must stay dark and calm so bright game objects read on top of it:
+no bright cyan anywhere (cyan belongs to the player), magenta only as thin traces.
+Rendering: crisp edges, soft bloom on glowing parts only, no motion blur, no depth of
+field, not photorealistic. No text, no logo, no watermark.
+
+WORLD 5 "FOUNDRY BELT": the asteroid belt turned into factories by the Void Collective
+(an alien machine intelligence); here it builds its army. We fly over the surface of a
+hollowed factory asteroid: dark rock cut into geometric terraces, rails and steel
+plates, glowing furnace pits; through chasms we see space and other factory asteroids
+far below. Rock #241f1b/#3e3630 (highlights #5e5248), steel #4a525c/#7a8490, molten
+metal #ff7a1a with a #ffc070 center, magenta #ff2d95 on the Collective's assembly lines.
+Warm light from the furnaces (from below and the side), weak sun from the top-left.
+Mood: industrial, relentless production. 80% machine (worker units).
+
+TASK: Arena border pieces seen from directly above on a plain flat dark background
+(#05010f), well apart: 4 straight strips (top, bottom, left, right), each 1024 px long
+and about 160 px thick, tileable along their length: terrace cliff edges with
+scaffolding, pipes and warning lights, clean readable inner edge. Plus 4 matching
+corners 256x256.
+
+PRODUCTION DIRECTION: Use the approved W5 P1 B reference for consistent Foundry Belt rock, steel and aggressive alien industrial design. Heavy layered armor, brutal angular geometry, cutting edges, mechanical claws, recessed orange furnaces and restrained magenta circuit traces. Strictly vertical orthographic view, not isometric. Maintain clean, readable silhouettes at mobile game scale. No lettering, symbols resembling text, logos or watermarks. The reference is for appearance, not for copying the arena layout into isolated assets. Generate a 1536x1536 atlas. Layout with clean flat #05010f padding: horizontal TOP strip occupying x=256..1279,y=40..199 (1024x160), with cliff outside above and clean inner edge below; horizontal BOTTOM strip x=256..1279,y=1336..1495, clean inner edge above; vertical LEFT strip x=40..199,y=256..1279, clean inner edge right; vertical RIGHT strip x=1336..1495,y=256..1279, clean inner edge left. Four 256x256 L-shaped corners centered respectively at (448,448),(1088,448),(448,1088),(1088,1088), matching their top-left,top-right,bottom-left,bottom-right roles and oriented inward toward arena. The central area is EMPTY. No arena floor inside the frame; isolated parts with generous blank gaps. Four strips and four corners only, no full assembled arena. Jagged dark rock cliff and heavy steel scaffold on outer side, thin pipework and tiny orange warning lights. End profiles of straight strips must repeat seamlessly.

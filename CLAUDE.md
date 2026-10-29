@@ -18,7 +18,9 @@
   in `art/2.0/worlds/world2`, textures by `proto2/make-world2.py`, look `js/v2/siege.js`) and world 3 "Lunar
   Bridgehead" (build 106, W3 set in `art/2.0/worlds/world3`, `proto2/make-world3.py`, look `js/v2/lunar.js`, craters
   as cover `js/cover.js`) and world 4 "Red Conversion" (build 108, W4 set in `art/2.0/worlds/world4`,
-  `proto2/make-world4.py`, look `js/v2/mars.js`, crystal network and dust storms `js/crystal.js`). ChatGPT's packs
+  `proto2/make-world4.py`, look `js/v2/mars.js`, crystal network and dust storms `js/crystal.js`) and world 5
+  "Foundry Belt" (build 109, W5 set in `art/2.0/worlds/world5`, `proto2/make-world5.py`, look `js/v2/foundry.js`,
+  drifting asteroids as moving cover in `js/cover.js`). ChatGPT's packs
   over about 18 MB do not fit one chat upload: Konrad sends them split into parts. The 1.x worlds 2-4 (`LEGACY_WORLDS`) are no longer played. 2.0 free trial = worlds 1-2.
 - Music: the 2.0 theme is the menu music for good; no separate M1 track.
 
@@ -74,7 +76,7 @@ Next, in this order unless Konrad says otherwise:
 Done 2026-10-29: Konrad's iPhone report (performance great, speed good, music great, world 2 beautiful; difficulty
 rose a lot but it is too early to judge: leave it; sound did not come back after a notification: fixed in build 105)
 and world 3 "Lunar Bridgehead" (build 106, accepted). World 4 "Red Conversion" built in build 108 (Konrad's choice
-over the weapon system); Konrad tests it on the iPhone.
+over the weapon system, accepted) and world 5 "Foundry Belt" in build 109; Konrad tests them on the iPhone.
 Next, in this order unless Konrad says otherwise:
 - Rework the weapon system: build the arsenal of point 4 (new mechanics: crits, burning, the ship's shield, black
   holes, super combos of 3 weapons, burning ground), on the current neon effects until ChatGPT's icons and effects

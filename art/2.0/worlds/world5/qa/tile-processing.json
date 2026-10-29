@@ -1,0 +1,15 @@
+{
+  "method": "Space: minimum-error source overlap cuts then Lanczos target sizing. Floor: smooth local edge-band matching and luminance cap 30%. Additive overlay fades to black at edges. Generated alpha retained and nearly opaque solid floor normalized.",
+  "source_space_size": [
+    1254,
+    1254
+  ],
+  "production_space_size": [
+    2048,
+    2048
+  ],
+  "space_note": "2048 output is normalized from a 1024 periodic crop of the original 1254 image; no additional native detail claimed.",
+  "chasm_fraction": 0.12076568603515625,
+  "chasm_alpha_generated": true,
+  "floor_max_luminance": 0.29960784313725486
+}

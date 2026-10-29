@@ -1,0 +1,720 @@
+{
+  "status": "automatic-checks-passed",
+  "production_png": 74,
+  "individual_assets": 63,
+  "concept_variant": "B",
+  "props": 13,
+  "borders": 8,
+  "enemies": 6,
+  "elite_scale": 1.6,
+  "shards": 24,
+  "boss_parts": 11,
+  "enemy_content_sizes": [
+    160,
+    170,
+    240,
+    280,
+    300,
+    200
+  ],
+  "chasm_transparent_fraction": 0.12076568603515625,
+  "texture_checks": {
+    "P2-space": {
+      "mean_luminance": 0.036266472755132936,
+      "max_luminance": 0.9767827450980391,
+      "opposite_edges_identical": true,
+      "near_black_fraction": 0.04389786720275879
+    },
+    "P3-floor-alpha": {
+      "mean_luminance": 0.16213832436655082,
+      "max_luminance": 0.29960784313725486,
+      "opposite_edges_identical": true,
+      "near_black_fraction": 0.16082191467285156
+    },
+    "P3-floor-black": {
+      "mean_luminance": 0.16093955840017282,
+      "max_luminance": 0.29960784313725486,
+      "opposite_edges_identical": true,
+      "near_black_fraction": 0.16498184204101562
+    },
+    "P4-overlay": {
+      "mean_luminance": 0.004330480325736252,
+      "max_luminance": 0.9866925490196077,
+      "opposite_edges_identical": true,
+      "near_black_fraction": 0.9272518157958984
+    }
+  },
+  "border_join_profiles_checked": 8,
+  "complete_boss_identical_in_parts_atlas": true,
+  "exact_bible_prompt_blocks_preserved": true,
+  "individual_assets_have_clear_margins": true,
+  "graphics": [
+    {
+      "file": "graphics/W5-P1-arena-concept.png",
+      "role": "P1-concept",
+      "size": [
+        941,
+        1672
+      ],
+      "sha256": "231ddcaa617337def9c6d28347e0dca889fbd974c3c252bbd59889ed2f8a0049"
+    },
+    {
+      "file": "graphics/W5-P2-factory-space-2048.png",
+      "role": "P2-space",
+      "size": [
+        2048,
+        2048
+      ],
+      "sha256": "d65455e9ec576f94a224c94aa45bc6cb4767b3cdffaa4ae04f52048a1ed89d4c"
+    },
+    {
+      "file": "graphics/W5-P3-factory-floor-1024-rgba.png",
+      "role": "P3-floor-alpha",
+      "size": [
+        1024,
+        1024
+      ],
+      "sha256": "fbd616f51fcdc34564ad59b22abc8918b47d2d94f638a363af9c1746a7ac22bf"
+    },
+    {
+      "file": "graphics/W5-P3-factory-floor-1024.png",
+      "role": "P3-floor-black",
+      "size": [
+        1024,
+        1024
+      ],
+      "sha256": "a4363b28ddba7f81a0993f15710a272764befcfc28710b3a532d726aa2d3f283"
+    },
+    {
+      "file": "graphics/W5-P4-embers-overlay-1024.png",
+      "role": "P4-overlay",
+      "size": [
+        1024,
+        1024
+      ],
+      "sha256": "70abaf26dc9eb8e4ffbfa4eb1b9812e3165bbedd2d098a34b4f973176fef67e3"
+    },
+    {
+      "file": "graphics/W5-P5-props-sheet.png",
+      "role": "P5-props-sheet",
+      "size": [
+        1760,
+        1480
+      ],
+      "sha256": "90140595fd5bd1b80101ebce928d199a4c33c741ce9e85ed8df392a6b7ad2537"
+    },
+    {
+      "file": "graphics/W5-P5-props/W5-P5-assembly-gantry.png",
+      "role": "individual-sprite",
+      "size": [
+        324,
+        293
+      ],
+      "sha256": "a91d35d703951fd3ff024ac814eaa70ada51c71cca22dd2f54fba3893da7bd81"
+    },
+    {
+      "file": "graphics/W5-P5-props/W5-P5-drifting-asteroid-1.png",
+      "role": "individual-sprite",
+      "size": [
+        194,
+        188
+      ],
+      "sha256": "8bc3f3512d1edb1965e0ea5e54a95c2466c08fcd9202feffea25e887eef66715"
+    },
+    {
+      "file": "graphics/W5-P5-props/W5-P5-drifting-asteroid-2.png",
+      "role": "individual-sprite",
+      "size": [
+        177,
+        194
+      ],
+      "sha256": "5a620433c7c441474e4746e1a90b06e81db8e092a3b83e3eba8cc11049d2b407"
+    },
+    {
+      "file": "graphics/W5-P5-props/W5-P5-drifting-asteroid-3.png",
+      "role": "individual-sprite",
+      "size": [
+        194,
+        180
+      ],
+      "sha256": "5fb96f61b9fb22e7661f0d27992cfdcd558a516390189ba0f4af5e532f73924a"
+    },
+    {
+      "file": "graphics/W5-P5-props/W5-P5-fuel-tank-destroyed.png",
+      "role": "individual-sprite",
+      "size": [
+        200,
+        177
+      ],
+      "sha256": "e91f443dad7306b893401e493ac3c4eeb8c7221624948d161e4dfacfaac3226b"
+    },
+    {
+      "file": "graphics/W5-P5-props/W5-P5-fuel-tank-intact.png",
+      "role": "individual-sprite",
+      "size": [
+        204,
+        139
+      ],
+      "sha256": "b522bfd769900da11e8bcc259de3d987bd8807a014377ebce149d87cbea0350e"
+    },
+    {
+      "file": "graphics/W5-P5-props/W5-P5-furnace-pit.png",
+      "role": "individual-sprite",
+      "size": [
+        286,
+        324
+      ],
+      "sha256": "412961a847eb093004fa08797d66541ff800a812af97793f27b8e11cbe0c50c4"
+    },
+    {
+      "file": "graphics/W5-P5-props/W5-P5-hull-plates.png",
+      "role": "individual-sprite",
+      "size": [
+        124,
+        105
+      ],
+      "sha256": "9321cb603009c43f7755bc5b208dc450f4009981d8f536f1c67a62b99d232893"
+    },
+    {
+      "file": "graphics/W5-P5-props/W5-P5-ore-cart.png",
+      "role": "individual-sprite",
+      "size": [
+        124,
+        83
+      ],
+      "sha256": "a9a174b81745188616ec61ceaede58438ad90b09d568d3b3f0baf7699e5fd367"
+    },
+    {
+      "file": "graphics/W5-P5-props/W5-P5-ore-conveyor.png",
+      "role": "individual-sprite",
+      "size": [
+        324,
+        211
+      ],
+      "sha256": "c3a21b069eaaeed86b62689ec6f359e1806e756685770c8b6366f69ce1705f6f"
+    },
+    {
+      "file": "graphics/W5-P5-props/W5-P5-power-capacitor-destroyed.png",
+      "role": "individual-sprite",
+      "size": [
+        242,
+        206
+      ],
+      "sha256": "da5811bce9d9720db0728d7abc2885278c338fa54ad29817c47d0bd5624f8e2e"
+    },
+    {
+      "file": "graphics/W5-P5-props/W5-P5-power-capacitor-intact.png",
+      "role": "individual-sprite",
+      "size": [
+        204,
+        190
+      ],
+      "sha256": "d0abfeb74cf90018903a6090d88c9b2967d965a39ac78580161249392f9295a3"
+    },
+    {
+      "file": "graphics/W5-P5-props/W5-P5-welding-arm.png",
+      "role": "individual-sprite",
+      "size": [
+        124,
+        116
+      ],
+      "sha256": "94c0f39572c4a9f1c819509cd422fdd5314a6c04de226fff34ef5e3955f4e5a5"
+    },
+    {
+      "file": "graphics/W5-P6-border-pieces-sheet.png",
+      "role": "P6-border-sheet",
+      "size": [
+        1536,
+        1536
+      ],
+      "sha256": "6b56de1bad84d97cf5eb03a84d842d628957a55c2307b604c6af7d2c2a993e29"
+    },
+    {
+      "file": "graphics/W5-P6-border-pieces/W5-P6-border-bottom.png",
+      "role": "individual-sprite",
+      "size": [
+        1024,
+        160
+      ],
+      "sha256": "7714c39e88d679ebd4a25bb7b0c8e9cd5995c41e36c1a9d6c952e89c315abd81"
+    },
+    {
+      "file": "graphics/W5-P6-border-pieces/W5-P6-border-left.png",
+      "role": "individual-sprite",
+      "size": [
+        160,
+        1024
+      ],
+      "sha256": "22bbc31336baa9a995299adfe922885c6190ca42f7e519ed7f582df154e819de"
+    },
+    {
+      "file": "graphics/W5-P6-border-pieces/W5-P6-border-right.png",
+      "role": "individual-sprite",
+      "size": [
+        160,
+        1024
+      ],
+      "sha256": "853842f6037b69d490972515bcde20fd11fc325e991b3c64ccdc250150e1f804"
+    },
+    {
+      "file": "graphics/W5-P6-border-pieces/W5-P6-border-top.png",
+      "role": "individual-sprite",
+      "size": [
+        1024,
+        160
+      ],
+      "sha256": "a8b4c0273bfa00e52ca882d848d10950c858d87d6fd2837cad9cc3a1f20f3fc9"
+    },
+    {
+      "file": "graphics/W5-P6-border-pieces/W5-P6-corner-bottom-left.png",
+      "role": "individual-sprite",
+      "size": [
+        256,
+        256
+      ],
+      "sha256": "d43e407cb2bb3525de3a653ffc7c3dcbdf5425c34a5416301367aba6d1ba1c49"
+    },
+    {
+      "file": "graphics/W5-P6-border-pieces/W5-P6-corner-bottom-right.png",
+      "role": "individual-sprite",
+      "size": [
+        256,
+        256
+      ],
+      "sha256": "0315c30991bee23ca99467727beeaa82d11d7bc9c0a8bd8f19cf3703ce09c87b"
+    },
+    {
+      "file": "graphics/W5-P6-border-pieces/W5-P6-corner-top-left.png",
+      "role": "individual-sprite",
+      "size": [
+        256,
+        256
+      ],
+      "sha256": "8afc070227343a70d9631e986ee4dfd386a30335307417bcbb774db1daafef1b"
+    },
+    {
+      "file": "graphics/W5-P6-border-pieces/W5-P6-corner-top-right.png",
+      "role": "individual-sprite",
+      "size": [
+        256,
+        256
+      ],
+      "sha256": "4ab62fa85a67b9f9aeaa3d574dc1befce518d76da781192ae1373af71287bdde"
+    },
+    {
+      "file": "graphics/W5-P7-elite-and-shards-sheet.png",
+      "role": "P7-elite-shards-sheet",
+      "size": [
+        1536,
+        1636
+      ],
+      "sha256": "bcd6e8c03d06d430e52dd548fdb51a9363bc91e493435168e9d451a84c9e0ba1"
+    },
+    {
+      "file": "graphics/W5-P7-elite-and-shards/W5-P7-assembler-turret-shard-1.png",
+      "role": "individual-sprite",
+      "size": [
+        125,
+        104
+      ],
+      "sha256": "6454fa6bf020a698c59f06a99025371b422650835744dffba849a38f742605b5"
+    },
+    {
+      "file": "graphics/W5-P7-elite-and-shards/W5-P7-assembler-turret-shard-2.png",
+      "role": "individual-sprite",
+      "size": [
+        91,
+        100
+      ],
+      "sha256": "4fb4982c11c66905b6670029a9ee955daf72e6da5b6da46a15570eee471668d4"
+    },
+    {
+      "file": "graphics/W5-P7-elite-and-shards/W5-P7-assembler-turret-shard-3.png",
+      "role": "individual-sprite",
+      "size": [
+        123,
+        91
+      ],
+      "sha256": "c2216aa6f59f208580f14bf9d59eb89c65925db9e0d4937a5c59d6cc300809f3"
+    },
+    {
+      "file": "graphics/W5-P7-elite-and-shards/W5-P7-assembler-turret-shard-4.png",
+      "role": "individual-sprite",
+      "size": [
+        136,
+        101
+      ],
+      "sha256": "1bd09474fa9fa15aa18621659cfaf5e74ce476fc5260538aadb70c258ae70291"
+    },
+    {
+      "file": "graphics/W5-P7-elite-and-shards/W5-P7-forge-drone-elite.png",
+      "role": "individual-sprite",
+      "size": [
+        280,
+        224
+      ],
+      "sha256": "6ef1cee8b79b34b9cc67735303260941fb54d52c1382700f9f78313f2289459b"
+    },
+    {
+      "file": "graphics/W5-P7-elite-and-shards/W5-P7-forge-drone-shard-1.png",
+      "role": "individual-sprite",
+      "size": [
+        101,
+        80
+      ],
+      "sha256": "a1a04097e1b94e3e603b816ab047dc038ab7567fe60a37b1c0ae5c1540bc6908"
+    },
+    {
+      "file": "graphics/W5-P7-elite-and-shards/W5-P7-forge-drone-shard-2.png",
+      "role": "individual-sprite",
+      "size": [
+        122,
+        95
+      ],
+      "sha256": "2521e58e2a1c1b1bfd52fd6166760b6e76e091f2478649ba5436da1555ddafef"
+    },
+    {
+      "file": "graphics/W5-P7-elite-and-shards/W5-P7-forge-drone-shard-3.png",
+      "role": "individual-sprite",
+      "size": [
+        107,
+        90
+      ],
+      "sha256": "2215552c516226d33f78fafc8a63d2f8bcc9008373ee9fc2be25529b3aba3592"
+    },
+    {
+      "file": "graphics/W5-P7-elite-and-shards/W5-P7-forge-drone-shard-4.png",
+      "role": "individual-sprite",
+      "size": [
+        107,
+        71
+      ],
+      "sha256": "339a1e335177d2652a498e1313047a6034435da247d460d2fe3c21bbaf972d21"
+    },
+    {
+      "file": "graphics/W5-P7-elite-and-shards/W5-P7-ore-hauler-shard-1.png",
+      "role": "individual-sprite",
+      "size": [
+        153,
+        108
+      ],
+      "sha256": "baa960ae841d2d99c9941a06ede97fb622f7ffe4e25b33b930d8ff493fc72d53"
+    },
+    {
+      "file": "graphics/W5-P7-elite-and-shards/W5-P7-ore-hauler-shard-2.png",
+      "role": "individual-sprite",
+      "size": [
+        149,
+        105
+      ],
+      "sha256": "87e7f5b3aec3a03b32f28e9639e11377230326cb5f35076dfde3d99af0285f2d"
+    },
+    {
+      "file": "graphics/W5-P7-elite-and-shards/W5-P7-ore-hauler-shard-3.png",
+      "role": "individual-sprite",
+      "size": [
+        149,
+        102
+      ],
+      "sha256": "48f3b728ae42e6fa50bc88ef6fcb1fc39f8f063eb0e5d7ed63c0ba5398ecfbe4"
+    },
+    {
+      "file": "graphics/W5-P7-elite-and-shards/W5-P7-ore-hauler-shard-4.png",
+      "role": "individual-sprite",
+      "size": [
+        152,
+        105
+      ],
+      "sha256": "67e083f4616d11c02f168e9870f5f2e68c10554ad1f1b348930b335d3d0c29f2"
+    },
+    {
+      "file": "graphics/W5-P7-elite-and-shards/W5-P7-rock-drifter-shard-1.png",
+      "role": "individual-sprite",
+      "size": [
+        153,
+        111
+      ],
+      "sha256": "b6b01dfd97af7163f6ed9c3f5256665e3f0869eedd2759e6c3cfe68dc16e490e"
+    },
+    {
+      "file": "graphics/W5-P7-elite-and-shards/W5-P7-rock-drifter-shard-2.png",
+      "role": "individual-sprite",
+      "size": [
+        116,
+        111
+      ],
+      "sha256": "208b36ef0243092f7194ae6ec3a6ef0878623fb627a5e5643873b4702469e732"
+    },
+    {
+      "file": "graphics/W5-P7-elite-and-shards/W5-P7-rock-drifter-shard-3.png",
+      "role": "individual-sprite",
+      "size": [
+        132,
+        110
+      ],
+      "sha256": "b6b396e515c1d7e7d484953c07a74bf9fbe22cd4e72dd662f1ca932313c01101"
+    },
+    {
+      "file": "graphics/W5-P7-elite-and-shards/W5-P7-rock-drifter-shard-4.png",
+      "role": "individual-sprite",
+      "size": [
+        130,
+        109
+      ],
+      "sha256": "d3ef1efa411c323aa38357d1126003fbe159374467cbdfc66411ea34db1de012"
+    },
+    {
+      "file": "graphics/W5-P7-elite-and-shards/W5-P7-welder-shard-1.png",
+      "role": "individual-sprite",
+      "size": [
+        110,
+        79
+      ],
+      "sha256": "0e8584e7d500611555172ce3270de37a84838ea44f9639a9a3d5438d16af8642"
+    },
+    {
+      "file": "graphics/W5-P7-elite-and-shards/W5-P7-welder-shard-2.png",
+      "role": "individual-sprite",
+      "size": [
+        85,
+        80
+      ],
+      "sha256": "5c02dad6f8710bb8eb9d379d88539d81327444b35f60a08833e3794697513f75"
+    },
+    {
+      "file": "graphics/W5-P7-elite-and-shards/W5-P7-welder-shard-3.png",
+      "role": "individual-sprite",
+      "size": [
+        104,
+        73
+      ],
+      "sha256": "1a1985f19d476e7a13ce8cd896389e6afbb24783764e1e2133ad357bbcf8028e"
+    },
+    {
+      "file": "graphics/W5-P7-elite-and-shards/W5-P7-welder-shard-4.png",
+      "role": "individual-sprite",
+      "size": [
+        103,
+        69
+      ],
+      "sha256": "87c436c3bb5d01a7fedc5e693b357f584f30dea5efabe2f13183b825a01c967d"
+    },
+    {
+      "file": "graphics/W5-P7-elite-and-shards/W5-P7-worker-mech-shard-1.png",
+      "role": "individual-sprite",
+      "size": [
+        102,
+        97
+      ],
+      "sha256": "129d14d4a1fd364daaa7bce3f5845e1e8af281f2b98825eeb3c10579a0b15848"
+    },
+    {
+      "file": "graphics/W5-P7-elite-and-shards/W5-P7-worker-mech-shard-2.png",
+      "role": "individual-sprite",
+      "size": [
+        104,
+        97
+      ],
+      "sha256": "d8686a189b71ba6d3360f3bd548888d6b2c82570380b5f3c01bf166eda508a5c"
+    },
+    {
+      "file": "graphics/W5-P7-elite-and-shards/W5-P7-worker-mech-shard-3.png",
+      "role": "individual-sprite",
+      "size": [
+        98,
+        92
+      ],
+      "sha256": "a6f42828e057b27e2214d6b8c562dc08c9a922a33e193e0ce660b10a0dccf455"
+    },
+    {
+      "file": "graphics/W5-P7-elite-and-shards/W5-P7-worker-mech-shard-4.png",
+      "role": "individual-sprite",
+      "size": [
+        86,
+        100
+      ],
+      "sha256": "e681c1a148d9c56535e4e844cf1acd7137bcce85e425a4c8056a9ad165c206e2"
+    },
+    {
+      "file": "graphics/W5-P7-enemies-sheet.png",
+      "role": "P7-enemies-sheet",
+      "size": [
+        1536,
+        1024
+      ],
+      "sha256": "8d888cfdbe77ebcaa191671828169353d22a8e47f59f4b25172aa0227f36d99d"
+    },
+    {
+      "file": "graphics/W5-P7-enemies/W5-P7-assembler-turret.png",
+      "role": "individual-sprite",
+      "size": [
+        241,
+        264
+      ],
+      "sha256": "c629ba44fe139e5b493abc6da604240ff978515658b7d640c4a3c16fb58cdc7f"
+    },
+    {
+      "file": "graphics/W5-P7-enemies/W5-P7-forge-drone.png",
+      "role": "individual-sprite",
+      "size": [
+        184,
+        176
+      ],
+      "sha256": "dac2a3b94b531abb611d8e850d5f324e3c36b1524a7e9088e89f8b2539dc103e"
+    },
+    {
+      "file": "graphics/W5-P7-enemies/W5-P7-ore-hauler.png",
+      "role": "individual-sprite",
+      "size": [
+        324,
+        322
+      ],
+      "sha256": "27f6cc04346c2a9a7dc2b5bd14abfd8395dadbc0eeea09d6244da8ef0e2bbd73"
+    },
+    {
+      "file": "graphics/W5-P7-enemies/W5-P7-rock-drifter.png",
+      "role": "individual-sprite",
+      "size": [
+        292,
+        304
+      ],
+      "sha256": "b0320a29c4616736cb57d3c9b18b4f648189966f5c2afcd93dcdaa1e46b14d99"
+    },
+    {
+      "file": "graphics/W5-P7-enemies/W5-P7-welder.png",
+      "role": "individual-sprite",
+      "size": [
+        194,
+        185
+      ],
+      "sha256": "6acb9502b9cd59c2818f30f42b357db0c8916583b32d9e61e832b25ce2413afd"
+    },
+    {
+      "file": "graphics/W5-P7-enemies/W5-P7-worker-mech.png",
+      "role": "individual-sprite",
+      "size": [
+        224,
+        188
+      ],
+      "sha256": "470f690327892ca25bba76a67696ec1aae187adfb6588288df3f57e444af271a"
+    },
+    {
+      "file": "graphics/W5-P8-foundry-mother-1024.png",
+      "role": "P8-boss",
+      "size": [
+        1024,
+        1024
+      ],
+      "sha256": "a7ac10a8e45fda1e20b139a7b34542e2f15cde4e2dd1d7369cc0c893b154d8af"
+    },
+    {
+      "file": "graphics/W5-P8-parts-sheet.png",
+      "role": "P8-parts-sheet",
+      "size": [
+        3072,
+        3072
+      ],
+      "sha256": "f4d1ff178674798fd3b7b437c5bcbce12b7c61caa25dc3d9462e1322a64ec6e6"
+    },
+    {
+      "file": "graphics/W5-P8-parts/W5-P8-arm-ne.png",
+      "role": "individual-sprite",
+      "size": [
+        320,
+        374
+      ],
+      "sha256": "72a59bdeccc618842a32f967b58fb2af931e781d9cb0713e0af262a89eb73d10"
+    },
+    {
+      "file": "graphics/W5-P8-parts/W5-P8-arm-nw.png",
+      "role": "individual-sprite",
+      "size": [
+        331,
+        374
+      ],
+      "sha256": "309960bb7d7ee61a1783bea7220678f4778784655cef162d5f67e217a3847b24"
+    },
+    {
+      "file": "graphics/W5-P8-parts/W5-P8-arm-se.png",
+      "role": "individual-sprite",
+      "size": [
+        236,
+        284
+      ],
+      "sha256": "92bd93449bdb9246a2db0d101c2f08b634c1274174422dab86d5bbbdcd8b7195"
+    },
+    {
+      "file": "graphics/W5-P8-parts/W5-P8-arm-sw.png",
+      "role": "individual-sprite",
+      "size": [
+        243,
+        284
+      ],
+      "sha256": "1f6e62e8ca5d956909ebb4caaa68c80f72b10fd62afbd304808fe78a3ef8cc80"
+    },
+    {
+      "file": "graphics/W5-P8-parts/W5-P8-bay-east.png",
+      "role": "individual-sprite",
+      "size": [
+        452,
+        454
+      ],
+      "sha256": "7bbdfc68cae72543b3a6c4e09d4e40952b77e23f0fb86b7e09d9810ca33411b1"
+    },
+    {
+      "file": "graphics/W5-P8-parts/W5-P8-bay-west.png",
+      "role": "individual-sprite",
+      "size": [
+        454,
+        436
+      ],
+      "sha256": "149e664b25c1e0a859131160b53f301d4df5349ea499c928fba6c446882b4997"
+    },
+    {
+      "file": "graphics/W5-P8-parts/W5-P8-body.png",
+      "role": "individual-sprite",
+      "size": [
+        730,
+        844
+      ],
+      "sha256": "3679bf887cedd2bfdfa51b4d7f2b4db83acacc0ba22176fd15cf0b937e915ae4"
+    },
+    {
+      "file": "graphics/W5-P8-parts/W5-P8-weak-point-bay-east.png",
+      "role": "individual-sprite",
+      "size": [
+        207,
+        284
+      ],
+      "sha256": "3198f64ff5631968512039af0aeba1d4b2519f43ada81c8aa464c5b1553e6e62"
+    },
+    {
+      "file": "graphics/W5-P8-parts/W5-P8-weak-point-bay-west.png",
+      "role": "individual-sprite",
+      "size": [
+        213,
+        284
+      ],
+      "sha256": "6f4151775972c33a572c391f7fffa9b242642c2a6d601c041f96aa27ec2ddf48"
+    },
+    {
+      "file": "graphics/W5-P8-parts/W5-P8-weak-point-furnace-east.png",
+      "role": "individual-sprite",
+      "size": [
+        253,
+        304
+      ],
+      "sha256": "d882c1e1d448d9ae3feed3e0b2e7b5990169a30636a0401ce3bfc432c99aaccc"
+    },
+    {
+      "file": "graphics/W5-P8-parts/W5-P8-weak-point-furnace-west.png",
+      "role": "individual-sprite",
+      "size": [
+        263,
+        304
+      ],
+      "sha256": "73acf91397361a14e7ba8b86e92ac1c50939e72a0934cde1f58b2b9aee508bee"
+    }
+  ],
+  "visual_review": "required separately"
+}

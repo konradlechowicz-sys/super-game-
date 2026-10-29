@@ -95,6 +95,15 @@ export const ENEMIES = {
   prismnode: { hp: 80, speed: 0, dmg: 8, r: 14, xp: 4, color: '#ff4dd8', shape: 'turret', ai: 'turret' },
   spreader: { hp: 70, speed: 40, dmg: 10, r: 18, xp: 5, color: '#c84dff', shape: 'circle', ai: 'lay' },
   cgolem: { hp: 280, speed: 28, dmg: 15, r: 24, xp: 9, color: '#ff5a2e', shape: 'square', split: 'mite' },
+  // 2.0 world 5 "Foundry Belt": the factory's workers (art: proto2/make-world5.py). The welder charges, the assembler
+  // turret is set in the ground and aims, the rock drifter floats straight across the arena like an asteroid, the ore
+  // hauler bursts into forge drones, the worker mech keeps its distance and shoots.
+  fdrone: { hp: 11, speed: 130, dmg: 5, r: 11, xp: 1, color: '#ff2d95', shape: 'dart', pack: [3, 5] },
+  welder: { hp: 36, speed: 62, dmg: 9, r: 12, xp: 3, color: '#ff7a1a', shape: 'diamond', ai: 'dash' },
+  aturret: { hp: 80, speed: 0, dmg: 8, r: 17, xp: 4, color: '#ff6ab4', shape: 'turret', ai: 'turret', aim: true },
+  drifter: { hp: 170, speed: 70, dmg: 14, r: 20, xp: 5, color: '#a08c7a', shape: 'rock', ai: 'drift', spin: 0.5 },
+  hauler: { hp: 240, speed: 30, dmg: 14, r: 21, xp: 9, color: '#ff7a1a', shape: 'square', split: 'fdrone' },
+  wmech: { hp: 46, speed: 48, dmg: 9, r: 14, xp: 4, color: '#ff3d9a', shape: 'hex', ai: 'shoot', shots: 3, fire: 3.4 },
 };
 
 export const BOSSES = {
@@ -128,6 +137,14 @@ export const BOSSES = {
     name: 'RED COLOSSUS', hp: 4400, speed: 26, dmg: 22, r: 80, color: '#ff2d95', inner: '#ff5a2e', sides: 6,
     move: 'chase', rest: 1.5, phases: [0.6, 0.3], attacks: ['crystal', 'spiral', 'summon', 'beams', 'crystal', 'mortar', 'burst'],
     summon: ['sdrone', 'mite'], bulletDmg: 8, bulletSpeed: 0.9, burstN: 18, summonN: 4, bgSpawn: 0.1,
+  },
+  // 2.0 world 5: the Foundry Mother, a mobile armored factory. It crawls after the ship and builds its army during the
+  // fight: its two assembly bays put out squads of drones, welders and mechs (build); it pours molten slag (mortar),
+  // sprays sparks (spiral, burst) and sweeps beams. Three phases.
+  foundry: {
+    name: 'FOUNDRY MOTHER', hp: 4600, speed: 20, dmg: 22, r: 85, color: '#ff2d95', inner: '#ff7a1a', sides: 8,
+    move: 'chase', rest: 1.6, phases: [0.6, 0.3], attacks: ['build', 'spiral', 'mortar', 'build', 'beams', 'burst'],
+    summon: ['fdrone', 'welder', 'wmech'], bulletDmg: 8, bulletSpeed: 0.9, burstN: 18, summonN: 3, bgSpawn: 0.1,
   },
   serpent: {
     name: 'CRYSTAL SERPENT', hp: 15000, speed: 120, dmg: 22, r: 34, color: '#2ff3ff', inner: '#b4fff0', sides: 5,
@@ -528,6 +545,70 @@ const W4_4 = [
   },
 ];
 
+// World 5 of 2.0, "Foundry Belt" (Art Bible; sector names from its table "Nazwy sektorów"). A step tougher than world 4
+// through WORLD_TUNING, the same pace. The world's mechanic: drifting asteroids are moving cover (enemy shots break on
+// them, js/cover.js), and the machinery can be destroyed (fuel tanks blow up, capacitors drive the enemies around them,
+// js/props.js). fixed: at most that many assembler turrets at once.
+const W5_5 = [
+  {
+    id: '5-1', name: 'Ore Drift', duration: 195, fixed: 3, hp0: 1.4, hp: 3.0, speed: 1.12, rate: [1.5, 5.0], max: 160, kills: 1350,
+    enemies: [['fdrone', 0, 10], ['welder', 15, 4], ['drifter', 30, 2]],
+    events: [
+      { t: 55, type: 'ring', enemy: 'fdrone', count: 34, msg: 'DRONE SWARM' },
+      { t: 100, type: 'elite', enemy: 'fdrone', msg: 'ELITE DETECTED' },
+      { t: 150, type: 'ring', enemy: 'drifter', count: 10, msg: 'ROCK STORM' },
+    ],
+  },
+  {
+    id: '5-2', name: 'Assembly Line', duration: 210, fixed: 4, hp0: 1.5, hp: 3.2, speed: 1.14, rate: [1.6, 5.6], max: 175, kills: 1800,
+    enemies: [['fdrone', 0, 10], ['welder', 10, 4], ['drifter', 25, 2], ['aturret', 30, 2]],
+    events: [
+      { t: 60, type: 'ring', enemy: 'welder', count: 18, msg: 'WELDERS INCOMING' },
+      { t: 110, type: 'elite', enemy: 'welder', msg: 'ELITE DETECTED' },
+      { t: 175, type: 'surge', dur: 30, mul: 2, msg: 'FINAL WAVE' },
+    ],
+  },
+  {
+    id: '5-3', name: 'Smelter Ring', duration: 225, fixed: 5, hp0: 1.6, hp: 3.4, speed: 1.15, rate: [1.7, 6.0], max: 180, kills: 1950,
+    enemies: [['fdrone', 0, 10], ['welder', 10, 4], ['drifter', 20, 2], ['aturret', 25, 2], ['wmech', 20, 4]],
+    events: [
+      { t: 55, type: 'ring', enemy: 'fdrone', count: 46, msg: 'DRONE SWARM' },
+      { t: 90, type: 'mortar', count: 6, msg: 'SLAG POUR' },
+      { t: 120, type: 'elite', enemy: 'wmech', msg: 'ELITE DETECTED' },
+      { t: 190, type: 'surge', dur: 30, mul: 2, msg: 'FINAL WAVE' },
+    ],
+  },
+  {
+    id: '5-4', name: 'Drone Yards', duration: 240, fixed: 5, hp0: 1.7, hp: 3.6, speed: 1.17, rate: [1.7, 6.4], max: 185, kills: 2050,
+    enemies: [['fdrone', 0, 11], ['welder', 10, 4], ['drifter', 20, 2], ['aturret', 25, 2], ['wmech', 20, 4], ['hauler', 40, 3]],
+    events: [
+      { t: 80, type: 'elite', enemy: 'hauler', msg: 'ELITE DETECTED' },
+      { t: 120, type: 'ring', enemy: 'fdrone', count: 56, msg: 'DRONE SWARM' },
+      { t: 165, type: 'elite', enemy: 'aturret', msg: 'ELITE DETECTED' },
+      { t: 205, type: 'surge', dur: 30, mul: 2, msg: 'FINAL WAVE' },
+    ],
+  },
+  {
+    id: '5-5', name: 'Hull Forge', duration: 255, fixed: 6, hp0: 1.8, hp: 3.9, speed: 1.19, rate: [1.8, 6.8], max: 185, kills: 2050,
+    enemies: [['fdrone', 0, 9], ['welder', 10, 4], ['drifter', 15, 3], ['aturret', 20, 2], ['wmech', 20, 4], ['hauler', 40, 3]],
+    events: [
+      { t: 60, type: 'ring', enemy: 'drifter', count: 12, msg: 'ROCK STORM' },
+      { t: 105, type: 'elite', enemy: 'welder', msg: 'ELITE DETECTED' },
+      { t: 150, type: 'mortar', count: 8, msg: 'SLAG POUR' },
+      { t: 190, type: 'elite', enemy: 'hauler', msg: 'ELITE DETECTED' },
+      { t: 225, type: 'surge', dur: 30, mul: 2, msg: 'FINAL WAVE' },
+    ],
+  },
+  {
+    id: '5-6', name: 'Foundry Mother', duration: 120, bossAt: 120, boss: 'foundry', fixed: 4, hp0: 1.6, hp: 3.4, speed: 1.2, rate: [1.6, 5.2], max: 175, kills: 850,
+    enemies: [['fdrone', 0, 9], ['welder', 10, 4], ['drifter', 20, 2], ['wmech', 30, 3], ['aturret', 40, 1], ['hauler', 55, 1]],
+    events: [
+      { t: 40, type: 'ring', enemy: 'fdrone', count: 34, msg: 'DRONE SWARM' },
+      { t: 80, type: 'elite', enemy: 'fdrone', msg: 'ELITE DETECTED' },
+    ],
+  },
+];
+
 // The 2.0 worlds after world 1 keep their own kill goals; their elites are counted for the 3rd star (world 2 missed
 // that until build 106: its 3rd star could not be won). World 2's elites stay without traits (Konrad tests its
 // difficulty first); world 3's carry one trait each, like world 1's.
@@ -536,8 +617,10 @@ const ELITE_TRAITS_2 = {
   '3-5': [['shielded'], ['commander']], '3-6': [['swift']],
   '4-1': [['berserker']], '4-2': [['shielded']], '4-3': [['swift']], '4-4': [['bulwark'], ['commander']],
   '4-5': [['swift'], ['berserker']], '4-6': [['shielded']],
+  '5-1': [['shielded']], '5-2': [['berserker']], '5-3': [['commander']], '5-4': [['bulwark'], ['shielded']],
+  '5-5': [['swift'], ['commander']], '5-6': [['berserker']],
 };
-for (const st of [...W2_2, ...W3_3, ...W4_4]) {
+for (const st of [...W2_2, ...W3_3, ...W4_4, ...W5_5]) {
   st.elites = st.events.filter((e) => e.type === 'elite').length;
   const list = (!W2_2.includes(st) && ELITE_TRAITS_2[st.id]) || [];
   st.events.filter((e) => e.type === 'elite').forEach((e, i) => {
@@ -556,13 +639,11 @@ export const WORLD_TUNING = {
   4: { dmg: 1.8, ramp: 0.4, hp: 1.25, elite: 1.4, boss: 1.3 },
 };
 
-// The 2.0 journey (decided by Konrad, 2026-10-28): worlds 1-4 are built; worlds 5-10 are under construction. The map
+// The 2.0 journey (decided by Konrad, 2026-10-28): worlds 1-5 are built; worlds 6-10 are under construction. The map
 // shows them with their story and planned sectors (Art Bible, table "Nazwy sektorów"); when a world is built, it gets
 // its stages and drops `soon`. The 1.x worlds 2-4 below (W2-W4, LEGACY_WORLDS) are no longer played; they stay as a
 // starting point for tuning the new worlds.
 const PLANNED_WORLDS = [
-  [5, 'Foundry Belt', '#ff8a2a', 'The asteroid belt, turned into the Collective\'s factories.',
-    ['Ore Drift', 'Assembly Line', 'Smelter Ring', 'Drone Yards', 'Hull Forge', 'Foundry Mother']],
   [6, 'Storm Relay', '#e3b778', 'In Jupiter\'s storms, a relay calls into deep space.',
     ['Gas Giant', 'Ion Winds', 'Antenna Field', 'Living Signal', 'Deep Transmission', 'Storm Eye']],
   [7, 'Abyss of Europa', '#4fd1e0', 'Under Europa\'s ice, alien sea life has been rewritten.',
@@ -593,6 +674,10 @@ export const WORLDS = [
   {
     id: 4, name: 'Red Conversion', color: '#e0452b', stages: W4_4, music: 'game4', bossMusic: 'boss4',
     theme: { top: '#2a0e09', bottom: '#0c0403', neb: ['#6e2b1c', '#ff5a2e', '#ff2d95'], grid: '#9c4a30' },
+  },
+  {
+    id: 5, name: 'Foundry Belt', color: '#ff8a2a', stages: W5_5, music: 'game5', bossMusic: 'boss5',
+    theme: { top: '#1c1612', bottom: '#060403', neb: ['#3e3630', '#ff7a1a', '#ff2d95'], grid: '#7a8490' },
   },
   ...PLANNED_WORLDS.map(([id, name, color, story, plan]) => ({ id, name, color, story, plan, stages: [], soon: true })),
 ];

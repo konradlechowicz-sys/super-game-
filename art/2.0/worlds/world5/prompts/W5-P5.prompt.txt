@@ -1,0 +1,28 @@
+STYLE (keep identical across all images):
+Game art for "Void Blaster", a top-down mobile space shooter (survivors-like).
+Camera: top-down orthographic, looking straight down, no perspective.
+Look: stylized sci-fi with a neon accent. Dark, rich materials (gunmetal, carbon,
+matte ceramic) lit from the top-left, glowing edges and emissive lights only where
+noted. Detail level: high but clean - panel lines, vents, rivets; no grunge overload.
+The background must stay dark and calm so bright game objects read on top of it:
+no bright cyan anywhere (cyan belongs to the player), magenta only as thin traces.
+Rendering: crisp edges, soft bloom on glowing parts only, no motion blur, no depth of
+field, not photorealistic. No text, no logo, no watermark.
+
+WORLD 5 "FOUNDRY BELT": the asteroid belt turned into factories by the Void Collective
+(an alien machine intelligence); here it builds its army. We fly over the surface of a
+hollowed factory asteroid: dark rock cut into geometric terraces, rails and steel
+plates, glowing furnace pits; through chasms we see space and other factory asteroids
+far below. Rock #241f1b/#3e3630 (highlights #5e5248), steel #4a525c/#7a8490, molten
+metal #ff7a1a with a #ffc070 center, magenta #ff2d95 on the Collective's assembly lines.
+Warm light from the furnaces (from below and the side), weak sun from the top-left.
+Mood: industrial, relentless production. 80% machine (worker units).
+
+TASK: Props sheet seen from directly above, plain flat dark background (#05010f), one
+scale, generous space between items. Large (200-320 px): an assembly gantry holding a
+half-built enemy hull, a furnace pit with molten metal, a conveyor belt section with
+ore. Medium (120-200 px): 3 drifting asteroids of different shapes (moving cover).
+Small (60-120 px): a robotic welding arm, an ore cart, a stack of hull plates.
+Destructible (2): a fuel tank and a power capacitor, each also shown exploded. No text.
+
+PRODUCTION DIRECTION: Use the approved W5 P1 B reference for consistent Foundry Belt rock, steel and aggressive alien industrial design. Heavy layered armor, brutal angular geometry, cutting edges, mechanical claws, recessed orange furnaces and restrained magenta circuit traces. Strictly vertical orthographic view, not isometric. Maintain clean, readable silhouettes at mobile game scale. No lettering, symbols resembling text, logos or watermarks. The reference is for appearance, not for copying the arena layout into isolated assets. Generate a 1600x1600 sprite sheet with an EXACT 4-column by 4-row layout, equal 400x400 cells, NO drawn grid lines and NO cell labels. All objects fully contained in their cells with generous clean #05010f margins. The cell order, left to right, top to bottom: row1 assembly gantry holding a half-built angular enemy hull; circular furnace pit containing molten orange metal; conveyor belt section loaded with ore; leave the fourth cell EMPTY. Row2 three separate floating asteroids of different shapes in cells1-3; fourth EMPTY. Row3 robotic welding arm, ore cart, stack of angular hull plates, fourth EMPTY. Row4 fuel tank intact; the same fuel tank exploded into a contained wreck with no fire cloud; power capacitor intact; the same power capacitor exploded into a contained wreck. Large row1 objects roughly 300px long, asteroids roughly 170px, small row3 objects roughly 100px. Both destructible pairs keep matching scale, about 170px intact and comparable wreck footprints. EXACTLY 13 objects, no extra fragments outside their assigned cells. Surface view straight down, never show front elevation.
