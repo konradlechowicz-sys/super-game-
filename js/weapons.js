@@ -1,5 +1,6 @@
 import { TAU, rand, pick } from './util.js';
 import { bladeSprite, wingmanSprite } from './sprites.js';
+import { ignite, launchHole, addFire, fireBeam } from './arsenal.js';
 
 // Every weapon: per-level stats (index = level-1), level descriptions, optional evolution.
 // update(w, g, dt) runs each frame; render(w, g, R) draws persistent visuals (blades, drones).
@@ -304,6 +305,109 @@ export const WEAPONS = {
         if (g.mines.length >= 40) g.mines.shift();
         g.mines.push({ x: p.x + rand(-14, 14), y: p.y + rand(-14, 14), life: 8, arm: 0.5, dmg: s.dmg * p.dmgMult, rad: s.rad * p.areaMult, pull: (s.pull || 0) * p.areaMult });
       }
+    },
+  },
+
+  // ---- 2.0 arsenal (PLAN-2.0-ARSENAL.md; mechanics in js/arsenal.js) ----
+  rail: {
+    name: 'Railgun', color: '#c8f0ff', icon: 'rail',
+    desc: ['Charges, then fires a beam through every enemy in your flight path.', '+30% damage', 'Charges faster', 'Wider beam, +25% damage', 'Charges faster, +25% damage'],
+    stats: [
+      { dmg: 46, cd: 2.2, w: 14 },
+      { dmg: 60, cd: 2.2, w: 14 },
+      { dmg: 60, cd: 1.85, w: 14 },
+      { dmg: 75, cd: 1.85, w: 20 },
+      { dmg: 94, cd: 1.6, w: 20 },
+    ],
+    evo: { with: 'targeting', name: 'Gauss Lance', desc: 'Twin beams that blast at the end of the line; crits break shields.', stats: { dmg: 120, cd: 1.4, w: 22, twin: true, blast: 90 } },
+    update(w, g, dt, s) {
+      w.t -= dt;
+      const p = g.player;
+      if (w.t > 0) return;
+      if (!g.nearestEnemy(p.x, p.y, 700)) { w.t = 0.1; return; }
+      w.t = s.cd * p.cdMult;
+      const a = p.facing, len = 760 * p.areaMult;
+      const color = w.evolved ? '#fff2a8' : '#c8f0ff';
+      for (const off of s.twin ? [-12, 12] : [0]) {
+        const x = p.x + Math.cos(a + Math.PI / 2) * off, y = p.y + Math.sin(a + Math.PI / 2) * off;
+        const { x1, y1 } = fireBeam(g, x, y, a, len, s.w * p.areaMult, s.dmg * p.dmgMult, color, s.twin ? { breakShield: true } : undefined);
+        if (s.blast) g.explode(x1, y1, s.blast * p.areaMult, s.dmg * p.dmgMult * 0.5, color);
+      }
+      g.shake = Math.max(g.shake, 3);
+      g.sfx('laser');
+    },
+  },
+
+  flame: {
+    name: 'Flamethrower', color: '#ff8a2a', icon: 'flame',
+    desc: ['Sprays fire at close range; enemies burn for 3 s.', '+30% damage', 'Wider cone', '+30% damage, longer reach', 'Hotter fire: burning +50%'],
+    stats: [
+      { dmg: 4, cd: 0.12, range: 140, cone: 0.42, burn: 8 },
+      { dmg: 5.2, cd: 0.12, range: 140, cone: 0.42, burn: 10 },
+      { dmg: 5.2, cd: 0.12, range: 140, cone: 0.55, burn: 10 },
+      { dmg: 6.8, cd: 0.12, range: 165, cone: 0.55, burn: 13 },
+      { dmg: 6.8, cd: 0.12, range: 165, cone: 0.55, burn: 20 },
+    ],
+    evo: { with: 'thermal', name: 'Inferno', desc: 'A wide blue flame that leaves the ground burning.', stats: { dmg: 9, cd: 0.1, range: 200, cone: 0.7, burn: 26, pools: true } },
+    update(w, g, dt, s) {
+      w.t -= dt;
+      if (w.t > 0) return;
+      const p = g.player, range = s.range * p.areaMult;
+      const tgt = g.nearestEnemy(p.x, p.y, range + 40);
+      if (!tgt) { w.t = 0.1; return; }
+      w.t = s.cd * p.cdMult;
+      const a = Math.atan2(tgt.y - p.y, tgt.x - p.x);
+      const fire = s.burn * p.dmgMult * (p.fireMult || 1);
+      for (const e of g.enemiesNear(p.x, p.y, range)) {
+        let da = Math.atan2(e.y - p.y, e.x - p.x) - a;
+        while (da > Math.PI) da -= TAU;
+        while (da < -Math.PI) da += TAU;
+        if (Math.abs(da) > s.cone) continue;
+        g.damage(e, s.dmg * p.dmgMult, Math.cos(a) * 30, Math.sin(a) * 30, true);
+        ignite(e, fire, 3);
+      }
+      // the flame itself: a spray of embers along the cone
+      const blue = w.evolved;
+      for (let i = 0; i < 5 && g.particles.length < 680; i++) {
+        const pa = a + rand(-s.cone, s.cone), v = range * rand(2.2, 3.2);
+        g.particles.push({ x: p.x + Math.cos(a) * 12, y: p.y + Math.sin(a) * 12, vx: Math.cos(pa) * v, vy: Math.sin(pa) * v, life: 0.3, max: 0.3, size: rand(6, 10),
+          color: blue ? (Math.random() < 0.5 ? '#7db8ff' : '#e0f0ff') : (Math.random() < 0.5 ? '#ff8a2a' : '#ffd23d') });
+      }
+      // Inferno: the ground at the end of the flame keeps burning
+      if (s.pools && (w.poolT = (w.poolT || 0) - s.cd) <= 0) {
+        w.poolT = 0.5;
+        addFire(g, p.x + Math.cos(a) * range * 0.75, p.y + Math.sin(a) * range * 0.75, 48 * p.areaMult, fire, 3);
+      }
+      if ((w.sfxT = (w.sfxT || 0) - s.cd) <= 0) { w.sfxT = 0.4; g.sfx('shotgun'); }
+    },
+  },
+
+  singularity: {
+    name: 'Singularity Cannon', color: '#b06bff', icon: 'singularity',
+    desc: ['Fires a slow orb that becomes a black hole, pulling enemies in.', '+30% damage', 'Bigger hole', 'Fires faster', '+1 orb, +25% damage'],
+    stats: [
+      { dmg: 34, cd: 3.6, n: 1, r: 100, dur: 2 },
+      { dmg: 44, cd: 3.6, n: 1, r: 100, dur: 2 },
+      { dmg: 44, cd: 3.6, n: 1, r: 125, dur: 2.2 },
+      { dmg: 44, cd: 2.9, n: 1, r: 125, dur: 2.2 },
+      { dmg: 55, cd: 2.9, n: 2, r: 130, dur: 2.4 },
+    ],
+    evo: { with: 'tractor', name: 'Event Horizon', desc: 'Huge black holes that collapse in a blast.', stats: { dmg: 70, cd: 2.8, n: 2, r: 170, dur: 2.6, collapse: 140 } },
+    update(w, g, dt, s) {
+      w.t -= dt;
+      if (w.t > 0) return;
+      const p = g.player;
+      const tgt = g.nearestEnemy(p.x, p.y, 520);
+      if (!tgt) { w.t = 0.15; return; }
+      w.t = s.cd * p.cdMult;
+      const a = Math.atan2(tgt.y - p.y, tgt.x - p.x);
+      for (let i = 0; i < s.n; i++) {
+        launchHole(g, p.x, p.y, a + (i - (s.n - 1) / 2) * 0.6, {
+          speed: 230, fly: 1, dur: s.dur, r: s.r * p.areaMult, dps: s.dmg * p.dmgMult, color: w.evolved ? '#e9c4ff' : '#b06bff',
+          collapse: s.collapse ? s.collapse * p.dmgMult : 0,
+        });
+      }
+      g.sfx('missile');
     },
   },
 };

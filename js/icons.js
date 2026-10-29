@@ -111,6 +111,34 @@ const DRAW = {
     stroke(g, c, 3.5);
     g.beginPath(); g.moveTo(0, -2); g.lineTo(0, -20); stroke(g, c, 3);
   },
+  // 2.0 arsenal
+  rail(g, c) {
+    g.beginPath(); g.moveTo(-22, 10); g.lineTo(22, -10); stroke(g, c, 5);
+    g.beginPath(); g.moveTo(-18, 18); g.lineTo(-4, 12); g.moveTo(4, -12); g.lineTo(18, -18); stroke(g, c, 2.5);
+  },
+  flame(g, c) {
+    g.beginPath(); g.moveTo(0, 20); g.bezierCurveTo(-18, 10, -14, -6, -4, -20); g.bezierCurveTo(-2, -8, 6, -8, 6, -16);
+    g.bezierCurveTo(18, -2, 16, 12, 0, 20); stroke(g, c, 3.5);
+    g.beginPath(); g.moveTo(0, 14); g.bezierCurveTo(-7, 8, -5, 0, 0, -6); g.bezierCurveTo(5, 0, 7, 8, 0, 14); stroke(g, c, 2.5);
+  },
+  singularity(g, c) {
+    g.beginPath(); g.arc(0, 0, 8, 0, TAU); g.fillStyle = '#05010f'; g.fill(); stroke(g, c, 3);
+    for (let i = 0; i < 3; i++) { const a = (i / 3) * TAU; g.beginPath(); g.arc(0, 0, 18, a, a + 1.4); stroke(g, c, 3); }
+  },
+  targeting(g, c) {
+    g.beginPath(); g.arc(0, 0, 15, 0, TAU); stroke(g, c, 3);
+    g.beginPath(); g.moveTo(0, -22); g.lineTo(0, -9); g.moveTo(0, 9); g.lineTo(0, 22); g.moveTo(-22, 0); g.lineTo(-9, 0); g.moveTo(9, 0); g.lineTo(22, 0); stroke(g, c, 3);
+    g.beginPath(); g.arc(0, 0, 3, 0, TAU); g.fillStyle = '#fff'; g.fill();
+  },
+  thermal(g, c) {
+    g.beginPath(); g.arc(0, 0, 9, 0, TAU); stroke(g, c, 3.5);
+    for (let i = 0; i < 8; i++) { const a = (i / 8) * TAU; g.moveTo(Math.cos(a) * 14, Math.sin(a) * 14); g.lineTo(Math.cos(a) * 21, Math.sin(a) * 21); }
+    stroke(g, c, 3);
+  },
+  phase(g, c) {
+    g.beginPath(); g.moveTo(0, -20); g.lineTo(16, -12); g.lineTo(14, 6); g.lineTo(0, 20); g.lineTo(-14, 6); g.lineTo(-16, -12); g.closePath(); stroke(g, c, 3.5);
+    g.beginPath(); g.moveTo(-6, 0); g.lineTo(-1, 6); g.lineTo(8, -6); stroke(g, c, 3);
+  },
   lock(g, c) {
     g.beginPath(); g.rect(-14, -4, 28, 22); stroke(g, c, 3.5);
     g.beginPath(); g.arc(0, -4, 10, Math.PI, 0); stroke(g, c, 3.5);

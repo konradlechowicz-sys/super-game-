@@ -1,6 +1,8 @@
 # Void Blaster 2.0: nowy arsenał (plan na później)
 
-Zaakceptowany przez Konrada jako plan (2026-10-28), do wdrożenia później. Rozwija treści „1.4”, które idą do 2.0
+Zaakceptowany przez Konrada jako plan (2026-10-28). **Etap 1 zrobiony (build 110, 2026-10-29):** 3 bronie z ewolucjami,
+3 perki i ich mechaniki (`js/arsenal.js`: krytyki, podpalenie, płonący grunt, czarne dziury, wiązki, tarcza), na neonowych
+efektach. **Etap 2 do zrobienia:** 6 kombosów, 3 zestawy perków, 3 super kombosy. Rozwija treści „1.4”, które idą do 2.0
 (`CLAUDE.md`, Roadmap): bronie Railgun, Flamethrower, Singularity Cannon i nazwy kombosów z `art/2.0/CHATGPT-BRIEF.md`.
 Nowe w tym planie: 3 perki, działanie wszystkich elementów i pary.
 

@@ -9,6 +9,7 @@ import { EDITION } from './edition.js';
 import { initProps, updateProps, breakProp, hasProps } from './props.js';
 import { initCover, hasCover, coverAt, updateCover } from './cover.js';
 import { initCrystal, hasCrystal, updateCrystal, layCrystal } from './crystal.js';
+import { ignite, updateArsenal, shieldHit } from './arsenal.js';
 
 const MAX_WEAPONS = 4;
 const MAX_PASSIVES = 4;
@@ -36,6 +37,7 @@ export class Game {
     this.time = 0;
     this.state = 'play';
     this.enemies = []; this.proj = []; this.ebullets = []; this.gems = []; this.pickups = [];
+    this.holes = []; this.fires = []; this.beams = []; // the 2.0 arsenal's black holes, burning ground, beams (js/arsenal.js)
     this.particles = []; this.hazards = []; this.rings = []; this.fx = []; this.bolts = []; this.mines = []; this.texts = [];
     this.hash = new SpatialHash(64);
     this.tmp = [];
@@ -99,6 +101,13 @@ export class Game {
     p.armor = s.armor || 0;
     p.xpMult = 1 + B('growth');
     p.coinMult = 1 + B('greed');
+    // 2.0 arsenal perks: crits, setting enemies on fire, the Phase Shield (it comes up charged when taken)
+    p.crit = (P.targeting || 0) * 0.06;
+    p.ignite = (P.thermal || 0) * 0.08;
+    p.fireMult = 1 + (P.thermal || 0) * 0.2;
+    const hadShield = !!p.shieldCd;
+    p.shieldCd = P.phase ? 16 - 2 * (P.phase - 1) : 0;
+    if (p.shieldCd && !hadShield) { p.shieldUp = true; p.shieldT = 0; }
   }
 
   addWeapon(id) {
@@ -273,14 +282,22 @@ export class Game {
   }
 
   // ---------------- combat ----------------
-  damage(e, dmg, kx = 0, ky = 0, quiet = false) {
+  // opt: { fire } burn damage (no crit, never sets on fire again), { noCrit }, { breakShield } a crit breaks a shield
+  damage(e, dmg, kx = 0, ky = 0, quiet = false, opt) {
     if (e.dead) return;
     if (e.parent) {
       // boss body segment: the boss takes reduced damage through its body
       e.flash = 0.07;
-      this.damage(e.parent, dmg * 0.6, 0, 0, quiet);
+      this.damage(e.parent, dmg * 0.6, 0, 0, quiet, opt);
       return;
     }
+    // 2.0 arsenal: Targeting Matrix crits (double damage), Thermal Core sets enemies on fire
+    const p = this.player;
+    const crit = p.crit > 0 && !opt?.noCrit && Math.random() < p.crit;
+    if (crit) dmg *= 2;
+    if (p.ignite > 0 && !opt?.fire && !e.prop && Math.random() < p.ignite) ignite(e, 8 * p.dmgMult * p.fireMult, 3);
+    // Gauss Lance: a critical hit breaks a shield outright
+    if (crit && opt?.breakShield && e.shield > 0) e.shield = 0.001;
     if (e.shield > 0) {
       // a shielded elite's shield soaks damage first and regrows after 4 s without hits
       const soak = Math.min(e.shield, dmg);
@@ -291,7 +308,8 @@ export class Game {
     e.hp -= dmg;
     e.flash = 0.07;
     if (!e.boss) { e.kx += kx * e.kbRes; e.ky += ky * e.kbRes; }
-    this.text(e.x, e.y - e.r, Math.round(dmg));
+    if (crit) this.text(e.x, e.y - e.r, `${Math.round(dmg)}!`, '#ffd23d');
+    else this.text(e.x, e.y - e.r, Math.round(dmg), opt?.fire ? '#ff8a2a' : '#ffffff');
     if (!quiet) this.sfx('hit');
     if (e.hp <= 0) this.kill(e);
   }
@@ -355,6 +373,7 @@ export class Game {
   hurtPlayer(dmg, src = '?', inv = 0.6) {
     const p = this.player;
     if (p.inv > 0 || this.state !== 'play' || this.app.god) return;
+    if (shieldHit(this)) return;
     // the world's damage level, rising towards the end of the sector
     const T = this.tune;
     dmg *= T.dmg * (1 + T.ramp * this.progress());
@@ -1028,6 +1047,7 @@ export class Game {
     this.updateHazards(dt);
     this.updateRings(dt);
     this.updateMines(dt);
+    updateArsenal(this, dt);
     this.updatePickups(dt);
     this.updateFx(dt);
 

@@ -16,6 +16,19 @@ i wersja TEST (gracze tego nie widzą).
 
 - 
 
+## Build 110 · 2026-10-29
+- [Nowe] Nowy arsenał 2.0, etap 1: 3 nowe bronie.
+  - Railgun: ładuje się i strzela wiązką przez wszystkich wrogów na linii lotu, więc celuje się ruchem statku. Ewolucja Gauss Lance (z Targeting Matrix): dwie wiązki, wybuch na końcu linii, a trafienia krytyczne rozbijają tarcze elit.
+  - Flamethrower: strumień ognia z bliska, trafieni płoną 3 s. Ewolucja Inferno (z Thermal Core): szeroki niebieski płomień, który zostawia płonący grunt.
+  - Singularity Cannon: wolna kula, która zatrzymuje się i zmienia w czarną dziurę wciągającą i raniącą wrogów. Ewolucja Event Horizon (z Tractor Beam): wielkie czarne dziury, które na koniec zapadają się w wybuch.
+- [Nowe] 3 nowe perki:
+  - Targeting Matrix: +6% szansy na trafienie krytyczne (×2 obrażeń, złota liczba z „!”).
+  - Thermal Core: +8% szansy, że każde trafienie podpali wroga, i ogień silniejszy o 20%.
+  - Phase Shield: tarcza wokół statku blokuje jedno trafienie i odnawia się co 16 s, krócej z każdym poziomem.
+- [Nowe] Ikony nowych broni i perków; Codex sam je obejmuje.
+- [Balans] Nowe bronie porównane w symulacji z dotychczasowymi: Railgun i Flamethrower jak bronie obszarowe (Missiles, Nova Pulse, Mines), Singularity Cannon na poziomie 1 jak Arc Coil.
+- [Zmiana] Efekty nowych broni są na razie neonowe; grafiki od ChatGPT podmienimy, gdy przyjdą. Kombosy, zestawy perków i super kombosy nowych broni to etap 2.
+
 ## Build 109 · 2026-10-29
 - [Nowe] Świat 5 „Foundry Belt” (pełna wersja): 6 sektorów (Ore Drift, Assembly Line, Smelter Ring, Drone Yards, Hull Forge, Foundry Mother) w grafice ChatGPT. Lot nad wydrążoną planetoidą-fabryką: skała cięta w tarasy, szyny i stalowe płyty, a przez rozpadliny widać kosmos z dalekimi planetoidami-fabrykami. Do tego pulsujące piece, suwnice z niedokończonymi kadłubami, taśmociągi, ramiona spawalnicze sypiące iskrami, krawędzie tarasów z rusztowaniami, żar i popiół w powietrzu.
 - [Nowe] Mechanika świata 5: dryfujące planetoidy są ruchomą osłoną. Pociski wrogów rozbijają się na nich, ale planetoidy powoli płyną i odbijają się od brzegu areny, więc trzeba się z nimi przesuwać. Maszyny da się niszczyć: zbiorniki paliwa wybuchają, kondensatory wzmacniają wrogów wokół, a rozbite dają łup.
