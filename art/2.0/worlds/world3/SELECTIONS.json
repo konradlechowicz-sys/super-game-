@@ -1,0 +1,32 @@
+{
+  "world": "W3 - Lunar Bridgehead",
+  "date": "2026-10-28",
+  "choices": {
+    "P1": "B",
+    "P3": "B",
+    "P4": "B",
+    "P5": "B",
+    "P6": "B",
+    "P7": "B",
+    "P8": "B"
+  },
+  "generation_order": [
+    "P1",
+    "P3",
+    "P4",
+    "P5",
+    "P6",
+    "P7",
+    "P8"
+  ],
+  "P2": "Not required: lunar ground fills the screen.",
+  "evidence": {
+    "P1": "Konrad reply: B — kręty środek, baza po prawej",
+    "P3": "Konrad reply: B — dłuższe, kręte koleiny",
+    "P4": "Konrad reply: B — luźne skupiska pyłu",
+    "P5": "Konrad reply: B — pięć ramion, podłużna pompa",
+    "P6": "Konrad reply: B — kanciaste bloki, głębsze szczeliny",
+    "P7": "Konrad reply: B — obłe segmenty, osiem odnóży",
+    "P8": "Konrad reply: B — rozgałęzione przewody, okrągłe punkty"
+  }
+}

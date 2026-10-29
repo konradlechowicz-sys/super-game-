@@ -1,0 +1,393 @@
+{
+  "background": "#05010f",
+  "facing": "up",
+  "world_units_to_pixels": 4.6875,
+  "individual_png_padding_px": 12,
+  "enemies": [
+    {
+      "name": "probe-swarm-unit",
+      "relative_size": 22,
+      "content_size": [
+        91,
+        103
+      ],
+      "file": "graphics/W3-P7-enemies/W3-P7-probe-swarm-unit.webp"
+    },
+    {
+      "name": "conduit-crawler",
+      "relative_size": 32,
+      "content_size": [
+        150,
+        137
+      ],
+      "file": "graphics/W3-P7-enemies/W3-P7-conduit-crawler.webp"
+    },
+    {
+      "name": "lunar-hopper",
+      "relative_size": 34,
+      "content_size": [
+        144,
+        159
+      ],
+      "file": "graphics/W3-P7-enemies/W3-P7-lunar-hopper.webp"
+    },
+    {
+      "name": "mortar-node",
+      "relative_size": 44,
+      "content_size": [
+        168,
+        206
+      ],
+      "file": "graphics/W3-P7-enemies/W3-P7-mortar-node.webp"
+    },
+    {
+      "name": "crater-turret",
+      "relative_size": 48,
+      "content_size": [
+        171,
+        225
+      ],
+      "file": "graphics/W3-P7-enemies/W3-P7-crater-turret.webp"
+    },
+    {
+      "name": "regolith-golem",
+      "relative_size": 64,
+      "content_size": [
+        266,
+        300
+      ],
+      "file": "graphics/W3-P7-enemies/W3-P7-regolith-golem.webp"
+    }
+  ],
+  "elite": {
+    "file": "graphics/W3-P7-elite-and-shards/W3-P7-conduit-crawler-elite.webp",
+    "scale": 1.6,
+    "content_max_px": 240
+  },
+  "death_shards": [
+    {
+      "enemy": "probe-swarm-unit",
+      "row": 1,
+      "fragments": [
+        {
+          "file": "graphics/W3-P7-elite-and-shards/W3-P7-probe-swarm-unit-shard-1.webp",
+          "position_on_body_png": [
+            0,
+            0
+          ],
+          "content_size": [
+            48,
+            53
+          ],
+          "scale": 1.0
+        },
+        {
+          "file": "graphics/W3-P7-elite-and-shards/W3-P7-probe-swarm-unit-shard-2.webp",
+          "position_on_body_png": [
+            45,
+            0
+          ],
+          "content_size": [
+            46,
+            52
+          ],
+          "scale": 1.0
+        },
+        {
+          "file": "graphics/W3-P7-elite-and-shards/W3-P7-probe-swarm-unit-shard-3.webp",
+          "position_on_body_png": [
+            0,
+            51
+          ],
+          "content_size": [
+            47,
+            52
+          ],
+          "scale": 1.0
+        },
+        {
+          "file": "graphics/W3-P7-elite-and-shards/W3-P7-probe-swarm-unit-shard-4.webp",
+          "position_on_body_png": [
+            45,
+            51
+          ],
+          "content_size": [
+            46,
+            52
+          ],
+          "scale": 1.0
+        }
+      ]
+    },
+    {
+      "enemy": "conduit-crawler",
+      "row": 2,
+      "fragments": [
+        {
+          "file": "graphics/W3-P7-elite-and-shards/W3-P7-conduit-crawler-shard-1.webp",
+          "position_on_body_png": [
+            0,
+            0
+          ],
+          "content_size": [
+            77,
+            72
+          ],
+          "scale": 1.0
+        },
+        {
+          "file": "graphics/W3-P7-elite-and-shards/W3-P7-conduit-crawler-shard-2.webp",
+          "position_on_body_png": [
+            72,
+            0
+          ],
+          "content_size": [
+            78,
+            72
+          ],
+          "scale": 1.0
+        },
+        {
+          "file": "graphics/W3-P7-elite-and-shards/W3-P7-conduit-crawler-shard-3.webp",
+          "position_on_body_png": [
+            2,
+            67
+          ],
+          "content_size": [
+            77,
+            70
+          ],
+          "scale": 1.0
+        },
+        {
+          "file": "graphics/W3-P7-elite-and-shards/W3-P7-conduit-crawler-shard-4.webp",
+          "position_on_body_png": [
+            73,
+            68
+          ],
+          "content_size": [
+            74,
+            69
+          ],
+          "scale": 1.0
+        }
+      ]
+    },
+    {
+      "enemy": "lunar-hopper",
+      "row": 3,
+      "fragments": [
+        {
+          "file": "graphics/W3-P7-elite-and-shards/W3-P7-lunar-hopper-shard-1.webp",
+          "position_on_body_png": [
+            10,
+            0
+          ],
+          "content_size": [
+            62,
+            80
+          ],
+          "scale": 1.0
+        },
+        {
+          "file": "graphics/W3-P7-elite-and-shards/W3-P7-lunar-hopper-shard-2.webp",
+          "position_on_body_png": [
+            70,
+            0
+          ],
+          "content_size": [
+            64,
+            84
+          ],
+          "scale": 1.0
+        },
+        {
+          "file": "graphics/W3-P7-elite-and-shards/W3-P7-lunar-hopper-shard-3.webp",
+          "position_on_body_png": [
+            0,
+            76
+          ],
+          "content_size": [
+            75,
+            83
+          ],
+          "scale": 1.0
+        },
+        {
+          "file": "graphics/W3-P7-elite-and-shards/W3-P7-lunar-hopper-shard-4.webp",
+          "position_on_body_png": [
+            72,
+            76
+          ],
+          "content_size": [
+            72,
+            83
+          ],
+          "scale": 1.0
+        }
+      ]
+    },
+    {
+      "enemy": "mortar-node",
+      "row": 4,
+      "fragments": [
+        {
+          "file": "graphics/W3-P7-elite-and-shards/W3-P7-mortar-node-shard-1.webp",
+          "position_on_body_png": [
+            0,
+            0
+          ],
+          "content_size": [
+            87,
+            109
+          ],
+          "scale": 1.0
+        },
+        {
+          "file": "graphics/W3-P7-elite-and-shards/W3-P7-mortar-node-shard-2.webp",
+          "position_on_body_png": [
+            81,
+            0
+          ],
+          "content_size": [
+            87,
+            107
+          ],
+          "scale": 1.0
+        },
+        {
+          "file": "graphics/W3-P7-elite-and-shards/W3-P7-mortar-node-shard-3.webp",
+          "position_on_body_png": [
+            0,
+            100
+          ],
+          "content_size": [
+            82,
+            106
+          ],
+          "scale": 1.0
+        },
+        {
+          "file": "graphics/W3-P7-elite-and-shards/W3-P7-mortar-node-shard-4.webp",
+          "position_on_body_png": [
+            81,
+            98
+          ],
+          "content_size": [
+            87,
+            107
+          ],
+          "scale": 1.0
+        }
+      ]
+    },
+    {
+      "enemy": "crater-turret",
+      "row": 5,
+      "fragments": [
+        {
+          "file": "graphics/W3-P7-elite-and-shards/W3-P7-crater-turret-shard-1.webp",
+          "position_on_body_png": [
+            0,
+            0
+          ],
+          "content_size": [
+            90,
+            118
+          ],
+          "scale": 1.0
+        },
+        {
+          "file": "graphics/W3-P7-elite-and-shards/W3-P7-crater-turret-shard-2.webp",
+          "position_on_body_png": [
+            82,
+            0
+          ],
+          "content_size": [
+            89,
+            119
+          ],
+          "scale": 1.0
+        },
+        {
+          "file": "graphics/W3-P7-elite-and-shards/W3-P7-crater-turret-shard-3.webp",
+          "position_on_body_png": [
+            0,
+            115
+          ],
+          "content_size": [
+            89,
+            110
+          ],
+          "scale": 1.0
+        },
+        {
+          "file": "graphics/W3-P7-elite-and-shards/W3-P7-crater-turret-shard-4.webp",
+          "position_on_body_png": [
+            82,
+            115
+          ],
+          "content_size": [
+            89,
+            110
+          ],
+          "scale": 1.0
+        }
+      ]
+    },
+    {
+      "enemy": "regolith-golem",
+      "row": 6,
+      "fragments": [
+        {
+          "file": "graphics/W3-P7-elite-and-shards/W3-P7-regolith-golem-shard-1.webp",
+          "position_on_body_png": [
+            9,
+            1
+          ],
+          "content_size": [
+            128,
+            155
+          ],
+          "scale": 1.0
+        },
+        {
+          "file": "graphics/W3-P7-elite-and-shards/W3-P7-regolith-golem-shard-2.webp",
+          "position_on_body_png": [
+            130,
+            0
+          ],
+          "content_size": [
+            129,
+            154
+          ],
+          "scale": 1.0
+        },
+        {
+          "file": "graphics/W3-P7-elite-and-shards/W3-P7-regolith-golem-shard-3.webp",
+          "position_on_body_png": [
+            0,
+            146
+          ],
+          "content_size": [
+            136,
+            154
+          ],
+          "scale": 1.0
+        },
+        {
+          "file": "graphics/W3-P7-elite-and-shards/W3-P7-regolith-golem-shard-4.webp",
+          "position_on_body_png": [
+            135,
+            143
+          ],
+          "content_size": [
+            131,
+            157
+          ],
+          "scale": 1.0
+        }
+      ]
+    }
+  ]
+}

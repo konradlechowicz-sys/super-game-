@@ -16,6 +16,18 @@ i wersja TEST (gracze tego nie widzą).
 
 - 
 
+## Build 106 · 2026-10-29
+- [Nowe] Świat 3 „Lunar Bridgehead” (pełna wersja): 6 sektorów (Dark Side, Sea of Tranquility, Crater Run, Rooted Base, Mortar Fields, Moon Spire) w grafice ChatGPT. Regolit Księżyca z koleinami, ruiny ludzkiej bazy (kopuły, łazik, anteny, panele), przewody Kolektywu pełzające po gruncie jak korzenie z pulsującą magentą, skalne grzbiety na brzegu areny, unoszący się pył; wrogowie rzucają twarde cienie.
+- [Nowe] Mechanika świata 3: wielkie kratery są osłoną, czyli pociski wrogów rozbijają się na nich (własne strzały lecą nad nimi). Kolektyw odpowiada moździerzami: gniazda moździerzy w gruncie i ostrzał, którego kratery nie zatrzymują.
+- [Nowe] 6 wrogów świata 3: Probe (stada sond), Conduit Crawler (z elitą w złotym pierścieniu), Lunar Hopper (porusza się skokami), Mortar Node (wystrzeliwuje pocisk po łuku tam, gdzie jest statek), Crater Turret (obraca działo za statkiem i strzela wachlarzem), Regolith Golem (ciężki). Każdy rozpada się na własne odłamki.
+- [Nowe] Boss MOON SPIRE: wieża-działo wrośnięta w krater. Nie rusza się, a jej działo obraca się za statkiem i po ładowaniu strzela serią ciężkich pocisków. Do tego ostrzał moździerzowy, spirale, wiązki i posiłki, 3 fazy, świecące słabe punkty i korzenie, które się poruszają.
+- [Nowe] Rekwizyty świata 3: ludzkie stanowiska moździerzy (wybuchają), pompy Kolektywu (wzmacniają wrogów wokół, rozbite dają łup), skrzynie z zapasami.
+- [Nowe] Muzyka świata 3 (Suno): sektor i boss, z płynnie dobranymi pętlami.
+- [Balans] Nieruchomych wrogów (wieżyczki, moździerze) jest naraz najwyżej 3–6 na sektor, a te zostawione daleko za statkiem znikają. Sektory sprawdzone symulacją: cele zestrzeleń osiągalne, boss pokonywany w 0,5–2 min.
+- [Poprawka] Świat 2: trzecia gwiazdka (wszystkie elity) była niemożliwa do zdobycia, a cel sektora pokazywał „undefined”. Elity świata 2 są teraz liczone; ich trudność bez zmian.
+- [Poprawka] Gravity Mines (ewolucja) nie zawieszają już gry, gdy w ich zasięgu stoi rekwizyt (zbiornik, skrzynia, bateria).
+- [Narzędzia] Podgląd w przeglądarce jest teraz podzielony: strona z kodem gry (ok. 0,8 MB) i osobne pliki grafik i muzyki w `dist/assets` (jeden plik przekroczyłby limit 16 MB).
+
 ## Build 105 · 2026-10-29
 - [Poprawka] Dźwięk wraca po powiadomieniu, połączeniu albo powrocie z innej aplikacji: przy pierwszym dotknięciu ekranu gra uruchamia dźwięk od nowa (iOS potrafił zostawić go zawieszonego), a muzyka gra dalej od pętli, bez ponownego intro.
 

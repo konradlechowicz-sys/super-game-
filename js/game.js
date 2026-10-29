@@ -7,6 +7,7 @@ import { Tutorial, tipsOn, tipSeen, markTip } from './tutorial.js';
 import { renderGame } from './render-canvas.js';
 import { EDITION } from './edition.js';
 import { initProps, updateProps, breakProp, hasProps } from './props.js';
+import { initCover, hasCover, coverAt } from './cover.js';
 
 const MAX_WEAPONS = 4;
 const MAX_PASSIVES = 4;
@@ -58,7 +59,9 @@ export class Game {
     this.recompute();
     this.player.hp = this.player.maxHp;
     this.addWeapon(this.ship.weapon);
-    // 2.0: each world's props to shoot (js/props.js)
+    // 2.0: world 3's craters, cover from enemy shots (js/cover.js), then each world's props to shoot (js/props.js)
+    this.cover = [];
+    if (EDITION === 2 && hasCover(stage.world?.id)) initCover(this);
     this.props = [];
     if (EDITION === 2 && hasProps(stage.world?.id)) initProps(this);
     this.tut = new Tutorial(this);
@@ -508,10 +511,19 @@ export class Game {
     return { x: clamp(p.x + Math.cos(a) * R, -hw, hw), y: clamp(p.y + Math.sin(a) * R, -hh, hh) };
   }
 
+  fixedCount() {
+    let n = 0;
+    for (const e of this.enemies) if (!e.dead && !e.boss && !e.prop && e.def?.speed === 0) n++;
+    return n;
+  }
+
   // Stationary enemies are placed near the player, everything else just off-screen.
   posFor(type) {
     if (ENEMIES[type].speed > 0) return this.spawnPos();
-    return this.nearPos(rand(190, 280));
+    // not inside a crater (world 3): its own shots would break on it
+    let pos = this.nearPos(rand(190, 280));
+    for (let k = 0; k < 8 && this.cover.length && coverAt(this, pos.x, pos.y, 20); k++) pos = this.nearPos(rand(190, 280));
+    return pos;
   }
 
   nearPos(R) {
@@ -521,7 +533,10 @@ export class Game {
   }
 
   spawnOne() {
-    const pool = this.stage.enemies.filter((e) => this.time >= e[1]);
+    let pool = this.stage.enemies.filter((e) => this.time >= e[1]);
+    // enemies set in the ground (world 3's turrets and mortar nodes) are capped (stage `fixed`, 5 by default), so they
+    // never wall in the ship or fill the sky with shells
+    if (pool.some((e) => ENEMIES[e[0]].speed === 0) && this.fixedCount() >= (this.stage.fixed ?? 5)) pool = pool.filter((e) => ENEMIES[e[0]].speed > 0);
     const [type] = weightedPick(pool, (e) => e[2]);
     const d = ENEMIES[type];
     const pos = this.posFor(type);
@@ -695,7 +710,7 @@ export class Game {
     const { vh } = this.viewSize();
     const hh = this.arena.h / 2 - 80;
     const b = {
-      id: nextId++, boss: true, def, name: def.name, x: p.x, y: clamp(p.y - vh * 0.4, -hh, hh), kx: 0, ky: 0,
+      id: nextId++, boss: true, def, name: def.name, x: p.x, y: clamp(p.y - vh * (def.move === 'anchor' ? 0.27 : 0.4), -hh, hh), kx: 0, ky: 0,
       hp: def.hp * this.tune.boss * (this.endless ? 1 + ENDLESS.bossGrowth * this.endless.bosses++ : 1), r: def.r, speed: def.speed, dmg: def.dmg, color: def.color, flash: 0, spawnT: 1.2,
       rot: 0, rot2: 0, phase: 1, atk: 0, atkT: 2.5, mode: 'idle', modeT: 0, spin: 0, kbRes: 0, alpha: 1,
       heading: Math.PI / 2, lunge: 0,
@@ -1105,6 +1120,8 @@ export class Game {
         continue;
       }
       const dx = p.x - e.x, dy = p.y - e.y, d = Math.hypot(dx, dy) || 1;
+      // a stationary enemy left far behind is taken away (no kill), so new ones can come up near the ship
+      if (e.def.speed === 0 && !e.elite && d > 1100) { e.dead = true; continue; }
       let mx = (dx / d) * e.speed, my = (dy / d) * e.speed;
       const ai = e.def.ai;
       let bounded = true, separate = true;
@@ -1158,12 +1175,48 @@ export class Game {
         }
       } else if (ai === 'turret') {
         mx = my = 0; separate = false;
+        // aim: turns its gun after the ship and fires a short fan at it (world 3's crater turret)
+        if (e.def.aim) e.rot = angleLerp(e.rot, Math.atan2(dy, dx), Math.min(1, dt * 2.2));
         e.cd -= dt;
         if (e.cd < 0.3) e.flash = Math.max(e.flash, 0.02);
         if (e.cd <= 0 && d < 430) {
           e.cd = e.elite ? 1.4 : 2.6;
-          const n = e.elite ? 8 : 4;
-          for (let k = 0; k < n; k++) this.enemyShoot(e.x, e.y, e.rot + (k / n) * TAU, 150, this.shotDmg(e, 6));
+          if (e.def.aim) {
+            const n = e.elite ? 5 : 3;
+            for (let k = 0; k < n; k++) this.enemyShoot(e.x, e.y, e.rot + (k - (n - 1) / 2) * 0.2, 175, this.shotDmg(e, 6));
+          } else {
+            const n = e.elite ? 8 : 4;
+            for (let k = 0; k < n; k++) this.enemyShoot(e.x, e.y, e.rot + (k / n) * TAU, 150, this.shotDmg(e, 6));
+          }
+        }
+      } else if (ai === 'lob') {
+        // a mortar set in the ground (world 3): every few seconds a shell lands where the ship is, after a warning
+        // circle; craters do not stop it
+        mx = my = 0; separate = false;
+        e.rot = angleLerp(e.rot, Math.atan2(dy, dx), Math.min(1, dt * 2));
+        e.cd -= dt;
+        if (e.cd < 0.4) e.flash = Math.max(e.flash, 0.02);
+        if (e.cd <= 0 && d < 520) {
+          e.cd = e.elite ? 2.2 : 4.2;
+          const n = e.elite ? 3 : 1;
+          for (let k = 0; k < n; k++) {
+            const a = rand(0, TAU), R = k ? rand(60, 120) : rand(0, 30);
+            this.addHazard({ kind: 'mortar', x: p.x + Math.cos(a) * R, y: p.y + Math.sin(a) * R, r: 54, warn: 1.25 + k * 0.15, dmg: this.shotDmg(e, 10), color: '#ff2d95', from: e });
+          }
+          this.sfx('warn');
+        }
+      } else if (ai === 'hop') {
+        // moves in leaps (world 3's lunar hopper): creeps, crouches, then jumps at where the ship is
+        if (e.state === 'chase') {
+          mx *= 0.3; my *= 0.3;
+          e.cd -= dt;
+          if (e.cd <= 0 && d < 560) { e.state = 'wind'; e.t = 0.28; }
+        } else if (e.state === 'wind') {
+          mx = my = 0; e.t -= dt;
+          if (e.t <= 0) { e.state = 'leap'; e.t = 0.45; e.dir = Math.atan2(dy, dx) + rand(-0.12, 0.12); e.leapV = Math.min(430, d / 0.45 + 40); }
+        } else {
+          mx = Math.cos(e.dir) * e.leapV; my = Math.sin(e.dir) * e.leapV; e.t -= dt;
+          if (e.t <= 0) { e.state = 'chase'; e.cd = e.elite ? rand(0.4, 0.6) : rand(0.8, 1.2); }
         }
       } else if (ai === 'blink') {
         // fade out, reappear next to the player
@@ -1324,9 +1377,11 @@ export class Game {
     return null;
   }
 
-  enemyShoot(x, y, a, speed, dmg, homing = false) {
+  enemyShoot(x, y, a, speed, dmg, homing = false, r = homing ? 6 : 5) {
     if (this.ebullets.length > 400) return;
-    this.ebullets.push({ x, y, vx: Math.cos(a) * speed, vy: Math.sin(a) * speed, r: homing ? 6 : 5, dmg, life: homing ? 4.5 : 6, homing, a, speed });
+    // from: the crater it was fired in, if any (world 3's cover stops shots that fly into a crater, not out of one)
+    const from = this.cover.length ? coverAt(this, x, y) : null;
+    this.ebullets.push({ x, y, vx: Math.cos(a) * speed, vy: Math.sin(a) * speed, r, dmg, life: homing ? 4.5 : 6, homing, a, speed, from });
     this.sfx('eshoot');
   }
 
@@ -1365,6 +1420,9 @@ export class Game {
       const ex = p.x + Math.cos(b.oa) * 240 - b.x, ey = p.y + Math.sin(b.oa) * 240 - b.y, el = Math.hypot(ex, ey) || 1;
       const sp = Math.min(b.speed * 2.2, el * 2);
       mx = (ex / el) * sp; my = (ey / el) * sp;
+    } else if (def.move === 'anchor') {
+      // rooted in its crater: it never moves, its cannon turns after the ship (Moon Spire)
+      b.aim = angleLerp(b.aim ?? Math.atan2(dy, dx), Math.atan2(dy, dx), Math.min(1, dt * (1.2 + enr * 0.5)));
     } else if (def.move === 'serpent') {
       b.heading = angleLerp(b.heading, Math.atan2(dy, dx), Math.min(1, dt * (1.3 + enr * 0.5)));
       const a = b.heading + Math.sin(this.time * 2.6) * 0.55;
@@ -1433,6 +1491,8 @@ export class Game {
         break;
       }
       case 'mortar': b.modeT = 1.4; this.mortars(5 + enr * 3, 1.1); break;
+      // the cannon (Moon Spire): it charges (flashing), then fires heavy shells along its aim, 3 to 5 in a row
+      case 'cannon': b.modeT = 0.9 + (3 + enr) * 0.32; b.shots = 0; this.sfx('warn'); break;
       case 'turrets': {
         b.modeT = 0.6;
         const hw = this.arena.w / 2 - 30, hh = this.arena.h / 2 - 30;
@@ -1451,6 +1511,21 @@ export class Game {
     const p = this.player;
     const bd = b.def.bulletDmg || 10, bs = b.def.bulletSpeed || 1;
     switch (b.mode) {
+      case 'cannon': {
+        const n = 3 + enr, left = b.modeT - (n - b.shots) * 0.32;
+        if (b.shots === 0 && left > 0) { b.flash = Math.max(b.flash, Math.sin(b.modeT * 50) > 0 ? 0.03 : 0); break; }
+        if (b.shots < n && b.modeT <= (n - b.shots) * 0.32) {
+          b.shots++;
+          b.fired = this.time;
+          const a = b.aim ?? Math.atan2(dy, dx), mz = b.r * 0.9;
+          this.enemyShoot(b.x + Math.cos(a) * mz, b.y + Math.sin(a) * mz, a, 270 * bs, bd * 2.2, false, 13);
+          // two lighter shells beside it from the second phase on
+          if (enr) for (const s of [-1, 1]) this.enemyShoot(b.x + Math.cos(a) * mz, b.y + Math.sin(a) * mz, a + s * 0.3, 230 * bs, bd);
+          this.sfx('boom');
+          this.shake = Math.max(this.shake, 5);
+        }
+        break;
+      }
       case 'spiral':
         b.shotT -= dt;
         if (b.shotT <= 0) {
@@ -1601,6 +1676,13 @@ export class Game {
       }
       b.x += b.vx * dt; b.y += b.vy * dt; b.life -= dt;
       let remove = b.life <= 0 || Math.abs(b.x) > hw || Math.abs(b.y) > hh;
+      if (!remove && this.cover.length) {
+        const c = coverAt(this, b.x, b.y);
+        if (c && c !== b.from) {
+          remove = true;
+          if (this.particles.length < 600) this.burst(b.x, b.y, '#b8a9d9', 3, 90, 0.3, 4);
+        } else if (!c) b.from = null;
+      }
       if (!remove && this.state === 'play' && (b.x - p.x) ** 2 + (b.y - p.y) ** 2 < (b.r + p.r - 3) ** 2 && p.inv <= 0) {
         this.hurtPlayer(b.dmg, 'bullet');
         remove = true;
@@ -1644,7 +1726,7 @@ export class Game {
       if (m.pull && m.arm <= 0) {
         // Gravity Mines: drag nearby enemies (not bosses) toward the mine
         for (const e of this.enemiesNear(m.x, m.y, m.pull)) {
-          if (e.boss || e.seg || e.def.speed === 0) continue;
+          if (e.boss || e.seg || e.prop || e.def.speed === 0) continue;
           const dx = m.x - e.x, dy = m.y - e.y, d = Math.hypot(dx, dy) || 1;
           const v = 160 * dt * (e.kbRes ?? 0.4);
           e.x += (dx / d) * v; e.y += (dy / d) * v;

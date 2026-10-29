@@ -9,6 +9,11 @@
 #          loop is louder than world 1's, the gains match the two (loop RMS 0.207 vs 0.173)
 #   boss2: world 2 boss (about 151 BPM, the tempo drifts through the track): 24 bars (about 38 s) where both ends
 #          sound most alike; the track starts 8 bars before the loop (`trim`), so the fight gets about 13 s of build-up
+#   game3: world 3 "Lunar Bridgehead" sector (about 129.6 BPM): 36 bars (about 67 s) from the main part; 0.83 to
+#          match the others (loop RMS 0.181)
+#   boss3: world 3 boss (about 136.6 BPM): 40 bars (about 70 s); the track starts 30 bars before the loop (`trim`),
+#          so the fight gets about 13 s of build-up
+# World 3's points were searched the same way as world 2's (below).
 # The world-2 points (build 100, after Konrad heard a jump): Suno's tempo is not exact, so a loop end taken from the
 # bar grid can sit a fraction of a beat off and the drums stumble at the jump. The ends were searched instead: every
 # beat as a start, whole-bar lengths, the end tuned in 2.9 ms steps to the best match of the onset envelope (rhythm)
@@ -28,6 +33,8 @@ TRACKS = {
     'boss': ('art/2.0/audio/w01-orbital-ruins-boss.mp3', 37.7818, 80.0374, 0.85),
     'game2': ('art/2.0/audio/w02-siege-of-earth-sector.mp3', 54.3387, 133.1107, 0.72),
     'boss2': ('art/2.0/audio/w02-siege-of-earth-boss.mp3', 75.2972, 113.5889, 1.0, 62.567),
+    'game3': ('art/2.0/audio/w03-lunar-bridgehead-sector.mp3', 54.6367, 121.4150, 0.83),
+    'boss3': ('art/2.0/audio/w03-lunar-bridgehead-boss.mp3', 44.6934, 114.8890, 1.0, 31.5114),
 }
 
 out = {}
