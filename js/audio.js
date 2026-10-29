@@ -11,8 +11,8 @@ const TRACKS = {
   game4: { bpm: 128, chords: [[36, 48, 51, 55], [44, 56, 60, 63], [39, 51, 55, 58], [43, 55, 59, 62]], drums: true, pad: false, hard: true },
   boss: { bpm: 140, chords: [[45, 57, 60, 64], [46, 58, 62, 65], [38, 50, 53, 57], [40, 52, 56, 59]], drums: true, pad: false, hard: true },
 };
-// 2.0 worlds 2-3's bosses: their recordings (js/v2/music.gen.js) play; without them, the synthesized boss track
-TRACKS.boss2 = TRACKS.boss3 = TRACKS.boss;
+// 2.0 worlds 2-4's bosses: their recordings (js/v2/music.gen.js) play; without them, the synthesized boss track
+TRACKS.boss2 = TRACKS.boss3 = TRACKS.boss4 = TRACKS.boss;
 
 export class AudioEngine {
   constructor() {

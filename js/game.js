@@ -8,6 +8,7 @@ import { renderGame } from './render-canvas.js';
 import { EDITION } from './edition.js';
 import { initProps, updateProps, breakProp, hasProps } from './props.js';
 import { initCover, hasCover, coverAt } from './cover.js';
+import { initCrystal, hasCrystal, updateCrystal, layCrystal } from './crystal.js';
 
 const MAX_WEAPONS = 4;
 const MAX_PASSIVES = 4;
@@ -62,6 +63,9 @@ export class Game {
     // 2.0: world 3's craters, cover from enemy shots (js/cover.js), then each world's props to shoot (js/props.js)
     this.cover = [];
     if (EDITION === 2 && hasCover(stage.world?.id)) initCover(this);
+    // world 4's black crystal network and dust storms (js/crystal.js)
+    this.crystal = null; this.storm = null;
+    if (EDITION === 2 && hasCrystal(stage.world?.id)) initCrystal(this);
     this.props = [];
     if (EDITION === 2 && hasProps(stage.world?.id)) initProps(this);
     this.tut = new Tutorial(this);
@@ -1014,6 +1018,7 @@ export class Game {
       for (const w of this.weapons) WEAPONS[w.id].update(w, this, dt, weaponStats(w));
       this.directSpawns(dt);
       if (this.props.length) updateProps(this, dt);
+      if (this.crystal) updateCrystal(this, dt);
     }
 
     this.updateEnemies(dt);
@@ -1205,6 +1210,10 @@ export class Game {
           }
           this.sfx('warn');
         }
+      } else if (ai === 'lay') {
+        // world 4's Spreader: walks at the ship and lays black crystal where it goes
+        e.cd -= dt;
+        if (e.cd <= 0) { e.cd = e.elite ? 1.2 : 2.4; layCrystal(this, e.x, e.y, e.elite ? 95 : 70); }
       } else if (ai === 'hop') {
         // moves in leaps (world 3's lunar hopper): creeps, crouches, then jumps at where the ship is
         if (e.state === 'chase') {
@@ -1493,6 +1502,18 @@ export class Game {
       case 'mortar': b.modeT = 1.4; this.mortars(5 + enr * 3, 1.1); break;
       // the cannon (Moon Spire): it charges (flashing), then fires heavy shells along its aim, 3 to 5 in a row
       case 'cannon': b.modeT = 0.9 + (3 + enr) * 0.32; b.shots = 0; this.sfx('warn'); break;
+      // crystal (Red Colossus): black crystal bursts out of the ground around the ship, with a ring of shards
+      case 'crystal': {
+        b.modeT = 1.2;
+        for (let i = 0; i < 3 + enr; i++) {
+          const a = rand(0, TAU), R = i ? rand(90, 200) : rand(0, 40);
+          layCrystal(this, p.x + Math.cos(a) * R, p.y + Math.sin(a) * R, 90, 18);
+        }
+        const n = (b.def.burstN || 18) + enr * 4, off = rand(0, TAU);
+        for (let k = 0; k < n; k++) this.enemyShoot(b.x, b.y, off + (k / n) * TAU, 140 * (b.def.bulletSpeed || 1), b.def.bulletDmg || 8);
+        this.sfx('warn');
+        break;
+      }
       case 'turrets': {
         b.modeT = 0.6;
         const hw = this.arena.w / 2 - 30, hh = this.arena.h / 2 - 30;

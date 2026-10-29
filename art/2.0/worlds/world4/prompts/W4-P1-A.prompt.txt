@@ -1,0 +1,26 @@
+STYLE (keep identical across all images):
+Game art for "Void Blaster", a top-down mobile space shooter (survivors-like).
+Camera: top-down orthographic, looking straight down, no perspective.
+Look: stylized sci-fi with a neon accent. Dark, rich materials (gunmetal, carbon,
+matte ceramic) lit from the top-left, glowing edges and emissive lights only where
+noted. Detail level: high but clean - panel lines, vents, rivets; no grunge overload.
+The background must stay dark and calm so bright game objects read on top of it:
+no bright cyan anywhere (cyan belongs to the player), magenta only as thin traces.
+Rendering: crisp edges, soft bloom on glowing parts only, no motion blur, no depth of
+field, not photorealistic. No text, no logo, no watermark.
+
+WORLD 4 "RED CONVERSION": low above a Mars plain in the middle of being rewritten by the
+Void Collective (an alien machine intelligence): a network of black crystal spreads over
+the red dust. Matte rust dust #4a1d14/#6e2b1c with highlights #9c4a30, black crystal
+#0d0a12 with facets #3b2a4a and an ember glow #ff5a2e inside, magenta #ff2d95 veins in
+the crystal, brown dusty haze #5a2a1f. Weak reddish sun from the top-left, diffused by
+dust. Mood: unease, a planet being converted. 80% machine, crystal growths.
+Mars is dusty and matte, never bright orange.
+
+TASK: Concept of the battle arena, 941x1672 portrait, seen from directly above: a red
+dust plain with low dunes, a black crystal network spreading from a few nodes across
+half of the ground, crystal spires, a half-converted human habitat and rover, canyon
+walls and crystal cliffs framing the edges, a light dust haze. Calm, dark center. No
+ships, no enemies.
+
+Additional direction from Konrad: preserve an aggressive design language: menacing jagged obsidian blades, forceful angular silhouettes, heavy industrial machinery being overtaken by crystal. Keep this aggression in the silhouettes and perimeter; the center remains dark and calm. Reference image 1 is a style/material/readability reference only, not the environment. Reference image 2 is the preceding approved lunar arena for continuity only: replace all lunar colors, regolith and craters with the specified Martian landscape. The new composition must clearly be Mars, with a network covering roughly half of the land, and an open playable center. Strict vertical overhead camera: no visible horizon or side-on crystal towers. A single finished portrait arena, not a collage.

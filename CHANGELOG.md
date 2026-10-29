@@ -16,6 +16,18 @@ i wersja TEST (gracze tego nie widzą).
 
 - 
 
+## Build 108 · 2026-10-29
+- [Nowe] Świat 4 „Red Conversion” (pełna wersja): 6 sektorów (Red Dust, Black Veins, Dust Storm, Glass Canyon, Olympus Shadow, Red Colossus) w grafice ChatGPT. Matowy czerwony pył Marsa z wydmami, kryształowe iglice, przejęta ludzka kopuła, zakopane łaziki, ściany kanionu z czarnymi kryształowymi klifami, pył niesiony wiatrem.
+- [Nowe] Mechanika świata 4: sieć czarnego kryształu rośnie w trakcie sektora z kilku węzłów, a Spreadery kładą świeży kryształ tam, gdzie idą (po chwili zanika). Na krysztale statek jest spowolniony. Co jakiś czas nadchodzi burza pyłowa: widok zamyka się wokół statku, a Dust Stalkery znikają w pyle.
+- [Nowe] 6 wrogów świata 4: Crystal Mite (roje), Shard Drone (strzela, elita w złotym pierścieniu), Dust Stalker (szarżuje), Prism Node (osadzony w gruncie, strzela dookoła), Spreader (kładzie kryształ), Crystal Golem (ciężki, rozpada się na Mity). Każdy rozpada się na własne odłamki, wszyscy rzucają cienie.
+- [Nowe] Boss RED COLOSSUS: chodząca forteca z czarnego kryształu. Idzie za statkiem i obraca się w jego stronę, wokół statku wyrasta kryształ z pierścieniem odłamków, do tego wiązki, spirale, ostrzał i posiłki. 3 fazy, pulsujące słabe punkty w stawach nóg, świecące działa przy strzałach.
+- [Nowe] Rekwizyty świata 4: kryształowe skupiska (rozpryskują się w wybuch odłamków), przejęte pylony energetyczne (wzmacniają wrogów wokół, rozbite dają łup), zrzuty z zapasami.
+- [Nowe] Muzyka świata 4 (Suno): sektor i boss, z płynnie dobranymi pętlami.
+- [Balans] Sektory świata 4 sprawdzone symulacją: cele zestrzeleń osiągalne, boss pokonywany w ok. 1–3 min.
+
+## Build 107 · 2026-10-29
+- [Narzędzia] Świat 4 „Red Conversion”: pierwsza część grafik od ChatGPT (koncept, podłoża, nakładka, rekwizyty, brzegi areny, spis plików) w `art/2.0/worlds/world4` i muzyka Suno (sektor, boss) w `art/2.0/audio`. Czekają na resztę (narożniki, wrogowie, boss); gra bez zmian.
+
 ## Build 106 · 2026-10-29
 - [Nowe] Świat 3 „Lunar Bridgehead” (pełna wersja): 6 sektorów (Dark Side, Sea of Tranquility, Crater Run, Rooted Base, Mortar Fields, Moon Spire) w grafice ChatGPT. Regolit Księżyca z koleinami, ruiny ludzkiej bazy (kopuły, łazik, anteny, panele), przewody Kolektywu pełzające po gruncie jak korzenie z pulsującą magentą, skalne grzbiety na brzegu areny, unoszący się pył; wrogowie rzucają twarde cienie.
 - [Nowe] Mechanika świata 3: wielkie kratery są osłoną, czyli pociski wrogów rozbijają się na nich (własne strzały lecą nad nimi). Kolektyw odpowiada moździerzami: gniazda moździerzy w gruncie i ostrzał, którego kratery nie zatrzymują.

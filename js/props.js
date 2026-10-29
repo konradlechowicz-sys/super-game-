@@ -21,9 +21,12 @@ export const PROPS = {
   mortarpost: { hp: 50, r: 25, blast: 170, dmg: 70, hurt: 12, art: 'w3-prop-mortar-intact', broken: 'w3-prop-mortar-destroyed', size: 3.4, glow: 'halo' },
   pump: { hp: 70, r: 25, buff: 240, loot: true, art: 'w3-prop-pump-intact', broken: 'w3-prop-pump-destroyed', size: 3.8, glow: 'core' },
   supply: { hp: 30, r: 20, loot: true, art: 'w3-prop-supply-crate', broken: null, size: 2.6, glow: 'halo' },
+  crystal: { hp: 50, r: 25, blast: 160, dmg: 70, hurt: 12, art: 'w4-prop-crystal-intact', broken: 'w4-prop-crystal-destroyed', size: 3.4, glow: 'core' },
+  pylon: { hp: 70, r: 25, buff: 240, loot: true, art: 'w4-prop-pylon-intact', broken: 'w4-prop-pylon-destroyed', size: 3.8, glow: 'core' },
+  drop: { hp: 30, r: 20, loot: true, art: 'w4-prop-supply-drop', broken: null, size: 2.6, glow: 'halo' },
 };
 // the props of each world, in the order they come (the list repeats)
-const WORLD_PROPS = { 1: ['tank', 'tank', 'crate'], 2: ['flak', 'beacon', 'flak'], 3: ['mortarpost', 'pump', 'supply'] };
+const WORLD_PROPS = { 1: ['tank', 'tank', 'crate'], 2: ['flak', 'beacon', 'flak'], 3: ['mortarpost', 'pump', 'supply'], 4: ['crystal', 'pylon', 'drop'] };
 const START = 7, MAX_LIVE = 9, EVERY = 30, MAX_WRECKS = 12;
 let nextId = -1; // negative, so a prop never shares an id with an enemy
 

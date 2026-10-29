@@ -86,6 +86,15 @@ export const ENEMIES = {
   mortarnode: { hp: 60, speed: 0, dmg: 8, r: 16, xp: 4, color: '#ff2d95', shape: 'turret', ai: 'lob' },
   cturret: { hp: 75, speed: 0, dmg: 8, r: 17, xp: 4, color: '#ff6ab4', shape: 'turret', ai: 'turret', aim: true },
   rgolem: { hp: 260, speed: 28, dmg: 15, r: 23, xp: 9, color: '#b8a9d9', shape: 'square' },
+  // 2.0 world 4 "Red Conversion": machines growing black crystal (art: proto2/make-world4.py). The Spreader lays crystal
+  // (ai 'lay', js/crystal.js), the prism node is set in the ground and fires all around, the crystal golem bursts into
+  // mites; the dust stalker charges and fades into dust storms (js/v2/mars.js).
+  mite: { hp: 9, speed: 145, dmg: 4, r: 9, xp: 1, color: '#ff2d95', shape: 'dart', pack: [3, 5] },
+  sdrone: { hp: 40, speed: 50, dmg: 8, r: 12, xp: 3, color: '#ff3d9a', shape: 'hex', ai: 'shoot', shots: 2, fire: 3.4 },
+  stalker: { hp: 42, speed: 64, dmg: 10, r: 13, xp: 3, color: '#ff5a2e', shape: 'diamond', ai: 'dash' },
+  prismnode: { hp: 80, speed: 0, dmg: 8, r: 14, xp: 4, color: '#ff4dd8', shape: 'turret', ai: 'turret' },
+  spreader: { hp: 70, speed: 40, dmg: 10, r: 18, xp: 5, color: '#c84dff', shape: 'circle', ai: 'lay' },
+  cgolem: { hp: 280, speed: 28, dmg: 15, r: 24, xp: 9, color: '#ff5a2e', shape: 'square', split: 'mite' },
 };
 
 export const BOSSES = {
@@ -111,6 +120,14 @@ export const BOSSES = {
     name: 'MOON SPIRE', hp: 5600, speed: 0, dmg: 20, r: 78, color: '#ff2d95', inner: '#ff8ad0', sides: 8,
     move: 'anchor', rest: 1.5, phases: [0.6, 0.3], attacks: ['cannon', 'mortar', 'spiral', 'summon', 'cannon', 'beams', 'burst'],
     summon: ['probe', 'hopper'], bulletDmg: 8, bulletSpeed: 0.9, burstN: 18, summonN: 5, bgSpawn: 0.12,
+  },
+  // 2.0 world 4: the Red Colossus, a walking fortress of black crystal. It strides after the ship, makes crystal burst
+  // out of the ground around it (crystal: the ship is slowed there), sweeps beams from its cannons, shells and spirals,
+  // and sends mites and shard drones. Three phases.
+  colossus: {
+    name: 'RED COLOSSUS', hp: 4400, speed: 26, dmg: 22, r: 80, color: '#ff2d95', inner: '#ff5a2e', sides: 6,
+    move: 'chase', rest: 1.5, phases: [0.6, 0.3], attacks: ['crystal', 'spiral', 'summon', 'beams', 'crystal', 'mortar', 'burst'],
+    summon: ['sdrone', 'mite'], bulletDmg: 8, bulletSpeed: 0.9, burstN: 18, summonN: 4, bgSpawn: 0.1,
   },
   serpent: {
     name: 'CRYSTAL SERPENT', hp: 15000, speed: 120, dmg: 22, r: 34, color: '#2ff3ff', inner: '#b4fff0', sides: 5,
@@ -447,16 +464,82 @@ const W3_3 = [
   },
 ];
 
+// World 4 of 2.0, "Red Conversion" (Art Bible; sector names from its table "Nazwy sektorów"). A step tougher than
+// world 3 through WORLD_TUNING, the same pace. The world's mechanic (js/crystal.js): the black crystal network spreads
+// from a few growth nodes during the sector and Spreaders lay more, the ship is slowed on it; dust storms close the
+// view (storms: [first, every, duration] in seconds). fixed: at most that many prism nodes at once.
+const W4_4 = [
+  {
+    id: '4-1', name: 'Red Dust', duration: 195, fixed: 3, storms: [70, 70, 12], hp0: 1.4, hp: 3.0, speed: 1.12, rate: [1.5, 5.0], max: 160, kills: 1500,
+    enemies: [['mite', 0, 10], ['sdrone', 15, 4], ['spreader', 35, 2]],
+    events: [
+      { t: 55, type: 'ring', enemy: 'mite', count: 34, msg: 'MITE SWARM' },
+      { t: 100, type: 'elite', enemy: 'sdrone', msg: 'ELITE DETECTED' },
+      { t: 150, type: 'ring', enemy: 'sdrone', count: 16, msg: 'SHARD DRONES' },
+    ],
+  },
+  {
+    id: '4-2', name: 'Black Veins', duration: 210, fixed: 4, storms: [60, 65, 12], hp0: 1.5, hp: 3.2, speed: 1.14, rate: [1.6, 5.6], max: 175, kills: 1800,
+    enemies: [['mite', 0, 10], ['sdrone', 10, 4], ['spreader', 20, 2], ['prismnode', 30, 2]],
+    events: [
+      { t: 60, type: 'ring', enemy: 'spreader', count: 8, msg: 'SPREADERS INCOMING' },
+      { t: 110, type: 'elite', enemy: 'spreader', msg: 'ELITE DETECTED' },
+      { t: 175, type: 'surge', dur: 30, mul: 2, msg: 'FINAL WAVE' },
+    ],
+  },
+  {
+    id: '4-3', name: 'Dust Storm', duration: 225, fixed: 5, storms: [35, 45, 15], hp0: 1.6, hp: 3.4, speed: 1.15, rate: [1.7, 6.0], max: 180, kills: 1950,
+    enemies: [['mite', 0, 10], ['sdrone', 10, 4], ['spreader', 20, 2], ['prismnode', 25, 2], ['stalker', 15, 4]],
+    events: [
+      { t: 55, type: 'ring', enemy: 'mite', count: 46, msg: 'MITE SWARM' },
+      { t: 105, type: 'elite', enemy: 'stalker', msg: 'ELITE DETECTED' },
+      { t: 150, type: 'ring', enemy: 'stalker', count: 18, msg: 'STALKER PACK' },
+      { t: 190, type: 'surge', dur: 30, mul: 2, msg: 'FINAL WAVE' },
+    ],
+  },
+  {
+    id: '4-4', name: 'Glass Canyon', duration: 240, fixed: 5, storms: [55, 60, 12], hp0: 1.7, hp: 3.6, speed: 1.17, rate: [1.7, 6.4], max: 185, kills: 2050,
+    enemies: [['mite', 0, 10], ['sdrone', 10, 4], ['spreader', 20, 2], ['prismnode', 25, 2], ['stalker', 20, 4], ['cgolem', 40, 3]],
+    events: [
+      { t: 80, type: 'elite', enemy: 'cgolem', msg: 'ELITE DETECTED' },
+      { t: 120, type: 'ring', enemy: 'sdrone', count: 22, msg: 'SHARD DRONES' },
+      { t: 165, type: 'elite', enemy: 'prismnode', msg: 'ELITE DETECTED' },
+      { t: 205, type: 'surge', dur: 30, mul: 2, msg: 'FINAL WAVE' },
+    ],
+  },
+  {
+    id: '4-5', name: 'Olympus Shadow', duration: 255, fixed: 6, storms: [45, 55, 14], hp0: 1.8, hp: 3.9, speed: 1.19, rate: [1.8, 6.8], max: 185, kills: 2050,
+    enemies: [['mite', 0, 9], ['sdrone', 10, 4], ['spreader', 15, 3], ['prismnode', 20, 2], ['stalker', 20, 4], ['cgolem', 40, 3]],
+    events: [
+      { t: 60, type: 'ring', enemy: 'spreader', count: 10, msg: 'SPREADERS INCOMING' },
+      { t: 105, type: 'elite', enemy: 'stalker', msg: 'ELITE DETECTED' },
+      { t: 150, type: 'ring', enemy: 'mite', count: 56, msg: 'MITE SWARM' },
+      { t: 190, type: 'elite', enemy: 'cgolem', msg: 'ELITE DETECTED' },
+      { t: 225, type: 'surge', dur: 30, mul: 2, msg: 'FINAL WAVE' },
+    ],
+  },
+  {
+    id: '4-6', name: 'Red Colossus', duration: 120, bossAt: 120, boss: 'colossus', fixed: 4, storms: [50, 60, 10], hp0: 1.6, hp: 3.4, speed: 1.2, rate: [1.6, 5.2], max: 175, kills: 850,
+    enemies: [['mite', 0, 9], ['sdrone', 10, 4], ['spreader', 20, 2], ['stalker', 30, 3], ['prismnode', 40, 1], ['cgolem', 55, 1]],
+    events: [
+      { t: 40, type: 'ring', enemy: 'mite', count: 34, msg: 'MITE SWARM' },
+      { t: 80, type: 'elite', enemy: 'sdrone', msg: 'ELITE DETECTED' },
+    ],
+  },
+];
+
 // The 2.0 worlds after world 1 keep their own kill goals; their elites are counted for the 3rd star (world 2 missed
 // that until build 106: its 3rd star could not be won). World 2's elites stay without traits (Konrad tests its
 // difficulty first); world 3's carry one trait each, like world 1's.
 const ELITE_TRAITS_2 = {
   '3-1': [['swift']], '3-2': [['shielded']], '3-3': [['commander']], '3-4': [['bulwark'], ['berserker']],
   '3-5': [['shielded'], ['commander']], '3-6': [['swift']],
+  '4-1': [['berserker']], '4-2': [['shielded']], '4-3': [['swift']], '4-4': [['bulwark'], ['commander']],
+  '4-5': [['swift'], ['berserker']], '4-6': [['shielded']],
 };
-for (const st of [...W2_2, ...W3_3]) {
+for (const st of [...W2_2, ...W3_3, ...W4_4]) {
   st.elites = st.events.filter((e) => e.type === 'elite').length;
-  const list = (W3_3.includes(st) && ELITE_TRAITS_2[st.id]) || [];
+  const list = (!W2_2.includes(st) && ELITE_TRAITS_2[st.id]) || [];
   st.events.filter((e) => e.type === 'elite').forEach((e, i) => {
     e.traits = list[i] || [];
     if (e.traits.length) e.msg = `${e.traits.map((t) => TRAITS[t].name).join(' ')} ELITE`;
@@ -473,13 +556,11 @@ export const WORLD_TUNING = {
   4: { dmg: 1.8, ramp: 0.4, hp: 1.25, elite: 1.4, boss: 1.3 },
 };
 
-// The 2.0 journey (decided by Konrad, 2026-10-28): worlds 1-3 are built; worlds 4-10 are under construction. The map
+// The 2.0 journey (decided by Konrad, 2026-10-28): worlds 1-4 are built; worlds 5-10 are under construction. The map
 // shows them with their story and planned sectors (Art Bible, table "Nazwy sektorów"); when a world is built, it gets
 // its stages and drops `soon`. The 1.x worlds 2-4 below (W2-W4, LEGACY_WORLDS) are no longer played; they stay as a
 // starting point for tuning the new worlds.
 const PLANNED_WORLDS = [
-  [4, 'Red Conversion', '#e0452b', 'Mars in the middle of being rewritten.',
-    ['Red Dust', 'Black Veins', 'Dust Storm', 'Glass Canyon', 'Olympus Shadow', 'Red Colossus']],
   [5, 'Foundry Belt', '#ff8a2a', 'The asteroid belt, turned into the Collective\'s factories.',
     ['Ore Drift', 'Assembly Line', 'Smelter Ring', 'Drone Yards', 'Hull Forge', 'Foundry Mother']],
   [6, 'Storm Relay', '#e3b778', 'In Jupiter\'s storms, a relay calls into deep space.',
@@ -508,6 +589,10 @@ export const WORLDS = [
     // the first world of the full game (worlds 3-10); its own sector and boss music (game3, boss3)
     id: 3, name: 'Lunar Bridgehead', color: '#a9b8d0', stages: W3_3, music: 'game3', bossMusic: 'boss3',
     theme: { top: '#14131c', bottom: '#050409', neb: ['#4a4856', '#b8a9d9', '#ff2d95'], grid: '#8d8a99' },
+  },
+  {
+    id: 4, name: 'Red Conversion', color: '#e0452b', stages: W4_4, music: 'game4', bossMusic: 'boss4',
+    theme: { top: '#2a0e09', bottom: '#0c0403', neb: ['#6e2b1c', '#ff5a2e', '#ff2d95'], grid: '#9c4a30' },
   },
   ...PLANNED_WORLDS.map(([id, name, color, story, plan]) => ({ id, name, color, story, plan, stages: [], soon: true })),
 ];

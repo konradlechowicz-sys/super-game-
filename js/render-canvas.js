@@ -54,6 +54,12 @@ export function renderGame(game, ctx, overlay = false) {
     ctx.fillStyle = 'rgba(0,0,0,0.35)'; ctx.strokeStyle = '#8d8a99'; ctx.lineWidth = 3;
     ctx.beginPath(); ctx.arc(c.x, c.y, c.r, 0, TAU); ctx.fill(); ctx.stroke();
   }
+  // world 4's black crystal network (js/crystal.js)
+  if (!overlay && game.crystal) for (const c of game.crystal.patches) {
+    if (!vis(c, c.r)) continue;
+    ctx.fillStyle = 'rgba(40,10,50,0.55)'; ctx.strokeStyle = 'rgba(255,45,149,0.5)'; ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.arc(c.x, c.y, c.r, 0, TAU); ctx.fill(); ctx.stroke();
+  }
   if (!overlay) for (const o of game.props) {
     if (!vis(o, 40) || (o.dead && !PROPS[o.prop].broken)) continue;
     ctx.globalAlpha = o.dead ? 0.35 : 1;
