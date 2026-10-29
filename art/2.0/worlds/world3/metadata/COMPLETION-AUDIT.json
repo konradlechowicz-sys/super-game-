@@ -1,0 +1,91 @@
+{
+  "result": "passed",
+  "scope": "All seven required stages, complete A/B variants and human selections; actual stored dimensions, named assets, repetitions, eight corner joins, enemy proportions, RGB fragment/body reconstruction and boss reconstruction.",
+  "asset_png_count": 73,
+  "prompt_count": 9,
+  "stages": {
+    "P1": {
+      "choice": "B",
+      "human_choice": "Konrad reply: B — kręty środek, baza po prawej",
+      "two_complete_distinct_variants": true,
+      "selected_png_count": 1,
+      "full_original_prompt_blocks_preserved": true,
+      "dimensions": [
+        941,
+        1672
+      ]
+    },
+    "P3": {
+      "choice": "B",
+      "human_choice": "Konrad reply: B — dłuższe, kręte koleiny",
+      "two_complete_distinct_variants": true,
+      "selected_png_count": 1,
+      "full_original_prompt_blocks_preserved": true,
+      "dimensions": [
+        1024,
+        1024
+      ],
+      "opposite_edges_identical": true,
+      "mean_luminance_fraction": 0.2185
+    },
+    "P4": {
+      "choice": "B",
+      "human_choice": "Konrad reply: B — luźne skupiska pyłu",
+      "two_complete_distinct_variants": true,
+      "selected_png_count": 1,
+      "full_original_prompt_blocks_preserved": true,
+      "dimensions": [
+        1024,
+        1024
+      ],
+      "opposite_edges_identical": true,
+      "black_pixel_fraction": 0.9119
+    },
+    "P5": {
+      "choice": "B",
+      "human_choice": "Konrad reply: B — pięć ramion, podłużna pompa",
+      "two_complete_distinct_variants": true,
+      "selected_png_count": 15,
+      "full_original_prompt_blocks_preserved": true,
+      "all_14_named_props": true,
+      "actual_stored_size_ranges": true,
+      "paired_damage_scale": true
+    },
+    "P6": {
+      "choice": "B",
+      "human_choice": "Konrad reply: B — kanciaste bloki, głębsze szczeliny",
+      "two_complete_distinct_variants": true,
+      "selected_png_count": 9,
+      "full_original_prompt_blocks_preserved": true,
+      "eight_parts_exact_dimensions": true,
+      "strip_repetition": true,
+      "all_eight_corner_connections": true
+    },
+    "P7": {
+      "choice": "B",
+      "human_choice": "Konrad reply: B — obłe segmenty, osiem odnóży",
+      "two_complete_distinct_variants": true,
+      "selected_png_count": 33,
+      "full_original_prompt_blocks_preserved": true,
+      "six_roles_and_exact_size_ratios": true,
+      "elite_1_6x": true,
+      "six_rows_four_shards": true,
+      "stored_rgb_fragments_reconstruct_all_six_bodies": true
+    },
+    "P8": {
+      "choice": "B",
+      "human_choice": "Konrad reply: B — rozgałęzione przewody, okrągłe punkty",
+      "two_complete_distinct_variants": true,
+      "selected_png_count": 13,
+      "full_original_prompt_blocks_preserved": true,
+      "boss_1024_square": true,
+      "crown_reactor_four_roots_four_weak_points_flash": true,
+      "all_11_parts_same_world_scale": true,
+      "stored_rgb_parts_reconstruct_boss": true,
+      "assembled_reference_bottom_right_same_pixels_and_scale": true,
+      "all_sheet_boxes_nonoverlapping": true
+    }
+  },
+  "visual_review": "Final selected overview and stage-specific repeat/assembly previews inspected.",
+  "archive_verification": "Separate post-packaging report stored in W3/qa/W3-final-archive-verification.json."
+}

@@ -574,7 +574,7 @@ Lyrics:
 | `endless` | M3 tryb Endless | do zrobienia |
 | `w01-orbital-ruins-sector` / `-boss` | W1 | gotowe (2026-10-27), w grze: pętle w `proto2/make-music.py` |
 | `w02-siege-of-earth-sector` / `-boss` | W2 | gotowe (2026-10-28), w grze (`game2`, `boss2`): pętle w `proto2/make-music.py` |
-| `w03-lunar-bridgehead-sector` / `-boss` | W3 | do zrobienia |
+| `w03-lunar-bridgehead-sector` / `-boss` | W3 | gotowe (2026-10-29), w grze (`game3`, `boss3`): pętle w `proto2/make-music.py` |
 | `w04-red-conversion-sector` / `-boss` | W4 | do zrobienia |
 | `w05-foundry-belt-sector` / `-boss` | W5 | do zrobienia |
 | `w06-storm-relay-sector` / `-boss` | W6 | do zrobienia |

@@ -1,7 +1,8 @@
 // Drawing a run with Canvas 2D, the 1.x look: reads the state of a Game (js/game.js) and draws it; the game logic
 // never draws. The 2.0 look (PixiJS) lives in js/v2/ and reads the same state.
-import { TAU, rand, clamp } from './util.js';
+import { TAU, rand, clamp, lerp } from './util.js';
 import { TRAITS } from './data.js';
+import { PROPS } from './props.js';
 import { WEAPONS, weaponStats } from './weapons.js';
 import {
   shipSprite, enemySprite, bossLayer, boltSprite, missileSprite, orbSprite, gemSprite,
@@ -47,9 +48,14 @@ export function renderGame(game, ctx, overlay = false) {
   const vis = (o, m = 0) => o.x > x0 - m && o.x < x1 + m && o.y > y0 - m && o.y < y1 + m;
 
   if (!overlay) drawArena(game, ctx, x0, x1, y0, y1);
-  // 2.0 world-1 props (js/props.js) as plain shapes; the 2.0 look draws them with their art
+  // 2.0 world 3's craters (js/cover.js) and the props (js/props.js) as plain shapes; the 2.0 look draws them with art
+  if (!overlay) for (const c of game.cover) {
+    if (!vis(c, c.r)) continue;
+    ctx.fillStyle = 'rgba(0,0,0,0.35)'; ctx.strokeStyle = '#8d8a99'; ctx.lineWidth = 3;
+    ctx.beginPath(); ctx.arc(c.x, c.y, c.r, 0, TAU); ctx.fill(); ctx.stroke();
+  }
   if (!overlay) for (const o of game.props) {
-    if (!vis(o, 40)) continue;
+    if (!vis(o, 40) || (o.dead && !PROPS[o.prop].broken)) continue;
     ctx.globalAlpha = o.dead ? 0.35 : 1;
     ctx.fillStyle = o.flash > 0 ? '#ffffff' : '#3a4152';
     ctx.strokeStyle = o.prop === 'tank' ? '#ffb02e' : '#8a94aa';
@@ -295,6 +301,13 @@ function drawHazards(game, ctx, overlay) {
       ctx.globalAlpha = 0.25;
       ctx.fillStyle = h.color || '#ff5a1a';
       ctx.beginPath(); ctx.arc(h.x, h.y, h.r * k, 0, TAU); ctx.fill();
+      // a shell lobbed by a mortar node (world 3): it arcs from the node to the circle while the warning runs
+      if (h.from) {
+        const sx = lerp(h.from.x, h.x, k), sy = lerp(h.from.y, h.y, k) - Math.sin(k * Math.PI) * 140;
+        ctx.globalAlpha = 1;
+        ctx.fillStyle = '#ffd0ea';
+        ctx.beginPath(); ctx.arc(sx, sy, 4 + Math.sin(k * Math.PI) * 3, 0, TAU); ctx.fill();
+      }
     } else if (h.kind === 'well') {
       const k = Math.min(1, h.t / h.warn) * Math.min(1, (h.dur - h.t) / 0.4);
       ctx.globalAlpha = 0.35 * k;

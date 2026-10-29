@@ -1,4 +1,5 @@
-// Builds the whole game as one self-contained page for the shareable web previews (normal and TEST).
+// Builds the shareable web previews (normal and TEST): one page each with the whole game's code, and the 2.0 pictures
+// and music beside them in dist/assets/ (shared by both pages; publish them with the page as its files).
 // Fonts load from Google Fonts there, so the bundled @font-face block is stripped.
 import { build } from 'esbuild';
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
@@ -7,7 +8,8 @@ import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 // tester's panel, js/testkit.js). __PREVIEW__: both may simulate the full-game purchase (labelled TEST).
 const css = readFileSync('css/style.css', 'utf8').replace(/\/\* fonts:start[\s\S]*?\/\* fonts:end \*\/\n*/, '');
 mkdirSync('dist', { recursive: true });
-// the 2.0 textures for the TEST page's 2.0 look (js/v2/)
+// the 2.0 textures and music (js/v2/), as files in dist/assets
+process.env.VB_ASSET_DIR = 'dist/assets';
 await import('./v2-assets.mjs');
 
 for (const test of [false, true]) {

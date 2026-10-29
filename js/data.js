@@ -77,6 +77,15 @@ export const ENEMIES = {
   skymine: { hp: 22, speed: 92, dmg: 6, r: 11, xp: 2, color: '#ff6ab4', shape: 'bomb', ai: 'fuse', spin: 2 },
   raider: { hp: 40, speed: 62, dmg: 10, r: 15, xp: 3, color: '#ff2d6f', shape: 'diamond', ai: 'dash' },
   walker: { hp: 230, speed: 30, dmg: 14, r: 22, xp: 8, color: '#c84dff', shape: 'square' },
+  // 2.0 world 3 "Lunar Bridgehead": the bridgehead's garrison (art: proto2/make-world3.py). The mortar node and the
+  // crater turret are set in the ground (speed 0): the node lobs shells at the ship (ai 'lob'), the turret turns to
+  // aim (aim); the hopper moves in leaps (ai 'hop').
+  probe: { hp: 9, speed: 140, dmg: 4, r: 8, xp: 1, color: '#ff2d95', shape: 'dart', pack: [3, 5] },
+  crawler: { hp: 30, speed: 76, dmg: 7, r: 11, xp: 2, color: '#ff4dd8', shape: 'circle' },
+  hopper: { hp: 38, speed: 50, dmg: 9, r: 12, xp: 3, color: '#ff3d9a', shape: 'diamond', ai: 'hop' },
+  mortarnode: { hp: 60, speed: 0, dmg: 8, r: 16, xp: 4, color: '#ff2d95', shape: 'turret', ai: 'lob' },
+  cturret: { hp: 75, speed: 0, dmg: 8, r: 17, xp: 4, color: '#ff6ab4', shape: 'turret', ai: 'turret', aim: true },
+  rgolem: { hp: 260, speed: 28, dmg: 15, r: 23, xp: 9, color: '#b8a9d9', shape: 'square' },
 };
 
 export const BOSSES = {
@@ -94,6 +103,14 @@ export const BOSSES = {
     name: 'LANDING CITADEL', hp: 4800, speed: 30, dmg: 20, r: 70, color: '#ff2d95', inner: '#ff8ad0', sides: 8,
     move: 'chase', rest: 1.6, phases: [0.6, 0.3], attacks: ['spiral', 'summon', 'beams', 'burst', 'mortar', 'spiral'],
     summon: ['interceptor', 'skymine'], bulletDmg: 8, bulletSpeed: 0.9, burstN: 18, summonN: 4, bgSpawn: 0.1,
+  },
+  // 2.0 world 3: the Moon Spire, a cannon tower grown out of a crater. It never moves (move 'anchor'): its cannon turns
+  // after the ship and fires heavy shells (cannon), it shells the ground (mortar), sweeps beams from its roots and sends
+  // probes and hoppers. Craters (the world's cover) stop its shots too. Three phases.
+  spire: {
+    name: 'MOON SPIRE', hp: 5600, speed: 0, dmg: 20, r: 78, color: '#ff2d95', inner: '#ff8ad0', sides: 8,
+    move: 'anchor', rest: 1.5, phases: [0.6, 0.3], attacks: ['cannon', 'mortar', 'spiral', 'summon', 'cannon', 'beams', 'burst'],
+    summon: ['probe', 'hopper'], bulletDmg: 8, bulletSpeed: 0.9, burstN: 18, summonN: 5, bgSpawn: 0.12,
   },
   serpent: {
     name: 'CRYSTAL SERPENT', hp: 15000, speed: 120, dmg: 22, r: 34, color: '#2ff3ff', inner: '#b4fff0', sides: 5,
@@ -365,6 +382,87 @@ for (const st of [...W1, ...W2, ...W3, ...W4]) {
   });
 }
 
+// World 3 of 2.0, "Lunar Bridgehead" (Art Bible; sector names from its table "Nazwy sektorów"). A step tougher than
+// world 2 through WORLD_TUNING, the same pace. The world's mechanic: craters are cover (enemy shots break on them,
+// js/cover.js), and the Collective answers with mortars: mortar nodes in the ground and barrages (event 'mortar').
+// fixed: at most that many turrets and mortar nodes at once (Game.spawnOne).
+const W3_3 = [
+  {
+    id: '3-1', name: 'Dark Side', duration: 195, fixed: 3, hp0: 1.4, hp: 3.0, speed: 1.12, rate: [1.5, 5.0], max: 160, kills: 1500,
+    enemies: [['probe', 0, 10], ['crawler', 15, 5], ['cturret', 40, 2]],
+    events: [
+      { t: 55, type: 'ring', enemy: 'probe', count: 34, msg: 'PROBE SWARM' },
+      { t: 100, type: 'elite', enemy: 'crawler', msg: 'ELITE DETECTED' },
+      { t: 150, type: 'ring', enemy: 'crawler', count: 22, msg: 'CRAWLERS INCOMING' },
+    ],
+  },
+  {
+    id: '3-2', name: 'Sea of Tranquility', duration: 210, fixed: 4, hp0: 1.5, hp: 3.2, speed: 1.14, rate: [1.6, 5.6], max: 175, kills: 1800,
+    enemies: [['probe', 0, 10], ['crawler', 10, 5], ['cturret', 25, 2], ['hopper', 30, 4]],
+    events: [
+      { t: 60, type: 'ring', enemy: 'hopper', count: 16, msg: 'HOPPERS INCOMING' },
+      { t: 110, type: 'elite', enemy: 'cturret', msg: 'ELITE DETECTED' },
+      { t: 175, type: 'surge', dur: 30, mul: 2, msg: 'FINAL WAVE' },
+    ],
+  },
+  {
+    id: '3-3', name: 'Crater Run', duration: 225, fixed: 5, hp0: 1.6, hp: 3.4, speed: 1.15, rate: [1.7, 6.0], max: 180, kills: 1950,
+    enemies: [['probe', 0, 10], ['crawler', 10, 5], ['cturret', 20, 2], ['hopper', 20, 4], ['mortarnode', 35, 2]],
+    events: [
+      { t: 55, type: 'ring', enemy: 'probe', count: 46, msg: 'PROBE SWARM' },
+      { t: 90, type: 'mortar', count: 6, msg: 'MORTAR BARRAGE' },
+      { t: 120, type: 'elite', enemy: 'hopper', msg: 'ELITE DETECTED' },
+      { t: 190, type: 'surge', dur: 30, mul: 2, msg: 'FINAL WAVE' },
+    ],
+  },
+  {
+    id: '3-4', name: 'Rooted Base', duration: 240, fixed: 5, hp0: 1.7, hp: 3.6, speed: 1.17, rate: [1.7, 6.4], max: 185, kills: 2050,
+    enemies: [['probe', 0, 10], ['crawler', 10, 5], ['cturret', 20, 2], ['hopper', 20, 4], ['mortarnode', 30, 2], ['rgolem', 40, 3]],
+    events: [
+      { t: 80, type: 'elite', enemy: 'rgolem', msg: 'ELITE DETECTED' },
+      { t: 120, type: 'ring', enemy: 'crawler', count: 26, msg: 'CRAWLERS INCOMING' },
+      { t: 165, type: 'elite', enemy: 'rgolem', msg: 'ELITE DETECTED' },
+      { t: 205, type: 'surge', dur: 30, mul: 2, msg: 'FINAL WAVE' },
+    ],
+  },
+  {
+    id: '3-5', name: 'Mortar Fields', duration: 255, fixed: 6, hp0: 1.8, hp: 3.9, speed: 1.19, rate: [1.8, 6.8], max: 185, kills: 2050,
+    enemies: [['probe', 0, 9], ['crawler', 10, 5], ['cturret', 15, 2], ['hopper', 20, 4], ['mortarnode', 20, 3], ['rgolem', 40, 3]],
+    events: [
+      { t: 60, type: 'mortar', count: 7, msg: 'MORTAR BARRAGE' },
+      { t: 105, type: 'elite', enemy: 'mortarnode', msg: 'ELITE DETECTED' },
+      { t: 150, type: 'ring', enemy: 'probe', count: 56, msg: 'PROBE SWARM' },
+      { t: 170, type: 'mortar', count: 9, msg: 'MORTAR BARRAGE' },
+      { t: 190, type: 'elite', enemy: 'rgolem', msg: 'ELITE DETECTED' },
+      { t: 225, type: 'surge', dur: 30, mul: 2, msg: 'FINAL WAVE' },
+    ],
+  },
+  {
+    id: '3-6', name: 'Moon Spire', duration: 120, bossAt: 120, boss: 'spire', fixed: 4, hp0: 1.6, hp: 3.4, speed: 1.2, rate: [1.6, 5.2], max: 175, kills: 850,
+    enemies: [['probe', 0, 9], ['crawler', 10, 5], ['cturret', 20, 2], ['hopper', 30, 3], ['mortarnode', 40, 1], ['rgolem', 55, 1]],
+    events: [
+      { t: 40, type: 'ring', enemy: 'probe', count: 34, msg: 'PROBE SWARM' },
+      { t: 80, type: 'elite', enemy: 'hopper', msg: 'ELITE DETECTED' },
+    ],
+  },
+];
+
+// The 2.0 worlds after world 1 keep their own kill goals; their elites are counted for the 3rd star (world 2 missed
+// that until build 106: its 3rd star could not be won). World 2's elites stay without traits (Konrad tests its
+// difficulty first); world 3's carry one trait each, like world 1's.
+const ELITE_TRAITS_2 = {
+  '3-1': [['swift']], '3-2': [['shielded']], '3-3': [['commander']], '3-4': [['bulwark'], ['berserker']],
+  '3-5': [['shielded'], ['commander']], '3-6': [['swift']],
+};
+for (const st of [...W2_2, ...W3_3]) {
+  st.elites = st.events.filter((e) => e.type === 'elite').length;
+  const list = (W3_3.includes(st) && ELITE_TRAITS_2[st.id]) || [];
+  st.events.filter((e) => e.type === 'elite').forEach((e, i) => {
+    e.traits = list[i] || [];
+    if (e.traits.length) e.msg = `${e.traits.map((t) => TRAITS[t].name).join(' ')} ELITE`;
+  });
+}
+
 // Difficulty of each world on top of the sector settings (v1.2: weapon combos make the ship much stronger, so the paid
 // worlds hit harder). dmg: every hit on the ship, rising by `ramp` towards the end of a sector; hp: all enemies;
 // elite: elites on top of that; boss: bosses.
@@ -375,13 +473,11 @@ export const WORLD_TUNING = {
   4: { dmg: 1.8, ramp: 0.4, hp: 1.25, elite: 1.4, boss: 1.3 },
 };
 
-// The 2.0 journey (decided by Konrad, 2026-10-28): worlds 1-2 are built; worlds 3-10 are under construction. The map
+// The 2.0 journey (decided by Konrad, 2026-10-28): worlds 1-3 are built; worlds 4-10 are under construction. The map
 // shows them with their story and planned sectors (Art Bible, table "Nazwy sektorów"); when a world is built, it gets
 // its stages and drops `soon`. The 1.x worlds 2-4 below (W2-W4, LEGACY_WORLDS) are no longer played; they stay as a
 // starting point for tuning the new worlds.
 const PLANNED_WORLDS = [
-  [3, 'Lunar Bridgehead', '#a9b8d0', 'The counterattack: the Moon is the enemy\'s forward base.',
-    ['Dark Side', 'Sea of Tranquility', 'Crater Run', 'Rooted Base', 'Mortar Fields', 'Moon Spire']],
   [4, 'Red Conversion', '#e0452b', 'Mars in the middle of being rewritten.',
     ['Red Dust', 'Black Veins', 'Dust Storm', 'Glass Canyon', 'Olympus Shadow', 'Red Colossus']],
   [5, 'Foundry Belt', '#ff8a2a', 'The asteroid belt, turned into the Collective\'s factories.',
@@ -407,6 +503,11 @@ export const WORLDS = [
     // its own recorded sector and boss music (proto2/make-music.py: game2, boss2)
     id: 2, name: 'Siege of Earth', color: '#ff6a3d', stages: W2_2, music: 'game2', bossMusic: 'boss2',
     theme: { top: '#0a1024', bottom: '#03050c', neb: ['#3a4566', '#ff5a2e', '#ff2d95'], grid: '#3a4566' },
+  },
+  {
+    // the first world of the full game (worlds 3-10); its own sector and boss music (game3, boss3)
+    id: 3, name: 'Lunar Bridgehead', color: '#a9b8d0', stages: W3_3, music: 'game3', bossMusic: 'boss3',
+    theme: { top: '#14131c', bottom: '#050409', neb: ['#4a4856', '#b8a9d9', '#ff2d95'], grid: '#8d8a99' },
   },
   ...PLANNED_WORLDS.map(([id, name, color, story, plan]) => ({ id, name, color, story, plan, stages: [], soon: true })),
 ];

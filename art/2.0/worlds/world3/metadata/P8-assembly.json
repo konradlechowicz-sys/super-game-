@@ -1,0 +1,173 @@
+{
+  "background": "#05010f",
+  "boss": "graphics/W3-P8-moon-spire-1024.webp",
+  "boss_size": [
+    1024,
+    1024
+  ],
+  "parts_sheet": "graphics/W3-P8-parts-sheet.webp",
+  "assembled_reference_box": [
+    2048,
+    2048,
+    3072,
+    3072
+  ],
+  "assembled_reference_scale": 1.0,
+  "individual_png_padding_px": 12,
+  "parts": [
+    {
+      "name": "crown-and-crater-foundation",
+      "file": "graphics/W3-P8-parts/W3-P8-crown-and-crater-foundation.webp",
+      "position_on_boss_png": [
+        185,
+        226
+      ],
+      "content_size": [
+        645,
+        615
+      ],
+      "scale": 1.0,
+      "static_boss_component": true
+    },
+    {
+      "name": "cannon-core",
+      "file": "graphics/W3-P8-parts/W3-P8-cannon-core.webp",
+      "position_on_boss_png": [
+        411,
+        406
+      ],
+      "content_size": [
+        183,
+        193
+      ],
+      "scale": 1.0,
+      "static_boss_component": true
+    },
+    {
+      "name": "root-north",
+      "file": "graphics/W3-P8-parts/W3-P8-root-north.webp",
+      "position_on_boss_png": [
+        376,
+        90
+      ],
+      "content_size": [
+        227,
+        251
+      ],
+      "scale": 1.0,
+      "static_boss_component": true
+    },
+    {
+      "name": "root-east",
+      "file": "graphics/W3-P8-parts/W3-P8-root-east.webp",
+      "position_on_boss_png": [
+        657,
+        405
+      ],
+      "content_size": [
+        287,
+        227
+      ],
+      "scale": 1.0,
+      "static_boss_component": true
+    },
+    {
+      "name": "root-south",
+      "file": "graphics/W3-P8-parts/W3-P8-root-south.webp",
+      "position_on_boss_png": [
+        352,
+        655
+      ],
+      "content_size": [
+        298,
+        311
+      ],
+      "scale": 1.0,
+      "static_boss_component": true
+    },
+    {
+      "name": "root-west",
+      "file": "graphics/W3-P8-parts/W3-P8-root-west.webp",
+      "position_on_boss_png": [
+        54,
+        395
+      ],
+      "content_size": [
+        287,
+        230
+      ],
+      "scale": 1.0,
+      "static_boss_component": true
+    },
+    {
+      "name": "weak-point-nw",
+      "file": "graphics/W3-P8-parts/W3-P8-weak-point-nw.webp",
+      "position_on_boss_png": [
+        349,
+        355
+      ],
+      "content_size": [
+        79,
+        79
+      ],
+      "scale": 1.0,
+      "static_boss_component": true
+    },
+    {
+      "name": "weak-point-ne",
+      "file": "graphics/W3-P8-parts/W3-P8-weak-point-ne.webp",
+      "position_on_boss_png": [
+        572,
+        355
+      ],
+      "content_size": [
+        79,
+        79
+      ],
+      "scale": 1.0,
+      "static_boss_component": true
+    },
+    {
+      "name": "weak-point-sw",
+      "file": "graphics/W3-P8-parts/W3-P8-weak-point-sw.webp",
+      "position_on_boss_png": [
+        350,
+        576
+      ],
+      "content_size": [
+        79,
+        79
+      ],
+      "scale": 1.0,
+      "static_boss_component": true
+    },
+    {
+      "name": "weak-point-se",
+      "file": "graphics/W3-P8-parts/W3-P8-weak-point-se.webp",
+      "position_on_boss_png": [
+        572,
+        576
+      ],
+      "content_size": [
+        79,
+        79
+      ],
+      "scale": 1.0,
+      "static_boss_component": true
+    },
+    {
+      "name": "muzzle-flash",
+      "file": "graphics/W3-P8-parts/W3-P8-muzzle-flash.webp",
+      "position_on_boss_png": [
+        380,
+        380
+      ],
+      "content_size": [
+        240,
+        240
+      ],
+      "scale": 1.0,
+      "static_boss_component": false
+    }
+  ]
+}

@@ -136,11 +136,14 @@ and `.../site/support.html`, and the web version of the game at `https://konradl
 - `js/v2/` — the 2.0 look on PixiJS, the normal look on the `v2` line (🛠 → *1.x look* compares); `title.js` = the
   title screen behind the menus (Earth, the Collective's web, rewritten satellites, emblem, the chosen ship); `orbit.js` =
   world 1 "Orbital Ruins" (ChatGPT art cut by `proto2/make-world1.py`); `siege.js` = world 2 "Siege of Earth"
-  (`proto2/make-world2.py`; cloud banks hide enemies until lightning strikes); `edge.js` = a world's arena edge; recorded
+  (`proto2/make-world2.py`; cloud banks hide enemies until lightning strikes); `lunar.js` = world 3 "Lunar Bridgehead"
+  (`proto2/make-world3.py`; regolith, the craters of `js/cover.js`, the Collective's conduits); `edge.js` = a world's arena edge; recorded
   2.0 music (`js/v2/music.gen.js` from `proto2/make-music.py`, needs ffmpeg) replaces the synthesized track it covers
   (`setRecording` in `js/audio.js`); textures come from `js/v2/assets.gen.js`, written by `scripts/v2-assets.mjs` from `proto2/assets` and `teaser/assets` (not committed). Release and normal web builds fail if the marker `VB-V2LOOK` is found
 - `js/props.js` — 2.0: each world's destructible props (world 1: fuel tanks and ammo crates; world 2: flak batteries and
-  the Collective's beacon pylons, which drive the enemies around them)
+  the Collective's beacon pylons, which drive the enemies around them; world 3: mortar posts, the Collective's pumps and
+  supply crates)
+- `js/cover.js` — 2.0 world 3: craters that stop enemy shots (cover)
 - `js/weapons.js` — weapon stats, behaviours and evolutions
 - `js/codex.js` — the Codex (v1.2): its sections and entries; discoveries are saved in `save.codex` (kept by Reset progress)
 - `js/combos.js` — weapon combos and perk sets (v1.2): which pairs exist and when they are active; their effects live in weapons.js and game.js (`updatePerkSets`, `missileCombos`, `crowdHit`)

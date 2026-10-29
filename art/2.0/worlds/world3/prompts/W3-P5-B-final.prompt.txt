@@ -1,0 +1,34 @@
+STYLE (keep identical across all images):
+Game art for "Void Blaster", a top-down mobile space shooter (survivors-like).
+Camera: top-down orthographic, looking straight down, no perspective.
+Look: stylized sci-fi with a neon accent. Dark, rich materials (gunmetal, carbon,
+matte ceramic) lit from the top-left, glowing edges and emissive lights only where
+noted. Detail level: high but clean - panel lines, vents, rivets; no grunge overload.
+The background must stay dark and calm so bright game objects read on top of it:
+no bright cyan anywhere (cyan belongs to the player), magenta only as thin traces.
+Rendering: crisp edges, soft bloom on glowing parts only, no motion blur, no depth of
+field, not photorealistic. No text, no logo, no watermark.
+
+WORLD 3 "LUNAR BRIDGEHEAD": just above the Moon's surface, where the Void Collective
+(an alien machine intelligence) built its forward base. Its conduits grow into the rock
+like roots: black-violet pipes #1a0f24 with magenta #ff2d95 veins. Gray regolith
+#2b2a33/#4a4856 with highlights #8d8a99, near-black shadows #0a0910 (no atmosphere),
+pale violet accents #b8a9d9, non-glowing frost #cfd8ef. Hard sunlight from the top-left,
+long sharp black shadows. Ruins of a human lunar base. Mood: sparse, hostile, first
+living growth. 90% machine, 10% organic.
+
+TASK: Props sheet seen from directly above, plain flat dark background (#05010f), one
+scale, generous space between items. Large (300-600 px): 3 crater decals with rims
+(cover for the player), a junction of Collective conduits (a pulsing node where 4-5
+pipes meet). Medium (200-320 px): a broken human habitat dome, a lunar rover wreck, a
+comms antenna array. Small (60-120 px): a supply crate, a solar panel, a short conduit
+segment. Destructible (2): a mortar node in a small crater and a conduit pump, each
+also shown destroyed. No text.
+
+LAYOUT: Single square sprite sheet, 2048x2048 preferred, exactly 14 separate objects, organized in four rows and four equal-width columns. No drawn grid, no cell labels or text. Leave clear dark empty gutters around each object; nothing touches or crosses another cell. Row 1 left-to-right: crater decal 1, crater decal 2, crater decal 3, conduit junction with 4-5 pipes. Row 2: broken habitat dome, lunar rover wreck, comms antenna array, EMPTY. Row 3: small supply crate, small solar panel, short conduit segment, EMPTY. Row 4: intact mortar in small crater, the SAME mortar/crater destroyed, intact conduit pump, the SAME pump destroyed. Preserve damage-pair scale and recognizable matching silhouettes. All 14 elements strictly vertical overhead; circular crater openings are circles, no horizon or isometric angle. Pale gray-violet lunar stone, non-glowing frost, subtle magenta traces only on Collective machinery. Keep all objects isolated against perfectly flat #05010f; no terrain linking the objects. Use the attached approved W3 arena only for material, palette and design language. Large objects about twice the medium objects and about four times the small ones. Generous margins; complete silhouettes and shadows, no cropping.
+
+VARIANT B design: three more irregular fractured crater rims, a split geodesic habitat dome, a longer six-wheel rover wreck, angular antenna array, an asymmetric conduit junction with five branching roots. Mortar has a broad segmented armored enclosure; pump has an elongated ribbed pressure chamber. Damage states visibly broken while matching intact designs.
+
+CAMERA PRIORITY: exact 90-degree vertical overhead orthographic sprite plan view. Show only upper surfaces: rover roof and six wheels seen symmetrically from directly overhead, circular dome footprint, antenna mast seen end-on from above with radial braces and face-up dishes, no tall upright tower in side view. Pump chambers are circular top plates. No visible frontal walls or axonometric tilt anywhere. Crater mouths circular, not ellipses. Top-left illumination may cast shadows but must not tilt the camera.
+
+For the antenna prop, use a flat low-profile three-dish ground installation viewed exactly from zenith, circular dishes pointing vertically up, radial support bars laid along the ground. No upright antenna tower or side elevation. All human structures neutral gray-violet; no orange/gold details.

@@ -14,8 +14,10 @@
 - Sector names of all 10 worlds (6 each, the 6th is the boss): Art Bible tab "Art Bible", table "Nazwy sektorów".
   World 1 approved by Konrad (2026-10-28, in `js/data.js`); worlds 2-10 are proposals to review. On `v2` the map
   shows all 10 worlds; worlds not built yet are "under construction" (`PLANNED_WORLDS` in `js/data.js`: story +
-  planned sectors). Built: world 1 (build 91) and world 2 "Siege of Earth" (build 98, from ChatGPT's approved W2 set
-  in `art/2.0/worlds/world2`, textures by `proto2/make-world2.py`, look `js/v2/siege.js`). The 1.x worlds 2-4 (`LEGACY_WORLDS`) are no longer played. 2.0 free trial = worlds 1-2.
+  planned sectors). Built: world 1 (build 91), world 2 "Siege of Earth" (build 98, from ChatGPT's approved W2 set
+  in `art/2.0/worlds/world2`, textures by `proto2/make-world2.py`, look `js/v2/siege.js`) and world 3 "Lunar
+  Bridgehead" (build 106, W3 set in `art/2.0/worlds/world3`, `proto2/make-world3.py`, look `js/v2/lunar.js`, craters
+  as cover `js/cover.js`). The 1.x worlds 2-4 (`LEGACY_WORLDS`) are no longer played. 2.0 free trial = worlds 1-2.
 - Music: the 2.0 theme is the menu music for good; no separate M1 track.
 
 ## Shared handoff with Codex (paused, see above)
@@ -67,16 +69,13 @@ Next, in this order unless Konrad says otherwise:
 4. The new 2.0 arsenal in `PLAN-2.0-ARSENAL.md` (Railgun, Flamethrower, Singularity Cannon, 3 new perks, their
    evolutions, 6 combos, 3 perk sets, 3 super combos).
 
-Next session (Konrad, 2026-10-28: tasks for tomorrow), in this order:
-- Konrad's report from the iPhone: performance (FPS in big waves), difficulty, the music loops, clouds and lightning
-  of world 2. Tune from it.
-- World 3 "Lunar Bridgehead": Konrad has the complete W3 art and music ready and sends them; build it like world 2
-  (see the item below for the previews).
+Done 2026-10-29: Konrad's iPhone report (performance great, speed good, music great, world 2 beautiful; difficulty
+rose a lot but it is too early to judge: leave it; sound did not come back after a notification: fixed in build 105)
+and world 3 "Lunar Bridgehead" (build 106; Konrad tests it on the iPhone).
+Next, in this order unless Konrad says otherwise:
 - Rework the weapon system: build the arsenal of point 4 (new mechanics: crits, burning, the ship's shield, black
   holes, super combos of 3 weapons, burning ground), on the current neon effects until ChatGPT's icons and effects
   come; check the balance with headless runs.
-- For world 3 (ChatGPT's W3 set, Art Bible P1-P8, and Suno's W3 music): before adding it, split the web previews into separate files (the one-file preview is near the
-  16 MB artifact limit: 15.3 MB at build 100).
 
 ## Android (decided by Konrad)
 Android launches with 2.0 (Google Play needs 12 testers for 14 days on a new account before publishing, so closed
@@ -151,7 +150,9 @@ Konrad decides what becomes the real game: **never push to `main`**. `main` hold
 1. **Repo:** commit and push to a `claude/...` branch: `claude/v2-...` (from `origin/v2`) for 2.0 work, another
    `claude/...` branch (from `origin/main`) for 1.x fixes and tools. Do not merge into `main` or `v2`.
 2. **Shareable previews:** `npm run build:web` produces `dist/void-blaster.html` and `dist/void-blaster-test.html`
-   (whole game in one file each). Republish them to the existing artifacts (keep the URLs):
+   (the game's code, about 0.8 MB each) and `dist/assets/` (the 2.0 pictures and music, shared by both; since build
+   106, when one file no longer fit the 16 MB artifact limit). Publish each page with every file of `dist/assets` as
+   its `files` (published path `assets/<name>`). Republish them to the existing artifacts (keep the URLs):
    normal https://claude.ai/artifact/LvvWrttnsoUNQZYBt7HgDo, TEST https://claude.ai/artifact/T9TmADoewKYcxJgXLp4YCk.
    Both always show the newest candidate.
 3. **Tell Konrad the build number and to run `npm run review` on his Mac.** The script lists every `claude/...`

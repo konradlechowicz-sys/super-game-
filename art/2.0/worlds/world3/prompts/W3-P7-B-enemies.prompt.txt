@@ -1,0 +1,31 @@
+STYLE (keep identical across all images):
+Game art for "Void Blaster", a top-down mobile space shooter (survivors-like).
+Camera: top-down orthographic, looking straight down, no perspective.
+Look: stylized sci-fi with a neon accent. Dark, rich materials (gunmetal, carbon,
+matte ceramic) lit from the top-left, glowing edges and emissive lights only where
+noted. Detail level: high but clean - panel lines, vents, rivets; no grunge overload.
+The background must stay dark and calm so bright game objects read on top of it:
+no bright cyan anywhere (cyan belongs to the player), magenta only as thin traces.
+Rendering: crisp edges, soft bloom on glowing parts only, no motion blur, no depth of
+field, not photorealistic. No text, no logo, no watermark.
+
+WORLD 3 "LUNAR BRIDGEHEAD": just above the Moon's surface, where the Void Collective
+(an alien machine intelligence) built its forward base. Its conduits grow into the rock
+like roots: black-violet pipes #1a0f24 with magenta #ff2d95 veins. Gray regolith
+#2b2a33/#4a4856 with highlights #8d8a99, near-black shadows #0a0910 (no atmosphere),
+pale violet accents #b8a9d9, non-glowing frost #cfd8ef. Hard sunlight from the top-left,
+long sharp black shadows. Ruins of a human lunar base. Mood: sparse, hostile, first
+living growth. 90% machine, 10% organic.
+
+TASK: Enemy sheet, 6 enemies, facing up, seen from directly above, one scale, plain
+flat dark background (#05010f), well apart. Machines with a glowing magenta core,
+pale gray-violet armor, the first ones with dark living conduit tissue. Relative
+sizes: probe swarm unit 22, conduit crawler 32, lunar hopper 34, mortar node
+(stationary, set in the ground) 44, crater turret (stationary) 48, regolith golem 64
+(the biggest drawn about 300 px). Then, on a second image: an elite conduit crawler
+(1.6x, heavier armor, a gold ring) and, for each of the 6, 3-4 broken shards of its
+body for the death animation, one row per enemy. No text.
+
+FIRST IMAGE ONLY in this call: generate the six ordinary enemy sprites, not the elite or shards yet. Square sheet, exactly six isolated enemies, arranged in two rows of three equal cells with generous empty gutters. Row 1 left to right: probe swarm unit (22), conduit crawler (32), lunar hopper (34). Row 2 left to right: mortar node embedded in a small lunar crater (44), crater turret in a wider rocky circular foundation (48), regolith golem (64). The golem is the largest, no cropping. All face UP, north at top. Exact 90-degree vertical overhead orthographic plan view, show upper surfaces, no side elevation or isometric perspective. Mortar/turret gun barrels lie in the image plane and point toward the TOP. Golem is a hulking low-slung mining machine armored with moon-rock boulders, with forward head and shoulder armor at top, arms/legs distributed symmetrically and a magenta torso reactor; not a standing humanoid side view. Pale gray-violet armor, dark machinery, magenta cores; living tissue limited to a few dark conduit cords. No bright cyan, gold, orange or text. Perfectly flat #05010f backdrop, no scenery connecting the units. Use the approved W3 arena as palette/material reference only.
+
+VARIANT B: rounded overlapping pale armor segments, broad curved silhouettes and thicker black mechanical joints. The probe has a compact four-lobed sensor cluster, the crawler has a round reactor body with eight articulated limbs and branching dark living cords, hopper has two broad spring-like jump legs. Mortar and turret have segmented ring armor; golem has a rounded boulder-like torso, heavy arms and compact rear support legs.

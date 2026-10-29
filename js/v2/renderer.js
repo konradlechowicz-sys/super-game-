@@ -15,6 +15,7 @@ import ASSETS from './assets.gen.js';
 import { makeTitle } from './title.js';
 import { makeOrbitalRuins } from './orbit.js';
 import { makeSiegeOfEarth } from './siege.js';
+import { makeLunarBridgehead } from './lunar.js';
 
 const TAU = Math.PI * 2;
 // enemy types with 2.0 art, and the colour of their glow
@@ -22,6 +23,8 @@ const ENEMY_ART = {
   drone: 0xff2d95, swarmer: 0xffe23d, dasher: 0xff3d9a, shooter: 0xff2d95, tank: 0xb04dff, splitter: 0x9dff3d,
   // world 2, the landing force (proto2/make-world2.py)
   interceptor: 0xff2d95, lander: 0xff2d95, gunship: 0xff2d95, skymine: 0xff2d95, raider: 0xff2d95, walker: 0xff2d95,
+  // world 3, the bridgehead's garrison (proto2/make-world3.py)
+  probe: 0xff2d95, crawler: 0xff2d95, hopper: 0xff2d95, mortarnode: 0xff2d95, cturret: 0xff2d95, rgolem: 0xff2d95,
 };
 const ENEMY_SIZE = 2.8; // sprite size in enemy radii
 const DEBRIS_MAX = 160; // enemy debris fragments flying at once (W1 P7); the oldest is reused past that
@@ -71,18 +74,20 @@ export async function createV2Renderer(app) {
   const lootLayer = add(new Container()), ringG = add(new Graphics());
   const glowLayer = add(new Container());
   const propLayer = new Container(), debrisLayer = new Container(), wreckLayer = new Container();
-  const enemyLayer = new Container(), bossLayer = new Container(), shipLayer = new Container();
+  const enemyLayer = new Container(), bossLayer = new Container(), shipLayer = new Container(), shadowLayer = new Container();
   const shotLayer = add(new Container()), fxLayer = add(new Container()), fxG = add(new Graphics());
   const weaponLayer = add(new Container()), weaponG = new Graphics();
   weaponLayer.addChild(weaponG);
   // the worlds with a 2.0 arena, each a far layer under the arena, its arena and a near layer over everything: world 1
   // "Orbital Ruins" (js/v2/orbit.js), world 2 "Siege of Earth" (js/v2/siege.js, plus cloud banks over the enemies
-  // with the enemies' cores shining through them); the other worlds use the floor tile
-  const orbit = makeOrbitalRuins(tex), siege = makeSiegeOfEarth(tex);
+  // with the enemies' cores shining through them), world 3 "Lunar Bridgehead" (js/v2/lunar.js, with the craters of
+  // js/cover.js); the other worlds use the floor tile
+  const orbit = makeOrbitalRuins(tex), siege = makeSiegeOfEarth(tex), lunar = makeLunarBridgehead(tex, halo);
   const coreLayer = add(new Container());
+  px.stage.addChildAt(lunar.far, 0);
   px.stage.addChildAt(siege.far, 0);
   px.stage.addChildAt(orbit.far, 0);
-  world.addChild(floor, border, orbit.arena, siege.arena, propLayer, debrisLayer, lootLayer, ringG, glowLayer, enemyLayer, bossLayer, siege.cover, coreLayer, shotLayer, weaponLayer, shipLayer, wreckLayer, fxLayer, fxG);
+  world.addChild(floor, border, orbit.arena, siege.arena, lunar.arena, propLayer, debrisLayer, shadowLayer, lootLayer, ringG, glowLayer, enemyLayer, bossLayer, siege.cover, coreLayer, shotLayer, weaponLayer, shipLayer, wreckLayer, fxLayer, fxG);
   // reusable sprites: each frame takes as many as it needs and hides the rest (no per-object create/destroy)
   const lootHalo = pool(lootLayer), loot = pool(lootLayer);
   const shotHalo = pool(shotLayer), shots = pool(shotLayer);
@@ -110,7 +115,7 @@ export async function createV2Renderer(app) {
   // the title screen behind the menus (js/v2/title.js), with its own, bigger ships
   const title = makeTitle(tex, halo, makeShips(TITLE_SHIP_H / SHIP_H));
   title.scene.visible = false;
-  px.stage.addChild(orbit.near, siege.near, title.scene);
+  px.stage.addChild(orbit.near, siege.near, lunar.near, title.scene);
 
   let arenaKey = '', lastTime = null;
   const drawn = new Map(); // game object -> its sprites
@@ -132,8 +137,13 @@ export async function createV2Renderer(app) {
     // the magenta core that shows through world 2's cloud banks
     const core = new Sprite(halo);
     core.anchor.set(0.5); core.tint = 0xff2d95;
+    // world 3: a hard black shadow toward the lower right (sunlight from the top left, no air), so the pale armor
+    // stands out from the gray ground
+    const shadow = new Sprite(tex[art]);
+    shadow.anchor.set(0.5); shadow.tint = 0x000000; shadow.alpha = 0.6;
+    shadowLayer.addChild(shadow);
     enemyLayer.addChild(body); glowLayer.addChild(glow); coreLayer.addChild(core);
-    return { body, glow, core, base: (e.r * ENEMY_SIZE) / Math.max(body.texture.width, body.texture.height) };
+    return { body, glow, core, shadow, base: (e.r * ENEMY_SIZE) / Math.max(body.texture.width, body.texture.height) };
   }
 
   // a prop to shoot (js/props.js: world 1 fuel tank or ammo crate, world 2 flak battery or beacon pylon) on a dark
@@ -158,7 +168,7 @@ export async function createV2Renderer(app) {
   const debris = [];
   let debrisGame = null, debrisTime = 0;
   function shatter(e) {
-    const dt = (n) => tex[`w1-debris-${e.type}-${n}`] || tex[`w2-debris-${e.type}-${n}`];
+    const dt = (n) => tex[`w1-debris-${e.type}-${n}`] || tex[`w2-debris-${e.type}-${n}`] || tex[`w3-debris-${e.type}-${n}`];
     if (!dt(1)) return;
     const n = e.elite ? 4 : 2 + Math.floor(Math.random() * 2), first = Math.floor(Math.random() * 4);
     for (let i = 0; i < n; i++) {
@@ -217,6 +227,34 @@ export async function createV2Renderer(app) {
     return { body: c, inner: hull, outer, ring: inner, flame, halo, weakGlow, rings: [outer, inner] };
   }
 
+  // the world-3 boss, the Moon Spire (W3 P8): the armored crown in its crater, four living conduit roots that stir,
+  // the cannon core that turns after the ship (Game: b.aim), four weak points that glow and the muzzle flash of each
+  // shell; parts placed from ASSETS.spire (centers in the art's 1024 frame)
+  function spireSprites() {
+    const c = new Container();
+    const at = (name, add) => {
+      const s = new Sprite(tex[`w3-boss-${name}`]);
+      const [x, y] = ASSETS.spire.parts[name];
+      s.anchor.set(0.5); s.position.set(x - 512, y - 512);
+      if (add) s.blendMode = 'add';
+      return s;
+    };
+    const halo = new Sprite(tex['glow-rgolem'] || halo0);
+    halo.anchor.set(0.5); halo.tint = 0xff2d95; halo.blendMode = 'add'; halo.scale.set(3.6);
+    const crown = at('crown-and-crater-foundation');
+    const roots = ['north', 'east', 'south', 'west'].map((n) => at(`root-${n}`));
+    const core = at('cannon-core');
+    const weak = ['nw', 'ne', 'sw', 'se'].map((n) => at(`weak-point-${n}`));
+    const weakGlow = weak.map((w) => { const g = new Sprite(halo0); g.anchor.set(0.5); g.position.copyFrom(w.position); g.tint = 0xff2d95; g.blendMode = 'add'; g.scale.set(1.8); return g; });
+    const coreGlow = new Sprite(halo0);
+    coreGlow.anchor.set(0.5); coreGlow.position.copyFrom(core.position); coreGlow.tint = 0xff2d95; coreGlow.blendMode = 'add'; coreGlow.scale.set(3.2);
+    const flash = at('muzzle-flash', true);
+    flash.anchor.set(0.5, 0.85); flash.alpha = 0;
+    c.addChild(halo, crown, ...roots, core, ...weak, ...weakGlow, coreGlow, flash);
+    bossLayer.addChild(c);
+    return { body: c, inner: crown, core, roots, halo, weakGlow, coreGlow, flash };
+  }
+
   function bossSprites() {
     const c = new Container();
     const at = (s, x, y) => { s.position.set(((x - 627) / 1254) * 1024, ((y - 627) / 1254) * 1024); return s; };
@@ -248,7 +286,7 @@ export async function createV2Renderer(app) {
   // the menus: the title scene; main = the main menu (full brightness, the ship), showShip = the 2.0 ship is the one chosen
   function renderTitle(time, opts) {
     fitScreen();
-    world.visible = orbit.near.visible = siege.near.visible = false;
+    world.visible = orbit.near.visible = siege.near.visible = lunar.near.visible = false;
     title.scene.visible = true;
     title.update(time, app.W, app.H, opts);
     px.render();
@@ -259,11 +297,12 @@ export async function createV2Renderer(app) {
     fitScreen();
     world.visible = true;
     title.scene.visible = false;
-    const w1 = game.stage.world.id === 1, w2 = game.stage.world.id === 2 && siege.ok;
+    const w1 = game.stage.world.id === 1, w2 = game.stage.world.id === 2 && siege.ok, w3 = game.stage.world.id === 3 && lunar.ok;
     orbit.far.visible = orbit.arena.visible = w1;
     orbit.near.visible = w1 && !!tex['w1-near'];
     siege.far.visible = siege.arena.visible = siege.cover.visible = siege.near.visible = coreLayer.visible = w2;
-    floor.visible = border.visible = !w1 && !w2;
+    lunar.far.visible = lunar.arena.visible = lunar.near.visible = w3;
+    floor.visible = border.visible = !w1 && !w2 && !w3;
     const sdt = Math.min(0.1, Math.max(0, game.time - (lastTime ?? game.time)));
     lastTime = game.time;
     const { cx, cy } = game.frameCam;
@@ -279,6 +318,7 @@ export async function createV2Renderer(app) {
       const seed = [...String(game.stage.id)].reduce((a, c) => a * 31 + c.charCodeAt(0), 7);
       if (w1) orbit.setArena(w, h, seed);
       if (w2) siege.setArena(w, h, seed);
+      if (w3) lunar.setArena(w, h, seed, game.cover);
       floor.width = w; floor.height = h; floor.position.set(-w / 2, -h / 2);
       const col = Number.parseInt(game.stage.world.theme.grid.slice(1), 16);
       border.clear().rect(-w / 2, -h / 2, w, h).stroke({ width: 12, color: col, alpha: 0.2 }).rect(-w / 2, -h / 2, w, h).stroke({ width: 2.5, color: col, alpha: 0.9 });
@@ -286,13 +326,16 @@ export async function createV2Renderer(app) {
 
     if (w1) orbit.update(game.time, cx, cy, z, app.W, app.H);
     if (w2) siege.update(game.time, cx, cy, z, app.W, app.H, sdt);
+    if (w3) lunar.update(game.time, cx, cy, z, app.W, app.H);
 
     // the props to shoot, whole or broken (js/props.js)
     for (const o of game.props) {
       const P = PROPS[o.prop];
       if (!tex[P.art]) continue;
       const s = spritesFor(o, () => propSprites(o));
-      const t = tex[o.dead ? P.broken : P.art];
+      // a prop with no broken picture (world 3's supply crate) is gone once broken
+      s.body.visible = !o.dead || !!P.broken;
+      const t = tex[o.dead ? P.broken : P.art] || s.spr.texture;
       if (s.spr.texture !== t) s.spr.texture = t;
       s.body.position.set(o.x, o.y); s.body.rotation = o.rot; s.body.scale.set(s.base);
       s.spr.tint = o.flash > 0 ? 0xffb0ff : 0xffffff;
@@ -319,7 +362,9 @@ export async function createV2Renderer(app) {
     // enemies and bosses with 2.0 art
     for (const e of game.enemies) {
       if (e.dead || e.seg) continue;
-      const sc = e.spawnT > 0 ? Math.max(0.05, 1 - e.spawnT / (e.boss ? 1.2 : 0.35)) : 1;
+      let sc = e.spawnT > 0 ? Math.max(0.05, 1 - e.spawnT / (e.boss ? 1.2 : 0.35)) : 1;
+      // world 3's hopper grows while it is in the air (a leap lasts 0.45 s)
+      if (e.state === 'leap' && e.def.ai === 'hop') sc *= 1 + 0.35 * Math.sin(Math.PI * Math.min(1, 1 - e.t / 0.45));
       if (e.boss && e.def === BOSSES.citadel && tex['w2-boss-core-hull']) {
         e.v2 = true;
         const s = spritesFor(e, () => citadelSprites());
@@ -336,6 +381,29 @@ export async function createV2Renderer(app) {
         s.ring.rotation = -t * (0.4 + rage * 0.3);
         s.flame.scale.set(1, (1 + rise * 1.5) * (1 + 0.15 * Math.sin(t * 31)));
         s.halo.alpha = (0.2 + 0.08 * Math.sin(t * 5)) * (1 + rage * 0.5);
+        s.weakGlow.forEach((g, i) => { g.alpha = 0.45 + 0.35 * Math.sin(t * (4 + rage * 3) + i * 1.6) + rage * 0.15; });
+        continue;
+      }
+      if (e.boss && e.def === BOSSES.spire && tex['w3-boss-crown-and-crater-foundation']) {
+        e.v2 = true;
+        const s = spritesFor(e, () => spireSprites());
+        // the entrance (spawnT 1.2 s): it pushes up out of the ground, growing
+        const k = Math.max(0, e.spawnT) / 1.2;
+        s.body.position.set(e.x, e.y);
+        s.body.alpha = (e.alpha ?? 1) * (1 - k * 0.7);
+        s.body.scale.set(((e.r * 4.1) / 1024) * (1 - k * 0.5));
+        s.inner.tint = s.core.tint = e.flash > 0 ? 0xffb0ff : 0xffffff;
+        const rage = (e.phase || 1) - 1, t = game.time;
+        // the cannon turns after the ship (its art faces up); the flash sits at the muzzle, along the aim
+        const aim = (e.aim ?? -Math.PI / 2) + Math.PI / 2;
+        s.core.rotation = aim;
+        const since = game.time - (e.fired ?? -9);
+        s.flash.rotation = aim;
+        s.flash.alpha = since < 0.18 ? 1 - since / 0.18 : 0;
+        s.flash.scale.set(0.9 + since * 2);
+        s.roots.forEach((r, i) => { r.rotation = Math.sin(t * (0.9 + rage * 0.6) + i * 1.7) * 0.025; });
+        s.halo.alpha = (0.18 + 0.08 * Math.sin(t * 4)) * (1 + rage * 0.5);
+        s.coreGlow.alpha = (e.mode === 'cannon' && !e.shots ? 0.9 : 0.4) + 0.2 * Math.sin(t * (5 + rage * 3));
         s.weakGlow.forEach((g, i) => { g.alpha = 0.45 + 0.35 * Math.sin(t * (4 + rage * 3) + i * 1.6) + rage * 0.15; });
         continue;
       }
@@ -374,6 +442,13 @@ export async function createV2Renderer(app) {
       s.glow.tint = e.elite ? 0xffd23d : 0xffffff;
       s.glow.alpha = (0.7 + 0.2 * Math.sin(game.time * 4 + (e.id || 0))) * s.body.alpha;
       if (w2) { s.core.position.set(ex, ey); s.core.scale.set((e.r * 1.3 * sc) / 64); s.core.alpha = 0.6 * s.body.alpha; }
+      s.shadow.visible = w3;
+      if (w3) {
+        // a hopper in the air casts its shadow farther
+        const lift = 0.18 * e.r + (sc - 1) * 3 * e.r;
+        s.shadow.position.set(ex + lift, ey + lift * 1.3); s.shadow.rotation = rot; s.shadow.scale.set(s.base * Math.min(sc, 1));
+        s.shadow.alpha = 0.6 * s.body.alpha;
+      }
     }
     // world 1: the falling wreck (Game.fallingWreck), a deck fragment (W1 P3b) tumbling across the arena
     for (const h of game.hazards) {
@@ -395,6 +470,7 @@ export async function createV2Renderer(app) {
       s.body.destroy({ children: true });
       s.glow?.destroy();
       s.core?.destroy();
+      if (s.shadow && !s.shadow.destroyed) s.shadow.destroy();
       drawn.delete(obj);
     }
 

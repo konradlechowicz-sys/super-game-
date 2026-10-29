@@ -1,0 +1,24 @@
+STYLE (keep identical across all images):
+Game art for "Void Blaster", a top-down mobile space shooter (survivors-like).
+Camera: top-down orthographic, looking straight down, no perspective.
+Look: stylized sci-fi with a neon accent. Dark, rich materials (gunmetal, carbon,
+matte ceramic) lit from the top-left, glowing edges and emissive lights only where
+noted. Detail level: high but clean - panel lines, vents, rivets; no grunge overload.
+The background must stay dark and calm so bright game objects read on top of it:
+no bright cyan anywhere (cyan belongs to the player), magenta only as thin traces.
+Rendering: crisp edges, soft bloom on glowing parts only, no motion blur, no depth of
+field, not photorealistic. No text, no logo, no watermark.
+
+WORLD 3 "LUNAR BRIDGEHEAD": just above the Moon's surface, where the Void Collective
+(an alien machine intelligence) built its forward base. Its conduits grow into the rock
+like roots: black-violet pipes #1a0f24 with magenta #ff2d95 veins. Gray regolith
+#2b2a33/#4a4856 with highlights #8d8a99, near-black shadows #0a0910 (no atmosphere),
+pale violet accents #b8a9d9, non-glowing frost #cfd8ef. Hard sunlight from the top-left,
+long sharp black shadows. Ruins of a human lunar base. Mood: sparse, hostile, first
+living growth. 90% machine, 10% organic.
+
+TASK: Seamless tileable floor texture 1024x1024: gray lunar regolith seen from above,
+fine dust, small pebbles, a few tiny craters, faint rover tracks. Very low contrast,
+no large craters or landmarks. Tiles on all four edges. Deliver the single tile.
+
+VARIANT B: dark gray-violet lunar regolith with slightly coarser small pebbles and a few subtle shallow tiny craters. Include faint winding parallel rover tracks, broken and sparse so they do not form dominant repeating landmarks. Very low contrast throughout. The input image is a reference for palette and material only: make a square ground texture, no ruins, pipes, bright magenta, large rocks, crater rims or scene layout. True overhead orthographic. Single 1024x1024 tile; opposite edges should join without a seam.
