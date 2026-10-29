@@ -48,6 +48,10 @@ export const PASSIVES = {
   armor: { name: 'Armor Plating', color: '#3dff8a', icon: 'armor', desc: '+20 max hull, +0.15 hull/sec' },
   tractor: { name: 'Tractor Beam', color: '#3dc8ff', icon: 'tractor', desc: '+30% pickup range' },
   amplifier: { name: 'Amplifier', color: '#b06bff', icon: 'amplifier', desc: '+12% area of effect' },
+  // 2.0 arsenal (PLAN-2.0-ARSENAL.md; mechanics in js/arsenal.js)
+  targeting: { name: 'Targeting Matrix', color: '#fff2a8', icon: 'targeting', desc: '+6% critical hit chance (x2 damage)' },
+  thermal: { name: 'Thermal Core', color: '#ff7a1a', icon: 'thermal', desc: '+8% chance hits set enemies on fire, fire +20%' },
+  phase: { name: 'Phase Shield', color: '#7df9ff', icon: 'phase', desc: 'A shield blocks one hit; recharges in 16 s (-2 s per level)' },
 };
 export const PASSIVE_MAX = 5;
 

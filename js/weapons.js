@@ -1,5 +1,6 @@
 import { TAU, rand, pick } from './util.js';
 import { bladeSprite, wingmanSprite } from './sprites.js';
+import { ignite, launchHole, addFire, fireBeam } from './arsenal.js';
 
 // Every weapon: per-level stats (index = level-1), level descriptions, optional evolution.
 // update(w, g, dt) runs each frame; render(w, g, R) draws persistent visuals (blades, drones).
@@ -132,6 +133,8 @@ export const WEAPONS = {
       const rad = s.rad * p.areaMult * (1 + 0.6 * out);
       const br = (w.evolved ? 15 : 11) * p.areaMult;
       const dmg = s.dmg * p.dmgMult * (w.flare > 0 ? 1.5 : 1);
+      // Fire Blades combo: the blades set what they cut on fire, at the Flamethrower's heat
+      const fl = g.combos.has('fireblades') && g.wstats('flame');
       for (let i = 0; i < s.n; i++) {
         const a = w.a + (i / s.n) * TAU;
         const bx = p.x + Math.cos(a) * rad, by = p.y + Math.sin(a) * rad;
@@ -142,6 +145,7 @@ export const WEAPONS = {
             e.orbitHit = g.time;
             const d = Math.hypot(e.x - p.x, e.y - p.y) || 1;
             g.damage(e, dmg, ((e.x - p.x) / d) * 160, ((e.y - p.y) / d) * 160);
+            if (fl) ignite(e, fl.burn * p.dmgMult * (p.fireMult || 1), 3);
           }
         }
       }
@@ -239,6 +243,21 @@ export const WEAPONS = {
       w.t = s.cd * p.cdMult;
       g.addRing({ x: p.x, y: p.y, max: s.rad * p.areaMult, dmg: s.dmg * p.dmgMult, dur: w.evolved ? 0.5 : 0.4, color: w.evolved ? '#e0fff6' : '#3dffc8', knock: 380, follow: true, slow: s.slow || 0 });
       g.sfx('pulse');
+      // Collapse combo: the pulse collapses every open black hole into a blast at once
+      if (g.combos.has('collapse')) {
+        for (const h of g.holes.splice(0)) {
+          if (h.t < h.fly) { g.holes.push(h); continue; }
+          g.explode(h.x, h.y, h.r * 1.1, Math.max(h.collapse, h.dps * 1.5), '#c46bff');
+        }
+      }
+      // Supernova Core (super combo): every 4th pulse pulls enemies in and leaves a ring of fire
+      if (g.combos.has('supernovacore') && (w.count = (w.count || 0) + 1) % 4 === 0) {
+        const fs = g.wstats('flame'), rad = s.rad * p.areaMult;
+        launchHole(g, p.x, p.y, 0, { speed: 0, fly: 0, dur: 1.2, r: rad * 1.4, dps: s.dmg * p.dmgMult, color: '#ffd23d' });
+        for (let i = 0; i < 12; i++) { const a = (i / 12) * TAU; addFire(g, p.x + Math.cos(a) * rad, p.y + Math.sin(a) * rad, 40, fs.burn * p.dmgMult * (p.fireMult || 1), 3.5); }
+        g.addFx(p.x, p.y, rad * 1.6, '#ffd23d', 0.6, 6);
+        g.shake = Math.max(g.shake, 8);
+      }
       // Blade Nova combo: the pulse flings the orbit blades out for a second
       const ow = g.combos.has('bladenova') && g.weapons.find((x) => x.id === 'orbit');
       if (ow) ow.flare = 1.2;
@@ -304,6 +323,136 @@ export const WEAPONS = {
         if (g.mines.length >= 40) g.mines.shift();
         g.mines.push({ x: p.x + rand(-14, 14), y: p.y + rand(-14, 14), life: 8, arm: 0.5, dmg: s.dmg * p.dmgMult, rad: s.rad * p.areaMult, pull: (s.pull || 0) * p.areaMult });
       }
+    },
+  },
+
+  // ---- 2.0 arsenal (PLAN-2.0-ARSENAL.md; mechanics in js/arsenal.js) ----
+  rail: {
+    name: 'Railgun', color: '#c8f0ff', icon: 'rail',
+    desc: ['Charges, then fires a beam through every enemy in your flight path.', '+30% damage', 'Charges faster', 'Wider beam, +25% damage', 'Charges faster, +25% damage'],
+    stats: [
+      { dmg: 46, cd: 2.2, w: 14 },
+      { dmg: 60, cd: 2.2, w: 14 },
+      { dmg: 60, cd: 1.85, w: 14 },
+      { dmg: 75, cd: 1.85, w: 20 },
+      { dmg: 94, cd: 1.6, w: 20 },
+    ],
+    evo: { with: 'targeting', name: 'Gauss Lance', desc: 'Twin beams that blast at the end of the line; crits break shields.', stats: { dmg: 120, cd: 1.4, w: 22, twin: true, blast: 90 } },
+    update(w, g, dt, s) {
+      w.t -= dt;
+      const p = g.player;
+      if (w.t > 0) return;
+      if (!g.nearestEnemy(p.x, p.y, 700)) { w.t = 0.1; return; }
+      w.t = s.cd * p.cdMult;
+      const a = p.facing, len = 760 * p.areaMult;
+      const color = w.evolved ? '#fff2a8' : '#c8f0ff';
+      const sg = g.combos.has('shrapnelrail') && g.wstats('spread'), fl = g.combos.has('phoenixrail') && g.wstats('flame');
+      for (const off of s.twin ? [-12, 12] : [0]) {
+        const x = p.x + Math.cos(a + Math.PI / 2) * off, y = p.y + Math.sin(a + Math.PI / 2) * off;
+        const { x1, y1, hits } = fireBeam(g, x, y, a, len, s.w * p.areaMult, s.dmg * p.dmgMult, color, s.twin ? { breakShield: true } : undefined);
+        if (s.blast) g.explode(x1, y1, s.blast * p.areaMult, s.dmg * p.dmgMult * 0.5, color);
+        // Ion Rail combo: every enemy the beam pierces sparks lightning to its nearest neighbour
+        if (g.combos.has('ionrail')) {
+          for (const e of hits.slice(0, 10)) {
+            if (e.prop) continue;
+            let best = null, bd = 140 * 140;
+            for (const o of g.enemiesNear(e.x, e.y, 140)) {
+              if (o === e || o.dead || o.prop) continue;
+              const d = (o.x - e.x) ** 2 + (o.y - e.y) ** 2;
+              if (d < bd) { bd = d; best = o; }
+            }
+            if (!best) continue;
+            g.damage(best, s.dmg * p.dmgMult * 0.4, 0, 0, true);
+            if (g.bolts.length < 40) g.addBolt([e.x, e.y, best.x, best.y], '#c8f0ff');
+          }
+        }
+        // Shrapnel Rail combo: the end of the beam bursts into a fan of pellets
+        if (sg) {
+          for (let i = 0; i < 8; i++) {
+            g.shoot({ x: x1, y: y1, a: a + (i / 7 - 0.5) * 1.2, speed: rand(460, 540), dmg: sg.dmg * p.dmgMult, pierce: 0, r: 5,
+              life: 0.4 * p.areaMult, look: 'pellet', color: '#ff8a2a', knock: 120 });
+          }
+        }
+        // Phoenix Rail (super combo): the beam leaves a line of fire
+        if (fl) {
+          for (let d = 60; d < len; d += 110) addFire(g, x + Math.cos(a) * d, y + Math.sin(a) * d, 32, fl.burn * p.dmgMult * p.fireMult, 2.5);
+        }
+      }
+      g.shake = Math.max(g.shake, 3);
+      g.sfx('laser');
+    },
+  },
+
+  flame: {
+    name: 'Flamethrower', color: '#ff8a2a', icon: 'flame',
+    desc: ['Sprays fire at close range; enemies burn for 3 s.', '+30% damage', 'Wider cone', '+30% damage, longer reach', 'Hotter fire: burning +50%'],
+    stats: [
+      { dmg: 4, cd: 0.12, range: 140, cone: 0.42, burn: 8 },
+      { dmg: 5.2, cd: 0.12, range: 140, cone: 0.42, burn: 10 },
+      { dmg: 5.2, cd: 0.12, range: 140, cone: 0.55, burn: 10 },
+      { dmg: 6.8, cd: 0.12, range: 165, cone: 0.55, burn: 13 },
+      { dmg: 6.8, cd: 0.12, range: 165, cone: 0.55, burn: 20 },
+    ],
+    evo: { with: 'thermal', name: 'Inferno', desc: 'A wide blue flame that leaves the ground burning.', stats: { dmg: 9, cd: 0.1, range: 200, cone: 0.7, burn: 26, pools: true } },
+    update(w, g, dt, s) {
+      w.t -= dt;
+      if (w.t > 0) return;
+      const p = g.player, range = s.range * p.areaMult;
+      const tgt = g.nearestEnemy(p.x, p.y, range + 40);
+      if (!tgt) { w.t = 0.1; return; }
+      w.t = s.cd * p.cdMult;
+      const a = Math.atan2(tgt.y - p.y, tgt.x - p.x);
+      const fire = s.burn * p.dmgMult * (p.fireMult || 1);
+      for (const e of g.enemiesNear(p.x, p.y, range)) {
+        let da = Math.atan2(e.y - p.y, e.x - p.x) - a;
+        while (da > Math.PI) da -= TAU;
+        while (da < -Math.PI) da += TAU;
+        if (Math.abs(da) > s.cone) continue;
+        g.damage(e, s.dmg * p.dmgMult, Math.cos(a) * 30, Math.sin(a) * 30, true);
+        ignite(e, fire, 3);
+      }
+      // the flame itself: a spray of embers along the cone
+      const blue = w.evolved;
+      for (let i = 0; i < 5 && g.particles.length < 680; i++) {
+        const pa = a + rand(-s.cone, s.cone), v = range * rand(2.2, 3.2);
+        g.particles.push({ x: p.x + Math.cos(a) * 12, y: p.y + Math.sin(a) * 12, vx: Math.cos(pa) * v, vy: Math.sin(pa) * v, life: 0.3, max: 0.3, size: rand(6, 10),
+          color: blue ? (Math.random() < 0.5 ? '#7db8ff' : '#e0f0ff') : (Math.random() < 0.5 ? '#ff8a2a' : '#ffd23d') });
+      }
+      // Inferno: the ground at the end of the flame keeps burning
+      if (s.pools && (w.poolT = (w.poolT || 0) - s.cd) <= 0) {
+        w.poolT = 0.5;
+        addFire(g, p.x + Math.cos(a) * range * 0.75, p.y + Math.sin(a) * range * 0.75, 48 * p.areaMult, fire, 3);
+      }
+      if ((w.sfxT = (w.sfxT || 0) - s.cd) <= 0) { w.sfxT = 0.4; g.sfx('shotgun'); }
+    },
+  },
+
+  singularity: {
+    name: 'Singularity Cannon', color: '#b06bff', icon: 'singularity',
+    desc: ['Fires a slow orb that becomes a black hole, pulling enemies in.', '+30% damage', 'Bigger hole', 'Fires faster', '+1 orb, +25% damage'],
+    stats: [
+      { dmg: 34, cd: 3.6, n: 1, r: 100, dur: 2 },
+      { dmg: 44, cd: 3.6, n: 1, r: 100, dur: 2 },
+      { dmg: 44, cd: 3.6, n: 1, r: 125, dur: 2.2 },
+      { dmg: 44, cd: 2.9, n: 1, r: 125, dur: 2.2 },
+      { dmg: 55, cd: 2.9, n: 2, r: 130, dur: 2.4 },
+    ],
+    evo: { with: 'tractor', name: 'Event Horizon', desc: 'Huge black holes that collapse in a blast.', stats: { dmg: 70, cd: 2.8, n: 2, r: 170, dur: 2.6, collapse: 140 } },
+    update(w, g, dt, s) {
+      w.t -= dt;
+      if (w.t > 0) return;
+      const p = g.player;
+      const tgt = g.nearestEnemy(p.x, p.y, 520);
+      if (!tgt) { w.t = 0.15; return; }
+      w.t = s.cd * p.cdMult;
+      const a = Math.atan2(tgt.y - p.y, tgt.x - p.x);
+      for (let i = 0; i < s.n; i++) {
+        launchHole(g, p.x, p.y, a + (i - (s.n - 1) / 2) * 0.6, {
+          speed: 230, fly: 1, dur: s.dur, r: s.r * p.areaMult, dps: s.dmg * p.dmgMult, color: w.evolved ? '#e9c4ff' : '#b06bff',
+          collapse: s.collapse ? s.collapse * p.dmgMult : 0,
+        });
+      }
+      g.sfx('missile');
     },
   },
 };

@@ -3,7 +3,7 @@
 // entries show as "???" with one hint.
 import { PASSIVES } from './data.js';
 import { WEAPONS } from './weapons.js';
-import { COMBOS } from './combos.js';
+import { COMBOS, levelFor } from './combos.js';
 
 const W = WEAPONS, P = PASSIVES;
 const partName = (combo, id) => (combo.perk ? P[id] : W[id]).name;
@@ -11,10 +11,10 @@ const partIcon = (combo, id) => (combo.perk ? P[id] : W[id]).icon;
 
 // Sections in the order the Codex shows them. Keys: w:weapon, e:evolution, c:combo or perk set, p:perk.
 export function codexSections() {
-  const combos = (perk) => Object.entries(COMBOS).filter(([, c]) => !!c.perk === perk).map(([id, c]) => ({
+  const combos = (perk, sup = false) => Object.entries(COMBOS).filter(([, c]) => !!c.perk === perk && !!c.super === sup).map(([id, c]) => ({
     key: `c:${id}`, name: c.name, desc: c.desc, icon: partIcon(c, c.parts[0]), color: c.color,
-    recipe: c.parts.map((x) => partName(c, x)).join(' + ') + ' (both LV 3)',
-    hint: `Needs ${partName(c, c.parts[0])} and one more ${perk ? 'perk' : 'weapon'}`,
+    recipe: c.parts.map((x) => partName(c, x)).join(' + ') + (sup ? ` (all LV ${levelFor(c)} or evolved)` : ' (both LV 3)'),
+    hint: sup ? `Needs ${partName(c, c.parts[0])} and two more weapons` : `Needs ${partName(c, c.parts[0])} and one more ${perk ? 'perk' : 'weapon'}`,
   }));
   return [
     { title: 'WEAPONS', items: Object.entries(W).map(([id, w]) => ({
@@ -25,6 +25,7 @@ export function codexSections() {
       recipe: `${w.name} LV 5 + ${P[w.evo.with].name}`, hint: `Evolves from ${w.name}`,
     })) },
     { title: 'WEAPON COMBOS', items: combos(false) },
+    { title: 'SUPER COMBOS', items: combos(false, true) },
     { title: 'PERKS', items: Object.entries(P).map(([id, p]) => ({
       key: `p:${id}`, name: p.name, desc: p.desc, icon: p.icon, color: p.color, hint: 'Find it on a level-up card',
     })) },

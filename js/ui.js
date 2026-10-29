@@ -626,7 +626,7 @@ export class UI {
 
   levelUp({ title, sub, cards, rerolls, build, onPick, onReroll, step = 1, steps = 1, hint = '' }) {
     const html = cards.map((c, i) => `
-      <button class="card ${c.evo ? 'evo' : ''} ${c.combo ? 'combo' : ''}" style="--cc:${c.color}" data-act="pick" data-i="${i}">
+      <button class="card ${c.evo ? 'evo' : ''} ${c.combo ? 'combo' : ''} ${c.superCombo ? 'super' : ''}" style="--cc:${c.color}" data-act="pick" data-i="${i}">
         <img src="${icon(c.icon, c.color, c.evo)}" alt="">
         <div class="card-info">
           <div class="card-top"><b>${esc(c.name)}</b><span class="tag ${c.tag === 'NEW' ? 'new' : ''}">${c.tag}</span></div>

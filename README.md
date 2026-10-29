@@ -150,6 +150,7 @@ and `.../site/support.html`, and the web version of the game at `https://konradl
 - `js/cover.js` — 2.0 cover that stops enemy shots: world 3's craters, world 5's drifting asteroids
 - `js/crystal.js` — 2.0 world 4: the black crystal network (grows from nodes, laid by Spreaders, slows the ship) and dust storms
 - `js/weapons.js` — weapon stats, behaviours and evolutions
+- `js/arsenal.js` — 2.0 arsenal mechanics: crits, burning, burning ground, black holes, railgun beams, the Phase Shield
 - `js/codex.js` — the Codex (v1.2): its sections and entries; discoveries are saved in `save.codex` (kept by Reset progress)
 - `js/combos.js` — weapon combos and perk sets (v1.2): which pairs exist and when they are active; their effects live in weapons.js and game.js (`updatePerkSets`, `missileCombos`, `crowdHit`)
 - `js/data.js` — ships, enemies, sectors, elite traits (fixed per sector), shop, daily rewards, Endless mode (`ENDLESS`, `endlessStage`)

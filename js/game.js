@@ -9,6 +9,7 @@ import { EDITION } from './edition.js';
 import { initProps, updateProps, breakProp, hasProps } from './props.js';
 import { initCover, hasCover, coverAt, updateCover } from './cover.js';
 import { initCrystal, hasCrystal, updateCrystal, layCrystal } from './crystal.js';
+import { ignite, updateArsenal, shieldHit, addFire, inHole } from './arsenal.js';
 
 const MAX_WEAPONS = 4;
 const MAX_PASSIVES = 4;
@@ -36,6 +37,7 @@ export class Game {
     this.time = 0;
     this.state = 'play';
     this.enemies = []; this.proj = []; this.ebullets = []; this.gems = []; this.pickups = [];
+    this.holes = []; this.fires = []; this.beams = []; // the 2.0 arsenal's black holes, burning ground, beams (js/arsenal.js)
     this.particles = []; this.hazards = []; this.rings = []; this.fx = []; this.bolts = []; this.mines = []; this.texts = [];
     this.hash = new SpatialHash(64);
     this.tmp = [];
@@ -99,6 +101,13 @@ export class Game {
     p.armor = s.armor || 0;
     p.xpMult = 1 + B('growth');
     p.coinMult = 1 + B('greed');
+    // 2.0 arsenal perks: crits, setting enemies on fire, the Phase Shield (it comes up charged when taken)
+    p.crit = (P.targeting || 0) * 0.06;
+    p.ignite = (P.thermal || 0) * 0.08;
+    p.fireMult = 1 + (P.thermal || 0) * 0.2;
+    const hadShield = !!p.shieldCd;
+    p.shieldCd = P.phase ? 16 - 2 * (P.phase - 1) : 0;
+    if (p.shieldCd && !hadShield) { p.shieldUp = true; p.shieldT = 0; }
   }
 
   addWeapon(id) {
@@ -174,6 +183,26 @@ export class Game {
     if (p.laststand) dmg *= 1.25;
     p.dmgMult = p.baseDmg * dmg;
     p.cdMult = p.baseCd * cd;
+    // Scorched Trail (perk set): a trail of fire behind the moving ship
+    if (C.has('scorched') && p.moving > 40 && (this.scorchT = (this.scorchT || 0) - dt) <= 0) {
+      this.scorchT = 0.22;
+      addFire(this, p.x, p.y, 34, 10 * p.dmgMult * p.fireMult, 2.2);
+    }
+    // Thunderstorm (super combo): every 6 s lightning strikes 8 enemies in sight, each strike leaves a mine
+    if (C.has('thunderstorm') && (this.stormT = (this.stormT ?? 6) - dt) <= 0) {
+      this.stormT = 6;
+      const ls = this.wstats('lightning'), ms = this.wstats('mines');
+      const { vw, vh } = this.viewSize();
+      const seen = this.enemies.filter((e) => !e.dead && !e.prop && e.spawnT <= 0 && Math.abs(e.x - this.cam.x) < vw / 2 && Math.abs(e.y - this.cam.y) < vh / 2);
+      for (let i = 0; i < 8 && seen.length; i++) {
+        const e = seen.splice(randi(0, seen.length - 1), 1)[0];
+        this.damage(e, ls.dmg * 1.5 * p.dmgMult, 0, 0, true);
+        if (this.bolts.length < 40) this.addBolt([e.x + rand(-40, 40), e.y - 320, e.x, e.y], '#fff27d');
+        if (this.mines.length < 40) this.mines.push({ x: e.x, y: e.y, life: 6, arm: 0.3, dmg: ms.dmg * p.dmgMult, rad: ms.rad * p.areaMult, pull: 0 });
+      }
+      this.shake = Math.max(this.shake, 5);
+      this.sfx('zap');
+    }
     if (C.has('singularity')) {
       this.singT = (this.singT ?? 0) + dt;
       if (this.singT >= 25) {
@@ -273,14 +302,23 @@ export class Game {
   }
 
   // ---------------- combat ----------------
-  damage(e, dmg, kx = 0, ky = 0, quiet = false) {
+  // opt: { fire } burn damage (no crit, never sets on fire again), { noCrit }, { breakShield } a crit breaks a shield
+  damage(e, dmg, kx = 0, ky = 0, quiet = false, opt) {
     if (e.dead) return;
     if (e.parent) {
       // boss body segment: the boss takes reduced damage through its body
       e.flash = 0.07;
-      this.damage(e.parent, dmg * 0.6, 0, 0, quiet);
+      this.damage(e.parent, dmg * 0.6, 0, 0, quiet, opt);
       return;
     }
+    // 2.0 arsenal: Targeting Matrix crits (double damage), Thermal Core sets enemies on fire
+    const p = this.player;
+    const crit = p.crit > 0 && !opt?.noCrit && Math.random() < p.crit;
+    if (crit) dmg *= 2;
+    e.lastCrit = crit; // Salvage Core: a critical kill drops an extra crystal
+    if (p.ignite > 0 && !opt?.fire && !e.prop && Math.random() < p.ignite) ignite(e, 8 * p.dmgMult * p.fireMult, 3);
+    // Gauss Lance: a critical hit breaks a shield outright
+    if (crit && opt?.breakShield && e.shield > 0) e.shield = 0.001;
     if (e.shield > 0) {
       // a shielded elite's shield soaks damage first and regrows after 4 s without hits
       const soak = Math.min(e.shield, dmg);
@@ -291,7 +329,8 @@ export class Game {
     e.hp -= dmg;
     e.flash = 0.07;
     if (!e.boss) { e.kx += kx * e.kbRes; e.ky += ky * e.kbRes; }
-    this.text(e.x, e.y - e.r, Math.round(dmg));
+    if (crit) this.text(e.x, e.y - e.r, `${Math.round(dmg)}!`, '#ffd23d');
+    else this.text(e.x, e.y - e.r, Math.round(dmg), opt?.fire ? '#ff8a2a' : '#ffffff');
     if (!quiet) this.sfx('hit');
     if (e.hp <= 0) this.kill(e);
   }
@@ -319,6 +358,7 @@ export class Game {
     }
     this.sfx('boom');
     this.dropGem(e.x, e.y, e.xp);
+    if (e.lastCrit && this.combos.has('salvage')) this.dropGem(e.x + rand(-10, 10), e.y + rand(-10, 10), e.xp);
     if (e.elite) {
       this.shake = Math.max(this.shake, 10);
       // a trait elite's crate holds two rewards and it drops more coins (12 plain, 20 with one trait, 28 with two)
@@ -355,12 +395,25 @@ export class Game {
   hurtPlayer(dmg, src = '?', inv = 0.6) {
     const p = this.player;
     if (p.inv > 0 || this.state !== 'play' || this.app.god) return;
+    if (shieldHit(this)) return;
     // the world's damage level, rising towards the end of the sector
     const T = this.tune;
     dmg *= T.dmg * (1 + T.ramp * this.progress());
     dmg = Math.max(1, dmg - p.armor);
     p.hp -= dmg;
     (this.dmgLog ||= {})[src] = (this.dmgLog[src] || 0) + dmg;
+    // Phoenix Rail (super combo): once a run a lethal hit turns into a firestorm and 30% hull
+    if (p.hp <= 0 && this.combos.has('phoenixrail') && !this.phoenixUsed) {
+      this.phoenixUsed = true;
+      p.hp = p.maxHp * 0.3;
+      p.inv = 2;
+      this.explode(p.x, p.y, 260, 220 * p.dmgMult, '#ff9a3d');
+      for (let i = 0; i < 10; i++) { const a = (i / 10) * TAU; addFire(this, p.x + Math.cos(a) * 150, p.y + Math.sin(a) * 150, 55, 20 * p.dmgMult * p.fireMult, 4); }
+      this.ui.banner('PHOENIX', 'RISEN FROM THE FIRE');
+      this.shake = 16;
+      this.sfx('evolve');
+      return;
+    }
     p.inv = inv;
     this.app.haptic('medium');
     this.shake = Math.max(this.shake, 9);
@@ -898,9 +951,11 @@ export class Game {
     const combos = combosFor(this, perk, id, lvl);
     const done = combos.find((x) => x.done);
     const what = perk ? 'perk set' : 'combo';
-    const comboHint = done ? `Unlocks ${what}: ${COMBOS[done.id].name}`
-      : combos.length ? `${perk ? 'Set' : 'Combo'} with ${combos.map((x) => x.partner).join(' / ')} at LV ${COMBO_LEVEL}` : '';
-    return { comboHint, combo: !!done };
+    const plain = combos.filter((x) => !x.super), sup = combos.filter((x) => x.super);
+    const comboHint = done ? `Unlocks ${done.super ? 'super combo' : what}: ${COMBOS[done.id].name}`
+      : plain.length ? `${perk ? 'Set' : 'Combo'} with ${plain.map((x) => x.partner).join(' / ')} at LV ${COMBO_LEVEL}`
+        : sup.length ? `Super combo with ${sup[0].partner} at LV ${sup[0].level}` : '';
+    return { comboHint, combo: !!done, superCombo: !!done?.super };
   }
 
   applyCard(c) {
@@ -1011,7 +1066,7 @@ export class Game {
       this.comboBannerT -= rawDt;
       if (this.comboQueue.length && this.comboBannerT <= 0) {
         const c = COMBOS[this.comboQueue.shift()];
-        this.ui.banner(c.perk ? 'PERK SET!' : 'COMBO!', c.name.toUpperCase());
+        this.ui.banner(c.perk ? 'PERK SET!' : c.super ? 'SUPER COMBO!' : 'COMBO!', c.name.toUpperCase());
         this.comboBannerT = 2.2;
       }
       this.updatePerkSets(dt);
@@ -1028,6 +1083,7 @@ export class Game {
     this.updateHazards(dt);
     this.updateRings(dt);
     this.updateMines(dt);
+    updateArsenal(this, dt);
     this.updatePickups(dt);
     this.updateFx(dt);
 
@@ -1647,8 +1703,11 @@ export class Game {
       let remove = false;
       if (pr.kind === 'missile') {
         if (!pr.target || pr.target.dead) pr.target = this.nearestEnemy(pr.x, pr.y, 500);
-        if (pr.target) {
-          const want = Math.atan2(pr.target.y - pr.y, pr.target.x - pr.x);
+        // Gravity Barrage combo: missiles curve into an open black hole nearby
+        const hole = this.combos.has('gravbarrage') && this.holes.find((h) => h.t >= h.fly && (h.x - pr.x) ** 2 + (h.y - pr.y) ** 2 < 400 * 400);
+        if (hole || pr.target) {
+          const tx = hole ? hole.x : pr.target.x, ty = hole ? hole.y : pr.target.y;
+          const want = Math.atan2(ty - pr.y, tx - pr.x);
           pr.a = angleLerp(pr.a, want, Math.min(1, pr.turn * dt));
         }
         pr.speed = Math.min(pr.speed + 500 * dt, 700);
@@ -1668,7 +1727,7 @@ export class Game {
           if ((e.x - pr.x) ** 2 + (e.y - pr.y) ** 2 > rr * rr) continue;
           if (pr.hit.includes(e.id)) continue;
           if (pr.kind === 'missile') {
-            this.explode(pr.x, pr.y, pr.rad, pr.dmg, pr.color);
+            this.explode(pr.x, pr.y, pr.rad, pr.dmg * (this.combos.has('gravbarrage') && inHole(this, pr.x, pr.y) ? 1.5 : 1), pr.color);
             this.missileCombos(pr.x, pr.y);
             remove = true;
             break;
@@ -1777,6 +1836,9 @@ export class Game {
         const coil = this.combos.has('stormmines') && this.wstats('lightning');
         const tgt = coil && this.nearestEnemy(m.x, m.y, 170);
         if (tgt) this.chainLightning(m.x, m.y, tgt, coil.dmg * this.player.dmgMult, 4, '#7df9ff');
+        // Napalm Mines combo: the blast leaves a pool of fire at the Flamethrower's heat
+        const fl = this.combos.has('napalm') && this.wstats('flame');
+        if (fl) addFire(this, m.x, m.y, m.rad * 0.8, fl.burn * this.player.dmgMult * this.player.fireMult, 3);
       }
     }
   }

@@ -97,6 +97,7 @@ export function renderGame(game, ctx, overlay = false) {
   }
   ctx.globalAlpha = 1;
   drawHazards(game, ctx, overlay);
+  drawArsenal(game, ctx);
   ctx.globalCompositeOperation = 'source-over';
 
   // enemies
@@ -262,6 +263,57 @@ function drawBoss(game, R, b, sc) {
     ctx.moveTo(b.x, b.y);
     ctx.lineTo(b.x + Math.cos(b.dir) * 500, b.y + Math.sin(b.dir) * 500);
     ctx.stroke();
+    ctx.globalAlpha = 1;
+  }
+}
+
+// The 2.0 arsenal (js/arsenal.js) in neon until its art comes, in both looks: burning ground, black holes, railgun
+// beams and the Phase Shield around the ship.
+function drawArsenal(game, ctx) {
+  const t = game.time, p = game.player;
+  ctx.globalCompositeOperation = 'lighter';
+  for (const f of game.fires) {
+    const k = Math.min(1, f.t / 0.2) * Math.min(1, (f.dur - f.t) / 0.5);
+    const gr = ctx.createRadialGradient(f.x, f.y, 0, f.x, f.y, f.r);
+    gr.addColorStop(0, `rgba(125,184,255,${0.45 * k})`);
+    gr.addColorStop(0.6, `rgba(255,138,42,${(0.3 + 0.1 * Math.sin(t * 20 + f.x)) * k})`);
+    gr.addColorStop(1, 'rgba(255,90,20,0)');
+    ctx.fillStyle = gr;
+    ctx.beginPath(); ctx.arc(f.x, f.y, f.r, 0, TAU); ctx.fill();
+  }
+  for (const b of game.beams) {
+    const k = 1 - b.t / b.dur;
+    ctx.strokeStyle = b.color; ctx.lineCap = 'round';
+    ctx.globalAlpha = 0.35 * k; ctx.lineWidth = b.w * 1.8;
+    ctx.beginPath(); ctx.moveTo(b.x0, b.y0); ctx.lineTo(b.x1, b.y1); ctx.stroke();
+    ctx.globalAlpha = k; ctx.lineWidth = b.w * 0.45; ctx.strokeStyle = '#ffffff';
+    ctx.stroke();
+  }
+  ctx.globalAlpha = 1;
+  ctx.globalCompositeOperation = 'source-over';
+  for (const h of game.holes) {
+    if (h.t < h.fly) {
+      ctx.fillStyle = '#1a0628'; ctx.strokeStyle = h.color; ctx.lineWidth = 3;
+      ctx.beginPath(); ctx.arc(h.x, h.y, 10, 0, TAU); ctx.fill(); ctx.stroke();
+      continue;
+    }
+    const k = Math.min(1, (h.t - h.fly) / 0.25) * Math.min(1, (h.fly + h.dur - h.t) / 0.25 + 0.2);
+    const r = h.r * 0.42 * k;
+    const gr = ctx.createRadialGradient(h.x, h.y, 0, h.x, h.y, h.r);
+    gr.addColorStop(0, 'rgba(0,0,0,0.95)');
+    gr.addColorStop(0.35, 'rgba(20,4,40,0.8)');
+    gr.addColorStop(1, 'rgba(60,10,90,0)');
+    ctx.globalAlpha = k;
+    ctx.fillStyle = gr;
+    ctx.beginPath(); ctx.arc(h.x, h.y, h.r, 0, TAU); ctx.fill();
+    ctx.strokeStyle = h.color; ctx.lineWidth = 3;
+    ctx.beginPath(); ctx.arc(h.x, h.y, r, t * 6, t * 6 + TAU * 0.75); ctx.stroke();
+    ctx.globalAlpha = 1;
+  }
+  if (p.shieldUp && game.state === 'play') {
+    ctx.globalAlpha = 0.45 + 0.15 * Math.sin(t * 4);
+    ctx.strokeStyle = '#7df9ff'; ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.arc(p.x, p.y, p.r + 16, 0, TAU); ctx.stroke();
     ctx.globalAlpha = 1;
   }
 }
