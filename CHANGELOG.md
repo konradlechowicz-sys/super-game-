@@ -16,6 +16,9 @@ i wersja TEST (gracze tego nie widzą).
 
 - 
 
+## Build 107 · 2026-10-29
+- [Narzędzia] Świat 4 „Red Conversion”: pierwsza część grafik od ChatGPT (koncept, podłoża, nakładka, rekwizyty, brzegi areny, spis plików) w `art/2.0/worlds/world4` i muzyka Suno (sektor, boss) w `art/2.0/audio`. Czekają na resztę (narożniki, wrogowie, boss); gra bez zmian.
+
 ## Build 106 · 2026-10-29
 - [Nowe] Świat 3 „Lunar Bridgehead” (pełna wersja): 6 sektorów (Dark Side, Sea of Tranquility, Crater Run, Rooted Base, Mortar Fields, Moon Spire) w grafice ChatGPT. Regolit Księżyca z koleinami, ruiny ludzkiej bazy (kopuły, łazik, anteny, panele), przewody Kolektywu pełzające po gruncie jak korzenie z pulsującą magentą, skalne grzbiety na brzegu areny, unoszący się pył; wrogowie rzucają twarde cienie.
 - [Nowe] Mechanika świata 3: wielkie kratery są osłoną, czyli pociski wrogów rozbijają się na nich (własne strzały lecą nad nimi). Kolektyw odpowiada moździerzami: gniazda moździerzy w gruncie i ostrzał, którego kratery nie zatrzymują.
