@@ -24,6 +24,11 @@ export function launchHole(g, x, y, a, o) {
     collapse: o.collapse || 0, tick: 0, color: o.color });
 }
 
+// whether (x, y) is inside an open black hole
+export function inHole(g, x, y) {
+  return g.holes.some((h) => h.t >= h.fly && (h.x - x) ** 2 + (h.y - y) ** 2 < h.r * h.r);
+}
+
 export function addFire(g, x, y, r, dps, dur) {
   if (g.fires.length >= 40) g.fires.shift();
   g.fires.push({ x, y, r, dps, dur, t: 0, tick: 0 });
@@ -118,6 +123,11 @@ export function shieldHit(g) {
   p.shieldUp = false;
   p.shieldT = p.shieldCd;
   p.inv = Math.max(p.inv, 0.6);
+  // Bastion Field (perk set): the breaking shield throws enemies back and recharges 30% faster
+  if (g.combos.has('bastion')) {
+    p.shieldT *= 0.7;
+    g.addRing({ x: p.x, y: p.y, max: 210, dmg: 30 * p.dmgMult, dur: 0.35, color: '#7df9ff', knock: 650, follow: true });
+  }
   g.addFx(p.x, p.y, 70, '#7df9ff', 0.4, 4);
   g.burst(p.x, p.y, '#7df9ff', 18, 260, 0.4, 5);
   g.text(p.x, p.y - 26, 'SHIELD', '#7df9ff', true);

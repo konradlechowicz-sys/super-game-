@@ -1,7 +1,7 @@
 // TEST build only: the tester's panel (🛠). Normal and App Store builds never contain this file: main.js loads it
 // behind the __TEST__ build flag and esbuild drops it, and `build.mjs --release` fails if MARKER is found.
 import { ALL_STAGES, BOSSES, TRAITS } from './data.js';
-import { COMBOS, COMBO_LEVEL } from './combos.js';
+import { COMBOS, COMBO_LEVEL, levelFor } from './combos.js';
 import { WEAPONS } from './weapons.js';
 
 // Everything lives inside installTestKit (no top-level code), so bundlers drop the whole module when it is not called.
@@ -126,7 +126,11 @@ export function installTestKit(app) {
       </div>
       <div class="tk-head">Give a combo (both weapons to LV ${COMBO_LEVEL})</div>
       <div class="tk-row">
-        ${Object.entries(COMBOS).filter(([, c]) => !c.perk).map(([id, c]) => btn('combo', c.name.toUpperCase(), `data-id="${id}" style="color:${c.color}"`)).join('')}
+        ${Object.entries(COMBOS).filter(([, c]) => !c.perk && !c.super).map(([id, c]) => btn('combo', c.name.toUpperCase(), `data-id="${id}" style="color:${c.color}"`)).join('')}
+      </div>
+      <div class="tk-head">Give a super combo (three weapons to LV 5)</div>
+      <div class="tk-row">
+        ${Object.entries(COMBOS).filter(([, c]) => c.super).map(([id, c]) => btn('combo', c.name.toUpperCase(), `data-id="${id}" style="color:${c.color}"`)).join('')}
       </div>
       <div class="tk-head">Give an evolution (weapon to LV 5, evolved)</div>
       <div class="tk-row">
@@ -174,7 +178,7 @@ export function installTestKit(app) {
         for (const id of c.parts) {
           let w = g.weapons.find((x) => x.id === id);
           if (!w) { g.addWeapon(id); w = g.weapons[g.weapons.length - 1]; }
-          w.level = Math.max(w.level, COMBO_LEVEL);
+          w.level = Math.max(w.level, levelFor(c));
         }
         g.checkCombos();
       })(),

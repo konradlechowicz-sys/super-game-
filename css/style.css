@@ -314,6 +314,9 @@ h1, h2, h3 { font-family: 'Orbitron', sans-serif; font-weight: 700; margin: 0; l
 .card-combo { font-size: 12px; font-weight: 700; color: var(--teal); margin-top: 3px; letter-spacing: 0.02em; }
 .card-combo::before { content: '⚡ '; }
 .card.combo { border-left-color: var(--teal); background: linear-gradient(90deg, rgba(79, 209, 176, 0.1), rgba(79, 209, 176, 0.02)); }
+/* 2.0 super combo (three weapons): the gold frame */
+.card.super { border-color: var(--gold); border-left-color: var(--gold); background: linear-gradient(90deg, rgba(255, 210, 61, 0.12), rgba(255, 210, 61, 0.02)); }
+.card.super .card-combo { color: var(--gold); }
 .locked-tap { pointer-events: none; opacity: 0.85; }
 .build { display: flex; flex-direction: column; gap: 6px; align-items: center; margin-top: 6px; }
 .build-row { display: flex; gap: 6px; min-height: 0; }

@@ -133,6 +133,8 @@ export const WEAPONS = {
       const rad = s.rad * p.areaMult * (1 + 0.6 * out);
       const br = (w.evolved ? 15 : 11) * p.areaMult;
       const dmg = s.dmg * p.dmgMult * (w.flare > 0 ? 1.5 : 1);
+      // Fire Blades combo: the blades set what they cut on fire, at the Flamethrower's heat
+      const fl = g.combos.has('fireblades') && g.wstats('flame');
       for (let i = 0; i < s.n; i++) {
         const a = w.a + (i / s.n) * TAU;
         const bx = p.x + Math.cos(a) * rad, by = p.y + Math.sin(a) * rad;
@@ -143,6 +145,7 @@ export const WEAPONS = {
             e.orbitHit = g.time;
             const d = Math.hypot(e.x - p.x, e.y - p.y) || 1;
             g.damage(e, dmg, ((e.x - p.x) / d) * 160, ((e.y - p.y) / d) * 160);
+            if (fl) ignite(e, fl.burn * p.dmgMult * (p.fireMult || 1), 3);
           }
         }
       }
@@ -240,6 +243,21 @@ export const WEAPONS = {
       w.t = s.cd * p.cdMult;
       g.addRing({ x: p.x, y: p.y, max: s.rad * p.areaMult, dmg: s.dmg * p.dmgMult, dur: w.evolved ? 0.5 : 0.4, color: w.evolved ? '#e0fff6' : '#3dffc8', knock: 380, follow: true, slow: s.slow || 0 });
       g.sfx('pulse');
+      // Collapse combo: the pulse collapses every open black hole into a blast at once
+      if (g.combos.has('collapse')) {
+        for (const h of g.holes.splice(0)) {
+          if (h.t < h.fly) { g.holes.push(h); continue; }
+          g.explode(h.x, h.y, h.r * 1.1, Math.max(h.collapse, h.dps * 1.5), '#c46bff');
+        }
+      }
+      // Supernova Core (super combo): every 4th pulse pulls enemies in and leaves a ring of fire
+      if (g.combos.has('supernovacore') && (w.count = (w.count || 0) + 1) % 4 === 0) {
+        const fs = g.wstats('flame'), rad = s.rad * p.areaMult;
+        launchHole(g, p.x, p.y, 0, { speed: 0, fly: 0, dur: 1.2, r: rad * 1.4, dps: s.dmg * p.dmgMult, color: '#ffd23d' });
+        for (let i = 0; i < 12; i++) { const a = (i / 12) * TAU; addFire(g, p.x + Math.cos(a) * rad, p.y + Math.sin(a) * rad, 40, fs.burn * p.dmgMult * (p.fireMult || 1), 3.5); }
+        g.addFx(p.x, p.y, rad * 1.6, '#ffd23d', 0.6, 6);
+        g.shake = Math.max(g.shake, 8);
+      }
       // Blade Nova combo: the pulse flings the orbit blades out for a second
       const ow = g.combos.has('bladenova') && g.weapons.find((x) => x.id === 'orbit');
       if (ow) ow.flare = 1.2;
@@ -328,10 +346,37 @@ export const WEAPONS = {
       w.t = s.cd * p.cdMult;
       const a = p.facing, len = 760 * p.areaMult;
       const color = w.evolved ? '#fff2a8' : '#c8f0ff';
+      const sg = g.combos.has('shrapnelrail') && g.wstats('spread'), fl = g.combos.has('phoenixrail') && g.wstats('flame');
       for (const off of s.twin ? [-12, 12] : [0]) {
         const x = p.x + Math.cos(a + Math.PI / 2) * off, y = p.y + Math.sin(a + Math.PI / 2) * off;
-        const { x1, y1 } = fireBeam(g, x, y, a, len, s.w * p.areaMult, s.dmg * p.dmgMult, color, s.twin ? { breakShield: true } : undefined);
+        const { x1, y1, hits } = fireBeam(g, x, y, a, len, s.w * p.areaMult, s.dmg * p.dmgMult, color, s.twin ? { breakShield: true } : undefined);
         if (s.blast) g.explode(x1, y1, s.blast * p.areaMult, s.dmg * p.dmgMult * 0.5, color);
+        // Ion Rail combo: every enemy the beam pierces sparks lightning to its nearest neighbour
+        if (g.combos.has('ionrail')) {
+          for (const e of hits.slice(0, 10)) {
+            if (e.prop) continue;
+            let best = null, bd = 140 * 140;
+            for (const o of g.enemiesNear(e.x, e.y, 140)) {
+              if (o === e || o.dead || o.prop) continue;
+              const d = (o.x - e.x) ** 2 + (o.y - e.y) ** 2;
+              if (d < bd) { bd = d; best = o; }
+            }
+            if (!best) continue;
+            g.damage(best, s.dmg * p.dmgMult * 0.4, 0, 0, true);
+            if (g.bolts.length < 40) g.addBolt([e.x, e.y, best.x, best.y], '#c8f0ff');
+          }
+        }
+        // Shrapnel Rail combo: the end of the beam bursts into a fan of pellets
+        if (sg) {
+          for (let i = 0; i < 8; i++) {
+            g.shoot({ x: x1, y: y1, a: a + (i / 7 - 0.5) * 1.2, speed: rand(460, 540), dmg: sg.dmg * p.dmgMult, pierce: 0, r: 5,
+              life: 0.4 * p.areaMult, look: 'pellet', color: '#ff8a2a', knock: 120 });
+          }
+        }
+        // Phoenix Rail (super combo): the beam leaves a line of fire
+        if (fl) {
+          for (let d = 60; d < len; d += 110) addFire(g, x + Math.cos(a) * d, y + Math.sin(a) * d, 32, fl.burn * p.dmgMult * p.fireMult, 2.5);
+        }
       }
       g.shake = Math.max(g.shake, 3);
       g.sfx('laser');

@@ -79,11 +79,9 @@ and world 3 "Lunar Bridgehead" (build 106, accepted). World 4 "Red Conversion" b
 over the weapon system, accepted) and world 5 "Foundry Belt" in build 109; Konrad tests them on the iPhone.
 Next, in this order unless Konrad says otherwise:
 - Weapon system rework, stage 1 done (build 110): Railgun, Flamethrower, Singularity Cannon with their evolutions, the
-  perks Targeting Matrix, Thermal Core, Phase Shield; mechanics in `js/arsenal.js`. Stage 2 next: the 6 combos, 3 perk
-  sets and 3 super combos of `PLAN-2.0-ARSENAL.md`.
-- (stage 1 brief) Rework the weapon system: build the arsenal of point 4 (new mechanics: crits, burning, the ship's shield, black
-  holes, super combos of 3 weapons, burning ground), on the current neon effects until ChatGPT's icons and effects
-  come; check the balance with headless runs.
+  perks Targeting Matrix, Thermal Core, Phase Shield; mechanics in `js/arsenal.js`. Stage 2 done (build 111): the 6
+  combos, 3 perk sets and 3 super combos (three weapons at LV 5, `super` in `js/combos.js`). All on neon effects until
+  ChatGPT's icons and effects come (brief C5-C7).
 
 ## Android (decided by Konrad)
 Android launches with 2.0 (Google Play needs 12 testers for 14 days on a new account before publishing, so closed

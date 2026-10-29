@@ -16,6 +16,25 @@ i wersja TEST (gracze tego nie widzą).
 
 - 
 
+## Build 111 · 2026-10-29
+- [Nowe] Nowy arsenał 2.0, etap 2: 6 kombosów nowych broni (obie bronie na poziomie 3).
+  - Ion Rail (Railgun + Arc Coil): każdy przebity wróg wypuszcza błyskawicę do sąsiada.
+  - Shrapnel Rail (Railgun + Scatter Gun): koniec wiązki rozpryskuje się w wachlarz śrutu.
+  - Napalm Mines (Flamethrower + Proximity Mines): wybuch miny zostawia plamę ognia.
+  - Fire Blades (Flamethrower + Orbit Blades): ostrza podpalają wrogów.
+  - Gravity Barrage (Singularity Cannon + Seeker Missiles): rakiety skręcają do czarnych dziur, a wrogowie w dziurze dostają od nich +50%.
+  - Collapse (Singularity Cannon + Nova Pulse): fala Nova od razu zapada czarne dziury w wybuchy.
+- [Nowe] 3 nowe zestawy perków (oba perki na poziomie 3).
+  - Scorched Trail (Thermal Core + Thrusters): w ruchu zostawiasz płonący ślad.
+  - Bastion Field (Phase Shield + Armor Plating): gdy tarcza pęka, fala odrzuca wrogów, a tarcza odnawia się o 30% szybciej.
+  - Salvage Core (Targeting Matrix + Tractor Beam): zabójstwo krytykiem zostawia dodatkowy kryształ XP.
+- [Nowe] 3 super kombosy z trzech broni (wszystkie na poziomie 5 albo po ewolucji, złota ramka na karcie, baner „SUPER COMBO!”).
+  - Thunderstorm (Railgun + Arc Coil + Proximity Mines): co 6 s błyskawice trafiają 8 wrogów na ekranie, a każde trafienie zostawia minę.
+  - Supernova Core (Nova Pulse + Singularity Cannon + Flamethrower): co 4. fala Nova wciąga wrogów do środka i zostawia pierścień ognia.
+  - Phoenix Rail (Railgun + Flamethrower + Pulse Blaster): wiązki zostawiają linię ognia, a raz na przelot śmiertelne trafienie zamienia się w burzę ognia wokół statku i 30% kadłuba.
+- [Nowe] Codex ma sekcję SUPER COMBOS; karty podpowiadają też super kombosy, gdy masz już pozostałe dwie bronie.
+- [Narzędzia] Panel testera: przyciski nowych kombosów, zestawów i super kombosów.
+
 ## Build 110 · 2026-10-29
 - [Nowe] Nowy arsenał 2.0, etap 1: 3 nowe bronie.
   - Railgun: ładuje się i strzela wiązką przez wszystkich wrogów na linii lotu, więc celuje się ruchem statku. Ewolucja Gauss Lance (z Targeting Matrix): dwie wiązki, wybuch na końcu linii, a trafienia krytyczne rozbijają tarcze elit.
