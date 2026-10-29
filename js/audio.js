@@ -32,36 +32,66 @@ export class AudioEngine {
     this.xpLast = 0;
   }
 
+  // Called on every tap and key press (iOS lets audio start or resume only inside a user gesture).
   unlock() {
     const AC = window.AudioContext || window.webkitAudioContext;
     if (!AC) return;
-    if (!this.ctx) {
-      const c = (this.ctx = new AC());
-      this.master = c.createDynamicsCompressor();
-      this.master.threshold.value = -14;
-      this.master.ratio.value = 6;
-      this.master.connect(c.destination);
-      this.sfxGain = c.createGain();
-      this.sfxGain.gain.value = 0.55;
-      this.sfxGain.connect(this.master);
-      this.musicGain = c.createGain();
-      this.musicGain.gain.value = this.musicOn ? 0.32 : 0;
-      this.musicGain.connect(this.master);
-      const len = c.sampleRate;
-      this.noiseBuf = c.createBuffer(1, len, c.sampleRate);
-      const d = this.noiseBuf.getChannelData(0);
-      for (let i = 0; i < len; i++) d[i] = Math.random() * 2 - 1;
-      // Simple echo for the lead synth
-      this.delay = c.createDelay(1);
-      this.delay.delayTime.value = 0.36;
-      const fb = c.createGain();
-      fb.gain.value = 0.32;
-      this.delay.connect(fb).connect(this.delay);
-      this.delay.connect(this.musicGain);
-      this.timer = setInterval(() => this.schedule(), 25);
-      if (this.recordings[this.wanted]) this.playRecording(this.wanted);
-    }
-    if (this.ctx.state === 'suspended') this.ctx.resume();
+    // After the app was in the background or a notification interrupted the sound, iOS can leave the context
+    // 'interrupted', or 'running' but silent, and resume() does not bring it back: start a fresh one instead.
+    if (this.ctx && this.stale) this.restart();
+    if (!this.ctx) this.build(new AC());
+    if (this.ctx.state !== 'running') this.ctx.resume().catch(() => {});
+  }
+
+  build(c) {
+    this.ctx = c;
+    this.stale = false;
+    this.master = c.createDynamicsCompressor();
+    this.master.threshold.value = -14;
+    this.master.ratio.value = 6;
+    this.master.connect(c.destination);
+    this.sfxGain = c.createGain();
+    this.sfxGain.gain.value = 0.55;
+    this.sfxGain.connect(this.master);
+    this.musicGain = c.createGain();
+    this.musicGain.gain.value = this.musicOn ? 0.32 : 0;
+    this.musicGain.connect(this.master);
+    const len = c.sampleRate;
+    this.noiseBuf = c.createBuffer(1, len, c.sampleRate);
+    const d = this.noiseBuf.getChannelData(0);
+    for (let i = 0; i < len; i++) d[i] = Math.random() * 2 - 1;
+    // Simple echo for the lead synth
+    this.delay = c.createDelay(1);
+    this.delay.delayTime.value = 0.36;
+    const fb = c.createGain();
+    fb.gain.value = 0.32;
+    this.delay.connect(fb).connect(this.delay);
+    this.delay.connect(this.musicGain);
+    this.nextTime = c.currentTime + 0.1;
+    this.timer ??= setInterval(() => this.schedule(), 25);
+    // the system took the sound away (a call, a notification, another app): rebuild on the next tap
+    c.onstatechange = () => { if (c === this.ctx && c.state !== 'running' && c.state !== 'closed') this.stale = true; };
+    if (this.recordings[this.wanted]) this.playRecording(this.wanted, true);
+  }
+
+  restart() {
+    const old = this.ctx;
+    this.ctx = null;
+    this.playing = null;
+    old.onstatechange = null;
+    old.close().catch(() => {});
+  }
+
+  // the page went to the background (main.js): silence now, a fresh context when the player is back
+  sleep() {
+    if (!this.ctx) return;
+    this.stale = true;
+    this.ctx.suspend().catch(() => {});
+  }
+
+  // the page is visible again: try to resume at once; if iOS refuses, the next tap rebuilds (unlock)
+  wake() {
+    if (this.ctx && this.ctx.state !== 'running') this.ctx.resume().catch(() => {});
   }
 
   setMusicOn(on) {
@@ -89,13 +119,14 @@ export class AudioEngine {
     if (this.wanted === name) { this.wanted = null; this.setTrack(name); }
   }
 
-  playRecording(name) {
+  // again: the track was already playing before the context was rebuilt, so it goes on from its loop, not the intro
+  playRecording(name, again = false) {
     if (!this.ctx || this.playing?.name === name) return;
     this.stopRecording();
-    const rec = this.recordings[name];
-    this.buffers[name] ??= bytesOf(rec.url).then((b) => this.ctx.decodeAudioData(b));
+    const rec = this.recordings[name], ctx = this.ctx;
+    this.buffers[name] ??= bytesOf(rec.url).then((b) => new Promise((ok, no) => ctx.decodeAudioData(b, ok, no)));
     this.buffers[name].then((buf) => {
-      if (this.wanted !== name || this.playing?.name === name) return;
+      if (this.ctx !== ctx || this.wanted !== name || this.playing?.name === name) return;
       const src = this.ctx.createBufferSource();
       src.buffer = buf;
       src.loop = true;
@@ -106,9 +137,11 @@ export class AudioEngine {
       gain.gain.setValueAtTime(0, t);
       gain.gain.linearRampToValueAtTime(rec.gain ?? 1, t + 0.6);
       src.connect(gain).connect(this.musicGain);
-      src.start(t);
+      src.start(t, again ? src.loopStart : 0);
       this.playing = { name, src, gain };
     }).catch((e) => {
+      // the context was rebuilt while decoding: decode again in the new one
+      if (this.ctx !== ctx) { delete this.buffers[name]; if (this.ctx && this.wanted === name) this.playRecording(name, again); return; }
       // a recording that cannot be decoded here: fall back to the synthesized track, so there is never silence
       this.recError = `${name}: ${e?.message || e}`;
       delete this.recordings[name];

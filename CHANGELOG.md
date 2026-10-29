@@ -16,6 +16,9 @@ i wersja TEST (gracze tego nie widzą).
 
 - 
 
+## Build 105 · 2026-10-29
+- [Poprawka] Dźwięk wraca po powiadomieniu, połączeniu albo powrocie z innej aplikacji: przy pierwszym dotknięciu ekranu gra uruchamia dźwięk od nowa (iOS potrafił zostawić go zawieszonego), a muzyka gra dalej od pętli, bez ponownego intro.
+
 ## Build 103 · 2026-10-28
 - [Narzędzia] Kolejność zadań na następną sesję: najpierw raport z telefonu (wydajność, trudność, pętle muzyki, chmury i błyskawice), potem świat 3 „Lunar Bridgehead” (grafiki i muzyka gotowe), potem przebudowa systemu broni. Gra bez zmian.
 
