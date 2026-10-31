@@ -36,3 +36,24 @@ Bez tego Apple nie pokaże ich graczom po wydaniu.
 - Aplikacja TEST („VB Test”, osobny identyfikator) nie ma rankingów w App Store Connect, więc w niej przycisk
   rankingu pokazuje pusty ekran Game Center. To normalne.
 - W Xcode w zakładce Signing & Capabilities powinno być widać **Game Center** (dodane w projekcie, plik `App.entitlements`).
+
+## Wersja 2.0: dziesięć światów (do zrobienia przed premierą 2.0)
+W 2.0 tryb Endless ma ranking dla każdego z 10 światów (otwiera się po pokonaniu Void Heart w świecie 10). Rankingi
+`w1`-`w4` zostają (te same identyfikatory), ale zmieniają się nazwy światów, więc przy 2.0 trzeba im zmienić nazwę
+widoczną dla graczy i dodać rankingi `w5`-`w10`, z tymi samymi ustawieniami co wyżej:
+
+| Reference Name | Leaderboard ID | Nazwa widoczna dla graczy (English) |
+| --- | --- | --- |
+| Endless – Orbital Ruins | `com.konradlechowicz.voidblaster.endless.w1` | Endless: Orbital Ruins |
+| Endless – Siege of Earth | `com.konradlechowicz.voidblaster.endless.w2` | Endless: Siege of Earth |
+| Endless – Lunar Bridgehead | `com.konradlechowicz.voidblaster.endless.w3` | Endless: Lunar Bridgehead |
+| Endless – Red Conversion | `com.konradlechowicz.voidblaster.endless.w4` | Endless: Red Conversion |
+| Endless – Foundry Belt | `com.konradlechowicz.voidblaster.endless.w5` | Endless: Foundry Belt |
+| Endless – Storm Relay | `com.konradlechowicz.voidblaster.endless.w6` | Endless: Storm Relay |
+| Endless – Abyss of Europa | `com.konradlechowicz.voidblaster.endless.w7` | Endless: Abyss of Europa |
+| Endless – The Rift Gate | `com.konradlechowicz.voidblaster.endless.w8` | Endless: The Rift Gate |
+| Endless – Brood World | `com.konradlechowicz.voidblaster.endless.w9` | Endless: Brood World |
+| Endless – The Nexus | `com.konradlechowicz.voidblaster.endless.w10` | Endless: The Nexus |
+
+Uwaga: w 2.0 postęp zaczyna się od nowa, a stare wyniki w rankingach `w1`-`w4` pochodzą z innych światów 1.x. Jeśli mają
+zniknąć, prościej założyć dla 2.0 nowe identyfikatory (wtedy zmienić `leaderboardId` w `js/leaderboard.js`); decyzja Konrada.

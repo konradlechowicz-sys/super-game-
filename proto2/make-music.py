@@ -26,7 +26,8 @@
 #   game7 / boss7: world 7 "Abyss of Europa" (about 111 / 120 BPM): 32 bars / 24 bars, the boss with 13 s of build-up
 #   game8 / boss8: world 8 "The Rift Gate" (about 129 / 137 BPM): 32 bars / 36 bars, the boss with 13 s of build-up
 #   game9 / boss9: world 9 "Brood World" (about 137 / 144 BPM): 40 bars / 24 bars, the boss with 13 s of build-up
-# World 3's to 9's points were searched the same way as world 2's (below).
+#   game10 / boss10: world 10 "The Nexus" (about 151 / 152 BPM): 40 bars / 24 bars, the boss with 13 s of build-up
+# World 3's to 10's points were searched the same way as world 2's (below).
 # The world-2 points (build 100, after Konrad heard a jump): Suno's tempo is not exact, so a loop end taken from the
 # bar grid can sit a fraction of a beat off and the drums stumble at the jump. The ends were searched instead: every
 # beat as a start, whole-bar lengths, the end tuned in 2.9 ms steps to the best match of the onset envelope (rhythm)
@@ -61,6 +62,8 @@ TRACKS = {
     'boss8': ('art/2.0/audio/w08-rift-gate-boss.mp3', 51.4021, 114.4478, 1.0, 38.2831),
     'game9': ('art/2.0/audio/w09-brood-world-sector.mp3', 43.7290, 113.6233, 0.67),
     'boss9': ('art/2.0/audio/w09-brood-world-boss.mp3', 40.0112, 80.0685, 0.94, 26.6582),
+    'game10': ('art/2.0/audio/w10-nexus-sector.mp3', 72.7474, 136.3320, 0.91),
+    'boss10': ('art/2.0/audio/w10-nexus-boss.mp3', 41.1736, 79.0553, 1.0, 28.5446),
 }
 
 out = {}

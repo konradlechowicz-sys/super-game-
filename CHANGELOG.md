@@ -16,6 +16,14 @@ i wersja TEST (gracze tego nie widzą).
 
 - 
 
+## Build 117 · 2026-10-31
+- [Nowe] Świat 10 „The Nexus” (pełna wersja), koniec podróży: 6 sektorów (Neural Shore, Synapse Storm, Broken Geometry, Heartbeat, The Cage, Void Heart) w grafice ChatGPT. Serce Kolektywu: wolno obracająca się sieć neuronowa w tle, podłoga z obwodów, niemożliwe ramy, pęknięte pierścienie, węzły neuronów, pąki-oczy i ściany na brzegu areny. Mapa nie ma już światów „w budowie”: cała podróż 1-10 jest grywalna.
+- [Nowe] Mechanika świata 10: wszystko naraz. Podmuchy wiatru, pary szczelin, które przenoszą statek i pociski, oraz jeziorka kwasu. Zdarzenia świata: „GRAVITY COLLAPSE” (studnie grawitacyjne) w pierwszych sektorach i „NEURAL STORM” (ostrzał) w późniejszych.
+- [Nowe] 6 wrogów świata 10: Synapse Swarm (roje), Wraith (pojawia się obok statku, elita w złotym pierścieniu), Eye (pociski samonaprowadzające), Voidling (roje), Neuron Node (osadzony w ziemi, celuje w statek), Overseer (ciężki, strzela). Wraith, Eye i Voidling wracają z 1.x w nowej grafice i są trochę silniejsze.
+- [Nowe] Boss VOID HEART, ostatni boss gry: bijące serce Kolektywu w pierścieniu klatki. W każdej z 3 faz wygląda inaczej (klatka pęka, rdzeń jaśnieje). Zagina przestrzeń (teleport), otwiera czarne dziury, strzela spiralami, wiązkami i salwami, ostrzeliwuje arenę i wzywa upiory oraz roje synaps. Pokonanie go otwiera tryb Endless we wszystkich światach.
+- [Nowe] Rekwizyty świata 10: skupiska neuronów (wybuchają) i kotwice pierścieni klatki (wzmacniają wrogów wokół). Muzyka świata 10 (Suno): sektor i boss.
+- [App Store] `appstore/GAME-CENTER.md`: lista 10 rankingów Endless do założenia przed premierą 2.0 (nowe nazwy światów, rankingi w5-w10).
+
 ## Build 116 · 2026-10-31
 - [Nowe] Świat 9 „Brood World” (pełna wersja): 6 sektorów (Living Ground, Breathing Fields, Spawning Pits, Acid Marsh, Egg Chambers, Brood Matriarch) w grafice ChatGPT. Świat lęgowy Kolektywu: oddychająca, żywa ziemia z żył i metalu, łukowate żebra, gniazda, skupiska jaj, świecące grzyby i organiczne ściany na brzegu areny.
 - [Nowe] Mechanika świata 9: jeziorka kwasu parzą statek, gdy w nie wleci, a gniazda wrastają w ziemię i wypuszczają larwy, dopóki się ich nie zniszczy. Zdarzenie świata to „ACID RAIN”, czyli ostrzał kwasem.

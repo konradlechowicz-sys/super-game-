@@ -71,9 +71,10 @@ export const ENEMIES = {
   turret: { hp: 70, speed: 0, dmg: 8, r: 16, xp: 4, color: '#ffc23d', shape: 'turret', ai: 'turret', spin: 0.7 },
   golem: { hp: 220, speed: 30, dmg: 14, r: 24, xp: 8, color: '#ff3d1a', shape: 'square', spin: 0.4 },
   // Void Core
-  wraith: { hp: 30, speed: 80, dmg: 7, r: 12, xp: 3, color: '#c86bff', shape: 'wraith', ai: 'blink' },
-  eye: { hp: 50, speed: 40, dmg: 8, r: 15, xp: 4, color: '#ff4dd8', shape: 'eye', ai: 'seeker' },
-  voidling: { hp: 10, speed: 130, dmg: 4, r: 8, xp: 1, color: '#9d4dff', shape: 'dart', pack: [4, 6] },
+  // the void's own (1.x world 4); 2.0 world 10 "The Nexus" brings them back, a little tougher (build 117)
+  wraith: { hp: 40, speed: 80, dmg: 9, r: 13, xp: 3, color: '#c86bff', shape: 'wraith', ai: 'blink' },
+  eye: { hp: 56, speed: 42, dmg: 9, r: 16, xp: 4, color: '#ff4dd8', shape: 'eye', ai: 'seeker' },
+  voidling: { hp: 12, speed: 135, dmg: 5, r: 9, xp: 1, color: '#9d4dff', shape: 'dart', pack: [4, 6] },
   // 2.0 world 2 "Siege of Earth": the landing force (art: proto2/make-world2.py; shapes are the 1.x look's fallback)
   interceptor: { hp: 10, speed: 135, dmg: 5, r: 10, xp: 1, color: '#ff2d95', shape: 'dart', pack: [3, 5] },
   lander: { hp: 50, speed: 52, dmg: 10, r: 12, xp: 3, color: '#ff4dd8', shape: 'circle', split: 'interceptor' },
@@ -142,6 +143,11 @@ export const ENEMIES = {
   nest: { hp: 120, speed: 0, dmg: 8, r: 19, xp: 5, color: '#ff2d95', shape: 'turret', ai: 'nest', spawn: 'larva' },
   broodsac: { hp: 90, speed: 34, dmg: 10, r: 17, xp: 5, color: '#c46bff', shape: 'circle', split: 'larva' },
   beetle: { hp: 310, speed: 26, dmg: 16, r: 22, xp: 9, color: '#6a8a4a', shape: 'square' },
+  // 2.0 world 10 "The Nexus": the Collective's mind (with the void's wraiths, eyes and voidlings above). Synapse swarms,
+  // neuron nodes grown into the ground that aim at the ship, the overseer is the heavy one and shoots.
+  synapse: { hp: 11, speed: 150, dmg: 5, r: 9, xp: 1, color: '#ff2d95', shape: 'dart', pack: [4, 6] },
+  neuronnode: { hp: 100, speed: 0, dmg: 8, r: 18, xp: 5, color: '#ff4dd8', shape: 'turret', ai: 'turret', aim: true },
+  overseer: { hp: 330, speed: 26, dmg: 16, r: 22, xp: 10, color: '#c86bff', shape: 'square', ai: 'shoot', shots: 4, fire: 3.6 },
 };
 
 export const BOSSES = {
@@ -211,6 +217,14 @@ export const BOSSES = {
     name: 'BROOD MATRIARCH', hp: 5000, speed: 30, dmg: 22, r: 86, color: '#9dff3d', inner: '#ff2d95', sides: 8,
     move: 'chase', rest: 1.5, phases: [0.6, 0.3], attacks: ['summon', 'mortar', 'charge', 'burst', 'summon', 'spiral'],
     summon: ['larva', 'leech'], bulletDmg: 8, bulletSpeed: 0.9, burstN: 18, summonN: 5, bgSpawn: 0.1,
+  },
+  // 2.0 world 10: the Void Heart, the heart of the Collective and the end of the journey. A beating core that changes
+  // in each of its three phases (its own art per phase): it folds space (teleport), opens black holes, throws spirals,
+  // beams, bursts and shells, and calls wraiths and synapse swarms. (The 1.x Void Heart is voidheart below.)
+  nexusheart: {
+    name: 'VOID HEART', hp: 5600, speed: 55, dmg: 22, r: 90, color: '#ff2d95', inner: '#b04dff', sides: 8,
+    move: 'float', rest: 1.3, phases: [0.6, 0.3], attacks: ['spiral', 'teleport', 'blackhole', 'beams', 'summon', 'burst', 'mortar'],
+    summon: ['wraith', 'synapse'], bulletDmg: 8, bulletSpeed: 0.95, burstN: 20, summonN: 5, bgSpawn: 0.1,
   },
   serpent: {
     name: 'CRYSTAL SERPENT', hp: 15000, speed: 120, dmg: 22, r: 34, color: '#2ff3ff', inner: '#b4fff0', sides: 5,
@@ -750,6 +764,13 @@ const W9_9 = journey(9, ['Living Ground', 'Breathing Fields', 'Spawning Pits', '
   { swarm: 'larva', basic: 'spitter', a: 'leech', b: 'broodsac', fixed: 'nest', tank: 'beetle', boss: 'matriarch' },
   (t) => ({ t, type: 'mortar', count: 8, msg: 'ACID RAIN' }), 'LARVA SWARM');
 
+// World 10 of 2.0, "The Nexus": the heart of the Collective and the end of the journey. The world's mechanic: all of
+// the journey's at once (gusts, rifts, acid; js/worldfx.js); its events: gravity collapses (wells) in the first half,
+// neural storms (mortar) after.
+const W10_10 = journey(10, ['Neural Shore', 'Synapse Storm', 'Broken Geometry', 'Heartbeat', 'The Cage', 'Void Heart'],
+  { swarm: 'synapse', basic: 'wraith', a: 'eye', b: 'voidling', fixed: 'neuronnode', tank: 'overseer', boss: 'nexusheart' },
+  (t) => (t < 120 ? { t, type: 'well', count: 2, msg: 'GRAVITY COLLAPSE' } : { t, type: 'mortar', count: 8, msg: 'NEURAL STORM' }), 'SYNAPSE STORM');
+
 // The 2.0 worlds after world 1 keep their own kill goals; their elites are counted for the 3rd star (world 2 missed
 // that until build 106: its 3rd star could not be won). World 2's elites stay without traits (Konrad tests its
 // difficulty first); world 3's carry one trait each, like world 1's.
@@ -764,7 +785,7 @@ const ELITE_TRAITS_2 = {
 // worlds 6-10: one trait each, two on the double-elite sectors, cycling through the traits
 const CYCLE = ['swift', 'shielded', 'berserker', 'commander', 'bulwark'];
 for (let w = 6, k = 0; w <= 10; w++) for (let n = 1; n <= 6; n++) ELITE_TRAITS_2[`${w}-${n}`] = (n === 4 || n === 5 ? [0, 1] : [0]).map(() => [CYCLE[k++ % CYCLE.length]]);
-for (const st of [...W2_2, ...W3_3, ...W4_4, ...W5_5, ...W6_6, ...W7_7, ...W8_8, ...W9_9]) {
+for (const st of [...W2_2, ...W3_3, ...W4_4, ...W5_5, ...W6_6, ...W7_7, ...W8_8, ...W9_9, ...W10_10]) {
   st.elites = st.events.filter((e) => e.type === 'elite').length;
   const list = (!W2_2.includes(st) && ELITE_TRAITS_2[st.id]) || [];
   st.events.filter((e) => e.type === 'elite').forEach((e, i) => {
@@ -790,13 +811,12 @@ export const WORLD_TUNING = {
   10: { dmg: 2.1, ramp: 0.46, hp: 1.37, elite: 1.52, boss: 1.42 },
 };
 
-// The 2.0 journey (decided by Konrad, 2026-10-28): worlds 1-9 are built; world 10 is under construction. The map
+// The 2.0 journey (decided by Konrad, 2026-10-28): all 10 worlds are built (build 117).
+// Worlds still under construction would be listed here. The map
 // shows them with their story and planned sectors (Art Bible, table "Nazwy sektorów"); when a world is built, it gets
 // its stages and drops `soon`. The 1.x worlds 2-4 below (W2-W4, LEGACY_WORLDS) are no longer played; they stay as a
 // starting point for tuning the new worlds.
 const PLANNED_WORLDS = [
-  [10, 'The Nexus', '#ff2d95', 'The heart of the Collective, and the end of the journey.',
-    ['Neural Shore', 'Synapse Storm', 'Broken Geometry', 'Heartbeat', 'The Cage', 'Void Heart']],
 ];
 
 export const WORLDS = [
@@ -837,6 +857,10 @@ export const WORLDS = [
   {
     id: 9, name: 'Brood World', color: '#8fd35a', stages: W9_9, music: 'game9', bossMusic: 'boss9',
     theme: { top: '#121c0a', bottom: '#040702', neb: ['#2a4a1c', '#8fd35a', '#ff2d95'], grid: '#5a8a3a' },
+  },
+  {
+    id: 10, name: 'The Nexus', color: '#ff2d95', stages: W10_10, music: 'game10', bossMusic: 'boss10',
+    theme: { top: '#1a0820', bottom: '#06020a', neb: ['#4a1a4a', '#ff2d95', '#7a5cff'], grid: '#8a4a8a' },
   },
   ...PLANNED_WORLDS.map(([id, name, color, story, plan]) => ({ id, name, color, story, plan, stages: [], soon: true })),
 ];

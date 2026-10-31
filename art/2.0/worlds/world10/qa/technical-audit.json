@@ -1,0 +1,608 @@
+{
+  "world": 10,
+  "passed": true,
+  "errors": [],
+  "checks": {
+    "W10-P1-arena-concept.png": {
+      "size": [
+        941,
+        1672
+      ],
+      "mode": "RGB",
+      "sha256": "b51e0c4e8e50b43f1a001b3392345215aa7f7e07f7e43ebb4d456ff86e70ea74"
+    },
+    "W10-P2-background.png": {
+      "size": [
+        2048,
+        2048
+      ],
+      "mode": "RGB",
+      "sha256": "00478f7d459ef014dc311898b1432def42669039101f03efc33c71a67580d365"
+    },
+    "W10-P3-floor.png": {
+      "size": [
+        1024,
+        1024
+      ],
+      "mode": "RGB",
+      "sha256": "54bf178c8900e7716c0b97d43f74eb1af9e5eefd278b17f3f4df6cc6d23fb30e",
+      "seams": {
+        "horizontal_exact": true,
+        "vertical_exact": true
+      },
+      "max_luminance": 0.29995999999999995
+    },
+    "W10-P4-overlay.png": {
+      "size": [
+        1024,
+        1024
+      ],
+      "mode": "RGB",
+      "sha256": "85b2ca501c36a19aab4552d76be694a4cb903496dd41891a4ce1d30fcb3fa86b",
+      "seams": {
+        "horizontal_exact": true,
+        "vertical_exact": true
+      },
+      "near_black_fraction": 0.9677495956420898
+    },
+    "W10-P5-props-sheet.png": {
+      "size": [
+        1600,
+        1200
+      ],
+      "mode": "RGB",
+      "sha256": "4388db77610ab8523cfc57e47327c8bebdb32f312fadc3f7c00a6d70c2f3596c"
+    },
+    "W10-P5-props/W10-P5-neuron-node.png": {
+      "size": [
+        292,
+        324
+      ],
+      "mode": "RGB",
+      "sha256": "6a6650b27a7aeac540c0de5bae68741d95a17f42ef0244e101116cd7ce8d1a5b"
+    },
+    "W10-P5-props/W10-P5-impossible-floating-frame.png": {
+      "size": [
+        270,
+        304
+      ],
+      "mode": "RGB",
+      "sha256": "75d72ae0c45cefdcf207f3830590dbdcc8f9ee6d06059683cd6df6e38c426152"
+    },
+    "W10-P5-props/W10-P5-broken-ring-fragment.png": {
+      "size": [
+        252,
+        304
+      ],
+      "mode": "RGB",
+      "sha256": "5c93f66d5cbd6e1da11fac266357d5b70b8fc36ad9dfef21f4d411e227ddfee5"
+    },
+    "W10-P5-props/W10-P5-synapse-knot.png": {
+      "size": [
+        122,
+        124
+      ],
+      "mode": "RGB",
+      "sha256": "14f15b698c3be5380d420c923914df4ef3327037eb2d240ce7d2247e5d094803"
+    },
+    "W10-P5-props/W10-P5-eye-bud.png": {
+      "size": [
+        109,
+        124
+      ],
+      "mode": "RGB",
+      "sha256": "94fc138af4a826c7c5c4a891bfcb061c1ec2bd4bd0d26dc02036ebea2e9d057e"
+    },
+    "W10-P5-props/W10-P5-circuit-shard.png": {
+      "size": [
+        101,
+        124
+      ],
+      "mode": "RGB",
+      "sha256": "d05f5443076a776ecf8df12dfb42c86aae36713ce56811dd6835be1b060fb9e8"
+    },
+    "W10-P5-props/W10-P5-neuron-cluster-intact.png": {
+      "size": [
+        204,
+        199
+      ],
+      "mode": "RGB",
+      "sha256": "986e6fed02a85bdf68746144cd367f9aedef7ea3d0ed0a742a742b979c95c91e"
+    },
+    "W10-P5-props/W10-P5-neuron-cluster-broken.png": {
+      "size": [
+        157,
+        201
+      ],
+      "mode": "RGB",
+      "sha256": "67ad0cbb240282910db96a34814a4524045a240d13929010a915c4cd3d650435"
+    },
+    "W10-P5-props/W10-P5-ring-anchor-intact.png": {
+      "size": [
+        191,
+        204
+      ],
+      "mode": "RGB",
+      "sha256": "358367b81c3d9c06e308be99111343dda27a10ec1d15a70dfc1fdfc20d6eaf5a"
+    },
+    "W10-P5-props/W10-P5-ring-anchor-broken.png": {
+      "size": [
+        186,
+        208
+      ],
+      "mode": "RGB",
+      "sha256": "20823b3d1d4b29c7884ac1796dc37b3ff3a6aede72131afd1a62438e34ab5d20"
+    },
+    "W10-P6-border-pieces-sheet.png": {
+      "size": [
+        1536,
+        1536
+      ],
+      "mode": "RGB",
+      "sha256": "e228a318e4e081a121895658e2ccac8f1cdb77c4196986029525f72b8d6938f5"
+    },
+    "W10-P6-border-pieces/W10-P6-border-top.png": {
+      "size": [
+        1024,
+        160
+      ],
+      "mode": "RGB",
+      "sha256": "1a5e8d7f6c5aadaf047b2d448e921bc0982267e44b542d1ba1ee3e537cb5153b"
+    },
+    "W10-P6-border-pieces/W10-P6-border-bottom.png": {
+      "size": [
+        1024,
+        160
+      ],
+      "mode": "RGB",
+      "sha256": "b7c8f29f6c20cf07c6f7a58bd02fd5270040f704c981ee4709e2616f8d7cdc26"
+    },
+    "W10-P6-border-pieces/W10-P6-border-left.png": {
+      "size": [
+        160,
+        1024
+      ],
+      "mode": "RGB",
+      "sha256": "e37b8f77d7928ea7017c0f5bdceb5e9bd211d1373629758f718908d333100c10"
+    },
+    "W10-P6-border-pieces/W10-P6-border-right.png": {
+      "size": [
+        160,
+        1024
+      ],
+      "mode": "RGB",
+      "sha256": "67834d1c24812ea69981eb493b58594d4e02bf23284fc0b453916462dbb0a3c6"
+    },
+    "W10-P6-border-pieces/W10-P6-corner-top-left.png": {
+      "size": [
+        256,
+        256
+      ],
+      "mode": "RGB",
+      "sha256": "f4ff4c142effb8d26c84d029c9878867f629c4a7dfc07d7f4d7fdcc106930f1c"
+    },
+    "W10-P6-border-pieces/W10-P6-corner-top-right.png": {
+      "size": [
+        256,
+        256
+      ],
+      "mode": "RGB",
+      "sha256": "ac5a6732750f090ea53f25f41f4a0b43f173c03f577ffca411044f5a33724f76"
+    },
+    "W10-P6-border-pieces/W10-P6-corner-bottom-left.png": {
+      "size": [
+        256,
+        256
+      ],
+      "mode": "RGB",
+      "sha256": "946145aac8a0a20319ee3f20459e538294b1b2f6b8c037e371dbf47b0f264971"
+    },
+    "W10-P6-border-pieces/W10-P6-corner-bottom-right.png": {
+      "size": [
+        256,
+        256
+      ],
+      "mode": "RGB",
+      "sha256": "bf1c9829b1e498a6ffaf1dd29abbf985ddf6a7f0d6dbcbf276d8b16dd1143087"
+    },
+    "W10-P7-enemies-sheet.png": {
+      "size": [
+        1080,
+        800
+      ],
+      "mode": "RGB",
+      "sha256": "599dd9fc775a588ee04b8454ae478f4b9c0a9cfdcb74753f8d725f4509fc7ab9"
+    },
+    "W10-P7-enemies/W10-P7-synapse-swarm-unit.png": {
+      "size": [
+        127,
+        117
+      ],
+      "mode": "RGB",
+      "sha256": "806aad860ce1b3c1468c8bf3ceab436a66164df310c7336a5dda803401b3e2b9"
+    },
+    "W10-P7-enemies/W10-P7-voidling.png": {
+      "size": [
+        114,
+        146
+      ],
+      "mode": "RGB",
+      "sha256": "a127983c0e767276793b2e7b582ebbe18640a6a073cf47fc14ded7af82527529"
+    },
+    "W10-P7-enemies/W10-P7-wraith.png": {
+      "size": [
+        212,
+        167
+      ],
+      "mode": "RGB",
+      "sha256": "425d340d327078582e4caab011e2e8ec1f0a620989f62bdf2e7461f7f1b264cb"
+    },
+    "W10-P7-enemies/W10-P7-eye.png": {
+      "size": [
+        230,
+        218
+      ],
+      "mode": "RGB",
+      "sha256": "e7450b2ebef25379f06d9955ad284cd972899f8efe23fc07e0332156fc100a35"
+    },
+    "W10-P7-enemies/W10-P7-neuron-node.png": {
+      "size": [
+        220,
+        249
+      ],
+      "mode": "RGB",
+      "sha256": "cb08d326818dd14c655487070a449da598aad2567d2ea1ba93854165089fb88a"
+    },
+    "W10-P7-enemies/W10-P7-overseer.png": {
+      "size": [
+        323,
+        324
+      ],
+      "mode": "RGB",
+      "sha256": "d2cb4339ffbca222a2e702468e5b5794eb13217dd4255d0ed1091d533c9773ea"
+    },
+    "W10-P7-elite-and-shards-sheet.png": {
+      "size": [
+        1200,
+        1800
+      ],
+      "mode": "RGB",
+      "sha256": "1d7464afd051de0195dc26e8031d20d05a3ddfad6a367d1bb5282e8a15faa0d8"
+    },
+    "W10-P7-elite-and-shards/W10-P7-wraith-elite.png": {
+      "size": [
+        325,
+        307
+      ],
+      "mode": "RGB",
+      "sha256": "e9301b091776096cfd637d834258c19286f5541a883fd2ff78dd2f64608b16ac"
+    },
+    "W10-P7-elite-and-shards/W10-P7-synapse-swarm-unit-shard-1.png": {
+      "size": [
+        86,
+        74
+      ],
+      "mode": "RGB",
+      "sha256": "c50dc4e9d90d86a4ceb9f4be2ae47d0da2ff531b5fe17576a6397899b512d266"
+    },
+    "W10-P7-elite-and-shards/W10-P7-synapse-swarm-unit-shard-2.png": {
+      "size": [
+        75,
+        71
+      ],
+      "mode": "RGB",
+      "sha256": "e9dd1cfa404176f58e887ec9a929466c9ed848fa198dd0dc5513568a7cb7f447"
+    },
+    "W10-P7-elite-and-shards/W10-P7-synapse-swarm-unit-shard-3.png": {
+      "size": [
+        57,
+        66
+      ],
+      "mode": "RGB",
+      "sha256": "0e1c3ed51733e9a5ec306811e100fea0af75719d31ccd4a3565692422ef73798"
+    },
+    "W10-P7-elite-and-shards/W10-P7-synapse-swarm-unit-shard-4.png": {
+      "size": [
+        71,
+        73
+      ],
+      "mode": "RGB",
+      "sha256": "ec97bc8da27b322dfce1ddabd271188ce8417bb8c21b546e48a1213d75a974c3"
+    },
+    "W10-P7-elite-and-shards/W10-P7-voidling-shard-1.png": {
+      "size": [
+        64,
+        67
+      ],
+      "mode": "RGB",
+      "sha256": "1c4e8d0eca8d321075cf895d46ab310f7758a37dc1081f929a10aa78f40618b5"
+    },
+    "W10-P7-elite-and-shards/W10-P7-voidling-shard-2.png": {
+      "size": [
+        69,
+        60
+      ],
+      "mode": "RGB",
+      "sha256": "1d5794af25818755817f5226d2dec22e25a367561b3575af4ccc6c6600d188d0"
+    },
+    "W10-P7-elite-and-shards/W10-P7-voidling-shard-3.png": {
+      "size": [
+        67,
+        64
+      ],
+      "mode": "RGB",
+      "sha256": "f53a153cae92cdbac5d4df90d84908b1453b2c675ec405108a17162fa8b0a9fc"
+    },
+    "W10-P7-elite-and-shards/W10-P7-voidling-shard-4.png": {
+      "size": [
+        97,
+        64
+      ],
+      "mode": "RGB",
+      "sha256": "f2fcffc93017320881633662b2c9041e1cbe9dc2dd4ce082733d977ebbc36066"
+    },
+    "W10-P7-elite-and-shards/W10-P7-wraith-shard-1.png": {
+      "size": [
+        137,
+        90
+      ],
+      "mode": "RGB",
+      "sha256": "7db05147989346bfe30f1bfb0ac9aa1a2aa9a658f79038e84ed4dc11c8b08cdd"
+    },
+    "W10-P7-elite-and-shards/W10-P7-wraith-shard-2.png": {
+      "size": [
+        117,
+        91
+      ],
+      "mode": "RGB",
+      "sha256": "46ba5e978618ba3fba1af760fd7e86a11eb9b138c78f8e0768ad832eae0d1ad8"
+    },
+    "W10-P7-elite-and-shards/W10-P7-wraith-shard-3.png": {
+      "size": [
+        92,
+        84
+      ],
+      "mode": "RGB",
+      "sha256": "93bdb926b8eb44d031a8f92ef2e022963fcd07a299d4c6b6cb3e8cf047de9660"
+    },
+    "W10-P7-elite-and-shards/W10-P7-wraith-shard-4.png": {
+      "size": [
+        132,
+        89
+      ],
+      "mode": "RGB",
+      "sha256": "df20b0acad624c0a5ae7a3896deefccb7925676eebae5b7a423c07eca9aeb171"
+    },
+    "W10-P7-elite-and-shards/W10-P7-eye-shard-1.png": {
+      "size": [
+        147,
+        136
+      ],
+      "mode": "RGB",
+      "sha256": "ddf7a10cd2417835266182e8cc0eb9553a01c24228bf77b307b57cf5d45990cd"
+    },
+    "W10-P7-elite-and-shards/W10-P7-eye-shard-2.png": {
+      "size": [
+        113,
+        109
+      ],
+      "mode": "RGB",
+      "sha256": "2fa5858300088baf25221f4b52d5e34615c492dcabde83fac5c5c0c62f7acbbf"
+    },
+    "W10-P7-elite-and-shards/W10-P7-eye-shard-3.png": {
+      "size": [
+        110,
+        102
+      ],
+      "mode": "RGB",
+      "sha256": "26dc5e30786ca95dfdbc2b19631e18e4b3f4df8a8ddef8d6f776cdcb30e9d853"
+    },
+    "W10-P7-elite-and-shards/W10-P7-eye-shard-4.png": {
+      "size": [
+        148,
+        107
+      ],
+      "mode": "RGB",
+      "sha256": "7bb81f2bdb94edecc957f3d9b095ae19f2ccafb23b59aa2c7f7b247901c77062"
+    },
+    "W10-P7-elite-and-shards/W10-P7-neuron-node-shard-1.png": {
+      "size": [
+        145,
+        114
+      ],
+      "mode": "RGB",
+      "sha256": "2e5028f3ad5c6007e31009c580032ab63b385418513910437ef89f71c1e1aff1"
+    },
+    "W10-P7-elite-and-shards/W10-P7-neuron-node-shard-2.png": {
+      "size": [
+        159,
+        127
+      ],
+      "mode": "RGB",
+      "sha256": "e86337cae2440fd759e3baa0434fe9877873f8063e238a779875b40bf548df1b"
+    },
+    "W10-P7-elite-and-shards/W10-P7-neuron-node-shard-3.png": {
+      "size": [
+        122,
+        105
+      ],
+      "mode": "RGB",
+      "sha256": "9b43b91859e3f2bb089c1a089063d459f9088f71ae4c705da8020a95dadac811"
+    },
+    "W10-P7-elite-and-shards/W10-P7-neuron-node-shard-4.png": {
+      "size": [
+        145,
+        91
+      ],
+      "mode": "RGB",
+      "sha256": "6edf26c12abf8737ff9bd398e97471ff5f6cd7fca2ec445e84003e497a29d7a5"
+    },
+    "W10-P7-elite-and-shards/W10-P7-overseer-shard-1.png": {
+      "size": [
+        204,
+        139
+      ],
+      "mode": "RGB",
+      "sha256": "40e99b59d8baf4985041c4ae1a3dac8bb91cf374069e44d0e40db853591a23c8"
+    },
+    "W10-P7-elite-and-shards/W10-P7-overseer-shard-2.png": {
+      "size": [
+        172,
+        151
+      ],
+      "mode": "RGB",
+      "sha256": "09f4f2df8efe90b1a911f11450a70154debc03426d2406a5e150f853b6df4741"
+    },
+    "W10-P7-elite-and-shards/W10-P7-overseer-shard-3.png": {
+      "size": [
+        141,
+        140
+      ],
+      "mode": "RGB",
+      "sha256": "639e450fc475eea62045238ed35c337447eadeca48a7fab84f2eb68cf9eb13c7"
+    },
+    "W10-P7-elite-and-shards/W10-P7-overseer-shard-4.png": {
+      "size": [
+        166,
+        139
+      ],
+      "mode": "RGB",
+      "sha256": "adc61291d11495cd369ee393954c54bc54d355c8a60b5a4697dd93f48a669e2e"
+    },
+    "W10-P8-void-heart-phase-1.png": {
+      "size": [
+        1024,
+        1024
+      ],
+      "mode": "RGB",
+      "sha256": "69d81368316bad4a3e21afd6b19687a663a936a00e58d81ddef6f9401466c936"
+    },
+    "W10-P8-void-heart-phase-2.png": {
+      "size": [
+        1024,
+        1024
+      ],
+      "mode": "RGB",
+      "sha256": "cd3ca37cfb532dac9bd8e1f2218036f1a1f92cbcc863908da1bb9f743735fb63"
+    },
+    "W10-P8-void-heart-phase-3.png": {
+      "size": [
+        1024,
+        1024
+      ],
+      "mode": "RGB",
+      "sha256": "c8dd3d9ebe5853689552baabfbb3143186ac49d7e57a972d4472bcb78b0be7de"
+    },
+    "W10-P8-parts-sheet.png": {
+      "size": [
+        4400,
+        4400
+      ],
+      "mode": "RGB",
+      "sha256": "30e2cb1714b469385b0ca0c6fc49d19aca099828c4574e98e8fbef31de4329cc"
+    },
+    "W10-P8-parts/W10-P8-heart.png": {
+      "size": [
+        353,
+        464
+      ],
+      "mode": "RGB",
+      "sha256": "c4d58fe6f9b92937ab200a52ee44fdba366ea8ffcf8ae8aa5eb513c37dc907ea"
+    },
+    "W10-P8-parts/W10-P8-ring-outer.png": {
+      "size": [
+        904,
+        924
+      ],
+      "mode": "RGB",
+      "sha256": "c0fc7826d1ab928c37b0d1701604ca68f7526bc880647cd842827cd959f423e0"
+    },
+    "W10-P8-parts/W10-P8-ring-middle.png": {
+      "size": [
+        704,
+        687
+      ],
+      "mode": "RGB",
+      "sha256": "bf57e99d72e33590ce9779ad0d030788761ad979ad4da85fab823fddf1d96ade"
+    },
+    "W10-P8-parts/W10-P8-ring-inner.png": {
+      "size": [
+        504,
+        445
+      ],
+      "mode": "RGB",
+      "sha256": "1223ffb12e15a0899a7ab89aee354bed0322e3281fb63f729998bd0ecf15c1f6"
+    },
+    "W10-P8-parts/W10-P8-eye-1.png": {
+      "size": [
+        204,
+        180
+      ],
+      "mode": "RGB",
+      "sha256": "9ca4172033f949cf98d72df79948a475a448fa725ec72bd074151dd62107de7a"
+    },
+    "W10-P8-parts/W10-P8-eye-2.png": {
+      "size": [
+        204,
+        190
+      ],
+      "mode": "RGB",
+      "sha256": "9a033c5f21b6b6f008b911724d9896841c38a0e08174e67f35df0afcb59ec611"
+    },
+    "W10-P8-parts/W10-P8-eye-3.png": {
+      "size": [
+        204,
+        191
+      ],
+      "mode": "RGB",
+      "sha256": "7e5b5a3fbf5365debc73539bb01e5b92c447af42f0847eb8b833715641890e9f"
+    },
+    "W10-P8-parts/W10-P8-eye-4.png": {
+      "size": [
+        204,
+        194
+      ],
+      "mode": "RGB",
+      "sha256": "6b6fb97c95f86ab3dbce4fe789e1146f0c732304fd513d2d37850b233f7f7117"
+    },
+    "W10-P8-parts/W10-P8-weak-point-1.png": {
+      "size": [
+        124,
+        111
+      ],
+      "mode": "RGB",
+      "sha256": "04c4c08bdddce1785da8a0a9e8a26813079ad639b38c1fe9eabdcd19bceea106"
+    },
+    "W10-P8-parts/W10-P8-weak-point-2.png": {
+      "size": [
+        124,
+        108
+      ],
+      "mode": "RGB",
+      "sha256": "ce7f75d24a8f98f4b64d54e5aab83ee51bc4ab68bf8de9059ba8b3ebad0a835f"
+    },
+    "W10-P8-parts/W10-P8-weak-point-3.png": {
+      "size": [
+        124,
+        108
+      ],
+      "mode": "RGB",
+      "sha256": "c2026315d854dd23e69da681e273ffb41d9fabfb4a59d9ebb793dcdebd30c8db"
+    },
+    "W10-P8-parts/W10-P8-weak-point-4.png": {
+      "size": [
+        124,
+        106
+      ],
+      "mode": "RGB",
+      "sha256": "bfd2d13e22787b1c5e22e346f06038e776fa412aac94c25d7c8e91763977aaef"
+    },
+    "elite_scale_ratio": 1.601063829787234,
+    "border_connections_checked": 8,
+    "parts_assembled_boss_identical": true,
+    "all_expected_files_count": 73,
+    "all_found_png_count": 73
+  },
+  "warnings": [],
+  "visual_review": "separate, required"
+}

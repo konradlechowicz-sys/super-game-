@@ -40,6 +40,13 @@ export const CFG = {
     glow: { 'bioluminescent-fungi': 0x9dff3d, 'egg-sac-cluster': 0xff2d95 },
     near: { alpha: 0.5, drift: [3, 6] },
   },
+  10: {
+    far: { mode: 'cover', parallax: 0.06, spin: 0.003, tint: 0xd8c8d8 },
+    floor: { scale: 0.8, tint: 0xc8bcc8 },
+    decor: [['impossible-floating-frame', 230, 2], ['broken-ring-fragment', 220, 2], ['neuron-node', 180, 3], ['synapse-knot', 140, 3], ['eye-bud', 120, 4], ['circuit-shard', 120, 4]],
+    glow: { 'neuron-node': 0xff2d95, 'eye-bud': 0xff4dd8, 'synapse-knot': 0xb04dff },
+    near: { alpha: 0.5, drift: [6, 3] },
+  },
 };
 
 function rng(seed) {
