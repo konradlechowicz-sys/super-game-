@@ -16,6 +16,9 @@ i wersja TEST (gracze tego nie widzą).
 
 - 
 
+## Build 118 · 2026-10-31
+- [Narzędzia] Podgląd na claude.ai: po buildzie 115 strona z linku mogła pokazywać stary wygląd 1.x, bo podgląd nie pozwala stronie pobierać własnych plików (`fetch`), a tak wczytywały się paczki grafik 2.0; tak samo mogła milczeć muzyka. Grafiki i muzyka idą teraz w plikach skryptów wczytywanych jak zwykłe pliki. Gra w aplikacji się nie zmienia.
+
 ## Build 117 · 2026-10-31
 - [Nowe] Świat 10 „The Nexus” (pełna wersja), koniec podróży: 6 sektorów (Neural Shore, Synapse Storm, Broken Geometry, Heartbeat, The Cage, Void Heart) w grafice ChatGPT. Serce Kolektywu: wolno obracająca się sieć neuronowa w tle, podłoga z obwodów, niemożliwe ramy, pęknięte pierścienie, węzły neuronów, pąki-oczy i ściany na brzegu areny. Mapa nie ma już światów „w budowie”: cała podróż 1-10 jest grywalna.
 - [Nowe] Mechanika świata 10: wszystko naraz. Podmuchy wiatru, pary szczelin, które przenoszą statek i pociski, oraz jeziorka kwasu. Zdarzenia świata: „GRAVITY COLLAPSE” (studnie grawitacyjne) w pierwszych sektorach i „NEURAL STORM” (ostrzał) w późniejszych.
