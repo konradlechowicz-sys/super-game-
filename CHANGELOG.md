@@ -16,6 +16,10 @@ i wersja TEST (gracze tego nie widzą).
 
 - 
 
+## Build 124 · 2026-10-31
+- [Nowe] Efekty nowych broni z grafik ChatGPT (Art Bible FX5–FX7) zamiast prostych neonowych kształtów: płomień Flamethrowera (niebieski po ewolucji w Inferno), płonący grunt (napalm, Inferno, Scorched Trail, Phoenix Rail), ogień na palących się wrogach, kula i wir czarnej dziury Singularity Cannon z jej zapadnięciem (większe, złote po ewolucji w Event Horizon), wiązka Railguna z ładowaniem przy statku, błyskiem wystrzału i wybuchem na końcu (Gauss Lance w złotej wersji).
+- [Narzędzia] Do sprawdzenia płynności: naraz rysuje się najwyżej 70 płonących wrogów; efekty są w osobnej paczce (`fx`), przycięte do rozmiaru w grze.
+
 ## Build 123 · 2026-10-31
 - [Nowe] Nowe ikony od ChatGPT (Art Bible IC1–IC6) zamiast prostych neonowych symboli: 11 broni, 11 ewolucji, 9 perków, 12 kombosów broni, 8 zestawów perków i 3 super kombosy. Widać je na kartach awansu, w Codexie, na liście broni w pauzie, w hangarze i w sklepie ulepszeń (ulepszenia mają ikony podobnych perków, naprawa i monety ikony znajdziek).
 - [Narzędzia] Komplet grafik wspólnych od ChatGPT (ikony, efekty, elity, znajdźki, Gold Striker, interfejs, materiały do sklepów) zapisany w `art/2.0/common`; tekstury do gry robi `proto2/make-common.py`. Pozostałe grafiki z tej paczki wchodzą w kolejnych buildach.

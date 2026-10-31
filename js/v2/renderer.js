@@ -88,8 +88,10 @@ export async function createV2Renderer(app) {
   await Promise.all(Object.entries(all).filter(([name]) => !name.startsWith('ui-')).map(async ([name, url]) => {
     const img = await load(url).catch(() => load(url));
     imgs[name] = img;
-    tex[name] = Texture.from(img);
+    // the effects (fx-..., proto2/make-common.py) are drawn by the canvas layer (js/render-canvas.js), not by PixiJS
+    if (!name.startsWith('fx-')) tex[name] = Texture.from(img);
   }));
+  app.fxArt = (key) => imgs[`fx-${key}`] || null;
   // the 2.0 pictures of the ships for the HTML screens (hangar, sector briefing; js/ui.js paintCanvases)
   app.shipArt = (id) => imgs[`ship-card-${id}`] || null;
 

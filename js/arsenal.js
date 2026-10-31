@@ -9,6 +9,7 @@
 import { TAU, rand } from './util.js';
 
 const BURN_TICK = 0.25; // seconds between burn damage ticks
+export const COLLAPSE_T = 0.45; // how long a black hole's collapse is drawn
 
 // Sets an enemy on fire: `dps` damage per second for `dur` seconds (the stronger fire wins, the longer one lasts).
 export function ignite(e, dps, dur = 3) {
@@ -21,7 +22,7 @@ export function ignite(e, dps, dur = 3) {
 export function launchHole(g, x, y, a, o) {
   if (g.holes.length >= 12) g.holes.shift();
   g.holes.push({ x, y, vx: Math.cos(a) * o.speed, vy: Math.sin(a) * o.speed, t: 0, fly: o.fly, dur: o.dur, r: o.r, dps: o.dps,
-    collapse: o.collapse || 0, tick: 0, color: o.color });
+    collapse: o.collapse || 0, tick: 0, color: o.color, evo: !!o.evo });
 }
 
 // whether (x, y) is inside an open black hole
@@ -29,9 +30,10 @@ export function inHole(g, x, y) {
   return g.holes.some((h) => h.t >= h.fly && (h.x - x) ** 2 + (h.y - y) ** 2 < h.r * h.r);
 }
 
-export function addFire(g, x, y, r, dps, dur) {
+// blue: the Inferno's fire (drawn blue)
+export function addFire(g, x, y, r, dps, dur, blue = false) {
   if (g.fires.length >= 40) g.fires.shift();
-  g.fires.push({ x, y, r, dps, dur, t: 0, tick: 0 });
+  g.fires.push({ x, y, r, dps, dur, t: 0, tick: 0, blue });
 }
 
 // The direction from (x, y) of the beam `len` long and `w` wide that crosses the most enemies: the ways toward the 16
@@ -130,11 +132,14 @@ export function updateArsenal(g, dt) {
     if (h.t > h.fly + h.dur) {
       // Event Horizon: the hole collapses into a blast
       if (h.collapse) { g.explode(h.x, h.y, h.r * 1.2, h.collapse, '#c46bff'); g.shake = Math.max(g.shake, 6); }
+      // its collapse is drawn for a moment (js/render-canvas.js)
+      if (g.collapses.length < 8) g.collapses.push({ x: h.x, y: h.y, r: h.r, t: 0, evo: h.evo });
       g.holes.splice(i, 1);
     }
   }
-  // beams fade
+  // beams fade, collapses play out
   for (let i = g.beams.length - 1; i >= 0; i--) if ((g.beams[i].t += dt) > g.beams[i].dur) g.beams.splice(i, 1);
+  for (let i = g.collapses.length - 1; i >= 0; i--) if ((g.collapses[i].t += dt) > COLLAPSE_T) g.collapses.splice(i, 1);
   // the Phase Shield recharges after SHIELD_WAIT s without a hit: full in SHIELD_FILL s (Bastion Field: 30% faster)
   if (p.shieldMax && p.shield < p.shieldMax) {
     const fast = g.combos.has('bastion') ? 1.3 : 1;

@@ -8,6 +8,7 @@ import json
 import os
 import re
 import subprocess
+import numpy as np
 from PIL import Image
 
 SRC = 'art/2.0/common'
@@ -47,3 +48,49 @@ for key, f in (('pu-heal', 'repair-kit'), ('pu-coin', 'coin')):
     Image.open(f'{SRC}/PU1/selected/PU1-{f}.webp').convert('RGB').resize((ICON, ICON), Image.LANCZOS).save(f'{OUT}/ui-{key}.webp', 'WEBP', quality=88, method=6)
     made += 1
 print(made, 'icons')
+
+
+# ---- FX5-FX7: the 2.0 weapons' effects (fx-...), drawn by js/render-canvas.js (their black background becomes
+# transparency, light_to_alpha). Frame strips are reduced to the size the game draws them at.
+def light_to_alpha(im):
+    # the effects are light on black: the game draws them on a transparent layer over the 2.0 look, where black would
+    # stay black, so brightness becomes alpha and the colour is lifted back to full strength
+    a = np.asarray(im.convert('RGB')).astype(np.float32)
+    al = a.max(axis=2, keepdims=True)
+    al = np.clip((al - 6) / 249, 0, 1)
+    rgb = np.where(al > 0.004, np.clip(a / np.maximum(al, 0.004), 0, 255), 0)
+    return Image.fromarray(np.dstack([rgb, al * 255]).astype(np.uint8), 'RGBA')
+
+
+def strip(src, out, frames, cell):
+    im = Image.open(f'{SRC}/{src}.webp').convert('RGB')
+    h = im.height
+    w = round(im.width / frames)
+    ch = round(cell * h / w)
+    light_to_alpha(im.resize((cell * frames, ch), Image.LANCZOS)).save(f'{OUT}/fx-{out}.webp', 'WEBP', quality=86, method=6)
+
+
+FX = [
+    ('FX5/selected/FX5-flame-cone-8frames', 'flame-cone', 8, 256),
+    ('FX5/selected/FX5-inferno-flame-cone-8frames', 'inferno-cone', 8, 256),
+    ('FX5/selected/FX5-burning-ground-8frames', 'fire-ground', 8, 128),
+    ('FX5/selected/FX5-inferno-burning-ground-8frames', 'inferno-ground', 8, 128),
+    ('FX5/selected/FX5-burn-8frames', 'burn', 8, 64),
+    ('FX6/selected/FX6-orb-8frames', 'hole-orb', 8, 64),
+    ('FX6/selected/FX6-event-horizon-orb-8frames', 'eh-orb', 8, 64),
+    ('FX6/selected/FX6-black-hole-8frames', 'hole', 8, 192),
+    ('FX6/selected/FX6-event-horizon-black-hole-8frames', 'eh-hole', 8, 192),
+    ('FX6/selected/FX6-collapse-8frames', 'collapse', 8, 192),
+    ('FX6/selected/FX6-event-horizon-collapse-8frames', 'eh-collapse', 8, 192),
+    ('FX7/selected/FX7-railgun-beam-body', 'rail-beam', 1, 512),
+    ('FX7/selected/FX7-gauss-lance-beam-body', 'gauss-beam', 1, 512),
+    ('FX7/selected/FX7-railgun-charge-6frames', 'rail-charge', 6, 64),
+    ('FX7/selected/FX7-gauss-lance-charge-6frames', 'gauss-charge', 6, 64),
+    ('FX7/selected/FX7-railgun-muzzle-flash-6frames', 'rail-muzzle', 6, 128),
+    ('FX7/selected/FX7-gauss-lance-muzzle-flash-6frames', 'gauss-muzzle', 6, 128),
+    ('FX7/selected/FX7-railgun-end-blast-6frames', 'rail-end', 6, 128),
+    ('FX7/selected/FX7-gauss-lance-end-blast-6frames', 'gauss-end', 6, 128),
+]
+for src, out, frames, cell in FX:
+    strip(src, out, frames, cell)
+print(len(FX), 'effect strips')

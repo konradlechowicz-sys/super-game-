@@ -38,7 +38,7 @@ export class Game {
     this.time = 0;
     this.state = 'play';
     this.enemies = []; this.proj = []; this.ebullets = []; this.gems = []; this.pickups = [];
-    this.holes = []; this.fires = []; this.beams = []; // the 2.0 arsenal's black holes, burning ground, beams (js/arsenal.js)
+    this.holes = []; this.fires = []; this.beams = []; this.collapses = []; // the 2.0 arsenal's black holes, burning ground, beams (js/arsenal.js)
     this.particles = []; this.hazards = []; this.rings = []; this.fx = []; this.bolts = []; this.mines = []; this.texts = [];
     this.hash = new SpatialHash(64);
     this.tmp = [];

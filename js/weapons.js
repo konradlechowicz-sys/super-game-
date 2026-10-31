@@ -405,6 +405,8 @@ export const WEAPONS = {
       if (!tgt) { w.t = 0.1; return; }
       w.t = s.cd * p.cdMult;
       const a = Math.atan2(tgt.y - p.y, tgt.x - p.x);
+      // what js/render-canvas.js needs to draw the flame
+      w.coneA = a; w.coneAt = g.time; w.coneLen = range; w.coneW = s.cone;
       const fire = s.burn * p.dmgMult * (p.fireMult || 1);
       for (const e of g.enemiesNear(p.x, p.y, range)) {
         let da = Math.atan2(e.y - p.y, e.x - p.x) - a;
@@ -416,7 +418,7 @@ export const WEAPONS = {
       }
       // the flame itself: a spray of embers along the cone
       const blue = w.evolved;
-      for (let i = 0; i < 5 && g.particles.length < 680; i++) {
+      for (let i = 0; i < 3 && g.particles.length < 680; i++) {
         const pa = a + rand(-s.cone, s.cone), v = range * rand(2.2, 3.2);
         g.particles.push({ x: p.x + Math.cos(a) * 12, y: p.y + Math.sin(a) * 12, vx: Math.cos(pa) * v, vy: Math.sin(pa) * v, life: 0.3, max: 0.3, size: rand(6, 10),
           color: blue ? (Math.random() < 0.5 ? '#7db8ff' : '#e0f0ff') : (Math.random() < 0.5 ? '#ff8a2a' : '#ffd23d') });
@@ -424,7 +426,7 @@ export const WEAPONS = {
       // Inferno: the ground at the end of the flame keeps burning
       if (s.pools && (w.poolT = (w.poolT || 0) - s.cd) <= 0) {
         w.poolT = 0.5;
-        addFire(g, p.x + Math.cos(a) * range * 0.75, p.y + Math.sin(a) * range * 0.75, 48 * p.areaMult, fire, 3);
+        addFire(g, p.x + Math.cos(a) * range * 0.75, p.y + Math.sin(a) * range * 0.75, 48 * p.areaMult, fire, 3, true);
       }
       if ((w.sfxT = (w.sfxT || 0) - s.cd) <= 0) { w.sfxT = 0.4; g.sfx('shotgun'); }
     },
@@ -451,7 +453,7 @@ export const WEAPONS = {
       const a = Math.atan2(tgt.y - p.y, tgt.x - p.x);
       for (let i = 0; i < s.n; i++) {
         launchHole(g, p.x, p.y, a + (i - (s.n - 1) / 2) * 0.6, {
-          speed: 230, fly: 1, dur: s.dur, r: s.r * p.areaMult, dps: s.dmg * p.dmgMult, color: w.evolved ? '#e9c4ff' : '#b06bff',
+          speed: 230, fly: 1, dur: s.dur, r: s.r * p.areaMult, dps: s.dmg * p.dmgMult, color: w.evolved ? '#e9c4ff' : '#b06bff', evo: w.evolved,
           collapse: s.collapse ? s.collapse * p.dmgMult : 0,
         });
       }
