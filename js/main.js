@@ -392,7 +392,11 @@ app.audio.setTrack('menu');
 // the menu music plays right after launch. Browsers forbid that: there it starts on the first tap (pointerdown above).
 if (app.native) app.audio.unlock();
 app.ui.menu();
-if (app.dailyStatus().claimable && app.save.stats.runs > 0) app.ui.daily();
+// the save is written at once, so a 1.x save moved to 2.0 (js/save.js) is not moved again on the next launch
+app.persist();
+// a 1.x veteran first sees the welcome screen (with their coins); the daily reward waits for the next launch
+if (app.save.veteranWelcome) app.ui.veteran();
+else if (app.dailyStatus().claimable && app.save.stats.runs > 0) app.ui.daily();
 requestAnimationFrame(frame);
 window.__app = app;
 
@@ -402,7 +406,9 @@ if (app.native && !hasLocalSave()) {
     if (!value || app.game) return;
     app.save = importSave(value);
     app.applySettings();
+    app.persist();
     app.ui.menu();
+    if (app.save.veteranWelcome) app.ui.veteran();
   }).catch(() => {});
 }
 
