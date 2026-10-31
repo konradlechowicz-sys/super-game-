@@ -118,3 +118,28 @@ for key, f in (('xp-s', 'xp-crystal-small'), ('xp-m', 'xp-crystal-medium'), ('xp
                ('heal', 'repair-kit'), ('magnet', 'magnet'), ('bomb', 'bomb'), ('chest', 'boss-chest-closed')):
     cut(Image.open(f'{SRC}/PU1/selected/PU1-{f}.webp').resize((96, 96), Image.LANCZOS)).save(f'{OUT}/pu-{key}.webp', 'WEBP', quality=88, method=6)
 print('elite rings, badges and pickups')
+
+
+# ---- FX1: projectiles (px-..., PixiJS textures: hundreds at once), pointing right, black -> transparency.
+for key, f in (('bolt', 'pulse-blaster'), ('photon', 'photon-storm'), ('pellet', 'scatter-gun'), ('flak', 'flak-cannon'),
+               ('missile', 'seeker-missile'), ('swarm', 'swarm-barrage'), ('dronebolt', 'wingman-drone-bolt'),
+               ('squadbolt', 'drone-squadron-bolt')):
+    light_to_alpha(Image.open(f'{SRC}/FX1/selected/FX1-{f}.webp').resize((64, 32), Image.LANCZOS)).save(f'{OUT}/px-{key}.webp', 'WEBP', quality=88, method=6)
+for key, f in (('mine', 'proximity-mine'), ('gmine', 'gravity-mine')):
+    im = Image.open(f'{SRC}/FX1/selected/FX1-{f}.webp')
+    light_to_alpha(im.crop((64, 0, 192, 128)).resize((48, 48), Image.LANCZOS)).save(f'{OUT}/px-{key}.webp', 'WEBP', quality=88, method=6)
+
+# ---- FX2-FX4, FX8, FX9: drawn by js/render-canvas.js (fx-...)
+for c in ('cyan', 'orange', 'red-pink', 'violet', 'electric-blue', 'teal', 'green', 'gold', 'white-blue', 'fire-orange', 'dark-violet'):
+    strip(f'FX2/selected/FX2-hit-{c}-8frames', f'hit-{c}', 8, 48)
+for size, cell in (('small', 96), ('medium', 128), ('large', 192)):
+    strip(f'FX3/selected/FX3-{size}-explosion-8frames', f'boom-{size}', 8, cell)
+for i in range(1, 7):
+    light_to_alpha(Image.open(f'{SRC}/FX4/selected/FX4-arc-coil-lightning-{i}.webp').resize((256, 32), Image.LANCZOS)).save(f'{OUT}/fx-arc-{i}.webp', 'WEBP', quality=86, method=6)
+    light_to_alpha(Image.open(f'{SRC}/FX4/selected/FX4-tempest-lightning-{i}.webp').resize((256, 32), Image.LANCZOS)).save(f'{OUT}/fx-tempest-{i}.webp', 'WEBP', quality=86, method=6)
+for src, out, cell in (('nova-ring', 'nova', 192), ('supernova-ring', 'supernova', 192), ('player-shield', 'pshield', 128),
+                       ('shield-break', 'pshield-break', 128), ('enemy-shield', 'eshield', 128)):
+    strip(f'FX8/selected/FX8-{src}-8frames', out, 8, cell)
+for src, out, cell in (('spawn-portal', 'portal', 96), ('warning-circle', 'warn', 128), ('elite-arrival', 'elite-in', 160)):
+    strip(f'FX9/selected/FX9-{src}-8frames', out, 8, cell)
+print('projectiles and the other effects')

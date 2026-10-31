@@ -166,6 +166,7 @@ export function shieldHit(g, dmg) {
     // broken: Bastion Field (perk set) throws the enemies back
     if (g.combos.has('bastion')) g.addRing({ x: p.x, y: p.y, max: 210, dmg: 30 * p.dmgMult, dur: 0.35, color: '#7df9ff', knock: 650, follow: true });
     g.addFx(p.x, p.y, 70, '#7df9ff', 0.4, 4);
+    g.shieldBroke = g.time; // its shattering is drawn for a moment (js/render-canvas.js)
     g.burst(p.x, p.y, '#7df9ff', 18, 260, 0.4, 5);
     g.text(p.x, p.y - 26, 'SHIELD DOWN', '#7df9ff', true);
     g.sfx('pulse');

@@ -38,7 +38,8 @@ export class Game {
     this.time = 0;
     this.state = 'play';
     this.enemies = []; this.proj = []; this.ebullets = []; this.gems = []; this.pickups = [];
-    this.holes = []; this.fires = []; this.beams = []; this.collapses = []; // the 2.0 arsenal's black holes, burning ground, beams (js/arsenal.js)
+    this.holes = []; this.fires = []; this.beams = []; this.collapses = [];
+    this.sparks = []; // hit sparks of shots (drawn with the 2.0 art, js/render-canvas.js) // the 2.0 arsenal's black holes, burning ground, beams (js/arsenal.js)
     this.particles = []; this.hazards = []; this.rings = []; this.fx = []; this.bolts = []; this.mines = []; this.texts = [];
     this.hash = new SpatialHash(64);
     this.tmp = [];
@@ -1770,6 +1771,7 @@ export class Game {
           const sp = pr.speed || 1;
           this.damage(e, pr.dmg, (pr.vx / sp) * pr.knock, (pr.vy / sp) * pr.knock);
           pr.hit.push(e.id);
+          if (this.sparks.length < 40) this.sparks.push({ x: pr.x, y: pr.y, color: pr.color, t: 0 });
           if (pr.flak) {
             // Flak Cannon: a small quiet blast around the hit
             for (const o of this.enemiesNear(pr.x, pr.y, pr.flak)) if (o !== e) this.damage(o, pr.dmg * 0.6, 0, 0, true);
@@ -1947,6 +1949,7 @@ export class Game {
       q.vx *= f; q.vy *= f;
       q.x += q.vx * dt; q.y += q.vy * dt;
     }
+    for (let i = this.sparks.length - 1; i >= 0; i--) if ((this.sparks[i].t += dt) > 0.25) this.sparks.splice(i, 1);
     for (let i = this.fx.length - 1; i >= 0; i--) {
       this.fx[i].t += dt;
       if (this.fx[i].t >= this.fx[i].dur) this.fx.splice(i, 1);

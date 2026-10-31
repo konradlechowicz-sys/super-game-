@@ -718,8 +718,13 @@ export async function createV2Renderer(app) {
     for (const pl of [lootHalo, loot, shotHalo, shots, sparks, weaponSprites]) pl.begin();
     const t = game.time;
 
-    // mines
-    for (const m of game.mines) if (vis(m)) put(loot.next(), mineSprite(m.pull ? '#b06bff' : '#ffd23d', m.arm <= 0 && Math.sin(t * 12) > 0), m.x, m.y);
+    // mines (ChatGPT's mines, Art Bible FX1, when loaded)
+    const mineT = tex['px-mine'];
+    for (const m of game.mines) {
+      if (!vis(m)) continue;
+      if (mineT) putTex(loot.next(), tex[m.pull ? 'px-gmine' : 'px-mine'], m.x, m.y, 26).alpha = m.arm <= 0 && Math.sin(t * 12) > 0 ? 1 : 0.8;
+      else put(loot.next(), mineSprite(m.pull ? '#b06bff' : '#ffd23d', m.arm <= 0 && Math.sin(t * 12) > 0), m.x, m.y);
+    }
 
     // weapons around the ship (blades, drones, aura), drawn by their own render functions
     weaponG.clear();
@@ -751,14 +756,27 @@ export async function createV2Renderer(app) {
 
     // damaging rings (shockwaves of weapons) under the enemies
     ringG.clear();
+    // the canvas layer draws Nova Pulse's rings and the explosions, lightning and sparks with the 2.0 art
+    // (js/render-canvas.js drawEffectsArt) once it is loaded
+    const fxArt = !!app.fxArt?.('boom-small');
     for (const r of game.rings) {
+      if (fxArt && (r.color === '#3dffc8' || r.color === '#e0fff6')) continue;
       const a = 1 - Math.max(0, r.t - r.dur) / 0.15;
       ringG.circle(r.x, r.y, Math.max(1, r.r)).fill({ color: r.color, alpha: 0.15 * a }).stroke({ width: 5, color: r.color, alpha: 0.85 * a });
     }
 
     // player shots and enemy bullets, each with a halo in its colour
+    const pj = tex['px-bolt'];
     for (const pr of game.proj) {
       if (!vis(pr)) continue;
+      // ChatGPT's projectiles (Art Bible FX1): the evolved ones are gold or lighter
+      const pt = pj && PROJ[pr.look]?.(pr.color);
+      if (pt) {
+        const [name, len, halo] = pt;
+        glow(shotHalo, pr.x, pr.y, pr.color, halo, 0.3);
+        putTex(shots.next(), tex[name], pr.x, pr.y, len, pr.a);
+        continue;
+      }
       let spr, size = 26;
       switch (pr.look) {
         case 'bolt': spr = boltSprite(pr.color, 12, 3); break;
@@ -784,11 +802,11 @@ export async function createV2Renderer(app) {
       put(sparks.next(), glowDot(q.color, 8), q.x, q.y, 0, (q.size / 8) * (0.4 + 0.6 * l)).alpha = l;
     }
     fxG.clear();
-    for (const f of game.fx) {
+    if (!fxArt) for (const f of game.fx) {
       const k = f.t / f.dur;
       fxG.circle(f.x, f.y, f.max * (0.2 + 0.8 * Math.sqrt(k))).stroke({ width: f.width * (1 - k) + 1, color: f.color, alpha: (1 - k) * 0.9 });
     }
-    for (const b of game.bolts) {
+    if (!fxArt) for (const b of game.bolts) {
       const a = b.t / 0.2;
       for (const [w, col, al] of [[7, b.color, 0.35], [2, '#ffffff', 1]]) {
         fxG.moveTo(b.pts[0], b.pts[1]);
@@ -866,6 +884,15 @@ function pool(layer) {
     end() { for (let i = n; i < list.length; i++) list[i].visible = false; },
   };
 }
+
+// The 2.0 projectile textures (px-..., proto2/make-common.py) per shot look: [texture, drawn length, halo size]
+const PROJ = {
+  bolt: () => ['px-bolt', 30, 24],
+  photon: () => ['px-photon', 46, 38],
+  pellet: (c) => [c === '#ffd23d' ? 'px-flak' : 'px-pellet', 22, 18],
+  missile: (c) => [c === '#ffd23d' ? 'px-swarm' : 'px-missile', 36, 30],
+  dronebolt: (c) => [c === '#e4ff7d' ? 'px-squadbolt' : 'px-dronebolt', 24, 18],
+};
 
 // A soft white round glow, tinted per use (halos of shots and gems).
 function softDot() {
