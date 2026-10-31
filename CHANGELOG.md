@@ -16,6 +16,18 @@ i wersja TEST (gracze tego nie widzą).
 
 - 
 
+## Build 122 · 2026-10-31
+- [Narzędzia] Nazwy wszystkich 10 światów i 60 sektorów zatwierdzone przez Konrada (Art Bible i CLAUDE.md). Gra się nie zmienia: te nazwy już w niej są.
+
+## Build 121 · 2026-10-31
+- [Zmiana] Każdy zapis sprzed 2.0 zaczyna podróż od świata 1, także zapis z wcześniejszych testowych buildów 2.0 z postępem w światach 5–10 (w buildzie 120 taki zostawał bez zmian). Kto grał wcześniej, dostaje monety weterana i ekran powitalny.
+
+## Build 120 · 2026-10-31
+- [Nowe] Przejście z 1.x na 2.0: przy pierwszym uruchomieniu 2.0 zapis z 1.x zaczyna podróż od nowa (gwiazdki, przebyte sektory, rekordy Endless i ulepszenia ze sklepu znikają, bo światy 2–4 to w 2.0 zupełnie inne miejsca). Zostają: zakup pełnej wersji, statki, skórki, ustawienia, Codex, seria dziennych nagród i statystyki. Stary zapis jest zachowany w całości jako kopia.
+- [Nowe] Nagroda weterana: gracz, który grał w 1.x, dostaje monety na start (300 + 10 za każdą gwiazdkę z 1.x, najwyżej 72, + połowa monet wydanych na ulepszenia; najwyżej 2 000) i jednorazowy ekran „WELCOME BACK, PILOT”. Zapis zapamiętuje, że gracz jest weteranem (skórka „Veteran” dojdzie, gdy będzie gotowa jej grafika).
+- [Narzędzia] Zapis ma teraz numer wersji (2).
+- [Narzędzia] Panel testera 🛠: przycisk „SIMULATE 1.x SAVE” zamienia bieżący zapis w zapis podobny do 1.x i pokazuje przejście na 2.0 z ekranem weterana.
+
 ## Build 119 · 2026-10-31
 - [Narzędzia] Art Bible kompletna: wszystkie zadania graficzne 2.0 mają jeden schemat kodów (W1-P1 … W10-P8 dla światów, SH statki, EL elity, FX efekty, PU znajdźki, IC ikony, UI interfejs, ST sklepy), prompty do zadań wspólnych są w zakładce Prompty, a nowa zakładka „Zadania i status” zbiera stan i kolejność. `CHATGPT-BRIEF.md` wskazuje na nowe kody. Gra się nie zmienia.
 

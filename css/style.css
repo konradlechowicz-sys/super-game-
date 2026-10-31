@@ -285,6 +285,11 @@ h1, h2, h3 { font-family: 'Orbitron', sans-serif; font-weight: 700; margin: 0; l
 .day.got { opacity: 0.35; }
 .day.today { border-color: var(--amber-line); background: var(--amber-dim); box-shadow: inset 0 -2px 0 var(--amber); }
 
+/* ---------- 1.x veteran welcome (js/ui.js veteran) ---------- */
+.veteran-gift { margin: 14px 0 6px; padding: 14px 8px; border: 1px solid var(--line); border-radius: 3px; background: rgba(255, 255, 255, 0.025); display: flex; flex-direction: column; align-items: center; gap: 4px; color: var(--gold); }
+.veteran-gift b { font-size: 30px; }
+.veteran-gift small { color: var(--muted); font-size: 10px; font-family: 'Orbitron', sans-serif; letter-spacing: 0.14em; }
+
 /* ---------- level up ---------- */
 .lu-title { text-align: center; font-family: 'Orbitron', sans-serif; font-weight: 700; font-size: 22px; letter-spacing: 0.24em; margin-right: -0.24em; color: var(--text); }
 .lu-title.lose { color: #f08aa0; }

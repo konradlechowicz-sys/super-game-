@@ -506,6 +506,27 @@ export class UI {
     }, 'daily');
   }
 
+  // The one-time welcome for a 1.x player (js/save.js moved their save to 2.0 and paid the veteran coins).
+  veteran() {
+    const w = this.save.veteranWelcome;
+    if (!w) return;
+    this.modal(`
+      <h2>WELCOME BACK, PILOT</h2>
+      <p>Void Blaster 2.0 is a new journey: ten new worlds from Earth's orbit to the heart of the Collective. Your
+      sector progress and upgrades start over.</p>
+      <p class="muted">Your purchase, ships and settings are kept. For flying with us since 1.x:</p>
+      <div class="veteran-gift">${COIN}<b>${w.coins}</b><small>VETERAN COINS</small></div>
+      <div class="modal-actions"><button class="btn primary" data-act="go">START THE JOURNEY</button></div>
+    `, {
+      go: () => {
+        this.save.veteranWelcome = null;
+        this.app.persist();
+        this.closeModal();
+        this.menu();
+      },
+    }, 'veteran', 400);
+  }
+
   // ======================= SETTINGS =======================
   settings() {
     const s = this.save.settings;

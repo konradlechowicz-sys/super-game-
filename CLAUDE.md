@@ -16,7 +16,7 @@
   Konrad's message. `art/2.0/CHATGPT-BRIEF.md` keeps only the rules and file specs (its tasks A-G are replaced).
   Change a world's card and its prompts together.
 - Sector names of all 10 worlds (6 each, the 6th is the boss): Art Bible tab "Art Bible", table "Nazwy sektorów".
-  World 1 approved by Konrad (2026-10-28, in `js/data.js`); worlds 2-10 are proposals to review. On `v2` the map
+  All world and sector names approved by Konrad (world 1 on 2026-10-28, worlds 2-10 on 2026-10-31; in `js/data.js`). On `v2` the map
   shows all 10 worlds; worlds not built yet were "under construction" (`PLANNED_WORLDS` in `js/data.js`, empty since build 117: story +
   planned sectors). Built: world 1 (build 91), world 2 "Siege of Earth" (build 98, from ChatGPT's approved W2 set
   in `art/2.0/worlds/world2`, textures by `proto2/make-world2.py`, look `js/v2/siege.js`) and world 3 "Lunar
@@ -52,7 +52,9 @@
   2.0 decisions (Konrad, 2026-10-26; execution plan in the Claude Doc "Void Blaster 2.0 – plan wykonawczy"): the 10
   new worlds replace the 4 of 1.x; all 10 ship at once, iOS and Android the same day; the "1.4" content (OVERLOAD
   minute, Railgun, Flamethrower, Singularity Cannon, 12 combos, 8 perk sets, 3 super combos) goes into 2.0; 2.0 is a
-  free update for Full Game owners (same app, same product); progress starts over, with a bonus for 1.x veterans;
+  free update for Full Game owners (same app, same product); progress starts over, with a bonus for 1.x veterans
+  (decided 2026-10-31, `migrate` in `js/save.js`: 300 coins + 10 per 1.x star + half the coins spent on upgrades, at
+  most 2,000, a one-time welcome screen, `save.veteran` kept for the Veteran skin once its art `SH7` exists; no badge);
   the full game costs more for new players (about USD 4.99). 2.0 is built in the same app on its own accepted line
   `v2` (decided by Konrad, 2026-10-27; see "Two lines" below), so `main` stays releasable as 1.x until launch. Stage 1
   (builds 68-70, in `main`) put the PixiJS look behind a switch in the TEST panel; on `v2` 2.0 becomes the normal game.

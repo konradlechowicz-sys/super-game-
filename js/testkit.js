@@ -3,6 +3,7 @@
 import { ALL_STAGES, BOSSES, TRAITS } from './data.js';
 import { COMBOS, COMBO_LEVEL, levelFor } from './combos.js';
 import { WEAPONS } from './weapons.js';
+import { importSave } from './save.js';
 
 // Everything lives inside installTestKit (no top-level code), so bundlers drop the whole module when it is not called.
 export function installTestKit(app) {
@@ -72,6 +73,7 @@ export function installTestKit(app) {
         ${btn('stars', '3 STARS EVERYWHERE')}
         ${btn('tips', 'RESET TUTORIAL')}
         ${btn('reset', 'RESET PROGRESS')}
+        ${btn('vet', 'SIMULATE 1.x SAVE')}
       </div>
       <p class="tiny muted center">Coins: ${s.coins.toLocaleString('en-US')} · Stars: ${Object.values(s.stars).reduce((a, b) => a + b, 0)}/${ALL_STAGES.length * 3}</p>
       <div class="modal-actions"><button class="btn primary" data-act="close">DONE</button></div>
@@ -90,6 +92,17 @@ export function installTestKit(app) {
       reset: (ds, el) => {
         if (!el.dataset.confirm) { el.dataset.confirm = '1'; el.textContent = 'TAP AGAIN'; return; }
         app.resetProgress(); ui.toast('Progress reset'); menuPanel();
+      },
+      // turns the current save into a 1.x-like one (no save version, 1.x stars, shop upgrades, 40 runs) and loads it,
+      // so the move to 2.0 and the veteran welcome (js/save.js) can be tried on the phone
+      vet: (ds, el) => {
+        if (!el.dataset.confirm) { el.dataset.confirm = '1'; el.textContent = 'TAP AGAIN'; return; }
+        const old = { ...s, v: undefined, veteran: false, veteranWelcome: null, endless: { 1: { kills: 800, time: 600 } },
+          stats: { ...s.stats, runs: Math.max(40, s.stats.runs) }, shop: { power: 4, hull: 3, thrust: 2, magnet: 2 },
+          stars: {}, cleared: {}, worldStars: {} };
+        for (const w of [1, 2, 3]) for (let n = 1; n <= 6; n++) { old.stars[`${w}-${n}`] = 3; old.cleared[`${w}-${n}`] = true; }
+        app.save = importSave(JSON.stringify(old));
+        app.persist(); ui.closeModal(); ui.menu(); ui.veteran();
       },
     }, 'testkit');
   }
