@@ -23,7 +23,7 @@
   drifting asteroids as moving cover in `js/cover.js`). Worlds 6-10 share one pipeline (from build 113): textures by
   `proto2/make-worlds.py N`, look `js/v2/journey.js` (one scene, each world's settings in `CFG`), mechanics
   `js/worldfx.js` (wind, ice, rifts, acid), sectors from `journey()` in `js/data.js`. World 6 "Storm Relay" (build
-  113), world 7 "Abyss of Europa" (build 114), world 8 "The Rift Gate" (build 115); each next world is its own build on a branch stacked on the previous one. ChatGPT's packs
+  113), world 7 "Abyss of Europa" (build 114), world 8 "The Rift Gate" (build 115), world 9 "Brood World" (build 116); each next world is its own build on a branch stacked on the previous one. ChatGPT's packs
   over about 18 MB do not fit one chat upload: Konrad sends them split into parts. The 1.x worlds 2-4 (`LEGACY_WORLDS`) are no longer played. 2.0 free trial = worlds 1-2.
 - Music: the 2.0 theme is the menu music for good; no separate M1 track.
 

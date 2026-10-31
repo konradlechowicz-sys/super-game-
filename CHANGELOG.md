@@ -16,6 +16,13 @@ i wersja TEST (gracze tego nie widzą).
 
 - 
 
+## Build 116 · 2026-10-31
+- [Nowe] Świat 9 „Brood World” (pełna wersja): 6 sektorów (Living Ground, Breathing Fields, Spawning Pits, Acid Marsh, Egg Chambers, Brood Matriarch) w grafice ChatGPT. Świat lęgowy Kolektywu: oddychająca, żywa ziemia z żył i metalu, łukowate żebra, gniazda, skupiska jaj, świecące grzyby i organiczne ściany na brzegu areny.
+- [Nowe] Mechanika świata 9: jeziorka kwasu parzą statek, gdy w nie wleci, a gniazda wrastają w ziemię i wypuszczają larwy, dopóki się ich nie zniszczy. Zdarzenie świata to „ACID RAIN”, czyli ostrzał kwasem.
+- [Nowe] 6 wrogów świata 9: Larva (roje), Leech (szarżuje), Spitter (pluje z dystansu, elita w złotym pierścieniu), Nest (osadzone w ziemi, wypuszcza larwy), Brood Sac (pęka na larwy), Carapace Beetle (ciężki).
+- [Nowe] Boss BROOD MATRIARCH: matka roju. Pełznie za statkiem i obraca się w jego stronę, rzuca się na niego, pluje kwasem (ostrzał, salwy, spirale) i przez całą walkę składa larwy i pijawki. Ma 3 fazy.
+- [Nowe] Rekwizyty świata 9: worki lęgowe pełne kwasu (wybuchają) i serca gniazd (wypuszczają larwy, póki stoją; potem łup). Muzyka świata 9 (Suno): sektor i boss.
+
 ## Build 115 · 2026-10-31
 - [Nowe] Świat 8 „The Rift Gate” (pełna wersja): 6 sektorów (Shattered Space, Mirror Shards, Echoes of Home, Gate Rings, No Return, Gatekeeper) w grafice ChatGPT. Za Układem Słonecznym, nad gigantycznym pierścieniem wrót: wolno obracające się zakrzywione niebo, unoszące się szklane odłamki rzeczywistości, segmenty pierścieni, pylony strażników, uśpione oczy i ściany światła na brzegu areny.
 - [Nowe] Mechanika świata 8: pary szczelin. Statek, który wleci w szczelinę, wylatuje z jej pary (z krótką przerwą, żeby nie skakać w kółko). To samo dzieje się z pociskami wrogów, więc strzał może przyjść z drugiego końca areny. Zdarzenie świata to „GRAVITY TEAR”, czyli studnie grawitacyjne.

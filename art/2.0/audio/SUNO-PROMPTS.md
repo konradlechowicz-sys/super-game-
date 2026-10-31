@@ -580,7 +580,7 @@ Lyrics:
 | `w06-storm-relay-sector` / `-boss` | W6 | gotowe (2026-10-31), w grze (`game6`, `boss6`): pętle w `proto2/make-music.py` |
 | `w07-abyss-of-europa-sector` / `-boss` | W7 | gotowe (2026-10-31), w grze (`game7`, `boss7`): pętle w `proto2/make-music.py` |
 | `w08-rift-gate-sector` / `-boss` | W8 | gotowe (2026-10-31), w grze (`game8`, `boss8`): pętle w `proto2/make-music.py` |
-| `w09-brood-world-sector` / `-boss` | W9 | do zrobienia |
+| `w09-brood-world-sector` / `-boss` | W9 | gotowe (2026-10-31), w grze (`game9`, `boss9`): pętle w `proto2/make-music.py` |
 | `w10-nexus-sector` / `-boss` | W10 | do zrobienia |
 | `film-intro` | F1 intro (opcjonalnie) | do zrobienia |
 | `film-ending` | F2 zakończenie | do zrobienia |

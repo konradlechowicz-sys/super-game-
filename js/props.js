@@ -14,6 +14,8 @@
 // World 6 "Storm Relay": gas tanks (blast) and the relay's signal amplifiers (buff, then loot).
 // World 7 "Abyss of Europa": ice-locked pods (loot) and the Collective's spore lanterns (buff, then loot).
 // World 8 "The Rift Gate": the gate's ring capacitors (blast) and rift anchors (buff, then loot).
+// World 9 "Brood World": brood sacs full of acid (blast) and nest hearts that breed larvae while they stand (spawn, then
+// loot).
 // spawn: while it stands, it breeds that enemy every few seconds (world 9's nest hearts).
 // art/broken: textures (js/v2/renderer.js), size: drawn length in radii, glow: 'weak' point, soft 'halo' or magenta 'core'.
 import { TAU, rand, randi, lerp } from './util.js';
@@ -37,10 +39,12 @@ export const PROPS = {
   icepod: { hp: 40, r: 25, loot: true, art: 'w7-prop-ice-locked-pod-intact', broken: 'w7-prop-ice-locked-pod-shattered', size: 3.4, glow: 'halo' },
   sporelamp: { hp: 70, r: 25, buff: 240, loot: true, art: 'w7-prop-spore-lantern-intact', broken: 'w7-prop-spore-lantern-shattered', size: 3.6, glow: 'core' },
   ringcap: { hp: 45, r: 25, blast: 165, dmg: 70, hurt: 12, art: 'w8-prop-ring-capacitor-intact', broken: 'w8-prop-ring-capacitor-broken', size: 3.4, glow: 'halo' },
+  eggsac: { hp: 45, r: 25, blast: 160, dmg: 65, hurt: 12, art: 'w9-prop-brood-sac-intact', broken: 'w9-prop-brood-sac-burst', size: 3.4, glow: 'halo' },
+  nestheart: { hp: 90, r: 26, spawn: 'larva', loot: true, art: 'w9-prop-nest-heart-intact', broken: 'w9-prop-nest-heart-burst', size: 3.8, glow: 'core' },
   riftanchor: { hp: 70, r: 25, buff: 240, loot: true, art: 'w8-prop-rift-anchor-intact', broken: 'w8-prop-rift-anchor-broken', size: 3.6, glow: 'core' },
 };
 // the props of each world, in the order they come (the list repeats)
-const WORLD_PROPS = { 1: ['tank', 'tank', 'crate'], 2: ['flak', 'beacon', 'flak'], 3: ['mortarpost', 'pump', 'supply'], 4: ['crystal', 'pylon', 'drop'], 5: ['fueltank', 'capacitor', 'fueltank'], 6: ['gastank', 'amplifier', 'gastank'], 7: ['icepod', 'sporelamp', 'icepod'], 8: ['ringcap', 'riftanchor', 'ringcap'] };
+const WORLD_PROPS = { 1: ['tank', 'tank', 'crate'], 2: ['flak', 'beacon', 'flak'], 3: ['mortarpost', 'pump', 'supply'], 4: ['crystal', 'pylon', 'drop'], 5: ['fueltank', 'capacitor', 'fueltank'], 6: ['gastank', 'amplifier', 'gastank'], 7: ['icepod', 'sporelamp', 'icepod'], 8: ['ringcap', 'riftanchor', 'ringcap'], 9: ['eggsac', 'nestheart', 'eggsac'] };
 const START = 7, MAX_LIVE = 9, EVERY = 30, MAX_WRECKS = 12;
 let nextId = -1; // negative, so a prop never shares an id with an enemy
 

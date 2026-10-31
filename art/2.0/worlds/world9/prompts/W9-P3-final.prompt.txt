@@ -1,0 +1,26 @@
+STYLE (keep identical across all images):
+Game art for "Void Blaster", a top-down mobile space shooter (survivors-like).
+Camera: top-down orthographic, looking straight down, no perspective.
+Look: stylized sci-fi with a neon accent. Dark, rich materials (gunmetal, carbon,
+matte ceramic) lit from the top-left, glowing edges and emissive lights only where
+noted. Detail level: high but clean - panel lines, vents, rivets; no grunge overload.
+The background must stay dark and calm so bright game objects read on top of it:
+no bright cyan anywhere (cyan belongs to the player), magenta only as thin traces.
+Rendering: crisp edges, soft bloom on glowing parts only, no motion blur, no depth of
+field, not photorealistic. No text, no logo, no watermark.
+
+WORLD 9 "BROOD WORLD": the breeding world of the Void Collective (an alien machine
+intelligence): the ground is living tissue fused with metal plates, it breathes; nests
+hatch enemies. STYLIZED, never realistic flesh, no blood, no gore. Dark matte tissue
+#2a0f18/#4a1a28 with veins #6e2a40, embedded metal #3a3440, acid green #9dff3d,
+bioluminescent violet #7a3dff and small pale pink points #ff8fbf. The floor is NOT
+glowing magenta (magenta #ff2d95 is only in enemy cores). Weak light from below, from
+bioluminescence and acid. Mood: inside a living organism. 30% machine, 70% organic.
+
+TASK: Seamless tileable floor texture 1024x1024: dark matte stylized tissue seen from
+above with thin veins and small embedded metal plates, a few faint bioluminescent
+specks. Very low contrast, no landmarks, no gore. Tiles on all four edges. Deliver
+the single tile.
+
+PRODUCTION NOTES (the attached approved P1 is a style/material reference, not a composition to reproduce):
+Single square full-frame material tile 1024x1024, not arena, no objects, no border, no vignette. Very dark MATTE stylized burgundy membrane, branching thin low-contrast veins and sparse SMALL embedded angular gunmetal plates. Maximum luminance 30 percent, no shiny wet highlights, no realistic flesh or gore, no bright magenta. Low-density faint violet specks. Uniform scale and visual weight across image, no central landmark; all four edges tile perfectly. The tissue is a stylized science-fiction material, clean broad forms, not photographic skin.

@@ -34,6 +34,12 @@ export const CFG = {
     glow: { 'dormant-sentinel-eye': 0xff2d95, 'guardian-pylon': 0xb9a8ff },
     near: { alpha: 0.5, drift: [8, 4] },
   },
+  9: {
+    floor: { scale: 0.8, tint: 0xc4c0b8 },
+    decor: [['metal-rib-arch', 260, 2], ['nest', 230, 2], ['egg-sac-cluster', 190, 3], ['bioluminescent-fungi', 140, 4], ['vein-knot', 140, 3], ['small-egg', 80, 5]],
+    glow: { 'bioluminescent-fungi': 0x9dff3d, 'egg-sac-cluster': 0xff2d95 },
+    near: { alpha: 0.5, drift: [3, 6] },
+  },
 };
 
 function rng(seed) {

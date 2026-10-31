@@ -133,6 +133,15 @@ export const ENEMIES = {
   nullorb: { hp: 52, speed: 42, dmg: 8, r: 16, xp: 4, color: '#ff4dd8', shape: 'eye', ai: 'seeker' },
   riftspawner: { hp: 110, speed: 0, dmg: 8, r: 18, xp: 5, color: '#c46bff', shape: 'turret', ai: 'nest', spawn: 'shardunit' },
   sentinel: { hp: 290, speed: 26, dmg: 15, r: 21, xp: 9, color: '#e9c4ff', shape: 'square', ai: 'shoot', shots: 4, fire: 3.8 },
+  // 2.0 world 9 "Brood World": the Collective's brood, flesh and metal. The leech lunges, the spitter keeps its distance
+  // and spits, the nest is grown into the ground and breeds larvae (ai 'nest'), the brood sac bursts into larvae, the
+  // carapace beetle is the heavy one.
+  larva: { hp: 10, speed: 140, dmg: 5, r: 9, xp: 1, color: '#8fd35a', shape: 'dart', pack: [4, 6] },
+  leech: { hp: 38, speed: 68, dmg: 9, r: 13, xp: 3, color: '#ff4dd8', shape: 'diamond', ai: 'dash' },
+  spitter: { hp: 44, speed: 50, dmg: 9, r: 14, xp: 3, color: '#9dff3d', shape: 'hex', ai: 'shoot', shots: 3, fire: 3.2 },
+  nest: { hp: 120, speed: 0, dmg: 8, r: 19, xp: 5, color: '#ff2d95', shape: 'turret', ai: 'nest', spawn: 'larva' },
+  broodsac: { hp: 90, speed: 34, dmg: 10, r: 17, xp: 5, color: '#c46bff', shape: 'circle', split: 'larva' },
+  beetle: { hp: 310, speed: 26, dmg: 16, r: 22, xp: 9, color: '#6a8a4a', shape: 'square' },
 };
 
 export const BOSSES = {
@@ -195,6 +204,13 @@ export const BOSSES = {
     name: 'GATEKEEPER', hp: 4800, speed: 55, dmg: 20, r: 84, color: '#b9a8ff', inner: '#ff2d95', sides: 8,
     move: 'float', rest: 1.4, phases: [0.6, 0.3], attacks: ['teleport', 'spiral', 'beams', 'summon', 'burst', 'teleport'],
     summon: ['shardunit', 'echo'], bulletDmg: 8, bulletSpeed: 0.9, burstN: 18, summonN: 4, bgSpawn: 0.1,
+  },
+  // 2.0 world 9: the Brood Matriarch, the mother of the brood. She crawls after the ship and lunges (charge), spits acid
+  // (mortar, burst, spiral) and lays larvae and leeches the whole fight.
+  matriarch: {
+    name: 'BROOD MATRIARCH', hp: 5000, speed: 30, dmg: 22, r: 86, color: '#9dff3d', inner: '#ff2d95', sides: 8,
+    move: 'chase', rest: 1.5, phases: [0.6, 0.3], attacks: ['summon', 'mortar', 'charge', 'burst', 'summon', 'spiral'],
+    summon: ['larva', 'leech'], bulletDmg: 8, bulletSpeed: 0.9, burstN: 18, summonN: 5, bgSpawn: 0.1,
   },
   serpent: {
     name: 'CRYSTAL SERPENT', hp: 15000, speed: 120, dmg: 22, r: 34, color: '#2ff3ff', inner: '#b4fff0', sides: 5,
@@ -727,6 +743,13 @@ const W8_8 = journey(8, ['Shattered Space', 'Mirror Shards', 'Echoes of Home', '
   { swarm: 'shardunit', basic: 'phasewalker', a: 'echo', b: 'nullorb', fixed: 'riftspawner', tank: 'sentinel', boss: 'gatekeeper' },
   (t) => ({ t, type: 'well', count: 2, msg: 'GRAVITY TEAR' }), 'SHARD SWARM');
 
+// World 9 of 2.0, "Brood World": the Collective's breeding world, where the ground breathes. The world's mechanic:
+// acid pools that burn the ship (js/worldfx.js) and nests that breed larvae (the nest enemy, the nest-heart prop);
+// acid rain (mortar) as its event.
+const W9_9 = journey(9, ['Living Ground', 'Breathing Fields', 'Spawning Pits', 'Acid Marsh', 'Egg Chambers', 'Brood Matriarch'],
+  { swarm: 'larva', basic: 'spitter', a: 'leech', b: 'broodsac', fixed: 'nest', tank: 'beetle', boss: 'matriarch' },
+  (t) => ({ t, type: 'mortar', count: 8, msg: 'ACID RAIN' }), 'LARVA SWARM');
+
 // The 2.0 worlds after world 1 keep their own kill goals; their elites are counted for the 3rd star (world 2 missed
 // that until build 106: its 3rd star could not be won). World 2's elites stay without traits (Konrad tests its
 // difficulty first); world 3's carry one trait each, like world 1's.
@@ -741,7 +764,7 @@ const ELITE_TRAITS_2 = {
 // worlds 6-10: one trait each, two on the double-elite sectors, cycling through the traits
 const CYCLE = ['swift', 'shielded', 'berserker', 'commander', 'bulwark'];
 for (let w = 6, k = 0; w <= 10; w++) for (let n = 1; n <= 6; n++) ELITE_TRAITS_2[`${w}-${n}`] = (n === 4 || n === 5 ? [0, 1] : [0]).map(() => [CYCLE[k++ % CYCLE.length]]);
-for (const st of [...W2_2, ...W3_3, ...W4_4, ...W5_5, ...W6_6, ...W7_7, ...W8_8]) {
+for (const st of [...W2_2, ...W3_3, ...W4_4, ...W5_5, ...W6_6, ...W7_7, ...W8_8, ...W9_9]) {
   st.elites = st.events.filter((e) => e.type === 'elite').length;
   const list = (!W2_2.includes(st) && ELITE_TRAITS_2[st.id]) || [];
   st.events.filter((e) => e.type === 'elite').forEach((e, i) => {
@@ -767,13 +790,11 @@ export const WORLD_TUNING = {
   10: { dmg: 2.1, ramp: 0.46, hp: 1.37, elite: 1.52, boss: 1.42 },
 };
 
-// The 2.0 journey (decided by Konrad, 2026-10-28): worlds 1-8 are built; worlds 9-10 are under construction. The map
+// The 2.0 journey (decided by Konrad, 2026-10-28): worlds 1-9 are built; world 10 is under construction. The map
 // shows them with their story and planned sectors (Art Bible, table "Nazwy sektorów"); when a world is built, it gets
 // its stages and drops `soon`. The 1.x worlds 2-4 below (W2-W4, LEGACY_WORLDS) are no longer played; they stay as a
 // starting point for tuning the new worlds.
 const PLANNED_WORLDS = [
-  [9, 'Brood World', '#8fd35a', 'The Collective\'s breeding world. The ground breathes.',
-    ['Living Ground', 'Breathing Fields', 'Spawning Pits', 'Acid Marsh', 'Egg Chambers', 'Brood Matriarch']],
   [10, 'The Nexus', '#ff2d95', 'The heart of the Collective, and the end of the journey.',
     ['Neural Shore', 'Synapse Storm', 'Broken Geometry', 'Heartbeat', 'The Cage', 'Void Heart']],
 ];
@@ -812,6 +833,10 @@ export const WORLDS = [
   {
     id: 8, name: 'The Rift Gate', color: '#b9a8ff', stages: W8_8, music: 'game8', bossMusic: 'boss8',
     theme: { top: '#120a24', bottom: '#04020a', neb: ['#3a2a5a', '#b9a8ff', '#ff2d95'], grid: '#7a6aa0' },
+  },
+  {
+    id: 9, name: 'Brood World', color: '#8fd35a', stages: W9_9, music: 'game9', bossMusic: 'boss9',
+    theme: { top: '#121c0a', bottom: '#040702', neb: ['#2a4a1c', '#8fd35a', '#ff2d95'], grid: '#5a8a3a' },
   },
   ...PLANNED_WORLDS.map(([id, name, color, story, plan]) => ({ id, name, color, story, plan, stages: [], soon: true })),
 ];

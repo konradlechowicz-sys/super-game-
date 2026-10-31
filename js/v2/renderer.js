@@ -39,6 +39,8 @@ const ENEMY_ART = {
   icewisp: 0xff2d95, frostcrab: 0xff2d95, tmine: 0xff2d95, lantern: 0xff2d95, eel: 0xff2d95, lspawn: 0xff2d95,
   // world 8
   shardunit: 0xff2d95, echo: 0xff2d95, phasewalker: 0xff2d95, nullorb: 0xff2d95, riftspawner: 0xff2d95, sentinel: 0xff2d95,
+  // world 9
+  larva: 0x9dff3d, leech: 0xff2d95, spitter: 0x9dff3d, nest: 0xff2d95, broodsac: 0xff2d95, beetle: 0x9dff3d,
 };
 // the bosses of worlds 6-10: their world (textures wN-boss, wN-boss-<phase>; glows at ASSETS.journey[N].weak), whether
 // they turn to face the ship as they move (face) or spin slowly (spin, turns per second)
@@ -46,6 +48,7 @@ const JOURNEY_BOSS = {
   stormeye: { w: 6, spin: 0.08 },
   leviathan: { w: 7, face: true },
   gatekeeper: { w: 8, spin: 0.06 },
+  matriarch: { w: 9, face: true },
 };
 const ENEMY_SIZE = 2.8; // sprite size in enemy radii
 const DEBRIS_MAX = 160; // enemy debris fragments flying at once (W1 P7); the oldest is reused past that
