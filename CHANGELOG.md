@@ -22,6 +22,7 @@ i wersja TEST (gracze tego nie widzą).
 - [Nowe] 6 wrogów świata 8: Shard Swarm Unit (roje), Echo (pojawia się obok statku), Phase Walker (szarżuje, elita w złotym pierścieniu), Null Orb (pociski samonaprowadzające), Rift Spawner (osadzony w przestrzeni, wypuszcza roje odłamków), Gate Sentinel (ciężki, strzela).
 - [Nowe] Boss GATEKEEPER: trzy obracające się pierścienie wrót wokół rdzenia. Zagina przestrzeń (teleport), strzela spiralami i wiązkami przez portale, wysyła roje i echa. Ma 3 fazy.
 - [Nowe] Rekwizyty świata 8: kondensatory pierścieni (wybuchają) i kotwice szczelin (wzmacniają wrogów wokół). Muzyka świata 8 (Suno): sektor i boss.
+- [Narzędzia] Podgląd na claude.ai: grafiki 2.0 idą w kilku plikach zbiorczych (jeden na świat i jeden wspólny) zamiast ponad 400 osobnych, bo wersja podglądu mieści najwyżej 511 plików. Gra w aplikacji się nie zmienia.
 
 ## Build 114 · 2026-10-31
 - [Nowe] Świat 7 „Abyss of Europa” (pełna wersja): 6 sektorów (Ice Shelf, Thin Ice, Glow Beneath, Cold Hatchery, The Deep Call, Abyss Leviathan) w grafice ChatGPT. Pod półprzezroczystym lodem Europy widać ciemny ocean ze świecącym życiem; są lodowe iglice, zamarznięte hybrydy, zielono świecące szczeliny, parujące kominy i lodowe ściany na brzegu areny.

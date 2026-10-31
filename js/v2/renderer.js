@@ -70,7 +70,10 @@ export async function createV2Renderer(app) {
   // waits for 'load' rather than img.decode(): with hundreds of pictures at once (worlds 1-10), decode() can give up
   // with "the source image cannot be decoded"; a picture that fails is tried once more
   const load = (url) => new Promise((ok, no) => { const img = new Image(); img.onload = () => ok(img); img.onerror = no; img.src = url; });
-  await Promise.all(Object.entries(ASSETS.images).map(async ([name, url]) => {
+  // the web previews keep the pictures in packs (scripts/v2-assets.mjs): JSON files of data URLs
+  const all = { ...ASSETS.images };
+  for (const pack of await Promise.all((ASSETS.packs || []).map((u) => fetch(u).then((r) => r.json())))) Object.assign(all, pack);
+  await Promise.all(Object.entries(all).map(async ([name, url]) => {
     const img = await load(url).catch(() => load(url));
     imgs[name] = img;
     tex[name] = Texture.from(img);
