@@ -16,6 +16,9 @@ i wersja TEST (gracze tego nie widzą).
 
 - 
 
+## Build 122 · 2026-10-31
+- [Narzędzia] Nazwy wszystkich 10 światów i 60 sektorów zatwierdzone przez Konrada (Art Bible i CLAUDE.md). Gra się nie zmienia: te nazwy już w niej są.
+
 ## Build 121 · 2026-10-31
 - [Zmiana] Każdy zapis sprzed 2.0 zaczyna podróż od świata 1, także zapis z wcześniejszych testowych buildów 2.0 z postępem w światach 5–10 (w buildzie 120 taki zostawał bez zmian). Kto grał wcześniej, dostaje monety weterana i ekran powitalny.
 
