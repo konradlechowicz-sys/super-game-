@@ -16,6 +16,14 @@ i wersja TEST (gracze tego nie widzą).
 
 - 
 
+## Build 114 · 2026-10-31
+- [Nowe] Świat 7 „Abyss of Europa” (pełna wersja): 6 sektorów (Ice Shelf, Thin Ice, Glow Beneath, Cold Hatchery, The Deep Call, Abyss Leviathan) w grafice ChatGPT. Pod półprzezroczystym lodem Europy widać ciemny ocean ze świecącym życiem; są lodowe iglice, zamarznięte hybrydy, zielono świecące szczeliny, parujące kominy i lodowe ściany na brzegu areny.
+- [Nowe] Mechanika świata 7: śliski lód. Statek ma bezwładność, ślizga się i dopiero po chwili skręca tam, gdzie go kierujesz. Spod lodu wynurzają się węgorze-hybrydy: znikają i pojawiają się obok statku. Zdarzenie świata to fala „BENEATH THE ICE”.
+- [Nowe] 6 wrogów świata 7: Ice Wisp (roje), Frost Crab (elita w złotym pierścieniu), Tentacle Mine (wybucha przy statku), Spore Lantern (osadzona w lodzie, strzela dookoła), Eel Hybrid (wynurza się spod lodu), Leviathan Spawn (ciężki, rozpada się na Ice Wisp).
+- [Nowe] Boss ABYSS LEVIATHAN: przepisane morskie życie wielkości okrętu. Obraca się w stronę statku, szarżuje, macki zamiatają wiązkami, do tego salwy, spirale, ostrzał i posiłki. Ma 3 fazy.
+- [Nowe] Rekwizyty świata 7: kapsuły uwięzione w lodzie (łup) i zarodnikowe latarnie Kolektywu (wzmacniają wrogów wokół). Muzyka świata 7 (Suno): sektor i boss.
+- [Poprawka] Grafiki 2.0 wczytują się odporniej: przy kilkuset obrazkach naraz przeglądarka czasem odmawiała ich dekodowania i gra spadała do wyglądu 1.x.
+
 ## Build 113 · 2026-10-31
 - [Nowe] Świat 6 „Storm Relay” (pełna wersja): 6 sektorów (Gas Giant, Ion Winds, Antenna Field, Living Signal, Deep Transmission, Storm Eye) w grafice ChatGPT. Lot nad burzami Jowisza: pod statkiem przesuwają się kłęby chmur gazowego olbrzyma, w burzy unoszą się mosiężne platformy przekaźnika, są anteny, piorunochrony i świecące cewki, a brzeg areny tworzą ściany burzy z piorunami.
 - [Nowe] Mechanika świata 6: porywy wiatru. Co kilkanaście sekund baner „WIND SHEAR” i przez kilka sekund wiatr spycha statek i pociski wrogów, a chmury i nakładka płyną z wiatrem. Burze piorunów (ostrzał) jako zdarzenie świata.

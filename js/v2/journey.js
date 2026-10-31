@@ -20,6 +20,13 @@ export const CFG = {
     glow: { 'coil-node': 0xff2d95, 'lightning-rod': 0xffd27a },
     near: { alpha: 0.65, drift: [26, 6] },
   },
+  7: {
+    far: { mode: 'tile', parallax: 0.22, drift: [3, 5], tint: 0xb0c0d0, tileScale: 1 },
+    floor: { scale: 0.8, tint: 0xc8d0e0 },
+    decor: [['ice-spire-cluster', 210, 3], ['frozen-hybrid-carcass', 190, 2], ['green-lit-crevasse', 220, 3], ['steaming-vent', 110, 4], ['circuit-vine-knot', 120, 3], ['ice-boulder', 120, 4]],
+    glow: { 'green-lit-crevasse': 0x3dff8a, 'steaming-vent': 0x8fb4ff },
+    near: { alpha: 0.55, drift: [4, 10] },
+  },
 };
 
 function rng(seed) {

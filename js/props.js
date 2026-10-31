@@ -12,6 +12,7 @@
 // World 4 "Red Conversion": crystal clusters (blast), converted pylons (buff, then loot), supply drops (loot).
 // World 5 "Foundry Belt": the factory's fuel tanks (blast) and power capacitors (buff, then loot).
 // World 6 "Storm Relay": gas tanks (blast) and the relay's signal amplifiers (buff, then loot).
+// World 7 "Abyss of Europa": ice-locked pods (loot) and the Collective's spore lanterns (buff, then loot).
 // spawn: while it stands, it breeds that enemy every few seconds (world 9's nest hearts).
 // art/broken: textures (js/v2/renderer.js), size: drawn length in radii, glow: 'weak' point, soft 'halo' or magenta 'core'.
 import { TAU, rand, randi, lerp } from './util.js';
@@ -32,9 +33,11 @@ export const PROPS = {
   capacitor: { hp: 70, r: 25, buff: 240, loot: true, art: 'w5-prop-power-capacitor-intact', broken: 'w5-prop-power-capacitor-destroyed', size: 3.6, glow: 'core' },
   gastank: { hp: 40, r: 26, blast: 160, dmg: 65, hurt: 12, art: 'w6-prop-gas-tank-intact', broken: 'w6-prop-gas-tank-exploded', size: 3.4, glow: 'weak' },
   amplifier: { hp: 70, r: 25, buff: 240, loot: true, art: 'w6-prop-signal-amplifier-intact', broken: 'w6-prop-signal-amplifier-exploded', size: 3.6, glow: 'core' },
+  icepod: { hp: 40, r: 25, loot: true, art: 'w7-prop-ice-locked-pod-intact', broken: 'w7-prop-ice-locked-pod-shattered', size: 3.4, glow: 'halo' },
+  sporelamp: { hp: 70, r: 25, buff: 240, loot: true, art: 'w7-prop-spore-lantern-intact', broken: 'w7-prop-spore-lantern-shattered', size: 3.6, glow: 'core' },
 };
 // the props of each world, in the order they come (the list repeats)
-const WORLD_PROPS = { 1: ['tank', 'tank', 'crate'], 2: ['flak', 'beacon', 'flak'], 3: ['mortarpost', 'pump', 'supply'], 4: ['crystal', 'pylon', 'drop'], 5: ['fueltank', 'capacitor', 'fueltank'], 6: ['gastank', 'amplifier', 'gastank'] };
+const WORLD_PROPS = { 1: ['tank', 'tank', 'crate'], 2: ['flak', 'beacon', 'flak'], 3: ['mortarpost', 'pump', 'supply'], 4: ['crystal', 'pylon', 'drop'], 5: ['fueltank', 'capacitor', 'fueltank'], 6: ['gastank', 'amplifier', 'gastank'], 7: ['icepod', 'sporelamp', 'icepod'] };
 const START = 7, MAX_LIVE = 9, EVERY = 30, MAX_WRECKS = 12;
 let nextId = -1; // negative, so a prop never shares an id with an enemy
 

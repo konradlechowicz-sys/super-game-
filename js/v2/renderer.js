@@ -35,11 +35,14 @@ const ENEMY_ART = {
   fdrone: 0xff2d95, welder: 0xff2d95, aturret: 0xff2d95, drifter: 0xff2d95, hauler: 0xff2d95, wmech: 0xff2d95,
   // world 6 (proto2/make-worlds.py)
   ionkite: 0xff2d95, gasmine: 0xff2d95, jelly: 0xff2d95, staticray: 0xff2d95, vortex: 0xff2d95, cloudwhale: 0xff2d95,
+  // world 7
+  icewisp: 0xff2d95, frostcrab: 0xff2d95, tmine: 0xff2d95, lantern: 0xff2d95, eel: 0xff2d95, lspawn: 0xff2d95,
 };
 // the bosses of worlds 6-10: their world (textures wN-boss, wN-boss-<phase>; glows at ASSETS.journey[N].weak), whether
 // they turn to face the ship as they move (face) or spin slowly (spin, turns per second)
 const JOURNEY_BOSS = {
   stormeye: { w: 6, spin: 0.08 },
+  leviathan: { w: 7, face: true },
 };
 const ENEMY_SIZE = 2.8; // sprite size in enemy radii
 const DEBRIS_MAX = 160; // enemy debris fragments flying at once (W1 P7); the oldest is reused past that
@@ -61,10 +64,11 @@ export async function createV2Renderer(app) {
     antialias: true, autoStart: false, powerPreference: 'high-performance',
   });
   const tex = {}, imgs = {};
+  // waits for 'load' rather than img.decode(): with hundreds of pictures at once (worlds 1-10), decode() can give up
+  // with "the source image cannot be decoded"; a picture that fails is tried once more
+  const load = (url) => new Promise((ok, no) => { const img = new Image(); img.onload = () => ok(img); img.onerror = no; img.src = url; });
   await Promise.all(Object.entries(ASSETS.images).map(async ([name, url]) => {
-    const img = new Image();
-    img.src = url;
-    await img.decode();
+    const img = await load(url).catch(() => load(url));
     imgs[name] = img;
     tex[name] = Texture.from(img);
   }));

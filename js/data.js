@@ -116,6 +116,15 @@ export const ENEMIES = {
   staticray: { hp: 42, speed: 64, dmg: 10, r: 15, xp: 3, color: '#ff3d9a', shape: 'diamond', ai: 'dash' },
   vortex: { hp: 120, speed: 32, dmg: 10, r: 17, xp: 5, color: '#c84dff', shape: 'circle', ai: 'vortex', spin: 2.5 },
   cloudwhale: { hp: 300, speed: 26, dmg: 15, r: 23, xp: 9, color: '#e3b778', shape: 'square', split: 'ionkite' },
+  // 2.0 world 7 "Abyss of Europa": rewritten sea life under the ice. The eel hybrid dives under the ice and comes up
+  // next to the ship (ai 'blink'), the spore lantern is set in the ice and fires all around, the leviathan spawn
+  // bursts into ice wisps.
+  icewisp: { hp: 10, speed: 135, dmg: 5, r: 10, xp: 1, color: '#4fd1e0', shape: 'dart', pack: [3, 5] },
+  frostcrab: { hp: 44, speed: 66, dmg: 9, r: 14, xp: 3, color: '#8fb4ff', shape: 'hex' },
+  tmine: { hp: 26, speed: 90, dmg: 6, r: 12, xp: 2, color: '#ff4dd8', shape: 'bomb', ai: 'fuse', spin: 1.5 },
+  lantern: { hp: 80, speed: 0, dmg: 8, r: 15, xp: 4, color: '#3dff8a', shape: 'turret', ai: 'turret' },
+  eel: { hp: 50, speed: 70, dmg: 10, r: 17, xp: 4, color: '#4fd1e0', shape: 'wraith', ai: 'blink' },
+  lspawn: { hp: 290, speed: 28, dmg: 15, r: 22, xp: 9, color: '#7a5cff', shape: 'square', split: 'icewisp' },
 };
 
 export const BOSSES = {
@@ -164,6 +173,13 @@ export const BOSSES = {
     name: 'STORM EYE', hp: 4600, speed: 60, dmg: 20, r: 82, color: '#ff2d95', inner: '#e3b778', sides: 8,
     move: 'float', rest: 1.5, phases: [0.6, 0.3], attacks: ['spiral', 'mortar', 'summon', 'beams', 'burst', 'mortar'],
     summon: ['ionkite', 'staticray'], bulletDmg: 8, bulletSpeed: 0.9, burstN: 18, summonN: 4, bgSpawn: 0.1,
+  },
+  // 2.0 world 7: the Abyss Leviathan, rewritten sea life the size of a ship, breaking up through the ice: it charges,
+  // sweeps its tentacles (beams), sprays bursts and spirals, shells the ice and sends wisps and tentacle mines.
+  leviathan: {
+    name: 'ABYSS LEVIATHAN', hp: 4800, speed: 34, dmg: 22, r: 84, color: '#4fd1e0', inner: '#ff2d95', sides: 8,
+    move: 'chase', rest: 1.5, phases: [0.6, 0.3], attacks: ['charge', 'burst', 'summon', 'spiral', 'beams', 'mortar'],
+    summon: ['icewisp', 'tmine'], bulletDmg: 8, bulletSpeed: 0.9, burstN: 18, summonN: 4, bgSpawn: 0.1,
   },
   serpent: {
     name: 'CRYSTAL SERPENT', hp: 15000, speed: 120, dmg: 22, r: 34, color: '#2ff3ff', inner: '#b4fff0', sides: 5,
@@ -684,6 +700,12 @@ const W6_6 = journey(6, ['Gas Giant', 'Ion Winds', 'Antenna Field', 'Living Sign
 // vortices drift through the storm from the 2nd sector on
 for (const s of W6_6.slice(1)) s.enemies.push(['vortex', 45, 2]);
 
+// World 7 of 2.0, "Abyss of Europa": under Europa's ice, alien sea life has been rewritten. The world's mechanic:
+// slippery ice (the ship slides, js/worldfx.js) and enemies that come up from under it (the eel hybrid; the event).
+const W7_7 = journey(7, ['Ice Shelf', 'Thin Ice', 'Glow Beneath', 'Cold Hatchery', 'The Deep Call', 'Abyss Leviathan'],
+  { swarm: 'icewisp', basic: 'frostcrab', a: 'eel', b: 'tmine', fixed: 'lantern', tank: 'lspawn', boss: 'leviathan' },
+  (t) => ({ t, type: 'ring', enemy: 'eel', count: 10, msg: 'BENEATH THE ICE' }), 'WISP SWARM');
+
 // The 2.0 worlds after world 1 keep their own kill goals; their elites are counted for the 3rd star (world 2 missed
 // that until build 106: its 3rd star could not be won). World 2's elites stay without traits (Konrad tests its
 // difficulty first); world 3's carry one trait each, like world 1's.
@@ -698,7 +720,7 @@ const ELITE_TRAITS_2 = {
 // worlds 6-10: one trait each, two on the double-elite sectors, cycling through the traits
 const CYCLE = ['swift', 'shielded', 'berserker', 'commander', 'bulwark'];
 for (let w = 6, k = 0; w <= 10; w++) for (let n = 1; n <= 6; n++) ELITE_TRAITS_2[`${w}-${n}`] = (n === 4 || n === 5 ? [0, 1] : [0]).map(() => [CYCLE[k++ % CYCLE.length]]);
-for (const st of [...W2_2, ...W3_3, ...W4_4, ...W5_5, ...W6_6]) {
+for (const st of [...W2_2, ...W3_3, ...W4_4, ...W5_5, ...W6_6, ...W7_7]) {
   st.elites = st.events.filter((e) => e.type === 'elite').length;
   const list = (!W2_2.includes(st) && ELITE_TRAITS_2[st.id]) || [];
   st.events.filter((e) => e.type === 'elite').forEach((e, i) => {
@@ -724,13 +746,11 @@ export const WORLD_TUNING = {
   10: { dmg: 2.1, ramp: 0.46, hp: 1.37, elite: 1.52, boss: 1.42 },
 };
 
-// The 2.0 journey (decided by Konrad, 2026-10-28): worlds 1-6 are built; worlds 7-10 are under construction. The map
+// The 2.0 journey (decided by Konrad, 2026-10-28): worlds 1-7 are built; worlds 8-10 are under construction. The map
 // shows them with their story and planned sectors (Art Bible, table "Nazwy sektorów"); when a world is built, it gets
 // its stages and drops `soon`. The 1.x worlds 2-4 below (W2-W4, LEGACY_WORLDS) are no longer played; they stay as a
 // starting point for tuning the new worlds.
 const PLANNED_WORLDS = [
-  [7, 'Abyss of Europa', '#4fd1e0', 'Under Europa\'s ice, alien sea life has been rewritten.',
-    ['Ice Shelf', 'Thin Ice', 'Glow Beneath', 'Cold Hatchery', 'The Deep Call', 'Abyss Leviathan']],
   [8, 'The Rift Gate', '#b9a8ff', 'The gate out of the Solar System. There is no way back.',
     ['Shattered Space', 'Mirror Shards', 'Echoes of Home', 'Gate Rings', 'No Return', 'Gatekeeper']],
   [9, 'Brood World', '#8fd35a', 'The Collective\'s breeding world. The ground breathes.',
@@ -765,6 +785,10 @@ export const WORLDS = [
   {
     id: 6, name: 'Storm Relay', color: '#e3b778', stages: W6_6, music: 'game6', bossMusic: 'boss6',
     theme: { top: '#2a1c10', bottom: '#0a0604', neb: ['#5a3a1c', '#e3b778', '#ff2d95'], grid: '#b08850' },
+  },
+  {
+    id: 7, name: 'Abyss of Europa', color: '#4fd1e0', stages: W7_7, music: 'game7', bossMusic: 'boss7',
+    theme: { top: '#0a1a2a', bottom: '#020610', neb: ['#1c3a5a', '#4fd1e0', '#7a5cff'], grid: '#5a7aa0' },
   },
   ...PLANNED_WORLDS.map(([id, name, color, story, plan]) => ({ id, name, color, story, plan, stages: [], soon: true })),
 ];
