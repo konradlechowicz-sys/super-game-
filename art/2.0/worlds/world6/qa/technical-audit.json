@@ -1,0 +1,626 @@
+{
+  "world": 6,
+  "passed": true,
+  "errors": [],
+  "checks": {
+    "W6-P1-arena-concept.png": {
+      "size": [
+        941,
+        1672
+      ],
+      "mode": "RGB",
+      "sha256": "7050b3751a313f63f3d1dd200fb5d6215217273f42ab3f7ee160e2d3df92ed30"
+    },
+    "W6-P2-background.png": {
+      "size": [
+        2048,
+        1024
+      ],
+      "mode": "RGB",
+      "sha256": "82d00310a1fabef7bfa10e3820c512d90c77f5a98e807f1b1d1f44789e98b86b",
+      "seams": {
+        "horizontal_exact": true,
+        "vertical_exact": false
+      }
+    },
+    "W6-P3-platforms-sheet.png": {
+      "size": [
+        2280,
+        820
+      ],
+      "mode": "RGB",
+      "sha256": "b68ec603a8b70ea415e789eaa431d30e600a2e1703df892c3ba47557b257b92a"
+    },
+    "W6-P3-platforms/W6-P3-1.png": {
+      "size": [
+        611,
+        704
+      ],
+      "mode": "RGB",
+      "sha256": "d0e249267d93acd090adfc636365777b4f71746326af070cb9d552d5fb6ed3a0",
+      "max_luminance": 0.2999780392156862
+    },
+    "W6-P3-platforms/W6-P3-2.png": {
+      "size": [
+        596,
+        664
+      ],
+      "mode": "RGB",
+      "sha256": "14257f1806814791c1119de1c966d7855e53e0b976be3cce0b054cb1b9d11dfd",
+      "max_luminance": 0.299998431372549
+    },
+    "W6-P3-platforms/W6-P3-3.png": {
+      "size": [
+        446,
+        624
+      ],
+      "mode": "RGB",
+      "sha256": "1901552dd749b66ea4ecfd8363c590582c53cc08664b773447579347fb4d5941",
+      "max_luminance": 0.2999513725490196
+    },
+    "W6-P4-overlay.png": {
+      "size": [
+        1024,
+        1024
+      ],
+      "mode": "RGB",
+      "sha256": "9bd18e6de47597a072ebfcef87b6eb837064a304dd4a4c77f1fe1fd77eb69e41",
+      "seams": {
+        "horizontal_exact": true,
+        "vertical_exact": true
+      },
+      "near_black_fraction": 0.8000850677490234
+    },
+    "W6-P5-props-sheet.png": {
+      "size": [
+        1600,
+        1200
+      ],
+      "mode": "RGB",
+      "sha256": "2a324dbc9a68b202fe5bda69210b1ca37cae225833bf353f597dc50fa0761d49"
+    },
+    "W6-P5-props/W6-P5-relay-antenna.png": {
+      "size": [
+        324,
+        309
+      ],
+      "mode": "RGB",
+      "sha256": "73a9deb61f2d83f149d9d8d56a8ff980da9ae8bc6d3c8ddb71ef8396d55e4b2f"
+    },
+    "W6-P5-props/W6-P5-lightning-rod.png": {
+      "size": [
+        262,
+        304
+      ],
+      "mode": "RGB",
+      "sha256": "0d99e1af47f60f92182b66dccd4b3d3038ab66b9c8e97eedc52ce64e73abf7f5"
+    },
+    "W6-P5-props/W6-P5-cable-tissue-tangle.png": {
+      "size": [
+        262,
+        304
+      ],
+      "mode": "RGB",
+      "sha256": "960af89b534b09f0959cab8c792c7a88061f03ef31f3a1d52146a923031f41b5"
+    },
+    "W6-P5-props/W6-P5-gas-mine-balloon.png": {
+      "size": [
+        120,
+        124
+      ],
+      "mode": "RGB",
+      "sha256": "f572e6955a4aab18c0cc317337a43700663dda77505aa72e4c3aaacadc239ee5"
+    },
+    "W6-P5-props/W6-P5-coil-node.png": {
+      "size": [
+        122,
+        124
+      ],
+      "mode": "RGB",
+      "sha256": "85795a48d29600c85637f71e227f123ff7be78546e83d4d23d7fc9789c34fcb6"
+    },
+    "W6-P5-props/W6-P5-broken-bronze-panel.png": {
+      "size": [
+        124,
+        116
+      ],
+      "mode": "RGB",
+      "sha256": "21aaaf95bdd49be9649a595241e325a0ed3dfea685542142a706ec9b42e7c7d8"
+    },
+    "W6-P5-props/W6-P5-signal-amplifier-intact.png": {
+      "size": [
+        199,
+        204
+      ],
+      "mode": "RGB",
+      "sha256": "37c9a7757f97dcc358e96381752b477eeaabab64c64766638ef7b86aa0bfb126"
+    },
+    "W6-P5-props/W6-P5-signal-amplifier-exploded.png": {
+      "size": [
+        237,
+        260
+      ],
+      "mode": "RGB",
+      "sha256": "f05f4191af444300044c53d0ce11a7aff2dd82e29b553d53b302d2e2d347996d"
+    },
+    "W6-P5-props/W6-P5-gas-tank-intact.png": {
+      "size": [
+        201,
+        204
+      ],
+      "mode": "RGB",
+      "sha256": "2ab3e1549e140d8bcc60841b4b5f3cb346b9a90ac88d0b184f471dcd4bafa22f"
+    },
+    "W6-P5-props/W6-P5-gas-tank-exploded.png": {
+      "size": [
+        250,
+        286
+      ],
+      "mode": "RGB",
+      "sha256": "2c1d4b8f51c373585f4ab37c236734a68de91dcfa74a101206d05b687c266a0e"
+    },
+    "W6-P6-border-pieces-sheet.png": {
+      "size": [
+        1536,
+        1536
+      ],
+      "mode": "RGB",
+      "sha256": "0deae6ab405c05c18835a438023d49a05922b878c6e6a441bc10680677a84736"
+    },
+    "W6-P6-border-pieces/W6-P6-border-top.png": {
+      "size": [
+        1024,
+        160
+      ],
+      "mode": "RGB",
+      "sha256": "d729aaf574856a435361db8b110452d67a26b5f1c37573324da4f66a6e61b8e7"
+    },
+    "W6-P6-border-pieces/W6-P6-border-bottom.png": {
+      "size": [
+        1024,
+        160
+      ],
+      "mode": "RGB",
+      "sha256": "4fc2fdf6abf35b005bdf90e99041f3f711aaa7b1829f2dbdaf6c7204cd41fb8b"
+    },
+    "W6-P6-border-pieces/W6-P6-border-left.png": {
+      "size": [
+        160,
+        1024
+      ],
+      "mode": "RGB",
+      "sha256": "38e1ddcf5a43f0a55c948bc92267e26e1c8a4e639068245be50906eb49c7fc6c"
+    },
+    "W6-P6-border-pieces/W6-P6-border-right.png": {
+      "size": [
+        160,
+        1024
+      ],
+      "mode": "RGB",
+      "sha256": "6bc09f40d0d5d83277979e088a537ffc37675ae8c62312f8b8a8d029f902f95b"
+    },
+    "W6-P6-border-pieces/W6-P6-corner-top-left.png": {
+      "size": [
+        256,
+        256
+      ],
+      "mode": "RGB",
+      "sha256": "267cf0b22e2a75e5f4e6014b339fd7cafc5fe7e5e42448a96562eb3888f4cd4e"
+    },
+    "W6-P6-border-pieces/W6-P6-corner-top-right.png": {
+      "size": [
+        256,
+        256
+      ],
+      "mode": "RGB",
+      "sha256": "fefddf3c8ea9fc5602239999da53ef1637810fd562aa430b61b323bbf1a043cd"
+    },
+    "W6-P6-border-pieces/W6-P6-corner-bottom-left.png": {
+      "size": [
+        256,
+        256
+      ],
+      "mode": "RGB",
+      "sha256": "aa8d45d451f5e4ee1276e175176ea41e305dc670be9e7527c1104eb878cdea59"
+    },
+    "W6-P6-border-pieces/W6-P6-corner-bottom-right.png": {
+      "size": [
+        256,
+        256
+      ],
+      "mode": "RGB",
+      "sha256": "391a3492572f621e67210b6b77692e3033981cc1c5d58a49406a4fbf7e04ff7e"
+    },
+    "W6-P7-enemies-sheet.png": {
+      "size": [
+        1080,
+        800
+      ],
+      "mode": "RGB",
+      "sha256": "965b1498721a4f79111429cfc235e55ccaff5d0ef735772110d8a33851a29c5a"
+    },
+    "W6-P7-enemies/W6-P7-ion-kite.png": {
+      "size": [
+        138,
+        169
+      ],
+      "mode": "RGB",
+      "sha256": "a851d49936c007672b69d4ec1c10d9e0afe7c2970be0333123e4dd91f59d2bc7"
+    },
+    "W6-P7-enemies/W6-P7-gas-mine.png": {
+      "size": [
+        179,
+        176
+      ],
+      "mode": "RGB",
+      "sha256": "9cfa656db0151cdd0d017f707c93b9255737bd7825d49aea8a4e4264e1793635"
+    },
+    "W6-P7-enemies/W6-P7-relay-jelly.png": {
+      "size": [
+        188,
+        184
+      ],
+      "mode": "RGB",
+      "sha256": "4a0bf4cbf73b51241b71e7417aad6403d1a3af0ac206f0df8740d89cc810353c"
+    },
+    "W6-P7-enemies/W6-P7-static-ray.png": {
+      "size": [
+        233,
+        221
+      ],
+      "mode": "RGB",
+      "sha256": "e4f720f955a73f0fc6c27105b12139f11a350dba6029fd4178accdae40a5e45a"
+    },
+    "W6-P7-enemies/W6-P7-vortex.png": {
+      "size": [
+        250,
+        251
+      ],
+      "mode": "RGB",
+      "sha256": "35c5529934b0bc39055df0cbffc352d3f34fe3547469e2d64546cb48bd46a60b"
+    },
+    "W6-P7-enemies/W6-P7-cloud-whale.png": {
+      "size": [
+        234,
+        324
+      ],
+      "mode": "RGB",
+      "sha256": "486ab1e625775f1cee8ba727dd886af3727014680eaa191a2a95ad4fca28747d"
+    },
+    "W6-P7-elite-and-shards-sheet.png": {
+      "size": [
+        1200,
+        1800
+      ],
+      "mode": "RGB",
+      "sha256": "cde564a0c0990e6cab79bcd7c71cd091e50073556437d364c753bf03f3525700"
+    },
+    "W6-P7-elite-and-shards/W6-P7-ion-kite-elite.png": {
+      "size": [
+        254,
+        256
+      ],
+      "mode": "RGB",
+      "sha256": "4dc799719408ca04c52d65543644aeb8b20a40993795e294c01408fc689ad7b5"
+    },
+    "W6-P7-elite-and-shards/W6-P7-ion-kite-shard-1.png": {
+      "size": [
+        104,
+        89
+      ],
+      "mode": "RGB",
+      "sha256": "512742e36f07f5b790f512e81d4beb6d0fd6b2916343db80f8078380610f510e"
+    },
+    "W6-P7-elite-and-shards/W6-P7-ion-kite-shard-2.png": {
+      "size": [
+        103,
+        96
+      ],
+      "mode": "RGB",
+      "sha256": "38b9a30f7971fc37fd366afff754448b70b1c5eb2dedc93ff87b8bdce276dba0"
+    },
+    "W6-P7-elite-and-shards/W6-P7-ion-kite-shard-3.png": {
+      "size": [
+        109,
+        83
+      ],
+      "mode": "RGB",
+      "sha256": "1e358698fe14e3bbf8fb128063ce830fa56033a3fa2db5a265c6b54c59c3e40f"
+    },
+    "W6-P7-elite-and-shards/W6-P7-ion-kite-shard-4.png": {
+      "size": [
+        111,
+        89
+      ],
+      "mode": "RGB",
+      "sha256": "f3795ad9daff0dd09da0c4adeebc7666c7749de0fa323c51c5f0ca0167c06842"
+    },
+    "W6-P7-elite-and-shards/W6-P7-gas-mine-shard-1.png": {
+      "size": [
+        109,
+        102
+      ],
+      "mode": "RGB",
+      "sha256": "ddcb446d75374f185ff6cc5645c124928165beea0cc31ed84b2c5730826fd3fb"
+    },
+    "W6-P7-elite-and-shards/W6-P7-gas-mine-shard-2.png": {
+      "size": [
+        103,
+        95
+      ],
+      "mode": "RGB",
+      "sha256": "5a2bd69c54d7e56ce90c1865dd60ec219924d7b3161267b59a310a1a27656d3f"
+    },
+    "W6-P7-elite-and-shards/W6-P7-gas-mine-shard-3.png": {
+      "size": [
+        117,
+        104
+      ],
+      "mode": "RGB",
+      "sha256": "cea944d88db4fe6416f997ee411730471743cc8ad306bec7ca86674ac403545d"
+    },
+    "W6-P7-elite-and-shards/W6-P7-gas-mine-shard-4.png": {
+      "size": [
+        116,
+        96
+      ],
+      "mode": "RGB",
+      "sha256": "d90f0f7999a1546fab8ebc4029df8d65fda8705d801e9a56d0539f7b274e4c23"
+    },
+    "W6-P7-elite-and-shards/W6-P7-relay-jelly-shard-1.png": {
+      "size": [
+        106,
+        87
+      ],
+      "mode": "RGB",
+      "sha256": "36ffcef7a0ab285d47619c4dee912ff58bb7b0fd2504c53dfca5773d9ba0ed12"
+    },
+    "W6-P7-elite-and-shards/W6-P7-relay-jelly-shard-2.png": {
+      "size": [
+        111,
+        93
+      ],
+      "mode": "RGB",
+      "sha256": "5054c03d5329836be600cb9c9465f61b2f1502da8aa9553f9c4517afe6b9a84e"
+    },
+    "W6-P7-elite-and-shards/W6-P7-relay-jelly-shard-3.png": {
+      "size": [
+        122,
+        97
+      ],
+      "mode": "RGB",
+      "sha256": "c5df9cfb742ec5bb4d236cb5fce39b683111aa371ca0d60e3405102256da15bb"
+    },
+    "W6-P7-elite-and-shards/W6-P7-relay-jelly-shard-4.png": {
+      "size": [
+        114,
+        94
+      ],
+      "mode": "RGB",
+      "sha256": "36cd3b27faa5f163aa2a0c3acd53d08a78ee70ac335f53c995c0fa18c6b78539"
+    },
+    "W6-P7-elite-and-shards/W6-P7-static-ray-shard-1.png": {
+      "size": [
+        149,
+        125
+      ],
+      "mode": "RGB",
+      "sha256": "520880259d7e4797b551dd8ae3eafdcb91ef44721d66bfa060aaa0bf04b73f2b"
+    },
+    "W6-P7-elite-and-shards/W6-P7-static-ray-shard-2.png": {
+      "size": [
+        134,
+        126
+      ],
+      "mode": "RGB",
+      "sha256": "c7e4e0459271e936603d2883da3cd3a8d955109bc7cf86e6fa686610ce8fea47"
+    },
+    "W6-P7-elite-and-shards/W6-P7-static-ray-shard-3.png": {
+      "size": [
+        134,
+        102
+      ],
+      "mode": "RGB",
+      "sha256": "7a72099f6db50fb589b571e27d21208d9bc694482717c0be9a64dbf86edd07dd"
+    },
+    "W6-P7-elite-and-shards/W6-P7-static-ray-shard-4.png": {
+      "size": [
+        145,
+        129
+      ],
+      "mode": "RGB",
+      "sha256": "e57ee26b54c4dd87f2e484c7fc8c16462a050682c516a171944ae26f2f608210"
+    },
+    "W6-P7-elite-and-shards/W6-P7-vortex-shard-1.png": {
+      "size": [
+        142,
+        145
+      ],
+      "mode": "RGB",
+      "sha256": "74c9b8acf520c508e278777a7222074a2ec80e26cccf2f7e26409ccb1c01b482"
+    },
+    "W6-P7-elite-and-shards/W6-P7-vortex-shard-2.png": {
+      "size": [
+        154,
+        142
+      ],
+      "mode": "RGB",
+      "sha256": "74407d73c6145714234604c62b282604bbed07981e39b1c1297f2b97289c6dba"
+    },
+    "W6-P7-elite-and-shards/W6-P7-vortex-shard-3.png": {
+      "size": [
+        143,
+        139
+      ],
+      "mode": "RGB",
+      "sha256": "59907f053703aafb2a99ceceb16805860167a02ac7a52a13014bf6cfd691af5b"
+    },
+    "W6-P7-elite-and-shards/W6-P7-vortex-shard-4.png": {
+      "size": [
+        160,
+        137
+      ],
+      "mode": "RGB",
+      "sha256": "cd0a3c75c08101564d756c7f4a31cbba0c453562a4751d8b9342a7110954d47f"
+    },
+    "W6-P7-elite-and-shards/W6-P7-cloud-whale-shard-1.png": {
+      "size": [
+        204,
+        173
+      ],
+      "mode": "RGB",
+      "sha256": "f653652384e1c1a2a96e2ede8d96224f2bc045f583f3c04289641c71bf4435a2"
+    },
+    "W6-P7-elite-and-shards/W6-P7-cloud-whale-shard-2.png": {
+      "size": [
+        171,
+        156
+      ],
+      "mode": "RGB",
+      "sha256": "fc29e575b5779b53ce5b24be8a1668b3ac6c7a7570cc094ab6bdae6e8beff4cb"
+    },
+    "W6-P7-elite-and-shards/W6-P7-cloud-whale-shard-3.png": {
+      "size": [
+        177,
+        193
+      ],
+      "mode": "RGB",
+      "sha256": "cdc4a0399fe42596859f46ae5daf681092bd2bcd377f7ca107239bbbeaaf5f0b"
+    },
+    "W6-P7-elite-and-shards/W6-P7-cloud-whale-shard-4.png": {
+      "size": [
+        191,
+        194
+      ],
+      "mode": "RGB",
+      "sha256": "afd91b176bf11cb81702e8e5964ae1c924b58c48a008f325fdd85ed495fecb3a"
+    },
+    "W6-P8-storm-eye.png": {
+      "size": [
+        1024,
+        1024
+      ],
+      "mode": "RGB",
+      "sha256": "2df4ec102b63ef702545e300d8e916759c37b7217dafcf0511d18cf4aa33b125"
+    },
+    "W6-P8-parts-sheet.png": {
+      "size": [
+        4400,
+        4400
+      ],
+      "mode": "RGB",
+      "sha256": "12b5342fd99a81b23b8b347a70c5b57c10a5a48428af7252f8c8cbac1cf4874b"
+    },
+    "W6-P8-parts/W6-P8-core.png": {
+      "size": [
+        294,
+        273
+      ],
+      "mode": "RGB",
+      "sha256": "947287ca4b5b966118a0b88631684ca08332bf0945a2d27f06b6747610469ae3"
+    },
+    "W6-P8-parts/W6-P8-armored-segment-1.png": {
+      "size": [
+        366,
+        424
+      ],
+      "mode": "RGB",
+      "sha256": "ffcc6d52d49f56e5777c9e4fb2bd69cbc4a8718e5ce8a8dd5799892a98956c28"
+    },
+    "W6-P8-parts/W6-P8-armored-segment-2.png": {
+      "size": [
+        376,
+        424
+      ],
+      "mode": "RGB",
+      "sha256": "e1741bb9135d2cf40b84c2872f8ee4a1561287215a4733baa8392048b2d163c5"
+    },
+    "W6-P8-parts/W6-P8-armored-segment-3.png": {
+      "size": [
+        361,
+        424
+      ],
+      "mode": "RGB",
+      "sha256": "cb663a8cb5fe09209727bf72864604df705a352b2ae6d408559005bfd6b3a3a8"
+    },
+    "W6-P8-parts/W6-P8-armored-segment-4.png": {
+      "size": [
+        406,
+        424
+      ],
+      "mode": "RGB",
+      "sha256": "a43a967bf97c4d8d392555922179af8546aef6a5c4c310ab2211e2c2e565e100"
+    },
+    "W6-P8-parts/W6-P8-cloud-arm-1.png": {
+      "size": [
+        445,
+        564
+      ],
+      "mode": "RGB",
+      "sha256": "a48b00fb82021e13002cff6a9d9a6be71482a90f127fb89138f3a18452eca756"
+    },
+    "W6-P8-parts/W6-P8-cloud-arm-2.png": {
+      "size": [
+        354,
+        564
+      ],
+      "mode": "RGB",
+      "sha256": "689009d63ffceef537901592c9b506837897e9cd36f075437548c8f9957bf296"
+    },
+    "W6-P8-parts/W6-P8-cloud-arm-3.png": {
+      "size": [
+        458,
+        564
+      ],
+      "mode": "RGB",
+      "sha256": "16f4bd82a0fa2aaee07b4c848e28706879a6328c954fc7af41908d9a58e5d32f"
+    },
+    "W6-P8-parts/W6-P8-cloud-arm-4.png": {
+      "size": [
+        564,
+        417
+      ],
+      "mode": "RGB",
+      "sha256": "80b8c4b21e20e2748f456549cca237226c8b4242524a25bd5d17d81053dc1fbf"
+    },
+    "W6-P8-parts/W6-P8-weak-point-1.png": {
+      "size": [
+        132,
+        134
+      ],
+      "mode": "RGB",
+      "sha256": "997ae53a1710c4e3edda93f2c97fa3fd1f92d2dc523815c7319c2274bdf84242"
+    },
+    "W6-P8-parts/W6-P8-weak-point-2.png": {
+      "size": [
+        134,
+        133
+      ],
+      "mode": "RGB",
+      "sha256": "72c2e9278b827cbc8450bc081f30865cc195099728c948cf6d2fabd5fe8b437c"
+    },
+    "W6-P8-parts/W6-P8-weak-point-3.png": {
+      "size": [
+        134,
+        113
+      ],
+      "mode": "RGB",
+      "sha256": "5d704bb14658ac19e18c3c3a7c8689c415ea664d90aa42e672884e0d57ce0fd7"
+    },
+    "W6-P8-parts/W6-P8-weak-point-4.png": {
+      "size": [
+        134,
+        130
+      ],
+      "mode": "RGB",
+      "sha256": "b81e199d9874b4f5fb8673cbc253557e0c9c74c29ec3f307c5b9843a90433927"
+    },
+    "elite_scale_ratio": 1.6,
+    "border_connections_checked": 8,
+    "parts_assembled_boss_identical": true,
+    "all_expected_files_count": 75,
+    "all_found_png_count": 75
+  },
+  "warnings": [],
+  "visual_review": "separate, required"
+}

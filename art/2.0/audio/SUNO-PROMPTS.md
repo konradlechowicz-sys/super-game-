@@ -577,7 +577,7 @@ Lyrics:
 | `w03-lunar-bridgehead-sector` / `-boss` | W3 | gotowe (2026-10-29), w grze (`game3`, `boss3`): pętle w `proto2/make-music.py` |
 | `w04-red-conversion-sector` / `-boss` | W4 | gotowe (2026-10-29), w grze (`game4`, `boss4`): pętle w `proto2/make-music.py` |
 | `w05-foundry-belt-sector` / `-boss` | W5 | gotowe (2026-10-29), w grze (`game5`, `boss5`): pętle w `proto2/make-music.py` |
-| `w06-storm-relay-sector` / `-boss` | W6 | do zrobienia |
+| `w06-storm-relay-sector` / `-boss` | W6 | gotowe (2026-10-31), w grze (`game6`, `boss6`): pętle w `proto2/make-music.py` |
 | `w07-abyss-of-europa-sector` / `-boss` | W7 | do zrobienia |
 | `w08-rift-gate-sector` / `-boss` | W8 | do zrobienia |
 | `w09-brood-world-sector` / `-boss` | W9 | do zrobienia |

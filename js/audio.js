@@ -13,8 +13,10 @@ const TRACKS = {
 };
 // 2.0 worlds 2-5's bosses: their recordings (js/v2/music.gen.js) play; without them, the synthesized boss track
 TRACKS.boss2 = TRACKS.boss3 = TRACKS.boss4 = TRACKS.boss5 = TRACKS.boss;
-// world 5 has no synthesized track of its own (the 1.x line had four worlds)
-TRACKS.game5 = TRACKS.game3;
+// worlds 5-10 have no synthesized tracks of their own (the 1.x line had four worlds)
+TRACKS.game5 = TRACKS.game7 = TRACKS.game9 = TRACKS.game3;
+TRACKS.game6 = TRACKS.game8 = TRACKS.game10 = TRACKS.game4;
+TRACKS.boss6 = TRACKS.boss7 = TRACKS.boss8 = TRACKS.boss9 = TRACKS.boss10 = TRACKS.boss;
 
 export class AudioEngine {
   constructor() {

@@ -16,6 +16,15 @@ i wersja TEST (gracze tego nie widzą).
 
 - 
 
+## Build 113 · 2026-10-31
+- [Nowe] Świat 6 „Storm Relay” (pełna wersja): 6 sektorów (Gas Giant, Ion Winds, Antenna Field, Living Signal, Deep Transmission, Storm Eye) w grafice ChatGPT. Lot nad burzami Jowisza: pod statkiem przesuwają się kłęby chmur gazowego olbrzyma, w burzy unoszą się mosiężne platformy przekaźnika, są anteny, piorunochrony i świecące cewki, a brzeg areny tworzą ściany burzy z piorunami.
+- [Nowe] Mechanika świata 6: porywy wiatru. Co kilkanaście sekund baner „WIND SHEAR” i przez kilka sekund wiatr spycha statek i pociski wrogów, a chmury i nakładka płyną z wiatrem. Burze piorunów (ostrzał) jako zdarzenie świata.
+- [Nowe] 6 wrogów świata 6: Ion Kite (roje, elita w złotym pierścieniu), Gas Mine (wybucha przy statku), Relay Jelly (strzela), Static Ray (szarżuje), Vortex (wir, który wciąga statek, od sektora 2), Cloud Whale (ciężki, rozpada się na Ion Kite). Z odłamkami i cieniami.
+- [Nowe] Boss STORM EYE: żywa burza krążąca wokół statku, z wolno obracającym się okiem i pulsującymi słabymi punktami. Atakuje spiralami iskier, uderzeniami piorunów, wiązkami i rojami. Ma 3 fazy.
+- [Nowe] Rekwizyty świata 6: zbiorniki gazu (wybuchają) i wzmacniacze sygnału (wzmacniają wrogów wokół, rozbite dają łup). Muzyka świata 6 (Suno): sektor i boss, z płynnie dobranymi pętlami.
+- [Balans] Strojenie trudności dla światów 5–10, każdy o stopień trudniejszy. Świat 5 przez przeoczenie używał strojenia świata 1, więc jest teraz trochę trudniejszy (symulacja: dalej wygrywany).
+- [Narzędzia] Wspólna podstawa światów 6–10: skrypt tekstur `proto2/make-worlds.py`, jedna scena 2.0 (`js/v2/journey.js`), mechaniki (`js/worldfx.js`), wspólne rysowanie bossów (słabe punkty wykrywane automatycznie na rysunku) i szablon sektorów.
+
 ## Build 112 · 2026-10-31
 - [Zmiana] Railgun sam celuje: przed każdym strzałem wybiera linię, na której trafi najwięcej wrogów (elity i bossy liczą się podwójnie i poczwórnie), także za statkiem. Wcześniej strzelał w kierunku lotu, a goniący rój był z tyłu (uwaga Konrada). W symulacji, gdy statek ucieka przed rojem, Railgun wypada teraz na równi z Seeker Missiles, Nova Pulse i Proximity Mines.
 - [Zmiana] Phase Shield to teraz osłona z zapasem: pochłania 25 obrażeń (+10 na każdy poziom, 65 na poziomie 5) przed kadłubem i odnawia się do pełna w 4 s, gdy przez 2,5 s nic w statek nie trafi. Wcześniej blokowała jedno trafienie co 16 s i przy częstych kontaktach nic nie dawała (uwaga Konrada). Wokół statku widać pierścień, który blednie w miarę zużycia, i łuk pokazujący, ile osłony zostało; „SHIELD DOWN”, gdy się wyczerpie.

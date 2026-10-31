@@ -1,7 +1,7 @@
 // Single source of truth for the game version. Updated by `npm run bump` (scripts/bump.mjs) — do not edit by hand.
 //   version: public release number (App Store "Version", CFBundleShortVersionString)
 //   build:   increases with every change (App Store "Build", CFBundleVersion)
-export const VERSION = { version: '1.3.0', build: 112, date: '2026-10-31' };
+export const VERSION = { version: '1.3.0', build: 113, date: '2026-10-31' };
 
 import { EDITION_TAG } from './edition.js';
 

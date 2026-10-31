@@ -9,6 +9,10 @@
 // then loot).
 // World 3 "Lunar Bridgehead": the lunar base's mortar posts (blast), the Collective's pumps on its conduits (buff, then
 // loot) and supply crates (loot; nothing is left of them). Props stay out of the craters (js/cover.js).
+// World 4 "Red Conversion": crystal clusters (blast), converted pylons (buff, then loot), supply drops (loot).
+// World 5 "Foundry Belt": the factory's fuel tanks (blast) and power capacitors (buff, then loot).
+// World 6 "Storm Relay": gas tanks (blast) and the relay's signal amplifiers (buff, then loot).
+// spawn: while it stands, it breeds that enemy every few seconds (world 9's nest hearts).
 // art/broken: textures (js/v2/renderer.js), size: drawn length in radii, glow: 'weak' point, soft 'halo' or magenta 'core'.
 import { TAU, rand, randi, lerp } from './util.js';
 import { coverAt } from './cover.js';
@@ -26,9 +30,11 @@ export const PROPS = {
   drop: { hp: 30, r: 20, loot: true, art: 'w4-prop-supply-drop', broken: null, size: 2.6, glow: 'halo' },
   fueltank: { hp: 40, r: 26, blast: 160, dmg: 65, hurt: 12, art: 'w5-prop-fuel-tank-intact', broken: 'w5-prop-fuel-tank-destroyed', size: 3.4, glow: 'weak' },
   capacitor: { hp: 70, r: 25, buff: 240, loot: true, art: 'w5-prop-power-capacitor-intact', broken: 'w5-prop-power-capacitor-destroyed', size: 3.6, glow: 'core' },
+  gastank: { hp: 40, r: 26, blast: 160, dmg: 65, hurt: 12, art: 'w6-prop-gas-tank-intact', broken: 'w6-prop-gas-tank-exploded', size: 3.4, glow: 'weak' },
+  amplifier: { hp: 70, r: 25, buff: 240, loot: true, art: 'w6-prop-signal-amplifier-intact', broken: 'w6-prop-signal-amplifier-exploded', size: 3.6, glow: 'core' },
 };
 // the props of each world, in the order they come (the list repeats)
-const WORLD_PROPS = { 1: ['tank', 'tank', 'crate'], 2: ['flak', 'beacon', 'flak'], 3: ['mortarpost', 'pump', 'supply'], 4: ['crystal', 'pylon', 'drop'], 5: ['fueltank', 'capacitor', 'fueltank'] };
+const WORLD_PROPS = { 1: ['tank', 'tank', 'crate'], 2: ['flak', 'beacon', 'flak'], 3: ['mortarpost', 'pump', 'supply'], 4: ['crystal', 'pylon', 'drop'], 5: ['fueltank', 'capacitor', 'fueltank'], 6: ['gastank', 'amplifier', 'gastank'] };
 const START = 7, MAX_LIVE = 9, EVERY = 30, MAX_WRECKS = 12;
 let nextId = -1; // negative, so a prop never shares an id with an enemy
 
@@ -59,6 +65,12 @@ export function initProps(g) {
 export function updateProps(g, dt) {
   for (const o of g.props) {
     if (o.flash > 0) o.flash -= dt;
+    // a nest heart (world 9) breeds enemies while it stands
+    const sp = PROPS[o.prop].spawn;
+    if (sp && !o.dead && (o.spawnT = (o.spawnT ?? 4) - dt) <= 0) {
+      o.spawnT = 6;
+      if (g.enemies.length < g.stage.max) for (let k = 0; k < 3; k++) { const c = g.spawnEnemy(sp, o.x + rand(-30, 30), o.y + rand(-30, 30)); c.spawnT = 0.3; }
+    }
     // a beacon pylon drives the enemies around it (Game.dmgMul and the move speed read buffT)
     const R = PROPS[o.prop].buff;
     if (R && !o.dead) for (const e of g.enemiesNear(o.x, o.y, R)) if (!e.prop && !e.boss) e.buffT = 0.25;

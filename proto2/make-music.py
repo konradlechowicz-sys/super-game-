@@ -21,7 +21,9 @@
 #          0.72 (loop RMS 0.209)
 #   boss5: world 5 boss (about 140.4 BPM): 24 bars (about 41 s); the track starts 30 beats before the loop (`trim`),
 #          about 13 s of build-up; 0.74 (loop RMS 0.204)
-# World 3's to 5's points were searched the same way as world 2's (below).
+#   game6: world 6 "Storm Relay" sector (about 113.8 BPM): 32 bars (about 67.5 s); boss6 (about 117 BPM): 36 bars
+#          (about 74 s) with 13 s of build-up (`trim`)
+# World 3's to 6's points were searched the same way as world 2's (below).
 # The world-2 points (build 100, after Konrad heard a jump): Suno's tempo is not exact, so a loop end taken from the
 # bar grid can sit a fraction of a beat off and the drums stumble at the jump. The ends were searched instead: every
 # beat as a start, whole-bar lengths, the end tuned in 2.9 ms steps to the best match of the onset envelope (rhythm)
@@ -47,6 +49,9 @@ TRACKS = {
     'boss4': ('art/2.0/audio/w04-red-conversion-boss.mp3', 56.9360, 118.4317, 0.93, 44.1260),
     'game5': ('art/2.0/audio/w05-foundry-belt-sector.mp3', 16.7618, 80.2995, 0.72),
     'boss5': ('art/2.0/audio/w05-foundry-belt-boss.mp3', 40.6500, 81.7792, 0.74, 27.8340),
+    # worlds 6-10 (Konrad's WAVs kept as 320k MP3s): ends found by the same search, on half-bar starts
+    'game6': ('art/2.0/audio/w06-storm-relay-sector.mp3', 40.1728, 107.6256, 0.92),
+    'boss6': ('art/2.0/audio/w06-storm-relay-boss.mp3', 50.4090, 124.1209, 0.88, 37.0840),
 }
 
 out = {}

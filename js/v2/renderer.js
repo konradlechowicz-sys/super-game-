@@ -18,6 +18,7 @@ import { makeSiegeOfEarth } from './siege.js';
 import { makeLunarBridgehead } from './lunar.js';
 import { makeRedConversion } from './mars.js';
 import { makeFoundryBelt } from './foundry.js';
+import { makeJourney, CFG as JOURNEY } from './journey.js';
 import { stormLevel } from '../crystal.js';
 
 const TAU = Math.PI * 2;
@@ -32,6 +33,13 @@ const ENEMY_ART = {
   mite: 0xff2d95, sdrone: 0xff2d95, stalker: 0xff2d95, prismnode: 0xff2d95, spreader: 0xff2d95, cgolem: 0xff2d95,
   // world 5, the factory's workers (proto2/make-world5.py)
   fdrone: 0xff2d95, welder: 0xff2d95, aturret: 0xff2d95, drifter: 0xff2d95, hauler: 0xff2d95, wmech: 0xff2d95,
+  // world 6 (proto2/make-worlds.py)
+  ionkite: 0xff2d95, gasmine: 0xff2d95, jelly: 0xff2d95, staticray: 0xff2d95, vortex: 0xff2d95, cloudwhale: 0xff2d95,
+};
+// the bosses of worlds 6-10: their world (textures wN-boss, wN-boss-<phase>; glows at ASSETS.journey[N].weak), whether
+// they turn to face the ship as they move (face) or spin slowly (spin, turns per second)
+const JOURNEY_BOSS = {
+  stormeye: { w: 6, spin: 0.08 },
 };
 const ENEMY_SIZE = 2.8; // sprite size in enemy radii
 const DEBRIS_MAX = 160; // enemy debris fragments flying at once (W1 P7); the oldest is reused past that
@@ -92,13 +100,17 @@ export async function createV2Renderer(app) {
   // Belt" (js/v2/foundry.js, with js/cover.js's drifting asteroids); the other worlds use the floor tile
   const orbit = makeOrbitalRuins(tex), siege = makeSiegeOfEarth(tex), lunar = makeLunarBridgehead(tex, halo);
   const mars = makeRedConversion(tex, halo), foundry = makeFoundryBelt(tex, halo);
+  // worlds 6-10: one scene each from js/v2/journey.js
+  const journeys = Object.fromEntries(Object.keys(JOURNEY).map((w) => [w, makeJourney(+w, tex, halo)]));
+  const journeyList = Object.values(journeys);
   const coreLayer = add(new Container());
+  for (const j of journeyList) px.stage.addChildAt(j.far, 0);
   px.stage.addChildAt(foundry.far, 0);
   px.stage.addChildAt(mars.far, 0);
   px.stage.addChildAt(lunar.far, 0);
   px.stage.addChildAt(siege.far, 0);
   px.stage.addChildAt(orbit.far, 0);
-  world.addChild(floor, border, orbit.arena, siege.arena, lunar.arena, mars.arena, foundry.arena, propLayer, debrisLayer, shadowLayer, lootLayer, ringG, glowLayer, enemyLayer, bossLayer, siege.cover, coreLayer, shotLayer, weaponLayer, shipLayer, wreckLayer, fxLayer, fxG);
+  world.addChild(floor, border, orbit.arena, siege.arena, lunar.arena, mars.arena, foundry.arena, ...journeyList.map((j) => j.arena), propLayer, debrisLayer, shadowLayer, lootLayer, ringG, glowLayer, enemyLayer, bossLayer, siege.cover, coreLayer, shotLayer, weaponLayer, shipLayer, wreckLayer, fxLayer, fxG);
   // reusable sprites: each frame takes as many as it needs and hides the rest (no per-object create/destroy)
   const lootHalo = pool(lootLayer), loot = pool(lootLayer);
   const shotHalo = pool(shotLayer), shots = pool(shotLayer);
@@ -126,7 +138,7 @@ export async function createV2Renderer(app) {
   // the title screen behind the menus (js/v2/title.js), with its own, bigger ships
   const title = makeTitle(tex, halo, makeShips(TITLE_SHIP_H / SHIP_H));
   title.scene.visible = false;
-  px.stage.addChild(orbit.near, siege.near, lunar.near, mars.near, foundry.near, title.scene);
+  px.stage.addChild(orbit.near, siege.near, lunar.near, mars.near, foundry.near, ...journeyList.map((j) => j.near), title.scene);
 
   let arenaKey = '', lastTime = null;
   const drawn = new Map(); // game object -> its sprites
@@ -179,7 +191,7 @@ export async function createV2Renderer(app) {
   const debris = [];
   let debrisGame = null, debrisTime = 0;
   function shatter(e) {
-    const dt = (n) => tex[`w1-debris-${e.type}-${n}`] || tex[`w2-debris-${e.type}-${n}`] || tex[`w3-debris-${e.type}-${n}`] || tex[`w4-debris-${e.type}-${n}`] || tex[`w5-debris-${e.type}-${n}`];
+    const dt = (n) => { for (let w = 1; w <= 10; w++) { const t = tex[`w${w}-debris-${e.type}-${n}`]; if (t) return t; } return null; };
     if (!dt(1)) return;
     const n = e.elite ? 4 : 2 + Math.floor(Math.random() * 2), first = Math.floor(Math.random() * 4);
     for (let i = 0; i < n; i++) {
@@ -310,6 +322,27 @@ export async function createV2Renderer(app) {
     return { body: c, inner: body, halo, weak, core, bays };
   }
 
+  // a boss of worlds 6-10 (W6-10 P8): its assembled drawing (one per phase for the Void Heart) with a halo and a glow
+  // on each weak point the texture script found
+  function journeySprites(b) {
+    const c = new Container(), info = ASSETS.journey?.[b.w] || { weak: [], phases: 1 };
+    const halo = new Sprite(halo0);
+    halo.anchor.set(0.5); halo.tint = 0xff2d95; halo.blendMode = 'add'; halo.scale.set(13);
+    const bodies = Array.from({ length: info.phases || 1 }, (_, i) => {
+      const s = new Sprite(tex[`w${b.w}-boss${info.phases > 1 ? `-${i + 1}` : ''}`]);
+      s.anchor.set(0.5); s.visible = i === 0;
+      return s;
+    });
+    const weak = (info.weak || []).map(([x, y]) => {
+      const g = new Sprite(halo0);
+      g.anchor.set(0.5); g.position.set(x - 512, y - 512); g.tint = 0xff2d95; g.blendMode = 'add'; g.scale.set(1.8);
+      return g;
+    });
+    c.addChild(halo, ...bodies, ...weak);
+    bossLayer.addChild(c);
+    return { body: c, bodies, halo, weak };
+  }
+
   function bossSprites() {
     const c = new Container();
     const at = (s, x, y) => { s.position.set(((x - 627) / 1254) * 1024, ((y - 627) / 1254) * 1024); return s; };
@@ -342,6 +375,7 @@ export async function createV2Renderer(app) {
   function renderTitle(time, opts) {
     fitScreen();
     world.visible = orbit.near.visible = siege.near.visible = lunar.near.visible = mars.near.visible = foundry.near.visible = false;
+    for (const j of journeyList) j.near.visible = false;
     title.scene.visible = true;
     title.update(time, app.W, app.H, opts);
     px.render();
@@ -361,7 +395,9 @@ export async function createV2Renderer(app) {
     lunar.far.visible = lunar.arena.visible = lunar.near.visible = w3;
     mars.far.visible = mars.arena.visible = mars.near.visible = w4;
     foundry.far.visible = foundry.arena.visible = foundry.near.visible = w5;
-    floor.visible = border.visible = !w1 && !w2 && !w3 && !w4 && !w5;
+    const jw = journeys[game.stage.world.id], wj = !!jw?.ok;
+    for (const j of journeyList) j.far.visible = j.arena.visible = j.near.visible = j === jw && wj;
+    floor.visible = border.visible = !w1 && !w2 && !w3 && !w4 && !w5 && !wj;
     const sdt = Math.min(0.1, Math.max(0, game.time - (lastTime ?? game.time)));
     lastTime = game.time;
     const { cx, cy } = game.frameCam;
@@ -380,6 +416,7 @@ export async function createV2Renderer(app) {
       if (w3) lunar.setArena(w, h, seed, game.cover);
       if (w4) mars.setArena(w, h, seed, game.crystal);
       if (w5) foundry.setArena(w, h, seed, game.cover);
+      if (wj) jw.setArena(w, h, seed, game);
       floor.width = w; floor.height = h; floor.position.set(-w / 2, -h / 2);
       const col = Number.parseInt(game.stage.world.theme.grid.slice(1), 16);
       border.clear().rect(-w / 2, -h / 2, w, h).stroke({ width: 12, color: col, alpha: 0.2 }).rect(-w / 2, -h / 2, w, h).stroke({ width: 2.5, color: col, alpha: 0.9 });
@@ -390,6 +427,7 @@ export async function createV2Renderer(app) {
     if (w3) lunar.update(game.time, cx, cy, z, app.W, app.H);
     if (w4) mars.update(game.time, cx, cy, z, app.W, app.H, game.crystal, storm);
     if (w5) foundry.update(game.time, cx, cy, z, app.W, app.H);
+    if (wj) jw.update(game.time, cx, cy, z, app.W, app.H, game);
 
     // the props to shoot, whole or broken (js/props.js)
     for (const o of game.props) {
@@ -468,6 +506,28 @@ export async function createV2Renderer(app) {
         s.halo.alpha = (0.18 + 0.08 * Math.sin(t * 4)) * (1 + rage * 0.5);
         s.coreGlow.alpha = (e.mode === 'cannon' && !e.shots ? 0.9 : 0.4) + 0.2 * Math.sin(t * (5 + rage * 3));
         s.weakGlow.forEach((g, i) => { g.alpha = 0.45 + 0.35 * Math.sin(t * (4 + rage * 3) + i * 1.6) + rage * 0.15; });
+        continue;
+      }
+      const jb = e.boss && Object.entries(JOURNEY_BOSS).find(([id]) => BOSSES[id] === e.def)?.[1];
+      if (jb && (tex[`w${jb.w}-boss`] || tex[`w${jb.w}-boss-1`])) {
+        e.v2 = true;
+        const s = spritesFor(e, () => journeySprites(jb));
+        const k = Math.max(0, e.spawnT) / 1.2, rage = (e.phase || 1) - 1, t = game.time;
+        s.body.position.set(e.x, e.y);
+        s.body.alpha = (e.alpha ?? 1) * (1 - k * 0.7);
+        s.body.scale.set(((e.r * 3.9) / 1024) * (1 - k * 0.4) * (1 + 0.01 * Math.sin(t * 5)));
+        if (jb.face) {
+          const p = game.player, want = Math.atan2(p.y - e.y, p.x - e.x) + Math.PI / 2;
+          let d = want - (s.heading ?? want);
+          while (d > Math.PI) d -= TAU;
+          while (d < -Math.PI) d += TAU;
+          s.heading = (s.heading ?? want) + d * 0.03;
+          s.body.rotation = s.heading;
+        } else s.body.rotation = t * TAU * (jb.spin || 0) * (1 + rage * 0.5);
+        // one drawing per phase (the Void Heart's cage breaking open)
+        s.bodies.forEach((b, i) => { b.visible = i === Math.min(s.bodies.length - 1, rage); b.tint = e.flash > 0 ? 0xffb0ff : 0xffffff; });
+        s.halo.alpha = (0.16 + 0.06 * Math.sin(t * 3)) * (1 + rage * 0.5);
+        s.weak.forEach((g, i) => { g.alpha = 0.4 + 0.35 * Math.sin(t * (4 + rage * 3) + i * 1.6) + rage * 0.15; });
         continue;
       }
       if (e.boss && e.def === BOSSES.foundry && tex['w5-boss']) {
@@ -554,8 +614,8 @@ export async function createV2Renderer(app) {
       s.glow.tint = e.elite ? 0xffd23d : 0xffffff;
       s.glow.alpha = (0.7 + 0.2 * Math.sin(game.time * 4 + (e.id || 0))) * s.body.alpha;
       if (w2) { s.core.position.set(ex, ey); s.core.scale.set((e.r * 1.3 * sc) / 64); s.core.alpha = 0.6 * s.body.alpha; }
-      s.shadow.visible = w3 || w4 || w5;
-      if (w3 || w4 || w5) {
+      s.shadow.visible = w3 || w4 || w5 || wj;
+      if (w3 || w4 || w5 || wj) {
         // a hopper in the air casts its shadow farther
         const lift = 0.18 * e.r + (sc - 1) * 3 * e.r;
         s.shadow.position.set(ex + lift, ey + lift * 1.3); s.shadow.rotation = rot; s.shadow.scale.set(s.base * Math.min(sc, 1));
