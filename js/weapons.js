@@ -1,6 +1,6 @@
 import { TAU, rand, pick } from './util.js';
 import { bladeSprite, wingmanSprite } from './sprites.js';
-import { ignite, launchHole, addFire, fireBeam } from './arsenal.js';
+import { ignite, launchHole, addFire, fireBeam, bestLine } from './arsenal.js';
 
 // Every weapon: per-level stats (index = level-1), level descriptions, optional evolution.
 // update(w, g, dt) runs each frame; render(w, g, R) draws persistent visuals (blades, drones).
@@ -329,7 +329,7 @@ export const WEAPONS = {
   // ---- 2.0 arsenal (PLAN-2.0-ARSENAL.md; mechanics in js/arsenal.js) ----
   rail: {
     name: 'Railgun', color: '#c8f0ff', icon: 'rail',
-    desc: ['Charges, then fires a beam through every enemy in your flight path.', '+30% damage', 'Charges faster', 'Wider beam, +25% damage', 'Charges faster, +25% damage'],
+    desc: ['Charges, then fires a beam along the line with the most enemies on it.', '+30% damage', 'Charges faster', 'Wider beam, +25% damage', 'Charges faster, +25% damage'],
     stats: [
       { dmg: 46, cd: 2.2, w: 14 },
       { dmg: 60, cd: 2.2, w: 14 },
@@ -342,9 +342,12 @@ export const WEAPONS = {
       w.t -= dt;
       const p = g.player;
       if (w.t > 0) return;
-      if (!g.nearestEnemy(p.x, p.y, 700)) { w.t = 0.1; return; }
+      const len = 760 * p.areaMult;
+      // it aims itself: the line through the most enemies, wherever they are (Konrad, 2026-10-31: the swarm chases
+      // the ship, so a beam along the flight path missed it)
+      const a = bestLine(g, p.x, p.y, len, s.w * p.areaMult);
+      if (a === null) { w.t = 0.1; return; }
       w.t = s.cd * p.cdMult;
-      const a = p.facing, len = 760 * p.areaMult;
       const color = w.evolved ? '#fff2a8' : '#c8f0ff';
       const sg = g.combos.has('shrapnelrail') && g.wstats('spread'), fl = g.combos.has('phoenixrail') && g.wstats('flame');
       for (const off of s.twin ? [-12, 12] : [0]) {

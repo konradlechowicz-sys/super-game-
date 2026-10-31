@@ -15,7 +15,7 @@ poziomie 5 albo po ewolucji (złota ramka).
 
 | Broń | Jak działa | Ewolucja |
 |---|---|---|
-| **Railgun** | Co ok. 2 s ładuje się (świeci) i strzela prostą wiązką przez całą linię wrogów w kierunku lotu; każdy wróg na linii obrywa mocno. Wysokie obrażenia, wolna, wymaga celowania ruchem. | **Gauss Lance** = Railgun LV5 + **Targeting Matrix**: dwie równoległe wiązki, wybuch na końcu linii; krytyki przebijają tarcze elit. |
+| **Railgun** | Co ok. 2 s ładuje się i strzela prostą wiązką przez całą linię wrogów: sam wybiera linię, na której trafi najwięcej (build 112; wcześniej strzelał w kierunku lotu i nie trafiał w goniący rój). Wysokie obrażenia, wolna. | **Gauss Lance** = Railgun LV5 + **Targeting Matrix**: dwie równoległe wiązki, wybuch na końcu linii; krytyki przebijają tarcze elit. |
 | **Flamethrower** | Krótki stożek ognia przed statkiem; trafieni płoną 3 s. Na tłum z bliska, słaby na dystans. | **Inferno** = Flamethrower LV5 + **Thermal Core**: szerszy niebieski płomień, płonące plamy na ziemi. |
 | **Singularity Cannon** | Co ok. 4 s wolna ciemna kula; po 1 s staje i na 2 s zmienia się w małą czarną dziurę, która wciąga i rani. | **Event Horizon** = Singularity LV5 + **Tractor Beam**: duże czarne dziury, które na koniec zapadają się w wybuch. |
 
@@ -25,7 +25,7 @@ poziomie 5 albo po ewolucji (złota ramka).
 |---|---|---|
 | **Targeting Matrix** | +6% szansy na trafienie krytyczne (×2 obrażeń) | ewolucja Railguna; zestaw Salvage Core |
 | **Thermal Core** | +8% szansy, że dowolne trafienie podpali wroga; ogień +20% obrażeń | ewolucja Flamethrowera; zestaw Scorched Trail |
-| **Phase Shield** | tarcza blokuje jedno trafienie, odnawia się co 16 s (−2 s na poziom) | perk obronny (gra zrobiła się trudniejsza); zestaw Bastion Field |
+| **Phase Shield** | tarcza pochłania 25 obrażeń (+10 na poziom) i odnawia się po 2,5 s bez trafień (zmiana po testach Konrada, build 112; wcześniej blokowała jedno trafienie co 16 s) | perk obronny (gra zrobiła się trudniejsza); zestaw Bastion Field |
 
 ## Kombosy broni (obie na LV3)
 

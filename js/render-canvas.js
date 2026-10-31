@@ -310,10 +310,14 @@ function drawArsenal(game, ctx) {
     ctx.beginPath(); ctx.arc(h.x, h.y, r, t * 6, t * 6 + TAU * 0.75); ctx.stroke();
     ctx.globalAlpha = 1;
   }
-  if (p.shieldUp && game.state === 'play') {
-    ctx.globalAlpha = 0.45 + 0.15 * Math.sin(t * 4);
-    ctx.strokeStyle = '#7df9ff'; ctx.lineWidth = 2;
+  // the Phase Shield: a ring that fades and thins as it soaks damage, and an arc showing how full it is
+  if (p.shield > 0 && game.state === 'play') {
+    const k = p.shield / p.shieldMax;
+    ctx.strokeStyle = '#7df9ff';
+    ctx.globalAlpha = (0.2 + 0.35 * k) * (0.85 + 0.15 * Math.sin(t * 4)); ctx.lineWidth = 1 + 2 * k;
     ctx.beginPath(); ctx.arc(p.x, p.y, p.r + 16, 0, TAU); ctx.stroke();
+    ctx.globalAlpha = 0.8; ctx.lineWidth = 2.5;
+    ctx.beginPath(); ctx.arc(p.x, p.y, p.r + 21, -Math.PI / 2, -Math.PI / 2 + TAU * k); ctx.stroke();
     ctx.globalAlpha = 1;
   }
 }

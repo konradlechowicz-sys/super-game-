@@ -16,6 +16,11 @@ i wersja TEST (gracze tego nie widzą).
 
 - 
 
+## Build 112 · 2026-10-31
+- [Zmiana] Railgun sam celuje: przed każdym strzałem wybiera linię, na której trafi najwięcej wrogów (elity i bossy liczą się podwójnie i poczwórnie), także za statkiem. Wcześniej strzelał w kierunku lotu, a goniący rój był z tyłu (uwaga Konrada). W symulacji, gdy statek ucieka przed rojem, Railgun wypada teraz na równi z Seeker Missiles, Nova Pulse i Proximity Mines.
+- [Zmiana] Phase Shield to teraz osłona z zapasem: pochłania 25 obrażeń (+10 na każdy poziom, 65 na poziomie 5) przed kadłubem i odnawia się do pełna w 4 s, gdy przez 2,5 s nic w statek nie trafi. Wcześniej blokowała jedno trafienie co 16 s i przy częstych kontaktach nic nie dawała (uwaga Konrada). Wokół statku widać pierścień, który blednie w miarę zużycia, i łuk pokazujący, ile osłony zostało; „SHIELD DOWN”, gdy się wyczerpie.
+- [Zmiana] Bastion Field (Phase Shield + Armor Plating): fala odrzucająca wrogów, gdy osłona się wyczerpie, i o 30% szybsze odnawianie.
+
 ## Build 111 · 2026-10-29
 - [Nowe] Nowy arsenał 2.0, etap 2: 6 kombosów nowych broni (obie bronie na poziomie 3).
   - Ion Rail (Railgun + Arc Coil): każdy przebity wróg wypuszcza błyskawicę do sąsiada.
