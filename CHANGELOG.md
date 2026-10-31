@@ -16,6 +16,10 @@ i wersja TEST (gracze tego nie widzą).
 
 - 
 
+## Build 125 · 2026-10-31
+- [Nowe] Elity z cechami mają pierścienie z grafik ChatGPT (Art Bible EL1): obracający się pierścień w kolorze każdej cechy i jej odznakę nad nazwą (SWIFT, BULWARK, BERSERKER, COMMANDER, SHIELDED).
+- [Nowe] Nowe znajdźki na arenie (Art Bible PU1): kryształy doświadczenia w trzech rozmiarach (zielone, największe złote), moneta, zestaw naprawczy, magnes, bomba i skrzynia bossa.
+
 ## Build 124 · 2026-10-31
 - [Nowe] Efekty nowych broni z grafik ChatGPT (Art Bible FX5–FX7) zamiast prostych neonowych kształtów: płomień Flamethrowera (niebieski po ewolucji w Inferno), płonący grunt (napalm, Inferno, Scorched Trail, Phoenix Rail), ogień na palących się wrogach, kula i wir czarnej dziury Singularity Cannon z jej zapadnięciem (większe, złote po ewolucji w Event Horizon), wiązka Railguna z ładowaniem przy statku, błyskiem wystrzału i wybuchem na końcu (Gauss Lance w złotej wersji).
 - [Narzędzia] Do sprawdzenia płynności: naraz rysuje się najwyżej 70 płonących wrogów; efekty są w osobnej paczce (`fx`), przycięte do rozmiaru w grze.

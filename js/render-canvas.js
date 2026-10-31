@@ -556,9 +556,20 @@ function drawWreck(h, ctx, t, overlay) {
 function drawTraits(game, ctx, e) {
   const list = [...e.traits];
   const pulse = 0.5 + 0.5 * Math.sin(game.app.time * 5);
+  const art = game.app.fxArt;
   ctx.save();
   ctx.lineWidth = 2;
   list.forEach((id, i) => {
+    // ChatGPT's trait ring (Art Bible EL1) turning slowly, or a neon ring
+    const ring = art?.(`el-${id}`);
+    if (ring) {
+      const d = (e.r + 12 + i * 8) * 2.25;
+      ctx.globalAlpha = 0.75 + pulse * 0.25;
+      ctx.save(); ctx.translate(e.x, e.y); ctx.rotate(game.time * (i % 2 ? -0.6 : 0.6));
+      ctx.drawImage(ring, -d / 2, -d / 2, d, d);
+      ctx.restore();
+      return;
+    }
     const c = TRAITS[id].color;
     ctx.strokeStyle = c; ctx.shadowColor = c; ctx.shadowBlur = 10;
     ctx.globalAlpha = 0.55 + pulse * 0.35;
@@ -585,6 +596,11 @@ function drawTraits(game, ctx, e) {
   ctx.fillStyle = TRAITS[list[0]].color;
   ctx.shadowColor = '#000'; ctx.shadowBlur = 4;
   ctx.fillText(list.map((id) => TRAITS[id].name).join(' · '), e.x, e.y - e.r - 14);
+  // the traits' badges (Art Bible EL1) above the name
+  if (art?.('elb-swift')) {
+    ctx.shadowBlur = 0;
+    list.forEach((id, i) => ctx.drawImage(art(`elb-${id}`), e.x - list.length * 10 + i * 20, e.y - e.r - 44, 20, 20));
+  }
   ctx.restore();
 }
 

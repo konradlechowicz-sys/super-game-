@@ -143,6 +143,13 @@ export async function createV2Renderer(app) {
   const weaponR = weaponAdapter(weaponG, (spr, x, y, a, sc, alpha) => { put(weaponSprites.next(), spr, x, y, a, sc).alpha = alpha; });
 
   // a pooled sprite showing one of the 1.x neon sprites
+  // a pooled sprite showing a 2.0 texture `size` px wide
+  function putTex(s, t, x, y, size, rot = 0) {
+    if (s.texture !== t) s.texture = t;
+    s.position.set(x, y); s.rotation = rot; s.alpha = 1;
+    s.scale.set(size / t.width);
+    return s;
+  }
   function put(s, spr, x, y, rot = 0, sc = 1) {
     const t = texOf(spr);
     if (s.texture !== t) s.texture = t;
@@ -723,18 +730,23 @@ export async function createV2Renderer(app) {
       }
     }
 
-    // gems and pickups, with a slow glowing pulse
+    // gems and pickups, with a slow glowing pulse: ChatGPT's crystals and pickups (Art Bible PU1, pu-...) when loaded
+    const xp = tex['pu-xp-s'];
     for (const g of game.gems) {
       if (!vis(g)) continue;
-      const col = g.v >= 10 ? '#ff4dd8' : g.v >= 3 ? '#3dff8a' : '#2fd2ff';
-      const sc = g.v >= 10 ? 1.4 : g.v >= 3 ? 1.15 : 1;
+      const big = g.v >= 10, mid = g.v >= 3;
+      const col = xp ? (big ? 0xffd23d : 0x3dff8a) : big ? '#ff4dd8' : mid ? '#3dff8a' : '#2fd2ff';
+      const sc = big ? 1.4 : mid ? 1.15 : 1;
       glow(lootHalo, g.x, g.y, col, 34 * sc, 0.28 + 0.1 * Math.sin(t * 5 + g.x * 0.05));
-      put(loot.next(), gemSprite(col), g.x, g.y, 0, sc);
+      if (xp) putTex(loot.next(), tex[big ? 'pu-xp-l' : mid ? 'pu-xp-m' : 'pu-xp-s'], g.x, g.y, 22 * sc);
+      else put(loot.next(), gemSprite(col), g.x, g.y, 0, sc);
     }
     for (const pk of game.pickups) {
       if (!vis(pk)) continue;
       const bob = pk.kind === 'coin' ? 1 : 1 + Math.sin(t * 5) * 0.1;
-      put(loot.next(), pickupSprite(pk.kind), pk.x, pk.y, 0, bob);
+      const pt = tex[`pu-${pk.kind}`];
+      if (pt) putTex(loot.next(), pt, pk.x, pk.y, (pk.kind === 'chest' ? 46 : 32) * bob);
+      else put(loot.next(), pickupSprite(pk.kind), pk.x, pk.y, 0, bob);
     }
 
     // damaging rings (shockwaves of weapons) under the enemies

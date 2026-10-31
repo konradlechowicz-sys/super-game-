@@ -94,3 +94,27 @@ FX = [
 for src, out, frames, cell in FX:
     strip(src, out, frames, cell)
 print(len(FX), 'effect strips')
+
+
+# ---- EL1: elite trait rings (overlays, drawn around an elite by js/render-canvas.js) and their badges; they came
+# with transparency.
+for t in ('swift', 'bulwark', 'berserker', 'commander', 'shielded'):
+    Image.open(f'{SRC}/EL1/selected/EL1-{t}-overlay.webp').convert('RGBA').resize((160, 160), Image.LANCZOS).save(f'{OUT}/fx-el-{t}.webp', 'WEBP', quality=88, method=6)
+    Image.open(f'{SRC}/EL1/selected/EL1-{t}-badge.webp').convert('RGBA').resize((40, 40), Image.LANCZOS).save(f'{OUT}/fx-elb-{t}.webp', 'WEBP', quality=90, method=6)
+
+# ---- PU1: pickups in the arena (pu-..., PixiJS textures in js/v2/renderer.js): their flat #05010f background
+# becomes transparency.
+BG = np.array([5, 1, 15], np.float32)
+
+
+def cut(im):
+    a = np.asarray(im.convert('RGB')).astype(np.float32)
+    d = np.abs(a - BG).max(axis=2)
+    alpha = np.clip((d - 6) / 14, 0, 1) * 255
+    return Image.fromarray(np.dstack([a, alpha]).astype(np.uint8), 'RGBA')
+
+
+for key, f in (('xp-s', 'xp-crystal-small'), ('xp-m', 'xp-crystal-medium'), ('xp-l', 'xp-crystal-large'), ('coin', 'coin'),
+               ('heal', 'repair-kit'), ('magnet', 'magnet'), ('bomb', 'bomb'), ('chest', 'boss-chest-closed')):
+    cut(Image.open(f'{SRC}/PU1/selected/PU1-{f}.webp').resize((96, 96), Image.LANCZOS)).save(f'{OUT}/pu-{key}.webp', 'WEBP', quality=88, method=6)
+print('elite rings, badges and pickups')
