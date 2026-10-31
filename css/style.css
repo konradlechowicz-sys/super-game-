@@ -149,6 +149,11 @@ h1, h2, h3 { font-family: 'Orbitron', sans-serif; font-weight: 700; margin: 0; l
 .world-tab.locked { opacity: 0.45; }
 .world-tab.wip .wnum { color: var(--muted); }
 .world-tab.wip.active { opacity: 0.9; }
+/* 2.0 art (Art Bible UI3, UI4): world tokens on the tabs and the world's heading, screen backgrounds */
+.world-tab .wtoken { width: 30px; height: 30px; margin-bottom: 1px; }
+.world-head .wtoken-big { width: 56px; height: 56px; flex: none; }
+.world-head .wtoken-big + h2 { flex: 1; margin-left: 10px; }
+.screen.has-art { background: linear-gradient(rgba(4, 6, 11, 0.62), rgba(4, 6, 11, 0.82)), var(--bgimg) center top / cover no-repeat; }
 /* a 2.0 world still being built (js/ui.js map): its story and planned sectors */
 .construct { margin: 14px 4px; padding: 18px 16px; border-radius: 3px; border: 1px dashed var(--line-2); background: var(--panel-2); }
 .construct-kicker { font: 600 10px 'Orbitron', sans-serif; letter-spacing: 0.32em; color: var(--amber); display: flex; align-items: center; gap: 8px; }

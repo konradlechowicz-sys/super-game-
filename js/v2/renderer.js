@@ -94,6 +94,13 @@ export async function createV2Renderer(app) {
   app.fxArt = (key) => imgs[`fx-${key}`] || null;
   // the 2.0 pictures of the ships for the HTML screens (hangar, sector briefing; js/ui.js paintCanvases)
   app.shipArt = (id) => imgs[`ship-card-${id}`] || null;
+  // the hangar's 3/4 renders (Art Bible UI5; ui-hero-<ship>, 'gold' for the Gold Striker), as pictures for the canvas
+  const heroes = {};
+  app.heroArt = (id) => {
+    if (!all[`ui-hero-${id}`]) return null;
+    if (!heroes[id]) { heroes[id] = new Image(); heroes[id].onload = () => app.ui.paintCanvases?.(document.body); heroes[id].src = all[`ui-hero-${id}`]; }
+    return heroes[id].complete && heroes[id].naturalWidth ? heroes[id] : null;
+  };
 
   const halo = softDot(), halo0 = halo;
   // the 1.x neon sprites (pre-rendered canvases, js/sprites.js) as GPU textures, made once per canvas
@@ -160,6 +167,8 @@ export async function createV2Renderer(app) {
   // the three ships: the Striker built from its parts, Phantom and Titan as a body with animated flames
   const makeShips = (scale) => ({
     striker: makeShip(tex, ASSETS.ship, SHIP_H * scale),
+    // the Gold Striker skin: the same parts drawn in gold (Art Bible SH4, proto2/make-common.py)
+    ...(tex['ship-gold-hull'] ? { gold: makeShip(tex, ASSETS.ship, SHIP_H * scale, 'gold-') } : {}),
     phantom: makeBodyShip(tex, 'phantom', ASSETS.ships.phantom, PHANTOM_L * scale),
     titan: makeBodyShip(tex, 'titan', ASSETS.ships.titan, TITAN_L * scale),
   });
@@ -684,9 +693,9 @@ export async function createV2Renderer(app) {
     // the ship the player flies (game.ship: its id, and skinName for the Gold Striker)
     const p = game.player;
     const alive = game.state !== 'dying' && game.state !== 'over';
-    const flying = ships[game.ship.id] || ships.striker;
+    const flying = (game.ship.skinName && ships.gold) || ships[game.ship.id] || ships.striker;
     if (flying !== ship) { ship.body.visible = false; ship = flying; ship.lastFacing = null; }
-    const base = game.ship.skinName ? GOLD : 0xffffff;
+    const base = game.ship.skinName && !ships.gold ? GOLD : 0xffffff;
     ship.body.visible = alive;
     if (alive) {
       let turn = p.facing - (ship.lastFacing ?? p.facing);
@@ -826,8 +835,9 @@ export async function createV2Renderer(app) {
 
 // The Striker from its parts (positions from art/2.0/ship/parts/assembly.json), as in proto2/ and the teaser:
 // engine flames that grow with speed and banking wings.
-function makeShip(tex, SHIP, height) {
-  const part = (name) => { const s = new Sprite(tex[`ship-${name}`]); s.anchor.set(0.5); return s; };
+// skin: '' or 'gold-' (the Gold Striker's parts)
+function makeShip(tex, SHIP, height, skin = '') {
+  const part = (name) => { const s = new Sprite(tex[`ship-${skin}${name}`]); s.anchor.set(0.5); return s; };
   const P = SHIP.pos, Z = SHIP.size, k = SHIP.k;
   const at = (key, name) => ({ x: P[key][0] * k + Z[name][0] / 2, y: P[key][1] * k + Z[name][1] / 2 });
   const hullAt = at('hull', 'hull');

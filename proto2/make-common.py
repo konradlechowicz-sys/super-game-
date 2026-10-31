@@ -143,3 +143,34 @@ for src, out, cell in (('nova-ring', 'nova', 192), ('supernova-ring', 'supernova
 for src, out, cell in (('spawn-portal', 'portal', 96), ('warning-circle', 'warn', 128), ('elite-arrival', 'elite-in', 160)):
     strip(f'FX9/selected/FX9-{src}-8frames', out, 8, cell)
 print('projectiles and the other effects')
+
+
+# ---- SH4: the Gold Striker's parts (ship-gold-..., the same sizes as the Striker's ship-..., so the game builds it
+# the same way, js/v2/renderer.js makeShip). The parts came as separate renderings: trimmed to the drawing and fitted
+# to the Striker's parts.
+PARTS = {'hull': 'hull', 'wing-left': 'wing-left', 'wing-right': 'wing-right', 'engine-left': 'engine-left',
+         'engine-right': 'engine-right', 'glass': 'cockpit-glass', 'gun': 'gun', 'flame': 'flame'}
+for part, f in PARTS.items():
+    g = cut(Image.open(f'{SRC}/SH4/selected/SH4-gold-striker-{f}.webp'))
+    g = g.crop(g.getchannel('A').point(lambda v: 255 if v > 40 else 0).getbbox())
+    size = Image.open(f'{OUT}/ship-{part}.webp').size
+    g.resize(size, Image.LANCZOS).save(f'{OUT}/ship-gold-{part}.webp', 'WEBP', quality=90, method=6)
+
+# ---- UI3-UI5: the hangar and sector screens (ui-..., HTML only)
+for key, f in (('bg-hangar', 'UI3/selected/UI3-hangar'), ('bg-map', 'UI3/selected/UI3-journey-map')):
+    Image.open(f'{SRC}/{f}.webp').convert('RGB').resize((645, 1398), Image.LANCZOS).save(f'{OUT}/ui-{key}.webp', 'WEBP', quality=78, method=6)
+TOKENS = ['orbital-ruins', 'siege-of-earth', 'lunar-bridgehead', 'red-conversion', 'foundry-belt', 'storm-relay',
+          'abyss-of-europa', 'rift-gate', 'brood-world', 'the-nexus']
+for i, name in enumerate(TOKENS, 1):
+    for state, key in (('unlocked', 'tok'), ('locked', 'tokl')):
+        cut(Image.open(f'{SRC}/UI4/selected/UI4-world-{i:02d}-{name}-{state}.webp').resize((96, 96), Image.LANCZOS)).save(f'{OUT}/ui-{key}-{i}.webp', 'WEBP', quality=86, method=6)
+for ship, f in (('striker', 'striker'), ('phantom', 'phantom'), ('titan', 'titan'), ('gold', 'gold-striker')):
+    cut(Image.open(f'{SRC}/UI5/selected/UI5-{f}-hangar-3quarter.webp').resize((256, 256), Image.LANCZOS)).save(f'{OUT}/ui-hero-{ship}.webp', 'WEBP', quality=86, method=6)
+
+# ---- ST1-ST3: the store art, as PNG for App Store Connect and Google Play (appstore/2.0/)
+os.makedirs('appstore/2.0', exist_ok=True)
+for f, out in (('ST1/selected/ST1-app-icon', 'app-icon-1024.png'), ('ST2/selected/ST2-google-play-graphic', 'google-play-feature-1024x500.png'),
+               ('ST3/selected/ST3-key-art', 'key-art-2048.jpg')):
+    im = Image.open(f'{SRC}/{f}.webp').convert('RGB')
+    im.save(f'appstore/2.0/{out}', 'JPEG', quality=92) if out.endswith('.jpg') else im.save(f'appstore/2.0/{out}', 'PNG', optimize=True)
+print('Gold Striker, screens and store art')

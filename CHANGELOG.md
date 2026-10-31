@@ -16,6 +16,12 @@ i wersja TEST (gracze tego nie widzą).
 
 - 
 
+## Build 127 · 2026-10-31
+- [Nowe] Gold Striker z własnych, złotych części od ChatGPT (Art Bible SH4) zamiast złotego zabarwienia Strikera.
+- [Nowe] Ekran sektorów: żeton każdego świata na zakładkach (wyszarzony, gdy świat jest zamknięty) i duży żeton przy nazwie świata, a w tle mapa podróży od Ziemi do Nexusa (UI3, UI4).
+- [Nowe] Hangar: statki w ujęciu 3/4 (Striker, Phantom, Titan, Gold Striker, UI5) i tło hangaru z widokiem na Ziemię (UI3).
+- [App Store] Materiały do sklepów 2.0 w `appstore/2.0`: ikona aplikacji 1024 px (ST1, jeszcze nie podmieniona w aplikacji), grafika Google Play 1024×500 (ST2) i key art 2048 px (ST3).
+
 ## Build 126 · 2026-10-31
 - [Nowe] Reszta efektów z grafik ChatGPT: pociski broni (Pulse Blaster, Photon Storm, Scatter Gun i Flak Cannon, rakiety, pociski dronów) i miny (Art Bible FX1), iskry trafień w kolorze broni (FX2), eksplozje w trzech wielkościach: wróg, elita i duże wybuchy, boss (FX3), błyskawice Arc Coil i złote Tempest (FX4), fale Nova Pulse i Supernova, bańka Phase Shield z rozpryskiem przy pęknięciu i tarcze wrogów z cechą SHIELDED (FX8), portal przy pojawianiu się wrogów, błysk przybycia elity i ostrzegawczy krąg przed ostrzałem (FX9).
 - [Narzędzia] Pod kątem płynności: naraz najwyżej 40 iskier trafień, 60 eksplozji i 24 portale (roje bez portali); pociski rysuje PixiJS jak dotąd, tylko z nowymi teksturami.

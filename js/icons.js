@@ -6,6 +6,8 @@ import { TAU, mix } from './util.js';
 const cache = new Map();
 let artOf = () => null;
 export const setIconArt = (fn) => { artOf = fn; };
+// a 2.0 interface picture by key (ui-<key>: screen backgrounds, world tokens), or null before the 2.0 look has loaded
+export const uiArt = (key) => artOf(key);
 
 function stroke(g, color, lw = 4) {
   g.shadowColor = color;

@@ -2,7 +2,7 @@ import { WORLDS, SHIPS, SHOP, DAILY, ALL_STAGES, BOSSES, ENDLESS, stageIndex } f
 import { WEAPONS } from './weapons.js';
 import { COMBOS } from './combos.js';
 import { codexSections, codexName } from './codex.js';
-import { icon } from './icons.js';
+import { icon, uiArt } from './icons.js';
 import { fmtTime } from './util.js';
 import { shipSprite } from './sprites.js';
 import { versionLabel, versionFull } from './version.js';
@@ -110,6 +110,12 @@ export class UI {
     this.paintCanvases(this.screenEl);
   }
 
+  // a 2.0 background picture behind the current screen (Art Bible UI3: the hangar, the journey map), darkened by CSS
+  screenArt(key) {
+    const pic = uiArt(key), el = this.screenEl.firstElementChild;
+    if (pic && el) { el.classList.add('has-art'); el.style.setProperty('--bgimg', `url(${pic})`); }
+  }
+
   clearScreen() { this.screenEl.innerHTML = ''; this.h = {}; }
 
   modal(html, handlers, cls = '', guardMs = 0) {
@@ -135,6 +141,13 @@ export class UI {
       const s = SHIPS[c.dataset.ship];
       const g = c.getContext('2d');
       // the 2.0 look has a picture of every ship (js/v2/renderer.js); a skin colour other than the ship's tints it
+      // the hangar shows the 3/4 renders (Art Bible UI5) once they are loaded
+      const hero = c.dataset.hero && this.app.v2 && !this.app.oldLook && this.app.heroArt?.(c.dataset.skin === 'gold' ? 'gold' : s.id);
+      if (hero) {
+        g.clearRect(0, 0, c.width, c.height);
+        g.drawImage(hero, 0, 0, c.width, c.height);
+        return;
+      }
       const art = this.app.v2 && !this.app.oldLook && this.app.shipArt?.(s.id);
       if (art) {
         g.clearRect(0, 0, c.width, c.height);
@@ -245,7 +258,7 @@ export class UI {
     const open = (w) => !w.soon && this.app.isUnlocked(w.stages[0].id);
     const tabs = WORLDS.map((w) => `
       <button class="world-tab ${w.id === worldId ? 'active' : ''} ${open(w) ? '' : 'locked'} ${w.soon ? 'wip' : ''}" style="--wc:${w.color}" data-act="world" data-id="${w.id}">
-        <span class="wnum">${w.id}</span><span class="wname">${esc(w.name)}</span>
+        ${uiArt(`tok-${w.id}`) ? `<img class="wtoken" src="${uiArt(`${open(w) ? 'tok' : 'tokl'}-${w.id}`)}" alt="">` : ''}<span class="wnum">${w.id}</span><span class="wname">${esc(w.name)}</span>
       </button>`).join('');
     let body;
     if (world.soon) {
@@ -263,7 +276,7 @@ export class UI {
       body = `<div class="soon"><img src="${icon('lock', world.color)}" alt=""><h3>${esc(world.name)}</h3><p>Defeat the ${esc(gate)} in ${esc(prev.name)} to open this sector.</p></div>`;
     } else {
       const totalStars = world.stages.reduce((a, s) => a + (save.stars[s.id] || 0), 0);
-      body = `<div class="world-head"><h2 style="--wc:${world.color}">${esc(world.name)}</h2><div class="star-count">${STAR}<b>${totalStars}</b>/${world.stages.length * 3}</div></div>
+      body = `<div class="world-head">${uiArt(`tok-${world.id}`) ? `<img class="wtoken-big" src="${uiArt(`tok-${world.id}`)}" alt="">` : ''}<h2 style="--wc:${world.color}">${esc(world.name)}</h2><div class="star-count">${STAR}<b>${totalStars}</b>/${world.stages.length * 3}</div></div>
       <div class="path">` + world.stages.map((s, i) => {
         const unlocked = this.app.isUnlocked(s.id);
         const stars = save.stars[s.id] || 0;
@@ -288,6 +301,7 @@ export class UI {
       stage: (ds) => this.briefing(ds.id),
       endless: (ds) => this.endlessBriefing(+ds.id),
     }, 'map');
+    this.screenArt('bg-map');
     this.coach('map');
   }
 
@@ -375,7 +389,7 @@ export class UI {
             <button class="skin ${save.skin === 'gold' ? 'on' : ''}" data-act="skin" data-id="gold" style="--k:#ffd23d">Gold ★</button></div>`
         : '';
       return `<div class="ship-card ${sel ? 'selected' : ''}" style="--sc:${s.color}">
-        <canvas data-ship="${s.id}" data-color="${s.color}" width="120" height="120"></canvas>
+        <canvas data-ship="${s.id}" data-color="${s.color}" data-hero="1" data-skin="${s.id === 'striker' && save.skin === 'gold' ? 'gold' : ''}" width="120" height="120"></canvas>
         <div class="ship-info">
           <h3>${esc(s.name)}</h3>
           <p class="muted">${esc(s.desc)}</p>
@@ -411,6 +425,7 @@ export class UI {
         this.hangar(back);
       },
     }, 'hangar');
+    this.screenArt('bg-hangar');
   }
 
   // ======================= CODEX =======================
