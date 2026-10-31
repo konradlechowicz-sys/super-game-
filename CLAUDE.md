@@ -9,8 +9,12 @@
 - Konrad relays everything between Claude and ChatGPT himself: Claude writes prompts, Konrad pastes them, reviews and
   sends the images back. `AI-HANDOFF.md` is no longer used for new assignments.
 - The source of all 2.0 visuals and ChatGPT prompts is the Claude Doc "Void Blaster 2.0 – Art Bible"
-  (https://claude.ai/artifact/A6CDwwg4WSEQ3v99p9ZbMc): tab "Art Bible" (world cards, shared rules) and tab "Prompty"
-  (style block, a world block per world, tasks P1-P8). Change a world's card and its prompts together.
+  (https://claude.ai/artifact/A6CDwwg4WSEQ3v99p9ZbMc): tab "Art Bible" (world cards, shared rules), tab "Prompty"
+  (style block, a world block per world, tasks W1-P1 … W10-P8, then the shared tasks) and tab "Zadania i status" (every
+  task code, its status and order, old names). Task codes (2026-10-31): `Wn-Pk` worlds, `SH` ships, `EL` elite
+  overlays, `FX` effects, `PU` pickups, `IC` icons, `UI` interface, `ST` store art; the code starts the file name and
+  Konrad's message. `art/2.0/CHATGPT-BRIEF.md` keeps only the rules and file specs (its tasks A-G are replaced).
+  Change a world's card and its prompts together.
 - Sector names of all 10 worlds (6 each, the 6th is the boss): Art Bible tab "Art Bible", table "Nazwy sektorów".
   World 1 approved by Konrad (2026-10-28, in `js/data.js`); worlds 2-10 are proposals to review. On `v2` the map
   shows all 10 worlds; worlds not built yet were "under construction" (`PLANNED_WORLDS` in `js/data.js`, empty since build 117: story +

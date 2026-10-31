@@ -16,6 +16,9 @@ i wersja TEST (gracze tego nie widzą).
 
 - 
 
+## Build 119 · 2026-10-31
+- [Narzędzia] Art Bible kompletna: wszystkie zadania graficzne 2.0 mają jeden schemat kodów (W1-P1 … W10-P8 dla światów, SH statki, EL elity, FX efekty, PU znajdźki, IC ikony, UI interfejs, ST sklepy), prompty do zadań wspólnych są w zakładce Prompty, a nowa zakładka „Zadania i status” zbiera stan i kolejność. `CHATGPT-BRIEF.md` wskazuje na nowe kody. Gra się nie zmienia.
+
 ## Build 118 · 2026-10-31
 - [Narzędzia] Podgląd na claude.ai: po buildzie 115 strona z linku mogła pokazywać stary wygląd 1.x, bo podgląd nie pozwala stronie pobierać własnych plików (`fetch`), a tak wczytywały się paczki grafik 2.0; tak samo mogła milczeć muzyka. Grafiki i muzyka idą teraz w plikach skryptów wczytywanych jak zwykłe pliki. Gra w aplikacji się nie zmienia.
 
