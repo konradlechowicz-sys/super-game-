@@ -325,8 +325,13 @@ export class AudioEngine {
 }
 
 // The bytes of a recording. Embedded data: URLs are decoded here instead of fetched, because sandboxed pages (the
-// preview on claude.ai) may forbid fetch even for data: URLs.
+// preview on claude.ai) may forbid fetch even for data: URLs. The web previews keep each track in a script of its own
+// (assets/music-<name>.js, scripts/v2-assets.mjs) that puts its data: URL in window.__vbMusic.
 function bytesOf(url) {
+  if (url.endsWith('.js')) {
+    return new Promise((ok, no) => { const s = document.createElement('script'); s.src = url; s.onload = ok; s.onerror = no; document.head.appendChild(s); })
+      .then(() => bytesOf(window.__vbMusic[url]));
+  }
   if (!url.startsWith('data:')) return fetch(url).then((r) => r.arrayBuffer());
   return new Promise((resolve) => {
     const bin = atob(url.slice(url.indexOf(',') + 1));

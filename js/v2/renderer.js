@@ -76,9 +76,11 @@ export async function createV2Renderer(app) {
   // waits for 'load' rather than img.decode(): with hundreds of pictures at once (worlds 1-10), decode() can give up
   // with "the source image cannot be decoded"; a picture that fails is tried once more
   const load = (url) => new Promise((ok, no) => { const img = new Image(); img.onload = () => ok(img); img.onerror = no; img.src = url; });
-  // the web previews keep the pictures in packs (scripts/v2-assets.mjs): JSON files of data URLs
+  // the web previews keep the pictures in packs (scripts/v2-assets.mjs): scripts that put data URLs in window.__vbPacks
   const all = { ...ASSETS.images };
-  for (const pack of await Promise.all((ASSETS.packs || []).map((u) => fetch(u).then((r) => r.json())))) Object.assign(all, pack);
+  const script = (src) => new Promise((ok, no) => { const s = document.createElement('script'); s.src = src; s.onload = ok; s.onerror = no; document.head.appendChild(s); });
+  await Promise.all((ASSETS.packs || []).map((u) => script(u).catch(() => script(u))));
+  for (const pack of Object.values(window.__vbPacks || {})) Object.assign(all, pack);
   await Promise.all(Object.entries(all).map(async ([name, url]) => {
     const img = await load(url).catch(() => load(url));
     imgs[name] = img;
