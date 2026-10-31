@@ -1,0 +1,45 @@
+STYLE (keep identical across all images):
+Game art for "Void Blaster", a top-down mobile space shooter (survivors-
+like).
+Camera: top-down orthographic, looking straight down, no perspective.
+Look: stylized sci-fi with a neon accent. Dark, rich materials (gunmetal, 
+carbon,
+matte ceramic) lit from the top-left, glowing edges and emissive lights only 
+where
+noted. Detail level: high but clean - panel lines, vents, rivets; no grunge 
+overload.
+The background must stay dark and calm so bright game objects read on top of 
+it:
+no bright cyan anywhere (cyan belongs to the player), magenta only as thin 
+traces.
+Rendering: crisp edges, soft bloom on glowing parts only, no motion blur, no 
+depth of
+field, not photorealistic. No text, no logo, no watermark.
+
+TASK: a sheet of 11 game icons, one per weapon, in a grid of 4 columns, each 
+icon a
+256x256 tile, generous space between tiles, on a plain flat background 
+#05010f.
+Tile style (the same for every icon): a dark gunmetal square #0a0d14 with 
+sharp
+corners and one small 45-degree cut corner at the top right, a thin 2 px 
+border in the
+weapon's color, the symbol centered and filling about 60% of the tile, drawn 
+in the
+weapon's color with a soft inner glow, simple bold shapes that read at 48 px.
+No text, no numbers, no letters.
+1) PULSE BLASTER, cyan #2ff3ff: three stacked energy bolts pointing up;
+2) SCATTER GUN, orange #ff8a2a: a fan of five pellets spreading from one 
+point;
+3) SEEKER MISSILES, red-pink #ff3d6e: a missile with a curved homing trail;
+4) ORBIT BLADES, violet #c46bff: three crescent blades circling a small core;
+5) ARC COIL, electric blue #7df9ff: a jagged lightning bolt jumping between 
+two nodes;
+6) NOVA PULSE, teal #3dffc8: three concentric shockwave rings;
+7) WINGMAN DRONE, green #9dff3d: a small escort drone with twin guns;
+8) PROXIMITY MINES, gold #ffd23d: a round spiked mine with a glowing core;
+9) RAILGUN, pale ice blue #c8f0ff: one long straight beam piercing three 
+dots;
+10) FLAMETHROWER, orange #ff8a2a: a cone of flame from a nozzle;
+11) SINGULARITY CANNON, violet #b06bff: a dark orb wrapped in a swirling 
+ring.

@@ -13,10 +13,10 @@ const images = {}, packs = {};
 const add = (dir, file) => {
   const key = file.replace('.webp', ''), data = `data:image/webp;base64,${readFileSync(`${dir}/${file}`).toString('base64')}`;
   if (!OUT) { images[key] = data; return; }
-  const pack = /^w\d+-/.test(file) ? file.split('-')[0] : 'core';
+  const pack = /^(w\d+|ui)-/.test(file) ? file.split('-')[0] : 'core';
   (packs[pack] ||= {})[key] = data;
 };
-for (const f of readdirSync('proto2/assets')) if (/^(ship|enemy|glow|w\d+)-.*\.webp$/.test(f)) add('proto2/assets', f);
+for (const f of readdirSync('proto2/assets')) if (/^(ship|enemy|glow|ui|w\d+)-.*\.webp$/.test(f)) add('proto2/assets', f);
 for (const f of ['floor.webp']) add('teaser/assets', f);
 // the title screen (js/v2/title.js): the teaser's Earth at night, the Collective's web and the satellites
 for (const f of ['earth.webp', 'web.webp', 'emblem.webp']) add('teaser/assets', f);

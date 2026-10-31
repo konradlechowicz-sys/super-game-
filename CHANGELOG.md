@@ -16,6 +16,10 @@ i wersja TEST (gracze tego nie widzą).
 
 - 
 
+## Build 123 · 2026-10-31
+- [Nowe] Nowe ikony od ChatGPT (Art Bible IC1–IC6) zamiast prostych neonowych symboli: 11 broni, 11 ewolucji, 9 perków, 12 kombosów broni, 8 zestawów perków i 3 super kombosy. Widać je na kartach awansu, w Codexie, na liście broni w pauzie, w hangarze i w sklepie ulepszeń (ulepszenia mają ikony podobnych perków, naprawa i monety ikony znajdziek).
+- [Narzędzia] Komplet grafik wspólnych od ChatGPT (ikony, efekty, elity, znajdźki, Gold Striker, interfejs, materiały do sklepów) zapisany w `art/2.0/common`; tekstury do gry robi `proto2/make-common.py`. Pozostałe grafiki z tej paczki wchodzą w kolejnych buildach.
+
 ## Build 122 · 2026-10-31
 - [Narzędzia] Nazwy wszystkich 10 światów i 60 sektorów zatwierdzone przez Konrada (Art Bible i CLAUDE.md). Gra się nie zmienia: te nazwy już w niej są.
 

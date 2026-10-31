@@ -20,6 +20,7 @@ import { makeRedConversion } from './mars.js';
 import { makeFoundryBelt } from './foundry.js';
 import { makeJourney, CFG as JOURNEY } from './journey.js';
 import { stormLevel } from '../crystal.js';
+import { setIconArt } from '../icons.js';
 
 const TAU = Math.PI * 2;
 // enemy types with 2.0 art, and the colour of their glow
@@ -81,7 +82,10 @@ export async function createV2Renderer(app) {
   const script = (src) => new Promise((ok, no) => { const s = document.createElement('script'); s.src = src; s.onload = ok; s.onerror = no; document.head.appendChild(s); });
   await Promise.all((ASSETS.packs || []).map((u) => script(u).catch(() => script(u))));
   for (const pack of Object.values(window.__vbPacks || {})) Object.assign(all, pack);
-  await Promise.all(Object.entries(all).map(async ([name, url]) => {
+  // the interface pictures (ui-..., proto2/make-common.py: icons) are for the HTML screens only (js/icons.js), not
+  // GPU textures
+  setIconArt((key) => all[`ui-${key}`] || null);
+  await Promise.all(Object.entries(all).filter(([name]) => !name.startsWith('ui-')).map(async ([name, url]) => {
     const img = await load(url).catch(() => load(url));
     imgs[name] = img;
     tex[name] = Texture.from(img);

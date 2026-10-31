@@ -19,6 +19,8 @@ const eliteGoal = (st) => {
   return st.boss ? `Destroy ${st.elites ? `${el} and ` : ''}the boss` : `Destroy ${st.elites > 1 ? `all ${el}` : `the ${el}`}`;
 };
 const COIN = '<span class="coin-ico"></span>';
+// the drawn 2.0 icons (js/icons.js) for the shop's upgrades: the perk or pickup each one is like
+const SHOP_ART = { power: 'p-power', armor: 'p-armor', thrusters: 'p-thrusters', tractor: 'p-tractor', amplifier: 'p-amplifier', overclock: 'p-overclock', heal: 'pu-heal', coins: 'pu-coin' };
 
 const titleCase = (s) => s.toLowerCase().replace(/\b\w/g, (c) => c.toUpperCase());
 const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
@@ -382,7 +384,7 @@ export class UI {
             <label>SPEED</label>${bars(s.speed, 300)}
             <label>POWER</label>${bars(s.dmg, 1.2)}
           </div>
-          <div class="ship-weapon"><img src="${icon(WEAPONS[s.weapon].icon, WEAPONS[s.weapon].color)}" alt=""><span>${esc(WEAPONS[s.weapon].name)}</span><em>${esc(s.perk)}</em></div>
+          <div class="ship-weapon"><img src="${icon(WEAPONS[s.weapon].icon, WEAPONS[s.weapon].color, false, `w-${s.weapon}`)}" alt=""><span>${esc(WEAPONS[s.weapon].name)}</span><em>${esc(s.perk)}</em></div>
           ${skins}
           ${btn}
         </div>
@@ -419,7 +421,7 @@ export class UI {
     const all = sections.flatMap((s) => s.items);
     const count = all.filter((x) => found[x.key]).length;
     const entry = (x) => found[x.key]
-      ? `<div class="codex-item" style="--cc:${x.color}"><img src="${icon(x.icon, x.color, x.evo)}" alt="">
+      ? `<div class="codex-item" style="--cc:${x.color}"><img src="${icon(x.icon, x.color, x.evo, x.art)}" alt="">
           <div><b>${esc(x.name)}</b><small>${esc(x.desc)}</small>${x.recipe ? `<em>${esc(x.recipe)}</em>` : ''}</div></div>`
       : `<div class="codex-item locked"><div class="codex-q">?</div><div><b>???</b><small>${esc(x.hint)}</small></div></div>`;
     this.setScreen(`
@@ -450,7 +452,7 @@ export class UI {
         ? `${esc(it.stat)} <b class="fx-now">${fmt(lvl)}</b>`
         : `${esc(it.stat)} <b class="fx-now">${fmt(lvl)}</b> <span class="fx-arrow">→</span> <b class="fx-next">${fmt(lvl + 1)}</b>`;
       return `<div class="shop-row">
-        <img src="${icon(it.icon, '#2ff3ff')}" alt="">
+        <img src="${icon(it.icon, '#2ff3ff', false, SHOP_ART[it.icon])}" alt="">
         <div class="shop-info"><div class="shop-head"><b>${esc(it.name)}</b><span class="shop-lvl">LV ${lvl}/${max}</span></div>
           <small class="shop-fx">${effect}</small><div class="pips">${pips}</div></div>
         ${maxed ? '<button class="btn small" disabled>MAX</button>'
@@ -640,7 +642,7 @@ export class UI {
   }
 
   buildHtml(build) {
-    const item = (x) => `<div class="build-item" style="--ic:${x.color}" title="${esc(x.name)}"><img src="${icon(x.icon, x.color)}" alt=""><b>${x.level}</b></div>`;
+    const item = (x) => `<div class="build-item" style="--ic:${x.color}" title="${esc(x.name)}"><img src="${icon(x.icon, x.color, false, x.art)}" alt=""><b>${x.level}</b></div>`;
     const combos = (build.combos || []).map((c) => `<span class="combo-chip" style="--cc:${c.color}" title="${esc(c.desc)}">${esc(c.name)}</span>`).join('');
     return `<div class="build"><div class="build-row">${build.weapons.map(item).join('')}</div><div class="build-row">${build.passives.map(item).join('')}</div>${combos ? `<div class="build-combos">${combos}</div>` : ''}</div>`;
   }
@@ -648,7 +650,7 @@ export class UI {
   levelUp({ title, sub, cards, rerolls, build, onPick, onReroll, step = 1, steps = 1, hint = '' }) {
     const html = cards.map((c, i) => `
       <button class="card ${c.evo ? 'evo' : ''} ${c.combo ? 'combo' : ''} ${c.superCombo ? 'super' : ''}" style="--cc:${c.color}" data-act="pick" data-i="${i}">
-        <img src="${icon(c.icon, c.color, c.evo)}" alt="">
+        <img src="${icon(c.icon, c.color, c.evo, c.art)}" alt="">
         <div class="card-info">
           <div class="card-top"><b>${esc(c.name)}</b><span class="tag ${c.tag === 'NEW' ? 'new' : ''}">${c.tag}</span></div>
           <div class="card-desc">${esc(c.desc)}</div>

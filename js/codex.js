@@ -12,22 +12,22 @@ const partIcon = (combo, id) => (combo.perk ? P[id] : W[id]).icon;
 // Sections in the order the Codex shows them. Keys: w:weapon, e:evolution, c:combo or perk set, p:perk.
 export function codexSections() {
   const combos = (perk, sup = false) => Object.entries(COMBOS).filter(([, c]) => !!c.perk === perk && !!c.super === sup).map(([id, c]) => ({
-    key: `c:${id}`, name: c.name, desc: c.desc, icon: partIcon(c, c.parts[0]), color: c.color,
+    key: `c:${id}`, name: c.name, desc: c.desc, icon: partIcon(c, c.parts[0]), art: `c-${id}`, color: c.color,
     recipe: c.parts.map((x) => partName(c, x)).join(' + ') + (sup ? ` (all LV ${levelFor(c)} or evolved)` : ' (both LV 3)'),
     hint: sup ? `Needs ${partName(c, c.parts[0])} and two more weapons` : `Needs ${partName(c, c.parts[0])} and one more ${perk ? 'perk' : 'weapon'}`,
   }));
   return [
     { title: 'WEAPONS', items: Object.entries(W).map(([id, w]) => ({
-      key: `w:${id}`, name: w.name, desc: w.desc[0], icon: w.icon, color: w.color, hint: 'Find it on a level-up card',
+      key: `w:${id}`, name: w.name, desc: w.desc[0], icon: w.icon, art: `w-${id}`, color: w.color, hint: 'Find it on a level-up card',
     })) },
     { title: 'EVOLUTIONS', items: Object.entries(W).filter(([, w]) => w.evo).map(([id, w]) => ({
-      key: `e:${id}`, name: w.evo.name, desc: w.evo.desc, icon: w.icon, color: '#ffd23d', evo: true,
+      key: `e:${id}`, name: w.evo.name, desc: w.evo.desc, icon: w.icon, art: `e-${id}`, color: '#ffd23d', evo: true,
       recipe: `${w.name} LV 5 + ${P[w.evo.with].name}`, hint: `Evolves from ${w.name}`,
     })) },
     { title: 'WEAPON COMBOS', items: combos(false) },
     { title: 'SUPER COMBOS', items: combos(false, true) },
     { title: 'PERKS', items: Object.entries(P).map(([id, p]) => ({
-      key: `p:${id}`, name: p.name, desc: p.desc, icon: p.icon, color: p.color, hint: 'Find it on a level-up card',
+      key: `p:${id}`, name: p.name, desc: p.desc, icon: p.icon, art: `p-${id}`, color: p.color, hint: 'Find it on a level-up card',
     })) },
     { title: 'PERK SETS', items: combos(true) },
   ];
