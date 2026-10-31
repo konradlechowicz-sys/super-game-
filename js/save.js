@@ -4,7 +4,7 @@ export const SAVE_KEY = 'voidblaster.save.v1';
 const KEY = SAVE_KEY;
 // Before the 1.x -> 2.0 move the old save is copied here untouched, in case it is ever needed again.
 export const LEGACY_KEY = 'voidblaster.save.1x';
-// The save's format: 2 = Void Blaster 2.0. A save without it was made by 1.x (or by a 2.0 test build before build 120).
+// The save's format: 2 = Void Blaster 2.0. A save without it was made by 1.x (or by a 2.0 test build before build 121).
 const SAVE_VERSION = 2;
 
 const fresh = () => ({
@@ -65,17 +65,13 @@ export function veteranCoins(old) {
   return Math.min(VETERAN.max, VETERAN.base + stars * VETERAN.perStar + Math.floor(spent * VETERAN.refund));
 }
 
-// A save made by a 2.0 test build before the save had a version: it holds progress that 1.x could not make
-// (worlds 5-10, the 2.0 weapons in the Codex), so it is kept as it is.
-const madeBy2 = (s) => [...Object.keys(s.stars || {}), ...Object.keys(s.cleared || {})].some((id) => +id.split('-')[0] >= 5)
-  || ['w:rail', 'w:flame', 'w:singularity'].some((k) => s.codex?.[k]);
-
 // 2.0 starts the journey over (decided by Konrad, 2026-10-26): the 1.x worlds 2-4 are different places, so a 1.x save's
 // stars, cleared sectors, Endless records and shop upgrades go; the purchase, ships, skins, settings, Codex, daily
 // streak and lifetime stats stay. A player who played 1.x gets the veteran coins and a welcome screen once.
+// Saves of the 2.0 test builds made before the save had a version (build 121) start over too (decided by Konrad,
+// 2026-10-31: everyone sees the whole story from world 1).
 function migrate(s, raw) {
   if (s.v === SAVE_VERSION) return s;
-  if (madeBy2(s)) return { ...s, v: SAVE_VERSION };
   try { localStorage.setItem(LEGACY_KEY, JSON.stringify(raw)); } catch { /* storage unavailable */ }
   const played = (s.stats?.runs || 0) > 0;
   const coins = played ? veteranCoins(s) : 0;
