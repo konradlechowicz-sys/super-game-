@@ -125,6 +125,14 @@ export const ENEMIES = {
   lantern: { hp: 80, speed: 0, dmg: 8, r: 15, xp: 4, color: '#3dff8a', shape: 'turret', ai: 'turret' },
   eel: { hp: 50, speed: 70, dmg: 10, r: 17, xp: 4, color: '#4fd1e0', shape: 'wraith', ai: 'blink' },
   lspawn: { hp: 290, speed: 28, dmg: 15, r: 22, xp: 9, color: '#7a5cff', shape: 'square', split: 'icewisp' },
+  // 2.0 world 8 "The Rift Gate": the gate's guards, made of glass and light. The echo blinks next to the ship, the
+  // null orb fires homing shots, the rift spawner is set in space and breeds shard units (ai 'nest').
+  shardunit: { hp: 9, speed: 150, dmg: 4, r: 8, xp: 1, color: '#b9a8ff', shape: 'dart', pack: [4, 6] },
+  echo: { hp: 32, speed: 78, dmg: 7, r: 11, xp: 3, color: '#c46bff', shape: 'wraith', ai: 'blink' },
+  phasewalker: { hp: 44, speed: 66, dmg: 10, r: 14, xp: 3, color: '#b9a8ff', shape: 'diamond', ai: 'dash' },
+  nullorb: { hp: 52, speed: 42, dmg: 8, r: 16, xp: 4, color: '#ff4dd8', shape: 'eye', ai: 'seeker' },
+  riftspawner: { hp: 110, speed: 0, dmg: 8, r: 18, xp: 5, color: '#c46bff', shape: 'turret', ai: 'nest', spawn: 'shardunit' },
+  sentinel: { hp: 290, speed: 26, dmg: 15, r: 21, xp: 9, color: '#e9c4ff', shape: 'square', ai: 'shoot', shots: 4, fire: 3.8 },
 };
 
 export const BOSSES = {
@@ -180,6 +188,13 @@ export const BOSSES = {
     name: 'ABYSS LEVIATHAN', hp: 4800, speed: 34, dmg: 22, r: 84, color: '#4fd1e0', inner: '#ff2d95', sides: 8,
     move: 'chase', rest: 1.5, phases: [0.6, 0.3], attacks: ['charge', 'burst', 'summon', 'spiral', 'beams', 'mortar'],
     summon: ['icewisp', 'tmine'], bulletDmg: 8, bulletSpeed: 0.9, burstN: 18, summonN: 4, bgSpawn: 0.1,
+  },
+  // 2.0 world 8: the Gatekeeper, three turning rings of the gate around a core. It folds space (teleport), throws
+  // spirals and beams through its portals and sends shard swarms and echoes.
+  gatekeeper: {
+    name: 'GATEKEEPER', hp: 4800, speed: 55, dmg: 20, r: 84, color: '#b9a8ff', inner: '#ff2d95', sides: 8,
+    move: 'float', rest: 1.4, phases: [0.6, 0.3], attacks: ['teleport', 'spiral', 'beams', 'summon', 'burst', 'teleport'],
+    summon: ['shardunit', 'echo'], bulletDmg: 8, bulletSpeed: 0.9, burstN: 18, summonN: 4, bgSpawn: 0.1,
   },
   serpent: {
     name: 'CRYSTAL SERPENT', hp: 15000, speed: 120, dmg: 22, r: 34, color: '#2ff3ff', inner: '#b4fff0', sides: 5,
@@ -706,6 +721,12 @@ const W7_7 = journey(7, ['Ice Shelf', 'Thin Ice', 'Glow Beneath', 'Cold Hatchery
   { swarm: 'icewisp', basic: 'frostcrab', a: 'eel', b: 'tmine', fixed: 'lantern', tank: 'lspawn', boss: 'leviathan' },
   (t) => ({ t, type: 'ring', enemy: 'eel', count: 10, msg: 'BENEATH THE ICE' }), 'WISP SWARM');
 
+// World 8 of 2.0, "The Rift Gate": the gate out of the Solar System. The world's mechanic: pairs of rifts that
+// teleport the ship and the enemy shots (js/worldfx.js); gravity tears (wells) as its event.
+const W8_8 = journey(8, ['Shattered Space', 'Mirror Shards', 'Echoes of Home', 'Gate Rings', 'No Return', 'Gatekeeper'],
+  { swarm: 'shardunit', basic: 'phasewalker', a: 'echo', b: 'nullorb', fixed: 'riftspawner', tank: 'sentinel', boss: 'gatekeeper' },
+  (t) => ({ t, type: 'well', count: 2, msg: 'GRAVITY TEAR' }), 'SHARD SWARM');
+
 // The 2.0 worlds after world 1 keep their own kill goals; their elites are counted for the 3rd star (world 2 missed
 // that until build 106: its 3rd star could not be won). World 2's elites stay without traits (Konrad tests its
 // difficulty first); world 3's carry one trait each, like world 1's.
@@ -720,7 +741,7 @@ const ELITE_TRAITS_2 = {
 // worlds 6-10: one trait each, two on the double-elite sectors, cycling through the traits
 const CYCLE = ['swift', 'shielded', 'berserker', 'commander', 'bulwark'];
 for (let w = 6, k = 0; w <= 10; w++) for (let n = 1; n <= 6; n++) ELITE_TRAITS_2[`${w}-${n}`] = (n === 4 || n === 5 ? [0, 1] : [0]).map(() => [CYCLE[k++ % CYCLE.length]]);
-for (const st of [...W2_2, ...W3_3, ...W4_4, ...W5_5, ...W6_6, ...W7_7]) {
+for (const st of [...W2_2, ...W3_3, ...W4_4, ...W5_5, ...W6_6, ...W7_7, ...W8_8]) {
   st.elites = st.events.filter((e) => e.type === 'elite').length;
   const list = (!W2_2.includes(st) && ELITE_TRAITS_2[st.id]) || [];
   st.events.filter((e) => e.type === 'elite').forEach((e, i) => {
@@ -746,13 +767,11 @@ export const WORLD_TUNING = {
   10: { dmg: 2.1, ramp: 0.46, hp: 1.37, elite: 1.52, boss: 1.42 },
 };
 
-// The 2.0 journey (decided by Konrad, 2026-10-28): worlds 1-7 are built; worlds 8-10 are under construction. The map
+// The 2.0 journey (decided by Konrad, 2026-10-28): worlds 1-8 are built; worlds 9-10 are under construction. The map
 // shows them with their story and planned sectors (Art Bible, table "Nazwy sektorów"); when a world is built, it gets
 // its stages and drops `soon`. The 1.x worlds 2-4 below (W2-W4, LEGACY_WORLDS) are no longer played; they stay as a
 // starting point for tuning the new worlds.
 const PLANNED_WORLDS = [
-  [8, 'The Rift Gate', '#b9a8ff', 'The gate out of the Solar System. There is no way back.',
-    ['Shattered Space', 'Mirror Shards', 'Echoes of Home', 'Gate Rings', 'No Return', 'Gatekeeper']],
   [9, 'Brood World', '#8fd35a', 'The Collective\'s breeding world. The ground breathes.',
     ['Living Ground', 'Breathing Fields', 'Spawning Pits', 'Acid Marsh', 'Egg Chambers', 'Brood Matriarch']],
   [10, 'The Nexus', '#ff2d95', 'The heart of the Collective, and the end of the journey.',
@@ -789,6 +808,10 @@ export const WORLDS = [
   {
     id: 7, name: 'Abyss of Europa', color: '#4fd1e0', stages: W7_7, music: 'game7', bossMusic: 'boss7',
     theme: { top: '#0a1a2a', bottom: '#020610', neb: ['#1c3a5a', '#4fd1e0', '#7a5cff'], grid: '#5a7aa0' },
+  },
+  {
+    id: 8, name: 'The Rift Gate', color: '#b9a8ff', stages: W8_8, music: 'game8', bossMusic: 'boss8',
+    theme: { top: '#120a24', bottom: '#04020a', neb: ['#3a2a5a', '#b9a8ff', '#ff2d95'], grid: '#7a6aa0' },
   },
   ...PLANNED_WORLDS.map(([id, name, color, story, plan]) => ({ id, name, color, story, plan, stages: [], soon: true })),
 ];

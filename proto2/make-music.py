@@ -24,7 +24,8 @@
 #   game6: world 6 "Storm Relay" sector (about 113.8 BPM): 32 bars (about 67.5 s); boss6 (about 117 BPM): 36 bars
 #          (about 74 s) with 13 s of build-up (`trim`)
 #   game7 / boss7: world 7 "Abyss of Europa" (about 111 / 120 BPM): 32 bars / 24 bars, the boss with 13 s of build-up
-# World 3's to 7's points were searched the same way as world 2's (below).
+#   game8 / boss8: world 8 "The Rift Gate" (about 129 / 137 BPM): 32 bars / 36 bars, the boss with 13 s of build-up
+# World 3's to 8's points were searched the same way as world 2's (below).
 # The world-2 points (build 100, after Konrad heard a jump): Suno's tempo is not exact, so a loop end taken from the
 # bar grid can sit a fraction of a beat off and the drums stumble at the jump. The ends were searched instead: every
 # beat as a start, whole-bar lengths, the end tuned in 2.9 ms steps to the best match of the onset envelope (rhythm)
@@ -55,6 +56,8 @@ TRACKS = {
     'boss6': ('art/2.0/audio/w06-storm-relay-boss.mp3', 50.4090, 124.1209, 0.88, 37.0840),
     'game7': ('art/2.0/audio/w07-abyss-of-europa-sector.mp3', 62.9558, 132.0199, 0.94),
     'boss7': ('art/2.0/audio/w07-abyss-of-europa-boss.mp3', 69.2134, 117.2062, 0.96, 56.2316),
+    'game8': ('art/2.0/audio/w08-rift-gate-sector.mp3', 57.0560, 116.5399, 0.69),
+    'boss8': ('art/2.0/audio/w08-rift-gate-boss.mp3', 51.4021, 114.4478, 1.0, 38.2831),
 }
 
 out = {}

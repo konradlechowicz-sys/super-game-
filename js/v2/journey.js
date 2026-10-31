@@ -27,6 +27,13 @@ export const CFG = {
     glow: { 'green-lit-crevasse': 0x3dff8a, 'steaming-vent': 0x8fb4ff },
     near: { alpha: 0.55, drift: [4, 10] },
   },
+  8: {
+    far: { mode: 'cover', parallax: 0.06, spin: 0.004, tint: 0xd0c8e0 },
+    islands: { n: 6, count: 9, size: [170, 300], tint: 0xd0c8e8 },
+    decor: [['gate-ring-segment', 230, 2], ['guardian-pylon', 170, 3], ['floating-ring-fragment', 200, 2], ['shard-cluster', 120, 4], ['dormant-sentinel-eye', 110, 3]],
+    glow: { 'dormant-sentinel-eye': 0xff2d95, 'guardian-pylon': 0xb9a8ff },
+    near: { alpha: 0.5, drift: [8, 4] },
+  },
 };
 
 function rng(seed) {

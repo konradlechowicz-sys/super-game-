@@ -16,6 +16,13 @@ i wersja TEST (gracze tego nie widzą).
 
 - 
 
+## Build 115 · 2026-10-31
+- [Nowe] Świat 8 „The Rift Gate” (pełna wersja): 6 sektorów (Shattered Space, Mirror Shards, Echoes of Home, Gate Rings, No Return, Gatekeeper) w grafice ChatGPT. Za Układem Słonecznym, nad gigantycznym pierścieniem wrót: wolno obracające się zakrzywione niebo, unoszące się szklane odłamki rzeczywistości, segmenty pierścieni, pylony strażników, uśpione oczy i ściany światła na brzegu areny.
+- [Nowe] Mechanika świata 8: pary szczelin. Statek, który wleci w szczelinę, wylatuje z jej pary (z krótką przerwą, żeby nie skakać w kółko). To samo dzieje się z pociskami wrogów, więc strzał może przyjść z drugiego końca areny. Zdarzenie świata to „GRAVITY TEAR”, czyli studnie grawitacyjne.
+- [Nowe] 6 wrogów świata 8: Shard Swarm Unit (roje), Echo (pojawia się obok statku), Phase Walker (szarżuje, elita w złotym pierścieniu), Null Orb (pociski samonaprowadzające), Rift Spawner (osadzony w przestrzeni, wypuszcza roje odłamków), Gate Sentinel (ciężki, strzela).
+- [Nowe] Boss GATEKEEPER: trzy obracające się pierścienie wrót wokół rdzenia. Zagina przestrzeń (teleport), strzela spiralami i wiązkami przez portale, wysyła roje i echa. Ma 3 fazy.
+- [Nowe] Rekwizyty świata 8: kondensatory pierścieni (wybuchają) i kotwice szczelin (wzmacniają wrogów wokół). Muzyka świata 8 (Suno): sektor i boss.
+
 ## Build 114 · 2026-10-31
 - [Nowe] Świat 7 „Abyss of Europa” (pełna wersja): 6 sektorów (Ice Shelf, Thin Ice, Glow Beneath, Cold Hatchery, The Deep Call, Abyss Leviathan) w grafice ChatGPT. Pod półprzezroczystym lodem Europy widać ciemny ocean ze świecącym życiem; są lodowe iglice, zamarznięte hybrydy, zielono świecące szczeliny, parujące kominy i lodowe ściany na brzegu areny.
 - [Nowe] Mechanika świata 7: śliski lód. Statek ma bezwładność, ślizga się i dopiero po chwili skręca tam, gdzie go kierujesz. Spod lodu wynurzają się węgorze-hybrydy: znikają i pojawiają się obok statku. Zdarzenie świata to fala „BENEATH THE ICE”.
