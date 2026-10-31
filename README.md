@@ -140,7 +140,8 @@ and `.../site/support.html`, and the web version of the game at `https://konradl
   (`proto2/make-world3.py`; regolith, the craters of `js/cover.js`, the Collective's conduits); `mars.js` = world 4
   "Red Conversion" (`proto2/make-world4.py`; red dust, the black crystal of `js/crystal.js` blended in through a mask,
   dust storms); `foundry.js` = world 5 "Foundry Belt" (`proto2/make-world5.py`; terraced factory floor with chasms
-  over space, furnaces, the drifting asteroids of `js/cover.js`); `edge.js` = a world's arena edge; recorded
+  over space, furnaces, the drifting asteroids of `js/cover.js`); `journey.js` = worlds 6-10, one scene driven by
+  each world's settings (`proto2/make-worlds.py`); `edge.js` = a world's arena edge; recorded
   2.0 music (`js/v2/music.gen.js` from `proto2/make-music.py`, needs ffmpeg) replaces the synthesized track it covers
   (`setRecording` in `js/audio.js`); textures come from `js/v2/assets.gen.js`, written by `scripts/v2-assets.mjs` from `proto2/assets` and `teaser/assets` (not committed). Release and normal web builds fail if the marker `VB-V2LOOK` is found
 - `js/props.js` — 2.0: each world's destructible props (world 1: fuel tanks and ammo crates; world 2: flak batteries and
@@ -148,6 +149,7 @@ and `.../site/support.html`, and the web version of the game at `https://konradl
   supply crates; world 4: crystal clusters, converted pylons and supply drops;
   world 5: fuel tanks and power capacitors)
 - `js/cover.js` — 2.0 cover that stops enemy shots: world 3's craters, world 5's drifting asteroids
+- `js/worldfx.js` — 2.0 worlds 6-10: wind (6), ice (7), rifts (8), acid (9), all of them (10)
 - `js/crystal.js` — 2.0 world 4: the black crystal network (grows from nodes, laid by Spreaders, slows the ship) and dust storms
 - `js/weapons.js` — weapon stats, behaviours and evolutions
 - `js/arsenal.js` — 2.0 arsenal mechanics: crits, burning, burning ground, black holes, railgun beams, the Phase Shield

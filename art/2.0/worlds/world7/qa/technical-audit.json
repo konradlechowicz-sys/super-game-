@@ -1,0 +1,609 @@
+{
+  "world": 7,
+  "passed": true,
+  "errors": [],
+  "checks": {
+    "W7-P1-arena-concept.png": {
+      "size": [
+        941,
+        1672
+      ],
+      "mode": "RGB",
+      "sha256": "9c664b9e96f685e15a2a0f015ea9a889db28cb4071944d46c9a87e6ccf2daf20"
+    },
+    "W7-P2-background.png": {
+      "size": [
+        2048,
+        2048
+      ],
+      "mode": "RGB",
+      "sha256": "b835b9437ac47c5de0ec7b294851c42a7d7a84c3e2975cce531188a320d9818e",
+      "seams": {
+        "horizontal_exact": true,
+        "vertical_exact": true
+      }
+    },
+    "W7-P3-floor.png": {
+      "size": [
+        1024,
+        1024
+      ],
+      "mode": "RGBA",
+      "sha256": "6a627af997dcbd1be03a1c3d11a1e4839fb102775d5cdd37398b1f3003c65957",
+      "seams": {
+        "horizontal_exact": true,
+        "vertical_exact": true
+      },
+      "max_luminance": 0.2999262745098039,
+      "alpha": {
+        "min": 95,
+        "max": 250,
+        "fraction_partial": 1.0
+      }
+    },
+    "W7-P4-overlay.png": {
+      "size": [
+        1024,
+        1024
+      ],
+      "mode": "RGB",
+      "sha256": "aa008803a2bda73c228c84775df3744d34819871f17e1516c86fb6fa56da0826",
+      "seams": {
+        "horizontal_exact": true,
+        "vertical_exact": true
+      },
+      "near_black_fraction": 0.8938941955566406
+    },
+    "W7-P5-props-sheet.png": {
+      "size": [
+        1600,
+        1200
+      ],
+      "mode": "RGB",
+      "sha256": "a1d3ec266712a91297b6a0c536100f20799043f481a749e296e84fd12d068707"
+    },
+    "W7-P5-props/W7-P5-ice-spire-cluster.png": {
+      "size": [
+        259,
+        324
+      ],
+      "mode": "RGB",
+      "sha256": "3a1851f60b5a819b2b47dcda9cb65d59a5968579eeada7c8d8785dcccff91381"
+    },
+    "W7-P5-props/W7-P5-frozen-hybrid-carcass.png": {
+      "size": [
+        211,
+        304
+      ],
+      "mode": "RGB",
+      "sha256": "00022449ee53c79764879dd7e0e38d7ac1092ce0a9d3162db2eeddbf44a5e5eb"
+    },
+    "W7-P5-props/W7-P5-green-lit-crevasse.png": {
+      "size": [
+        228,
+        304
+      ],
+      "mode": "RGB",
+      "sha256": "c8e74d0be11471766025f0178c4b655c9085dcfb006644ebbe68f732898ceaa3"
+    },
+    "W7-P5-props/W7-P5-steaming-vent.png": {
+      "size": [
+        73,
+        124
+      ],
+      "mode": "RGB",
+      "sha256": "b07f98c1b4bd7a3bf4555b8b40f1a88d365f76813bde2be467c0109888ec8e8e"
+    },
+    "W7-P5-props/W7-P5-circuit-vine-knot.png": {
+      "size": [
+        87,
+        124
+      ],
+      "mode": "RGB",
+      "sha256": "917f3e61b5f4414a4136164cfff5260490fee4a624f14fcd0e0471b5fd8fb88f"
+    },
+    "W7-P5-props/W7-P5-ice-boulder.png": {
+      "size": [
+        119,
+        124
+      ],
+      "mode": "RGB",
+      "sha256": "45c41ff00dd36bd70c6f74bff210b45893d79d1b7ea925e9cabae0eac7104c18"
+    },
+    "W7-P5-props/W7-P5-spore-lantern-intact.png": {
+      "size": [
+        179,
+        204
+      ],
+      "mode": "RGB",
+      "sha256": "7e08a20cdf30f383dd70f25a7f03c49fb6bee7d57ec94a96c8d3f75e40a44eed"
+    },
+    "W7-P5-props/W7-P5-spore-lantern-shattered.png": {
+      "size": [
+        190,
+        212
+      ],
+      "mode": "RGB",
+      "sha256": "2f9e9c2b1289d58d632142744badc02af8cfc907015a50613e6a17dc5eaac7df"
+    },
+    "W7-P5-props/W7-P5-ice-locked-pod-intact.png": {
+      "size": [
+        135,
+        204
+      ],
+      "mode": "RGB",
+      "sha256": "d92ff939679a5548416ceb818b3d47d16ab1a4b24688d4765d4a8abd8b508261"
+    },
+    "W7-P5-props/W7-P5-ice-locked-pod-shattered.png": {
+      "size": [
+        195,
+        213
+      ],
+      "mode": "RGB",
+      "sha256": "3d8223017c64cbefa890f8342aab3af5d9e0e87418aca89b2a595dd0f33f9f1a"
+    },
+    "W7-P6-border-pieces-sheet.png": {
+      "size": [
+        1536,
+        1536
+      ],
+      "mode": "RGB",
+      "sha256": "e544b8760387124c72b94fe4dae51a7265aabbd92acf839b1b96727cedac9f74"
+    },
+    "W7-P6-border-pieces/W7-P6-border-top.png": {
+      "size": [
+        1024,
+        160
+      ],
+      "mode": "RGB",
+      "sha256": "ad338cae9335ebd65155b9711bcb7ccdfdf371b95b8e7e0fc23a2ccbefd1e864"
+    },
+    "W7-P6-border-pieces/W7-P6-border-bottom.png": {
+      "size": [
+        1024,
+        160
+      ],
+      "mode": "RGB",
+      "sha256": "df99f98f195f628410bd62c6d188f625a9e442fd5640a5379c860f92f0234df5"
+    },
+    "W7-P6-border-pieces/W7-P6-border-left.png": {
+      "size": [
+        160,
+        1024
+      ],
+      "mode": "RGB",
+      "sha256": "270b7770d858e91b046ed8b3ac296115e3910fd2a0b933f5c08c83d9e917d601"
+    },
+    "W7-P6-border-pieces/W7-P6-border-right.png": {
+      "size": [
+        160,
+        1024
+      ],
+      "mode": "RGB",
+      "sha256": "ff4fe59f06fd6a545b15a17e8882937d87c94dbf0bed709aee53881e6f82401d"
+    },
+    "W7-P6-border-pieces/W7-P6-corner-top-left.png": {
+      "size": [
+        256,
+        256
+      ],
+      "mode": "RGB",
+      "sha256": "48c21e032fd9e2026a6b69336b228b871ccbefd34e3572742b64458480a243fd"
+    },
+    "W7-P6-border-pieces/W7-P6-corner-top-right.png": {
+      "size": [
+        256,
+        256
+      ],
+      "mode": "RGB",
+      "sha256": "8fe2cdd17670a6b638e4de7edeb5dfa87d6964ec2b1351a68363c1a9131b9fa6"
+    },
+    "W7-P6-border-pieces/W7-P6-corner-bottom-left.png": {
+      "size": [
+        256,
+        256
+      ],
+      "mode": "RGB",
+      "sha256": "9b8c489fb0c0710326c120a888f122c21ef6bb211614ff718323b5af2c07be32"
+    },
+    "W7-P6-border-pieces/W7-P6-corner-bottom-right.png": {
+      "size": [
+        256,
+        256
+      ],
+      "mode": "RGB",
+      "sha256": "754a9b38b106bc3cd06837e448f747a6de8b88814638e5c6c128a5fc1485a96e"
+    },
+    "W7-P7-enemies-sheet.png": {
+      "size": [
+        1080,
+        800
+      ],
+      "mode": "RGB",
+      "sha256": "7397b074236c8803b96ff6c18c2eb9fbfbce9ffd21f16f7bb0b683f5810aaac3"
+    },
+    "W7-P7-enemies/W7-P7-ice-wisp.png": {
+      "size": [
+        88,
+        159
+      ],
+      "mode": "RGB",
+      "sha256": "ad05c1926db400e716b09d03eec038a5267cfd0fe8d742059160033c643a366c"
+    },
+    "W7-P7-enemies/W7-P7-frost-crab.png": {
+      "size": [
+        218,
+        198
+      ],
+      "mode": "RGB",
+      "sha256": "e3fd1a197324984ed8335d2837dc6d595c87574c86f4fcf147159130f8c8550e"
+    },
+    "W7-P7-enemies/W7-P7-tentacle-mine.png": {
+      "size": [
+        198,
+        156
+      ],
+      "mode": "RGB",
+      "sha256": "86aa153cb7b20de689f41ca64c37bde0a4c93e7f7508e696e532eb3c66ff3768"
+    },
+    "W7-P7-enemies/W7-P7-spore-lantern.png": {
+      "size": [
+        220,
+        237
+      ],
+      "mode": "RGB",
+      "sha256": "fe0d91a5fdc4c5ac7ce379095d307f5bccb0e3c246505be8f0da4b87ee91877b"
+    },
+    "W7-P7-enemies/W7-P7-eel-hybrid.png": {
+      "size": [
+        136,
+        266
+      ],
+      "mode": "RGB",
+      "sha256": "d96b035d23d140e085965028900a81599474d5a5201a330a7bddca8f87b44c0f"
+    },
+    "W7-P7-enemies/W7-P7-leviathan-spawn.png": {
+      "size": [
+        259,
+        324
+      ],
+      "mode": "RGB",
+      "sha256": "0fc3e32c1fc6b3e85a02482d2cabc8e7778bb07b537eaeaeb12b3570ef2416f8"
+    },
+    "W7-P7-elite-and-shards-sheet.png": {
+      "size": [
+        1200,
+        1800
+      ],
+      "mode": "RGB",
+      "sha256": "27885d9bd0ae4e209043c275fba775951f84e848146847df48ec9fe45121a312"
+    },
+    "W7-P7-elite-and-shards/W7-P7-frost-crab-elite.png": {
+      "size": [
+        334,
+        304
+      ],
+      "mode": "RGB",
+      "sha256": "4082905b5215fa1fec249ffb5f94bc12cc587e07e9cac3306b3ee30bcbf0e906"
+    },
+    "W7-P7-elite-and-shards/W7-P7-ice-wisp-shard-1.png": {
+      "size": [
+        70,
+        90
+      ],
+      "mode": "RGB",
+      "sha256": "4718d85d80f096962f1e61604bdf69bd4e4f2ae7ddf4bcbb2569beaeb55f9290"
+    },
+    "W7-P7-elite-and-shards/W7-P7-ice-wisp-shard-2.png": {
+      "size": [
+        91,
+        99
+      ],
+      "mode": "RGB",
+      "sha256": "795cb8cc73715c3ff4f12fffd3c038dba1cc89b88b859a5084557665bf7ff5fd"
+    },
+    "W7-P7-elite-and-shards/W7-P7-ice-wisp-shard-3.png": {
+      "size": [
+        93,
+        105
+      ],
+      "mode": "RGB",
+      "sha256": "56f803c31cb314871c46669fc2f65fc8adde84e25af7d00cbcab093a934c9748"
+    },
+    "W7-P7-elite-and-shards/W7-P7-ice-wisp-shard-4.png": {
+      "size": [
+        80,
+        87
+      ],
+      "mode": "RGB",
+      "sha256": "c13e3aa7cd8388a68839e186b127ce3249d0f448a514a1e1936baf5c8af73687"
+    },
+    "W7-P7-elite-and-shards/W7-P7-frost-crab-shard-1.png": {
+      "size": [
+        140,
+        118
+      ],
+      "mode": "RGB",
+      "sha256": "cc98c05f04327b3059bbe089daeaa4d0e90e693a11b6b858e174e95be34ce4c5"
+    },
+    "W7-P7-elite-and-shards/W7-P7-frost-crab-shard-2.png": {
+      "size": [
+        140,
+        123
+      ],
+      "mode": "RGB",
+      "sha256": "68bd9a9369967540a20c17b00ebf6892e659b9db8386f2c65f5a85602d52ff9e"
+    },
+    "W7-P7-elite-and-shards/W7-P7-frost-crab-shard-3.png": {
+      "size": [
+        120,
+        128
+      ],
+      "mode": "RGB",
+      "sha256": "081417e52058479fdfb448d129771b585a05749ba02bd6ed81f16a2618479d3c"
+    },
+    "W7-P7-elite-and-shards/W7-P7-frost-crab-shard-4.png": {
+      "size": [
+        134,
+        112
+      ],
+      "mode": "RGB",
+      "sha256": "05324e62efd7ee405a38e7bdedbf957cbd34eff897efc5f4e31f5be144970126"
+    },
+    "W7-P7-elite-and-shards/W7-P7-tentacle-mine-shard-1.png": {
+      "size": [
+        128,
+        100
+      ],
+      "mode": "RGB",
+      "sha256": "52ac69ce32ea279f90b5700902cb1d2402600a252f314023d7c20c6c2d8a98ec"
+    },
+    "W7-P7-elite-and-shards/W7-P7-tentacle-mine-shard-2.png": {
+      "size": [
+        118,
+        105
+      ],
+      "mode": "RGB",
+      "sha256": "23bb308b4e01e1250219e604de5d7528d7052d62672cb2eb5c08ab28ad526ae6"
+    },
+    "W7-P7-elite-and-shards/W7-P7-tentacle-mine-shard-3.png": {
+      "size": [
+        128,
+        104
+      ],
+      "mode": "RGB",
+      "sha256": "6cceca687a0b325159ad993e7c98b66f286af4d44cbe2233908a0a470494f914"
+    },
+    "W7-P7-elite-and-shards/W7-P7-tentacle-mine-shard-4.png": {
+      "size": [
+        127,
+        104
+      ],
+      "mode": "RGB",
+      "sha256": "9feaa52578080267a501b23ec059d2cac499ab01cbc2a4b558f0fcc8f8e9b715"
+    },
+    "W7-P7-elite-and-shards/W7-P7-spore-lantern-shard-1.png": {
+      "size": [
+        152,
+        143
+      ],
+      "mode": "RGB",
+      "sha256": "60a3bdc459149fba5429d136b5bb439b21c4310d05fdb43f61b26eef7f43b7a3"
+    },
+    "W7-P7-elite-and-shards/W7-P7-spore-lantern-shard-2.png": {
+      "size": [
+        113,
+        135
+      ],
+      "mode": "RGB",
+      "sha256": "7c6c52c3aa9670d86221b2f6a7d2c4200f600eb1c4f988841b42bedf76b1267c"
+    },
+    "W7-P7-elite-and-shards/W7-P7-spore-lantern-shard-3.png": {
+      "size": [
+        129,
+        129
+      ],
+      "mode": "RGB",
+      "sha256": "d8f45a85dd9ff4832e976026824861a9c493eadb31552c18fe3bc889b34d5a99"
+    },
+    "W7-P7-elite-and-shards/W7-P7-spore-lantern-shard-4.png": {
+      "size": [
+        148,
+        144
+      ],
+      "mode": "RGB",
+      "sha256": "fdb43a4813caa6b015ee0dce023abf9e126e64fcdb1f37ce2739812ac9def33f"
+    },
+    "W7-P7-elite-and-shards/W7-P7-eel-hybrid-shard-1.png": {
+      "size": [
+        154,
+        141
+      ],
+      "mode": "RGB",
+      "sha256": "035a09cbdd162a1a8610c9ae83ac53d773f3ef792686e180e1a8521ae67855a4"
+    },
+    "W7-P7-elite-and-shards/W7-P7-eel-hybrid-shard-2.png": {
+      "size": [
+        149,
+        145
+      ],
+      "mode": "RGB",
+      "sha256": "835f3471bbe6dda7afd6833f7e84424400e105d9fd94816dc6a9e2f2bdd58e01"
+    },
+    "W7-P7-elite-and-shards/W7-P7-eel-hybrid-shard-3.png": {
+      "size": [
+        162,
+        139
+      ],
+      "mode": "RGB",
+      "sha256": "63fc83dd3591a5eb8c73772e77cc814d770bf4cdb8c91ad2316c05c4191e559f"
+    },
+    "W7-P7-elite-and-shards/W7-P7-eel-hybrid-shard-4.png": {
+      "size": [
+        169,
+        121
+      ],
+      "mode": "RGB",
+      "sha256": "d6749731a94289b23dd765988964e0fb5b522ae1a658f0a978695792dd1deff9"
+    },
+    "W7-P7-elite-and-shards/W7-P7-leviathan-spawn-shard-1.png": {
+      "size": [
+        176,
+        197
+      ],
+      "mode": "RGB",
+      "sha256": "f349bb86f8a760f114efa1a95d89b02e8b15bc95dc99f413c732c77fe793279c"
+    },
+    "W7-P7-elite-and-shards/W7-P7-leviathan-spawn-shard-2.png": {
+      "size": [
+        156,
+        204
+      ],
+      "mode": "RGB",
+      "sha256": "a16c7dc2e2ba0ae0e41a74f56c1cc3a5f92c7cf416ecfa35036eb19f796d2330"
+    },
+    "W7-P7-elite-and-shards/W7-P7-leviathan-spawn-shard-3.png": {
+      "size": [
+        152,
+        189
+      ],
+      "mode": "RGB",
+      "sha256": "ff58af5f02a39e5a60cd3ba9ceea12a873847279b58de2e2a7a979fd016ed459"
+    },
+    "W7-P7-elite-and-shards/W7-P7-leviathan-spawn-shard-4.png": {
+      "size": [
+        181,
+        196
+      ],
+      "mode": "RGB",
+      "sha256": "a1880b93efb5fc271e0e5bbaa28e068551da1f23985f2ddc5200445c5601bb07"
+    },
+    "W7-P8-abyss-leviathan.png": {
+      "size": [
+        1024,
+        1024
+      ],
+      "mode": "RGB",
+      "sha256": "735e3a5c7b4456a3bf45d94641a0095b7515538936c890265fe118e4376d386e"
+    },
+    "W7-P8-parts-sheet.png": {
+      "size": [
+        4400,
+        4400
+      ],
+      "mode": "RGB",
+      "sha256": "4af2459bd0e0f3ef07f7162ef11080b5edf9cd8995926031985b41e06cc79a8c"
+    },
+    "W7-P8-parts/W7-P8-mantle.png": {
+      "size": [
+        429,
+        624
+      ],
+      "mode": "RGB",
+      "sha256": "17e717e322f3713bb3561bbd72b21902b54796d0cca09c72cf5c4b5fbd327070"
+    },
+    "W7-P8-parts/W7-P8-tentacle-1.png": {
+      "size": [
+        160,
+        624
+      ],
+      "mode": "RGB",
+      "sha256": "2addaa08bd2c70a96cd7f7e0d7d5f062d2bbff7fba64fd7825621910832b071a"
+    },
+    "W7-P8-parts/W7-P8-tentacle-2.png": {
+      "size": [
+        163,
+        624
+      ],
+      "mode": "RGB",
+      "sha256": "1e03b942ebfe4d948a4efceeefc2932908c860376f28e0b5143e9aeb8a5fa462"
+    },
+    "W7-P8-parts/W7-P8-tentacle-3.png": {
+      "size": [
+        178,
+        624
+      ],
+      "mode": "RGB",
+      "sha256": "55ac3c0ff44d5b70bf057f9efef3d48c3474914ba1a69cf995ff72178603d910"
+    },
+    "W7-P8-parts/W7-P8-tentacle-4.png": {
+      "size": [
+        159,
+        624
+      ],
+      "mode": "RGB",
+      "sha256": "49f098e2e4c8fea48f14b224cb4fb620ab09b38208a7db69ffffd35c62177304"
+    },
+    "W7-P8-parts/W7-P8-tentacle-5.png": {
+      "size": [
+        172,
+        624
+      ],
+      "mode": "RGB",
+      "sha256": "b4b9c803845f382f53a38f352a35881b6d81e8d0401890f910c937fa1bf69198"
+    },
+    "W7-P8-parts/W7-P8-tentacle-6.png": {
+      "size": [
+        158,
+        624
+      ],
+      "mode": "RGB",
+      "sha256": "92a3fc861668ee26e1d55f109f97f8e1137b50723edbb8658ee16e9f3c3cada6"
+    },
+    "W7-P8-parts/W7-P8-tentacle-7.png": {
+      "size": [
+        162,
+        624
+      ],
+      "mode": "RGB",
+      "sha256": "514c47a14688b74bb37d2674b2784642c83ec575d3a77987637491dc90c301c8"
+    },
+    "W7-P8-parts/W7-P8-tentacle-8.png": {
+      "size": [
+        168,
+        624
+      ],
+      "mode": "RGB",
+      "sha256": "52be03cc02c254fe74921393526591ec8f5395c17fe3b5d119affafa8b505886"
+    },
+    "W7-P8-parts/W7-P8-weak-point-1.png": {
+      "size": [
+        133,
+        134
+      ],
+      "mode": "RGB",
+      "sha256": "a8462c6a5e4c49817c17000824c0954a911194132f65df542cf5e8c1ea5f29c4"
+    },
+    "W7-P8-parts/W7-P8-weak-point-2.png": {
+      "size": [
+        184,
+        167
+      ],
+      "mode": "RGB",
+      "sha256": "683dbf19b79ee8444b2a3f29c8e9850a9a1c1c99c0e2c8130c079b71b32891af"
+    },
+    "W7-P8-parts/W7-P8-weak-point-3.png": {
+      "size": [
+        182,
+        184
+      ],
+      "mode": "RGB",
+      "sha256": "8e3e47c38448bd755124f0dbb07779ea3c209c3e040dc8e927803a9afdf9c35b"
+    },
+    "W7-P8-parts/W7-P8-weak-point-4.png": {
+      "size": [
+        129,
+        134
+      ],
+      "mode": "RGB",
+      "sha256": "8011be5c3bba18e499d3ffcb17391851cd9b75d02342bd8bf97e41aa2076ab81"
+    },
+    "elite_scale_ratio": 1.597938144329897,
+    "border_connections_checked": 8,
+    "parts_assembled_boss_identical": true,
+    "all_expected_files_count": 72,
+    "all_found_png_count": 72
+  },
+  "warnings": [],
+  "visual_review": "separate, required"
+}

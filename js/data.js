@@ -71,9 +71,10 @@ export const ENEMIES = {
   turret: { hp: 70, speed: 0, dmg: 8, r: 16, xp: 4, color: '#ffc23d', shape: 'turret', ai: 'turret', spin: 0.7 },
   golem: { hp: 220, speed: 30, dmg: 14, r: 24, xp: 8, color: '#ff3d1a', shape: 'square', spin: 0.4 },
   // Void Core
-  wraith: { hp: 30, speed: 80, dmg: 7, r: 12, xp: 3, color: '#c86bff', shape: 'wraith', ai: 'blink' },
-  eye: { hp: 50, speed: 40, dmg: 8, r: 15, xp: 4, color: '#ff4dd8', shape: 'eye', ai: 'seeker' },
-  voidling: { hp: 10, speed: 130, dmg: 4, r: 8, xp: 1, color: '#9d4dff', shape: 'dart', pack: [4, 6] },
+  // the void's own (1.x world 4); 2.0 world 10 "The Nexus" brings them back, a little tougher (build 117)
+  wraith: { hp: 40, speed: 80, dmg: 9, r: 13, xp: 3, color: '#c86bff', shape: 'wraith', ai: 'blink' },
+  eye: { hp: 56, speed: 42, dmg: 9, r: 16, xp: 4, color: '#ff4dd8', shape: 'eye', ai: 'seeker' },
+  voidling: { hp: 12, speed: 135, dmg: 5, r: 9, xp: 1, color: '#9d4dff', shape: 'dart', pack: [4, 6] },
   // 2.0 world 2 "Siege of Earth": the landing force (art: proto2/make-world2.py; shapes are the 1.x look's fallback)
   interceptor: { hp: 10, speed: 135, dmg: 5, r: 10, xp: 1, color: '#ff2d95', shape: 'dart', pack: [3, 5] },
   lander: { hp: 50, speed: 52, dmg: 10, r: 12, xp: 3, color: '#ff4dd8', shape: 'circle', split: 'interceptor' },
@@ -108,6 +109,45 @@ export const ENEMIES = {
   drifter: { hp: 170, speed: 70, dmg: 14, r: 20, xp: 5, color: '#a08c7a', shape: 'rock', ai: 'drift', spin: 0.5 },
   hauler: { hp: 240, speed: 30, dmg: 14, r: 21, xp: 9, color: '#ff7a1a', shape: 'square', split: 'fdrone' },
   wmech: { hp: 46, speed: 48, dmg: 9, r: 14, xp: 4, color: '#ff3d9a', shape: 'hex', ai: 'shoot', shots: 3, fire: 3.4 },
+  // 2.0 world 6 "Storm Relay": the relay's swarm in Jupiter's storms (art: proto2/make-worlds.py). The vortex drags the
+  // ship in (ai 'vortex'), the cloud whale bursts into ion kites.
+  ionkite: { hp: 11, speed: 140, dmg: 5, r: 11, xp: 1, color: '#ff2d95', shape: 'dart', pack: [3, 5] },
+  gasmine: { hp: 24, speed: 95, dmg: 6, r: 12, xp: 2, color: '#ffb02e', shape: 'bomb', ai: 'fuse', spin: 2 },
+  jelly: { hp: 40, speed: 46, dmg: 8, r: 12, xp: 3, color: '#ff4dd8', shape: 'circle', ai: 'shoot', shots: 3, fire: 3.4 },
+  staticray: { hp: 42, speed: 64, dmg: 10, r: 15, xp: 3, color: '#ff3d9a', shape: 'diamond', ai: 'dash' },
+  vortex: { hp: 120, speed: 32, dmg: 10, r: 17, xp: 5, color: '#c84dff', shape: 'circle', ai: 'vortex', spin: 2.5 },
+  cloudwhale: { hp: 300, speed: 26, dmg: 15, r: 23, xp: 9, color: '#e3b778', shape: 'square', split: 'ionkite' },
+  // 2.0 world 7 "Abyss of Europa": rewritten sea life under the ice. The eel hybrid dives under the ice and comes up
+  // next to the ship (ai 'blink'), the spore lantern is set in the ice and fires all around, the leviathan spawn
+  // bursts into ice wisps.
+  icewisp: { hp: 10, speed: 135, dmg: 5, r: 10, xp: 1, color: '#4fd1e0', shape: 'dart', pack: [3, 5] },
+  frostcrab: { hp: 44, speed: 66, dmg: 9, r: 14, xp: 3, color: '#8fb4ff', shape: 'hex' },
+  tmine: { hp: 26, speed: 90, dmg: 6, r: 12, xp: 2, color: '#ff4dd8', shape: 'bomb', ai: 'fuse', spin: 1.5 },
+  lantern: { hp: 80, speed: 0, dmg: 8, r: 15, xp: 4, color: '#3dff8a', shape: 'turret', ai: 'turret' },
+  eel: { hp: 50, speed: 70, dmg: 10, r: 17, xp: 4, color: '#4fd1e0', shape: 'wraith', ai: 'blink' },
+  lspawn: { hp: 290, speed: 28, dmg: 15, r: 22, xp: 9, color: '#7a5cff', shape: 'square', split: 'icewisp' },
+  // 2.0 world 8 "The Rift Gate": the gate's guards, made of glass and light. The echo blinks next to the ship, the
+  // null orb fires homing shots, the rift spawner is set in space and breeds shard units (ai 'nest').
+  shardunit: { hp: 9, speed: 150, dmg: 4, r: 8, xp: 1, color: '#b9a8ff', shape: 'dart', pack: [4, 6] },
+  echo: { hp: 32, speed: 78, dmg: 7, r: 11, xp: 3, color: '#c46bff', shape: 'wraith', ai: 'blink' },
+  phasewalker: { hp: 44, speed: 66, dmg: 10, r: 14, xp: 3, color: '#b9a8ff', shape: 'diamond', ai: 'dash' },
+  nullorb: { hp: 52, speed: 42, dmg: 8, r: 16, xp: 4, color: '#ff4dd8', shape: 'eye', ai: 'seeker' },
+  riftspawner: { hp: 110, speed: 0, dmg: 8, r: 18, xp: 5, color: '#c46bff', shape: 'turret', ai: 'nest', spawn: 'shardunit' },
+  sentinel: { hp: 290, speed: 26, dmg: 15, r: 21, xp: 9, color: '#e9c4ff', shape: 'square', ai: 'shoot', shots: 4, fire: 3.8 },
+  // 2.0 world 9 "Brood World": the Collective's brood, flesh and metal. The leech lunges, the spitter keeps its distance
+  // and spits, the nest is grown into the ground and breeds larvae (ai 'nest'), the brood sac bursts into larvae, the
+  // carapace beetle is the heavy one.
+  larva: { hp: 10, speed: 140, dmg: 5, r: 9, xp: 1, color: '#8fd35a', shape: 'dart', pack: [4, 6] },
+  leech: { hp: 38, speed: 68, dmg: 9, r: 13, xp: 3, color: '#ff4dd8', shape: 'diamond', ai: 'dash' },
+  spitter: { hp: 44, speed: 50, dmg: 9, r: 14, xp: 3, color: '#9dff3d', shape: 'hex', ai: 'shoot', shots: 3, fire: 3.2 },
+  nest: { hp: 120, speed: 0, dmg: 8, r: 19, xp: 5, color: '#ff2d95', shape: 'turret', ai: 'nest', spawn: 'larva' },
+  broodsac: { hp: 90, speed: 34, dmg: 10, r: 17, xp: 5, color: '#c46bff', shape: 'circle', split: 'larva' },
+  beetle: { hp: 310, speed: 26, dmg: 16, r: 22, xp: 9, color: '#6a8a4a', shape: 'square' },
+  // 2.0 world 10 "The Nexus": the Collective's mind (with the void's wraiths, eyes and voidlings above). Synapse swarms,
+  // neuron nodes grown into the ground that aim at the ship, the overseer is the heavy one and shoots.
+  synapse: { hp: 11, speed: 150, dmg: 5, r: 9, xp: 1, color: '#ff2d95', shape: 'dart', pack: [4, 6] },
+  neuronnode: { hp: 100, speed: 0, dmg: 8, r: 18, xp: 5, color: '#ff4dd8', shape: 'turret', ai: 'turret', aim: true },
+  overseer: { hp: 330, speed: 26, dmg: 16, r: 22, xp: 10, color: '#c86bff', shape: 'square', ai: 'shoot', shots: 4, fire: 3.6 },
 };
 
 export const BOSSES = {
@@ -149,6 +189,42 @@ export const BOSSES = {
     name: 'FOUNDRY MOTHER', hp: 4600, speed: 20, dmg: 22, r: 85, color: '#ff2d95', inner: '#ff7a1a', sides: 8,
     move: 'chase', rest: 1.6, phases: [0.6, 0.3], attacks: ['build', 'spiral', 'mortar', 'build', 'beams', 'burst'],
     summon: ['fdrone', 'welder', 'wmech'], bulletDmg: 8, bulletSpeed: 0.9, burstN: 18, summonN: 3, bgSpawn: 0.1,
+  },
+  // 2.0 world 6: the Storm Eye, the relay's heart, a living storm that circles the ship: spirals of sparks, lightning
+  // strikes (mortar), beams and swarms of ion kites and static rays. Three phases.
+  stormeye: {
+    name: 'STORM EYE', hp: 4600, speed: 60, dmg: 20, r: 82, color: '#ff2d95', inner: '#e3b778', sides: 8,
+    move: 'float', rest: 1.5, phases: [0.6, 0.3], attacks: ['spiral', 'mortar', 'summon', 'beams', 'burst', 'mortar'],
+    summon: ['ionkite', 'staticray'], bulletDmg: 8, bulletSpeed: 0.9, burstN: 18, summonN: 4, bgSpawn: 0.1,
+  },
+  // 2.0 world 7: the Abyss Leviathan, rewritten sea life the size of a ship, breaking up through the ice: it charges,
+  // sweeps its tentacles (beams), sprays bursts and spirals, shells the ice and sends wisps and tentacle mines.
+  leviathan: {
+    name: 'ABYSS LEVIATHAN', hp: 4800, speed: 34, dmg: 22, r: 84, color: '#4fd1e0', inner: '#ff2d95', sides: 8,
+    move: 'chase', rest: 1.5, phases: [0.6, 0.3], attacks: ['charge', 'burst', 'summon', 'spiral', 'beams', 'mortar'],
+    summon: ['icewisp', 'tmine'], bulletDmg: 8, bulletSpeed: 0.9, burstN: 18, summonN: 4, bgSpawn: 0.1,
+  },
+  // 2.0 world 8: the Gatekeeper, three turning rings of the gate around a core. It folds space (teleport), throws
+  // spirals and beams through its portals and sends shard swarms and echoes.
+  gatekeeper: {
+    name: 'GATEKEEPER', hp: 4800, speed: 55, dmg: 20, r: 84, color: '#b9a8ff', inner: '#ff2d95', sides: 8,
+    move: 'float', rest: 1.4, phases: [0.6, 0.3], attacks: ['teleport', 'spiral', 'beams', 'summon', 'burst', 'teleport'],
+    summon: ['shardunit', 'echo'], bulletDmg: 8, bulletSpeed: 0.9, burstN: 18, summonN: 4, bgSpawn: 0.1,
+  },
+  // 2.0 world 9: the Brood Matriarch, the mother of the brood. She crawls after the ship and lunges (charge), spits acid
+  // (mortar, burst, spiral) and lays larvae and leeches the whole fight.
+  matriarch: {
+    name: 'BROOD MATRIARCH', hp: 5000, speed: 30, dmg: 22, r: 86, color: '#9dff3d', inner: '#ff2d95', sides: 8,
+    move: 'chase', rest: 1.5, phases: [0.6, 0.3], attacks: ['summon', 'mortar', 'charge', 'burst', 'summon', 'spiral'],
+    summon: ['larva', 'leech'], bulletDmg: 8, bulletSpeed: 0.9, burstN: 18, summonN: 5, bgSpawn: 0.1,
+  },
+  // 2.0 world 10: the Void Heart, the heart of the Collective and the end of the journey. A beating core that changes
+  // in each of its three phases (its own art per phase): it folds space (teleport), opens black holes, throws spirals,
+  // beams, bursts and shells, and calls wraiths and synapse swarms. (The 1.x Void Heart is voidheart below.)
+  nexusheart: {
+    name: 'VOID HEART', hp: 5600, speed: 55, dmg: 22, r: 90, color: '#ff2d95', inner: '#b04dff', sides: 8,
+    move: 'float', rest: 1.3, phases: [0.6, 0.3], attacks: ['spiral', 'teleport', 'blackhole', 'beams', 'summon', 'burst', 'mortar'],
+    summon: ['wraith', 'synapse'], bulletDmg: 8, bulletSpeed: 0.95, burstN: 20, summonN: 5, bgSpawn: 0.1,
   },
   serpent: {
     name: 'CRYSTAL SERPENT', hp: 15000, speed: 120, dmg: 22, r: 34, color: '#2ff3ff', inner: '#b4fff0', sides: 5,
@@ -613,6 +689,88 @@ const W5_5 = [
   },
 ];
 
+// The six sectors of a 2.0 world from world 6 on, all built alike (the pace and goals of world 5): E names the world's
+// enemies by role (swarm: packs; basic; a, b: the specials; fixed: set in the ground, or null; tank), special(t) is
+// the world's own event, msg the swarm's banner. A world's mechanic lives in js/worldfx.js.
+function journey(w, names, E, special, msg) {
+  const fixed = E.fixed;
+  const id = (n) => `${w}-${n}`;
+  const st = (n, name, duration, cap, hp0, hp, speed, rate, max, kills, enemies, events, extra = {}) =>
+    ({ id: id(n), name, duration, fixed: cap, hp0, hp, speed, rate, max, kills, enemies: enemies.filter((e) => e[0]), events, ...extra });
+  return [
+    st(1, names[0], 195, 3, 1.4, 3.0, 1.12, [1.5, 5.0], 160, 1350, [[E.swarm, 0, 10], [E.basic, 15, 4], [E.a, 30, 2]], [
+      { t: 55, type: 'ring', enemy: E.swarm, count: 34, msg },
+      { t: 100, type: 'elite', enemy: E.basic, msg: 'ELITE DETECTED' },
+      { t: 150, type: 'ring', enemy: E.basic, count: 16, msg: 'INCOMING' },
+    ]),
+    st(2, names[1], 210, 4, 1.5, 3.2, 1.14, [1.6, 5.6], 175, 1800, [[E.swarm, 0, 10], [E.basic, 10, 4], [E.a, 25, 2], [fixed || E.b, 30, 2]], [
+      { t: 60, type: 'ring', enemy: E.a, count: 16, msg: 'INCOMING' },
+      special(85),
+      { t: 110, type: 'elite', enemy: E.a, msg: 'ELITE DETECTED' },
+      { t: 175, type: 'surge', dur: 30, mul: 2, msg: 'FINAL WAVE' },
+    ]),
+    st(3, names[2], 225, 5, 1.6, 3.4, 1.15, [1.7, 6.0], 180, 1950, [[E.swarm, 0, 10], [E.basic, 10, 4], [E.a, 20, 2], [fixed, 25, 2], [E.b, 20, 4]], [
+      { t: 55, type: 'ring', enemy: E.swarm, count: 46, msg },
+      special(90),
+      { t: 120, type: 'elite', enemy: E.b, msg: 'ELITE DETECTED' },
+      { t: 190, type: 'surge', dur: 30, mul: 2, msg: 'FINAL WAVE' },
+    ]),
+    st(4, names[3], 240, 5, 1.7, 3.6, 1.17, [1.7, 6.4], 185, 2050, [[E.swarm, 0, 11], [E.basic, 10, 4], [E.a, 20, 2], [fixed, 25, 2], [E.b, 20, 4], [E.tank, 40, 3]], [
+      { t: 80, type: 'elite', enemy: E.tank, msg: 'ELITE DETECTED' },
+      { t: 120, type: 'ring', enemy: E.swarm, count: 56, msg },
+      special(145),
+      { t: 165, type: 'elite', enemy: fixed || E.a, msg: 'ELITE DETECTED' },
+      { t: 205, type: 'surge', dur: 30, mul: 2, msg: 'FINAL WAVE' },
+    ]),
+    st(5, names[4], 255, 6, 1.8, 3.9, 1.19, [1.8, 6.8], 185, 2050, [[E.swarm, 0, 9], [E.basic, 10, 4], [E.a, 15, 3], [fixed, 20, 2], [E.b, 20, 4], [E.tank, 40, 3]], [
+      { t: 60, type: 'ring', enemy: E.a, count: 14, msg: 'INCOMING' },
+      { t: 105, type: 'elite', enemy: E.b, msg: 'ELITE DETECTED' },
+      special(150),
+      { t: 190, type: 'elite', enemy: E.tank, msg: 'ELITE DETECTED' },
+      { t: 225, type: 'surge', dur: 30, mul: 2, msg: 'FINAL WAVE' },
+    ]),
+    st(6, names[5], 120, 4, 1.6, 3.4, 1.2, [1.6, 5.2], 175, 850, [[E.swarm, 0, 9], [E.basic, 10, 4], [E.a, 20, 2], [E.b, 30, 3], [fixed, 40, 1], [E.tank, 55, 1]], [
+      { t: 40, type: 'ring', enemy: E.swarm, count: 34, msg },
+      { t: 80, type: 'elite', enemy: E.basic, msg: 'ELITE DETECTED' },
+    ], { bossAt: 120, boss: E.boss }),
+  ];
+}
+
+// World 6 of 2.0, "Storm Relay" (Art Bible; sector names from its table "Nazwy sektorów"): in Jupiter's storms the
+// Collective's relay calls into deep space. The world's mechanic: gusts of wind push the ship and the enemy shots
+// (js/worldfx.js); lightning strikes (mortar) as its event.
+const W6_6 = journey(6, ['Gas Giant', 'Ion Winds', 'Antenna Field', 'Living Signal', 'Deep Transmission', 'Storm Eye'],
+  { swarm: 'ionkite', basic: 'jelly', a: 'staticray', b: 'gasmine', fixed: null, tank: 'cloudwhale', boss: 'stormeye' },
+  (t) => ({ t, type: 'mortar', count: 7, msg: 'LIGHTNING STORM' }), 'ION SWARM');
+// vortices drift through the storm from the 2nd sector on
+for (const s of W6_6.slice(1)) s.enemies.push(['vortex', 45, 2]);
+
+// World 7 of 2.0, "Abyss of Europa": under Europa's ice, alien sea life has been rewritten. The world's mechanic:
+// slippery ice (the ship slides, js/worldfx.js) and enemies that come up from under it (the eel hybrid; the event).
+const W7_7 = journey(7, ['Ice Shelf', 'Thin Ice', 'Glow Beneath', 'Cold Hatchery', 'The Deep Call', 'Abyss Leviathan'],
+  { swarm: 'icewisp', basic: 'frostcrab', a: 'eel', b: 'tmine', fixed: 'lantern', tank: 'lspawn', boss: 'leviathan' },
+  (t) => ({ t, type: 'ring', enemy: 'eel', count: 10, msg: 'BENEATH THE ICE' }), 'WISP SWARM');
+
+// World 8 of 2.0, "The Rift Gate": the gate out of the Solar System. The world's mechanic: pairs of rifts that
+// teleport the ship and the enemy shots (js/worldfx.js); gravity tears (wells) as its event.
+const W8_8 = journey(8, ['Shattered Space', 'Mirror Shards', 'Echoes of Home', 'Gate Rings', 'No Return', 'Gatekeeper'],
+  { swarm: 'shardunit', basic: 'phasewalker', a: 'echo', b: 'nullorb', fixed: 'riftspawner', tank: 'sentinel', boss: 'gatekeeper' },
+  (t) => ({ t, type: 'well', count: 2, msg: 'GRAVITY TEAR' }), 'SHARD SWARM');
+
+// World 9 of 2.0, "Brood World": the Collective's breeding world, where the ground breathes. The world's mechanic:
+// acid pools that burn the ship (js/worldfx.js) and nests that breed larvae (the nest enemy, the nest-heart prop);
+// acid rain (mortar) as its event.
+const W9_9 = journey(9, ['Living Ground', 'Breathing Fields', 'Spawning Pits', 'Acid Marsh', 'Egg Chambers', 'Brood Matriarch'],
+  { swarm: 'larva', basic: 'spitter', a: 'leech', b: 'broodsac', fixed: 'nest', tank: 'beetle', boss: 'matriarch' },
+  (t) => ({ t, type: 'mortar', count: 8, msg: 'ACID RAIN' }), 'LARVA SWARM');
+
+// World 10 of 2.0, "The Nexus": the heart of the Collective and the end of the journey. The world's mechanic: all of
+// the journey's at once (gusts, rifts, acid; js/worldfx.js); its events: gravity collapses (wells) in the first half,
+// neural storms (mortar) after.
+const W10_10 = journey(10, ['Neural Shore', 'Synapse Storm', 'Broken Geometry', 'Heartbeat', 'The Cage', 'Void Heart'],
+  { swarm: 'synapse', basic: 'wraith', a: 'eye', b: 'voidling', fixed: 'neuronnode', tank: 'overseer', boss: 'nexusheart' },
+  (t) => (t < 120 ? { t, type: 'well', count: 2, msg: 'GRAVITY COLLAPSE' } : { t, type: 'mortar', count: 8, msg: 'NEURAL STORM' }), 'SYNAPSE STORM');
+
 // The 2.0 worlds after world 1 keep their own kill goals; their elites are counted for the 3rd star (world 2 missed
 // that until build 106: its 3rd star could not be won). World 2's elites stay without traits (Konrad tests its
 // difficulty first); world 3's carry one trait each, like world 1's.
@@ -624,7 +782,10 @@ const ELITE_TRAITS_2 = {
   '5-1': [['shielded']], '5-2': [['berserker']], '5-3': [['commander']], '5-4': [['bulwark'], ['shielded']],
   '5-5': [['swift'], ['commander']], '5-6': [['berserker']],
 };
-for (const st of [...W2_2, ...W3_3, ...W4_4, ...W5_5]) {
+// worlds 6-10: one trait each, two on the double-elite sectors, cycling through the traits
+const CYCLE = ['swift', 'shielded', 'berserker', 'commander', 'bulwark'];
+for (let w = 6, k = 0; w <= 10; w++) for (let n = 1; n <= 6; n++) ELITE_TRAITS_2[`${w}-${n}`] = (n === 4 || n === 5 ? [0, 1] : [0]).map(() => [CYCLE[k++ % CYCLE.length]]);
+for (const st of [...W2_2, ...W3_3, ...W4_4, ...W5_5, ...W6_6, ...W7_7, ...W8_8, ...W9_9, ...W10_10]) {
   st.elites = st.events.filter((e) => e.type === 'elite').length;
   const list = (!W2_2.includes(st) && ELITE_TRAITS_2[st.id]) || [];
   st.events.filter((e) => e.type === 'elite').forEach((e, i) => {
@@ -641,23 +802,21 @@ export const WORLD_TUNING = {
   2: { dmg: 1.4, ramp: 0.3, hp: 1.15, elite: 1.3, boss: 1.2 },
   3: { dmg: 1.6, ramp: 0.35, hp: 1.2, elite: 1.35, boss: 1.25 },
   4: { dmg: 1.8, ramp: 0.4, hp: 1.25, elite: 1.4, boss: 1.3 },
+  // 2.0 worlds 5-10 (build 113: world 5 had been left on world 1's tuning), one step up each
+  5: { dmg: 1.85, ramp: 0.4, hp: 1.27, elite: 1.42, boss: 1.32 },
+  6: { dmg: 1.9, ramp: 0.42, hp: 1.29, elite: 1.44, boss: 1.34 },
+  7: { dmg: 1.95, ramp: 0.42, hp: 1.31, elite: 1.46, boss: 1.36 },
+  8: { dmg: 2.0, ramp: 0.44, hp: 1.33, elite: 1.48, boss: 1.38 },
+  9: { dmg: 2.05, ramp: 0.44, hp: 1.35, elite: 1.5, boss: 1.4 },
+  10: { dmg: 2.1, ramp: 0.46, hp: 1.37, elite: 1.52, boss: 1.42 },
 };
 
-// The 2.0 journey (decided by Konrad, 2026-10-28): worlds 1-5 are built; worlds 6-10 are under construction. The map
+// The 2.0 journey (decided by Konrad, 2026-10-28): all 10 worlds are built (build 117).
+// Worlds still under construction would be listed here. The map
 // shows them with their story and planned sectors (Art Bible, table "Nazwy sektorów"); when a world is built, it gets
 // its stages and drops `soon`. The 1.x worlds 2-4 below (W2-W4, LEGACY_WORLDS) are no longer played; they stay as a
 // starting point for tuning the new worlds.
 const PLANNED_WORLDS = [
-  [6, 'Storm Relay', '#e3b778', 'In Jupiter\'s storms, a relay calls into deep space.',
-    ['Gas Giant', 'Ion Winds', 'Antenna Field', 'Living Signal', 'Deep Transmission', 'Storm Eye']],
-  [7, 'Abyss of Europa', '#4fd1e0', 'Under Europa\'s ice, alien sea life has been rewritten.',
-    ['Ice Shelf', 'Thin Ice', 'Glow Beneath', 'Cold Hatchery', 'The Deep Call', 'Abyss Leviathan']],
-  [8, 'The Rift Gate', '#b9a8ff', 'The gate out of the Solar System. There is no way back.',
-    ['Shattered Space', 'Mirror Shards', 'Echoes of Home', 'Gate Rings', 'No Return', 'Gatekeeper']],
-  [9, 'Brood World', '#8fd35a', 'The Collective\'s breeding world. The ground breathes.',
-    ['Living Ground', 'Breathing Fields', 'Spawning Pits', 'Acid Marsh', 'Egg Chambers', 'Brood Matriarch']],
-  [10, 'The Nexus', '#ff2d95', 'The heart of the Collective, and the end of the journey.',
-    ['Neural Shore', 'Synapse Storm', 'Broken Geometry', 'Heartbeat', 'The Cage', 'Void Heart']],
 ];
 
 export const WORLDS = [
@@ -682,6 +841,26 @@ export const WORLDS = [
   {
     id: 5, name: 'Foundry Belt', color: '#ff8a2a', stages: W5_5, music: 'game5', bossMusic: 'boss5',
     theme: { top: '#1c1612', bottom: '#060403', neb: ['#3e3630', '#ff7a1a', '#ff2d95'], grid: '#7a8490' },
+  },
+  {
+    id: 6, name: 'Storm Relay', color: '#e3b778', stages: W6_6, music: 'game6', bossMusic: 'boss6',
+    theme: { top: '#2a1c10', bottom: '#0a0604', neb: ['#5a3a1c', '#e3b778', '#ff2d95'], grid: '#b08850' },
+  },
+  {
+    id: 7, name: 'Abyss of Europa', color: '#4fd1e0', stages: W7_7, music: 'game7', bossMusic: 'boss7',
+    theme: { top: '#0a1a2a', bottom: '#020610', neb: ['#1c3a5a', '#4fd1e0', '#7a5cff'], grid: '#5a7aa0' },
+  },
+  {
+    id: 8, name: 'The Rift Gate', color: '#b9a8ff', stages: W8_8, music: 'game8', bossMusic: 'boss8',
+    theme: { top: '#120a24', bottom: '#04020a', neb: ['#3a2a5a', '#b9a8ff', '#ff2d95'], grid: '#7a6aa0' },
+  },
+  {
+    id: 9, name: 'Brood World', color: '#8fd35a', stages: W9_9, music: 'game9', bossMusic: 'boss9',
+    theme: { top: '#121c0a', bottom: '#040702', neb: ['#2a4a1c', '#8fd35a', '#ff2d95'], grid: '#5a8a3a' },
+  },
+  {
+    id: 10, name: 'The Nexus', color: '#ff2d95', stages: W10_10, music: 'game10', bossMusic: 'boss10',
+    theme: { top: '#1a0820', bottom: '#06020a', neb: ['#4a1a4a', '#ff2d95', '#7a5cff'], grid: '#8a4a8a' },
   },
   ...PLANNED_WORLDS.map(([id, name, color, story, plan]) => ({ id, name, color, story, plan, stages: [], soon: true })),
 ];

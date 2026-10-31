@@ -1,0 +1,603 @@
+{
+  "world": 8,
+  "passed": true,
+  "errors": [],
+  "checks": {
+    "W8-P1-arena-concept.png": {
+      "size": [
+        941,
+        1672
+      ],
+      "mode": "RGB",
+      "sha256": "a9230a94c180677d7e197fbe66612068da5591734b74947dc422ebbfb2609463"
+    },
+    "W8-P2-background.png": {
+      "size": [
+        2048,
+        2048
+      ],
+      "mode": "RGB",
+      "sha256": "3f5f244c68755d8b8446e926c968c1d42c9c54f42e9ae5f323743aef3198dec5"
+    },
+    "W8-P3-reality-shards-sheet.png": {
+      "size": [
+        2280,
+        1640
+      ],
+      "mode": "RGB",
+      "sha256": "b101010effe0f547348ebf664b6296abf2ccacbd13d17bdbc4f7aad13bb5b789"
+    },
+    "W8-P3-reality-shards/W8-P3-1.png": {
+      "size": [
+        540,
+        584
+      ],
+      "mode": "RGB",
+      "sha256": "e6e544e60362fa4ee01de665897f53c65905441ddd4afd18a91bf682f704cef6"
+    },
+    "W8-P3-reality-shards/W8-P3-2.png": {
+      "size": [
+        490,
+        504
+      ],
+      "mode": "RGB",
+      "sha256": "6438c9215e5b4e03136f28bea0a651d0392c6bce96f3d05d4e8f7b5d88875621"
+    },
+    "W8-P3-reality-shards/W8-P3-3.png": {
+      "size": [
+        524,
+        418
+      ],
+      "mode": "RGB",
+      "sha256": "ead10e2845fe8a61d9f74ad2716512183e133929c92322d476ff16838992895b"
+    },
+    "W8-P3-reality-shards/W8-P3-4.png": {
+      "size": [
+        496,
+        544
+      ],
+      "mode": "RGB",
+      "sha256": "3e2d25a8848343bca1cf97b4f60886b03d90a8d69ccf6e74ec3fc62e02598c9b"
+    },
+    "W8-P3-reality-shards/W8-P3-5.png": {
+      "size": [
+        404,
+        464
+      ],
+      "mode": "RGB",
+      "sha256": "c094923ab8d6d0621804e96d2d0aca93f62cc8c23bd0f81836a057c1d3f46ba3"
+    },
+    "W8-P3-reality-shards/W8-P3-6.png": {
+      "size": [
+        425,
+        564
+      ],
+      "mode": "RGB",
+      "sha256": "1ed828f46c300a8c60f54f16ca1930c0c177e351fc933b2d9f77fc36fd3f569e"
+    },
+    "W8-P4-overlay.png": {
+      "size": [
+        1024,
+        1024
+      ],
+      "mode": "RGB",
+      "sha256": "be97f2aad670ddd1ae2d4c2fe4001bf3233240e2e0e8337ffcc299f6786ca706",
+      "seams": {
+        "horizontal_exact": true,
+        "vertical_exact": true
+      },
+      "near_black_fraction": 0.9800662994384766
+    },
+    "W8-P5-props-sheet.png": {
+      "size": [
+        1600,
+        1200
+      ],
+      "mode": "RGB",
+      "sha256": "23b9b26e061b5f0fd439e42f6d55a87db7468041e7973b587fcc891f94b57350"
+    },
+    "W8-P5-props/W8-P5-gate-ring-segment.png": {
+      "size": [
+        221,
+        324
+      ],
+      "mode": "RGB",
+      "sha256": "4317f78c1020062fafaba7da1475a723b8c66a822a88c81d828b13f2f6d15359"
+    },
+    "W8-P5-props/W8-P5-guardian-pylon.png": {
+      "size": [
+        221,
+        304
+      ],
+      "mode": "RGB",
+      "sha256": "ceb1b67cb7ce7da73c16f15952fae5d709e0af8d8feb650aede421dff1dd0b99"
+    },
+    "W8-P5-props/W8-P5-rift.png": {
+      "size": [
+        227,
+        304
+      ],
+      "mode": "RGB",
+      "sha256": "85178c2131d7b7666ab333d566d2b1c90f170b1cb39785311ee10a2174ea7888"
+    },
+    "W8-P5-props/W8-P5-floating-ring-fragment.png": {
+      "size": [
+        117,
+        124
+      ],
+      "mode": "RGB",
+      "sha256": "ba2084fefa235cf3eada5fd34969a20dc3694add1c8e76184301cbcfccaa7774"
+    },
+    "W8-P5-props/W8-P5-shard-cluster.png": {
+      "size": [
+        82,
+        124
+      ],
+      "mode": "RGB",
+      "sha256": "bc6771e4561110ceb1c5a07946573c3575662d08e0155ef6d0ccbe06e887f353"
+    },
+    "W8-P5-props/W8-P5-dormant-sentinel-eye.png": {
+      "size": [
+        124,
+        123
+      ],
+      "mode": "RGB",
+      "sha256": "77a295c90300c3e6cb64850ee18e8825c4e2619a0200b5ce091cbf4b95047864"
+    },
+    "W8-P5-props/W8-P5-rift-anchor-intact.png": {
+      "size": [
+        151,
+        204
+      ],
+      "mode": "RGB",
+      "sha256": "f418d4e6746ab6859d250ffda0a2fc8c25142112d3f95b1915e51cbccd0241c0"
+    },
+    "W8-P5-props/W8-P5-rift-anchor-broken.png": {
+      "size": [
+        158,
+        194
+      ],
+      "mode": "RGB",
+      "sha256": "d66507c86344e93f8719ce0ff735e2c850c98bb0c7dae8a80a9645b0959a560c"
+    },
+    "W8-P5-props/W8-P5-ring-capacitor-intact.png": {
+      "size": [
+        177,
+        204
+      ],
+      "mode": "RGB",
+      "sha256": "266e8e678e24793407b6d080192e321b7f40def921ba6222657bab3aef382e4c"
+    },
+    "W8-P5-props/W8-P5-ring-capacitor-broken.png": {
+      "size": [
+        220,
+        234
+      ],
+      "mode": "RGB",
+      "sha256": "8be001a766088bc388e7258151a3ebb8b1713bb4f1da046a2b9dd35b16de1bd1"
+    },
+    "W8-P6-border-pieces-sheet.png": {
+      "size": [
+        1536,
+        1536
+      ],
+      "mode": "RGB",
+      "sha256": "14fa428b0af1f13685ddeb85e1e0d19e51968c9b73b3e529b72c59bf173f2f35"
+    },
+    "W8-P6-border-pieces/W8-P6-border-top.png": {
+      "size": [
+        1024,
+        160
+      ],
+      "mode": "RGB",
+      "sha256": "b92328b6032982a849a9f441b70323854f4621cf0e0a9f2a98d34022c737355c"
+    },
+    "W8-P6-border-pieces/W8-P6-border-bottom.png": {
+      "size": [
+        1024,
+        160
+      ],
+      "mode": "RGB",
+      "sha256": "9040a3aa9441d3ab665d2c2d9481a481c820b492ed2fc21047c56281aaa5a0d3"
+    },
+    "W8-P6-border-pieces/W8-P6-border-left.png": {
+      "size": [
+        160,
+        1024
+      ],
+      "mode": "RGB",
+      "sha256": "def4004b5595c148970baa7ea277b248ac44ab77e6f42f4d51755e73a1346010"
+    },
+    "W8-P6-border-pieces/W8-P6-border-right.png": {
+      "size": [
+        160,
+        1024
+      ],
+      "mode": "RGB",
+      "sha256": "61836c0c8ae3772d06fe1a308c2e8602a4f1e83dfbd670d4d9515d906a6f8261"
+    },
+    "W8-P6-border-pieces/W8-P6-corner-top-left.png": {
+      "size": [
+        256,
+        256
+      ],
+      "mode": "RGB",
+      "sha256": "3cea58cda8229b4721c72a6e71b3fbcd750c7c6203b6f46e6e4ef972d6ced953"
+    },
+    "W8-P6-border-pieces/W8-P6-corner-top-right.png": {
+      "size": [
+        256,
+        256
+      ],
+      "mode": "RGB",
+      "sha256": "ff82849f704604da24a80e08ad3ec76e37f1e8dc19bd07bbc601c734e642d23e"
+    },
+    "W8-P6-border-pieces/W8-P6-corner-bottom-left.png": {
+      "size": [
+        256,
+        256
+      ],
+      "mode": "RGB",
+      "sha256": "fdf95ac2662ce35ef78ef1ff1e0d922f108a09bc9ce11505aa43d067bc30decd"
+    },
+    "W8-P6-border-pieces/W8-P6-corner-bottom-right.png": {
+      "size": [
+        256,
+        256
+      ],
+      "mode": "RGB",
+      "sha256": "9d01ae1607c12d9ac12ab1e19b986656ca7ed91e606e51fe8e20f79f62caf6b3"
+    },
+    "W8-P7-enemies-sheet.png": {
+      "size": [
+        1080,
+        800
+      ],
+      "mode": "RGB",
+      "sha256": "ce8684222be76dc3defcfc811f7464f820f8ecc4a9690bdc4e2ea79b1ac77149"
+    },
+    "W8-P7-enemies/W8-P7-shard-swarm-unit.png": {
+      "size": [
+        116,
+        134
+      ],
+      "mode": "RGB",
+      "sha256": "53e04ddfce9d84b25b12cd6f0057d822ac7a8e5411cddfe13d6f7d03c1b843bd"
+    },
+    "W8-P7-enemies/W8-P7-echo.png": {
+      "size": [
+        139,
+        184
+      ],
+      "mode": "RGB",
+      "sha256": "5ea82f3c101901139503caf9871a8a015b0e1807e074a819afd611b43c1a74d8"
+    },
+    "W8-P7-enemies/W8-P7-phase-walker.png": {
+      "size": [
+        224,
+        216
+      ],
+      "mode": "RGB",
+      "sha256": "c3f43cbb3dcac1d428e07664d0a8a7cba00eda1a1021d191997e46e385d33a35"
+    },
+    "W8-P7-enemies/W8-P7-null-orb.png": {
+      "size": [
+        251,
+        264
+      ],
+      "mode": "RGB",
+      "sha256": "2e3fdad247e3b2a7e517ff83c32c1eb3b88b5682590c51cbcb38857f0546f9db"
+    },
+    "W8-P7-enemies/W8-P7-rift-spawner.png": {
+      "size": [
+        244,
+        284
+      ],
+      "mode": "RGB",
+      "sha256": "a19f097a535c7607a45d8d6e7491ced50950685b18572c35d4de5139d8f7bdbc"
+    },
+    "W8-P7-enemies/W8-P7-gate-sentinel.png": {
+      "size": [
+        268,
+        324
+      ],
+      "mode": "RGB",
+      "sha256": "bb9b5b599613f7aed2bc24ef32f35ef25f9d1269b2cb23641d7e1d3d009a0102"
+    },
+    "W8-P7-elite-and-shards-sheet.png": {
+      "size": [
+        1200,
+        1800
+      ],
+      "mode": "RGB",
+      "sha256": "90bb463f5850b5abdaa3a5e112dc689e3c1cb7683a8d6b87c97bcbf1a3815e87"
+    },
+    "W8-P7-elite-and-shards/W8-P7-phase-walker-elite.png": {
+      "size": [
+        344,
+        323
+      ],
+      "mode": "RGB",
+      "sha256": "df903608510caf3a22cde2fb2a8856f786c65337773c89a42fef688e4c79ff3f"
+    },
+    "W8-P7-elite-and-shards/W8-P7-shard-swarm-unit-shard-1.png": {
+      "size": [
+        84,
+        83
+      ],
+      "mode": "RGB",
+      "sha256": "003186d807ed92a7e6af64f5a3af47c7b640e5f5c63d88f4fd70fafa9aa8c5c9"
+    },
+    "W8-P7-elite-and-shards/W8-P7-shard-swarm-unit-shard-2.png": {
+      "size": [
+        90,
+        81
+      ],
+      "mode": "RGB",
+      "sha256": "30d5c3ee1aa1b3b739d347ef8be5c730cd0a1ce73048be3716694892e6cfb658"
+    },
+    "W8-P7-elite-and-shards/W8-P7-shard-swarm-unit-shard-3.png": {
+      "size": [
+        82,
+        73
+      ],
+      "mode": "RGB",
+      "sha256": "e9736bf321d28c2918bcc2a07eae94ef7a6063a080791895aa8c0d55296488aa"
+    },
+    "W8-P7-elite-and-shards/W8-P7-shard-swarm-unit-shard-4.png": {
+      "size": [
+        61,
+        82
+      ],
+      "mode": "RGB",
+      "sha256": "13891e3d92f614dfc4e4a556fe2846e2068ba8224cd70105b7475637ec2f37a6"
+    },
+    "W8-P7-elite-and-shards/W8-P7-echo-shard-1.png": {
+      "size": [
+        112,
+        98
+      ],
+      "mode": "RGB",
+      "sha256": "e01934c37d9c8aa18aa0e0c1b2b14ef85e66c99c6a2e77ab99d66a2ddb3d3dd8"
+    },
+    "W8-P7-elite-and-shards/W8-P7-echo-shard-2.png": {
+      "size": [
+        120,
+        94
+      ],
+      "mode": "RGB",
+      "sha256": "d465017a181d7e615ae4f6f44c8a2e47945cbd5857e1888517485d691785d8bd"
+    },
+    "W8-P7-elite-and-shards/W8-P7-echo-shard-3.png": {
+      "size": [
+        107,
+        88
+      ],
+      "mode": "RGB",
+      "sha256": "1f1c8bcb89e6f916b0c968b5bf2a7f213b6f979db952644637ecd454b59b082a"
+    },
+    "W8-P7-elite-and-shards/W8-P7-echo-shard-4.png": {
+      "size": [
+        88,
+        90
+      ],
+      "mode": "RGB",
+      "sha256": "2ee8ce7df69a35e652e00e8182aa9043f31069a9be2f83882768fca619c4a97d"
+    },
+    "W8-P7-elite-and-shards/W8-P7-phase-walker-shard-1.png": {
+      "size": [
+        144,
+        116
+      ],
+      "mode": "RGB",
+      "sha256": "125e635a5f0bed11d5778ca616291f74c9472b452fef54bd54b6d3531976cf39"
+    },
+    "W8-P7-elite-and-shards/W8-P7-phase-walker-shard-2.png": {
+      "size": [
+        135,
+        125
+      ],
+      "mode": "RGB",
+      "sha256": "3b095461f5586c97358fdd54d385713a5a5b7919f5d4875b3805be7ec196d9b2"
+    },
+    "W8-P7-elite-and-shards/W8-P7-phase-walker-shard-3.png": {
+      "size": [
+        132,
+        125
+      ],
+      "mode": "RGB",
+      "sha256": "5e7997e6add4a9c77b26aa39f78a6a5255a7d480c4593fa739973a5413f35501"
+    },
+    "W8-P7-elite-and-shards/W8-P7-phase-walker-shard-4.png": {
+      "size": [
+        111,
+        125
+      ],
+      "mode": "RGB",
+      "sha256": "1c43592b2e4be0a2536d5823d085a315971748b38ece9f3785e7e91532c6bea9"
+    },
+    "W8-P7-elite-and-shards/W8-P7-null-orb-shard-1.png": {
+      "size": [
+        168,
+        145
+      ],
+      "mode": "RGB",
+      "sha256": "bbbb1dfad2c7c925bb3db4afe105dbb3a7898278808e02da5273eec94b184e17"
+    },
+    "W8-P7-elite-and-shards/W8-P7-null-orb-shard-2.png": {
+      "size": [
+        162,
+        149
+      ],
+      "mode": "RGB",
+      "sha256": "c8f6e022069849e3ad03188f1918bde7e03823e52d70451440ec204d5cabdb8e"
+    },
+    "W8-P7-elite-and-shards/W8-P7-null-orb-shard-3.png": {
+      "size": [
+        141,
+        129
+      ],
+      "mode": "RGB",
+      "sha256": "8c95a7aef1edc9d7d013e03294831e1317872febc1ae0f8047f9b3183d206bb7"
+    },
+    "W8-P7-elite-and-shards/W8-P7-null-orb-shard-4.png": {
+      "size": [
+        114,
+        131
+      ],
+      "mode": "RGB",
+      "sha256": "5c363f0c8575e8566dff1171cceee50663a22033021f2936060235a4ca93ca8c"
+    },
+    "W8-P7-elite-and-shards/W8-P7-rift-spawner-shard-1.png": {
+      "size": [
+        169,
+        142
+      ],
+      "mode": "RGB",
+      "sha256": "7568167b148b629417a343ad1efcfe90c97b78365fcd05d19a9190bc3415aea2"
+    },
+    "W8-P7-elite-and-shards/W8-P7-rift-spawner-shard-2.png": {
+      "size": [
+        144,
+        146
+      ],
+      "mode": "RGB",
+      "sha256": "14d8ab6903381f314993e74f0b54ef1f4668506bd74b008202d573bc8c385efb"
+    },
+    "W8-P7-elite-and-shards/W8-P7-rift-spawner-shard-3.png": {
+      "size": [
+        180,
+        144
+      ],
+      "mode": "RGB",
+      "sha256": "097889cfadf2a7cdbf58495fc1bc2615b2ed173d02008f445662e17e02191c2c"
+    },
+    "W8-P7-elite-and-shards/W8-P7-rift-spawner-shard-4.png": {
+      "size": [
+        97,
+        103
+      ],
+      "mode": "RGB",
+      "sha256": "423f5c292be3d14ee833bb568df98a0f6b49908ba724f0807583e6b11d0da42d"
+    },
+    "W8-P7-elite-and-shards/W8-P7-gate-sentinel-shard-1.png": {
+      "size": [
+        204,
+        155
+      ],
+      "mode": "RGB",
+      "sha256": "dd7063787ff05c7f0730d5698811a6c5152f0c6295e7653ed225ee726023d033"
+    },
+    "W8-P7-elite-and-shards/W8-P7-gate-sentinel-shard-2.png": {
+      "size": [
+        163,
+        153
+      ],
+      "mode": "RGB",
+      "sha256": "ee4e2bf9a08fda6d8ee003a4219c04576929c94cb78c22008f50904b0d915be7"
+    },
+    "W8-P7-elite-and-shards/W8-P7-gate-sentinel-shard-3.png": {
+      "size": [
+        167,
+        129
+      ],
+      "mode": "RGB",
+      "sha256": "6bf6413d8c20c5e5f0202458481138595bc58fab70f466137d26280c261bcc32"
+    },
+    "W8-P7-elite-and-shards/W8-P7-gate-sentinel-shard-4.png": {
+      "size": [
+        123,
+        129
+      ],
+      "mode": "RGB",
+      "sha256": "438ec89f0496837895e30ef0095da2a65dbe00a99029179c2e6f2646af778317"
+    },
+    "W8-P8-gatekeeper.png": {
+      "size": [
+        1024,
+        1024
+      ],
+      "mode": "RGB",
+      "sha256": "377bf3611278f60bd19aaea4e4429b7f8b74c85ed2d561ef2402fbaddfd4852e"
+    },
+    "W8-P8-parts-sheet.png": {
+      "size": [
+        4400,
+        3300
+      ],
+      "mode": "RGB",
+      "sha256": "d2e6fd90c09068151a6ce33fef49cd93113d46b4ff8515a350d6c96c3b25c50b"
+    },
+    "W8-P8-parts/W8-P8-core.png": {
+      "size": [
+        324,
+        322
+      ],
+      "mode": "RGB",
+      "sha256": "316ba0951a92a2d3ef2d4f5cbf645dd3d1d515d520cc6fac81f2a8830c03ad9c"
+    },
+    "W8-P8-parts/W8-P8-ring-outer.png": {
+      "size": [
+        962,
+        964
+      ],
+      "mode": "RGB",
+      "sha256": "9b805b67154a5283345e201eb6f3c9540069b9e146b2f3294e15ee8f7e65d879"
+    },
+    "W8-P8-parts/W8-P8-ring-middle.png": {
+      "size": [
+        634,
+        664
+      ],
+      "mode": "RGB",
+      "sha256": "2a4b32bc0f540f307578637d197437dc4b43f1ac0f6c0b9052367762be58d5ae"
+    },
+    "W8-P8-parts/W8-P8-ring-inner.png": {
+      "size": [
+        344,
+        342
+      ],
+      "mode": "RGB",
+      "sha256": "56c54e04a2af5c3e85e9eaf8e3fefb07d063cf8d71999c564baedc0011b9d42a"
+    },
+    "W8-P8-parts/W8-P8-weak-point-1.png": {
+      "size": [
+        144,
+        94
+      ],
+      "mode": "RGB",
+      "sha256": "0eb78fa6bced13d39e893a4f78d738ed9ded02eec96078c74a9d0f7cf5940564"
+    },
+    "W8-P8-parts/W8-P8-weak-point-2.png": {
+      "size": [
+        144,
+        115
+      ],
+      "mode": "RGB",
+      "sha256": "7644409784812f2d33dc369060cd4ec6a20386ba05698f533a2a995cedae1b0e"
+    },
+    "W8-P8-parts/W8-P8-weak-point-3.png": {
+      "size": [
+        144,
+        87
+      ],
+      "mode": "RGB",
+      "sha256": "978b607c2962f88cda2126f80ff10c79878fdbc9f18a45a20874ffd6645077ce"
+    },
+    "W8-P8-parts/W8-P8-weak-point-4.png": {
+      "size": [
+        80,
+        144
+      ],
+      "mode": "RGB",
+      "sha256": "0e4009b0144d722f95b08a8ee70c31f4a7cebf20e1ff0d1300702ba24f9b97fe"
+    },
+    "elite_scale_ratio": 1.6,
+    "border_connections_checked": 8,
+    "parts_assembled_boss_identical": true,
+    "all_expected_files_count": 73,
+    "all_found_png_count": 73
+  },
+  "warnings": [],
+  "visual_review": "separate, required"
+}

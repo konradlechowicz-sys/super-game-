@@ -1,0 +1,29 @@
+STYLE (keep identical across all images):
+Game art for "Void Blaster", a top-down mobile space shooter (survivors-like).
+Camera: top-down orthographic, looking straight down, no perspective.
+Look: stylized sci-fi with a neon accent. Dark, rich materials (gunmetal, carbon,
+matte ceramic) lit from the top-left, glowing edges and emissive lights only where
+noted. Detail level: high but clean - panel lines, vents, rivets; no grunge overload.
+The background must stay dark and calm so bright game objects read on top of it:
+no bright cyan anywhere (cyan belongs to the player), magenta only as thin traces.
+Rendering: crisp edges, soft bloom on glowing parts only, no motion blur, no depth of
+field, not photorealistic. No text, no logo, no watermark.
+
+WORLD 7 "ABYSS OF EUROPA": just above a thick, translucent ice sheet on Europa; under
+it a dark ocean where the Void Collective (an alien machine intelligence) rewrote alien
+sea life into hybrids. Ice is muted steel-blue and violet, NEVER bright cyan:
+#141c30/#26304e with edges #4a5680. Ocean #05060f. Bioluminescence in toxic green
+#3dff8a and violet #7a3dff. Circuit-vines #2a1438 with magenta #ff2d95 nodes. Almost no
+light from above; light comes from below the ice. Mood: depth, pressure, something
+huge moving underneath. 50% machine, 50% organic.
+
+TASK: The world-7 boss "Abyss Leviathan": a huge squid-like hybrid seen from directly
+above, 1024x1024, plain flat dark background (#05010f): an armored mantle with machine
+plates, a magenta core, 6-8 tentacles of tissue and cable, bioluminescent stripes, 3-4
+glowing weak points (tentacle roots, gill vents, core). Stylized, no gore. Then a second
+image: exploded parts sheet at one scale with generous space: mantle, each tentacle
+(drawn straight), each weak point; plus the complete assembled boss at the same scale in
+the bottom-right corner. No text.
+
+PRODUCTION NOTES (the attached approved P1 is a style/material reference, not a composition to reproduce):
+One assembled boss ONLY, square 1024x1024, complete sprite with generous margins on flat #05010f. Strict 90-degree orthographic dorsal TOP VIEW, no oblique front view, no shadow, arena, labels or text. All appendages in image plane, clean readable silhouette. Abyss Leviathan: enormous stylized armored squid-like hybrid, faceted steel-violet MANTLE with dark machine plates, bright magenta core and exactly EIGHT tissue/cable tentacles trailing downward and outward, each distinct, complete and readable. Toxic-green and violet bioluminescent stripes; four separate glowing weakpoint sockets at mantle/gills/tentacle roots. Do not make a realistic squid or humanoid. No ice floor, cyan, blood or gore. Mantle at top, tentacles at bottom, strictly dorsal overhead.

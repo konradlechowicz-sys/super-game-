@@ -16,6 +16,46 @@ i wersja TEST (gracze tego nie widzą).
 
 - 
 
+## Build 117 · 2026-10-31
+- [Nowe] Świat 10 „The Nexus” (pełna wersja), koniec podróży: 6 sektorów (Neural Shore, Synapse Storm, Broken Geometry, Heartbeat, The Cage, Void Heart) w grafice ChatGPT. Serce Kolektywu: wolno obracająca się sieć neuronowa w tle, podłoga z obwodów, niemożliwe ramy, pęknięte pierścienie, węzły neuronów, pąki-oczy i ściany na brzegu areny. Mapa nie ma już światów „w budowie”: cała podróż 1-10 jest grywalna.
+- [Nowe] Mechanika świata 10: wszystko naraz. Podmuchy wiatru, pary szczelin, które przenoszą statek i pociski, oraz jeziorka kwasu. Zdarzenia świata: „GRAVITY COLLAPSE” (studnie grawitacyjne) w pierwszych sektorach i „NEURAL STORM” (ostrzał) w późniejszych.
+- [Nowe] 6 wrogów świata 10: Synapse Swarm (roje), Wraith (pojawia się obok statku, elita w złotym pierścieniu), Eye (pociski samonaprowadzające), Voidling (roje), Neuron Node (osadzony w ziemi, celuje w statek), Overseer (ciężki, strzela). Wraith, Eye i Voidling wracają z 1.x w nowej grafice i są trochę silniejsze.
+- [Nowe] Boss VOID HEART, ostatni boss gry: bijące serce Kolektywu w pierścieniu klatki. W każdej z 3 faz wygląda inaczej (klatka pęka, rdzeń jaśnieje). Zagina przestrzeń (teleport), otwiera czarne dziury, strzela spiralami, wiązkami i salwami, ostrzeliwuje arenę i wzywa upiory oraz roje synaps. Pokonanie go otwiera tryb Endless we wszystkich światach.
+- [Nowe] Rekwizyty świata 10: skupiska neuronów (wybuchają) i kotwice pierścieni klatki (wzmacniają wrogów wokół). Muzyka świata 10 (Suno): sektor i boss.
+- [App Store] `appstore/GAME-CENTER.md`: lista 10 rankingów Endless do założenia przed premierą 2.0 (nowe nazwy światów, rankingi w5-w10).
+
+## Build 116 · 2026-10-31
+- [Nowe] Świat 9 „Brood World” (pełna wersja): 6 sektorów (Living Ground, Breathing Fields, Spawning Pits, Acid Marsh, Egg Chambers, Brood Matriarch) w grafice ChatGPT. Świat lęgowy Kolektywu: oddychająca, żywa ziemia z żył i metalu, łukowate żebra, gniazda, skupiska jaj, świecące grzyby i organiczne ściany na brzegu areny.
+- [Nowe] Mechanika świata 9: jeziorka kwasu parzą statek, gdy w nie wleci, a gniazda wrastają w ziemię i wypuszczają larwy, dopóki się ich nie zniszczy. Zdarzenie świata to „ACID RAIN”, czyli ostrzał kwasem.
+- [Nowe] 6 wrogów świata 9: Larva (roje), Leech (szarżuje), Spitter (pluje z dystansu, elita w złotym pierścieniu), Nest (osadzone w ziemi, wypuszcza larwy), Brood Sac (pęka na larwy), Carapace Beetle (ciężki).
+- [Nowe] Boss BROOD MATRIARCH: matka roju. Pełznie za statkiem i obraca się w jego stronę, rzuca się na niego, pluje kwasem (ostrzał, salwy, spirale) i przez całą walkę składa larwy i pijawki. Ma 3 fazy.
+- [Nowe] Rekwizyty świata 9: worki lęgowe pełne kwasu (wybuchają) i serca gniazd (wypuszczają larwy, póki stoją; potem łup). Muzyka świata 9 (Suno): sektor i boss.
+
+## Build 115 · 2026-10-31
+- [Nowe] Świat 8 „The Rift Gate” (pełna wersja): 6 sektorów (Shattered Space, Mirror Shards, Echoes of Home, Gate Rings, No Return, Gatekeeper) w grafice ChatGPT. Za Układem Słonecznym, nad gigantycznym pierścieniem wrót: wolno obracające się zakrzywione niebo, unoszące się szklane odłamki rzeczywistości, segmenty pierścieni, pylony strażników, uśpione oczy i ściany światła na brzegu areny.
+- [Nowe] Mechanika świata 8: pary szczelin. Statek, który wleci w szczelinę, wylatuje z jej pary (z krótką przerwą, żeby nie skakać w kółko). To samo dzieje się z pociskami wrogów, więc strzał może przyjść z drugiego końca areny. Zdarzenie świata to „GRAVITY TEAR”, czyli studnie grawitacyjne.
+- [Nowe] 6 wrogów świata 8: Shard Swarm Unit (roje), Echo (pojawia się obok statku), Phase Walker (szarżuje, elita w złotym pierścieniu), Null Orb (pociski samonaprowadzające), Rift Spawner (osadzony w przestrzeni, wypuszcza roje odłamków), Gate Sentinel (ciężki, strzela).
+- [Nowe] Boss GATEKEEPER: trzy obracające się pierścienie wrót wokół rdzenia. Zagina przestrzeń (teleport), strzela spiralami i wiązkami przez portale, wysyła roje i echa. Ma 3 fazy.
+- [Nowe] Rekwizyty świata 8: kondensatory pierścieni (wybuchają) i kotwice szczelin (wzmacniają wrogów wokół). Muzyka świata 8 (Suno): sektor i boss.
+- [Narzędzia] Podgląd na claude.ai: grafiki 2.0 idą w kilku plikach zbiorczych (jeden na świat i jeden wspólny) zamiast ponad 400 osobnych, bo wersja podglądu mieści najwyżej 511 plików. Gra w aplikacji się nie zmienia.
+
+## Build 114 · 2026-10-31
+- [Nowe] Świat 7 „Abyss of Europa” (pełna wersja): 6 sektorów (Ice Shelf, Thin Ice, Glow Beneath, Cold Hatchery, The Deep Call, Abyss Leviathan) w grafice ChatGPT. Pod półprzezroczystym lodem Europy widać ciemny ocean ze świecącym życiem; są lodowe iglice, zamarznięte hybrydy, zielono świecące szczeliny, parujące kominy i lodowe ściany na brzegu areny.
+- [Nowe] Mechanika świata 7: śliski lód. Statek ma bezwładność, ślizga się i dopiero po chwili skręca tam, gdzie go kierujesz. Spod lodu wynurzają się węgorze-hybrydy: znikają i pojawiają się obok statku. Zdarzenie świata to fala „BENEATH THE ICE”.
+- [Nowe] 6 wrogów świata 7: Ice Wisp (roje), Frost Crab (elita w złotym pierścieniu), Tentacle Mine (wybucha przy statku), Spore Lantern (osadzona w lodzie, strzela dookoła), Eel Hybrid (wynurza się spod lodu), Leviathan Spawn (ciężki, rozpada się na Ice Wisp).
+- [Nowe] Boss ABYSS LEVIATHAN: przepisane morskie życie wielkości okrętu. Obraca się w stronę statku, szarżuje, macki zamiatają wiązkami, do tego salwy, spirale, ostrzał i posiłki. Ma 3 fazy.
+- [Nowe] Rekwizyty świata 7: kapsuły uwięzione w lodzie (łup) i zarodnikowe latarnie Kolektywu (wzmacniają wrogów wokół). Muzyka świata 7 (Suno): sektor i boss.
+- [Poprawka] Grafiki 2.0 wczytują się odporniej: przy kilkuset obrazkach naraz przeglądarka czasem odmawiała ich dekodowania i gra spadała do wyglądu 1.x.
+
+## Build 113 · 2026-10-31
+- [Nowe] Świat 6 „Storm Relay” (pełna wersja): 6 sektorów (Gas Giant, Ion Winds, Antenna Field, Living Signal, Deep Transmission, Storm Eye) w grafice ChatGPT. Lot nad burzami Jowisza: pod statkiem przesuwają się kłęby chmur gazowego olbrzyma, w burzy unoszą się mosiężne platformy przekaźnika, są anteny, piorunochrony i świecące cewki, a brzeg areny tworzą ściany burzy z piorunami.
+- [Nowe] Mechanika świata 6: porywy wiatru. Co kilkanaście sekund baner „WIND SHEAR” i przez kilka sekund wiatr spycha statek i pociski wrogów, a chmury i nakładka płyną z wiatrem. Burze piorunów (ostrzał) jako zdarzenie świata.
+- [Nowe] 6 wrogów świata 6: Ion Kite (roje, elita w złotym pierścieniu), Gas Mine (wybucha przy statku), Relay Jelly (strzela), Static Ray (szarżuje), Vortex (wir, który wciąga statek, od sektora 2), Cloud Whale (ciężki, rozpada się na Ion Kite). Z odłamkami i cieniami.
+- [Nowe] Boss STORM EYE: żywa burza krążąca wokół statku, z wolno obracającym się okiem i pulsującymi słabymi punktami. Atakuje spiralami iskier, uderzeniami piorunów, wiązkami i rojami. Ma 3 fazy.
+- [Nowe] Rekwizyty świata 6: zbiorniki gazu (wybuchają) i wzmacniacze sygnału (wzmacniają wrogów wokół, rozbite dają łup). Muzyka świata 6 (Suno): sektor i boss, z płynnie dobranymi pętlami.
+- [Balans] Strojenie trudności dla światów 5–10, każdy o stopień trudniejszy. Świat 5 przez przeoczenie używał strojenia świata 1, więc jest teraz trochę trudniejszy (symulacja: dalej wygrywany).
+- [Narzędzia] Wspólna podstawa światów 6–10: skrypt tekstur `proto2/make-worlds.py`, jedna scena 2.0 (`js/v2/journey.js`), mechaniki (`js/worldfx.js`), wspólne rysowanie bossów (słabe punkty wykrywane automatycznie na rysunku) i szablon sektorów.
+
 ## Build 112 · 2026-10-31
 - [Zmiana] Railgun sam celuje: przed każdym strzałem wybiera linię, na której trafi najwięcej wrogów (elity i bossy liczą się podwójnie i poczwórnie), także za statkiem. Wcześniej strzelał w kierunku lotu, a goniący rój był z tyłu (uwaga Konrada). W symulacji, gdy statek ucieka przed rojem, Railgun wypada teraz na równi z Seeker Missiles, Nova Pulse i Proximity Mines.
 - [Zmiana] Phase Shield to teraz osłona z zapasem: pochłania 25 obrażeń (+10 na każdy poziom, 65 na poziomie 5) przed kadłubem i odnawia się do pełna w 4 s, gdy przez 2,5 s nic w statek nie trafi. Wcześniej blokowała jedno trafienie co 16 s i przy częstych kontaktach nic nie dawała (uwaga Konrada). Wokół statku widać pierścień, który blednie w miarę zużycia, i łuk pokazujący, ile osłony zostało; „SHIELD DOWN”, gdy się wyczerpie.

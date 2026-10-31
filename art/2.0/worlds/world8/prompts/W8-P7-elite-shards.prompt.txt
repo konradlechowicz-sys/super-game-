@@ -1,0 +1,29 @@
+STYLE (keep identical across all images):
+Game art for "Void Blaster", a top-down mobile space shooter (survivors-like).
+Camera: top-down orthographic, looking straight down, no perspective.
+Look: stylized sci-fi with a neon accent. Dark, rich materials (gunmetal, carbon,
+matte ceramic) lit from the top-left, glowing edges and emissive lights only where
+noted. Detail level: high but clean - panel lines, vents, rivets; no grunge overload.
+The background must stay dark and calm so bright game objects read on top of it:
+no bright cyan anywhere (cyan belongs to the player), magenta only as thin traces.
+Rendering: crisp edges, soft bloom on glowing parts only, no motion blur, no depth of
+field, not photorealistic. No text, no logo, no watermark.
+
+WORLD 8 "THE RIFT GATE": the gateway out of the Solar System, guarded by the Void
+Collective (an alien machine intelligence). Space here is cracked like glass: floating
+shards of reality with sharp glowing edges, warped and smeared stars, a gigantic gate
+ring far below. Void #04020a, rift white #f4f0ff, violet #8a4dff (dark #2a1050),
+magenta #ff2d95 for the Collective. No light source: the shard edges and rifts glow
+cold white. Mood: the last threshold, unstable, wrong. 50% machine, 50% organic.
+
+TASK: Enemy sheet, 6 enemies (gate guardians), facing up, seen from directly above,
+one scale, plain flat dark background (#05010f), well apart. Half machine, half
+organism, glass-like parts with white edges, a glowing magenta core, violet accents.
+Relative sizes: shard swarm unit 22, echo 32 (can copy itself), phase walker 40, null
+orb 48, rift spawner (stationary) 52, gate sentinel 60 (the biggest drawn about 300
+px). Then, on a second image: an elite phase walker (1.6x, heavier armor, a gold ring)
+and, for each of the 6, 3-4 broken shards of its body for the death animation, one row
+per enemy. No text.
+
+PRODUCTION NOTES (the attached approved P1 is a style/material reference, not a composition to reproduce):
+Draw SECOND image ONLY: elite plus 24 death shards; match the attached enemy sheet (second reference) precisely. Portrait 1600x2400, flat #05010f, strict dorsal top view. Top dedicated band ONE elite with heavier armor, 1.6x normal body and a COMPLETE unmistakable thin glowing GOLD CIRCULAR RING encircling its entire silhouette. Then SIX clearly separated rows with exactly FOUR DISTINCT broken modules per row, each from the matching normal enemy in reading order; all parts separated, generous blank margin. Total 25 sprites, no normal intact enemies or text. Clean geometric stylized fragments, no gore. Elite phase walker is the TOP RIGHT enemy in reference: magenta diamond hub and FOUR separate jointed limbs with white-violet crystal tips. SIX shard rows: shard swarm, echo, phase walker, null orb, rift spawner, gate sentinel. White-edged dark glass and violet machine-organic links. No planets, stars or scenery.

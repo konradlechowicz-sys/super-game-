@@ -1,0 +1,416 @@
+{
+  "name": "Abyss of Europa",
+  "enemy": [
+    "ice-wisp",
+    "frost-crab",
+    "tentacle-mine",
+    "spore-lantern",
+    "eel-hybrid",
+    "leviathan-spawn"
+  ],
+  "sizes": [
+    28,
+    40,
+    36,
+    44,
+    50,
+    62
+  ],
+  "elite": "frost-crab",
+  "props": [
+    "ice-spire-cluster",
+    "frozen-hybrid-carcass",
+    "green-lit-crevasse",
+    "steaming-vent",
+    "circuit-vine-knot",
+    "ice-boulder",
+    "spore-lantern-intact",
+    "spore-lantern-shattered",
+    "ice-locked-pod-intact",
+    "ice-locked-pod-shattered"
+  ],
+  "boss": "abyss-leviathan",
+  "parts": [
+    "mantle",
+    "tentacle-1",
+    "tentacle-2",
+    "tentacle-3",
+    "tentacle-4",
+    "tentacle-5",
+    "tentacle-6",
+    "tentacle-7",
+    "tentacle-8",
+    "weak-point-1",
+    "weak-point-2",
+    "weak-point-3",
+    "weak-point-4"
+  ],
+  "floor": "translucent-ice",
+  "floor_count": 1,
+  "far_size": [
+    2048,
+    2048
+  ],
+  "far_tile": "both",
+  "phases": 1,
+  "constraints": [
+    "Ice must actually be partly transparent so ocean shows below; no cyan or bright white",
+    "Ocean far tile has no creatures: movement added in game",
+    "Boss has 8 cable-tissue tentacles, each drawn straight in parts sheet",
+    "Stylized geometric hybrids, no realistic animals or gore"
+  ],
+  "world": 7,
+  "expected_production_png": {
+    "W7-P1-arena-concept.png": {
+      "role": "P1",
+      "size": [
+        941,
+        1672
+      ],
+      "approval_required": true
+    },
+    "W7-P2-background.png": {
+      "role": "P2",
+      "size": [
+        2048,
+        2048
+      ],
+      "tile": "both"
+    },
+    "W7-P3-floor.png": {
+      "role": "P3",
+      "size": [
+        1024,
+        1024
+      ],
+      "tile": "both",
+      "alpha_required": true
+    },
+    "W7-P4-overlay.png": {
+      "role": "P4",
+      "size": [
+        1024,
+        1024
+      ],
+      "tile": "both",
+      "background": "#000000"
+    },
+    "W7-P5-props-sheet.png": {
+      "role": "P5-sheet",
+      "count": 10
+    },
+    "W7-P5-props/W7-P5-ice-spire-cluster.png": {
+      "role": "P5-item"
+    },
+    "W7-P5-props/W7-P5-frozen-hybrid-carcass.png": {
+      "role": "P5-item"
+    },
+    "W7-P5-props/W7-P5-green-lit-crevasse.png": {
+      "role": "P5-item"
+    },
+    "W7-P5-props/W7-P5-steaming-vent.png": {
+      "role": "P5-item"
+    },
+    "W7-P5-props/W7-P5-circuit-vine-knot.png": {
+      "role": "P5-item"
+    },
+    "W7-P5-props/W7-P5-ice-boulder.png": {
+      "role": "P5-item"
+    },
+    "W7-P5-props/W7-P5-spore-lantern-intact.png": {
+      "role": "P5-item"
+    },
+    "W7-P5-props/W7-P5-spore-lantern-shattered.png": {
+      "role": "P5-item"
+    },
+    "W7-P5-props/W7-P5-ice-locked-pod-intact.png": {
+      "role": "P5-item"
+    },
+    "W7-P5-props/W7-P5-ice-locked-pod-shattered.png": {
+      "role": "P5-item"
+    },
+    "W7-P6-border-pieces-sheet.png": {
+      "role": "P6-sheet",
+      "count": 8
+    },
+    "W7-P6-border-pieces/W7-P6-border-top.png": {
+      "role": "P6-strip",
+      "size": [
+        1024,
+        160
+      ],
+      "tile": "long-axis"
+    },
+    "W7-P6-border-pieces/W7-P6-border-bottom.png": {
+      "role": "P6-strip",
+      "size": [
+        1024,
+        160
+      ],
+      "tile": "long-axis"
+    },
+    "W7-P6-border-pieces/W7-P6-border-left.png": {
+      "role": "P6-strip",
+      "size": [
+        160,
+        1024
+      ],
+      "tile": "long-axis"
+    },
+    "W7-P6-border-pieces/W7-P6-border-right.png": {
+      "role": "P6-strip",
+      "size": [
+        160,
+        1024
+      ],
+      "tile": "long-axis"
+    },
+    "W7-P6-border-pieces/W7-P6-corner-top-left.png": {
+      "role": "P6-corner",
+      "size": [
+        256,
+        256
+      ]
+    },
+    "W7-P6-border-pieces/W7-P6-corner-top-right.png": {
+      "role": "P6-corner",
+      "size": [
+        256,
+        256
+      ]
+    },
+    "W7-P6-border-pieces/W7-P6-corner-bottom-left.png": {
+      "role": "P6-corner",
+      "size": [
+        256,
+        256
+      ]
+    },
+    "W7-P6-border-pieces/W7-P6-corner-bottom-right.png": {
+      "role": "P6-corner",
+      "size": [
+        256,
+        256
+      ]
+    },
+    "W7-P7-enemies-sheet.png": {
+      "role": "P7-enemies-sheet",
+      "count": 6
+    },
+    "W7-P7-enemies/W7-P7-ice-wisp.png": {
+      "role": "P7-enemy",
+      "relative_units": 28,
+      "target_content_max": 135
+    },
+    "W7-P7-enemies/W7-P7-frost-crab.png": {
+      "role": "P7-enemy",
+      "relative_units": 40,
+      "target_content_max": 194
+    },
+    "W7-P7-enemies/W7-P7-tentacle-mine.png": {
+      "role": "P7-enemy",
+      "relative_units": 36,
+      "target_content_max": 174
+    },
+    "W7-P7-enemies/W7-P7-spore-lantern.png": {
+      "role": "P7-enemy",
+      "relative_units": 44,
+      "target_content_max": 213
+    },
+    "W7-P7-enemies/W7-P7-eel-hybrid.png": {
+      "role": "P7-enemy",
+      "relative_units": 50,
+      "target_content_max": 242
+    },
+    "W7-P7-enemies/W7-P7-leviathan-spawn.png": {
+      "role": "P7-enemy",
+      "relative_units": 62,
+      "target_content_max": 300
+    },
+    "W7-P7-elite-and-shards-sheet.png": {
+      "role": "P7-elite-shards-sheet",
+      "count": 25
+    },
+    "W7-P7-elite-and-shards/W7-P7-frost-crab-elite.png": {
+      "role": "P7-elite",
+      "scale_vs_normal": 1.6
+    },
+    "W7-P7-elite-and-shards/W7-P7-ice-wisp-shard-1.png": {
+      "role": "P7-shard",
+      "enemy": "ice-wisp"
+    },
+    "W7-P7-elite-and-shards/W7-P7-ice-wisp-shard-2.png": {
+      "role": "P7-shard",
+      "enemy": "ice-wisp"
+    },
+    "W7-P7-elite-and-shards/W7-P7-ice-wisp-shard-3.png": {
+      "role": "P7-shard",
+      "enemy": "ice-wisp"
+    },
+    "W7-P7-elite-and-shards/W7-P7-ice-wisp-shard-4.png": {
+      "role": "P7-shard",
+      "enemy": "ice-wisp"
+    },
+    "W7-P7-elite-and-shards/W7-P7-frost-crab-shard-1.png": {
+      "role": "P7-shard",
+      "enemy": "frost-crab"
+    },
+    "W7-P7-elite-and-shards/W7-P7-frost-crab-shard-2.png": {
+      "role": "P7-shard",
+      "enemy": "frost-crab"
+    },
+    "W7-P7-elite-and-shards/W7-P7-frost-crab-shard-3.png": {
+      "role": "P7-shard",
+      "enemy": "frost-crab"
+    },
+    "W7-P7-elite-and-shards/W7-P7-frost-crab-shard-4.png": {
+      "role": "P7-shard",
+      "enemy": "frost-crab"
+    },
+    "W7-P7-elite-and-shards/W7-P7-tentacle-mine-shard-1.png": {
+      "role": "P7-shard",
+      "enemy": "tentacle-mine"
+    },
+    "W7-P7-elite-and-shards/W7-P7-tentacle-mine-shard-2.png": {
+      "role": "P7-shard",
+      "enemy": "tentacle-mine"
+    },
+    "W7-P7-elite-and-shards/W7-P7-tentacle-mine-shard-3.png": {
+      "role": "P7-shard",
+      "enemy": "tentacle-mine"
+    },
+    "W7-P7-elite-and-shards/W7-P7-tentacle-mine-shard-4.png": {
+      "role": "P7-shard",
+      "enemy": "tentacle-mine"
+    },
+    "W7-P7-elite-and-shards/W7-P7-spore-lantern-shard-1.png": {
+      "role": "P7-shard",
+      "enemy": "spore-lantern"
+    },
+    "W7-P7-elite-and-shards/W7-P7-spore-lantern-shard-2.png": {
+      "role": "P7-shard",
+      "enemy": "spore-lantern"
+    },
+    "W7-P7-elite-and-shards/W7-P7-spore-lantern-shard-3.png": {
+      "role": "P7-shard",
+      "enemy": "spore-lantern"
+    },
+    "W7-P7-elite-and-shards/W7-P7-spore-lantern-shard-4.png": {
+      "role": "P7-shard",
+      "enemy": "spore-lantern"
+    },
+    "W7-P7-elite-and-shards/W7-P7-eel-hybrid-shard-1.png": {
+      "role": "P7-shard",
+      "enemy": "eel-hybrid"
+    },
+    "W7-P7-elite-and-shards/W7-P7-eel-hybrid-shard-2.png": {
+      "role": "P7-shard",
+      "enemy": "eel-hybrid"
+    },
+    "W7-P7-elite-and-shards/W7-P7-eel-hybrid-shard-3.png": {
+      "role": "P7-shard",
+      "enemy": "eel-hybrid"
+    },
+    "W7-P7-elite-and-shards/W7-P7-eel-hybrid-shard-4.png": {
+      "role": "P7-shard",
+      "enemy": "eel-hybrid"
+    },
+    "W7-P7-elite-and-shards/W7-P7-leviathan-spawn-shard-1.png": {
+      "role": "P7-shard",
+      "enemy": "leviathan-spawn"
+    },
+    "W7-P7-elite-and-shards/W7-P7-leviathan-spawn-shard-2.png": {
+      "role": "P7-shard",
+      "enemy": "leviathan-spawn"
+    },
+    "W7-P7-elite-and-shards/W7-P7-leviathan-spawn-shard-3.png": {
+      "role": "P7-shard",
+      "enemy": "leviathan-spawn"
+    },
+    "W7-P7-elite-and-shards/W7-P7-leviathan-spawn-shard-4.png": {
+      "role": "P7-shard",
+      "enemy": "leviathan-spawn"
+    },
+    "W7-P8-abyss-leviathan.png": {
+      "role": "P8-boss",
+      "size": [
+        1024,
+        1024
+      ],
+      "phase": 1
+    },
+    "W7-P8-parts-sheet.png": {
+      "role": "P8-sheet",
+      "parts": 13,
+      "assembled_copy": "bottom-right, identical render and scale"
+    },
+    "W7-P8-parts/W7-P8-mantle.png": {
+      "role": "P8-part"
+    },
+    "W7-P8-parts/W7-P8-tentacle-1.png": {
+      "role": "P8-part"
+    },
+    "W7-P8-parts/W7-P8-tentacle-2.png": {
+      "role": "P8-part"
+    },
+    "W7-P8-parts/W7-P8-tentacle-3.png": {
+      "role": "P8-part"
+    },
+    "W7-P8-parts/W7-P8-tentacle-4.png": {
+      "role": "P8-part"
+    },
+    "W7-P8-parts/W7-P8-tentacle-5.png": {
+      "role": "P8-part"
+    },
+    "W7-P8-parts/W7-P8-tentacle-6.png": {
+      "role": "P8-part"
+    },
+    "W7-P8-parts/W7-P8-tentacle-7.png": {
+      "role": "P8-part"
+    },
+    "W7-P8-parts/W7-P8-tentacle-8.png": {
+      "role": "P8-part"
+    },
+    "W7-P8-parts/W7-P8-weak-point-1.png": {
+      "role": "P8-part"
+    },
+    "W7-P8-parts/W7-P8-weak-point-2.png": {
+      "role": "P8-part"
+    },
+    "W7-P8-parts/W7-P8-weak-point-3.png": {
+      "role": "P8-part"
+    },
+    "W7-P8-parts/W7-P8-weak-point-4.png": {
+      "role": "P8-part"
+    }
+  },
+  "order": [
+    "P1-review",
+    "P3",
+    "P2",
+    "P4",
+    "P5",
+    "P6",
+    "P7-enemies",
+    "P7-elite-shards",
+    "P8-boss",
+    "P8-parts"
+  ],
+  "delivery_rules": {
+    "zip_size_exclusive_limit": 30000000,
+    "zip_target_limit": 29500000,
+    "preserve_sources": true,
+    "preserve_exact_prompts": true,
+    "qa": [
+      "all sheets and each extracted sprite visually inspected",
+      "exact output dimensions and scaling metadata",
+      "tiles repeated 3x3 (W6 P2 horizontal) and half-shifted",
+      "RGBA ice over ocean (W7)",
+      "all border joins and repeated strips, assembled frame",
+      "CRC, full PNG decode and SHA256 for every archive file",
+      "each delivery file exactly once across split ZIPs",
+      "full boss in parts sheet identical rendering and size",
+      "P1 user approval evidence"
+    ]
+  }
+}

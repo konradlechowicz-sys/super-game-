@@ -10,6 +10,7 @@ import { initProps, updateProps, breakProp, hasProps } from './props.js';
 import { initCover, hasCover, coverAt, updateCover } from './cover.js';
 import { initCrystal, hasCrystal, updateCrystal, layCrystal } from './crystal.js';
 import { ignite, updateArsenal, shieldHit, addFire, inHole } from './arsenal.js';
+import { initWorldFx, hasWorldFx, updateWorldFx } from './worldfx.js';
 
 const MAX_WEAPONS = 4;
 const MAX_PASSIVES = 4;
@@ -68,6 +69,10 @@ export class Game {
     // world 4's black crystal network and dust storms (js/crystal.js)
     this.crystal = null; this.storm = null;
     if (EDITION === 2 && hasCrystal(stage.world?.id)) initCrystal(this);
+    // worlds 6-10: wind, ice, rifts, acid (js/worldfx.js)
+    this.wind = null; this.ice = false; this.rifts = []; this.acid = [];
+    this.worldFx = EDITION === 2 && hasWorldFx(stage.world?.id);
+    if (this.worldFx) initWorldFx(this);
     this.props = [];
     if (EDITION === 2 && hasProps(stage.world?.id)) initProps(this);
     this.tut = new Tutorial(this);
@@ -1078,6 +1083,7 @@ export class Game {
       if (this.props.length) updateProps(this, dt);
       if (this.crystal) updateCrystal(this, dt);
       if (this.cover.length) updateCover(this, dt);
+      if (this.worldFx) updateWorldFx(this, dt);
     }
 
     this.updateEnemies(dt);
@@ -1156,6 +1162,15 @@ export class Game {
     const step = speed * dt;
     const ox = p.x, oy = p.y;
     if (ld <= step) { p.x = p.tx; p.y = p.ty; } else { p.x += (lx / ld) * step; p.y += (ly / ld) * step; }
+    if (this.ice) {
+      // world 7's ice: the ship's velocity only slowly follows where it is steered, so it slides on
+      const k = Math.min(1, dt * 2.6);
+      p.svx = (p.svx || 0) + ((p.x - ox) / (dt || 1) - (p.svx || 0)) * k;
+      p.svy = (p.svy || 0) + ((p.y - oy) / (dt || 1) - (p.svy || 0)) * k;
+      p.x = clamp(ox + p.svx * dt, -hw, hw); p.y = clamp(oy + p.svy * dt, -hh, hh);
+      if (Math.abs(p.x) >= hw) p.svx = 0;
+      if (Math.abs(p.y) >= hh) p.svy = 0;
+    }
     const mv = Math.hypot(p.x - ox, p.y - oy);
     p.moving = dt > 0 ? mv / dt : 0;
     if (mv > 0.3) p.facing = angleLerp(p.facing, Math.atan2(p.y - oy, p.x - ox), Math.min(1, dt * 12));
@@ -1269,6 +1284,23 @@ export class Game {
             this.addHazard({ kind: 'mortar', x: p.x + Math.cos(a) * R, y: p.y + Math.sin(a) * R, r: 54, warn: 1.25 + k * 0.15, dmg: this.shotDmg(e, 10), color: '#ff2d95', from: e });
           }
           this.sfx('warn');
+        }
+      } else if (ai === 'vortex') {
+        // world 6's vortex: drifts at the ship and drags it in
+        if (d < 260 && this.state === 'play') {
+          const f = (80 * (1 - d / 260) + 20) * dt;
+          p.x -= (dx / d) * f; p.y -= (dy / d) * f; p.tx -= (dx / d) * f; p.ty -= (dy / d) * f;
+        }
+      } else if (ai === 'nest') {
+        // a nest (worlds 8 and 9): set in the ground, it breeds its young while the ship is near
+        mx = my = 0; separate = false;
+        e.cd -= dt;
+        if (e.cd <= 0 && d < 600) {
+          e.cd = e.elite ? 3 : 5.5;
+          if (this.enemies.length < this.stage.max) {
+            for (let k = 0; k < (e.elite ? 4 : 2); k++) { const c = this.spawnEnemy(e.def.spawn, e.x + rand(-25, 25), e.y + rand(-25, 25)); c.spawnT = 0.3; }
+            e.flash = 0.15;
+          }
         }
       } else if (ai === 'lay') {
         // world 4's Spreader: walks at the ship and lays black crystal where it goes

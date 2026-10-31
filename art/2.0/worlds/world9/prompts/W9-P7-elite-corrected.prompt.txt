@@ -1,0 +1,30 @@
+STYLE (keep identical across all images):
+Game art for "Void Blaster", a top-down mobile space shooter (survivors-like).
+Camera: top-down orthographic, looking straight down, no perspective.
+Look: stylized sci-fi with a neon accent. Dark, rich materials (gunmetal, carbon,
+matte ceramic) lit from the top-left, glowing edges and emissive lights only where
+noted. Detail level: high but clean - panel lines, vents, rivets; no grunge overload.
+The background must stay dark and calm so bright game objects read on top of it:
+no bright cyan anywhere (cyan belongs to the player), magenta only as thin traces.
+Rendering: crisp edges, soft bloom on glowing parts only, no motion blur, no depth of
+field, not photorealistic. No text, no logo, no watermark.
+
+WORLD 9 "BROOD WORLD": the breeding world of the Void Collective (an alien machine
+intelligence): the ground is living tissue fused with metal plates, it breathes; nests
+hatch enemies. STYLIZED, never realistic flesh, no blood, no gore. Dark matte tissue
+#2a0f18/#4a1a28 with veins #6e2a40, embedded metal #3a3440, acid green #9dff3d,
+bioluminescent violet #7a3dff and small pale pink points #ff8fbf. The floor is NOT
+glowing magenta (magenta #ff2d95 is only in enemy cores). Weak light from below, from
+bioluminescence and acid. Mood: inside a living organism. 30% machine, 70% organic.
+
+TASK: Enemy sheet, 6 enemies, facing up, seen from directly above, one scale, plain
+flat dark background (#05010f), well apart. Mostly organic creatures with some metal
+parts: stylized and geometric, never realistic animals, no gore; glowing magenta core,
+acid-green and violet accents. Relative sizes: larva 26, leech 30, spitter 36, nest
+(stationary) 56, brood sac 60, carapace beetle 64 (the biggest drawn about 300 px).
+Then, on a second image: an elite spitter (1.6x, heavier carapace, a gold ring) and,
+for each of the 6, 3-4 broken shards of its body for the death animation (stylized, no
+gore), one row per enemy. No text.
+
+PRODUCTION NOTES (the attached approved P1 is a style/material reference, not a composition to reproduce):
+Draw ONLY ONE elite sprite, square 1024x1024 flat #05010f. SECOND reference is an isolated NORMAL enemy; preserve that exact base design and dorsal orientation, increase armor weight and body size by 1.6x. Add one COMPLETE thin glowing GOLD CIRCULAR RING around its full silhouette, clearly separated outside the appendages. The ring must be unmistakable, not just gold armor. No other objects, shards, ground, shadow, text or labels. Centered with generous margin, 90-degree overhead. This is elite SPITTER: keep the reference short broad spiny carapace, large forward acid-green nozzle and side green sacs. Do NOT turn it into the long thin leech or larva. Heavy chitin and metal, magenta core, no gore.

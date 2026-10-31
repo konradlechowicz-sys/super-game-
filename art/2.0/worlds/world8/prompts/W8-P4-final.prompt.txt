@@ -1,0 +1,24 @@
+STYLE (keep identical across all images):
+Game art for "Void Blaster", a top-down mobile space shooter (survivors-like).
+Camera: top-down orthographic, looking straight down, no perspective.
+Look: stylized sci-fi with a neon accent. Dark, rich materials (gunmetal, carbon,
+matte ceramic) lit from the top-left, glowing edges and emissive lights only where
+noted. Detail level: high but clean - panel lines, vents, rivets; no grunge overload.
+The background must stay dark and calm so bright game objects read on top of it:
+no bright cyan anywhere (cyan belongs to the player), magenta only as thin traces.
+Rendering: crisp edges, soft bloom on glowing parts only, no motion blur, no depth of
+field, not photorealistic. No text, no logo, no watermark.
+
+WORLD 8 "THE RIFT GATE": the gateway out of the Solar System, guarded by the Void
+Collective (an alien machine intelligence). Space here is cracked like glass: floating
+shards of reality with sharp glowing edges, warped and smeared stars, a gigantic gate
+ring far below. Void #04020a, rift white #f4f0ff, violet #8a4dff (dark #2a1050),
+magenta #ff2d95 for the Collective. No light source: the shard edges and rifts glow
+cold white. Mood: the last threshold, unstable, wrong. 50% machine, 50% organic.
+
+TASK: Seamless tileable overlay 1024x1024 on plain black (#000000; blended additively):
+sparse thin light streaks and tiny white sparks, a few faint violet glints. Mostly
+empty. Tiles on all four edges.
+
+PRODUCTION NOTES (the attached approved P1 is a style/material reference, not a composition to reproduce):
+Only square 1024x1024 additive overlay on pure black. Sparse thin white-violet light streaks, tiny white sparks and faint violet glints, 90 percent black negative space. No shards, gate rings, starscape, nebula or border, no large rays, clouds or central flare. All four edges seamless, particles only.

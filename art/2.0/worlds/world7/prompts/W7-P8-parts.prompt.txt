@@ -1,0 +1,29 @@
+STYLE (keep identical across all images):
+Game art for "Void Blaster", a top-down mobile space shooter (survivors-like).
+Camera: top-down orthographic, looking straight down, no perspective.
+Look: stylized sci-fi with a neon accent. Dark, rich materials (gunmetal, carbon,
+matte ceramic) lit from the top-left, glowing edges and emissive lights only where
+noted. Detail level: high but clean - panel lines, vents, rivets; no grunge overload.
+The background must stay dark and calm so bright game objects read on top of it:
+no bright cyan anywhere (cyan belongs to the player), magenta only as thin traces.
+Rendering: crisp edges, soft bloom on glowing parts only, no motion blur, no depth of
+field, not photorealistic. No text, no logo, no watermark.
+
+WORLD 7 "ABYSS OF EUROPA": just above a thick, translucent ice sheet on Europa; under
+it a dark ocean where the Void Collective (an alien machine intelligence) rewrote alien
+sea life into hybrids. Ice is muted steel-blue and violet, NEVER bright cyan:
+#141c30/#26304e with edges #4a5680. Ocean #05060f. Bioluminescence in toxic green
+#3dff8a and violet #7a3dff. Circuit-vines #2a1438 with magenta #ff2d95 nodes. Almost no
+light from above; light comes from below the ice. Mood: depth, pressure, something
+huge moving underneath. 50% machine, 50% organic.
+
+TASK: The world-7 boss "Abyss Leviathan": a huge squid-like hybrid seen from directly
+above, 1024x1024, plain flat dark background (#05010f): an armored mantle with machine
+plates, a magenta core, 6-8 tentacles of tissue and cable, bioluminescent stripes, 3-4
+glowing weak points (tentacle roots, gill vents, core). Stylized, no gore. Then a second
+image: exploded parts sheet at one scale with generous space: mantle, each tentacle
+(drawn straight), each weak point; plus the complete assembled boss at the same scale in
+the bottom-right corner. No text.
+
+PRODUCTION NOTES (the attached approved P1 is a style/material reference, not a composition to reproduce):
+PARTS SHEET only. Second reference is the exact boss design to disassemble; first is approved arena style. Flat #05010f background, strict overhead orthographic, same design and materials as boss, separate INTACT modules with wide empty gutters. No text or grid, no random broken shards. Square 2400x2400, FOUR COLUMNS and FOUR ROWS. Row1 mantle with magenta core (no attached tentacles), tentacle1, tentacle2, tentacle3. Row2 tentacles4,5,6,7. Row3 tentacle8, weakpoint1, weakpoint2, weakpoint3. Row4 weakpoint4 at left, two empty cells, complete assembled boss bottom-right. EIGHT distinct tissue/cable tentacles, each drawn STRAIGHT (uncoiled) so code can bend them, roots clearly distinguishable from tips, green/violet stripes and armored tips. Four glowing socket modules, no gore, no cyan. Mantle and each tentacle are single complete modules, not multiple chunks.

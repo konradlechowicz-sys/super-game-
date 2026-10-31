@@ -1,0 +1,640 @@
+{
+  "world": 9,
+  "passed": true,
+  "errors": [],
+  "checks": {
+    "W9-P1-arena-concept.png": {
+      "size": [
+        941,
+        1672
+      ],
+      "mode": "RGB",
+      "sha256": "3bfacf23d6e1aab8314a5440f93525e28cac066f2c6a77cad12ac5daee8334f5"
+    },
+    "W9-P3-floor.png": {
+      "size": [
+        1024,
+        1024
+      ],
+      "mode": "RGB",
+      "sha256": "6ffbb074de1364481529d1c3a7aae6bf72976cbb773d324f525eb3f16a65c3a6",
+      "seams": {
+        "horizontal_exact": true,
+        "vertical_exact": true
+      },
+      "max_luminance": 0.2999498039215686
+    },
+    "W9-P4-overlay.png": {
+      "size": [
+        1024,
+        1024
+      ],
+      "mode": "RGB",
+      "sha256": "499c69dc354f47ab95032b2327bad16fa721260317ee034ebf329acb5f33b9cf",
+      "seams": {
+        "horizontal_exact": true,
+        "vertical_exact": true
+      },
+      "near_black_fraction": 0.9189777374267578
+    },
+    "W9-P5-props-sheet.png": {
+      "size": [
+        1600,
+        1200
+      ],
+      "mode": "RGB",
+      "sha256": "5011917a247e5e090cec8ce08af9892f2f373b22e4ca18b865d80780f5a7e4cb"
+    },
+    "W9-P5-props/W9-P5-nest.png": {
+      "size": [
+        324,
+        321
+      ],
+      "mode": "RGB",
+      "sha256": "c30a76b9400bd24890c528fbb56cee697d39a58a5bb282398d5a3400bb37fb7c"
+    },
+    "W9-P5-props/W9-P5-egg-sac-cluster.png": {
+      "size": [
+        244,
+        304
+      ],
+      "mode": "RGB",
+      "sha256": "281b2a8e2a81495959b40651a1988ce2e644869d8f1314cd3f305b1a45f600d7"
+    },
+    "W9-P5-props/W9-P5-metal-rib-arch.png": {
+      "size": [
+        300,
+        304
+      ],
+      "mode": "RGB",
+      "sha256": "c3b2c1559e4b4e52ca4a37c520fa7021d77b1bef7077ea1106fd2d8220c06d26"
+    },
+    "W9-P5-props/W9-P5-acid-pool-1.png": {
+      "size": [
+        244,
+        240
+      ],
+      "mode": "RGB",
+      "sha256": "abe4d5303bc2007c4857d94ccab511d07081783796a911e319766f03da19293a"
+    },
+    "W9-P5-props/W9-P5-acid-pool-2.png": {
+      "size": [
+        234,
+        189
+      ],
+      "mode": "RGB",
+      "sha256": "dff87197c97b7bcb164eb25e185e426d7d266986f4382dfd055337f4cd499094"
+    },
+    "W9-P5-props/W9-P5-bioluminescent-fungi.png": {
+      "size": [
+        124,
+        116
+      ],
+      "mode": "RGB",
+      "sha256": "b545d5e553f44051e08c7641d5a447d264cde5976b7ccaa16d99b2da7d6c3464"
+    },
+    "W9-P5-props/W9-P5-vein-knot.png": {
+      "size": [
+        124,
+        105
+      ],
+      "mode": "RGB",
+      "sha256": "274a22d59edd5a81bd1753a39bc9072193af4465bb25335c4d9a04c955329de0"
+    },
+    "W9-P5-props/W9-P5-small-egg.png": {
+      "size": [
+        100,
+        104
+      ],
+      "mode": "RGB",
+      "sha256": "996d2427dadc1a197404390a8f3259ce3ab6d6c30896a953134196adad86de31"
+    },
+    "W9-P5-props/W9-P5-brood-sac-intact.png": {
+      "size": [
+        194,
+        204
+      ],
+      "mode": "RGB",
+      "sha256": "b0cd748901a974b3c44faaf29859f736d2a6cd8d41c948ded5c1329dcb40388b"
+    },
+    "W9-P5-props/W9-P5-brood-sac-burst.png": {
+      "size": [
+        186,
+        190
+      ],
+      "mode": "RGB",
+      "sha256": "56a091d14d58af7bedf819b6af17ecfd04b487ced54516a42e7da21b14b57fa7"
+    },
+    "W9-P5-props/W9-P5-nest-heart-intact.png": {
+      "size": [
+        188,
+        204
+      ],
+      "mode": "RGB",
+      "sha256": "1937fe74968904590e03708a83f4432a37d989551e892f56f8778189b6fb9f7f"
+    },
+    "W9-P5-props/W9-P5-nest-heart-burst.png": {
+      "size": [
+        208,
+        215
+      ],
+      "mode": "RGB",
+      "sha256": "47585bc0fdf66a4b98829d830ccc3c317855d5e68292c56da4436050269781e6"
+    },
+    "W9-P6-border-pieces-sheet.png": {
+      "size": [
+        1536,
+        1536
+      ],
+      "mode": "RGB",
+      "sha256": "8d58820c74f47666d07d85ca177299401d9546f987b3de0297ca5aefc799107c"
+    },
+    "W9-P6-border-pieces/W9-P6-border-top.png": {
+      "size": [
+        1024,
+        160
+      ],
+      "mode": "RGB",
+      "sha256": "824ee3f42e0d2a3b8930d20405c34ee9cfa6d5104ba37ba8035de41e765b77b2"
+    },
+    "W9-P6-border-pieces/W9-P6-border-bottom.png": {
+      "size": [
+        1024,
+        160
+      ],
+      "mode": "RGB",
+      "sha256": "d22c1b0d204e9e5deb4f04fb5ce9ca36352aaab15f6f2f43e1f16bdac117e2da"
+    },
+    "W9-P6-border-pieces/W9-P6-border-left.png": {
+      "size": [
+        160,
+        1024
+      ],
+      "mode": "RGB",
+      "sha256": "2d98ea6fe2be60e24f4657cf13bc28c6b87c3f81544d66731f97258c0783e946"
+    },
+    "W9-P6-border-pieces/W9-P6-border-right.png": {
+      "size": [
+        160,
+        1024
+      ],
+      "mode": "RGB",
+      "sha256": "f9939d10618931edc73cd69cd73aadec64465bc983917c0651506d831387278f"
+    },
+    "W9-P6-border-pieces/W9-P6-corner-top-left.png": {
+      "size": [
+        256,
+        256
+      ],
+      "mode": "RGB",
+      "sha256": "8198c53fcdeb318926740a2e38ae2ccdc4cdc6694f0025437b2d314036b006a0"
+    },
+    "W9-P6-border-pieces/W9-P6-corner-top-right.png": {
+      "size": [
+        256,
+        256
+      ],
+      "mode": "RGB",
+      "sha256": "43bb74e9c59367ab2114d9d5035d68a9dfe4beea249e6daa89854d007163b48c"
+    },
+    "W9-P6-border-pieces/W9-P6-corner-bottom-left.png": {
+      "size": [
+        256,
+        256
+      ],
+      "mode": "RGB",
+      "sha256": "540e529276630ff2e4c2354ada633129a9a9550d25d2f2995e42df70f365c5ee"
+    },
+    "W9-P6-border-pieces/W9-P6-corner-bottom-right.png": {
+      "size": [
+        256,
+        256
+      ],
+      "mode": "RGB",
+      "sha256": "0994ea744c275b6fe345f5d6ea1bdbab85f0fc6a4d0f498d08282dee74b6b2ff"
+    },
+    "W9-P7-enemies-sheet.png": {
+      "size": [
+        1080,
+        800
+      ],
+      "mode": "RGB",
+      "sha256": "77d0f7bd90af70ae6b69de39ef057de57519ede4f390509c8457e96d2685f5e4"
+    },
+    "W9-P7-enemies/W9-P7-larva.png": {
+      "size": [
+        94,
+        146
+      ],
+      "mode": "RGB",
+      "sha256": "7349479f14d187d10fdf2ee17b216208e306cf0ab4c187e015585c7999bdc134"
+    },
+    "W9-P7-enemies/W9-P7-leech.png": {
+      "size": [
+        129,
+        165
+      ],
+      "mode": "RGB",
+      "sha256": "66abe6420062d5c0676baae798d93c554242d917464d41eddd2d11518d0c022b"
+    },
+    "W9-P7-enemies/W9-P7-spitter.png": {
+      "size": [
+        193,
+        185
+      ],
+      "mode": "RGB",
+      "sha256": "7b31acdb40f845105059a07f405c7f1b98c3364e042f1fa47b762b8351c20121"
+    },
+    "W9-P7-enemies/W9-P7-nest.png": {
+      "size": [
+        277,
+        286
+      ],
+      "mode": "RGB",
+      "sha256": "0e39319a7e0830be59d9fdc052c4ba706b84a73df99bbac67c0a73c06efbb141"
+    },
+    "W9-P7-enemies/W9-P7-brood-sac.png": {
+      "size": [
+        226,
+        305
+      ],
+      "mode": "RGB",
+      "sha256": "983908a8f6978c2cdd21757e9e39216396090e11dd1780093e08612b0c08f46d"
+    },
+    "W9-P7-enemies/W9-P7-carapace-beetle.png": {
+      "size": [
+        312,
+        324
+      ],
+      "mode": "RGB",
+      "sha256": "34c7023e0d2a1f5d9230bd94dad87c69e3423a5784132f53919fb1bb8de85a2b"
+    },
+    "W9-P7-elite-and-shards-sheet.png": {
+      "size": [
+        1200,
+        1800
+      ],
+      "mode": "RGB",
+      "sha256": "f7b11fabc3fe1800e83075b01966a6b98cae42006e2338783a829969b54137f3"
+    },
+    "W9-P7-elite-and-shards/W9-P7-spitter-elite.png": {
+      "size": [
+        294,
+        285
+      ],
+      "mode": "RGB",
+      "sha256": "afdf5a785d211e9cabd43763a72d95457ebf281970d24fa3630ac47eeb0ae5fd"
+    },
+    "W9-P7-elite-and-shards/W9-P7-larva-shard-1.png": {
+      "size": [
+        93,
+        80
+      ],
+      "mode": "RGB",
+      "sha256": "11a4a2bcd9c0b7a8fc92a2ae4856e3e3ac090d409831a1c367dc80d065a80b80"
+    },
+    "W9-P7-elite-and-shards/W9-P7-larva-shard-2.png": {
+      "size": [
+        97,
+        71
+      ],
+      "mode": "RGB",
+      "sha256": "1f2b630ee314aae66b9a6e981ffc16f3ac8e93c7fd3286b06e8eeb8dd06dd55e"
+    },
+    "W9-P7-elite-and-shards/W9-P7-larva-shard-3.png": {
+      "size": [
+        97,
+        77
+      ],
+      "mode": "RGB",
+      "sha256": "59f743f425a2c8865212a1b4243f56c3d50fc94a3face3a082b50ac89b553468"
+    },
+    "W9-P7-elite-and-shards/W9-P7-larva-shard-4.png": {
+      "size": [
+        87,
+        73
+      ],
+      "mode": "RGB",
+      "sha256": "54dec308c27d4ede8e49ccbe7edd5e089a3caa75385a8c5ae787acc9b5596227"
+    },
+    "W9-P7-elite-and-shards/W9-P7-leech-shard-1.png": {
+      "size": [
+        109,
+        88
+      ],
+      "mode": "RGB",
+      "sha256": "f68c62a5f095f0748386c597acbfde88aa77b41897b61b7c431ef03393eb3cff"
+    },
+    "W9-P7-elite-and-shards/W9-P7-leech-shard-2.png": {
+      "size": [
+        92,
+        86
+      ],
+      "mode": "RGB",
+      "sha256": "215f15db6ac217a736e53f4c3604ef78054a64b2b77a0df6e4a71e4fe9580cd2"
+    },
+    "W9-P7-elite-and-shards/W9-P7-leech-shard-3.png": {
+      "size": [
+        102,
+        83
+      ],
+      "mode": "RGB",
+      "sha256": "4b91e659aab3017cc47939ea8c75712684d131734ec2ed6a5cd50e8512657605"
+    },
+    "W9-P7-elite-and-shards/W9-P7-leech-shard-4.png": {
+      "size": [
+        90,
+        72
+      ],
+      "mode": "RGB",
+      "sha256": "cf8f07f5ad90fe24055fddc44bbd57da0e5a2738b075efde64c041206551461b"
+    },
+    "W9-P7-elite-and-shards/W9-P7-spitter-shard-1.png": {
+      "size": [
+        125,
+        105
+      ],
+      "mode": "RGB",
+      "sha256": "a5a208affc24b64ac95feff36416c7abaff9b52debdb38c76f4d3051a5d20c31"
+    },
+    "W9-P7-elite-and-shards/W9-P7-spitter-shard-2.png": {
+      "size": [
+        123,
+        98
+      ],
+      "mode": "RGB",
+      "sha256": "d843817c682fac239be59361fef67195450e6887f281e1de80ef8015bfb3ee34"
+    },
+    "W9-P7-elite-and-shards/W9-P7-spitter-shard-3.png": {
+      "size": [
+        91,
+        90
+      ],
+      "mode": "RGB",
+      "sha256": "ea62eac31e1e8caf367a4802eb3b8abbb9860d64de45b2e71e16dff77fde7cc8"
+    },
+    "W9-P7-elite-and-shards/W9-P7-spitter-shard-4.png": {
+      "size": [
+        103,
+        96
+      ],
+      "mode": "RGB",
+      "sha256": "cc947091c07581feb0306f32b94390f9fe83eeaa25a4e874b2d55bf9108f3746"
+    },
+    "W9-P7-elite-and-shards/W9-P7-nest-shard-1.png": {
+      "size": [
+        181,
+        140
+      ],
+      "mode": "RGB",
+      "sha256": "47e929681c3ad1bb3d6fd8bc52d68fecc2d573cea7ebb85611b21dff6037738e"
+    },
+    "W9-P7-elite-and-shards/W9-P7-nest-shard-2.png": {
+      "size": [
+        153,
+        129
+      ],
+      "mode": "RGB",
+      "sha256": "322d627b4c767a4283a086825e506321be022202ed19c32f27bc4137a4d9de96"
+    },
+    "W9-P7-elite-and-shards/W9-P7-nest-shard-3.png": {
+      "size": [
+        122,
+        126
+      ],
+      "mode": "RGB",
+      "sha256": "c50651dd2a7afcb7a6065ae7f76827cca7bad5f97c49dd382ffb7d13953c39f1"
+    },
+    "W9-P7-elite-and-shards/W9-P7-nest-shard-4.png": {
+      "size": [
+        164,
+        134
+      ],
+      "mode": "RGB",
+      "sha256": "41978158a7b5d06008cf03950dfba88262b55c36c225bc525304eaf1b0253e51"
+    },
+    "W9-P7-elite-and-shards/W9-P7-brood-sac-shard-1.png": {
+      "size": [
+        193,
+        147
+      ],
+      "mode": "RGB",
+      "sha256": "32a816885969878f926d217a0966c5064c87262610cd561994f010fa4b222532"
+    },
+    "W9-P7-elite-and-shards/W9-P7-brood-sac-shard-2.png": {
+      "size": [
+        159,
+        156
+      ],
+      "mode": "RGB",
+      "sha256": "649313fe51dd564fb1ebd043dbdea50120e9faedf5887b0110cd2cd691a69f16"
+    },
+    "W9-P7-elite-and-shards/W9-P7-brood-sac-shard-3.png": {
+      "size": [
+        139,
+        160
+      ],
+      "mode": "RGB",
+      "sha256": "e473c76e3c265c2e222db75324c5ab6785101b8c3f76ad6578f0998bdfc44ada"
+    },
+    "W9-P7-elite-and-shards/W9-P7-brood-sac-shard-4.png": {
+      "size": [
+        156,
+        155
+      ],
+      "mode": "RGB",
+      "sha256": "f11aa6448447e3410728cf527dd5035ba250fdeeea4eb052befdcde713916509"
+    },
+    "W9-P7-elite-and-shards/W9-P7-carapace-beetle-shard-1.png": {
+      "size": [
+        204,
+        190
+      ],
+      "mode": "RGB",
+      "sha256": "9270bf8d72e53d6b13eca5787c2f1a26be81ebb75b00dc97334cf2a16bae5278"
+    },
+    "W9-P7-elite-and-shards/W9-P7-carapace-beetle-shard-2.png": {
+      "size": [
+        180,
+        182
+      ],
+      "mode": "RGB",
+      "sha256": "db61f290a1b3f0f3e742cb2b472ff10a6bffc1a933eac836c4b1fea058c40e7c"
+    },
+    "W9-P7-elite-and-shards/W9-P7-carapace-beetle-shard-3.png": {
+      "size": [
+        196,
+        189
+      ],
+      "mode": "RGB",
+      "sha256": "c73217ee1dd62368134e4fdfca3e37c581c2682a47f320ee8b17bd4350dd1c50"
+    },
+    "W9-P7-elite-and-shards/W9-P7-carapace-beetle-shard-4.png": {
+      "size": [
+        174,
+        170
+      ],
+      "mode": "RGB",
+      "sha256": "254dea8522cb2840c231e2f6c227eb9b3b9084a120d72ec2da766ba46976bfdd"
+    },
+    "W9-P8-brood-matriarch.png": {
+      "size": [
+        1024,
+        1024
+      ],
+      "mode": "RGB",
+      "sha256": "7ab391f93fa7455678a2eab47ddab7a970ccd7c4f1e7c435ecac47a15cbf7bab"
+    },
+    "W9-P8-parts-sheet.png": {
+      "size": [
+        4400,
+        5500
+      ],
+      "mode": "RGB",
+      "sha256": "9de7adc6f86161a514d74bfa07a464a423426f260b5d3dd65fd51ef298d2d372"
+    },
+    "W9-P8-parts/W9-P8-head.png": {
+      "size": [
+        368,
+        374
+      ],
+      "mode": "RGB",
+      "sha256": "d10126ad21a59c88d8538fe6bc182fc4051782866a83dbef33d57be7240c6a77"
+    },
+    "W9-P8-parts/W9-P8-thorax.png": {
+      "size": [
+        316,
+        374
+      ],
+      "mode": "RGB",
+      "sha256": "b1b534a2c2c5c5ff1465f0c50404933334c05743ede3003c3d6afb61d4c31e48"
+    },
+    "W9-P8-parts/W9-P8-abdomen.png": {
+      "size": [
+        378,
+        574
+      ],
+      "mode": "RGB",
+      "sha256": "6dfae9747368209d82e6523fdd0fe75ced478939470bc8a83d875bf956e05660"
+    },
+    "W9-P8-parts/W9-P8-egg-sac-1.png": {
+      "size": [
+        183,
+        204
+      ],
+      "mode": "RGB",
+      "sha256": "12c7440150a9042835ef0ec44347726640ee53919906394e1bb70d9960458209"
+    },
+    "W9-P8-parts/W9-P8-egg-sac-2.png": {
+      "size": [
+        201,
+        204
+      ],
+      "mode": "RGB",
+      "sha256": "fcf259717557b7ad80b0e0599d49315ab1bc1e7073e1bc17a0165c8d0a451804"
+    },
+    "W9-P8-parts/W9-P8-egg-sac-3.png": {
+      "size": [
+        198,
+        204
+      ],
+      "mode": "RGB",
+      "sha256": "5f0768c5fc7822390baed32058d0826bba4c4744426b422f2b248014f8244e32"
+    },
+    "W9-P8-parts/W9-P8-egg-sac-4.png": {
+      "size": [
+        195,
+        204
+      ],
+      "mode": "RGB",
+      "sha256": "3d595237542f277584e73d4278b5d6d07c1e931c083ede08d3c1373fd2590c23"
+    },
+    "W9-P8-parts/W9-P8-leg-1.png": {
+      "size": [
+        504,
+        435
+      ],
+      "mode": "RGB",
+      "sha256": "a8e1dbc79400ea864ecf28ef8b3cfc275d33aebe0672f772566ed600c0ff9e3e"
+    },
+    "W9-P8-parts/W9-P8-leg-2.png": {
+      "size": [
+        504,
+        432
+      ],
+      "mode": "RGB",
+      "sha256": "977d2166a4b2835708f41709cbeb978f3c1658884c622fbfbab437c5bc3eda4c"
+    },
+    "W9-P8-parts/W9-P8-leg-3.png": {
+      "size": [
+        504,
+        436
+      ],
+      "mode": "RGB",
+      "sha256": "5d07a3119ebb8a1c3ca31c2d8db39e7c2c727a0fbbeb140204e587366cfe0c04"
+    },
+    "W9-P8-parts/W9-P8-leg-4.png": {
+      "size": [
+        504,
+        427
+      ],
+      "mode": "RGB",
+      "sha256": "977720248b507b5ffb97936494507b3a642b87f50cc54bde32d4c1d2be7eced8"
+    },
+    "W9-P8-parts/W9-P8-leg-5.png": {
+      "size": [
+        504,
+        415
+      ],
+      "mode": "RGB",
+      "sha256": "17f2a346fb77b5f5fd22728d8bd6f35d7d0c7ba391b9ccc5b9638ebae230bb43"
+    },
+    "W9-P8-parts/W9-P8-leg-6.png": {
+      "size": [
+        504,
+        417
+      ],
+      "mode": "RGB",
+      "sha256": "2a7f667bea1a1ad9ee14fdf832b6d17cd14861729aacb9ab4b57d84f588192e2"
+    },
+    "W9-P8-parts/W9-P8-weak-point-1.png": {
+      "size": [
+        134,
+        134
+      ],
+      "mode": "RGB",
+      "sha256": "e713f0c31b349f8c86bb5fcb5f12ce66ef20cc42017bcb8cd4a85c1644785a9a"
+    },
+    "W9-P8-parts/W9-P8-weak-point-2.png": {
+      "size": [
+        134,
+        132
+      ],
+      "mode": "RGB",
+      "sha256": "4e76dc32f9adb891cb2d44abb80956bd5687ca955f828e69497565d2898b6e70"
+    },
+    "W9-P8-parts/W9-P8-weak-point-3.png": {
+      "size": [
+        134,
+        133
+      ],
+      "mode": "RGB",
+      "sha256": "a3db7d763baa810afede75118152e68217cb83aa488b24bded801c9362abe667"
+    },
+    "W9-P8-parts/W9-P8-weak-point-4.png": {
+      "size": [
+        134,
+        126
+      ],
+      "mode": "RGB",
+      "sha256": "efff57676750359b8e384b0f6968337e55836c634d926f674ba09318572cbb3d"
+    },
+    "elite_scale_ratio": 1.5976331360946745,
+    "border_connections_checked": 8,
+    "parts_assembled_boss_identical": true,
+    "all_expected_files_count": 77,
+    "all_found_png_count": 77
+  },
+  "warnings": [],
+  "visual_review": "separate, required"
+}

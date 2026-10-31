@@ -1,0 +1,428 @@
+{
+  "name": "Brood World",
+  "enemy": [
+    "larva",
+    "leech",
+    "spitter",
+    "nest",
+    "brood-sac",
+    "carapace-beetle"
+  ],
+  "sizes": [
+    26,
+    30,
+    36,
+    56,
+    60,
+    64
+  ],
+  "elite": "spitter",
+  "props": [
+    "nest",
+    "egg-sac-cluster",
+    "metal-rib-arch",
+    "acid-pool-1",
+    "acid-pool-2",
+    "bioluminescent-fungi",
+    "vein-knot",
+    "small-egg",
+    "brood-sac-intact",
+    "brood-sac-burst",
+    "nest-heart-intact",
+    "nest-heart-burst"
+  ],
+  "boss": "brood-matriarch",
+  "parts": [
+    "head",
+    "thorax",
+    "abdomen",
+    "egg-sac-1",
+    "egg-sac-2",
+    "egg-sac-3",
+    "egg-sac-4",
+    "leg-1",
+    "leg-2",
+    "leg-3",
+    "leg-4",
+    "leg-5",
+    "leg-6",
+    "weak-point-1",
+    "weak-point-2",
+    "weak-point-3",
+    "weak-point-4"
+  ],
+  "floor": "tissue-metal",
+  "floor_count": 1,
+  "far_size": null,
+  "far_tile": "not-required",
+  "phases": 1,
+  "constraints": [
+    "No P2: Bible says not needed, membrane pulsing done in game",
+    "Dark MATTE stylized tissue, no blood or gore, no glowing magenta floor",
+    "Two acid pool decals 150-250 px",
+    "Boss armored head and thorax, long abdomen with egg sacs, magenta core"
+  ],
+  "world": 9,
+  "expected_production_png": {
+    "W9-P1-arena-concept.png": {
+      "role": "P1",
+      "size": [
+        941,
+        1672
+      ],
+      "approval_required": true
+    },
+    "W9-P3-floor.png": {
+      "role": "P3",
+      "size": [
+        1024,
+        1024
+      ],
+      "tile": "both",
+      "alpha_required": false
+    },
+    "W9-P4-overlay.png": {
+      "role": "P4",
+      "size": [
+        1024,
+        1024
+      ],
+      "tile": "both",
+      "background": "#000000"
+    },
+    "W9-P5-props-sheet.png": {
+      "role": "P5-sheet",
+      "count": 12
+    },
+    "W9-P5-props/W9-P5-nest.png": {
+      "role": "P5-item"
+    },
+    "W9-P5-props/W9-P5-egg-sac-cluster.png": {
+      "role": "P5-item"
+    },
+    "W9-P5-props/W9-P5-metal-rib-arch.png": {
+      "role": "P5-item"
+    },
+    "W9-P5-props/W9-P5-acid-pool-1.png": {
+      "role": "P5-item"
+    },
+    "W9-P5-props/W9-P5-acid-pool-2.png": {
+      "role": "P5-item"
+    },
+    "W9-P5-props/W9-P5-bioluminescent-fungi.png": {
+      "role": "P5-item"
+    },
+    "W9-P5-props/W9-P5-vein-knot.png": {
+      "role": "P5-item"
+    },
+    "W9-P5-props/W9-P5-small-egg.png": {
+      "role": "P5-item"
+    },
+    "W9-P5-props/W9-P5-brood-sac-intact.png": {
+      "role": "P5-item"
+    },
+    "W9-P5-props/W9-P5-brood-sac-burst.png": {
+      "role": "P5-item"
+    },
+    "W9-P5-props/W9-P5-nest-heart-intact.png": {
+      "role": "P5-item"
+    },
+    "W9-P5-props/W9-P5-nest-heart-burst.png": {
+      "role": "P5-item"
+    },
+    "W9-P6-border-pieces-sheet.png": {
+      "role": "P6-sheet",
+      "count": 8
+    },
+    "W9-P6-border-pieces/W9-P6-border-top.png": {
+      "role": "P6-strip",
+      "size": [
+        1024,
+        160
+      ],
+      "tile": "long-axis"
+    },
+    "W9-P6-border-pieces/W9-P6-border-bottom.png": {
+      "role": "P6-strip",
+      "size": [
+        1024,
+        160
+      ],
+      "tile": "long-axis"
+    },
+    "W9-P6-border-pieces/W9-P6-border-left.png": {
+      "role": "P6-strip",
+      "size": [
+        160,
+        1024
+      ],
+      "tile": "long-axis"
+    },
+    "W9-P6-border-pieces/W9-P6-border-right.png": {
+      "role": "P6-strip",
+      "size": [
+        160,
+        1024
+      ],
+      "tile": "long-axis"
+    },
+    "W9-P6-border-pieces/W9-P6-corner-top-left.png": {
+      "role": "P6-corner",
+      "size": [
+        256,
+        256
+      ]
+    },
+    "W9-P6-border-pieces/W9-P6-corner-top-right.png": {
+      "role": "P6-corner",
+      "size": [
+        256,
+        256
+      ]
+    },
+    "W9-P6-border-pieces/W9-P6-corner-bottom-left.png": {
+      "role": "P6-corner",
+      "size": [
+        256,
+        256
+      ]
+    },
+    "W9-P6-border-pieces/W9-P6-corner-bottom-right.png": {
+      "role": "P6-corner",
+      "size": [
+        256,
+        256
+      ]
+    },
+    "W9-P7-enemies-sheet.png": {
+      "role": "P7-enemies-sheet",
+      "count": 6
+    },
+    "W9-P7-enemies/W9-P7-larva.png": {
+      "role": "P7-enemy",
+      "relative_units": 26,
+      "target_content_max": 122
+    },
+    "W9-P7-enemies/W9-P7-leech.png": {
+      "role": "P7-enemy",
+      "relative_units": 30,
+      "target_content_max": 141
+    },
+    "W9-P7-enemies/W9-P7-spitter.png": {
+      "role": "P7-enemy",
+      "relative_units": 36,
+      "target_content_max": 169
+    },
+    "W9-P7-enemies/W9-P7-nest.png": {
+      "role": "P7-enemy",
+      "relative_units": 56,
+      "target_content_max": 262
+    },
+    "W9-P7-enemies/W9-P7-brood-sac.png": {
+      "role": "P7-enemy",
+      "relative_units": 60,
+      "target_content_max": 281
+    },
+    "W9-P7-enemies/W9-P7-carapace-beetle.png": {
+      "role": "P7-enemy",
+      "relative_units": 64,
+      "target_content_max": 300
+    },
+    "W9-P7-elite-and-shards-sheet.png": {
+      "role": "P7-elite-shards-sheet",
+      "count": 25
+    },
+    "W9-P7-elite-and-shards/W9-P7-spitter-elite.png": {
+      "role": "P7-elite",
+      "scale_vs_normal": 1.6
+    },
+    "W9-P7-elite-and-shards/W9-P7-larva-shard-1.png": {
+      "role": "P7-shard",
+      "enemy": "larva"
+    },
+    "W9-P7-elite-and-shards/W9-P7-larva-shard-2.png": {
+      "role": "P7-shard",
+      "enemy": "larva"
+    },
+    "W9-P7-elite-and-shards/W9-P7-larva-shard-3.png": {
+      "role": "P7-shard",
+      "enemy": "larva"
+    },
+    "W9-P7-elite-and-shards/W9-P7-larva-shard-4.png": {
+      "role": "P7-shard",
+      "enemy": "larva"
+    },
+    "W9-P7-elite-and-shards/W9-P7-leech-shard-1.png": {
+      "role": "P7-shard",
+      "enemy": "leech"
+    },
+    "W9-P7-elite-and-shards/W9-P7-leech-shard-2.png": {
+      "role": "P7-shard",
+      "enemy": "leech"
+    },
+    "W9-P7-elite-and-shards/W9-P7-leech-shard-3.png": {
+      "role": "P7-shard",
+      "enemy": "leech"
+    },
+    "W9-P7-elite-and-shards/W9-P7-leech-shard-4.png": {
+      "role": "P7-shard",
+      "enemy": "leech"
+    },
+    "W9-P7-elite-and-shards/W9-P7-spitter-shard-1.png": {
+      "role": "P7-shard",
+      "enemy": "spitter"
+    },
+    "W9-P7-elite-and-shards/W9-P7-spitter-shard-2.png": {
+      "role": "P7-shard",
+      "enemy": "spitter"
+    },
+    "W9-P7-elite-and-shards/W9-P7-spitter-shard-3.png": {
+      "role": "P7-shard",
+      "enemy": "spitter"
+    },
+    "W9-P7-elite-and-shards/W9-P7-spitter-shard-4.png": {
+      "role": "P7-shard",
+      "enemy": "spitter"
+    },
+    "W9-P7-elite-and-shards/W9-P7-nest-shard-1.png": {
+      "role": "P7-shard",
+      "enemy": "nest"
+    },
+    "W9-P7-elite-and-shards/W9-P7-nest-shard-2.png": {
+      "role": "P7-shard",
+      "enemy": "nest"
+    },
+    "W9-P7-elite-and-shards/W9-P7-nest-shard-3.png": {
+      "role": "P7-shard",
+      "enemy": "nest"
+    },
+    "W9-P7-elite-and-shards/W9-P7-nest-shard-4.png": {
+      "role": "P7-shard",
+      "enemy": "nest"
+    },
+    "W9-P7-elite-and-shards/W9-P7-brood-sac-shard-1.png": {
+      "role": "P7-shard",
+      "enemy": "brood-sac"
+    },
+    "W9-P7-elite-and-shards/W9-P7-brood-sac-shard-2.png": {
+      "role": "P7-shard",
+      "enemy": "brood-sac"
+    },
+    "W9-P7-elite-and-shards/W9-P7-brood-sac-shard-3.png": {
+      "role": "P7-shard",
+      "enemy": "brood-sac"
+    },
+    "W9-P7-elite-and-shards/W9-P7-brood-sac-shard-4.png": {
+      "role": "P7-shard",
+      "enemy": "brood-sac"
+    },
+    "W9-P7-elite-and-shards/W9-P7-carapace-beetle-shard-1.png": {
+      "role": "P7-shard",
+      "enemy": "carapace-beetle"
+    },
+    "W9-P7-elite-and-shards/W9-P7-carapace-beetle-shard-2.png": {
+      "role": "P7-shard",
+      "enemy": "carapace-beetle"
+    },
+    "W9-P7-elite-and-shards/W9-P7-carapace-beetle-shard-3.png": {
+      "role": "P7-shard",
+      "enemy": "carapace-beetle"
+    },
+    "W9-P7-elite-and-shards/W9-P7-carapace-beetle-shard-4.png": {
+      "role": "P7-shard",
+      "enemy": "carapace-beetle"
+    },
+    "W9-P8-brood-matriarch.png": {
+      "role": "P8-boss",
+      "size": [
+        1024,
+        1024
+      ],
+      "phase": 1
+    },
+    "W9-P8-parts-sheet.png": {
+      "role": "P8-sheet",
+      "parts": 17,
+      "assembled_copy": "bottom-right, identical render and scale"
+    },
+    "W9-P8-parts/W9-P8-head.png": {
+      "role": "P8-part"
+    },
+    "W9-P8-parts/W9-P8-thorax.png": {
+      "role": "P8-part"
+    },
+    "W9-P8-parts/W9-P8-abdomen.png": {
+      "role": "P8-part"
+    },
+    "W9-P8-parts/W9-P8-egg-sac-1.png": {
+      "role": "P8-part"
+    },
+    "W9-P8-parts/W9-P8-egg-sac-2.png": {
+      "role": "P8-part"
+    },
+    "W9-P8-parts/W9-P8-egg-sac-3.png": {
+      "role": "P8-part"
+    },
+    "W9-P8-parts/W9-P8-egg-sac-4.png": {
+      "role": "P8-part"
+    },
+    "W9-P8-parts/W9-P8-leg-1.png": {
+      "role": "P8-part"
+    },
+    "W9-P8-parts/W9-P8-leg-2.png": {
+      "role": "P8-part"
+    },
+    "W9-P8-parts/W9-P8-leg-3.png": {
+      "role": "P8-part"
+    },
+    "W9-P8-parts/W9-P8-leg-4.png": {
+      "role": "P8-part"
+    },
+    "W9-P8-parts/W9-P8-leg-5.png": {
+      "role": "P8-part"
+    },
+    "W9-P8-parts/W9-P8-leg-6.png": {
+      "role": "P8-part"
+    },
+    "W9-P8-parts/W9-P8-weak-point-1.png": {
+      "role": "P8-part"
+    },
+    "W9-P8-parts/W9-P8-weak-point-2.png": {
+      "role": "P8-part"
+    },
+    "W9-P8-parts/W9-P8-weak-point-3.png": {
+      "role": "P8-part"
+    },
+    "W9-P8-parts/W9-P8-weak-point-4.png": {
+      "role": "P8-part"
+    }
+  },
+  "order": [
+    "P1-review",
+    "P3",
+    "P4",
+    "P5",
+    "P6",
+    "P7-enemies",
+    "P7-elite-shards",
+    "P8-boss",
+    "P8-parts"
+  ],
+  "delivery_rules": {
+    "zip_size_exclusive_limit": 30000000,
+    "zip_target_limit": 29500000,
+    "preserve_sources": true,
+    "preserve_exact_prompts": true,
+    "qa": [
+      "all sheets and each extracted sprite visually inspected",
+      "exact output dimensions and scaling metadata",
+      "tiles repeated 3x3 (W6 P2 horizontal) and half-shifted",
+      "RGBA ice over ocean (W7)",
+      "all border joins and repeated strips, assembled frame",
+      "CRC, full PNG decode and SHA256 for every archive file",
+      "each delivery file exactly once across split ZIPs",
+      "full boss in parts sheet identical rendering and size",
+      "P1 user approval evidence"
+    ]
+  }
+}
