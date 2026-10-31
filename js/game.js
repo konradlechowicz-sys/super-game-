@@ -105,9 +105,10 @@ export class Game {
     p.crit = (P.targeting || 0) * 0.06;
     p.ignite = (P.thermal || 0) * 0.08;
     p.fireMult = 1 + (P.thermal || 0) * 0.2;
-    const hadShield = !!p.shieldCd;
-    p.shieldCd = P.phase ? 16 - 2 * (P.phase - 1) : 0;
-    if (p.shieldCd && !hadShield) { p.shieldUp = true; p.shieldT = 0; }
+    // the Phase Shield soaks damage before the hull; a new level fills it up
+    const oldShield = p.shieldMax || 0;
+    p.shieldMax = P.phase ? 25 + 10 * (P.phase - 1) : 0;
+    if (p.shieldMax > oldShield) p.shield = p.shieldMax;
   }
 
   addWeapon(id) {
@@ -395,11 +396,13 @@ export class Game {
   hurtPlayer(dmg, src = '?', inv = 0.6) {
     const p = this.player;
     if (p.inv > 0 || this.state !== 'play' || this.app.god) return;
-    if (shieldHit(this)) return;
     // the world's damage level, rising towards the end of the sector
     const T = this.tune;
     dmg *= T.dmg * (1 + T.ramp * this.progress());
     dmg = Math.max(1, dmg - p.armor);
+    // the Phase Shield soaks what it can
+    dmg = shieldHit(this, dmg);
+    if (dmg <= 0) { p.inv = inv; return; }
     p.hp -= dmg;
     (this.dmgLog ||= {})[src] = (this.dmgLog[src] || 0) + dmg;
     // Phoenix Rail (super combo): once a run a lethal hit turns into a firestorm and 30% hull

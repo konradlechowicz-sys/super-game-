@@ -4,7 +4,7 @@
 // - burning ground (Inferno): patches of fire that burn whatever stands in them;
 // - black holes (Singularity Cannon): a slow dark orb that stops and pulls enemies in, hurting them;
 // - beams (Railgun): an instant line through every enemy on it, drawn for a moment;
-// - the ship's Phase Shield: blocks one hit, then recharges.
+// - the ship's Phase Shield: soaks damage before the hull, recharges after a moment without hits.
 // The game keeps the lists (g.holes, g.fires, g.beams) and calls updateArsenal every frame.
 import { TAU, rand } from './util.js';
 
@@ -32,6 +32,32 @@ export function inHole(g, x, y) {
 export function addFire(g, x, y, r, dps, dur) {
   if (g.fires.length >= 40) g.fires.shift();
   g.fires.push({ x, y, r, dps, dur, t: 0, tick: 0 });
+}
+
+// The direction from (x, y) of the beam `len` long and `w` wide that crosses the most enemies: the ways toward the 16
+// nearest enemies are tried. null when nothing is in reach.
+export function bestLine(g, x, y, len, w) {
+  const near = [];
+  for (const e of g.enemies) {
+    if (e.dead || e.spawnT > 0 || e.ghost || e.seg) continue;
+    const d2 = (e.x - x) ** 2 + (e.y - y) ** 2;
+    if (d2 < len * len) near.push([d2, e]);
+  }
+  if (!near.length) return null;
+  near.sort((a, b) => a[0] - b[0]);
+  let best = null, most = 0;
+  for (const [, t] of near.slice(0, 16)) {
+    const a = Math.atan2(t.y - y, t.x - x), c = Math.cos(a), s = Math.sin(a);
+    let n = 0;
+    for (const [, e] of near) {
+      const along = (e.x - x) * c + (e.y - y) * s;
+      if (along < 0) continue;
+      const off = Math.abs((e.y - y) * c - (e.x - x) * s);
+      if (off < w / 2 + e.r) n += e.boss ? 4 : e.elite ? 2 : 1;
+    }
+    if (n > most) { most = n; best = a; }
+  }
+  return best;
 }
 
 // An instant beam from (x, y) along `a`, `len` long and `w` wide: hits every enemy on it once (opt: Game.damage's).
@@ -109,28 +135,35 @@ export function updateArsenal(g, dt) {
   }
   // beams fade
   for (let i = g.beams.length - 1; i >= 0; i--) if ((g.beams[i].t += dt) > g.beams[i].dur) g.beams.splice(i, 1);
-  // the Phase Shield recharges
-  if (p.shieldCd && !p.shieldUp) {
-    p.shieldT -= dt;
-    if (p.shieldT <= 0) { p.shieldUp = true; g.addFx(p.x, p.y, 40, '#7df9ff', 0.3, 2); }
+  // the Phase Shield recharges after SHIELD_WAIT s without a hit: full in SHIELD_FILL s (Bastion Field: 30% faster)
+  if (p.shieldMax && p.shield < p.shieldMax) {
+    const fast = g.combos.has('bastion') ? 1.3 : 1;
+    p.shieldWait = (p.shieldWait || 0) - dt * fast;
+    if (p.shieldWait <= 0) {
+      const was = p.shield;
+      p.shield = Math.min(p.shieldMax, p.shield + (p.shieldMax / SHIELD_FILL) * fast * dt);
+      if (was <= 0 && p.shield > 0) g.addFx(p.x, p.y, 40, '#7df9ff', 0.3, 2);
+    }
   }
 }
 
-// The Phase Shield takes the hit instead of the hull. Returns true when it did.
-export function shieldHit(g) {
+const SHIELD_WAIT = 2.5, SHIELD_FILL = 4;
+
+// The Phase Shield soaks a hit (`dmg` after the world's scaling). Returns what gets through to the hull.
+export function shieldHit(g, dmg) {
   const p = g.player;
-  if (!p.shieldUp) return false;
-  p.shieldUp = false;
-  p.shieldT = p.shieldCd;
-  p.inv = Math.max(p.inv, 0.6);
-  // Bastion Field (perk set): the breaking shield throws enemies back and recharges 30% faster
-  if (g.combos.has('bastion')) {
-    p.shieldT *= 0.7;
-    g.addRing({ x: p.x, y: p.y, max: 210, dmg: 30 * p.dmgMult, dur: 0.35, color: '#7df9ff', knock: 650, follow: true });
+  if (!(p.shield > 0)) return dmg;
+  const soak = Math.min(p.shield, dmg);
+  p.shield -= soak;
+  p.shieldWait = SHIELD_WAIT;
+  g.burst(p.x, p.y, '#7df9ff', 6, 200, 0.3, 4);
+  if (p.shield <= 0) {
+    // broken: Bastion Field (perk set) throws the enemies back
+    if (g.combos.has('bastion')) g.addRing({ x: p.x, y: p.y, max: 210, dmg: 30 * p.dmgMult, dur: 0.35, color: '#7df9ff', knock: 650, follow: true });
+    g.addFx(p.x, p.y, 70, '#7df9ff', 0.4, 4);
+    g.burst(p.x, p.y, '#7df9ff', 18, 260, 0.4, 5);
+    g.text(p.x, p.y - 26, 'SHIELD DOWN', '#7df9ff', true);
+    g.sfx('pulse');
   }
-  g.addFx(p.x, p.y, 70, '#7df9ff', 0.4, 4);
-  g.burst(p.x, p.y, '#7df9ff', 18, 260, 0.4, 5);
-  g.text(p.x, p.y - 26, 'SHIELD', '#7df9ff', true);
-  g.sfx('pulse');
-  return true;
+  return dmg - soak;
 }
