@@ -17,6 +17,8 @@
   The shared set (IC, EL, FX, PU, SH4, UI3-5, ST) came on 2026-10-31: originals in `art/2.0/common`, game textures by
   `proto2/make-common.py` (`ui-...` pictures are for the HTML screens, `js/icons.js`); built in one build per group.
   Change a world's card and its prompts together.
+  Decided by Konrad 2026-11-01: UI1 (image frames) and SH6 (evolved modules) dropped; the interface stays code-drawn,
+  and SH5 weapon modules sit on every ship (`MOUNTS` in `js/v2/renderer.js`, build 134), evolved ones turn gold in code.
 - Sector names of all 10 worlds (6 each, the 6th is the boss): Art Bible tab "Art Bible", table "Nazwy sektorów".
   All world and sector names approved by Konrad (world 1 on 2026-10-28, worlds 2-10 on 2026-10-31; in `js/data.js`). On `v2` the map
   shows all 10 worlds; worlds not built yet were "under construction" (`PLANNED_WORLDS` in `js/data.js`, empty since build 117: story +
