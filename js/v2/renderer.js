@@ -20,6 +20,7 @@ import { makeRedConversion } from './mars.js';
 import { makeFoundryBelt } from './foundry.js';
 import { makeJourney, CFG as JOURNEY } from './journey.js';
 import { stormLevel } from '../crystal.js';
+import { setIconArt } from '../icons.js';
 
 const TAU = Math.PI * 2;
 // enemy types with 2.0 art, and the colour of their glow
@@ -81,13 +82,25 @@ export async function createV2Renderer(app) {
   const script = (src) => new Promise((ok, no) => { const s = document.createElement('script'); s.src = src; s.onload = ok; s.onerror = no; document.head.appendChild(s); });
   await Promise.all((ASSETS.packs || []).map((u) => script(u).catch(() => script(u))));
   for (const pack of Object.values(window.__vbPacks || {})) Object.assign(all, pack);
-  await Promise.all(Object.entries(all).map(async ([name, url]) => {
+  // the interface pictures (ui-..., proto2/make-common.py: icons) are for the HTML screens only (js/icons.js), not
+  // GPU textures
+  setIconArt((key) => all[`ui-${key}`] || null);
+  await Promise.all(Object.entries(all).filter(([name]) => !name.startsWith('ui-')).map(async ([name, url]) => {
     const img = await load(url).catch(() => load(url));
     imgs[name] = img;
-    tex[name] = Texture.from(img);
+    // the effects (fx-..., proto2/make-common.py) are drawn by the canvas layer (js/render-canvas.js), not by PixiJS
+    if (!name.startsWith('fx-')) tex[name] = Texture.from(img);
   }));
+  app.fxArt = (key) => imgs[`fx-${key}`] || null;
   // the 2.0 pictures of the ships for the HTML screens (hangar, sector briefing; js/ui.js paintCanvases)
   app.shipArt = (id) => imgs[`ship-card-${id}`] || null;
+  // the hangar's 3/4 renders (Art Bible UI5; ui-hero-<ship>, 'gold' for the Gold Striker), as pictures for the canvas
+  const heroes = {};
+  app.heroArt = (id) => {
+    if (!all[`ui-hero-${id}`]) return null;
+    if (!heroes[id]) { heroes[id] = new Image(); heroes[id].onload = () => app.ui.paintCanvases?.(document.body); heroes[id].src = all[`ui-hero-${id}`]; }
+    return heroes[id].complete && heroes[id].naturalWidth ? heroes[id] : null;
+  };
 
   const halo = softDot(), halo0 = halo;
   // the 1.x neon sprites (pre-rendered canvases, js/sprites.js) as GPU textures, made once per canvas
@@ -137,6 +150,13 @@ export async function createV2Renderer(app) {
   const weaponR = weaponAdapter(weaponG, (spr, x, y, a, sc, alpha) => { put(weaponSprites.next(), spr, x, y, a, sc).alpha = alpha; });
 
   // a pooled sprite showing one of the 1.x neon sprites
+  // a pooled sprite showing a 2.0 texture `size` px wide
+  function putTex(s, t, x, y, size, rot = 0) {
+    if (s.texture !== t) s.texture = t;
+    s.position.set(x, y); s.rotation = rot; s.alpha = 1;
+    s.scale.set(size / t.width);
+    return s;
+  }
   function put(s, spr, x, y, rot = 0, sc = 1) {
     const t = texOf(spr);
     if (s.texture !== t) s.texture = t;
@@ -147,6 +167,8 @@ export async function createV2Renderer(app) {
   // the three ships: the Striker built from its parts, Phantom and Titan as a body with animated flames
   const makeShips = (scale) => ({
     striker: makeShip(tex, ASSETS.ship, SHIP_H * scale),
+    // the Gold Striker skin: the same parts drawn in gold (Art Bible SH4, proto2/make-common.py)
+    ...(tex['ship-gold-hull'] ? { gold: makeShip(tex, ASSETS.ship, SHIP_H * scale, 'gold-') } : {}),
     phantom: makeBodyShip(tex, 'phantom', ASSETS.ships.phantom, PHANTOM_L * scale),
     titan: makeBodyShip(tex, 'titan', ASSETS.ships.titan, TITAN_L * scale),
   });
@@ -671,9 +693,9 @@ export async function createV2Renderer(app) {
     // the ship the player flies (game.ship: its id, and skinName for the Gold Striker)
     const p = game.player;
     const alive = game.state !== 'dying' && game.state !== 'over';
-    const flying = ships[game.ship.id] || ships.striker;
+    const flying = (game.ship.skinName && ships.gold) || ships[game.ship.id] || ships.striker;
     if (flying !== ship) { ship.body.visible = false; ship = flying; ship.lastFacing = null; }
-    const base = game.ship.skinName ? GOLD : 0xffffff;
+    const base = game.ship.skinName && !ships.gold ? GOLD : 0xffffff;
     ship.body.visible = alive;
     if (alive) {
       let turn = p.facing - (ship.lastFacing ?? p.facing);
@@ -705,8 +727,13 @@ export async function createV2Renderer(app) {
     for (const pl of [lootHalo, loot, shotHalo, shots, sparks, weaponSprites]) pl.begin();
     const t = game.time;
 
-    // mines
-    for (const m of game.mines) if (vis(m)) put(loot.next(), mineSprite(m.pull ? '#b06bff' : '#ffd23d', m.arm <= 0 && Math.sin(t * 12) > 0), m.x, m.y);
+    // mines (ChatGPT's mines, Art Bible FX1, when loaded)
+    const mineT = tex['px-mine'];
+    for (const m of game.mines) {
+      if (!vis(m)) continue;
+      if (mineT) putTex(loot.next(), tex[m.pull ? 'px-gmine' : 'px-mine'], m.x, m.y, 26).alpha = m.arm <= 0 && Math.sin(t * 12) > 0 ? 1 : 0.8;
+      else put(loot.next(), mineSprite(m.pull ? '#b06bff' : '#ffd23d', m.arm <= 0 && Math.sin(t * 12) > 0), m.x, m.y);
+    }
 
     // weapons around the ship (blades, drones, aura), drawn by their own render functions
     weaponG.clear();
@@ -717,30 +744,48 @@ export async function createV2Renderer(app) {
       }
     }
 
-    // gems and pickups, with a slow glowing pulse
+    // gems and pickups, with a slow glowing pulse: ChatGPT's crystals and pickups (Art Bible PU1, pu-...) when loaded
+    const xp = tex['pu-xp-s'];
     for (const g of game.gems) {
       if (!vis(g)) continue;
-      const col = g.v >= 10 ? '#ff4dd8' : g.v >= 3 ? '#3dff8a' : '#2fd2ff';
-      const sc = g.v >= 10 ? 1.4 : g.v >= 3 ? 1.15 : 1;
+      const big = g.v >= 10, mid = g.v >= 3;
+      const col = xp ? (big ? 0xffd23d : 0x3dff8a) : big ? '#ff4dd8' : mid ? '#3dff8a' : '#2fd2ff';
+      const sc = big ? 1.4 : mid ? 1.15 : 1;
       glow(lootHalo, g.x, g.y, col, 34 * sc, 0.28 + 0.1 * Math.sin(t * 5 + g.x * 0.05));
-      put(loot.next(), gemSprite(col), g.x, g.y, 0, sc);
+      if (xp) putTex(loot.next(), tex[big ? 'pu-xp-l' : mid ? 'pu-xp-m' : 'pu-xp-s'], g.x, g.y, 22 * sc);
+      else put(loot.next(), gemSprite(col), g.x, g.y, 0, sc);
     }
     for (const pk of game.pickups) {
       if (!vis(pk)) continue;
       const bob = pk.kind === 'coin' ? 1 : 1 + Math.sin(t * 5) * 0.1;
-      put(loot.next(), pickupSprite(pk.kind), pk.x, pk.y, 0, bob);
+      const pt = tex[`pu-${pk.kind}`];
+      if (pt) putTex(loot.next(), pt, pk.x, pk.y, (pk.kind === 'chest' ? 46 : 32) * bob);
+      else put(loot.next(), pickupSprite(pk.kind), pk.x, pk.y, 0, bob);
     }
 
     // damaging rings (shockwaves of weapons) under the enemies
     ringG.clear();
+    // the canvas layer draws Nova Pulse's rings and the explosions, lightning and sparks with the 2.0 art
+    // (js/render-canvas.js drawEffectsArt) once it is loaded
+    const fxArt = !!app.fxArt?.('boom-small');
     for (const r of game.rings) {
+      if (fxArt && (r.color === '#3dffc8' || r.color === '#e0fff6')) continue;
       const a = 1 - Math.max(0, r.t - r.dur) / 0.15;
       ringG.circle(r.x, r.y, Math.max(1, r.r)).fill({ color: r.color, alpha: 0.15 * a }).stroke({ width: 5, color: r.color, alpha: 0.85 * a });
     }
 
     // player shots and enemy bullets, each with a halo in its colour
+    const pj = tex['px-bolt'];
     for (const pr of game.proj) {
       if (!vis(pr)) continue;
+      // ChatGPT's projectiles (Art Bible FX1): the evolved ones are gold or lighter
+      const pt = pj && PROJ[pr.look]?.(pr.color);
+      if (pt) {
+        const [name, len, halo] = pt;
+        glow(shotHalo, pr.x, pr.y, pr.color, halo, 0.3);
+        putTex(shots.next(), tex[name], pr.x, pr.y, len, pr.a);
+        continue;
+      }
       let spr, size = 26;
       switch (pr.look) {
         case 'bolt': spr = boltSprite(pr.color, 12, 3); break;
@@ -766,11 +811,11 @@ export async function createV2Renderer(app) {
       put(sparks.next(), glowDot(q.color, 8), q.x, q.y, 0, (q.size / 8) * (0.4 + 0.6 * l)).alpha = l;
     }
     fxG.clear();
-    for (const f of game.fx) {
+    if (!fxArt) for (const f of game.fx) {
       const k = f.t / f.dur;
       fxG.circle(f.x, f.y, f.max * (0.2 + 0.8 * Math.sqrt(k))).stroke({ width: f.width * (1 - k) + 1, color: f.color, alpha: (1 - k) * 0.9 });
     }
-    for (const b of game.bolts) {
+    if (!fxArt) for (const b of game.bolts) {
       const a = b.t / 0.2;
       for (const [w, col, al] of [[7, b.color, 0.35], [2, '#ffffff', 1]]) {
         fxG.moveTo(b.pts[0], b.pts[1]);
@@ -790,8 +835,9 @@ export async function createV2Renderer(app) {
 
 // The Striker from its parts (positions from art/2.0/ship/parts/assembly.json), as in proto2/ and the teaser:
 // engine flames that grow with speed and banking wings.
-function makeShip(tex, SHIP, height) {
-  const part = (name) => { const s = new Sprite(tex[`ship-${name}`]); s.anchor.set(0.5); return s; };
+// skin: '' or 'gold-' (the Gold Striker's parts)
+function makeShip(tex, SHIP, height, skin = '') {
+  const part = (name) => { const s = new Sprite(tex[`ship-${skin}${name}`]); s.anchor.set(0.5); return s; };
   const P = SHIP.pos, Z = SHIP.size, k = SHIP.k;
   const at = (key, name) => ({ x: P[key][0] * k + Z[name][0] / 2, y: P[key][1] * k + Z[name][1] / 2 });
   const hullAt = at('hull', 'hull');
@@ -848,6 +894,15 @@ function pool(layer) {
     end() { for (let i = n; i < list.length; i++) list[i].visible = false; },
   };
 }
+
+// The 2.0 projectile textures (px-..., proto2/make-common.py) per shot look: [texture, drawn length, halo size]
+const PROJ = {
+  bolt: () => ['px-bolt', 30, 24],
+  photon: () => ['px-photon', 46, 38],
+  pellet: (c) => [c === '#ffd23d' ? 'px-flak' : 'px-pellet', 22, 18],
+  missile: (c) => [c === '#ffd23d' ? 'px-swarm' : 'px-missile', 36, 30],
+  dronebolt: (c) => [c === '#e4ff7d' ? 'px-squadbolt' : 'px-dronebolt', 24, 18],
+};
 
 // A soft white round glow, tinted per use (halos of shots and gems).
 function softDot() {

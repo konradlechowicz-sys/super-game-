@@ -1,7 +1,13 @@
-// Small neon icons rendered to data URLs for the DOM UI (cards, shop, build list).
+// Small neon icons rendered to data URLs for the DOM UI (cards, shop, build list). In 2.0 the drawn icons from ChatGPT
+// (Art Bible IC1-IC6, proto2/make-common.py) replace them once the 2.0 look has loaded its pictures: callers pass the
+// picture's key (art: w-<weapon>, e-<weapon>, p-<perk>, c-<combo>, pu-heal, pu-coin); the neon icon stays the fallback.
 import { TAU, mix } from './util.js';
 
 const cache = new Map();
+let artOf = () => null;
+export const setIconArt = (fn) => { artOf = fn; };
+// a 2.0 interface picture by key (ui-<key>: screen backgrounds, world tokens), or null before the 2.0 look has loaded
+export const uiArt = (key) => artOf(key);
 
 function stroke(g, color, lw = 4) {
   g.shadowColor = color;
@@ -145,7 +151,9 @@ const DRAW = {
   },
 };
 
-export function icon(name, color, evo = false) {
+export function icon(name, color, evo = false, art = null) {
+  const pic = art && artOf(art);
+  if (pic) return pic;
   const key = `${name}:${color}:${evo}`;
   if (cache.has(key)) return cache.get(key);
   const c = document.createElement('canvas');

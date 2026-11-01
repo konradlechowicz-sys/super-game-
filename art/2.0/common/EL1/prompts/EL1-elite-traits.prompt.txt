@@ -1,0 +1,31 @@
+STYLE (keep identical across all images):
+Game art for "Void Blaster", a top-down mobile space shooter (survivors-
+like).
+Camera: top-down orthographic, looking straight down, no perspective.
+Look: stylized sci-fi with a neon accent. Dark, rich materials (gunmetal, 
+carbon,
+matte ceramic) lit from the top-left, glowing edges and emissive lights only 
+where
+noted. Detail level: high but clean - panel lines, vents, rivets; no grunge 
+overload.
+The background must stay dark and calm so bright game objects read on top of 
+it:
+no bright cyan anywhere (cyan belongs to the player), magenta only as thin 
+traces.
+Rendering: crisp edges, soft bloom on glowing parts only, no motion blur, no 
+depth of
+field, not photorealistic. No text, no logo, no watermark.
+
+TASK: 5 elite trait overlays for enemies, each 256x256 with an EMPTY 
+transparent center
+(any enemy will sit inside it), seen from directly above, on a plain flat 
+black
+background (#000000), well apart, one row:
+1) SWIFT, cyan #2ff3ff: speed streaks and chevrons around a thin ring;
+2) BULWARK, green #3dff8a: a thick hexagonal shield ring with heavy plates;
+3) BERSERKER, red #ff3d3d: a jagged spiked ring with flame-like edges;
+4) COMMANDER, gold #ffd23d: a crown-like ring with small banner tips;
+5) SHIELDED, violet #b06bff: a glowing bubble ring with hexagon cells.
+Then a second row: 5 small badge icons (64x64), one per trait, same colors, 
+simple
+symbols (chevron, shield, fang, crown, hexagon). No text.

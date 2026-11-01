@@ -1,0 +1,32 @@
+STYLE (keep identical across all images):
+Game art for "Void Blaster", a top-down mobile space shooter (survivors-
+like).
+Camera: top-down orthographic, looking straight down, no perspective.
+Look: stylized sci-fi with a neon accent. Dark, rich materials (gunmetal, 
+carbon,
+matte ceramic) lit from the top-left, glowing edges and emissive lights only 
+where
+noted. Detail level: high but clean - panel lines, vents, rivets; no grunge 
+overload.
+The background must stay dark and calm so bright game objects read on top of 
+it:
+no bright cyan anywhere (cyan belongs to the player), magenta only as thin 
+traces.
+Rendering: crisp edges, soft bloom on glowing parts only, no motion blur, no 
+depth of
+field, not photorealistic. No text, no logo, no watermark.
+
+TASK: railgun beam pieces seen from directly above, on plain flat black 
+#000000:
+1) BEAM BODY: a horizontal beam 1024x96 px, pale ice blue #c8f0ff with a 
+white-hot
+   core, TILEABLE along its length (the left and right edges match);
+2) MUZZLE FLASH: a sharp flash where the beam leaves the ship, 256x256, 6 
+frames in a
+   row;
+3) END BLAST: the burst where the beam ends, 256x256, 6 frames in a row;
+4) CHARGE: a small glow gathering before the shot, 128x128, 6 frames in a 
+row.
+Then the same four for the GAUSS LANCE evolution: thicker, with magnetic 
+rings spaced
+along the beam and a faint gold edge. No text.

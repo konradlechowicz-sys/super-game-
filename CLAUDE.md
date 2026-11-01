@@ -14,6 +14,8 @@
   task code, its status and order, old names). Task codes (2026-10-31): `Wn-Pk` worlds, `SH` ships, `EL` elite
   overlays, `FX` effects, `PU` pickups, `IC` icons, `UI` interface, `ST` store art; the code starts the file name and
   Konrad's message. `art/2.0/CHATGPT-BRIEF.md` keeps only the rules and file specs (its tasks A-G are replaced).
+  The shared set (IC, EL, FX, PU, SH4, UI3-5, ST) came on 2026-10-31: originals in `art/2.0/common`, game textures by
+  `proto2/make-common.py` (`ui-...` pictures are for the HTML screens, `js/icons.js`); built in one build per group.
   Change a world's card and its prompts together.
 - Sector names of all 10 worlds (6 each, the 6th is the boss): Art Bible tab "Art Bible", table "Nazwy sektorów".
   All world and sector names approved by Konrad (world 1 on 2026-10-28, worlds 2-10 on 2026-10-31; in `js/data.js`). On `v2` the map

@@ -1,0 +1,1859 @@
+{
+  "projekt": "Void Blaster 2.0",
+  "opis": "Wybrane grafiki i zachowane prompty źródłowe",
+  "zadania": [
+    "IC1",
+    "IC2",
+    "IC3",
+    "IC4",
+    "IC5",
+    "IC6",
+    "EL1",
+    "FX1",
+    "FX2",
+    "FX3",
+    "FX4",
+    "FX5",
+    "FX6",
+    "FX7",
+    "FX8",
+    "FX9",
+    "PU1",
+    "SH4",
+    "UI3",
+    "UI4",
+    "UI5",
+    "ST1",
+    "ST2",
+    "ST3"
+  ],
+  "grafiki": [
+    {
+      "zadanie": "IC1",
+      "plik": "IC1/selected/IC1-arc-coil.png",
+      "szerokosc": 256,
+      "wysokosc": 256,
+      "tryb": "RGB",
+      "bajty": 80227,
+      "sha256": "44a59a37479f8774c53d13dbb580e102ec89dc83b6d38e8a6072f6d697a6cd9b"
+    },
+    {
+      "zadanie": "IC1",
+      "plik": "IC1/selected/IC1-flamethrower.png",
+      "szerokosc": 256,
+      "wysokosc": 256,
+      "tryb": "RGB",
+      "bajty": 67575,
+      "sha256": "cd8070fb423f4871bc07ebb399d40c7292201b824d85ab4dc29a8a5f68fef714"
+    },
+    {
+      "zadanie": "IC1",
+      "plik": "IC1/selected/IC1-nova-pulse.png",
+      "szerokosc": 256,
+      "wysokosc": 256,
+      "tryb": "RGB",
+      "bajty": 82656,
+      "sha256": "4d4752f6b9cf8600bf6f8ccfead82bf3aa8db6fe6d124143f3021276df83bf8e"
+    },
+    {
+      "zadanie": "IC1",
+      "plik": "IC1/selected/IC1-orbit-blades.png",
+      "szerokosc": 256,
+      "wysokosc": 256,
+      "tryb": "RGB",
+      "bajty": 80337,
+      "sha256": "d2119fdc146b517071dd23a65909b52a59f15348e1a9b0c3a1a61aef833f7936"
+    },
+    {
+      "zadanie": "IC1",
+      "plik": "IC1/selected/IC1-proximity-mines.png",
+      "szerokosc": 256,
+      "wysokosc": 256,
+      "tryb": "RGB",
+      "bajty": 75672,
+      "sha256": "18876012f28c506de870f96dcc0d75d429c599942474ce75b8d0d5d399c6d4bd"
+    },
+    {
+      "zadanie": "IC1",
+      "plik": "IC1/selected/IC1-pulse-blaster.png",
+      "szerokosc": 256,
+      "wysokosc": 256,
+      "tryb": "RGB",
+      "bajty": 65686,
+      "sha256": "fb2c40108fc5084bb92507da83a1abb1f7716923d0148b002cf2b1056dd38f5a"
+    },
+    {
+      "zadanie": "IC1",
+      "plik": "IC1/selected/IC1-railgun.png",
+      "szerokosc": 256,
+      "wysokosc": 256,
+      "tryb": "RGB",
+      "bajty": 63446,
+      "sha256": "94b06294fda039cf66f28fea92337429d2c4fffc5bfec15a4a654ae20caaa362"
+    },
+    {
+      "zadanie": "IC1",
+      "plik": "IC1/selected/IC1-scatter-gun.png",
+      "szerokosc": 256,
+      "wysokosc": 256,
+      "tryb": "RGB",
+      "bajty": 75311,
+      "sha256": "5b5bc34e5f566588dfa7df663fe203371d8f9031f3fcf9de2fcb8497a9ef777f"
+    },
+    {
+      "zadanie": "IC1",
+      "plik": "IC1/selected/IC1-seeker-missiles.png",
+      "szerokosc": 256,
+      "wysokosc": 256,
+      "tryb": "RGB",
+      "bajty": 71804,
+      "sha256": "32ba6e339474ee2a8db12c2ee3916778aa9181bbc05f2bf95e316d0f439938fa"
+    },
+    {
+      "zadanie": "IC1",
+      "plik": "IC1/selected/IC1-singularity-cannon.png",
+      "szerokosc": 256,
+      "wysokosc": 256,
+      "tryb": "RGB",
+      "bajty": 87455,
+      "sha256": "120796863b73549b45f3753641743f70f7186d4bdb6cc2fc8cb457ad42e10101"
+    },
+    {
+      "zadanie": "IC1",
+      "plik": "IC1/selected/IC1-weapon-icons-sheet.png",
+      "szerokosc": 1536,
+      "wysokosc": 1024,
+      "tryb": "RGB",
+      "bajty": 1446957,
+      "sha256": "34cd459bd380bfd93b1eb7700ceebff679c22bce87ceeb559215eef071d5d66e"
+    },
+    {
+      "zadanie": "IC1",
+      "plik": "IC1/selected/IC1-wingman-drone.png",
+      "szerokosc": 256,
+      "wysokosc": 256,
+      "tryb": "RGB",
+      "bajty": 73955,
+      "sha256": "920eceb1fd4dc50b04b7b9f9f879bc5593f257edaa273550f821f818075db8a7"
+    },
+    {
+      "zadanie": "IC2",
+      "plik": "IC2/selected/IC2-drone-squadron.png",
+      "szerokosc": 256,
+      "wysokosc": 256,
+      "tryb": "RGB",
+      "bajty": 86265,
+      "sha256": "167ce465b20cd3bac1dfadfd29dc07b8cb28562ec026f86afa49a9cb72f9651b"
+    },
+    {
+      "zadanie": "IC2",
+      "plik": "IC2/selected/IC2-event-horizon.png",
+      "szerokosc": 256,
+      "wysokosc": 256,
+      "tryb": "RGB",
+      "bajty": 106120,
+      "sha256": "4fe62b72f8c6755432d4f01d35a1164faa71f0218ca72e50facf5849a1168d31"
+    },
+    {
+      "zadanie": "IC2",
+      "plik": "IC2/selected/IC2-evolution-icons-sheet.png",
+      "szerokosc": 1536,
+      "wysokosc": 1024,
+      "tryb": "RGB",
+      "bajty": 1783000,
+      "sha256": "993f99a51bd47200b25ac841a5058725a189440c54dca25fa67d2267b582faa9"
+    },
+    {
+      "zadanie": "IC2",
+      "plik": "IC2/selected/IC2-flak-cannon.png",
+      "szerokosc": 256,
+      "wysokosc": 256,
+      "tryb": "RGB",
+      "bajty": 93994,
+      "sha256": "0d9b471c89a23a4a82faf48095fdecc8743b2a551fbee5c60d526e62085e7132"
+    },
+    {
+      "zadanie": "IC2",
+      "plik": "IC2/selected/IC2-gauss-lance.png",
+      "szerokosc": 256,
+      "wysokosc": 256,
+      "tryb": "RGB",
+      "bajty": 83153,
+      "sha256": "4c0b520b4663e2ee2e4a05556f04fda78e5d95e956430347a77b4bb53feebe3d"
+    },
+    {
+      "zadanie": "IC2",
+      "plik": "IC2/selected/IC2-gravity-mines.png",
+      "szerokosc": 256,
+      "wysokosc": 256,
+      "tryb": "RGB",
+      "bajty": 94689,
+      "sha256": "5598d73923517ced340e17ed0ca211c14c298bdab21d8f59b0a2bc386c582f51"
+    },
+    {
+      "zadanie": "IC2",
+      "plik": "IC2/selected/IC2-inferno.png",
+      "szerokosc": 256,
+      "wysokosc": 256,
+      "tryb": "RGB",
+      "bajty": 90086,
+      "sha256": "e7b94b7c386b5dcc2642f9af35b26a4f3b491fed279cae3ad5acc8d6b9a4809e"
+    },
+    {
+      "zadanie": "IC2",
+      "plik": "IC2/selected/IC2-photon-storm.png",
+      "szerokosc": 256,
+      "wysokosc": 256,
+      "tryb": "RGB",
+      "bajty": 84844,
+      "sha256": "adf3481e488c61ce009ea83e56b5d29730c99f96fdab9e1e68c0352e89566c71"
+    },
+    {
+      "zadanie": "IC2",
+      "plik": "IC2/selected/IC2-plasma-halo.png",
+      "szerokosc": 256,
+      "wysokosc": 256,
+      "tryb": "RGB",
+      "bajty": 99792,
+      "sha256": "761e8169fa087bc94ffe81f64099517f0d69c36e668dac3ffb46da1915d3eacc"
+    },
+    {
+      "zadanie": "IC2",
+      "plik": "IC2/selected/IC2-supernova.png",
+      "szerokosc": 256,
+      "wysokosc": 256,
+      "tryb": "RGB",
+      "bajty": 102882,
+      "sha256": "8a2ef0ca8734e69cf1564453cda7e73f9a4eb12b7781b802a062641af501a9aa"
+    },
+    {
+      "zadanie": "IC2",
+      "plik": "IC2/selected/IC2-swarm-barrage.png",
+      "szerokosc": 256,
+      "wysokosc": 256,
+      "tryb": "RGB",
+      "bajty": 93682,
+      "sha256": "ad7149a4ba71858b3f06a526af0e33cb000c9cd3fcdd2d6ebce8beefa32656a9"
+    },
+    {
+      "zadanie": "IC2",
+      "plik": "IC2/selected/IC2-tempest.png",
+      "szerokosc": 256,
+      "wysokosc": 256,
+      "tryb": "RGB",
+      "bajty": 98950,
+      "sha256": "7d265f8549c1bb76abc560c948784140e9a8a6997455a86a132c474f19bd7e0f"
+    },
+    {
+      "zadanie": "IC3",
+      "plik": "IC3/selected/IC3-amplifier.png",
+      "szerokosc": 256,
+      "wysokosc": 256,
+      "tryb": "RGB",
+      "bajty": 97380,
+      "sha256": "b6a69f89adf229bfd01358dc0e0ed321bb29151066f1a55b9ad04b8ee54c0529"
+    },
+    {
+      "zadanie": "IC3",
+      "plik": "IC3/selected/IC3-armor-plating.png",
+      "szerokosc": 256,
+      "wysokosc": 256,
+      "tryb": "RGB",
+      "bajty": 90348,
+      "sha256": "cfb7a5da57ee53a10f4a6bf8680f8265a26be1ef12262ba1106193b8e369a30b"
+    },
+    {
+      "zadanie": "IC3",
+      "plik": "IC3/selected/IC3-overclock.png",
+      "szerokosc": 256,
+      "wysokosc": 256,
+      "tryb": "RGB",
+      "bajty": 90634,
+      "sha256": "5d64e98d24edb0c4e473e2b737ebc6d9db0b98fad56f716ac3dc8aa9466ecd2d"
+    },
+    {
+      "zadanie": "IC3",
+      "plik": "IC3/selected/IC3-perk-icons-sheet.png",
+      "szerokosc": 1536,
+      "wysokosc": 1024,
+      "tryb": "RGB",
+      "bajty": 1668351,
+      "sha256": "f9b6fe66f1b3a1708bbea42170329f4da4bf9ad55515c8615dc8306c2687ae01"
+    },
+    {
+      "zadanie": "IC3",
+      "plik": "IC3/selected/IC3-phase-shield.png",
+      "szerokosc": 256,
+      "wysokosc": 256,
+      "tryb": "RGB",
+      "bajty": 100228,
+      "sha256": "140ad3eced489d60aef2f3c9d82565f4611cfd81d417b3243bce55198fbdcbee"
+    },
+    {
+      "zadanie": "IC3",
+      "plik": "IC3/selected/IC3-power-core.png",
+      "szerokosc": 256,
+      "wysokosc": 256,
+      "tryb": "RGB",
+      "bajty": 93219,
+      "sha256": "f41563af18298a0ae470db05da5fdc1e2b89a5605313e168ad270f555da82ccb"
+    },
+    {
+      "zadanie": "IC3",
+      "plik": "IC3/selected/IC3-targeting-matrix.png",
+      "szerokosc": 256,
+      "wysokosc": 256,
+      "tryb": "RGB",
+      "bajty": 91639,
+      "sha256": "ad98dfc6488aa6ad9c6717ae62df4de89490f650bd556532189bf9b82dc62fa7"
+    },
+    {
+      "zadanie": "IC3",
+      "plik": "IC3/selected/IC3-thermal-core.png",
+      "szerokosc": 256,
+      "wysokosc": 256,
+      "tryb": "RGB",
+      "bajty": 91600,
+      "sha256": "da6fe47af2b7e94f2099505f7f1343e732625cbf71ddebed76fa5abf38cfe9e7"
+    },
+    {
+      "zadanie": "IC3",
+      "plik": "IC3/selected/IC3-thrusters.png",
+      "szerokosc": 256,
+      "wysokosc": 256,
+      "tryb": "RGB",
+      "bajty": 90947,
+      "sha256": "b607de3c6f11a31d427a40dbeba9c6ce35efee20afd7bdb473441428b3515e9d"
+    },
+    {
+      "zadanie": "IC3",
+      "plik": "IC3/selected/IC3-tractor-beam.png",
+      "szerokosc": 256,
+      "wysokosc": 256,
+      "tryb": "RGB",
+      "bajty": 90963,
+      "sha256": "f34ac2fe72156cb9e32a5bac915617475be96d24d32880cb9e74c6d6d43cae12"
+    },
+    {
+      "zadanie": "IC4",
+      "plik": "IC4/selected/IC4-blade-nova.png",
+      "szerokosc": 256,
+      "wysokosc": 256,
+      "tryb": "RGB",
+      "bajty": 93366,
+      "sha256": "d621c140157d726ec1eebc3efd9df9375e60bb2613e541854d55319904b70aad"
+    },
+    {
+      "zadanie": "IC4",
+      "plik": "IC4/selected/IC4-cluster-missiles.png",
+      "szerokosc": 256,
+      "wysokosc": 256,
+      "tryb": "RGB",
+      "bajty": 83963,
+      "sha256": "3af8ba6f61c0d3adae2baa4b8332493fe886686d91c0050c5c575e9d51f36b2f"
+    },
+    {
+      "zadanie": "IC4",
+      "plik": "IC4/selected/IC4-collapse.png",
+      "szerokosc": 256,
+      "wysokosc": 256,
+      "tryb": "RGB",
+      "bajty": 103928,
+      "sha256": "4583b943dc64631d8d4c50fd78f9a209adc987eb07ad486a6630fafc35c4afec"
+    },
+    {
+      "zadanie": "IC4",
+      "plik": "IC4/selected/IC4-fire-blades.png",
+      "szerokosc": 256,
+      "wysokosc": 256,
+      "tryb": "RGB",
+      "bajty": 99747,
+      "sha256": "8efeec388c9c2a72f1f63fcad700cc1b9a7a092a26232067fe249ed925e5ded4"
+    },
+    {
+      "zadanie": "IC4",
+      "plik": "IC4/selected/IC4-gravity-barrage.png",
+      "szerokosc": 256,
+      "wysokosc": 256,
+      "tryb": "RGB",
+      "bajty": 96668,
+      "sha256": "b483b7b39ac4eed21453dc7cc3d7156bc21386f7dc93f02188a93d31cb52e2fe"
+    },
+    {
+      "zadanie": "IC4",
+      "plik": "IC4/selected/IC4-ion-bolts.png",
+      "szerokosc": 256,
+      "wysokosc": 256,
+      "tryb": "RGB",
+      "bajty": 79512,
+      "sha256": "672c55535907e36a6453d6bed63d6644902d25b4603376ff048b6d84099bb96e"
+    },
+    {
+      "zadanie": "IC4",
+      "plik": "IC4/selected/IC4-ion-rail.png",
+      "szerokosc": 256,
+      "wysokosc": 256,
+      "tryb": "RGB",
+      "bajty": 76195,
+      "sha256": "4e738273ae1836912a9af87e04a6efa23a4e2ee662d9480dee27ae00a2d55118"
+    },
+    {
+      "zadanie": "IC4",
+      "plik": "IC4/selected/IC4-minelayer.png",
+      "szerokosc": 256,
+      "wysokosc": 256,
+      "tryb": "RGB",
+      "bajty": 76355,
+      "sha256": "8c49a7808b77438e6db5932b067ed77fb476d597a667a18fdefd289a6e5d98fe"
+    },
+    {
+      "zadanie": "IC4",
+      "plik": "IC4/selected/IC4-napalm-mines.png",
+      "szerokosc": 256,
+      "wysokosc": 256,
+      "tryb": "RGB",
+      "bajty": 83521,
+      "sha256": "662873c69aff24ce3df49dbd61d84d825d572b57753a85804a60517f1f6702a3"
+    },
+    {
+      "zadanie": "IC4",
+      "plik": "IC4/selected/IC4-shrapnel-rail.png",
+      "szerokosc": 256,
+      "wysokosc": 256,
+      "tryb": "RGB",
+      "bajty": 78284,
+      "sha256": "7b7e9f3a433d91052f25e473e01796922bb0bbfa409cd0a8d8f6c4580cb32273"
+    },
+    {
+      "zadanie": "IC4",
+      "plik": "IC4/selected/IC4-storm-mines.png",
+      "szerokosc": 256,
+      "wysokosc": 256,
+      "tryb": "RGB",
+      "bajty": 87771,
+      "sha256": "0b4fcabd5542c8e9eea2c533fac97024c41736bc2605ff336aa1aecb23af2747"
+    },
+    {
+      "zadanie": "IC4",
+      "plik": "IC4/selected/IC4-twin-link.png",
+      "szerokosc": 256,
+      "wysokosc": 256,
+      "tryb": "RGB",
+      "bajty": 83680,
+      "sha256": "50c58ab987fc8d4cb0f1ce0ae6dde242b836b860237a95313fa030c76e9df6cb"
+    },
+    {
+      "zadanie": "IC4",
+      "plik": "IC4/selected/IC4-weapon-combo-icons-sheet.png",
+      "szerokosc": 1124,
+      "wysokosc": 848,
+      "tryb": "RGB",
+      "bajty": 1047576,
+      "sha256": "e055ef09770550ca95761cd6772801a7f6b9c0fd7b540f8f2e2b08a75e128a2d"
+    },
+    {
+      "zadanie": "IC5",
+      "plik": "IC5/selected/IC5-bastion-field.png",
+      "szerokosc": 256,
+      "wysokosc": 256,
+      "tryb": "RGB",
+      "bajty": 123717,
+      "sha256": "ab8a13dd0419d6193b216299147c2e3145b8b263565e9c9bf582b5f9207c5731"
+    },
+    {
+      "zadanie": "IC5",
+      "plik": "IC5/selected/IC5-hit-and-run.png",
+      "szerokosc": 256,
+      "wysokosc": 256,
+      "tryb": "RGB",
+      "bajty": 89829,
+      "sha256": "410c7c5651179e074c16897023963a375010d75a4b5d33adc7dd7f15585b511b"
+    },
+    {
+      "zadanie": "IC5",
+      "plik": "IC5/selected/IC5-last-stand.png",
+      "szerokosc": 256,
+      "wysokosc": 256,
+      "tryb": "RGB",
+      "bajty": 113602,
+      "sha256": "f5555c5a9af94847868b662ba7cd94187f5c25e167209ca4aeb11ff888cc8863"
+    },
+    {
+      "zadanie": "IC5",
+      "plik": "IC5/selected/IC5-overdrive.png",
+      "szerokosc": 256,
+      "wysokosc": 256,
+      "tryb": "RGB",
+      "bajty": 107382,
+      "sha256": "0240fa0ad9eab7d01205ce434e3a531284a5f001fb09bc41ee08c03c9d97aa6e"
+    },
+    {
+      "zadanie": "IC5",
+      "plik": "IC5/selected/IC5-perk-set-icons-sheet.png",
+      "szerokosc": 1536,
+      "wysokosc": 1024,
+      "tryb": "RGB",
+      "bajty": 1815258,
+      "sha256": "2f7a8a3d8a07a7e271151529bb850e03b6ffb650263a3ee182a567ccf300fb46"
+    },
+    {
+      "zadanie": "IC5",
+      "plik": "IC5/selected/IC5-ram-plating.png",
+      "szerokosc": 256,
+      "wysokosc": 256,
+      "tryb": "RGB",
+      "bajty": 111172,
+      "sha256": "868cbf2d45e6a870a173f84de3bdb67653b9f6f8ccd8d1c9b3cb234583a2c405"
+    },
+    {
+      "zadanie": "IC5",
+      "plik": "IC5/selected/IC5-salvage-core.png",
+      "szerokosc": 256,
+      "wysokosc": 256,
+      "tryb": "RGB",
+      "bajty": 104595,
+      "sha256": "a7392588945f8919277adf15ba4504556a53034a5a8690caa876c4ed1fae9c17"
+    },
+    {
+      "zadanie": "IC5",
+      "plik": "IC5/selected/IC5-scorched-trail.png",
+      "szerokosc": 256,
+      "wysokosc": 256,
+      "tryb": "RGB",
+      "bajty": 99294,
+      "sha256": "abb1f0ba0292413d6038472de9f5ebd30033b5bb5b4c22520ec4c69a80bca036"
+    },
+    {
+      "zadanie": "IC5",
+      "plik": "IC5/selected/IC5-singularity.png",
+      "szerokosc": 256,
+      "wysokosc": 256,
+      "tryb": "RGB",
+      "bajty": 109042,
+      "sha256": "44ed06e2866141dae828518f436a12610b9197f545e6e770abec01435cfdcc27"
+    },
+    {
+      "zadanie": "IC6",
+      "plik": "IC6/selected/IC6-phoenix-rail.png",
+      "szerokosc": 256,
+      "wysokosc": 256,
+      "tryb": "RGB",
+      "bajty": 114630,
+      "sha256": "d5bcdbf9cdf9097e7400a6ae1c763cef5decce616332371a1b3148559f81d520"
+    },
+    {
+      "zadanie": "IC6",
+      "plik": "IC6/selected/IC6-super-combo-icons-sheet.png",
+      "szerokosc": 2172,
+      "wysokosc": 724,
+      "tryb": "RGB",
+      "bajty": 1960264,
+      "sha256": "90ab20c509bf737a4251e0ebbae03dddaeef2e51d591881f76b31eadf8b02fc7"
+    },
+    {
+      "zadanie": "IC6",
+      "plik": "IC6/selected/IC6-supernova-core.png",
+      "szerokosc": 256,
+      "wysokosc": 256,
+      "tryb": "RGB",
+      "bajty": 125369,
+      "sha256": "1b9db301c47b5bd0e6915b7026b9beeb467245e3c76fd3c78e6dfdd91c2cafed"
+    },
+    {
+      "zadanie": "IC6",
+      "plik": "IC6/selected/IC6-thunderstorm.png",
+      "szerokosc": 256,
+      "wysokosc": 256,
+      "tryb": "RGB",
+      "bajty": 121488,
+      "sha256": "25e019e96e2265fbbc1d90328dc5230e36bde8e12ea34181a24d3a793409dfb4"
+    },
+    {
+      "zadanie": "EL1",
+      "plik": "EL1/selected/EL1-berserker-badge.png",
+      "szerokosc": 64,
+      "wysokosc": 64,
+      "tryb": "RGBA",
+      "bajty": 6889,
+      "sha256": "af7682d5a14ca69007753012b4ee3bfc6898356fd992eedff8f2ff5d6fe1724d"
+    },
+    {
+      "zadanie": "EL1",
+      "plik": "EL1/selected/EL1-berserker-overlay.png",
+      "szerokosc": 256,
+      "wysokosc": 256,
+      "tryb": "RGBA",
+      "bajty": 82358,
+      "sha256": "e35ca77c17b5683444611e810cfdfaf92b16d467c4481e82c95b4becb61f451f"
+    },
+    {
+      "zadanie": "EL1",
+      "plik": "EL1/selected/EL1-bulwark-badge.png",
+      "szerokosc": 64,
+      "wysokosc": 64,
+      "tryb": "RGBA",
+      "bajty": 7235,
+      "sha256": "8ea3a4517f196f43399bf8680b0ed293a8fc5ad94830f83591b9dfa62012c70d"
+    },
+    {
+      "zadanie": "EL1",
+      "plik": "EL1/selected/EL1-bulwark-overlay.png",
+      "szerokosc": 256,
+      "wysokosc": 256,
+      "tryb": "RGBA",
+      "bajty": 97931,
+      "sha256": "efd5d58bcb0df6705207c32ccc5a99a6cf2d1c9c6ca21eb4d06edf9a5dd2997d"
+    },
+    {
+      "zadanie": "EL1",
+      "plik": "EL1/selected/EL1-commander-badge.png",
+      "szerokosc": 64,
+      "wysokosc": 64,
+      "tryb": "RGBA",
+      "bajty": 7037,
+      "sha256": "e3f370cedb8697a0bd58f8bc852766de30433e719f0f87d1e03c74c3e93d4969"
+    },
+    {
+      "zadanie": "EL1",
+      "plik": "EL1/selected/EL1-commander-overlay.png",
+      "szerokosc": 256,
+      "wysokosc": 256,
+      "tryb": "RGBA",
+      "bajty": 76456,
+      "sha256": "58b1c0655f6bfa99039d26ecdf6d5fe874ad1a73c1ba166bb0db2ff8a1eb36b8"
+    },
+    {
+      "zadanie": "EL1",
+      "plik": "EL1/selected/EL1-elite-overlays-and-badges-sheet.png",
+      "szerokosc": 1280,
+      "wysokosc": 320,
+      "tryb": "RGB",
+      "bajty": 340484,
+      "sha256": "5c0cbf0dbb6166de2cd9cac7d0ea00a55a8e1d692484978f6c47a8d754e963c8"
+    },
+    {
+      "zadanie": "EL1",
+      "plik": "EL1/selected/EL1-shielded-badge.png",
+      "szerokosc": 64,
+      "wysokosc": 64,
+      "tryb": "RGBA",
+      "bajty": 7457,
+      "sha256": "7769ee4d92c3445c6ac819fe7637ec9cf0c388698f9b5d29d321f0eeb037e586"
+    },
+    {
+      "zadanie": "EL1",
+      "plik": "EL1/selected/EL1-shielded-overlay.png",
+      "szerokosc": 256,
+      "wysokosc": 256,
+      "tryb": "RGBA",
+      "bajty": 83991,
+      "sha256": "cf6e41ec4edc3010e43797388bcfe4b9b90fea0d5eae801ec871a65d59132bfc"
+    },
+    {
+      "zadanie": "EL1",
+      "plik": "EL1/selected/EL1-swift-badge.png",
+      "szerokosc": 64,
+      "wysokosc": 64,
+      "tryb": "RGBA",
+      "bajty": 6770,
+      "sha256": "3e1c9d2b49385e1a7d34c901a7f153d5bf2c3309b4a8cfb9119caea5dad6fa7d"
+    },
+    {
+      "zadanie": "EL1",
+      "plik": "EL1/selected/EL1-swift-overlay.png",
+      "szerokosc": 256,
+      "wysokosc": 256,
+      "tryb": "RGBA",
+      "bajty": 76728,
+      "sha256": "c4214cb52e1d4f9dc6709ec850885b4037e4eaadd31b49fcc7e06351f0a48f2e"
+    },
+    {
+      "zadanie": "FX1",
+      "plik": "FX1/selected/FX1-arc-coil-spark.png",
+      "szerokosc": 256,
+      "wysokosc": 128,
+      "tryb": "RGB",
+      "bajty": 19875,
+      "sha256": "d71dc3156534197c9fffe44a59ed3e7e76046714f5c714d253ab178526abf39a"
+    },
+    {
+      "zadanie": "FX1",
+      "plik": "FX1/selected/FX1-drone-squadron-bolt.png",
+      "szerokosc": 256,
+      "wysokosc": 128,
+      "tryb": "RGB",
+      "bajty": 16489,
+      "sha256": "01a3271ff780c3e7212e364225f8302f50f39c7690fbed54785373339f28dd5c"
+    },
+    {
+      "zadanie": "FX1",
+      "plik": "FX1/selected/FX1-event-horizon-orb.png",
+      "szerokosc": 256,
+      "wysokosc": 128,
+      "tryb": "RGB",
+      "bajty": 40432,
+      "sha256": "7687edc16ea5802d54b164ac64c1ab8d9a9794893a46ca0f841082ad204c566e"
+    },
+    {
+      "zadanie": "FX1",
+      "plik": "FX1/selected/FX1-flak-cannon.png",
+      "szerokosc": 256,
+      "wysokosc": 128,
+      "tryb": "RGB",
+      "bajty": 18950,
+      "sha256": "200df79fd2f933c37246ef1ffa897a975f4ce7cec66263ead675d05af421dddf"
+    },
+    {
+      "zadanie": "FX1",
+      "plik": "FX1/selected/FX1-flamethrower-blob.png",
+      "szerokosc": 256,
+      "wysokosc": 128,
+      "tryb": "RGB",
+      "bajty": 21895,
+      "sha256": "ac5afdf8c68e1b5f888fd7743200e64b7dc1c621533a91f57ce391402550c3dd"
+    },
+    {
+      "zadanie": "FX1",
+      "plik": "FX1/selected/FX1-gauss-lance-slug.png",
+      "szerokosc": 256,
+      "wysokosc": 128,
+      "tryb": "RGB",
+      "bajty": 25764,
+      "sha256": "2f209dbc609af7da70a736922e1cb423d925a0dcb7eac89470d95bf435ad4278"
+    },
+    {
+      "zadanie": "FX1",
+      "plik": "FX1/selected/FX1-gravity-mine.png",
+      "szerokosc": 256,
+      "wysokosc": 128,
+      "tryb": "RGB",
+      "bajty": 29223,
+      "sha256": "916c4996a2a313afc7d9d3599213992c60f185b78bd238b80957c27de5a55a5b"
+    },
+    {
+      "zadanie": "FX1",
+      "plik": "FX1/selected/FX1-inferno-blob.png",
+      "szerokosc": 256,
+      "wysokosc": 128,
+      "tryb": "RGB",
+      "bajty": 30475,
+      "sha256": "398baa8aa4ce5fad4c0e353acfbd1197e2cf9551a9b32a5482f43982470c066c"
+    },
+    {
+      "zadanie": "FX1",
+      "plik": "FX1/selected/FX1-nova-pulse-wave.png",
+      "szerokosc": 256,
+      "wysokosc": 128,
+      "tryb": "RGB",
+      "bajty": 23504,
+      "sha256": "a6182c53a0d476be1acfad845dad96f45e74affe764ae7e2ff1ac30ceeb1dc01"
+    },
+    {
+      "zadanie": "FX1",
+      "plik": "FX1/selected/FX1-orbit-blade.png",
+      "szerokosc": 256,
+      "wysokosc": 128,
+      "tryb": "RGB",
+      "bajty": 28324,
+      "sha256": "4ac67bf542f1a91f4c7b14a5f47f484c54e6fc46f5832441fe88e827cfb16565"
+    },
+    {
+      "zadanie": "FX1",
+      "plik": "FX1/selected/FX1-photon-storm.png",
+      "szerokosc": 256,
+      "wysokosc": 128,
+      "tryb": "RGB",
+      "bajty": 19307,
+      "sha256": "e41c84be2d4d15595694643347b6948f3029cf7f25aaa71f00a9a9a7eef91e27"
+    },
+    {
+      "zadanie": "FX1",
+      "plik": "FX1/selected/FX1-plasma-halo.png",
+      "szerokosc": 256,
+      "wysokosc": 128,
+      "tryb": "RGB",
+      "bajty": 30951,
+      "sha256": "5e09504a142148fdcdfe6c8ccc155236051599bc056b337ad7532a2cd913db3d"
+    },
+    {
+      "zadanie": "FX1",
+      "plik": "FX1/selected/FX1-projectiles-sheet.png",
+      "szerokosc": 2816,
+      "wysokosc": 256,
+      "tryb": "RGB",
+      "bajty": 510717,
+      "sha256": "f52510df60fe7c394026b1213c547606272396879022784c0eaacbdb4c181b24"
+    },
+    {
+      "zadanie": "FX1",
+      "plik": "FX1/selected/FX1-proximity-mine.png",
+      "szerokosc": 256,
+      "wysokosc": 128,
+      "tryb": "RGB",
+      "bajty": 20597,
+      "sha256": "7a5e156ca9d3349c40dc7fe0890d813f0f8604d7594638d3fbcb0a50f606da98"
+    },
+    {
+      "zadanie": "FX1",
+      "plik": "FX1/selected/FX1-pulse-blaster.png",
+      "szerokosc": 256,
+      "wysokosc": 128,
+      "tryb": "RGB",
+      "bajty": 19778,
+      "sha256": "9c5800d6f6c5073b8d999fba8ea95ed4e64856ecc32ee9a075fd8fd81a57eeb7"
+    },
+    {
+      "zadanie": "FX1",
+      "plik": "FX1/selected/FX1-railgun-slug.png",
+      "szerokosc": 256,
+      "wysokosc": 128,
+      "tryb": "RGB",
+      "bajty": 13944,
+      "sha256": "d5a041fab69f1a5d5dbe3361aa4c0fec3ba0b2b45f6c55fbf377b3afa85b4978"
+    },
+    {
+      "zadanie": "FX1",
+      "plik": "FX1/selected/FX1-scatter-gun.png",
+      "szerokosc": 256,
+      "wysokosc": 128,
+      "tryb": "RGB",
+      "bajty": 17046,
+      "sha256": "f70cbb7227f48e6c27e37fec36e47a38eb20f50d5253a97051bf9e5e0eb2c4b8"
+    },
+    {
+      "zadanie": "FX1",
+      "plik": "FX1/selected/FX1-seeker-missile.png",
+      "szerokosc": 256,
+      "wysokosc": 128,
+      "tryb": "RGB",
+      "bajty": 21087,
+      "sha256": "47245464d25c2e66b3fd48ae947e9d6b5b1f7909f961b578d95e85a0fcbbad5e"
+    },
+    {
+      "zadanie": "FX1",
+      "plik": "FX1/selected/FX1-singularity-orb.png",
+      "szerokosc": 256,
+      "wysokosc": 128,
+      "tryb": "RGB",
+      "bajty": 20330,
+      "sha256": "50c806f97e6552d87bf1fb83a0d4d4f07acab1d04214916e0775ce2a943d9da0"
+    },
+    {
+      "zadanie": "FX1",
+      "plik": "FX1/selected/FX1-supernova-wave.png",
+      "szerokosc": 256,
+      "wysokosc": 128,
+      "tryb": "RGB",
+      "bajty": 30595,
+      "sha256": "f53ce1b338665c8dfe0bffd1b6df7e05e3535a2cdf700d490f30b0ab93f0dff2"
+    },
+    {
+      "zadanie": "FX1",
+      "plik": "FX1/selected/FX1-swarm-barrage.png",
+      "szerokosc": 256,
+      "wysokosc": 128,
+      "tryb": "RGB",
+      "bajty": 18552,
+      "sha256": "4e4da1072cfa1636bf2dfa2e9725af711049a91ffc2c0df88dbbbda57ac798a8"
+    },
+    {
+      "zadanie": "FX1",
+      "plik": "FX1/selected/FX1-tempest-spark.png",
+      "szerokosc": 256,
+      "wysokosc": 128,
+      "tryb": "RGB",
+      "bajty": 22646,
+      "sha256": "3df257c1584bad52abf219ec3628e8c21a8d938eae3de38feca74e65d1646658"
+    },
+    {
+      "zadanie": "FX1",
+      "plik": "FX1/selected/FX1-wingman-drone-bolt.png",
+      "szerokosc": 256,
+      "wysokosc": 128,
+      "tryb": "RGB",
+      "bajty": 15251,
+      "sha256": "7ac46129d674ff45cb6d981f206a5f1378d792deff694f6b3485deebae6730c3"
+    },
+    {
+      "zadanie": "FX2",
+      "plik": "FX2/selected/FX2-hit-cyan-8frames.png",
+      "szerokosc": 1024,
+      "wysokosc": 128,
+      "tryb": "RGB",
+      "bajty": 72751,
+      "sha256": "108bed3bf5dc54bf7466019876d8f7b3099fececeeb4a927f976580eaaeea1b9"
+    },
+    {
+      "zadanie": "FX2",
+      "plik": "FX2/selected/FX2-hit-dark-violet-8frames.png",
+      "szerokosc": 1024,
+      "wysokosc": 128,
+      "tryb": "RGB",
+      "bajty": 78595,
+      "sha256": "46fa9cfc51c6de66768e9e879dbd6ece8ba87e51644dd75a5132817eb775d14f"
+    },
+    {
+      "zadanie": "FX2",
+      "plik": "FX2/selected/FX2-hit-electric-blue-8frames.png",
+      "szerokosc": 1024,
+      "wysokosc": 128,
+      "tryb": "RGB",
+      "bajty": 72034,
+      "sha256": "7240561818aa6966a8c5efc926e658b73aed4d7b40ac57996c2217954b70a766"
+    },
+    {
+      "zadanie": "FX2",
+      "plik": "FX2/selected/FX2-hit-fire-orange-8frames.png",
+      "szerokosc": 1024,
+      "wysokosc": 128,
+      "tryb": "RGB",
+      "bajty": 71874,
+      "sha256": "1267ab7a644e5d9a573b86a4086cadd8518fe7120bffc9a2a07452e4ed20173b"
+    },
+    {
+      "zadanie": "FX2",
+      "plik": "FX2/selected/FX2-hit-gold-8frames.png",
+      "szerokosc": 1024,
+      "wysokosc": 128,
+      "tryb": "RGB",
+      "bajty": 71715,
+      "sha256": "8dd88c288888daaf828405f35e59f9ba716c645cbba2d33940df3325d2a1b1ba"
+    },
+    {
+      "zadanie": "FX2",
+      "plik": "FX2/selected/FX2-hit-green-8frames.png",
+      "szerokosc": 1024,
+      "wysokosc": 128,
+      "tryb": "RGB",
+      "bajty": 73206,
+      "sha256": "acc807088e5f1eebd882d5f1140676fe37482d392ab6bca040a2ffb9e7413c9c"
+    },
+    {
+      "zadanie": "FX2",
+      "plik": "FX2/selected/FX2-hit-orange-8frames.png",
+      "szerokosc": 1024,
+      "wysokosc": 128,
+      "tryb": "RGB",
+      "bajty": 73721,
+      "sha256": "4442417be584d095dd9a5e4301571047859cd79100b9e86fcf654055a33d545b"
+    },
+    {
+      "zadanie": "FX2",
+      "plik": "FX2/selected/FX2-hit-red-pink-8frames.png",
+      "szerokosc": 1024,
+      "wysokosc": 128,
+      "tryb": "RGB",
+      "bajty": 78187,
+      "sha256": "b2c3313644552088f11f51f7b115c9b574dfc59ab9aa79766a88a26828ce58fb"
+    },
+    {
+      "zadanie": "FX2",
+      "plik": "FX2/selected/FX2-hit-teal-8frames.png",
+      "szerokosc": 1024,
+      "wysokosc": 128,
+      "tryb": "RGB",
+      "bajty": 71624,
+      "sha256": "69fe0a666276b1a113dda23d8ec209f9325fc3a5ef351e727c74fce0e0b12b26"
+    },
+    {
+      "zadanie": "FX2",
+      "plik": "FX2/selected/FX2-hit-violet-8frames.png",
+      "szerokosc": 1024,
+      "wysokosc": 128,
+      "tryb": "RGB",
+      "bajty": 79091,
+      "sha256": "6925ad2658256bc3cea801cc7449909e280eabe0ed2445f19d3d12be8c543d6c"
+    },
+    {
+      "zadanie": "FX2",
+      "plik": "FX2/selected/FX2-hit-white-blue-8frames.png",
+      "szerokosc": 1024,
+      "wysokosc": 128,
+      "tryb": "RGB",
+      "bajty": 71283,
+      "sha256": "50d683998c6aae8831fe86ee46dda6adbc72a47fa5b6427c8d8d29ac6e218720"
+    },
+    {
+      "zadanie": "FX3",
+      "plik": "FX3/selected/FX3-large-explosion-8frames.png",
+      "szerokosc": 4096,
+      "wysokosc": 512,
+      "tryb": "RGB",
+      "bajty": 1862211,
+      "sha256": "4c204b78c3c3a1e6a7e288009b921a1a4e59d48eee65a18ce8ca0501b7d42eda"
+    },
+    {
+      "zadanie": "FX3",
+      "plik": "FX3/selected/FX3-medium-explosion-8frames.png",
+      "szerokosc": 3072,
+      "wysokosc": 384,
+      "tryb": "RGB",
+      "bajty": 1032670,
+      "sha256": "742fb9e5f7a9d98eeae623f5f453242e8d8094285f0da29cff9f490fe20644f8"
+    },
+    {
+      "zadanie": "FX3",
+      "plik": "FX3/selected/FX3-small-explosion-8frames.png",
+      "szerokosc": 2048,
+      "wysokosc": 256,
+      "tryb": "RGB",
+      "bajty": 454719,
+      "sha256": "fa41e30db91210d609287069c38c230d61ecbb3ca82fabce54adc44e5ebf593c"
+    },
+    {
+      "zadanie": "FX4",
+      "plik": "FX4/selected/FX4-arc-coil-lightning-1.png",
+      "szerokosc": 512,
+      "wysokosc": 64,
+      "tryb": "RGB",
+      "bajty": 19091,
+      "sha256": "553f0aca28766d71c2d0c276dbca1bd44aa29fb2f1748f16c72aae2425ef0d09"
+    },
+    {
+      "zadanie": "FX4",
+      "plik": "FX4/selected/FX4-arc-coil-lightning-2.png",
+      "szerokosc": 512,
+      "wysokosc": 64,
+      "tryb": "RGB",
+      "bajty": 20122,
+      "sha256": "9a34d74c62b9ef8eeef3706564e9b0182270d9efb8ab2f1908de8110de3da873"
+    },
+    {
+      "zadanie": "FX4",
+      "plik": "FX4/selected/FX4-arc-coil-lightning-3.png",
+      "szerokosc": 512,
+      "wysokosc": 64,
+      "tryb": "RGB",
+      "bajty": 20359,
+      "sha256": "8ec85507d8acf9948f909ec060808275952da7d2b381dd0d0e7a4dad0ed4079c"
+    },
+    {
+      "zadanie": "FX4",
+      "plik": "FX4/selected/FX4-arc-coil-lightning-4.png",
+      "szerokosc": 512,
+      "wysokosc": 64,
+      "tryb": "RGB",
+      "bajty": 20187,
+      "sha256": "ee11e1fdf85cfbbfb50549f4df76d13ac8a2a8b76c76d4b00bdca9d26bbeab1c"
+    },
+    {
+      "zadanie": "FX4",
+      "plik": "FX4/selected/FX4-arc-coil-lightning-5.png",
+      "szerokosc": 512,
+      "wysokosc": 64,
+      "tryb": "RGB",
+      "bajty": 21321,
+      "sha256": "738efb8f4fdbe0aa9d37e8661f9ee5d98864de187563dfcfd0b175af2d64d97a"
+    },
+    {
+      "zadanie": "FX4",
+      "plik": "FX4/selected/FX4-arc-coil-lightning-6.png",
+      "szerokosc": 512,
+      "wysokosc": 64,
+      "tryb": "RGB",
+      "bajty": 20087,
+      "sha256": "541710eaecc29b56e9d2bfd34f73602b76c44ceaa2548ea7f48ccaf828d9c925"
+    },
+    {
+      "zadanie": "FX4",
+      "plik": "FX4/selected/FX4-lightning-variants-sheet.png",
+      "szerokosc": 512,
+      "wysokosc": 768,
+      "tryb": "RGB",
+      "bajty": 251139,
+      "sha256": "2f0297c2d37ddf90e0a9d09fee73eaa2005570cc8cea9efc4a1dd3f3366de0cc"
+    },
+    {
+      "zadanie": "FX4",
+      "plik": "FX4/selected/FX4-tempest-lightning-1.png",
+      "szerokosc": 512,
+      "wysokosc": 64,
+      "tryb": "RGB",
+      "bajty": 23748,
+      "sha256": "f6c144238fabeb5f0bebce93099feecf9e043d448e6f575d90425f4293da9f8e"
+    },
+    {
+      "zadanie": "FX4",
+      "plik": "FX4/selected/FX4-tempest-lightning-2.png",
+      "szerokosc": 512,
+      "wysokosc": 64,
+      "tryb": "RGB",
+      "bajty": 24987,
+      "sha256": "f5800ff53f4ce92a6b26148342896935fdcce745a4a989ba7ed10ee2d6a2d479"
+    },
+    {
+      "zadanie": "FX4",
+      "plik": "FX4/selected/FX4-tempest-lightning-3.png",
+      "szerokosc": 512,
+      "wysokosc": 64,
+      "tryb": "RGB",
+      "bajty": 22489,
+      "sha256": "0fb0967c6de5819c6aa0d067eae53488d947bb357570fd99f7f5533e63af8e71"
+    },
+    {
+      "zadanie": "FX4",
+      "plik": "FX4/selected/FX4-tempest-lightning-4.png",
+      "szerokosc": 512,
+      "wysokosc": 64,
+      "tryb": "RGB",
+      "bajty": 24676,
+      "sha256": "7aee60bc0e0056617b93f393589df83c431e90c68b8974c5f94a073de80a604c"
+    },
+    {
+      "zadanie": "FX4",
+      "plik": "FX4/selected/FX4-tempest-lightning-5.png",
+      "szerokosc": 512,
+      "wysokosc": 64,
+      "tryb": "RGB",
+      "bajty": 24277,
+      "sha256": "69ead3c19a03730894c029f697f54c196985f0856998f5dfc5dd062ef0c11906"
+    },
+    {
+      "zadanie": "FX4",
+      "plik": "FX4/selected/FX4-tempest-lightning-6.png",
+      "szerokosc": 512,
+      "wysokosc": 64,
+      "tryb": "RGB",
+      "bajty": 23546,
+      "sha256": "2623662fcf6e44ed15552ccce32508593380f7e435bcc1cfdc12c91059e1b587"
+    },
+    {
+      "zadanie": "FX5",
+      "plik": "FX5/selected/FX5-burn-8frames.png",
+      "szerokosc": 1024,
+      "wysokosc": 128,
+      "tryb": "RGB",
+      "bajty": 101941,
+      "sha256": "cbc2a2ab096e1f6d4620a24c804e471b595ffb8e39d8e529f65c2c909b052866"
+    },
+    {
+      "zadanie": "FX5",
+      "plik": "FX5/selected/FX5-burning-ground-8frames.png",
+      "szerokosc": 2048,
+      "wysokosc": 256,
+      "tryb": "RGB",
+      "bajty": 458747,
+      "sha256": "397a7025b3d6f9f7d3a7f106665f12142c7511328ed8428b4c6226438e614ea8"
+    },
+    {
+      "zadanie": "FX5",
+      "plik": "FX5/selected/FX5-flame-cone-8frames.png",
+      "szerokosc": 4096,
+      "wysokosc": 256,
+      "tryb": "RGB",
+      "bajty": 830416,
+      "sha256": "0ef7b24169e61627d39c04b198941d3952e82dce846c211a81295c55fb07ce19"
+    },
+    {
+      "zadanie": "FX5",
+      "plik": "FX5/selected/FX5-inferno-burn-8frames.png",
+      "szerokosc": 1024,
+      "wysokosc": 128,
+      "tryb": "RGB",
+      "bajty": 111859,
+      "sha256": "2c43c8e5862524a5b4d4180a2307e4b48623d6c1e09e7b357e0a7b661498d6d6"
+    },
+    {
+      "zadanie": "FX5",
+      "plik": "FX5/selected/FX5-inferno-burning-ground-8frames.png",
+      "szerokosc": 2048,
+      "wysokosc": 256,
+      "tryb": "RGB",
+      "bajty": 483769,
+      "sha256": "4782c3732108913170de6185a77d8b1dd63f6783bbdb4b62d539a40bbeedac00"
+    },
+    {
+      "zadanie": "FX5",
+      "plik": "FX5/selected/FX5-inferno-flame-cone-8frames.png",
+      "szerokosc": 4096,
+      "wysokosc": 256,
+      "tryb": "RGB",
+      "bajty": 920740,
+      "sha256": "3ca86a263171449aa2902fca5a25956f9eefff6c5ee9e398c035406c0abfb2ab"
+    },
+    {
+      "zadanie": "FX6",
+      "plik": "FX6/selected/FX6-black-hole-8frames.png",
+      "szerokosc": 2048,
+      "wysokosc": 256,
+      "tryb": "RGB",
+      "bajty": 653936,
+      "sha256": "e39758e1e05d60e233f9bc0f415e414682d712d4f89211423896e1b65983dcf9"
+    },
+    {
+      "zadanie": "FX6",
+      "plik": "FX6/selected/FX6-collapse-8frames.png",
+      "szerokosc": 3072,
+      "wysokosc": 384,
+      "tryb": "RGB",
+      "bajty": 1214683,
+      "sha256": "e4675954792fd12a2d3700c8dbd1104db57cd50754c5efbd0c87ccf5b1c573c2"
+    },
+    {
+      "zadanie": "FX6",
+      "plik": "FX6/selected/FX6-event-horizon-black-hole-8frames.png",
+      "szerokosc": 2048,
+      "wysokosc": 256,
+      "tryb": "RGB",
+      "bajty": 719208,
+      "sha256": "5fd00c23fd5dbee92859d2372b0bc20a6bb1dd821304c14e84fcbba909184979"
+    },
+    {
+      "zadanie": "FX6",
+      "plik": "FX6/selected/FX6-event-horizon-collapse-8frames.png",
+      "szerokosc": 3072,
+      "wysokosc": 384,
+      "tryb": "RGB",
+      "bajty": 1384793,
+      "sha256": "5767431acffdcd188b2f0649d25eaf7f44cd5dd71fcdfe2406d94c5e3fb14e39"
+    },
+    {
+      "zadanie": "FX6",
+      "plik": "FX6/selected/FX6-event-horizon-orb-8frames.png",
+      "szerokosc": 1024,
+      "wysokosc": 128,
+      "tryb": "RGB",
+      "bajty": 140762,
+      "sha256": "1207f89f0c005d88bf6a9f3cb831a1f5105935165de895edb34f48ddf46d9505"
+    },
+    {
+      "zadanie": "FX6",
+      "plik": "FX6/selected/FX6-orb-8frames.png",
+      "szerokosc": 1024,
+      "wysokosc": 128,
+      "tryb": "RGB",
+      "bajty": 117403,
+      "sha256": "3d679f58d5a425bf7923c8c204df14ec3dbc759c55aa86e4fef5c26a442e519a"
+    },
+    {
+      "zadanie": "FX7",
+      "plik": "FX7/selected/FX7-gauss-lance-beam-body.png",
+      "szerokosc": 1024,
+      "wysokosc": 96,
+      "tryb": "RGB",
+      "bajty": 126108,
+      "sha256": "ade673431d6b6a78ac3185c773c2bfc9c880686e290ddb350d1002427d1b36a2"
+    },
+    {
+      "zadanie": "FX7",
+      "plik": "FX7/selected/FX7-gauss-lance-charge-6frames.png",
+      "szerokosc": 768,
+      "wysokosc": 128,
+      "tryb": "RGB",
+      "bajty": 92869,
+      "sha256": "bf50b10606ca2055864622846ded259318892debfe4d2d04301f6eea7d42f640"
+    },
+    {
+      "zadanie": "FX7",
+      "plik": "FX7/selected/FX7-gauss-lance-end-blast-6frames.png",
+      "szerokosc": 1536,
+      "wysokosc": 256,
+      "tryb": "RGB",
+      "bajty": 399891,
+      "sha256": "e2dd324d18fa6339ed2d27aa8369750dde6543950c002dd440f3d756712eed8f"
+    },
+    {
+      "zadanie": "FX7",
+      "plik": "FX7/selected/FX7-gauss-lance-muzzle-flash-6frames.png",
+      "szerokosc": 1536,
+      "wysokosc": 256,
+      "tryb": "RGB",
+      "bajty": 327026,
+      "sha256": "4d9bae43f9a2ad1fcd63615610666cfcaab707a5c0a0e78d1c0eafbd9cd522fd"
+    },
+    {
+      "zadanie": "FX7",
+      "plik": "FX7/selected/FX7-railgun-beam-body.png",
+      "szerokosc": 1024,
+      "wysokosc": 96,
+      "tryb": "RGB",
+      "bajty": 56374,
+      "sha256": "b01a3189c1095e5e488eac9655a34e8a652e976721b59b60a81ca62224798fd8"
+    },
+    {
+      "zadanie": "FX7",
+      "plik": "FX7/selected/FX7-railgun-charge-6frames.png",
+      "szerokosc": 768,
+      "wysokosc": 128,
+      "tryb": "RGB",
+      "bajty": 66912,
+      "sha256": "60cacb8d4036feca46c26eb6f9cef02b730b60763adba4e5f2fab1a4b70277c9"
+    },
+    {
+      "zadanie": "FX7",
+      "plik": "FX7/selected/FX7-railgun-end-blast-6frames.png",
+      "szerokosc": 1536,
+      "wysokosc": 256,
+      "tryb": "RGB",
+      "bajty": 337244,
+      "sha256": "a8b90b7f1c71f6b3d5c21ebf6ae4f0931a8b7ba564cc219462eb5920d226fd66"
+    },
+    {
+      "zadanie": "FX7",
+      "plik": "FX7/selected/FX7-railgun-muzzle-flash-6frames.png",
+      "szerokosc": 1536,
+      "wysokosc": 256,
+      "tryb": "RGB",
+      "bajty": 294311,
+      "sha256": "a192ed6488b87df42b8ce9d279cf6a66728bb963122c309741a8ded0b276db14"
+    },
+    {
+      "zadanie": "FX8",
+      "plik": "FX8/selected/FX8-enemy-shield-8frames.png",
+      "szerokosc": 4096,
+      "wysokosc": 512,
+      "tryb": "RGB",
+      "bajty": 1684449,
+      "sha256": "ef1a4b54d69213b61678bb8bc8977806936047b5e20dc8cd124e8675c113f7a1"
+    },
+    {
+      "zadanie": "FX8",
+      "plik": "FX8/selected/FX8-nova-ring-8frames.png",
+      "szerokosc": 4096,
+      "wysokosc": 512,
+      "tryb": "RGB",
+      "bajty": 1228426,
+      "sha256": "d927988f84e08748709ab6434ea351c3b2f3e2b00ec9aa675cb28aa2eafe8a3a"
+    },
+    {
+      "zadanie": "FX8",
+      "plik": "FX8/selected/FX8-player-shield-8frames.png",
+      "szerokosc": 4096,
+      "wysokosc": 512,
+      "tryb": "RGB",
+      "bajty": 1567820,
+      "sha256": "d26b315558020f05c12e423462e67cc8458488b59b75288a0a189e8dc010933d"
+    },
+    {
+      "zadanie": "FX8",
+      "plik": "FX8/selected/FX8-shield-break-8frames.png",
+      "szerokosc": 4096,
+      "wysokosc": 512,
+      "tryb": "RGB",
+      "bajty": 1464674,
+      "sha256": "4ffaeb2844477bb97aed8c8d9c502ddd00130221ebb3076b7d626dceb9b422ba"
+    },
+    {
+      "zadanie": "FX8",
+      "plik": "FX8/selected/FX8-supernova-ring-8frames.png",
+      "szerokosc": 4096,
+      "wysokosc": 512,
+      "tryb": "RGB",
+      "bajty": 1682665,
+      "sha256": "0e9aba929d5499e42a9be6bc1120f57d2d403b200a011c91f897a2790dc48027"
+    },
+    {
+      "zadanie": "FX9",
+      "plik": "FX9/selected/FX9-elite-arrival-8frames.png",
+      "szerokosc": 3072,
+      "wysokosc": 384,
+      "tryb": "RGB",
+      "bajty": 922684,
+      "sha256": "493a09eb3935e8ec7c5c3ba74f47397d9b2cf4690b2a8e84e472d62fe58bba6e"
+    },
+    {
+      "zadanie": "FX9",
+      "plik": "FX9/selected/FX9-spawn-portal-8frames.png",
+      "szerokosc": 2048,
+      "wysokosc": 256,
+      "tryb": "RGB",
+      "bajty": 595987,
+      "sha256": "24649489123da86872b0821ba7caf29c65c000c890e96210209ee025fa2cb0f0"
+    },
+    {
+      "zadanie": "FX9",
+      "plik": "FX9/selected/FX9-warning-circle-8frames.png",
+      "szerokosc": 2048,
+      "wysokosc": 256,
+      "tryb": "RGB",
+      "bajty": 434019,
+      "sha256": "49118a4d453625425134e4f6bd212205525dce2b7c971291170acdb479c4dbb5"
+    },
+    {
+      "zadanie": "PU1",
+      "plik": "PU1/selected/PU1-bomb.png",
+      "szerokosc": 128,
+      "wysokosc": 128,
+      "tryb": "RGB",
+      "bajty": 14465,
+      "sha256": "844dca4375a051e201325eccafdfef63bfce9ebca0a86af3d7a070ce66ff39d6"
+    },
+    {
+      "zadanie": "PU1",
+      "plik": "PU1/selected/PU1-boss-chest-closed.png",
+      "szerokosc": 128,
+      "wysokosc": 128,
+      "tryb": "RGB",
+      "bajty": 20342,
+      "sha256": "e14ef2052c54782824114b70c0f0635a7b861eeb2028c335e6af9be05f1c38ee"
+    },
+    {
+      "zadanie": "PU1",
+      "plik": "PU1/selected/PU1-boss-chest-open.png",
+      "szerokosc": 128,
+      "wysokosc": 128,
+      "tryb": "RGB",
+      "bajty": 27078,
+      "sha256": "26b52ec287876dce7eaa38e1fe3e543015e548cd0ec84a7da6d8ca51d66bbbc2"
+    },
+    {
+      "zadanie": "PU1",
+      "plik": "PU1/selected/PU1-coin.png",
+      "szerokosc": 128,
+      "wysokosc": 128,
+      "tryb": "RGB",
+      "bajty": 16637,
+      "sha256": "6656712d6c170b54a15fde4d20ef9717f8aa4c73cfa9dfcc5e2034db6aa07a40"
+    },
+    {
+      "zadanie": "PU1",
+      "plik": "PU1/selected/PU1-magnet.png",
+      "szerokosc": 128,
+      "wysokosc": 128,
+      "tryb": "RGB",
+      "bajty": 16348,
+      "sha256": "3987fa193fa1a0e8f6361cab1995c7aa80f884a8a0fbd59171a159a85ccd054d"
+    },
+    {
+      "zadanie": "PU1",
+      "plik": "PU1/selected/PU1-pickups-sheet.png",
+      "szerokosc": 512,
+      "wysokosc": 384,
+      "tryb": "RGB",
+      "bajty": 176004,
+      "sha256": "d93fe330cd4bf62640292427a307dd3141dae9cfa04579979376b440d6fdc55d"
+    },
+    {
+      "zadanie": "PU1",
+      "plik": "PU1/selected/PU1-repair-kit.png",
+      "szerokosc": 128,
+      "wysokosc": 128,
+      "tryb": "RGB",
+      "bajty": 16451,
+      "sha256": "b1fae71f806da3f322341d7da7e7be5393d0144db79e1d18426b1094b0e34253"
+    },
+    {
+      "zadanie": "PU1",
+      "plik": "PU1/selected/PU1-supply-crate-closed.png",
+      "szerokosc": 128,
+      "wysokosc": 128,
+      "tryb": "RGB",
+      "bajty": 12388,
+      "sha256": "2f9965454c5560809eba959528798aaa1f09b97eb2c7b19284a4309c8e2fe53d"
+    },
+    {
+      "zadanie": "PU1",
+      "plik": "PU1/selected/PU1-supply-crate-open.png",
+      "szerokosc": 128,
+      "wysokosc": 128,
+      "tryb": "RGB",
+      "bajty": 19398,
+      "sha256": "906cd8363ab515d2ad91d55d7920c27cd96f79e30aa9671b5bebe84c4139a0bf"
+    },
+    {
+      "zadanie": "PU1",
+      "plik": "PU1/selected/PU1-xp-crystal-large.png",
+      "szerokosc": 128,
+      "wysokosc": 128,
+      "tryb": "RGB",
+      "bajty": 20923,
+      "sha256": "659f0c5e4827ca2520c594f14e3d65db89e65442789cf26ebc81f6df9b0397fc"
+    },
+    {
+      "zadanie": "PU1",
+      "plik": "PU1/selected/PU1-xp-crystal-medium.png",
+      "szerokosc": 128,
+      "wysokosc": 128,
+      "tryb": "RGB",
+      "bajty": 11555,
+      "sha256": "a53f67f7d5a483e319622d36786e97e01ae2f43b90509b9ab9a8df503d5791ac"
+    },
+    {
+      "zadanie": "PU1",
+      "plik": "PU1/selected/PU1-xp-crystal-small.png",
+      "szerokosc": 128,
+      "wysokosc": 128,
+      "tryb": "RGB",
+      "bajty": 7191,
+      "sha256": "4cecdf7159f14d97c6d51190530fe83ae3a5ca511198c4e41d51f3b24e5d8bfd"
+    },
+    {
+      "zadanie": "SH4",
+      "plik": "SH4/selected/SH4-gold-striker-cockpit-glass.png",
+      "szerokosc": 145,
+      "wysokosc": 260,
+      "tryb": "RGB",
+      "bajty": 47288,
+      "sha256": "a1ee31506066dbaa8b46f09fda485c46c9b11c8d219a926d8532f492646472d6"
+    },
+    {
+      "zadanie": "SH4",
+      "plik": "SH4/selected/SH4-gold-striker-engine-left.png",
+      "szerokosc": 160,
+      "wysokosc": 320,
+      "tryb": "RGB",
+      "bajty": 75775,
+      "sha256": "07b521e8423f04d8d5d1ac717f4f6fab542c82d4177241ce56a6724f1e0fe827"
+    },
+    {
+      "zadanie": "SH4",
+      "plik": "SH4/selected/SH4-gold-striker-engine-right.png",
+      "szerokosc": 160,
+      "wysokosc": 320,
+      "tryb": "RGB",
+      "bajty": 76199,
+      "sha256": "2bf45e5822919efc16b9a1e0df589e99eed34baa5f03a7ea254551ba67801927"
+    },
+    {
+      "zadanie": "SH4",
+      "plik": "SH4/selected/SH4-gold-striker-flame.png",
+      "szerokosc": 185,
+      "wysokosc": 274,
+      "tryb": "RGB",
+      "bajty": 46262,
+      "sha256": "c3833f3ed5048227cfd16608ea3eb8a5f1bf8ca4cab221e5b9850812d56326e8"
+    },
+    {
+      "zadanie": "SH4",
+      "plik": "SH4/selected/SH4-gold-striker-gun.png",
+      "szerokosc": 95,
+      "wysokosc": 260,
+      "tryb": "RGB",
+      "bajty": 29325,
+      "sha256": "6df76a6bfacbaaad007e0e1d0ba9c890ed08c8dbbbfa3d5d60ef873c8b7b9e18"
+    },
+    {
+      "zadanie": "SH4",
+      "plik": "SH4/selected/SH4-gold-striker-hull.png",
+      "szerokosc": 260,
+      "wysokosc": 750,
+      "tryb": "RGB",
+      "bajty": 238803,
+      "sha256": "712f62fd9e09d45d880f76a24bab8a3572dadb238e378829f89f1b3a0e61ea84"
+    },
+    {
+      "zadanie": "SH4",
+      "plik": "SH4/selected/SH4-gold-striker-parts-sheet.png",
+      "szerokosc": 2500,
+      "wysokosc": 1100,
+      "tryb": "RGB",
+      "bajty": 1948495,
+      "sha256": "42eed0a16b82830b648f011a1cb7777910bb3dcc795c2cfecf2112301336552b"
+    },
+    {
+      "zadanie": "SH4",
+      "plik": "SH4/selected/SH4-gold-striker-wing-left.png",
+      "szerokosc": 290,
+      "wysokosc": 645,
+      "tryb": "RGB",
+      "bajty": 214147,
+      "sha256": "057cd56ced672768b4086f82506a80902543972403404cb4ad94dae0000f08d7"
+    },
+    {
+      "zadanie": "SH4",
+      "plik": "SH4/selected/SH4-gold-striker-wing-right.png",
+      "szerokosc": 290,
+      "wysokosc": 645,
+      "tryb": "RGB",
+      "bajty": 210957,
+      "sha256": "7db12993d282f5cffbea362952b3b93bf03281b0a09186cdc09c85901ad6532f"
+    },
+    {
+      "zadanie": "SH4",
+      "plik": "SH4/selected/SH4-gold-striker.png",
+      "szerokosc": 1024,
+      "wysokosc": 1024,
+      "tryb": "RGB",
+      "bajty": 1156816,
+      "sha256": "f7597ef856f0771563d52e8f7cd4e06ab36d0bfb9e6da6afce9586626bd518a9"
+    },
+    {
+      "zadanie": "UI3",
+      "plik": "UI3/selected/UI3-hangar.png",
+      "szerokosc": 1290,
+      "wysokosc": 2796,
+      "tryb": "RGB",
+      "bajty": 4030406,
+      "sha256": "7d7ffe7001cc5732f288fd398299b2450d237d6f90466679c25af73573362fa0"
+    },
+    {
+      "zadanie": "UI3",
+      "plik": "UI3/selected/UI3-journey-map.png",
+      "szerokosc": 1290,
+      "wysokosc": 2796,
+      "tryb": "RGB",
+      "bajty": 3565995,
+      "sha256": "59b5f55affd02fba183925088ef45b58886b0eb4676e444f940d095004dfa9f2"
+    },
+    {
+      "zadanie": "UI4",
+      "plik": "UI4/selected/UI4-path-connector.png",
+      "szerokosc": 169,
+      "wysokosc": 64,
+      "tryb": "RGB",
+      "bajty": 10611,
+      "sha256": "a8aab8cbc8d77544f679b06eb5b5a957f74bcbac1e01691d85120dc77f54a580"
+    },
+    {
+      "zadanie": "UI4",
+      "plik": "UI4/selected/UI4-world-01-orbital-ruins-locked.png",
+      "szerokosc": 256,
+      "wysokosc": 256,
+      "tryb": "RGB",
+      "bajty": 123375,
+      "sha256": "4a7ca36adb9e3db35c55c09cfa0276d0f8e557d6d8e5470d3c63cb9c70c36090"
+    },
+    {
+      "zadanie": "UI4",
+      "plik": "UI4/selected/UI4-world-01-orbital-ruins-unlocked.png",
+      "szerokosc": 256,
+      "wysokosc": 256,
+      "tryb": "RGB",
+      "bajty": 125255,
+      "sha256": "ad54c996afda6679e6bda3173fdce50657ec2dbf800ed1d640be8d390e6906aa"
+    },
+    {
+      "zadanie": "UI4",
+      "plik": "UI4/selected/UI4-world-02-siege-of-earth-locked.png",
+      "szerokosc": 256,
+      "wysokosc": 256,
+      "tryb": "RGB",
+      "bajty": 124468,
+      "sha256": "4fc463a3304625956b9601810b69bc69a0c5857324ec2a3edd108d0c5b6e781d"
+    },
+    {
+      "zadanie": "UI4",
+      "plik": "UI4/selected/UI4-world-02-siege-of-earth-unlocked.png",
+      "szerokosc": 256,
+      "wysokosc": 256,
+      "tryb": "RGB",
+      "bajty": 128442,
+      "sha256": "50f4b586856865e6dcaa8b3b0dcda1f689c7ab5975940ee39a17edef8d953593"
+    },
+    {
+      "zadanie": "UI4",
+      "plik": "UI4/selected/UI4-world-03-lunar-bridgehead-locked.png",
+      "szerokosc": 256,
+      "wysokosc": 256,
+      "tryb": "RGB",
+      "bajty": 133919,
+      "sha256": "eddb8f430882e39b4888f0b859704564fd59caada384cfd168aad0c15ee1c8ed"
+    },
+    {
+      "zadanie": "UI4",
+      "plik": "UI4/selected/UI4-world-03-lunar-bridgehead-unlocked.png",
+      "szerokosc": 256,
+      "wysokosc": 256,
+      "tryb": "RGB",
+      "bajty": 137964,
+      "sha256": "428806844b9613c142933f1c64e799cd5f71992df1f47f0adb4383e023c9cd03"
+    },
+    {
+      "zadanie": "UI4",
+      "plik": "UI4/selected/UI4-world-04-red-conversion-locked.png",
+      "szerokosc": 256,
+      "wysokosc": 256,
+      "tryb": "RGB",
+      "bajty": 131216,
+      "sha256": "788f66e3c0beae63873e922bbb337743afb356bac8a6d090cb5a29ddc2350abf"
+    },
+    {
+      "zadanie": "UI4",
+      "plik": "UI4/selected/UI4-world-04-red-conversion-unlocked.png",
+      "szerokosc": 256,
+      "wysokosc": 256,
+      "tryb": "RGB",
+      "bajty": 135362,
+      "sha256": "c5023ec4ab09c4d0c406f7b8d35f1476db0502184cc0c74d4bb1d8e54d362c1d"
+    },
+    {
+      "zadanie": "UI4",
+      "plik": "UI4/selected/UI4-world-05-foundry-belt-locked.png",
+      "szerokosc": 256,
+      "wysokosc": 256,
+      "tryb": "RGB",
+      "bajty": 130863,
+      "sha256": "2b26b05ddf22e775f155754de13f8fb910ecb003983e363c7e8ace4048b76c2c"
+    },
+    {
+      "zadanie": "UI4",
+      "plik": "UI4/selected/UI4-world-05-foundry-belt-unlocked.png",
+      "szerokosc": 256,
+      "wysokosc": 256,
+      "tryb": "RGB",
+      "bajty": 134365,
+      "sha256": "8f4060e567d43eb2bd0c8daecb122370480835ca46e99f10b2d523c6936b627c"
+    },
+    {
+      "zadanie": "UI4",
+      "plik": "UI4/selected/UI4-world-06-storm-relay-locked.png",
+      "szerokosc": 256,
+      "wysokosc": 256,
+      "tryb": "RGB",
+      "bajty": 120009,
+      "sha256": "015e96f3593152a0ce5dca693fca50ed7eeb94389c618f99b1f8f5e96d24e58d"
+    },
+    {
+      "zadanie": "UI4",
+      "plik": "UI4/selected/UI4-world-06-storm-relay-unlocked.png",
+      "szerokosc": 256,
+      "wysokosc": 256,
+      "tryb": "RGB",
+      "bajty": 117205,
+      "sha256": "052c1195f08ddc9818222b7009c6f36445a9cbd5d92dbcdca01b1f6d0ce527c3"
+    },
+    {
+      "zadanie": "UI4",
+      "plik": "UI4/selected/UI4-world-07-abyss-of-europa-locked.png",
+      "szerokosc": 256,
+      "wysokosc": 256,
+      "tryb": "RGB",
+      "bajty": 134449,
+      "sha256": "3e4ead3c796b06bf450114de11f156174defb4c8225af02719ba15a498a39003"
+    },
+    {
+      "zadanie": "UI4",
+      "plik": "UI4/selected/UI4-world-07-abyss-of-europa-unlocked.png",
+      "szerokosc": 256,
+      "wysokosc": 256,
+      "tryb": "RGB",
+      "bajty": 132101,
+      "sha256": "146574843626996cf1a982a7ff051a39d538fd46024c8ad27f36033db85f1a0d"
+    },
+    {
+      "zadanie": "UI4",
+      "plik": "UI4/selected/UI4-world-08-rift-gate-locked.png",
+      "szerokosc": 256,
+      "wysokosc": 256,
+      "tryb": "RGB",
+      "bajty": 127675,
+      "sha256": "77556d239a20be367fc33870628c4e82d782bfe2415008e2031a6426fc0833f4"
+    },
+    {
+      "zadanie": "UI4",
+      "plik": "UI4/selected/UI4-world-08-rift-gate-unlocked.png",
+      "szerokosc": 256,
+      "wysokosc": 256,
+      "tryb": "RGB",
+      "bajty": 127426,
+      "sha256": "d3cd5ce4a3700f8cb76a1232084b0047b2a79d02a3dab90851b9cb62752a9a73"
+    },
+    {
+      "zadanie": "UI4",
+      "plik": "UI4/selected/UI4-world-09-brood-world-locked.png",
+      "szerokosc": 256,
+      "wysokosc": 256,
+      "tryb": "RGB",
+      "bajty": 127664,
+      "sha256": "4b8298bbd352dad0f1af60156c7486644a8729993de44d5e8824117030721666"
+    },
+    {
+      "zadanie": "UI4",
+      "plik": "UI4/selected/UI4-world-09-brood-world-unlocked.png",
+      "szerokosc": 256,
+      "wysokosc": 256,
+      "tryb": "RGB",
+      "bajty": 123057,
+      "sha256": "169f7207535ce62e83903ff12870e9973553b8c6e8af888ee6f1f3e28a2c6788"
+    },
+    {
+      "zadanie": "UI4",
+      "plik": "UI4/selected/UI4-world-10-the-nexus-locked.png",
+      "szerokosc": 256,
+      "wysokosc": 256,
+      "tryb": "RGB",
+      "bajty": 128812,
+      "sha256": "27b2d5811861ee4e9fd2af681d47a5a3c4ee8c55567723944f4c4355e6f76908"
+    },
+    {
+      "zadanie": "UI4",
+      "plik": "UI4/selected/UI4-world-10-the-nexus-unlocked.png",
+      "szerokosc": 256,
+      "wysokosc": 256,
+      "tryb": "RGB",
+      "bajty": 128623,
+      "sha256": "1d019d9dc03ac0e60275e74f55af52cabe5c4222d80395fbcdfad61d10a04210"
+    },
+    {
+      "zadanie": "UI4",
+      "plik": "UI4/selected/UI4-world-tokens-locked-sheet.png",
+      "szerokosc": 1280,
+      "wysokosc": 512,
+      "tryb": "RGB",
+      "bajty": 1254484,
+      "sha256": "33ea29e5064a612e2cbd6d29fa8f9ed5f109b3f6f50fac86269d1ca880f234b7"
+    },
+    {
+      "zadanie": "UI4",
+      "plik": "UI4/selected/UI4-world-tokens-unlocked-sheet.png",
+      "szerokosc": 1280,
+      "wysokosc": 512,
+      "tryb": "RGB",
+      "bajty": 1249359,
+      "sha256": "56f5b61eb5c83f76313e65cb85e0c50ff24196de54d44bbd828bce795dcdfa29"
+    },
+    {
+      "zadanie": "UI5",
+      "plik": "UI5/selected/UI5-gold-striker-hangar-3quarter.png",
+      "szerokosc": 1024,
+      "wysokosc": 1024,
+      "tryb": "RGB",
+      "bajty": 1249657,
+      "sha256": "65cde5adf96a9cd6890bf6dbace63951e22134b6074ef5a28b0027fabd596266"
+    },
+    {
+      "zadanie": "UI5",
+      "plik": "UI5/selected/UI5-phantom-hangar-3quarter.png",
+      "szerokosc": 1024,
+      "wysokosc": 1024,
+      "tryb": "RGB",
+      "bajty": 1199904,
+      "sha256": "3eb71fefea0c9d455f291da151466e8867ddb9b33e8e172c309313a21c58e98f"
+    },
+    {
+      "zadanie": "UI5",
+      "plik": "UI5/selected/UI5-striker-hangar-3quarter.png",
+      "szerokosc": 1024,
+      "wysokosc": 1024,
+      "tryb": "RGB",
+      "bajty": 1294995,
+      "sha256": "609a78fff0adfc0092f357fe880ae1ba3fb8e1145914ffd1931092b9762ab01e"
+    },
+    {
+      "zadanie": "UI5",
+      "plik": "UI5/selected/UI5-titan-hangar-3quarter.png",
+      "szerokosc": 1024,
+      "wysokosc": 1024,
+      "tryb": "RGB",
+      "bajty": 1358012,
+      "sha256": "b99f30914b367389e0ec6263e03cd35ed2be271eefbf382e1ff8ffb179dab19e"
+    },
+    {
+      "zadanie": "ST1",
+      "plik": "ST1/selected/ST1-app-icon.png",
+      "szerokosc": 1024,
+      "wysokosc": 1024,
+      "tryb": "RGB",
+      "bajty": 1655365,
+      "sha256": "3dbc9304af1b8c6ebeeb88d6636dd1b1d4732b2925c6314f4ed1e5e900781742"
+    },
+    {
+      "zadanie": "ST2",
+      "plik": "ST2/selected/ST2-google-play-graphic.png",
+      "szerokosc": 1024,
+      "wysokosc": 500,
+      "tryb": "RGB",
+      "bajty": 848035,
+      "sha256": "ea8e5d7e355ffe552952b8c28f2b06cd3ddb1cbbdba8b27fef91bf08d0149c55"
+    },
+    {
+      "zadanie": "ST3",
+      "plik": "ST3/selected/ST3-key-art.png",
+      "szerokosc": 2048,
+      "wysokosc": 2048,
+      "tryb": "RGB",
+      "bajty": 5926101,
+      "sha256": "4e10b20ebad9732b4c3533737bd4090f3ff2f8bb9dad39a268127dd5071b5d79"
+    }
+  ]
+}

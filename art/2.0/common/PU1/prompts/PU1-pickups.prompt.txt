@@ -1,0 +1,34 @@
+STYLE (keep identical across all images):
+Game art for "Void Blaster", a top-down mobile space shooter (survivors-
+like).
+Camera: top-down orthographic, looking straight down, no perspective.
+Look: stylized sci-fi with a neon accent. Dark, rich materials (gunmetal, 
+carbon,
+matte ceramic) lit from the top-left, glowing edges and emissive lights only 
+where
+noted. Detail level: high but clean - panel lines, vents, rivets; no grunge 
+overload.
+The background must stay dark and calm so bright game objects read on top of 
+it:
+no bright cyan anywhere (cyan belongs to the player), magenta only as thin 
+traces.
+Rendering: crisp edges, soft bloom on glowing parts only, no motion blur, no 
+depth of
+field, not photorealistic. No text, no logo, no watermark.
+
+TASK: a sheet of pickups seen from directly above, one scale, generous space, 
+on a plain
+flat background #05010f, each 128x128 with its own soft glow:
+1-3) XP CRYSTAL small, medium, large: faceted gems, green #3dff8a fading to 
+gold at the
+     tips;
+4) COIN: a gold #ffd23d hexagonal coin with a simple engraved star;
+5) REPAIR KIT: a compact white-and-green #3dff8a med module with a cross;
+6) MAGNET: a red-and-silver horseshoe magnet with blue #3dc8ff field lines;
+7) BOMB: a round charge with a red #ff3d3d blinking light;
+8-9) SUPPLY CRATE closed and open: a gunmetal crate with amber #ffb02e 
+stripes;
+10-11) BOSS CHEST closed and open: a larger armored chest with gold trim and 
+a magenta
+     #ff2d95 lock, glowing light from inside when open.
+Readable at 32-48 px. No text.

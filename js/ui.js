@@ -2,7 +2,7 @@ import { WORLDS, SHIPS, SHOP, DAILY, ALL_STAGES, BOSSES, ENDLESS, stageIndex } f
 import { WEAPONS } from './weapons.js';
 import { COMBOS } from './combos.js';
 import { codexSections, codexName } from './codex.js';
-import { icon } from './icons.js';
+import { icon, uiArt } from './icons.js';
 import { fmtTime } from './util.js';
 import { shipSprite } from './sprites.js';
 import { versionLabel, versionFull } from './version.js';
@@ -19,6 +19,8 @@ const eliteGoal = (st) => {
   return st.boss ? `Destroy ${st.elites ? `${el} and ` : ''}the boss` : `Destroy ${st.elites > 1 ? `all ${el}` : `the ${el}`}`;
 };
 const COIN = '<span class="coin-ico"></span>';
+// the drawn 2.0 icons (js/icons.js) for the shop's upgrades: the perk or pickup each one is like
+const SHOP_ART = { power: 'p-power', armor: 'p-armor', thrusters: 'p-thrusters', tractor: 'p-tractor', amplifier: 'p-amplifier', overclock: 'p-overclock', heal: 'pu-heal', coins: 'pu-coin' };
 
 const titleCase = (s) => s.toLowerCase().replace(/\b\w/g, (c) => c.toUpperCase());
 const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
@@ -108,6 +110,12 @@ export class UI {
     this.paintCanvases(this.screenEl);
   }
 
+  // a 2.0 background picture behind the current screen (Art Bible UI3: the hangar, the journey map), darkened by CSS
+  screenArt(key) {
+    const pic = uiArt(key), el = this.screenEl.firstElementChild;
+    if (pic && el) { el.classList.add('has-art'); el.style.setProperty('--bgimg', `url(${pic})`); }
+  }
+
   clearScreen() { this.screenEl.innerHTML = ''; this.h = {}; }
 
   modal(html, handlers, cls = '', guardMs = 0) {
@@ -133,6 +141,13 @@ export class UI {
       const s = SHIPS[c.dataset.ship];
       const g = c.getContext('2d');
       // the 2.0 look has a picture of every ship (js/v2/renderer.js); a skin colour other than the ship's tints it
+      // the hangar shows the 3/4 renders (Art Bible UI5) once they are loaded
+      const hero = c.dataset.hero && this.app.v2 && !this.app.oldLook && this.app.heroArt?.(c.dataset.skin === 'gold' ? 'gold' : s.id);
+      if (hero) {
+        g.clearRect(0, 0, c.width, c.height);
+        g.drawImage(hero, 0, 0, c.width, c.height);
+        return;
+      }
       const art = this.app.v2 && !this.app.oldLook && this.app.shipArt?.(s.id);
       if (art) {
         g.clearRect(0, 0, c.width, c.height);
@@ -243,7 +258,7 @@ export class UI {
     const open = (w) => !w.soon && this.app.isUnlocked(w.stages[0].id);
     const tabs = WORLDS.map((w) => `
       <button class="world-tab ${w.id === worldId ? 'active' : ''} ${open(w) ? '' : 'locked'} ${w.soon ? 'wip' : ''}" style="--wc:${w.color}" data-act="world" data-id="${w.id}">
-        <span class="wnum">${w.id}</span><span class="wname">${esc(w.name)}</span>
+        ${uiArt(`tok-${w.id}`) ? `<img class="wtoken" src="${uiArt(`${open(w) ? 'tok' : 'tokl'}-${w.id}`)}" alt="">` : ''}<span class="wnum">${w.id}</span><span class="wname">${esc(w.name)}</span>
       </button>`).join('');
     let body;
     if (world.soon) {
@@ -261,7 +276,7 @@ export class UI {
       body = `<div class="soon"><img src="${icon('lock', world.color)}" alt=""><h3>${esc(world.name)}</h3><p>Defeat the ${esc(gate)} in ${esc(prev.name)} to open this sector.</p></div>`;
     } else {
       const totalStars = world.stages.reduce((a, s) => a + (save.stars[s.id] || 0), 0);
-      body = `<div class="world-head"><h2 style="--wc:${world.color}">${esc(world.name)}</h2><div class="star-count">${STAR}<b>${totalStars}</b>/${world.stages.length * 3}</div></div>
+      body = `<div class="world-head">${uiArt(`tok-${world.id}`) ? `<img class="wtoken-big" src="${uiArt(`tok-${world.id}`)}" alt="">` : ''}<h2 style="--wc:${world.color}">${esc(world.name)}</h2><div class="star-count">${STAR}<b>${totalStars}</b>/${world.stages.length * 3}</div></div>
       <div class="path">` + world.stages.map((s, i) => {
         const unlocked = this.app.isUnlocked(s.id);
         const stars = save.stars[s.id] || 0;
@@ -286,6 +301,7 @@ export class UI {
       stage: (ds) => this.briefing(ds.id),
       endless: (ds) => this.endlessBriefing(+ds.id),
     }, 'map');
+    this.screenArt('bg-map');
     this.coach('map');
   }
 
@@ -373,7 +389,7 @@ export class UI {
             <button class="skin ${save.skin === 'gold' ? 'on' : ''}" data-act="skin" data-id="gold" style="--k:#ffd23d">Gold ★</button></div>`
         : '';
       return `<div class="ship-card ${sel ? 'selected' : ''}" style="--sc:${s.color}">
-        <canvas data-ship="${s.id}" data-color="${s.color}" width="120" height="120"></canvas>
+        <canvas data-ship="${s.id}" data-color="${s.color}" data-hero="1" data-skin="${s.id === 'striker' && save.skin === 'gold' ? 'gold' : ''}" width="120" height="120"></canvas>
         <div class="ship-info">
           <h3>${esc(s.name)}</h3>
           <p class="muted">${esc(s.desc)}</p>
@@ -382,7 +398,7 @@ export class UI {
             <label>SPEED</label>${bars(s.speed, 300)}
             <label>POWER</label>${bars(s.dmg, 1.2)}
           </div>
-          <div class="ship-weapon"><img src="${icon(WEAPONS[s.weapon].icon, WEAPONS[s.weapon].color)}" alt=""><span>${esc(WEAPONS[s.weapon].name)}</span><em>${esc(s.perk)}</em></div>
+          <div class="ship-weapon"><img src="${icon(WEAPONS[s.weapon].icon, WEAPONS[s.weapon].color, false, `w-${s.weapon}`)}" alt=""><span>${esc(WEAPONS[s.weapon].name)}</span><em>${esc(s.perk)}</em></div>
           ${skins}
           ${btn}
         </div>
@@ -409,6 +425,7 @@ export class UI {
         this.hangar(back);
       },
     }, 'hangar');
+    this.screenArt('bg-hangar');
   }
 
   // ======================= CODEX =======================
@@ -419,7 +436,7 @@ export class UI {
     const all = sections.flatMap((s) => s.items);
     const count = all.filter((x) => found[x.key]).length;
     const entry = (x) => found[x.key]
-      ? `<div class="codex-item" style="--cc:${x.color}"><img src="${icon(x.icon, x.color, x.evo)}" alt="">
+      ? `<div class="codex-item" style="--cc:${x.color}"><img src="${icon(x.icon, x.color, x.evo, x.art)}" alt="">
           <div><b>${esc(x.name)}</b><small>${esc(x.desc)}</small>${x.recipe ? `<em>${esc(x.recipe)}</em>` : ''}</div></div>`
       : `<div class="codex-item locked"><div class="codex-q">?</div><div><b>???</b><small>${esc(x.hint)}</small></div></div>`;
     this.setScreen(`
@@ -450,7 +467,7 @@ export class UI {
         ? `${esc(it.stat)} <b class="fx-now">${fmt(lvl)}</b>`
         : `${esc(it.stat)} <b class="fx-now">${fmt(lvl)}</b> <span class="fx-arrow">→</span> <b class="fx-next">${fmt(lvl + 1)}</b>`;
       return `<div class="shop-row">
-        <img src="${icon(it.icon, '#2ff3ff')}" alt="">
+        <img src="${icon(it.icon, '#2ff3ff', false, SHOP_ART[it.icon])}" alt="">
         <div class="shop-info"><div class="shop-head"><b>${esc(it.name)}</b><span class="shop-lvl">LV ${lvl}/${max}</span></div>
           <small class="shop-fx">${effect}</small><div class="pips">${pips}</div></div>
         ${maxed ? '<button class="btn small" disabled>MAX</button>'
@@ -640,7 +657,7 @@ export class UI {
   }
 
   buildHtml(build) {
-    const item = (x) => `<div class="build-item" style="--ic:${x.color}" title="${esc(x.name)}"><img src="${icon(x.icon, x.color)}" alt=""><b>${x.level}</b></div>`;
+    const item = (x) => `<div class="build-item" style="--ic:${x.color}" title="${esc(x.name)}"><img src="${icon(x.icon, x.color, false, x.art)}" alt=""><b>${x.level}</b></div>`;
     const combos = (build.combos || []).map((c) => `<span class="combo-chip" style="--cc:${c.color}" title="${esc(c.desc)}">${esc(c.name)}</span>`).join('');
     return `<div class="build"><div class="build-row">${build.weapons.map(item).join('')}</div><div class="build-row">${build.passives.map(item).join('')}</div>${combos ? `<div class="build-combos">${combos}</div>` : ''}</div>`;
   }
@@ -648,7 +665,7 @@ export class UI {
   levelUp({ title, sub, cards, rerolls, build, onPick, onReroll, step = 1, steps = 1, hint = '' }) {
     const html = cards.map((c, i) => `
       <button class="card ${c.evo ? 'evo' : ''} ${c.combo ? 'combo' : ''} ${c.superCombo ? 'super' : ''}" style="--cc:${c.color}" data-act="pick" data-i="${i}">
-        <img src="${icon(c.icon, c.color, c.evo)}" alt="">
+        <img src="${icon(c.icon, c.color, c.evo, c.art)}" alt="">
         <div class="card-info">
           <div class="card-top"><b>${esc(c.name)}</b><span class="tag ${c.tag === 'NEW' ? 'new' : ''}">${c.tag}</span></div>
           <div class="card-desc">${esc(c.desc)}</div>

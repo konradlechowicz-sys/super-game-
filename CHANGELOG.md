@@ -16,6 +16,28 @@ i wersja TEST (gracze tego nie widzą).
 
 - 
 
+## Build 127 · 2026-10-31
+- [Nowe] Gold Striker z własnych, złotych części od ChatGPT (Art Bible SH4) zamiast złotego zabarwienia Strikera.
+- [Nowe] Ekran sektorów: żeton każdego świata na zakładkach (wyszarzony, gdy świat jest zamknięty) i duży żeton przy nazwie świata, a w tle mapa podróży od Ziemi do Nexusa (UI3, UI4).
+- [Nowe] Hangar: statki w ujęciu 3/4 (Striker, Phantom, Titan, Gold Striker, UI5) i tło hangaru z widokiem na Ziemię (UI3).
+- [App Store] Materiały do sklepów 2.0 w `appstore/2.0`: ikona aplikacji 1024 px (ST1, jeszcze nie podmieniona w aplikacji), grafika Google Play 1024×500 (ST2) i key art 2048 px (ST3).
+
+## Build 126 · 2026-10-31
+- [Nowe] Reszta efektów z grafik ChatGPT: pociski broni (Pulse Blaster, Photon Storm, Scatter Gun i Flak Cannon, rakiety, pociski dronów) i miny (Art Bible FX1), iskry trafień w kolorze broni (FX2), eksplozje w trzech wielkościach: wróg, elita i duże wybuchy, boss (FX3), błyskawice Arc Coil i złote Tempest (FX4), fale Nova Pulse i Supernova, bańka Phase Shield z rozpryskiem przy pęknięciu i tarcze wrogów z cechą SHIELDED (FX8), portal przy pojawianiu się wrogów, błysk przybycia elity i ostrzegawczy krąg przed ostrzałem (FX9).
+- [Narzędzia] Pod kątem płynności: naraz najwyżej 40 iskier trafień, 60 eksplozji i 24 portale (roje bez portali); pociski rysuje PixiJS jak dotąd, tylko z nowymi teksturami.
+
+## Build 125 · 2026-10-31
+- [Nowe] Elity z cechami mają pierścienie z grafik ChatGPT (Art Bible EL1): obracający się pierścień w kolorze każdej cechy i jej odznakę nad nazwą (SWIFT, BULWARK, BERSERKER, COMMANDER, SHIELDED).
+- [Nowe] Nowe znajdźki na arenie (Art Bible PU1): kryształy doświadczenia w trzech rozmiarach (zielone, największe złote), moneta, zestaw naprawczy, magnes, bomba i skrzynia bossa.
+
+## Build 124 · 2026-10-31
+- [Nowe] Efekty nowych broni z grafik ChatGPT (Art Bible FX5–FX7) zamiast prostych neonowych kształtów: płomień Flamethrowera (niebieski po ewolucji w Inferno), płonący grunt (napalm, Inferno, Scorched Trail, Phoenix Rail), ogień na palących się wrogach, kula i wir czarnej dziury Singularity Cannon z jej zapadnięciem (większe, złote po ewolucji w Event Horizon), wiązka Railguna z ładowaniem przy statku, błyskiem wystrzału i wybuchem na końcu (Gauss Lance w złotej wersji).
+- [Narzędzia] Do sprawdzenia płynności: naraz rysuje się najwyżej 70 płonących wrogów; efekty są w osobnej paczce (`fx`), przycięte do rozmiaru w grze.
+
+## Build 123 · 2026-10-31
+- [Nowe] Nowe ikony od ChatGPT (Art Bible IC1–IC6) zamiast prostych neonowych symboli: 11 broni, 11 ewolucji, 9 perków, 12 kombosów broni, 8 zestawów perków i 3 super kombosy. Widać je na kartach awansu, w Codexie, na liście broni w pauzie, w hangarze i w sklepie ulepszeń (ulepszenia mają ikony podobnych perków, naprawa i monety ikony znajdziek).
+- [Narzędzia] Komplet grafik wspólnych od ChatGPT (ikony, efekty, elity, znajdźki, Gold Striker, interfejs, materiały do sklepów) zapisany w `art/2.0/common`; tekstury do gry robi `proto2/make-common.py`. Pozostałe grafiki z tej paczki wchodzą w kolejnych buildach.
+
 ## Build 122 · 2026-10-31
 - [Narzędzia] Nazwy wszystkich 10 światów i 60 sektorów zatwierdzone przez Konrada (Art Bible i CLAUDE.md). Gra się nie zmienia: te nazwy już w niej są.
 

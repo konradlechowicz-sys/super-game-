@@ -38,7 +38,8 @@ export class Game {
     this.time = 0;
     this.state = 'play';
     this.enemies = []; this.proj = []; this.ebullets = []; this.gems = []; this.pickups = [];
-    this.holes = []; this.fires = []; this.beams = []; // the 2.0 arsenal's black holes, burning ground, beams (js/arsenal.js)
+    this.holes = []; this.fires = []; this.beams = []; this.collapses = [];
+    this.sparks = []; // hit sparks of shots (drawn with the 2.0 art, js/render-canvas.js) // the 2.0 arsenal's black holes, burning ground, beams (js/arsenal.js)
     this.particles = []; this.hazards = []; this.rings = []; this.fx = []; this.bolts = []; this.mines = []; this.texts = [];
     this.hash = new SpatialHash(64);
     this.tmp = [];
@@ -935,11 +936,11 @@ export class Game {
   }
 
   describeCard(c) {
-    if (c.kind === 'heal') return { ...c, name: 'Repair Kit', tag: 'HEAL', desc: 'Restore 40% hull.', icon: 'heal', color: '#3dff8a' };
-    if (c.kind === 'coins') return { ...c, name: 'Salvage', tag: 'BONUS', desc: '+25 coins.', icon: 'coins', color: '#ffd23d' };
+    if (c.kind === 'heal') return { ...c, name: 'Repair Kit', tag: 'HEAL', desc: 'Restore 40% hull.', icon: 'heal', art: 'pu-heal', color: '#3dff8a' };
+    if (c.kind === 'coins') return { ...c, name: 'Salvage', tag: 'BONUS', desc: '+25 coins.', icon: 'coins', art: 'pu-coin', color: '#ffd23d' };
     if (c.kind === 'evo') {
       const def = WEAPONS[c.id];
-      return { ...c, name: def.evo.name, tag: 'EVOLUTION', desc: def.evo.desc, icon: def.icon, color: '#ffd23d', evo: true };
+      return { ...c, name: def.evo.name, tag: 'EVOLUTION', desc: def.evo.desc, icon: def.icon, art: `e-${c.id}`, color: '#ffd23d', evo: true };
     }
     if (c.kind === 'wnew' || c.kind === 'wlvl') {
       const def = WEAPONS[c.id];
@@ -947,11 +948,11 @@ export class Game {
       const lvl = w ? w.level + 1 : 1;
       let desc = def.desc[lvl - 1];
       if (lvl === WEAPON_MAX && def.evo) desc += ` · Evolves with ${PASSIVES[def.evo.with].name}`;
-      return { ...c, name: def.name, tag: w ? `LV ${lvl}` : 'NEW', desc, ...this.comboHint(false, c.id, lvl), icon: def.icon, color: def.color };
+      return { ...c, name: def.name, tag: w ? `LV ${lvl}` : 'NEW', desc, ...this.comboHint(false, c.id, lvl), icon: def.icon, art: `w-${c.id}`, color: def.color };
     }
     const def = PASSIVES[c.id];
     const lvl = (this.passives[c.id] || 0) + 1;
-    return { ...c, name: def.name, tag: lvl === 1 ? 'NEW' : `LV ${lvl}`, desc: def.desc, ...this.comboHint(true, c.id, lvl), icon: def.icon, color: def.color };
+    return { ...c, name: def.name, tag: lvl === 1 ? 'NEW' : `LV ${lvl}`, desc: def.desc, ...this.comboHint(true, c.id, lvl), icon: def.icon, art: `p-${c.id}`, color: def.color };
   }
 
   // Combo hint on a card: only for a partner the player already has, so the rest stays a discovery.
@@ -1046,8 +1047,8 @@ export class Game {
 
   buildSummary() {
     return {
-      weapons: this.weapons.map((w) => ({ id: w.id, icon: WEAPONS[w.id].icon, color: w.evolved ? '#ffd23d' : WEAPONS[w.id].color, level: w.evolved ? '★' : w.level, name: w.evolved ? WEAPONS[w.id].evo.name : WEAPONS[w.id].name })),
-      passives: Object.entries(this.passives).map(([id, l]) => ({ id, icon: PASSIVES[id].icon, color: PASSIVES[id].color, level: l, name: PASSIVES[id].name })),
+      weapons: this.weapons.map((w) => ({ id: w.id, icon: WEAPONS[w.id].icon, art: `${w.evolved ? 'e' : 'w'}-${w.id}`, color: w.evolved ? '#ffd23d' : WEAPONS[w.id].color, level: w.evolved ? '★' : w.level, name: w.evolved ? WEAPONS[w.id].evo.name : WEAPONS[w.id].name })),
+      passives: Object.entries(this.passives).map(([id, l]) => ({ id, icon: PASSIVES[id].icon, art: `p-${id}`, color: PASSIVES[id].color, level: l, name: PASSIVES[id].name })),
       combos: [...this.combos].map((id) => ({ id, name: COMBOS[id].name, color: COMBOS[id].color, desc: COMBOS[id].desc })),
     };
   }
@@ -1770,6 +1771,7 @@ export class Game {
           const sp = pr.speed || 1;
           this.damage(e, pr.dmg, (pr.vx / sp) * pr.knock, (pr.vy / sp) * pr.knock);
           pr.hit.push(e.id);
+          if (this.sparks.length < 40) this.sparks.push({ x: pr.x, y: pr.y, color: pr.color, t: 0 });
           if (pr.flak) {
             // Flak Cannon: a small quiet blast around the hit
             for (const o of this.enemiesNear(pr.x, pr.y, pr.flak)) if (o !== e) this.damage(o, pr.dmg * 0.6, 0, 0, true);
@@ -1947,6 +1949,7 @@ export class Game {
       q.vx *= f; q.vy *= f;
       q.x += q.vx * dt; q.y += q.vy * dt;
     }
+    for (let i = this.sparks.length - 1; i >= 0; i--) if ((this.sparks[i].t += dt) > 0.25) this.sparks.splice(i, 1);
     for (let i = this.fx.length - 1; i >= 0; i--) {
       this.fx[i].t += dt;
       if (this.fx[i].t >= this.fx[i].dur) this.fx.splice(i, 1);
