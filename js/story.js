@@ -78,6 +78,11 @@ const CREDITS = `
   <div class="story-credits">
     <h2>VOID BLASTER</h2>
     <p>A game by<br><b>Konrad Lechowicz</b></p>
+    <div class="story-thanks">
+      <h3>SPECIAL THANKS</h3>
+      <p><b>Suno</b> and <b>ChatGPT</b>, wonderful crew members:<br>full of creative ideas and tireless at work.</p>
+      <p><b>Claude</b>, a wonderful project manager.</p>
+    </div>
     <p class="muted">Thank you for playing.</p>
     <div class="story-sig">VOID COLLECTIVE // SIGNAL<br>...WE REMEMBER.</div>
     <p class="story-endless">ENDLESS MODE UNLOCKED</p>

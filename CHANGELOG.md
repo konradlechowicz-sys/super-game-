@@ -16,6 +16,9 @@ i wersja TEST (gracze tego nie widzą).
 
 - 
 
+## Build 137 · 2026-11-01
+- [Nowe] Napisy końcowe: podziękowania (SPECIAL THANKS) dla Suno i ChatGPT, „wspaniałych członków załogi, pełnych kreatywnych pomysłów i niestrudzonych w działaniu”, oraz dla Claude'a, „wspaniałego project managera”.
+
 ## Build 136 · 2026-11-01
 - [Nowe] Fabuła 2.0 (scenariusz zaakceptowany przez Konrada): intro przed pierwszym sektorem (4 plansze), transmisja po pokonaniu bossa każdego ze światów 1–9 i outro z napisami końcowymi po Void Heart. Admirał Hale z Dowództwa Ziemi i przechwycone sygnały Kolektywu, tekst pisany na żywo pod powoli przesuwającą się planszą; stuknięcie przyspiesza lub przechodzi dalej, SKIP pomija scenę.
 - [Nowe] Każda scena gra się sama raz; w Codexie nowa sekcja LOG pozwala obejrzeć obejrzane sceny ponownie. W wersji próbnej transmisja po świecie 2 poprzedza zaproszenie do pełnej gry.
