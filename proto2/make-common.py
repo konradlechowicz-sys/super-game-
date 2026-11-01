@@ -234,3 +234,13 @@ for part, (cx, cy) in SPOTS.items():
     g.resize(Image.open(f'{OUT}/ship-{part}.webp').size, Image.LANCZOS).save(f'{OUT}/ship-vet-{part}.webp', 'WEBP', quality=90, method=6)
 cut(Image.open(f'{SRC}/SH7/selected/SH7b-veteran-striker-hangar-3quarter.webp').resize((256, 256), Image.LANCZOS)).save(f'{OUT}/ui-hero-veteran.webp', 'WEBP', quality=86, method=6)
 print('Veteran Striker')
+
+
+# ---- SH5: weapon modules on the ship (ship-mod-<weapon>, PixiJS textures; js/v2/renderer.js mounts the player's
+# weapons on every ship). One 256 px cell per module, all at one scale; the flat #05010f background becomes transparency.
+for i, (key, f) in enumerate((('blaster', 'pulse-blaster'), ('spread', 'scatter-gun'), ('missiles', 'seeker-missiles'),
+                              ('orbit', 'orbit-blades'), ('lightning', 'arc-coil'), ('pulse', 'nova-pulse'),
+                              ('drone', 'wingman-drone'), ('mines', 'proximity-mines'), ('rail', 'railgun'),
+                              ('flame', 'flamethrower'), ('singularity', 'singularity-cannon')), 1):
+    cut(Image.open(f'{SRC}/SH5/selected/SH5-{i:02d}-{f}-module.webp').resize((96, 96), Image.LANCZOS)).save(f'{OUT}/ship-mod-{key}.webp', 'WEBP', quality=90, method=6)
+print('weapon modules')

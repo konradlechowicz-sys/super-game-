@@ -715,6 +715,7 @@ export async function createV2Renderer(app) {
       ship.body.alpha = p.inv > 0 && Math.floor(game.time * 20) % 2 === 0 ? 0.35 : 1;
       ship.setTint(game.flash > 0.15 ? 0xff8080 : base);
       ship.animate(game.time, 0.6 + Math.min(1, p.moving / 300) * 0.8, ship.bank);
+      ship.setWeapons(game.weapons);
     }
     px.render();
   }
@@ -871,8 +872,10 @@ function makeShip(tex, SHIP, height, skin = '') {
   body.addChild(...flames, ...guns, ...wings, ...engines, hull, glass);
   body.scale.set(height / (k * 1201));
   const solid = [...guns, ...wings, ...engines, hull, glass];
+  const mods = makeModules(tex, k * 1201, MOUNTS.striker);
+  body.addChildAt(mods.layer, body.getChildIndex(hull));
   return {
-    body, bank: 0, lastFacing: null,
+    body, bank: 0, lastFacing: null, setWeapons: mods.set,
     setTint(t) { for (const s of solid) s.tint = t; },
     animate(time, boost, bank) {
       wings[0].scale.x = 1 - 0.18 * Math.max(0, bank);
@@ -880,6 +883,47 @@ function makeShip(tex, SHIP, height, skin = '') {
       flames.forEach((f, i) => {
         f.scale.set(0.9, boost * (1 + 0.16 * Math.sin(time * 31 + i * 1.7) + 0.08 * Math.sin(time * 53)));
         f.alpha = 0.85 + 0.15 * Math.sin(time * 40 + i);
+      });
+    },
+  };
+}
+
+// The player's weapons as modules on the ship (Art Bible SH5, ship-mod-<weapon>): one per weapon, in the order they
+// were taken, on four mounts per ship (fractions of the ship's length, from its middle, nose up: outer pair on the
+// wings, then the inner pair). An evolved weapon's module turns gold with a glow (no separate art, decided by Konrad
+// 2026-11-01). L: the ship's length in its own units.
+const MOUNTS = {
+  striker: [[-0.3, 0.1], [0.3, 0.1], [-0.15, 0.0], [0.15, 0.0]],
+  phantom: [[-0.24, 0.26], [0.24, 0.26], [-0.15, 0.06], [0.15, 0.06]],
+  titan: [[-0.37, 0.06], [0.37, 0.06], [-0.19, -0.04], [0.19, -0.04]],
+};
+const MOD_SIZE = 0.3; // a module's size, as a fraction of the ship's length
+
+function makeModules(tex, L, mounts) {
+  const layer = new Container();
+  const slots = mounts.map(([x, y]) => {
+    const glow = new Sprite(Texture.EMPTY), mod = new Sprite(Texture.EMPTY);
+    for (const s of [glow, mod]) { s.anchor.set(0.5); s.position.set(x * L, y * L); s.visible = false; }
+    glow.blendMode = 'add'; glow.tint = 0xffc23d; glow.alpha = 0.9;
+    layer.addChild(glow, mod);
+    return { glow, mod };
+  });
+  let key = '';
+  return {
+    layer,
+    // weapons: game.weapons ({ id, evolved }); only redrawn when the loadout changes
+    set(weapons) {
+      const k = weapons.map((w) => w.id + (w.evolved ? '+' : '')).join(',');
+      if (k === key) return;
+      key = k;
+      slots.forEach(({ glow, mod }, i) => {
+        const w = weapons[i], t = w && tex[`ship-mod-${w.id}`];
+        mod.visible = !!t; glow.visible = !!t && w.evolved;
+        if (!t) return;
+        mod.texture = glow.texture = t;
+        mod.scale.set((MOD_SIZE * L) / t.width);
+        glow.scale.set((MOD_SIZE * L * 1.5) / t.width);
+        mod.tint = w.evolved ? 0xffd27a : 0xffffff;
       });
     },
   };
@@ -964,10 +1008,12 @@ function makeBodyShip(tex, name, def, length) {
     return f;
   });
   body.addChild(...flames, hull);
+  const mods = makeModules(tex, def.length, MOUNTS[name]);
+  body.addChild(mods.layer);
   const k = length / def.length;
   body.scale.set(k);
   return {
-    body, bank: 0, lastFacing: null,
+    body, bank: 0, lastFacing: null, setWeapons: mods.set,
     setTint(t) { hull.tint = t; },
     animate(time, boost, bank) {
       hull.scale.x = 1 - 0.12 * Math.abs(bank);

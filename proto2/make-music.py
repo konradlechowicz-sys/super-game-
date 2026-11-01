@@ -21,8 +21,9 @@
 #          0.72 (loop RMS 0.209)
 #   boss5: world 5 boss (about 140.4 BPM): 24 bars (about 41 s); the track starts 30 beats before the loop (`trim`),
 #          about 13 s of build-up; 0.74 (loop RMS 0.204)
-#   game6: world 6 "Storm Relay" sector (about 113.8 BPM): 32 bars (about 67.5 s); boss6 (about 117 BPM): 36 bars
-#          (about 74 s) with 13 s of build-up (`trim`)
+#   game6: world 6 "Storm Relay" sector, version 2 (Konrad's new Suno track, 2026-11-01, about 137.4 BPM): 32 bars
+#          (about 56 s); boss6 (version 2, about 140 BPM): 36 bars (about 62 s) with 8 bars (13.7 s) of build-up
+#          (`trim`); both searched like worlds 7-10 (below)
 #   game7 / boss7: world 7 "Abyss of Europa" (about 111 / 120 BPM): 32 bars / 24 bars, the boss with 13 s of build-up
 #   game8 / boss8: world 8 "The Rift Gate" (about 129 / 137 BPM): 32 bars / 36 bars, the boss with 13 s of build-up
 #   game9 / boss9: world 9 "Brood World" (about 137 / 144 BPM): 40 bars / 24 bars, the boss with 13 s of build-up
@@ -36,7 +37,7 @@
 # and band energies (sound) over the 4 s after both points.
 # A track's optional 5th value `trim` drops that many seconds from the start (the loop points are in the original's
 # time and are moved with it).
-# Writes proto2/assets/music-<name>.mp3 and music.json. Run from the repo root: python3 proto2/make-music.py
+# Writes proto2/assets/music-<name>.mp3 and music.json. Run from the repo root: python3 proto2/make-music.py [name ...]
 import json
 import subprocess
 import numpy as np
@@ -56,8 +57,8 @@ TRACKS = {
     'game5': ('art/2.0/audio/w05-foundry-belt-sector.mp3', 16.7618, 80.2995, 0.72),
     'boss5': ('art/2.0/audio/w05-foundry-belt-boss.mp3', 40.6500, 81.7792, 0.74, 27.8340),
     # worlds 6-10 (Konrad's WAVs kept as 320k MP3s): ends found by the same search, on half-bar starts
-    'game6': ('art/2.0/audio/w06-storm-relay-sector.mp3', 40.1728, 107.6256, 0.92),
-    'boss6': ('art/2.0/audio/w06-storm-relay-boss.mp3', 50.4090, 124.1209, 0.88, 37.0840),
+    'game6': ('art/2.0/audio/w06-storm-relay-sector.mp3', 38.8699, 94.7824, 0.86),
+    'boss6': ('art/2.0/audio/w06-storm-relay-boss.mp3', 71.0952, 132.8064, 0.9, 57.3809),
     'game7': ('art/2.0/audio/w07-abyss-of-europa-sector.mp3', 51.6410, 103.3743, 0.89),
     'boss7': ('art/2.0/audio/w07-abyss-of-europa-boss.mp3', 79.1994, 111.1864, 0.97, 66.1994),
     'game8': ('art/2.0/audio/w08-rift-gate-sector.mp3', 34.3200, 78.8493, 0.77),
@@ -69,7 +70,13 @@ TRACKS = {
 }
 
 out = {}
+import sys
+ONLY = set(sys.argv[1:])  # optional: only these tracks (the others keep their files and music.json entries)
+old = json.load(open('proto2/assets/music.json')) if ONLY else {}
+out.update({k: v for k, v in old.items() if k not in ONLY})
 for name, (src, start, end, gain, *rest) in TRACKS.items():
+    if ONLY and name not in ONLY:
+        continue
     raw = subprocess.run(['ffmpeg', '-v', 'error', '-i', src, '-t', f'{end + 0.5:.3f}', '-ac', '2', '-ar', str(SR),
                           '-f', 'f32le', '-'], check=True, capture_output=True).stdout
     a = np.frombuffer(raw, dtype=np.float32).reshape(-1, 2).copy()

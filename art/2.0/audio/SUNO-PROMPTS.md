@@ -581,7 +581,7 @@ Lyrics:
 | `w03-lunar-bridgehead-sector` / `-boss` | W3 | gotowe (2026-10-29), w grze (`game3`, `boss3`): pętle w `proto2/make-music.py` |
 | `w04-red-conversion-sector` / `-boss` | W4 | gotowe (2026-10-29), w grze (`game4`, `boss4`): pętle w `proto2/make-music.py` |
 | `w05-foundry-belt-sector` / `-boss` | W5 | gotowe (2026-10-29), w grze (`game5`, `boss5`): pętle w `proto2/make-music.py` |
-| `w06-storm-relay-sector` / `-boss` | W6 | do wymiany (2026-11-01): wersja 1 w grze (`game6`, `boss6`) odstaje od reszty; nowy prompt (wersja 2) wyżej |
+| `w06-storm-relay-sector` / `-boss` | W6 | wersja 2 (prompt wyżej) w grze od buildu 135 (`game6`, `boss6`); wersja 1 odstawała od reszty |
 | `w07-abyss-of-europa-sector` / `-boss` | W7 | gotowe (2026-10-31), w grze (`game7`, `boss7`): pętle w `proto2/make-music.py` |
 | `w08-rift-gate-sector` / `-boss` | W8 | gotowe (2026-10-31), w grze (`game8`, `boss8`): pętle w `proto2/make-music.py` |
 | `w09-brood-world-sector` / `-boss` | W9 | gotowe (2026-10-31), w grze (`game9`, `boss9`): pętle w `proto2/make-music.py` |
