@@ -16,6 +16,10 @@ i wersja TEST (gracze tego nie widzą).
 
 - 
 
+## Build 128 · 2026-11-01
+- [Poprawka] Start gry: zanim wczytają się grafiki 2.0, nie pokazuje się już przez chwilę wygląd 1.x. Ekran jest ciemny z pulsującym napisem LOADING, a menu pojawia się dopiero razem z grafiką 2.0 (najwyżej po 20 s pokazuje się to, co jest).
+- [Poprawka] Okna wyższe niż ekran (np. panel testera 🛠) dają się przewijać palcem, więc da się dojść do przycisku DONE. Wcześniej gra blokowała przesuwanie wszędzie poza listami.
+
 ## Build 127 · 2026-10-31
 - [Nowe] Gold Striker z własnych, złotych części od ChatGPT (Art Bible SH4) zamiast złotego zabarwienia Strikera.
 - [Nowe] Ekran sektorów: żeton każdego świata na zakładkach (wyszarzony, gdy świat jest zamknięty) i duży żeton przy nazwie świata, a w tle mapa podróży od Ziemi do Nexusa (UI3, UI4).

@@ -237,7 +237,7 @@ h1, h2, h3 { font-family: 'Orbitron', sans-serif; font-weight: 700; margin: 0; l
 .modal-layer.open { display: flex; align-items: center; justify-content: center; padding: calc(var(--st) + 12px) 14px calc(var(--sb) + 12px); }
 .backdrop { position: absolute; inset: 0; background: rgba(2, 4, 8, 0.78); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); }
 .modal {
-  position: relative; width: 100%; max-width: 440px; max-height: 100%; overflow-y: auto;
+  position: relative; width: 100%; max-width: 440px; max-height: 100%; overflow-y: auto; -webkit-overflow-scrolling: touch; touch-action: pan-y; overscroll-behavior: contain;
   padding: 22px 18px 20px; border-radius: 4px; border: 1px solid var(--line-2);
   background: linear-gradient(180deg, rgba(16, 20, 30, 0.97), rgba(8, 11, 17, 0.97));
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.04);
@@ -382,6 +382,15 @@ h1, h2, h3 { font-family: 'Orbitron', sans-serif; font-weight: 700; margin: 0; l
   background: var(--panel); border: 1px solid var(--amber-line); color: var(--amber); font-family: 'Orbitron', sans-serif; font-size: 11px; letter-spacing: 0.12em; opacity: 0; pointer-events: none; white-space: nowrap; }
 .toast.show { animation: toast 2.2s ease; }
 @keyframes toast { 0% { opacity: 0; transform: translate(-50%, -10px); } 12%, 80% { opacity: 1; transform: translate(-50%, 0); } 100% { opacity: 0; } }
+
+/* ---------- 2.0 start: dark until the 2.0 pictures have loaded (js/main.js) ---------- */
+body.v2-loading #ui { visibility: hidden; }
+body.v2-loading::after {
+  content: 'LOADING'; position: fixed; left: 0; right: 0; top: 50%; text-align: center; z-index: 50;
+  font-family: 'Orbitron', sans-serif; font-size: 12px; letter-spacing: 0.4em; color: var(--muted);
+  animation: loading-pulse 1.2s ease-in-out infinite alternate;
+}
+@keyframes loading-pulse { from { opacity: 0.35; } to { opacity: 1; } }
 
 /* ---------- TEST variant (js/testkit.js) ---------- */
 .test-build .version-tag { color: var(--red); font-weight: 700; }
