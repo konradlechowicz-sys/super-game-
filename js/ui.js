@@ -2,6 +2,7 @@ import { WORLDS, SHIPS, SHOP, DAILY, ALL_STAGES, BOSSES, ENDLESS, stageIndex } f
 import { WEAPONS } from './weapons.js';
 import { COMBOS } from './combos.js';
 import { codexSections, codexName } from './codex.js';
+import { STORY, STORY_ORDER, sceneAfterWorld } from './story.js';
 import { icon, uiArt } from './icons.js';
 import { fmtTime } from './util.js';
 import { shipSprite } from './sprites.js';
@@ -442,11 +443,16 @@ export class UI {
       ? `<div class="codex-item" style="--cc:${x.color}"><img src="${icon(x.icon, x.color, x.evo, x.art)}" alt="">
           <div><b>${esc(x.name)}</b><small>${esc(x.desc)}</small>${x.recipe ? `<em>${esc(x.recipe)}</em>` : ''}</div></div>`
       : `<div class="codex-item locked"><div class="codex-q">?</div><div><b>???</b><small>${esc(x.hint)}</small></div></div>`;
+    // the Log: the story scenes seen so far, to replay (js/story.js)
+    const seen = this.save.story || {};
+    const logHtml = `<h3 class="codex-head">LOG <span>${STORY_ORDER.filter((k) => seen[k]).length}/${STORY_ORDER.length}</span></h3>${STORY_ORDER.map((k) => (seen[k]
+      ? `<button class="codex-item codex-log" data-act="story" data-k="${k}"><div class="codex-q">▶</div><div><b>${esc(STORY[k].title)}</b><small>Replay this transmission</small></div></button>`
+      : `<div class="codex-item codex-log locked"><div class="codex-q">?</div><div><b>???</b><small>${k === 'intro' ? 'Start the journey' : k === 'outro' ? 'Destroy the Void Heart' : `Defeat the boss of world ${k.slice(1)}`}</small></div></div>`)).join('')}`;
     this.setScreen(`
       <div class="topbar"><button class="icon-btn" data-act="back" aria-label="Back">‹</button><h1 class="title">CODEX</h1><div class="codex-count">${count}/${all.length}</div></div>
       <p class="muted center">Everything you have found in your runs. Keep playing to fill in the rest.</p>
-      <div class="scroll">${sections.map((s) => `<h3 class="codex-head">${s.title} <span>${s.items.filter((x) => found[x.key]).length}/${s.items.length}</span></h3>${s.items.map(entry).join('')}`).join('')}</div>
-    `, { back }, 'codex');
+      <div class="scroll">${logHtml}${sections.map((s) => `<h3 class="codex-head">${s.title} <span>${s.items.filter((x) => found[x.key]).length}/${s.items.length}</span></h3>${s.items.map(entry).join('')}`).join('')}</div>
+    `, { back, story: (d) => this.app.playStory(d.k, () => this.codex(back)) }, 'codex');
   }
 
   // ======================= SHOP =======================
@@ -790,6 +796,12 @@ export class UI {
     const stars = [0, 1, 2].map((k) => `<span class="rstar ${k < r.stars ? 'on' : ''} ${k >= r.prevStars && k < r.stars ? 'new' : ''}" style="animation-delay:${0.3 + k * 0.25}s">${STAR}</span>`).join('');
     // every goal with its progress, so the player sees which one was missed
     const st = r.stage;
+    // a world's boss beaten for the first time: its story scene (js/story.js) plays when the player leaves the
+    // results (not on RETRY); after world 2 the trial's invitation follows it
+    const worldDone = r.won && (!next || next.world.id !== st.world.id);
+    const sceneKey = worldDone ? sceneAfterWorld(st.world.id) : null;
+    const scene = sceneKey && !this.save.story?.[sceneKey] ? sceneKey : null;
+    const story = (then) => (scene ? this.app.playStory(scene, then) : then());
     const bossNote = st.boss ? (r.won ? ' + boss' : ' + boss ✗') : '';
     const rows = [
       [st.boss ? 'Defeat the boss' : 'Survive', st.boss ? (r.won ? '✓' : '✗') : `${fmtTime(Math.min(r.time, st.duration))} / ${fmtTime(st.duration)}`],
@@ -826,10 +838,10 @@ export class UI {
       ${r.newEntries?.length ? `<div class="codex-new">NEW IN CODEX: ${r.newEntries.map((k) => esc(codexName(k))).join(', ')}</div>` : ''}
       ${!r.won ? '<p class="tiny muted center">Tip: spend coins on permanent Upgrades to get stronger.</p>' : ''}
     `, {
-      map: () => { this.closeModal(); this.app.endRun(); this.map(); },
+      map: () => { this.closeModal(); this.app.endRun(); story(() => this.map()); },
       retry: () => { this.closeModal(); this.app.startStage(r.stage.id); },
-      next: () => { this.closeModal(); this.app.startStage(next.id); },
-      full: () => { this.closeModal(); this.app.endRun(); this.paywall(() => this.map(), true); },
+      next: () => { this.closeModal(); if (scene) { this.app.endRun(); story(() => this.app.startStage(next.id)); } else this.app.startStage(next.id); },
+      full: () => { this.closeModal(); this.app.endRun(); story(() => this.paywall(() => this.map(), true)); },
     }, 'results', 700);
   }
 

@@ -16,6 +16,12 @@ i wersja TEST (gracze tego nie widzą).
 
 - 
 
+## Build 136 · 2026-11-01
+- [Nowe] Fabuła 2.0 (scenariusz zaakceptowany przez Konrada): intro przed pierwszym sektorem (4 plansze), transmisja po pokonaniu bossa każdego ze światów 1–9 i outro z napisami końcowymi po Void Heart. Admirał Hale z Dowództwa Ziemi i przechwycone sygnały Kolektywu, tekst pisany na żywo pod powoli przesuwającą się planszą; stuknięcie przyspiesza lub przechodzi dalej, SKIP pomija scenę.
+- [Nowe] Każda scena gra się sama raz; w Codexie nowa sekcja LOG pozwala obejrzeć obejrzane sceny ponownie. W wersji próbnej transmisja po świecie 2 poprzedza zaproszenie do pełnej gry.
+- [Zmiana] Do czasu plansz od ChatGPT (Art Bible SC0a–SC10d) sceny mają tła z konceptów światów.
+- [Narzędzia] Panel testera: przyciski odtwarzania każdej sceny i „FORGET SEEN”.
+
 ## Build 135 · 2026-11-01
 - [Zmiana] Nowa muzyka świata 6 „Storm Relay” (wersja 2 z Suno, pasuje do reszty ścieżki): sektory ok. 137 BPM z pętlą 32 taktów (ok. 56 s), boss ok. 140 BPM z pętlą 36 taktów (ok. 62 s) i 8 taktami wejścia; punkty pętli dobrane tak jak w światach 7–10 (bez słyszalnego skoku).
 

@@ -11,6 +11,7 @@ import { createLeaderboard } from './leaderboard.js';
 import { frameCamera } from './render-canvas.js';
 import { EDITION } from './edition.js';
 import { installTestKit } from './testkit.js';
+import { playStory } from './story.js';
 
 const params = new URLSearchParams(location.search);
 // Test flags (?dev, &full, &god, ...) work only on the developer's own machine or network and in TEST builds, so the
@@ -203,8 +204,17 @@ app.resetProgress = () => {
   app.applySettings();
 };
 
+// a story scene (js/story.js), marked as seen when it starts (so SKIP counts too)
+app.playStory = (key, done) => {
+  app.save.story = { ...(app.save.story || {}), [key]: 1 };
+  app.persist();
+  playStory(key, done);
+};
+
 app.startStage = (id) => {
   if (app.needsFullGame(id)) { app.ui.paywall(); return; }
+  // the intro plays once, before the journey's first sector
+  if (id === ALL_STAGES[0].id && !app.save.story?.intro) { app.playStory('intro', () => app.startStage(id)); return; }
   const st = ALL_STAGES.find((s) => s.id === id);
   const stage = DEV && params.get('fast') ? { ...st, duration: st.duration / 6, bossAt: st.bossAt && st.bossAt / 6, events: st.events.map((e) => ({ ...e, t: e.t / 6 })) } : st;
   app.bg.setTheme(st.world.theme);

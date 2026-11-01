@@ -479,3 +479,41 @@ body.v2-loading::after {
 .endless-score b { font-family: 'Orbitron', sans-serif; font-weight: 700; font-size: 44px; color: var(--text); font-variant-numeric: tabular-nums; }
 .endless-score span { font-family: 'Orbitron', sans-serif; font-size: 11px; letter-spacing: 0.34em; color: var(--muted); }
 .lb-btn { display: block; margin: 0 auto 12px; }
+
+/* ---- the story scenes (js/story.js): a portrait picture drifting slowly, the transmission typed under it ---- */
+.story { position: absolute; inset: 0; z-index: 50; pointer-events: auto; background: #000; overflow: hidden;
+  animation: story-in 0.5s ease-out; }
+.story.out { opacity: 0; transition: opacity 0.35s; }
+@keyframes story-in { from { opacity: 0; } }
+.story-art { position: absolute; inset: -6%; background: center / cover no-repeat; opacity: 0; }
+.story-art.drift { animation: story-fade 0.8s ease-out forwards, story-drift-r 16s ease-out forwards; }
+.story-art.drift.left { animation: story-fade 0.8s ease-out forwards, story-drift-l 16s ease-out forwards; }
+@keyframes story-fade { to { opacity: 1; } }
+@keyframes story-drift-r { from { transform: scale(1.0) translate(-1.5%, 1%); } to { transform: scale(1.08) translate(1.5%, -1%); } }
+@keyframes story-drift-l { from { transform: scale(1.08) translate(1.5%, 0); } to { transform: scale(1.0) translate(-1.5%, -1%); } }
+.story-shade { position: absolute; inset: 0;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.35) 0%, rgba(0, 0, 0, 0) 22%, rgba(0, 0, 0, 0) 45%, rgba(2, 3, 8, 0.92) 78%, #02030a 100%); }
+.story-text { position: absolute; left: 0; right: 0; bottom: 0; padding: 0 24px calc(40px + var(--sb)); }
+.story-block { margin-top: 16px; }
+.story-head { font: 600 11px/1.4 'Rajdhani', sans-serif; letter-spacing: 0.18em; margin-bottom: 6px; opacity: 0.85; }
+.story-block p { margin: 0 0 4px; min-height: 1.4em; font: 500 18px/1.4 'Rajdhani', sans-serif; color: var(--text); }
+.story-block.cmd .story-head { color: var(--amber); }
+.story-block.void .story-head, .story-block.void p { color: #ff4fa8; }
+.story-block.void p { font-family: 'Orbitron', sans-serif; font-size: 13px; letter-spacing: 0.08em; line-height: 1.7;
+  text-shadow: 0 0 8px rgba(255, 45, 149, 0.5); }
+.story-block.lost .story-head, .story-block.lost p { color: var(--muted); font-style: italic; }
+.story-skip { position: absolute; top: calc(14px + var(--st)); right: 14px; background: rgba(4, 6, 11, 0.6);
+  border: 1px solid var(--line-2); color: var(--muted); font: 600 12px 'Rajdhani', sans-serif; letter-spacing: 0.15em;
+  padding: 8px 14px; }
+.story.credits .story-skip { display: none; }
+.story.credits .story-text { top: 0; display: flex; align-items: center; justify-content: center; text-align: center; }
+.story-credits h2 { font: 800 30px 'Orbitron', sans-serif; letter-spacing: 0.2em; color: var(--text); margin: 0 0 24px; }
+.story-credits p { font: 500 17px/1.5 'Rajdhani', sans-serif; color: var(--text); margin: 0 0 18px; }
+.story-credits b { color: var(--amber); font-weight: 600; font-size: 20px; }
+.story-sig { margin: 40px 0 10px; font: 500 12px/1.8 'Orbitron', sans-serif; letter-spacing: 0.1em; color: #ff4fa8;
+  text-shadow: 0 0 8px rgba(255, 45, 149, 0.5); }
+.story-endless { font: 700 13px 'Orbitron', sans-serif !important; letter-spacing: 0.2em; color: var(--amber) !important; }
+.codex-log { width: 100%; text-align: left; color: inherit; font: inherit; --cc: var(--amber); }
+.codex-log .codex-q { color: var(--amber); border-style: solid; border-color: var(--amber-line); font-size: 14px; }
+.codex-log.locked { --cc: #59627a; }
+.codex-log.locked .codex-q { color: var(--muted); border-style: dashed; border-color: var(--line-2); font-size: 20px; }
