@@ -98,9 +98,9 @@ export function makeTitle(tex, halo, ships) {
   return {
     scene,
     // time: seconds; W, H: screen in points; main: the main menu (ship, full brightness); shipId: the chosen ship;
-    // gold: the Gold Striker skin
+    // skin: '' or a skin's ships key ('gold', 'vet': the Gold and Veteran Strikers)
     // emblem: { y, size } of the room above the logo, in points (null: no emblem)
-    update(time, W, H, { main, shipId, gold, emblem: em }) {
+    update(time, W, H, { main, shipId, skin, emblem: em }) {
       const dt = lastTime === null ? 0 : Math.min(0.05, time - lastTime);
       lastTime = time;
       // cover the screen with the portrait art, Earth kept at the bottom; a slow breathing zoom
@@ -166,11 +166,11 @@ export function makeTitle(tex, halo, ships) {
 
       shipC.visible = !!main;
       if (shipC.visible) {
-        const ship = ships[shipId] || ships.striker;
+        const ship = (skin && ships[skin]) || ships[shipId] || ships.striker;
         for (const s of Object.values(ships)) s.body.visible = s === ship;
         shipC.position.set(W / 2, H * 0.47 + Math.sin(time * 1.6) * 8);
         ship.body.rotation = 0;
-        ship.setTint(gold ? 0xffd98a : 0xffffff);
+        ship.setTint(skin === 'gold' && !ships.gold ? 0xffd98a : 0xffffff);
         ship.animate(time, 0.9 + 0.25 * Math.sin(time * 2.3), Math.sin(time * 0.7) * 0.25);
       }
     },

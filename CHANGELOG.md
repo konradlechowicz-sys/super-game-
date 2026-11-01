@@ -16,6 +16,10 @@ i wersja TEST (gracze tego nie widzą).
 
 - 
 
+## Build 132 · 2026-11-01
+- [Nowe] Skórka Veteran Striker (grafika SH7 od ChatGPT) dla graczy z wersji 1.x: wybór „Veteran” w hangarze przy Strikerze; statek w grze i na ekranie tytułowym złożony z nowych części, w hangarze render 3/4.
+- [Zmiana] Płomień silnika złotej skórki wycięty czysto (bez ciemnej obwódki).
+
 ## Build 131 · 2026-11-01
 - [Poprawka] Muzyka światów 7–10 (sektory i bossowie) ma nowe pętle bez słyszalnych skoków: koniec pętli trzyma się rytmu z dokładnością do 0,035 s (wcześniej do 0,12 s), a przy wyborze porównany był też rytm przed skokiem. Muzyka świata 6 czeka na nowe utwory z Suno.
 - [Narzędzia] Wydajność: na iPhonie 17 Pro Max ze wszystkimi nowymi grafikami dokładanie masy wrogów nic nie zmienia (test Konrada); zapisane w CLAUDE.md.

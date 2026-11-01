@@ -151,7 +151,8 @@ print('projectiles and the other effects')
 PARTS = {'hull': 'hull', 'wing-left': 'wing-left', 'wing-right': 'wing-right', 'engine-left': 'engine-left',
          'engine-right': 'engine-right', 'glass': 'cockpit-glass', 'gun': 'gun', 'flame': 'flame'}
 for part, f in PARTS.items():
-    g = cut(Image.open(f'{SRC}/SH4/selected/SH4-gold-striker-{f}.webp'))
+    src = Image.open(f'{SRC}/SH4/selected/SH4-gold-striker-{f}.webp')
+    g = light_to_alpha(src) if part == 'flame' else cut(src)
     g = g.crop(g.getchannel('A').point(lambda v: 255 if v > 40 else 0).getbbox())
     size = Image.open(f'{OUT}/ship-{part}.webp').size
     g.resize(size, Image.LANCZOS).save(f'{OUT}/ship-gold-{part}.webp', 'WEBP', quality=90, method=6)
@@ -174,3 +175,62 @@ for f, out in (('ST1/selected/ST1-app-icon', 'app-icon-1024.png'), ('ST2/selecte
     im = Image.open(f'{SRC}/{f}.webp').convert('RGB')
     im.save(f'appstore/2.0/{out}', 'JPEG', quality=92) if out.endswith('.jpg') else im.save(f'appstore/2.0/{out}', 'PNG', optimize=True)
 print('Gold Striker, screens and store art')
+
+
+# ---- SH7: the Veteran Striker (1.x players' skin). Its parts came on one sheet (no separate files): each part is a
+# blob of the sheet, found by position, trimmed and fitted to the Striker's part (ship-vet-...). The assembled ship in
+# the sheet's bottom-right corner is left out. The hangar's 3/4 render is ui-hero-veteran.
+sheet = cut(Image.open(f'{SRC}/SH7/selected/SH7a-veteran-striker-parts-sheet.webp'))
+alpha = np.asarray(sheet.getchannel('A')) > 60
+
+
+def blobs_of(mask, step=4):
+    # connected parts of the mask (on a grid `step` px coarse, which also joins a part's nearby pieces): their boxes
+    small = mask[::step, ::step]
+    h, w = small.shape
+    seen = np.zeros_like(small, bool)
+    out = []
+    for y0 in range(h):
+        for x0 in range(w):
+            if not small[y0, x0] or seen[y0, x0]:
+                continue
+            stack, ys, xs = [(y0, x0)], [], []
+            seen[y0, x0] = True
+            while stack:
+                y, x = stack.pop()
+                ys.append(y); xs.append(x)
+                for dy in (-2, -1, 0, 1, 2):
+                    for dx in (-2, -1, 0, 1, 2):
+                        ny, nx = y + dy, x + dx
+                        if 0 <= ny < h and 0 <= nx < w and small[ny, nx] and not seen[ny, nx]:
+                            seen[ny, nx] = True
+                            stack.append((ny, nx))
+            if len(ys) > 150:
+                out.append((slice(min(ys) * step, (max(ys) + 1) * step), slice(min(xs) * step, (max(xs) + 1) * step)))
+    return out
+
+
+blobs = blobs_of(alpha)
+H, W = alpha.shape
+
+
+sheet_rgb = Image.open(f'{SRC}/SH7/selected/SH7a-veteran-striker-parts-sheet.webp').convert('RGB')
+
+
+def blob(cx, cy, light=False):
+    # the biggest blob whose box holds the point (sheet coordinates, as fractions); light: a glow (the engine flame),
+    # whose dark edge would show as a rim, so its brightness becomes its alpha instead
+    x, y = cx * W, cy * H
+    hits = [b for b in blobs if b[1].start <= x < b[1].stop and b[0].start <= y < b[0].stop]
+    b = max(hits, key=lambda b: (b[0].stop - b[0].start) * (b[1].stop - b[1].start))
+    box = (b[1].start, b[0].start, b[1].stop, b[0].stop)
+    return light_to_alpha(sheet_rgb.crop(box)) if light else sheet.crop(box)
+
+
+SPOTS = {'wing-left': (0.22, 0.35), 'hull': (0.46, 0.35), 'wing-right': (0.71, 0.35), 'engine-left': (0.16, 0.8),
+         'engine-right': (0.30, 0.8), 'flame': (0.425, 0.84), 'glass': (0.54, 0.84), 'gun': (0.65, 0.84)}
+for part, (cx, cy) in SPOTS.items():
+    g = blob(cx, cy, part == 'flame')
+    g.resize(Image.open(f'{OUT}/ship-{part}.webp').size, Image.LANCZOS).save(f'{OUT}/ship-vet-{part}.webp', 'WEBP', quality=90, method=6)
+cut(Image.open(f'{SRC}/SH7/selected/SH7b-veteran-striker-hangar-3quarter.webp').resize((256, 256), Image.LANCZOS)).save(f'{OUT}/ui-hero-veteran.webp', 'WEBP', quality=86, method=6)
+print('Veteran Striker')

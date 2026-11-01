@@ -172,6 +172,8 @@ export async function createV2Renderer(app) {
     striker: makeShip(tex, ASSETS.ship, SHIP_H * scale),
     // the Gold Striker skin: the same parts drawn in gold (Art Bible SH4, proto2/make-common.py)
     ...(tex['ship-gold-hull'] ? { gold: makeShip(tex, ASSETS.ship, SHIP_H * scale, 'gold-') } : {}),
+    // the Veteran Striker skin (Art Bible SH7)
+    ...(tex['ship-vet-hull'] ? { vet: makeShip(tex, ASSETS.ship, SHIP_H * scale, 'vet-') } : {}),
     phantom: makeBodyShip(tex, 'phantom', ASSETS.ships.phantom, PHANTOM_L * scale),
     titan: makeBodyShip(tex, 'titan', ASSETS.ships.titan, TITAN_L * scale),
   });
@@ -698,9 +700,9 @@ export async function createV2Renderer(app) {
     // the ship the player flies (game.ship: its id, and skinName for the Gold Striker)
     const p = game.player;
     const alive = game.state !== 'dying' && game.state !== 'over';
-    const flying = (game.ship.skinName && ships.gold) || ships[game.ship.id] || ships.striker;
+    const flying = (game.ship.skin && ships[game.ship.skin]) || ships[game.ship.id] || ships.striker;
     if (flying !== ship) { ship.body.visible = false; ship = flying; ship.lastFacing = null; }
-    const base = game.ship.skinName && !ships.gold ? GOLD : 0xffffff;
+    const base = game.ship.skin === 'gold' && !ships.gold ? GOLD : 0xffffff;
     ship.body.visible = alive;
     if (alive) {
       let turn = p.facing - (ship.lastFacing ?? p.facing);
@@ -840,7 +842,7 @@ export async function createV2Renderer(app) {
 
 // The Striker from its parts (positions from art/2.0/ship/parts/assembly.json), as in proto2/ and the teaser:
 // engine flames that grow with speed and banking wings.
-// skin: '' or 'gold-' (the Gold Striker's parts)
+// skin: '' or 'gold-' / 'vet-' (the Gold and Veteran Strikers' parts)
 function makeShip(tex, SHIP, height, skin = '') {
   const part = (name) => { const s = new Sprite(tex[`ship-${skin}${name}`]); s.anchor.set(0.5); return s; };
   const P = SHIP.pos, Z = SHIP.size, k = SHIP.k;

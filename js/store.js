@@ -101,6 +101,8 @@ export function createStore(app, dev) {
 
 // The look of the selected ship, with an owned cosmetic skin applied.
 export function shipLook(ship, save) {
-  if (ship.id === 'striker' && save.skin === 'gold' && save.skins.includes('gold')) return { ...ship, color: '#ffd23d', skinName: 'Gold' };
+  if (ship.id === 'striker' && save.skin === 'gold' && save.skins.includes('gold')) return { ...ship, color: '#ffd23d', skinName: 'Gold', skin: 'gold' };
+  // the Veteran Striker: for players who had a 1.x save (js/save.js migrate, Art Bible SH7)
+  if (ship.id === 'striker' && save.skin === 'veteran' && save.veteran) return { ...ship, color: '#ff2d95', skinName: 'Veteran', skin: 'vet' };
   return ship;
 }

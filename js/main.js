@@ -323,7 +323,7 @@ function renderMenu(dt) {
     const logo = onMenu && document.querySelector('.menu .logo');
     const r = logo && logo.getBoundingClientRect();
     const emblem = r ? { y: r.top + parseFloat(getComputedStyle(logo, '::before').height || 0) / 2, size: parseFloat(getComputedStyle(logo, '::before').height || 0) } : null;
-    app.v2r.renderTitle(app.time, { main: onMenu, shipId: ship.id, gold: !!ship.skinName, emblem });
+    app.v2r.renderTitle(app.time, { main: onMenu, shipId: ship.id, skin: ship.skin || '', emblem });
     ctx.setTransform(1, 0, 0, 1, 0, 0);
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     return;
