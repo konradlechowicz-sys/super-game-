@@ -16,6 +16,9 @@ i wersja TEST (gracze tego nie widzą).
 
 - 
 
+## Build 133 · 2026-11-01
+- [Nowe] Atmosfera światów 3–10 z grafik ChatGPT (W3-P9 … W10-P9): pył księżycowy, marsjańskie chmury pyłu, dym fabryk, burzowe chmury Jowisza, mgła nad lodem Europy, zorze przy Wrotach, zarodnikowa mgła Brood World i neuronowa mgiełka Nexusa zastępują mgłę rysowaną kodem; jasność wyrównana tak, by była subtelna jak chmury w świecie 2.
+
 ## Build 132 · 2026-11-01
 - [Nowe] Skórka Veteran Striker (grafika SH7 od ChatGPT) dla graczy z wersji 1.x: wybór „Veteran” w hangarze przy Strikerze; statek w grze i na ekranie tytułowym złożony z nowych części, w hangarze render 3/4.
 - [Zmiana] Płomień silnika złotej skórki wycięty czysto (bez ciemnej obwódki).

@@ -2,8 +2,9 @@
 // other worlds should have that too): soft banks of the world's own air drifting over the arena, a low haze under
 // the enemies and a few thin banks over them, as in world 2 (js/v2/siege.js). Lunar dust, Martian dust, factory
 // smoke, Jupiter's storm clouds (driven by world 6's wind), mist over Europa's ice, light veils at the Rift Gate,
-// spore fog on the Brood World, the Nexus's neural haze. The banks are drawn here in code (soft cloud shapes); the
-// world's own atmosphere art (Art Bible Wn-P9, texture wN-atmos) replaces them when it exists.
+// spore fog on the Brood World, the Nexus's neural haze. The banks are ChatGPT's atmosphere art (Art Bible Wn-P9,
+// textures wN-atmos-1..4 by proto2/make-atmos.py, already in the world's colours); a world without it gets soft cloud
+// shapes drawn here in code, tinted.
 import { Container, Sprite, Texture } from 'pixi.js';
 
 const TAU = Math.PI * 2;
@@ -65,8 +66,8 @@ export function makeAtmosphere(tex) {
     cfg = ATMOS[worldId] || null;
     if (!cfg) return;
     const r = rng(seed * 977 + worldId);
-    const own = tex[`w${worldId}-atmos`];
-    const pics = own ? [own] : shapes();
+    const own = [1, 2, 3, 4].map((k) => tex[`w${worldId}-atmos-${k}`]).filter(Boolean);
+    const pics = own.length ? own : shapes();
     const put = (into, n, alpha) => {
       for (let i = 0; i < n; i++) {
         const s = new Sprite(pics[i % pics.length]);
@@ -74,7 +75,7 @@ export function makeAtmosphere(tex) {
         const size = cfg.size[0] + r() * (cfg.size[1] - cfg.size[0]);
         s.scale.set(size / s.texture.width);
         s.rotation = r() * TAU;
-        s.tint = cfg.tint;
+        s.tint = own.length ? 0xffffff : cfg.tint;
         s.alpha = alpha;
         into.addChild(s);
         // they wrap around a field bigger than the arena by a bank's size, so the jump is never seen inside it
