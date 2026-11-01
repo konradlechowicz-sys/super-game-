@@ -19,6 +19,7 @@ import { makeLunarBridgehead } from './lunar.js';
 import { makeRedConversion } from './mars.js';
 import { makeFoundryBelt } from './foundry.js';
 import { makeJourney, CFG as JOURNEY } from './journey.js';
+import { makeAtmosphere } from './atmos.js';
 import { stormLevel } from '../crystal.js';
 import { setIconArt } from '../icons.js';
 
@@ -134,6 +135,8 @@ export async function createV2Renderer(app) {
   // worlds 6-10: one scene each from js/v2/journey.js
   const journeys = Object.fromEntries(Object.keys(JOURNEY).map((w) => [w, makeJourney(+w, tex, halo)]));
   const journeyList = Object.values(journeys);
+  // the air of worlds 3-10 (js/v2/atmos.js): a haze under the enemies and thin banks over them
+  const atmos = makeAtmosphere(tex);
   const coreLayer = add(new Container());
   for (const j of journeyList) px.stage.addChildAt(j.far, 0);
   px.stage.addChildAt(foundry.far, 0);
@@ -141,7 +144,7 @@ export async function createV2Renderer(app) {
   px.stage.addChildAt(lunar.far, 0);
   px.stage.addChildAt(siege.far, 0);
   px.stage.addChildAt(orbit.far, 0);
-  world.addChild(floor, border, orbit.arena, siege.arena, lunar.arena, mars.arena, foundry.arena, ...journeyList.map((j) => j.arena), propLayer, debrisLayer, shadowLayer, lootLayer, ringG, glowLayer, enemyLayer, bossLayer, siege.cover, coreLayer, shotLayer, weaponLayer, shipLayer, wreckLayer, fxLayer, fxG);
+  world.addChild(floor, border, orbit.arena, siege.arena, lunar.arena, mars.arena, foundry.arena, ...journeyList.map((j) => j.arena), atmos.low, propLayer, debrisLayer, shadowLayer, lootLayer, ringG, glowLayer, enemyLayer, bossLayer, siege.cover, atmos.high, coreLayer, shotLayer, weaponLayer, shipLayer, wreckLayer, fxLayer, fxG);
   // reusable sprites: each frame takes as many as it needs and hides the rest (no per-object create/destroy)
   const lootHalo = pool(lootLayer), loot = pool(lootLayer);
   const shotHalo = pool(shotLayer), shots = pool(shotLayer);
@@ -457,6 +460,7 @@ export async function createV2Renderer(app) {
       if (w4) mars.setArena(w, h, seed, game.crystal);
       if (w5) foundry.setArena(w, h, seed, game.cover);
       if (wj) jw.setArena(w, h, seed, game);
+      atmos.setArena(game.stage.world.id, w, h, seed);
       floor.width = w; floor.height = h; floor.position.set(-w / 2, -h / 2);
       const col = Number.parseInt(game.stage.world.theme.grid.slice(1), 16);
       border.clear().rect(-w / 2, -h / 2, w, h).stroke({ width: 12, color: col, alpha: 0.2 }).rect(-w / 2, -h / 2, w, h).stroke({ width: 2.5, color: col, alpha: 0.9 });
@@ -468,6 +472,7 @@ export async function createV2Renderer(app) {
     if (w4) mars.update(game.time, cx, cy, z, app.W, app.H, game.crystal, storm);
     if (w5) foundry.update(game.time, cx, cy, z, app.W, app.H);
     if (wj) jw.update(game.time, cx, cy, z, app.W, app.H, game);
+    atmos.update(game.time, game, sdt);
 
     // the props to shoot, whole or broken (js/props.js)
     for (const o of game.props) {

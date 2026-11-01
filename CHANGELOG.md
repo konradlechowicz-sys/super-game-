@@ -16,6 +16,10 @@ i wersja TEST (gracze tego nie widzą).
 
 - 
 
+## Build 130 · 2026-11-01
+- [Zmiana] Wrogowie przechwytują: dwa na trzy szybkie stwory (roje i wszystko, co ma prędkość 100+ i nie ma własnego sposobu ruchu) lecą tam, dokąd zmierza statek (do 1,4 s naprzód), a nie tylko za nim. Tłum nadlatuje też z przodu i z boków, zamiast ciągnąć się jedną masą za statkiem.
+- [Nowe] Atmosfera w światach 3–10, jak chmury w świecie 2: dryfujące, półprzezroczyste ławice powietrza w kolorze świata, mgiełka pod wrogami i kilka cienkich ławic nad nimi. Pył na Księżycu i Marsie, dym w fabryce, chmury burzowe na Jowiszu (niesie je wiatr świata 6), mgła nad lodem Europy, zasłony światła przy wrotach, mgła zarodników, mgiełka Nexusa. Na razie rysowane w kodzie; zastąpią je grafiki od ChatGPT (nowe zadania W3-P9 … W10-P9 w Art Bible).
+
 ## Build 129 · 2026-11-01
 - [Zmiana] Muzyka przechodzi płynnie: przy zmianie utworu (np. gdy pojawia się boss) poprzedni wycisza się przez 2 s, a nowy narasta przez ok. 2 s, zamiast szybkiego cięcia.
 - [Zmiana] Płomień Flamethrowera jest subtelniejszy: półprzezroczysty, węższy, sięga tylko do celu i łagodnie pojawia się i znika. Płonący grunt jest mniejszy i przygaszony.
