@@ -406,7 +406,7 @@ export const WEAPONS = {
       w.t = s.cd * p.cdMult;
       const a = Math.atan2(tgt.y - p.y, tgt.x - p.x);
       // what js/render-canvas.js needs to draw the flame
-      w.coneA = a; w.coneAt = g.time; w.coneLen = range; w.coneW = s.cone;
+      w.coneA = a; w.coneAt = g.time; w.coneLen = Math.min(range, Math.hypot(tgt.x - p.x, tgt.y - p.y) + 50); w.coneW = s.cone;
       const fire = s.burn * p.dmgMult * (p.fireMult || 1);
       for (const e of g.enemiesNear(p.x, p.y, range)) {
         let da = Math.atan2(e.y - p.y, e.x - p.x) - a;

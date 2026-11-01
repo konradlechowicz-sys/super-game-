@@ -16,6 +16,12 @@ i wersja TEST (gracze tego nie widzą).
 
 - 
 
+## Build 129 · 2026-11-01
+- [Zmiana] Muzyka przechodzi płynnie: przy zmianie utworu (np. gdy pojawia się boss) poprzedni wycisza się przez 2 s, a nowy narasta przez ok. 2 s, zamiast szybkiego cięcia.
+- [Zmiana] Płomień Flamethrowera jest subtelniejszy: półprzezroczysty, węższy, sięga tylko do celu i łagodnie pojawia się i znika. Płonący grunt jest mniejszy i przygaszony.
+- [Poprawka] Eksplozje (także przy porażce) nie szarpią: klatki animacji płynnie przechodzą jedna w drugą, a wybuch na końcu łagodnie gaśnie.
+- [Narzędzia] Nowy prompt do Suno na muzykę świata 6 (sektor i boss) w `art/2.0/audio/SUNO-PROMPTS.md`: ten sam rdzeń stylu co reszta ścieżki dźwiękowej zamiast drum and bass.
+
 ## Build 128 · 2026-11-01
 - [Poprawka] Start gry: zanim wczytają się grafiki 2.0, nie pokazuje się już przez chwilę wygląd 1.x. Ekran jest ciemny z pulsującym napisem LOADING, a menu pojawia się dopiero razem z grafiką 2.0 (najwyżej po 20 s pokazuje się to, co jest).
 - [Poprawka] Okna wyższe niż ekran (np. panel testera 🛠) dają się przewijać palcem, więc da się dojść do przycisku DONE. Wcześniej gra blokowała przesuwanie wszędzie poza listami.

@@ -269,6 +269,15 @@ function drawBoss(game, R, b, sc) {
 }
 
 // One frame of an effect strip (proto2/make-common.py: frames side by side), centred on (x, y), turned by rot.
+// Like frame, but between two frames it blends them, so a short strip (8 frames) plays smoothly however long it lasts
+function frameBlend(ctx, img, frames, f, x, y, w, h, rot = 0) {
+  const a = ctx.globalAlpha, i = Math.max(0, Math.min(frames - 1, Math.floor(f))), k = Math.min(1, Math.max(0, f - i));
+  if (i >= frames - 1 || k < 0.02) { frame(ctx, img, frames, i, x, y, w, h, rot); return; }
+  ctx.globalAlpha = a * (1 - k); frame(ctx, img, frames, i, x, y, w, h, rot);
+  ctx.globalAlpha = a * k; frame(ctx, img, frames, i + 1, x, y, w, h, rot);
+  ctx.globalAlpha = a;
+}
+
 function frame(ctx, img, frames, f, x, y, w, h, rot = 0) {
   const cw = img.width / frames, i = Math.min(frames - 1, Math.max(0, Math.floor(f)));
   if (!rot) { ctx.drawImage(img, i * cw, 0, cw, img.height, x - w / 2, y - h / 2, w, h); return; }
@@ -289,8 +298,8 @@ function drawArsenalArt(game, ctx) {
   // burning ground
   for (const f of game.fires) {
     const k = Math.min(1, f.t / 0.2) * Math.min(1, (f.dur - f.t) / 0.5);
-    ctx.globalAlpha = 0.9 * k;
-    frame(ctx, art(f.blue ? 'inferno-ground' : 'fire-ground'), 8, (t * A + f.x * 0.37) % 8, f.x, f.y, f.r * 2.3, f.r * 2.3);
+    ctx.globalAlpha = 0.6 * k;
+    frameBlend(ctx, art(f.blue ? 'inferno-ground' : 'fire-ground'), 8, (t * A + f.x * 0.37) % 7.99, f.x, f.y, f.r * 2.1, f.r * 2.1);
   }
   // burning enemies (the busiest effect: at most 70 at once)
   ctx.globalAlpha = 0.85;
@@ -302,15 +311,15 @@ function drawArsenalArt(game, ctx) {
     const s = Math.max(26, e.r * 2.4);
     frame(ctx, burn, 8, (t * A + e.id) % 8, e.x, e.y - e.r * 0.3, s, s);
   }
-  // the flame: drawn while the Flamethrower fires (it fires every ~0.1 s)
+  // the flame: drawn while the Flamethrower fires (it fires every ~0.1 s). Subtle (Konrad, 2026-11-01: it looked like
+  // an extra object bigger than the ship): see-through, only as long as the way to its target, narrower, fading in
+  // and out, its frames blended
   for (const w of game.weapons) {
-    if (w.id !== 'flame' || !(t - (w.coneAt ?? -9) < 0.18)) continue;
-    const img = art(w.evolved ? 'inferno-cone' : 'flame-cone'), len = w.coneLen * 1.08, wid = Math.max(50, Math.tan(w.coneW) * len * 1.5);
-    ctx.globalAlpha = 0.95;
-    ctx.save(); ctx.translate(p.x + Math.cos(w.coneA) * 10, p.y + Math.sin(w.coneA) * 10); ctx.rotate(w.coneA);
-    const cw = img.width / 8;
-    ctx.drawImage(img, Math.floor((t * 16) % 8) * cw, 0, cw, img.height, 0, -wid / 2, len, wid);
-    ctx.restore();
+    const since = t - (w.coneAt ?? -9);
+    if (w.id !== 'flame' || !(since < 0.22)) continue;
+    const img = art(w.evolved ? 'inferno-cone' : 'flame-cone'), len = w.coneLen, wid = Math.max(30, Math.tan(w.coneW) * len * 1.05);
+    ctx.globalAlpha = 0.5 * Math.min(1, (0.22 - since) / 0.1);
+    frameBlend(ctx, img, 8, (t * 12) % 7.99, p.x + Math.cos(w.coneA) * (10 + len / 2), p.y + Math.sin(w.coneA) * (10 + len / 2), len, wid, w.coneA);
   }
   // the railgun's charge glow at the nose, the last 0.45 s before a shot
   for (const w of game.weapons) {
@@ -410,8 +419,9 @@ function drawEffectsArt(game, ctx) {
   for (const f of game.fx) {
     const k = f.t / f.dur, kind = f.max >= 160 ? 'large' : f.max >= 60 ? 'medium' : 'small';
     const d = Math.min(560, f.max * (kind === 'small' ? 2.8 : 2.2));
-    ctx.globalAlpha = 1;
-    frame(ctx, art(`boom-${kind}`), 8, k * 8, f.x, f.y, d, d);
+    // blended frames and a soft fade at the end: the 8 frames no longer jerk (Konrad, 2026-11-01)
+    ctx.globalAlpha = Math.min(1, (1 - k) * 4);
+    frameBlend(ctx, art(`boom-${kind}`), 8, k * 7.99, f.x, f.y, d * (0.9 + 0.1 * k), d * (0.9 + 0.1 * k));
   }
   // lightning: a textured segment between every two points
   for (const b of game.bolts) {
