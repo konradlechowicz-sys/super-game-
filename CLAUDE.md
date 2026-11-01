@@ -56,7 +56,7 @@
   minute, Railgun, Flamethrower, Singularity Cannon, 12 combos, 8 perk sets, 3 super combos) goes into 2.0; 2.0 is a
   free update for Full Game owners (same app, same product); progress starts over, with a bonus for 1.x veterans
   (decided 2026-10-31, `migrate` in `js/save.js`: 300 coins + 10 per 1.x star + half the coins spent on upgrades, at
-  most 2,000, a one-time welcome screen, `save.veteran` kept for the Veteran skin once its art `SH7` exists; no badge);
+  most 2,000, a one-time welcome screen, `save.veteran` unlocks the Veteran Striker skin, art `SH7` in `art/2.0/common/SH7`, in the game since build 132; no badge);
   the full game costs more for new players (about USD 4.99). 2.0 is built in the same app on its own accepted line
   `v2` (decided by Konrad, 2026-10-27; see "Two lines" below), so `main` stays releasable as 1.x until launch. Stage 1
   (builds 68-70, in `main`) put the PixiJS look behind a switch in the TEST panel; on `v2` 2.0 becomes the normal game.
