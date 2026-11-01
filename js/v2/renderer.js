@@ -19,6 +19,7 @@ import { makeLunarBridgehead } from './lunar.js';
 import { makeRedConversion } from './mars.js';
 import { makeFoundryBelt } from './foundry.js';
 import { makeJourney, CFG as JOURNEY } from './journey.js';
+import { makeAtmosphere } from './atmos.js';
 import { stormLevel } from '../crystal.js';
 import { setIconArt } from '../icons.js';
 
@@ -134,6 +135,8 @@ export async function createV2Renderer(app) {
   // worlds 6-10: one scene each from js/v2/journey.js
   const journeys = Object.fromEntries(Object.keys(JOURNEY).map((w) => [w, makeJourney(+w, tex, halo)]));
   const journeyList = Object.values(journeys);
+  // the air of worlds 3-10 (js/v2/atmos.js): a haze under the enemies and thin banks over them
+  const atmos = makeAtmosphere(tex);
   const coreLayer = add(new Container());
   for (const j of journeyList) px.stage.addChildAt(j.far, 0);
   px.stage.addChildAt(foundry.far, 0);
@@ -141,7 +144,7 @@ export async function createV2Renderer(app) {
   px.stage.addChildAt(lunar.far, 0);
   px.stage.addChildAt(siege.far, 0);
   px.stage.addChildAt(orbit.far, 0);
-  world.addChild(floor, border, orbit.arena, siege.arena, lunar.arena, mars.arena, foundry.arena, ...journeyList.map((j) => j.arena), propLayer, debrisLayer, shadowLayer, lootLayer, ringG, glowLayer, enemyLayer, bossLayer, siege.cover, coreLayer, shotLayer, weaponLayer, shipLayer, wreckLayer, fxLayer, fxG);
+  world.addChild(floor, border, orbit.arena, siege.arena, lunar.arena, mars.arena, foundry.arena, ...journeyList.map((j) => j.arena), atmos.low, propLayer, debrisLayer, shadowLayer, lootLayer, ringG, glowLayer, enemyLayer, bossLayer, siege.cover, atmos.high, coreLayer, shotLayer, weaponLayer, shipLayer, wreckLayer, fxLayer, fxG);
   // reusable sprites: each frame takes as many as it needs and hides the rest (no per-object create/destroy)
   const lootHalo = pool(lootLayer), loot = pool(lootLayer);
   const shotHalo = pool(shotLayer), shots = pool(shotLayer);
@@ -169,6 +172,8 @@ export async function createV2Renderer(app) {
     striker: makeShip(tex, ASSETS.ship, SHIP_H * scale),
     // the Gold Striker skin: the same parts drawn in gold (Art Bible SH4, proto2/make-common.py)
     ...(tex['ship-gold-hull'] ? { gold: makeShip(tex, ASSETS.ship, SHIP_H * scale, 'gold-') } : {}),
+    // the Veteran Striker skin (Art Bible SH7)
+    ...(tex['ship-vet-hull'] ? { vet: makeShip(tex, ASSETS.ship, SHIP_H * scale, 'vet-') } : {}),
     phantom: makeBodyShip(tex, 'phantom', ASSETS.ships.phantom, PHANTOM_L * scale),
     titan: makeBodyShip(tex, 'titan', ASSETS.ships.titan, TITAN_L * scale),
   });
@@ -457,6 +462,7 @@ export async function createV2Renderer(app) {
       if (w4) mars.setArena(w, h, seed, game.crystal);
       if (w5) foundry.setArena(w, h, seed, game.cover);
       if (wj) jw.setArena(w, h, seed, game);
+      atmos.setArena(game.stage.world.id, w, h, seed);
       floor.width = w; floor.height = h; floor.position.set(-w / 2, -h / 2);
       const col = Number.parseInt(game.stage.world.theme.grid.slice(1), 16);
       border.clear().rect(-w / 2, -h / 2, w, h).stroke({ width: 12, color: col, alpha: 0.2 }).rect(-w / 2, -h / 2, w, h).stroke({ width: 2.5, color: col, alpha: 0.9 });
@@ -468,6 +474,7 @@ export async function createV2Renderer(app) {
     if (w4) mars.update(game.time, cx, cy, z, app.W, app.H, game.crystal, storm);
     if (w5) foundry.update(game.time, cx, cy, z, app.W, app.H);
     if (wj) jw.update(game.time, cx, cy, z, app.W, app.H, game);
+    atmos.update(game.time, game, sdt);
 
     // the props to shoot, whole or broken (js/props.js)
     for (const o of game.props) {
@@ -693,9 +700,9 @@ export async function createV2Renderer(app) {
     // the ship the player flies (game.ship: its id, and skinName for the Gold Striker)
     const p = game.player;
     const alive = game.state !== 'dying' && game.state !== 'over';
-    const flying = (game.ship.skinName && ships.gold) || ships[game.ship.id] || ships.striker;
+    const flying = (game.ship.skin && ships[game.ship.skin]) || ships[game.ship.id] || ships.striker;
     if (flying !== ship) { ship.body.visible = false; ship = flying; ship.lastFacing = null; }
-    const base = game.ship.skinName && !ships.gold ? GOLD : 0xffffff;
+    const base = game.ship.skin === 'gold' && !ships.gold ? GOLD : 0xffffff;
     ship.body.visible = alive;
     if (alive) {
       let turn = p.facing - (ship.lastFacing ?? p.facing);
@@ -835,7 +842,7 @@ export async function createV2Renderer(app) {
 
 // The Striker from its parts (positions from art/2.0/ship/parts/assembly.json), as in proto2/ and the teaser:
 // engine flames that grow with speed and banking wings.
-// skin: '' or 'gold-' (the Gold Striker's parts)
+// skin: '' or 'gold-' / 'vet-' (the Gold and Veteran Strikers' parts)
 function makeShip(tex, SHIP, height, skin = '') {
   const part = (name) => { const s = new Sprite(tex[`ship-${skin}${name}`]); s.anchor.set(0.5); return s; };
   const P = SHIP.pos, Z = SHIP.size, k = SHIP.k;

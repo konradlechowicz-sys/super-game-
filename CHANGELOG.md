@@ -16,6 +16,27 @@ i wersja TEST (gracze tego nie widzą).
 
 - 
 
+## Build 133 · 2026-11-01
+- [Nowe] Atmosfera światów 3–10 z grafik ChatGPT (W3-P9 … W10-P9): pył księżycowy, marsjańskie chmury pyłu, dym fabryk, burzowe chmury Jowisza, mgła nad lodem Europy, zorze przy Wrotach, zarodnikowa mgła Brood World i neuronowa mgiełka Nexusa zastępują mgłę rysowaną kodem; jasność wyrównana tak, by była subtelna jak chmury w świecie 2.
+
+## Build 132 · 2026-11-01
+- [Nowe] Skórka Veteran Striker (grafika SH7 od ChatGPT) dla graczy z wersji 1.x: wybór „Veteran” w hangarze przy Strikerze; statek w grze i na ekranie tytułowym złożony z nowych części, w hangarze render 3/4.
+- [Zmiana] Płomień silnika złotej skórki wycięty czysto (bez ciemnej obwódki).
+
+## Build 131 · 2026-11-01
+- [Poprawka] Muzyka światów 7–10 (sektory i bossowie) ma nowe pętle bez słyszalnych skoków: koniec pętli trzyma się rytmu z dokładnością do 0,035 s (wcześniej do 0,12 s), a przy wyborze porównany był też rytm przed skokiem. Muzyka świata 6 czeka na nowe utwory z Suno.
+- [Narzędzia] Wydajność: na iPhonie 17 Pro Max ze wszystkimi nowymi grafikami dokładanie masy wrogów nic nie zmienia (test Konrada); zapisane w CLAUDE.md.
+
+## Build 130 · 2026-11-01
+- [Zmiana] Wrogowie przechwytują: dwa na trzy szybkie stwory (roje i wszystko, co ma prędkość 100+ i nie ma własnego sposobu ruchu) lecą tam, dokąd zmierza statek (do 1,4 s naprzód), a nie tylko za nim. Tłum nadlatuje też z przodu i z boków, zamiast ciągnąć się jedną masą za statkiem.
+- [Nowe] Atmosfera w światach 3–10, jak chmury w świecie 2: dryfujące, półprzezroczyste ławice powietrza w kolorze świata, mgiełka pod wrogami i kilka cienkich ławic nad nimi. Pył na Księżycu i Marsie, dym w fabryce, chmury burzowe na Jowiszu (niesie je wiatr świata 6), mgła nad lodem Europy, zasłony światła przy wrotach, mgła zarodników, mgiełka Nexusa. Na razie rysowane w kodzie; zastąpią je grafiki od ChatGPT (nowe zadania W3-P9 … W10-P9 w Art Bible).
+
+## Build 129 · 2026-11-01
+- [Zmiana] Muzyka przechodzi płynnie: przy zmianie utworu (np. gdy pojawia się boss) poprzedni wycisza się przez 2 s, a nowy narasta przez ok. 2 s, zamiast szybkiego cięcia.
+- [Zmiana] Płomień Flamethrowera jest subtelniejszy: półprzezroczysty, węższy, sięga tylko do celu i łagodnie pojawia się i znika. Płonący grunt jest mniejszy i przygaszony.
+- [Poprawka] Eksplozje (także przy porażce) nie szarpią: klatki animacji płynnie przechodzą jedna w drugą, a wybuch na końcu łagodnie gaśnie.
+- [Narzędzia] Nowy prompt do Suno na muzykę świata 6 (sektor i boss) w `art/2.0/audio/SUNO-PROMPTS.md`: ten sam rdzeń stylu co reszta ścieżki dźwiękowej zamiast drum and bass.
+
 ## Build 128 · 2026-11-01
 - [Poprawka] Start gry: zanim wczytają się grafiki 2.0, nie pokazuje się już przez chwilę wygląd 1.x. Ekran jest ciemny z pulsującym napisem LOADING, a menu pojawia się dopiero razem z grafiką 2.0 (najwyżej po 20 s pokazuje się to, co jest).
 - [Poprawka] Okna wyższe niż ekran (np. panel testera 🛠) dają się przewijać palcem, więc da się dojść do przycisku DONE. Wcześniej gra blokowała przesuwanie wszędzie poza listami.

@@ -1174,6 +1174,10 @@ export class Game {
     }
     const mv = Math.hypot(p.x - ox, p.y - oy);
     p.moving = dt > 0 ? mv / dt : 0;
+    // the ship's smoothed velocity: intercepting enemies aim where it is going
+    const kv = Math.min(1, dt * 5);
+    p.vx = (p.vx || 0) + ((dt > 0 ? (p.x - ox) / dt : 0) - (p.vx || 0)) * kv;
+    p.vy = (p.vy || 0) + ((dt > 0 ? (p.y - oy) / dt : 0) - (p.vy || 0)) * kv;
     if (mv > 0.3) p.facing = angleLerp(p.facing, Math.atan2(p.y - oy, p.x - ox), Math.min(1, dt * 12));
     p.inv = Math.max(0, p.inv - dt);
     if (p.regen && this.state === 'play') p.hp = Math.min(p.maxHp, p.hp + p.regen * dt);
@@ -1205,6 +1209,14 @@ export class Game {
       if (e.def.speed === 0 && !e.elite && d > 1100) { e.dead = true; continue; }
       let mx = (dx / d) * e.speed, my = (dy / d) * e.speed;
       const ai = e.def.ai;
+      // interception (decided by Konrad, 2026-11-01: crowds that only trail the ship clump into one mass): two of
+      // every three fast chasers (swarms and anything 100+ fast without its own way of moving) head for where the
+      // ship will be, up to 1.4 s ahead, so they cut it off and come from the front and the sides too
+      if (!ai && (e.def.pack || e.def.speed >= 100) && e.id % 3 && d > 90) {
+        const lead = Math.min(1.4, d / Math.max(60, e.speed));
+        const ix = dx + (p.vx || 0) * lead, iy = dy + (p.vy || 0) * lead, il = Math.hypot(ix, iy) || 1;
+        mx = (ix / il) * e.speed; my = (iy / il) * e.speed;
+      }
       let bounded = true, separate = true;
       if (ai === 'dash') {
         e.cd -= dt;

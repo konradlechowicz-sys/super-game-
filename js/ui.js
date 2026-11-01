@@ -142,7 +142,7 @@ export class UI {
       const g = c.getContext('2d');
       // the 2.0 look has a picture of every ship (js/v2/renderer.js); a skin colour other than the ship's tints it
       // the hangar shows the 3/4 renders (Art Bible UI5) once they are loaded
-      const hero = c.dataset.hero && this.app.v2 && !this.app.oldLook && this.app.heroArt?.(c.dataset.skin === 'gold' ? 'gold' : s.id);
+      const hero = c.dataset.hero && this.app.v2 && !this.app.oldLook && this.app.heroArt?.(c.dataset.skin || s.id);
       if (hero) {
         g.clearRect(0, 0, c.width, c.height);
         g.drawImage(hero, 0, 0, c.width, c.height);
@@ -383,13 +383,16 @@ export class UI {
         : owned ? `<button class="btn small primary" data-act="select" data-id="${s.id}">SELECT</button>`
           : !full ? '<button class="btn small full-btn" data-act="full">FULL GAME</button>'
             : `<button class="btn small buy" data-act="buy" data-id="${s.id}" ${save.coins < s.cost ? 'disabled' : ''}>${COIN}<span class="num">${s.cost}</span></button>`;
-      const skins = s.id === 'striker' && save.skins.includes('gold')
+      // the Striker's skins: Gold (full game) and Veteran (1.x players)
+      const gold = save.skins.includes('gold'), vet = !!save.veteran;
+      const skins = s.id === 'striker' && (gold || vet)
         ? `<div class="skin-row"><span>Color</span>
-            <button class="skin ${save.skin !== 'gold' ? 'on' : ''}" data-act="skin" data-id="" style="--k:${base.color}">Neon</button>
-            <button class="skin ${save.skin === 'gold' ? 'on' : ''}" data-act="skin" data-id="gold" style="--k:#ffd23d">Gold ★</button></div>`
+            <button class="skin ${!['gold', 'veteran'].includes(save.skin) ? 'on' : ''}" data-act="skin" data-id="" style="--k:${base.color}">Neon</button>
+            ${gold ? `<button class="skin ${save.skin === 'gold' ? 'on' : ''}" data-act="skin" data-id="gold" style="--k:#ffd23d">Gold ★</button>` : ''}
+            ${vet ? `<button class="skin ${save.skin === 'veteran' ? 'on' : ''}" data-act="skin" data-id="veteran" style="--k:#ff2d95">Veteran</button>` : ''}</div>`
         : '';
       return `<div class="ship-card ${sel ? 'selected' : ''}" style="--sc:${s.color}">
-        <canvas data-ship="${s.id}" data-color="${s.color}" data-hero="1" data-skin="${s.id === 'striker' && save.skin === 'gold' ? 'gold' : ''}" width="120" height="120"></canvas>
+        <canvas data-ship="${s.id}" data-color="${s.color}" data-hero="1" data-skin="${s.id === 'striker' && ((save.skin === 'gold' && gold) || (save.skin === 'veteran' && vet)) ? save.skin : ''}" width="120" height="120"></canvas>
         <div class="ship-info">
           <h3>${esc(s.name)}</h3>
           <p class="muted">${esc(s.desc)}</p>

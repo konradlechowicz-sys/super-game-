@@ -18,6 +18,9 @@ TRACKS.game5 = TRACKS.game7 = TRACKS.game9 = TRACKS.game3;
 TRACKS.game6 = TRACKS.game8 = TRACKS.game10 = TRACKS.game4;
 TRACKS.boss6 = TRACKS.boss7 = TRACKS.boss8 = TRACKS.boss9 = TRACKS.boss10 = TRACKS.boss;
 
+// how long a recorded track takes to fade in and out when the music changes (seconds)
+const FADE_IN = 2.2, FADE_OUT = 2.0;
+
 export class AudioEngine {
   constructor() {
     this.ctx = null;
@@ -138,8 +141,11 @@ export class AudioEngine {
       src.loopEnd = Math.min(rec.loopEnd, buf.duration);
       const gain = this.ctx.createGain();
       const t = this.ctx.currentTime;
+      // a slow fade-in under the previous track's fade-out (stopRecording): the switch to a boss's music is a
+      // crossfade, not a cut (Konrad, 2026-11-01)
       gain.gain.setValueAtTime(0, t);
-      gain.gain.linearRampToValueAtTime(rec.gain ?? 1, t + 0.6);
+      gain.gain.linearRampToValueAtTime((rec.gain ?? 1) * 0.35, t + 0.8);
+      gain.gain.linearRampToValueAtTime(rec.gain ?? 1, t + FADE_IN);
       src.connect(gain).connect(this.musicGain);
       src.start(t, again ? src.loopStart : 0);
       this.playing = { name, src, gain };
@@ -170,8 +176,8 @@ export class AudioEngine {
     const t = this.ctx.currentTime;
     p.gain.gain.cancelScheduledValues(t);
     p.gain.gain.setValueAtTime(p.gain.gain.value, t);
-    p.gain.gain.linearRampToValueAtTime(0, t + 0.4);
-    p.src.stop(t + 0.45);
+    p.gain.gain.linearRampToValueAtTime(0, t + FADE_OUT);
+    p.src.stop(t + FADE_OUT + 0.05);
   }
 
   // ---------- primitives ----------
