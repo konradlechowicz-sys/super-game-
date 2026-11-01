@@ -64,6 +64,8 @@
 - 2.0 performance gate 1 passed (Konrad, 2026-10-27, iPhone 17 Pro Max, TEST variant with the 2.0 look): a steady
   60 FPS with about 180 enemies on screen. 2.0 balance must use this: noticeably more enemies at once than 1.x
   (bigger waves and swarms), keeping a margin for older iPhones.
+  Rechecked 2026-11-01 (Konrad, iPhone 17 Pro Max, with all the shared art of builds 123-127): adding masses of enemies
+  (STRESS +300) changes nothing. Older iPhones not checked yet.
 
 ## 2.0 to-do (Konrad, 2026-10-28)
 World 1 is complete in the 2.0 look (build 91, accepted; Konrad played it on his iPhone and is very happy with it).

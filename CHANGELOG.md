@@ -16,6 +16,10 @@ i wersja TEST (gracze tego nie widzą).
 
 - 
 
+## Build 131 · 2026-11-01
+- [Poprawka] Muzyka światów 7–10 (sektory i bossowie) ma nowe pętle bez słyszalnych skoków: koniec pętli trzyma się rytmu z dokładnością do 0,035 s (wcześniej do 0,12 s), a przy wyborze porównany był też rytm przed skokiem. Muzyka świata 6 czeka na nowe utwory z Suno.
+- [Narzędzia] Wydajność: na iPhonie 17 Pro Max ze wszystkimi nowymi grafikami dokładanie masy wrogów nic nie zmienia (test Konrada); zapisane w CLAUDE.md.
+
 ## Build 130 · 2026-11-01
 - [Zmiana] Wrogowie przechwytują: dwa na trzy szybkie stwory (roje i wszystko, co ma prędkość 100+ i nie ma własnego sposobu ruchu) lecą tam, dokąd zmierza statek (do 1,4 s naprzód), a nie tylko za nim. Tłum nadlatuje też z przodu i z boków, zamiast ciągnąć się jedną masą za statkiem.
 - [Nowe] Atmosfera w światach 3–10, jak chmury w świecie 2: dryfujące, półprzezroczyste ławice powietrza w kolorze świata, mgiełka pod wrogami i kilka cienkich ławic nad nimi. Pył na Księżycu i Marsie, dym w fabryce, chmury burzowe na Jowiszu (niesie je wiatr świata 6), mgła nad lodem Europy, zasłony światła przy wrotach, mgła zarodników, mgiełka Nexusa. Na razie rysowane w kodzie; zastąpią je grafiki od ChatGPT (nowe zadania W3-P9 … W10-P9 w Art Bible).
