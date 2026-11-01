@@ -16,6 +16,9 @@ i wersja TEST (gracze tego nie widzą).
 
 - 
 
+## Build 135 · 2026-11-01
+- [Zmiana] Nowa muzyka świata 6 „Storm Relay” (wersja 2 z Suno, pasuje do reszty ścieżki): sektory ok. 137 BPM z pętlą 32 taktów (ok. 56 s), boss ok. 140 BPM z pętlą 36 taktów (ok. 62 s) i 8 taktami wejścia; punkty pętli dobrane tak jak w światach 7–10 (bez słyszalnego skoku).
+
 ## Build 134 · 2026-11-01
 - [Nowe] Bronie widać na statku (grafika SH5 od ChatGPT): każda zdobyta broń pojawia się jako moduł na skrzydłach lub przy kadłubie Strikera, Phantoma i Titana (także w skórkach Gold i Veteran), do 4 modułów w kolejności zdobycia; broń po ewolucji ma złoty moduł z poświatą.
 
