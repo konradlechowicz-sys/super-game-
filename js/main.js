@@ -115,7 +115,9 @@ window.addEventListener('keydown', (e) => {
 });
 window.addEventListener('keyup', (e) => input.keys.delete(e.code));
 // Block iOS rubber-banding, double-tap zoom and pinch zoom.
-document.addEventListener('touchmove', (e) => { if (!e.target.closest('.scroll')) e.preventDefault(); }, { passive: false });
+// the page itself never scrolls or bounces; lists (.scroll) and pop-ups taller than the screen (.modal, e.g. the
+// tester's panel) do
+document.addEventListener('touchmove', (e) => { if (!e.target.closest('.scroll, .modal')) e.preventDefault(); }, { passive: false });
 document.addEventListener('gesturestart', (e) => e.preventDefault());
 document.addEventListener('dblclick', (e) => e.preventDefault());
 
@@ -326,6 +328,13 @@ function renderMenu(dt) {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     return;
   }
+  // the 2.0 look is still loading: a dark screen, not the 1.x title
+  if (document.body.classList.contains('v2-loading')) {
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    ctx.fillStyle = '#04060b';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    return;
+  }
   app.bg.draw(ctx, menuCam * 0.3, -menuCam, app.time);
   if (!onMenu) return;
   const { W, H, dpr } = app;
@@ -378,8 +387,13 @@ app.store.init().then(() => {
 // A dynamic import, so the unbundled dev page (which cannot resolve 'pixi.js') falls back to the 1.x look.
 if (EDITION === 2) {
   app.v2 = true;
-  import('./v2/renderer.js').then((m) => m.createV2Renderer(app)).then((r) => { app.v2r = r; })
-    .catch((e) => { app.v2 = false; console.warn('2.0 look not loaded, using the 1.x look:', e.message); });
+  // until the 2.0 pictures have loaded the screen stays dark with "LOADING" (css: body.v2-loading), so the 1.x look
+  // never flashes before the 2.0 one (Konrad, 2026-11-01); at most 20 s, then whatever is there is shown
+  document.body.classList.add('v2-loading');
+  const loaded = () => document.body.classList.remove('v2-loading');
+  setTimeout(loaded, 20000);
+  import('./v2/renderer.js').then((m) => m.createV2Renderer(app)).then((r) => { app.v2r = r; loaded(); })
+    .catch((e) => { app.v2 = false; loaded(); console.warn('2.0 look not loaded, using the 1.x look:', e.message); });
   // the recorded 2.0 music (js/v2/music.gen.js, from proto2/make-music.py) replaces the synthesized tracks it covers
   import('./v2/music.gen.js').then((m) => { for (const [name, rec] of Object.entries(m.default)) app.audio.setRecording(name, rec); })
     .catch(() => { /* the unbundled dev page has no generated music: the synthesized tracks play */ });
