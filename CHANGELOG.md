@@ -18,6 +18,7 @@ i wersja TEST (gracze tego nie widzą).
 
 ## Build 139 · 2026-11-02
 - [Narzędzia] Nagrywarka filmików reklamowych 2.0 (`npm run promo:video -- <invasion|swarm|bosses|worlds>`, `promo/record.mjs`, ujęcia w `promo/shots.mjs`): nagrywa prawdziwą grę klatka po klatce (1080×1920, 30 kl./s), z napisami w stylu gry, muzyką z gry i planszą „COMING SOON · iPhone & Android”; wyniki w `appstore/2.0/video/`. Gra bez zmian.
+- [Nowe] Cztery filmiki kampanii 2.0 w `appstore/2.0/video/` (z okładkami): VB-01 „The Invasion” (zwiastun fabularny, 32 s), VB-02 „The Swarm” (chaos gameplayu, 22 s), VB-03 „Ten Bosses” (31 s), VB-04 „10 Worlds · 54 Ways to Fight” (światy, Codex, hangar, 29 s).
 
 ## Build 138 · 2026-11-02
 - [Nowe] Sceny fabuły mają właściwe ilustracje od ChatGPT (Art Bible SC0a–SC10d, 17 plansz): intro, 9 transmisji między światami i outro zamiast teł z konceptów światów.
