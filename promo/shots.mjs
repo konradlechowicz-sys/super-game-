@@ -9,6 +9,8 @@ export const CODEX_KEYS = codexSections().flatMap((s) => s.items.map((i) => i.ke
 
 const HALE = 'EARTH COMMAND // ADMIRAL HALE', VOID = 'VOID COLLECTIVE // SIGNAL';
 const TYPE = 'P.type(t);';
+// a story shot: the scene's picture with the given transmission (functions run in the page, so the text goes in as JSON)
+const story = (key, panel, say) => new Function(`window.__promo.story(${JSON.stringify(key)}, ${panel}, ${JSON.stringify(say || null)});`);
 // the end card: key art, VOID BLASTER 2.0, COMING SOON, iPhone & Android
 const END = (bars, bar) => ({ dur: bars * bar, each: 'P.end(Math.min(1, t / 0.4));', fadeOut: 0.8 });
 
@@ -18,17 +20,17 @@ const invasion = {
   file: 'VB-01-invasion', cover: 2,
   music: { file: 'art/2.0/audio/void-blaster-theme-suno.mp3', start: 35.5 - 6 * B1 },
   shots: [
-    { dur: 2 * B1, setup: () => window.__promo.story('intro', 1), each: TYPE, fadeIn: 0.4 },
-    { dur: 2 * B1, setup: () => window.__promo.story('intro', 2), each: TYPE },
-    { dur: 2 * B1, setup: () => window.__promo.story('intro', 3, [{ who: 'cmd', head: 'EARTH COMMAND // ADMIRAL HALE', lines: ["One ship. That's all we have left.", 'Take back our sky.'] }]), each: TYPE },
+    { dur: 2 * B1, setup: story('intro', 1), each: TYPE, fadeIn: 0.4 },
+    { dur: 2 * B1, setup: story('intro', 2), each: TYPE },
+    { dur: 2 * B1, setup: story('intro', 3, [{ who: 'cmd', head: 'EARTH COMMAND // ADMIRAL HALE', lines: ["One ship. That's all we have left.", 'Take back our sky.'] }]), each: TYPE },
     { dur: 2 * B1, warm: 1, setup: () => { const P = window.__promo; P.stage('1-4', { at: 50, weapons: [['blaster', 5], ['missiles', 5], ['lightning', 4]] }); P.stress(120); },
       cap: { t: 'ONE PILOT', s: 'VS. THE VOID COLLECTIVE', y: 0.17, at: 0.3 } },
-    { dur: B1, setup: () => window.__promo.story('w2', 0, [{ who: 'void', head: VOID, lines: ['MOON: BRIDGEHEAD ESTABLISHED.'] }]), each: TYPE },
-    { dur: B1, setup: () => window.__promo.story('w3', 0, [{ who: 'void', head: VOID, lines: ['MARS: 61% REWRITTEN.'] }]), each: TYPE },
-    { dur: B1, setup: () => window.__promo.story('w5', 0, [{ who: 'void', head: VOID, lines: ['WHY DO YOU RESIST REPAIR?'] }]), each: TYPE },
-    { dur: B1, setup: () => window.__promo.story('w7', 0, [{ who: 'cmd', head: HALE, lines: ["Past the Gate, we can't reach you."] }]), each: TYPE },
-    { dur: B1, setup: () => window.__promo.story('w8', 0, [{ who: 'void', head: VOID, lines: ['WE GROW. YOU COULD GROW WITH US.'] }]), each: TYPE },
-    { dur: 2 * B1, setup: () => window.__promo.story('w9', 0, [{ who: 'void', head: VOID, lines: ['COME CLOSER, LITTLE LIGHT.'] }]), each: 'P.type(t, 24);' },
+    { dur: B1, setup: story('w2', 0, [{ who: 'void', head: VOID, lines: ['MOON: BRIDGEHEAD ESTABLISHED.'] }]), each: TYPE },
+    { dur: B1, setup: story('w3', 0, [{ who: 'void', head: VOID, lines: ['MARS: 61% REWRITTEN.'] }]), each: TYPE },
+    { dur: B1, setup: story('w5', 0, [{ who: 'void', head: VOID, lines: ['WHY DO YOU RESIST REPAIR?'] }]), each: TYPE },
+    { dur: B1, setup: story('w7', 0, [{ who: 'cmd', head: HALE, lines: ["Past the Gate, we can't reach you."] }]), each: TYPE },
+    { dur: B1, setup: story('w8', 0, [{ who: 'void', head: VOID, lines: ['WE GROW. YOU COULD GROW WITH US.'] }]), each: TYPE },
+    { dur: 2 * B1, setup: story('w9', 0, [{ who: 'void', head: VOID, lines: ['COME CLOSER, LITTLE LIGHT.'] }]), each: 'P.type(t, 24);' },
     { dur: 2 * B1, warm: 4, setup: () => window.__promo.stage('10-6', { boss: true, weapons: [['rail', 5, true], ['flame', 5], ['singularity', 5], ['blaster', 5]] }),
       cap: { t: 'REACH THE HEART', s: '10 WORLDS · ONE JOURNEY', y: 0.17, at: 0.4 } },
     END(2, B1),
@@ -44,7 +46,7 @@ const swarm = {
     { dur: 2 * B2, warm: 1.5, setup: () => { const P = window.__promo; P.stage('2-4', { at: 60, weapons: [['pulse', 5], ['singularity', 5], ['flame', 5], ['blaster', 5]] }); P.stress(300); },
       cap: { t: '300+ ENEMIES', s: 'ON SCREEN AT ONCE', y: 0.17, at: 0.2 } },
     { dur: B2, warm: 0.5, setup: () => { const P = window.__promo; const g = P.stage('3-3', { at: 40, weapons: [['blaster', 3], ['spread', 2]] }); delete g.openCards; g.gainXp((g.xpNext - g.xp) / g.player.xpMult + 1); },
-      cap: { t: 'BUILD YOUR ARSENAL', y: 0.12, at: 0.1 } },
+      cap: { t: 'BUILD YOUR ARSENAL', s: 'PICK YOUR UPGRADES', y: 0.84, at: 0.1 } },
     { dur: 1.5 * B2, warm: 1, setup: () => { const P = window.__promo; P.stage('4-3', { at: 45, r: 50, weapons: [['flame', 5, true], ['orbit', 5]] }); P.stress(140); },
       cap: { t: 'INFERNO', s: 'FLAMETHROWER · EVOLVED', y: 0.17, at: 0.15 } },
     { dur: 1.5 * B2, warm: 1.5, setup: () => { const P = window.__promo; P.stage('8-3', { at: 45, weapons: [['singularity', 5, true], ['pulse', 5]] }); P.stress(160); },
@@ -101,10 +103,10 @@ const worlds = {
       ...(i === 0 ? { fadeIn: 0.2 } : {}),
     })),
     { dur: 4 * B4, setup: () => window.__promo.codex(), each: 'P.scroll(".codex .scroll", Math.min(1, t / dur) ** 1.2);',
-      cap: { t: '54 WAYS TO FIGHT', y: 0.58, at: 0.2, rowsIn: 2.4,
+      cap: { t: '54 WAYS TO FIGHT', y: 0.36, box: true, at: 0.2, rowsIn: 2.4,
         rows: [[11, 'WEAPONS'], [11, 'EVOLUTIONS'], [9, 'PERKS'], [12, 'COMBOS'], [8, 'PERK SETS'], [3, 'SUPER COMBOS']] } },
     { dur: 2 * B4, setup: () => window.__promo.hangar(),
-      cap: { t: '3 SHIPS', s: 'SKINS · WEAPON MODULES', y: 0.8, at: 0.2 } },
+      cap: { t: '3 SHIPS', s: 'SKINS · WEAPON MODULES', y: 0.42, box: true, at: 0.2 } },
     END(2, B4),
   ],
 };

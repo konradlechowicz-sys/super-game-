@@ -42,6 +42,7 @@ window.__promo = (() => {
       '#pcap.void .t{color:#ff4fa8;text-shadow:0 0 14px rgba(255,45,149,.6),0 2px 10px #000}' +
       '#pcap .row{font:700 20px/1.6 Orbitron,sans-serif;letter-spacing:.06em;color:#dfe5ee;text-shadow:0 2px 10px #000}' +
       '#pcap .row b{color:#ffb02e;display:inline-block;min-width:2.2em;text-align:right;margin-right:.4em}' +
+      '#pcap.box .wrap{display:inline-block;background:rgba(3,5,10,.9);border:1px solid rgba(255,176,46,.4);padding:18px 26px 16px;box-shadow:0 0 40px rgba(0,0,0,.8)}' +
       '#pend{position:fixed;inset:0;z-index:95;background:#000 center/cover no-repeat;display:none;pointer-events:none}' +
       '#pend .sh{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(2,3,8,.15),rgba(2,3,8,.55) 45%,rgba(2,3,8,.95))}' +
       '#pend .in{position:absolute;left:0;right:0;bottom:16%;text-align:center}' +
@@ -116,12 +117,12 @@ window.__promo = (() => {
     const el = document.getElementById('pcap');
     if (!c) { el.style.display = 'none'; return; }
     el.style.display = 'block';
-    el.className = c.void ? 'void' : '';
+    el.className = (c.void ? 'void ' : '') + (c.box ? 'box' : '');
     el.style.top = ((c.y ?? 0.2) * 100) + '%';
     el.style.opacity = a;
     el.style.transform = 'scale(' + (0.92 + 0.08 * Math.min(1, a)) + ')';
     const rows = c.rows ? '<div style="margin-top:14px">' + c.rows.map(([n, l], i) => i < Math.ceil(k * c.rows.length) ? '<div class="row"><b>' + n + '</b>' + l + '</div>' : '').join('') + '</div>' : '';
-    el.innerHTML = (c.t ? '<div class="t">' + c.t + '</div>' : '') + (c.s ? '<div class="s">' + c.s + '</div>' : '') + rows;
+    el.innerHTML = '<div class="wrap">' + (c.t ? '<div class="t">' + c.t + '</div>' : '') + (c.s ? '<div class="s">' + c.s + '</div>' : '') + rows + '</div>';
   };
   P.end = (a) => { const e = document.getElementById('pend'); e.style.display = a > 0 ? 'block' : 'none'; e.style.opacity = a; };
   P.fade = (a) => { document.getElementById('pfade').style.opacity = a; };
@@ -131,8 +132,12 @@ window.__promo = (() => {
     const st = () => document.querySelector('.story');
     st().style.animation = 'none'; // a hard cut from the previous shot, no fade over the menu behind
     for (let i = 0; i < panel * 2 + 1; i++) st().dispatchEvent(new PointerEvent('pointerup', { bubbles: true }));
-    if (say) st().querySelector('.story-text').innerHTML = say.map((b) => '<div class="story-block ' + b.who + '"><div class="story-head">' + b.head + '</div>' + b.lines.map((l) => '<p data-t="' + l + '"></p>').join('') + '</div>').join('');
+    if (say && say.length) st().querySelector('.story-text').innerHTML = say.map((b) => '<div class="story-block ' + b.who + '"><div class="story-head">' + b.head + '</div>' + b.lines.map((l) => '<p data-t="' + l + '"></p>').join('') + '</div>').join('');
     st().querySelector('.story-skip').style.display = 'none';
+    // in a fast cut the picture is there at once (the game fades it in from black), still with its slow drift
+    const art = st().querySelector('.story-art');
+    art.style.opacity = '1';
+    art.style.animation = (art.classList.contains('left') ? 'story-drift-l' : 'story-drift-r') + ' 16s ease-out forwards';
   };
   P.type = (t, cps = 38) => {
     let n = Math.floor(t * cps);
@@ -217,7 +222,7 @@ const m = video.music;
 execFileSync('ffmpeg', ['-y', '-loglevel', 'error', '-framerate', String(FPS), '-i', `${FRAMES}/%05d.jpg`,
   '-ss', String(m.start), '-t', String(len), '-i', m.file,
   '-filter_complex', `[1:a]afade=t=in:d=0.05,afade=t=out:st=${Math.max(0, len - 1.8)}:d=1.8,loudnorm=I=-14:TP=-1:LRA=11[a]`,
-  '-map', '0:v', '-map', '[a]', '-c:v', 'libx264', '-pix_fmt', 'yuv420p', '-crf', '18', '-preset', 'slow',
+  '-map', '0:v', '-map', '[a]', '-c:v', 'libx264', '-pix_fmt', 'yuv420p', '-crf', '20', '-maxrate', '8M', '-bufsize', '16M', '-preset', 'slow',
   '-c:a', 'aac', '-b:a', '192k', '-ar', '48000', '-shortest', '-movflags', '+faststart', `${out}.mp4`], { stdio: 'inherit' });
 // the cover: the frame the video names (its most telling moment)
 const cover = Math.min(frame - 1, Math.round((video.cover || 1) * FPS));
