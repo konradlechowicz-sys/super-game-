@@ -16,6 +16,9 @@ i wersja TEST (gracze tego nie widzą).
 
 - 
 
+## Build 141 · 2026-11-02
+- [Narzędzia] Plan projektu (CLAUDE.md): nowa sekcja „PC / Steam” z listą zadań (pad w walce i w menu, sterowanie myszą, podpowiedzi przycisków, ustawienia sterowania, układ poziomy, ustawienia PC, Steamworks i strona sklepu). Gra bez zmian.
+
 ## Build 140 · 2026-11-02
 - [Narzędzia] Opisy do TikToka, Instagrama i YouTube dla 4 filmików kampanii 2.0 (`appstore/2.0/video/SOCIAL-CAPTIONS.md`). Gra bez zmian.
 

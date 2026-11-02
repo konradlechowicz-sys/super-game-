@@ -104,6 +104,23 @@ Next, in this order unless Konrad says otherwise:
   combos, 3 perk sets and 3 super combos (three weapons at LV 5, `super` in `js/combos.js`). All on neon effects until
   ChatGPT's icons and effects come (brief C5-C7).
 
+## PC / Steam (idea, added to the task list by Konrad 2026-11-02; after the iPhone + Android launch)
+The game can go to Steam wrapped as a desktop app (Electron, Tauri or NW.js) with Steamworks (achievements, Endless
+leaderboards instead of Game Center, cloud saves); sold as a paid game (no paywall), the trial as a separate demo.
+Tasks, in this order:
+1. Gamepad in combat: Gamepad API, left stick (dead zone) and d-pad into the existing analog path (`input.jx/jy` in
+   `js/main.js`), Start = pause. Keyboard (WASD/arrows, Esc/P) and mouse drag already work.
+2. Menus from gamepad and keyboard: one generic focus system in `js/ui.js` (highlight, arrows/d-pad move, A/Enter
+   confirm, B/Esc back, level-up cards 1/2/3, lists scrolled with the stick). Also useful on Android/iOS gamepads.
+3. Mouse steering mode: the ship follows the cursor (hidden cursor), as an alternative to WASD.
+4. Button prompts matching the device in use (Xbox, PlayStation, keyboard) in the tutorial and on buttons.
+5. Control settings: device choice, stick sensitivity (key remapping optional).
+6. Landscape layout for monitors, Steam Deck and tablets (the biggest part: arena, menus, HUD, level-up cards, story).
+7. PC settings (fullscreen, resolution, V-Sync), Windows build (Steam Deck runs it), Mac/Linux optional.
+8. Steam: Steamworks account (100 USD Steam Direct fee, tax and bank details), store page as Coming Soon at least
+   2 weeks before launch, landscape trailer (`promo/record.mjs`), AI content disclosure (ChatGPT art, Suno music;
+   check that the Suno tracks were made on a plan that allows commercial use).
+
 ## Android (decided by Konrad)
 Android launches with 2.0 (Google Play needs 12 testers for 14 days on a new account before publishing, so closed
 testing should start during 2.0 work). Project in `android/`, see README.md. Until Google
