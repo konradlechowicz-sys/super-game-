@@ -16,6 +16,10 @@ i wersja TEST (gracze tego nie widzą).
 
 - 
 
+## Build 144 · 2026-11-02
+- [Nowe] Android: rankingi trybu Endless w Google Play Games (ta sama obsługa co Game Center na iPhonie); włączą się, gdy w Play Console powstanie projekt Play Games i 10 tablic wyników, a ich identyfikatory trafią do gry.
+- [Narzędzia] `appstore/GOOGLE-PLAY.md`: instrukcja Play Console krok po kroku (konto, aplikacja, pierwszy pakiet, produkt „Full Game”, zamknięte testy 12 osób × 14 dni, formularze, Play Games, premiera).
+
 ## Build 143 · 2026-11-02
 - [Nowe] Android: zakup pełnej gry przez Google Play (Billing 7.1.1): cena ze sklepu, zakup, płatności oczekujące, przywracanie zakupu z konta Google i potwierdzanie zakupów; ten sam produkt co w App Store (`com.konradlechowicz.voidblaster.fullgame`). Działa, gdy produkt zostanie założony w Play Console.
 - [Zmiana] Komunikaty sklepu na Androidzie mówią o Google Play i koncie Google zamiast App Store i Apple ID.

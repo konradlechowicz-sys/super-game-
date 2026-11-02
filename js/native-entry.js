@@ -10,8 +10,8 @@ const Store = registerPlugin('VoidStore');
 const GameCenter = registerPlugin('VoidGameCenter');
 
 // The same "VoidStore" plugin on Android: Google Play Billing (android/app/src/main/java/.../StorePlugin.java).
-// Leaderboards on Android wait for Google Play Games.
+// Leaderboards: Game Center on iOS, Google Play Games on Android (PlayGamesPlugin.java), both as "VoidGameCenter".
 const platform = Capacitor.getPlatform();
 const ios = platform === 'ios';
 const store = ios || platform === 'android' ? Store : null;
-window.__native = Capacitor.isNativePlatform() ? { platform, Haptics, ImpactStyle, NotificationType, Preferences, Store: store, GameCenter: ios ? GameCenter : null } : null;
+window.__native = Capacitor.isNativePlatform() ? { platform, Haptics, ImpactStyle, NotificationType, Preferences, Store: store, GameCenter: store ? GameCenter : null } : null;

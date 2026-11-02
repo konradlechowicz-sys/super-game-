@@ -75,7 +75,9 @@ pop-up, pause a run, go one screen back; at the main menu the app goes to the ba
 creates the upload key `android/void-blaster-upload.jks` and `android/keystore.properties` (both out of git: back them
 up). The full-game purchase is Google Play Billing behind the same "VoidStore" plugin as iOS
 (`android/app/src/main/java/.../StorePlugin.java`; the one-time product in Play Console has the App Store's id
-`com.konradlechowicz.voidblaster.fullgame`). Not done yet: Google Play Games leaderboards.
+`com.konradlechowicz.voidblaster.fullgame`). Endless leaderboards: Google Play Games behind the same "VoidGameCenter"
+plugin (`PlayGamesPlugin.java`), off until the Play Games project id (`res/values/strings.xml`) and the 10 leaderboard ids
+(`PLAY_IDS` in `js/leaderboard.js`) are filled in. Step-by-step Play Console setup: `appstore/GOOGLE-PLAY.md`.
 
 ## Free trial and the full game
 - Free: world 1 with its boss, the Striker, shop upgrades up to level 3. The browser version is always the free trial.
