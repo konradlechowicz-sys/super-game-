@@ -38,8 +38,8 @@
   https://claude.ai/artifact/YGAi7N4QxktYtx4ad9ZbKc): intro before sector 1-1, a transmission after each boss of worlds
   1-9, outro + credits after the Void Heart; Admiral Hale (Earth Command) and the Void Collective, player call sign
   Vanguard. Scenes and texts in `js/story.js` (played once, `save.story`; Codex tab Log replays them), pictures Art
-  Bible SC0a-SC10d by `proto2/make-story.py` (`ui-sc-<code>`; stand-ins from the worlds' concept art until ChatGPT's
-  scenes arrive in `art/2.0/common/SC/selected`).
+  Bible SC0a-SC10d by `proto2/make-story.py` (`ui-sc-<code>`, from ChatGPT's scenes in `art/2.0/common/SC/selected`,
+  in the game since build 138).
 
 ## Shared handoff with Codex (paused, see above)
 

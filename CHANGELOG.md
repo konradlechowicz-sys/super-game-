@@ -16,6 +16,9 @@ i wersja TEST (gracze tego nie widzą).
 
 - 
 
+## Build 138 · 2026-11-02
+- [Nowe] Sceny fabuły mają właściwe ilustracje od ChatGPT (Art Bible SC0a–SC10d, 17 plansz): intro, 9 transmisji między światami i outro zamiast teł z konceptów światów.
+
 ## Build 137 · 2026-11-01
 - [Nowe] Napisy końcowe: podziękowania (SPECIAL THANKS) dla Suno i ChatGPT, „wspaniałych członków załogi, pełnych kreatywnych pomysłów i niestrudzonych w działaniu”, oraz dla Claude'a, „wspaniałego project managera”.
 
