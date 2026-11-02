@@ -8,6 +8,8 @@ import com.getcapacitor.BridgeActivity;
 public class MainActivity extends BridgeActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        // the game's own native plugins, registered before Capacitor starts: the full-game purchase (Google Play Billing)
+        registerPlugin(StorePlugin.class);
         super.onCreate(savedInstanceState);
         // The back button asks the game (js/main.js app.handleBack): it skips a story scene, closes a pop-up, pauses a
         // run or goes one screen back. At the main menu it answers false and the app goes to the background.

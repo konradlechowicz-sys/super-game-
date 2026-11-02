@@ -578,7 +578,7 @@ export class UI {
       tips: () => { setTips(this.app, true); this.toast('Tutorial hints will show again'); },
       restore: async () => {
         const owned = await this.app.store.restore();
-        this.toast(owned ? 'Full game restored' : 'No purchase found for this Apple ID');
+        this.toast(owned ? 'Full game restored' : `No purchase found for this ${this.app.native?.platform === 'android' ? 'Google account' : 'Apple ID'}`);
         this.settings();
       },
       control: () => {
@@ -773,13 +773,13 @@ export class UI {
           this.toast('Purchase pending approval');
           after();
         } else {
-          if (status === 'error' || status === 'unavailable') this.toast('The App Store is not available right now');
+          if (status === 'error' || status === 'unavailable') this.toast(`${this.app.native?.platform === 'android' ? 'Google Play' : 'The App Store'} is not available right now`);
           this.paywall(after, afterBoss);
         }
       },
       restore: async () => {
         const owned = await store.restore();
-        this.toast(owned ? 'Full game restored' : 'No purchase found for this Apple ID');
+        this.toast(owned ? 'Full game restored' : `No purchase found for this ${this.app.native?.platform === 'android' ? 'Google account' : 'Apple ID'}`);
         if (owned) { this.closeModal(); after(); } else this.paywall(after, afterBoss);
       },
     }, 'paywall', 300);

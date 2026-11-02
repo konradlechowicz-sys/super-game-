@@ -73,8 +73,9 @@ The back button asks the game (`MainActivity.java` → `app.handleBack` in `js/m
 pop-up, pause a run, go one screen back; at the main menu the app goes to the background.
 `npm run android:bundle` makes the signed bundle for Google Play (`dist/void-blaster-build-N.aab`); the first time it
 creates the upload key `android/void-blaster-upload.jks` and `android/keystore.properties` (both out of git: back them
-up). Not done yet: Google Play Billing (Android plays as the free trial; `js/native-entry.js` passes no store plugin),
-Google Play Games leaderboards.
+up). The full-game purchase is Google Play Billing behind the same "VoidStore" plugin as iOS
+(`android/app/src/main/java/.../StorePlugin.java`; the one-time product in Play Console has the App Store's id
+`com.konradlechowicz.voidblaster.fullgame`). Not done yet: Google Play Games leaderboards.
 
 ## Free trial and the full game
 - Free: world 1 with its boss, the Striker, shop upgrades up to level 3. The browser version is always the free trial.

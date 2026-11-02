@@ -16,6 +16,10 @@ i wersja TEST (gracze tego nie widzą).
 
 - 
 
+## Build 143 · 2026-11-02
+- [Nowe] Android: zakup pełnej gry przez Google Play (Billing 7.1.1): cena ze sklepu, zakup, płatności oczekujące, przywracanie zakupu z konta Google i potwierdzanie zakupów; ten sam produkt co w App Store (`com.konradlechowicz.voidblaster.fullgame`). Działa, gdy produkt zostanie założony w Play Console.
+- [Zmiana] Komunikaty sklepu na Androidzie mówią o Google Play i koncie Google zamiast App Store i Apple ID.
+
 ## Build 142 · 2026-11-02
 - [Nowe] Android: przycisk „wstecz” działa jak w grze: pomija scenę fabuły, zamyka okienko, pauzuje bieg albo cofa o ekran; w menu głównym chowa aplikację w tle.
 - [Narzędzia] `npm run android:bundle`: podpisany pakiet `.aab` dla Google Play (`dist/void-blaster-build-N.aab`); za pierwszym razem tworzy klucz do wysyłania (`android/void-blaster-upload.jks` + `android/keystore.properties`, poza gitem — zrób kopię zapasową).
