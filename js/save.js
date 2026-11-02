@@ -11,10 +11,12 @@ const fresh = () => ({
   v: SAVE_VERSION,
   // set once when a 1.x save is moved to 2.0: { coins } shown on the welcome screen until the player closes it
   veteranWelcome: null,
-  // the player had a 1.x save (the Veteran skin will be theirs when its art is ready)
+  // the player had a 1.x save: the Veteran Striker skin is theirs
   veteran: false,
   coins: 0,
   stars: {},
+  // story scenes already played (js/story.js: intro, w1 ... w9, outro -> 1); the Codex's Log replays them
+  story: {},
   // Codex entries discovered in any run (key -> 1); kept by Reset progress
   codex: {},
   // worlds whose 18 stars already paid the full-set bonus (id -> true)

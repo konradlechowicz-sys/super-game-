@@ -4,6 +4,7 @@ import { ALL_STAGES, BOSSES, TRAITS } from './data.js';
 import { COMBOS, COMBO_LEVEL, levelFor } from './combos.js';
 import { WEAPONS } from './weapons.js';
 import { importSave } from './save.js';
+import { STORY_ORDER } from './story.js';
 
 // Everything lives inside installTestKit (no top-level code), so bundlers drop the whole module when it is not called.
 export function installTestKit(app) {
@@ -75,6 +76,11 @@ export function installTestKit(app) {
         ${btn('reset', 'RESET PROGRESS')}
         ${btn('vet', 'SIMULATE 1.x SAVE')}
       </div>
+      <div class="tk-head">Story scenes (js/story.js)</div>
+      <div class="tk-row">
+        ${STORY_ORDER.map((k) => btn('story', k.toUpperCase(), `data-k="${k}"`)).join('')}
+        ${btn('storyreset', 'FORGET SEEN')}
+      </div>
       <p class="tiny muted center">Coins: ${s.coins.toLocaleString('en-US')} · Stars: ${Object.values(s.stars).reduce((a, b) => a + b, 0)}/${ALL_STAGES.length * 3}</p>
       <div class="modal-actions"><button class="btn primary" data-act="close">DONE</button></div>
     `, {
@@ -89,6 +95,8 @@ export function installTestKit(app) {
         app.persist(); ui.toast('Every sector cleared with 3 stars'); menuPanel();
       },
       tips: () => { s.tips = {}; s.tipsOff = false; app.persist(); ui.toast('Tutorial will show again'); menuPanel(); },
+      story: (ds) => { ui.closeModal(); app.playStory(ds.k, menuPanel); },
+      storyreset: () => { s.story = {}; app.persist(); ui.toast('Story scenes will play again'); menuPanel(); },
       reset: (ds, el) => {
         if (!el.dataset.confirm) { el.dataset.confirm = '1'; el.textContent = 'TAP AGAIN'; return; }
         app.resetProgress(); ui.toast('Progress reset'); menuPanel();
