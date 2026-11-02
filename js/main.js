@@ -422,6 +422,23 @@ app.persist();
 if (app.save.veteranWelcome) app.ui.veteran();
 else if (app.dailyStatus().claimable && app.save.stats.runs > 0) app.ui.daily();
 requestAnimationFrame(frame);
+// Android's back button (android/app/src/main/java/.../MainActivity.java asks this): skips a story scene, closes the
+// open pop-up, pauses a run, or goes one screen back; false at the main menu, where the app goes to the background.
+app.handleBack = () => {
+  const ui = app.ui;
+  const story = document.querySelector('.story');
+  if (story) { story.querySelector('.story-skip')?.dispatchEvent(new PointerEvent('pointerup', { bubbles: true })); return true; }
+  const tap = (fn) => fn({}, document.createElement('button'));
+  if (ui.modalEl.classList.contains('open')) {
+    const h = ui.mh || {};
+    const fn = h.resume || h.close || h.back || h.no || h.map;
+    if (fn) tap(fn);
+    return true; // a pop-up without a way out (the level-up cards) stays
+  }
+  if (app.game) { app.game.pause(); return true; }
+  if (ui.h?.back) { tap(ui.h.back); return true; }
+  return false;
+};
 window.__app = app;
 
 // In the app, restore progress from the native copy if WebView storage was cleared.

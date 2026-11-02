@@ -18,3 +18,8 @@ proto2/assets.gen.js
 js/v2/assets.gen.js
 js/v2/music.gen.js
 teaser/assets.gen.js
+
+# Google Play upload key and its passwords (npm run android:bundle); back them up, never commit them
+android/keystore.properties
+*.jks
+*.keystore

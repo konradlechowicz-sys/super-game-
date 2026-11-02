@@ -16,6 +16,10 @@ i wersja TEST (gracze tego nie widzą).
 
 - 
 
+## Build 142 · 2026-11-02
+- [Nowe] Android: przycisk „wstecz” działa jak w grze: pomija scenę fabuły, zamyka okienko, pauzuje bieg albo cofa o ekran; w menu głównym chowa aplikację w tle.
+- [Narzędzia] `npm run android:bundle`: podpisany pakiet `.aab` dla Google Play (`dist/void-blaster-build-N.aab`); za pierwszym razem tworzy klucz do wysyłania (`android/void-blaster-upload.jks` + `android/keystore.properties`, poza gitem — zrób kopię zapasową).
+
 ## Build 141 · 2026-11-02
 - [Narzędzia] Plan projektu (CLAUDE.md): nowa sekcja „PC / Steam” z listą zadań (pad w walce i w menu, sterowanie myszą, podpowiedzi przycisków, ustawienia sterowania, układ poziomy, ustawienia PC, Steamworks i strona sklepu). Gra bez zmian.
 

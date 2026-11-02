@@ -2,13 +2,18 @@
 // npm run android:test — the TEST variant (tester's panel 🛠) as a separate app "VB Test" with its own save
 // Both build the game, install it with Gradle and launch it. Start an emulator first (Android Studio → Device Manager
 // → ▶) or connect a phone with USB debugging on. `npm run android:open` opens the project in Android Studio instead.
+// npm run android:bundle — the signed app bundle for Google Play (dist/void-blaster-build-N.aab), to upload in Play
+// Console (closed testing, then production). The first time it makes the upload key: android/void-blaster-upload.jks
+// and android/keystore.properties (passwords), both kept out of git; back them up (Google Play signs the app itself
+// and can replace a lost upload key, but that takes days).
 import { execSync } from 'node:child_process';
-import { cpSync, existsSync, rmSync, writeFileSync } from 'node:fs';
+import { cpSync, existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { homedir } from 'node:os';
+import { createInterface } from 'node:readline/promises';
 
 const mode = process.argv[2];
-if (mode !== 'play' && mode !== 'test') {
-  console.log('Użycie: node scripts/android.mjs play|test');
+if (mode !== 'play' && mode !== 'test' && mode !== 'bundle') {
+  console.log('Użycie: node scripts/android.mjs play|test|bundle');
   process.exit(1);
 }
 const run = (cmd, opts = {}) => execSync(cmd, { stdio: 'inherit', ...opts });
@@ -27,6 +32,34 @@ env.ANDROID_HOME = sdk;
 // local.properties needs forward slashes (or escaped backslashes) on Windows
 if (!existsSync('android/local.properties')) writeFileSync('android/local.properties', `sdk.dir=${sdk.replaceAll('\\', '/')}\n`);
 const adb = `"${sdk}/platform-tools/adb${WIN ? '.exe' : ''}"`;
+const gradlew = WIN ? 'gradlew.bat' : './gradlew';
+
+if (mode === 'bundle') {
+  if (!existsSync('android/keystore.properties')) {
+    console.log('\nPierwszy pakiet dla Google Play: tworzę klucz do wysyłania (upload key).');
+    console.log('Wymyśl hasło (co najmniej 6 znaków) i ZAPISZ je w bezpiecznym miejscu razem z plikiem');
+    console.log('android/void-blaster-upload.jks — bez nich nie wyślesz nowej wersji do Google Play.\n');
+    const rl = createInterface({ input: process.stdin, output: process.stdout });
+    const pass = (await rl.question('Hasło klucza: ')).trim();
+    rl.close();
+    if (pass.length < 6) bye('Hasło musi mieć co najmniej 6 znaków.');
+    const keytool = `"${env.JAVA_HOME ? `${env.JAVA_HOME}/bin/` : ''}keytool"`;
+    run(`${keytool} -genkeypair -keystore android/void-blaster-upload.jks -alias upload -keyalg RSA -keysize 2048 -validity 10000 ` +
+      `-storepass "${pass}" -keypass "${pass}" -dname "CN=Konrad Lechowicz, O=Konrad Lechowicz, C=PL"`);
+    writeFileSync('android/keystore.properties', `storeFile=../void-blaster-upload.jks\nstorePassword=${pass}\nkeyAlias=upload\nkeyPassword=${pass}\n`);
+    console.log('\nKlucz zapisany: android/void-blaster-upload.jks + android/keystore.properties (poza gitem). Zrób kopię zapasową!');
+  }
+  run('node scripts/build.mjs');
+  run('npx cap sync android');
+  console.log('\nBuduję podpisany pakiet dla Google Play…');
+  run(`${gradlew} -q bundleGameRelease`, { cwd: 'android', env });
+  const build = (readFileSync('js/version.js', 'utf8').match(/build:\s*(\d+)/) || [])[1] || 'x';
+  mkdirSync('dist', { recursive: true });
+  const out = `dist/void-blaster-build-${build}.aab`;
+  cpSync('android/app/build/outputs/bundle/gameRelease/app-game-release.aab', out);
+  console.log(`\n✔ ${out}\nWyślij go w Play Console: Testy → Testy zamknięte → Utwórz nową wersję → Prześlij.`);
+  process.exit(0);
+}
 
 const devices = sh(`${adb} devices`).split(/\r?\n/).slice(1).filter((l) => /\tdevice\s*$/.test(l));
 if (!devices.length) {
@@ -48,6 +81,6 @@ run('npx cap sync android');
 const flavor = test ? 'Vbtest' : 'Game';
 const appId = `com.konradlechowicz.voidblaster${test ? '.test' : ''}`;
 console.log(`\nBuduję i instaluję ${test ? '„VB Test”' : 'Void Blaster'} (pierwszy raz trwa kilka minut)…`);
-run(`${WIN ? 'gradlew.bat' : './gradlew'} -q install${flavor}Debug`, { cwd: 'android', env });
+run(`${gradlew} -q install${flavor}Debug`, { cwd: 'android', env });
 run(`${adb} shell monkey -p ${appId} -c android.intent.category.LAUNCHER 1`, { stdio: 'ignore' });
 console.log(`\n▶ ${test ? '„VB Test” (wersja TEST z panelem 🛠)' : 'Void Blaster'} działa na: ${devices[0].split('\t')[0]}`);
