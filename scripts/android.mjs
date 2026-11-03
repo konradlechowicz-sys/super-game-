@@ -6,7 +6,7 @@
 // Console (closed testing, then production). The first time it makes the upload key: android/void-blaster-upload.jks
 // and android/keystore.properties (passwords), both kept out of git; back them up (Google Play signs the app itself
 // and can replace a lost upload key, but that takes days).
-import { execSync } from 'node:child_process';
+import { execSync, spawnSync } from 'node:child_process';
 import { cpSync, existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { homedir } from 'node:os';
 import { createInterface } from 'node:readline/promises';
@@ -24,7 +24,28 @@ const bye = (msg) => { console.log(`\n${msg}`); process.exit(1); };
 const WIN = process.platform === 'win32';
 const env = { ...process.env };
 const studioJava = WIN ? 'C:\\Program Files\\Android\\Android Studio\\jbr' : '/Applications/Android Studio.app/Contents/jbr/Contents/Home';
-if (!env.JAVA_HOME && existsSync(studioJava)) env.JAVA_HOME = studioJava;
+// Gradle 8.14 runs on Java 17-24 only (a newer one fails with "Unsupported class file major version"): take the first
+// Java of that range, Android Studio's own first, then JAVA_HOME (often another JDK installed for something else).
+const javaVersion = (home) => {
+  if (!home || !existsSync(home)) return 0;
+  try {
+    // java -version prints to stderr
+    const r = spawnSync(`${home}${WIN ? '\\bin\\java.exe' : '/bin/java'}`, ['-version'], { encoding: 'utf8' });
+    const m = `${r.stderr}${r.stdout}`.match(/version "(\d+)(?:\.(\d+))?/);
+    if (!m) return 0;
+    return m[1] === '1' ? +m[2] : +m[1];
+  } catch { return 0; }
+};
+const javaCandidates = [env.VB_JAVA_HOME, studioJava, env.JAVA_HOME].filter(Boolean);
+const goodJava = javaCandidates.find((h) => { const v = javaVersion(h); return v >= 17 && v <= 24; });
+if (goodJava) env.JAVA_HOME = goodJava;
+else {
+  const found = javaCandidates.map((h) => `  ${h}: Java ${javaVersion(h) || 'brak'}`).join('\n');
+  bye(`Gradle potrzebuje Javy w wersji od 17 do 24, a znalazłem:\n${found}\n` +
+    'Zainstaluj JDK 21 (np. Eclipse Temurin 21 z adoptium.net) i ustaw zmienną VB_JAVA_HOME na jej folder,\n' +
+    'np. w PowerShell: $env:VB_JAVA_HOME = "C:\\Program Files\\Eclipse Adoptium\\jdk-21..." i uruchom ponownie.');
+}
+console.log(`Java dla Gradle: ${env.JAVA_HOME} (wersja ${javaVersion(env.JAVA_HOME)})`);
 const defaultSdk = WIN ? `${env.LOCALAPPDATA}\\Android\\Sdk` : `${homedir()}/Library/Android/sdk`;
 const sdk = env.ANDROID_HOME || env.ANDROID_SDK_ROOT || defaultSdk;
 if (!existsSync(sdk)) bye(`Nie widzę Android SDK w ${sdk}. Otwórz raz Android Studio (npm run android:open), żeby je zainstalowało.`);

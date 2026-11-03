@@ -16,6 +16,9 @@ i wersja TEST (gracze tego nie widzą).
 
 - 
 
+## Build 145 · 2026-11-03
+- [Narzędzia] `npm run android:play|test|bundle` sam wybiera Javę zgodną z Gradle (17–24): najpierw tę z Android Studio, potem `JAVA_HOME`; z Javą 25 budowanie kończyło się błędem „Unsupported class file major version 69”. Gdy żadna nie pasuje, podaje, co zainstalować (`VB_JAVA_HOME`).
+
 ## Build 144 · 2026-11-02
 - [Nowe] Android: rankingi trybu Endless w Google Play Games (ta sama obsługa co Game Center na iPhonie); włączą się, gdy w Play Console powstanie projekt Play Games i 10 tablic wyników, a ich identyfikatory trafią do gry.
 - [Narzędzia] `appstore/GOOGLE-PLAY.md`: instrukcja Play Console krok po kroku (konto, aplikacja, pierwszy pakiet, produkt „Full Game”, zamknięte testy 12 osób × 14 dni, formularze, Play Games, premiera).
