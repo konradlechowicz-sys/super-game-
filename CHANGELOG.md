@@ -16,6 +16,11 @@ i wersja TEST (gracze tego nie widzą).
 
 - 
 
+## Build 148 · 2026-11-03
+- [Balans] Awanse nie wyskakują już seriami: doświadczenie trafia do „banku”, który daje najwyżej jeden poziom na 2,5 s, a resztę oddaje później. Z jednej dużej porcji (magnes, bomba, masa kryształów) bank przyjmuje najwyżej dwa poziomy zapasu, więc daje kilka awansów zamiast całej serii.
+- [Balans] Łagodniejsza krzywa doświadczenia (około 8–10% mniej awansów w sektorze). W pomiarze (4 sektory, 3,5 min) przed zmianą zdarzały się 2–3 okienka w ciągu 0,3 s, po zmianie najkrótszy odstęp to 2,5 s.
+- [Narzędzia] LEVEL UP i „Boss now” w panelu testera dają poziomy od razu, z pominięciem banku.
+
 ## Build 147 · 2026-11-03
 - [Zmiana] Wrogowie poruszają się jak stado, a nie jeden obiekt: każdy ma własny czas reakcji na skręt statku (0,25–0,9 s), własne wyprzedzenie, stronę, z której podchodzi, lekkie myszkowanie i bezwładność (skręca łukiem). Rój nie zmienia już kierunku synchronicznie ze statkiem.
 - [Balans] Zwykli wrogowie gonią najwyżej z prędkością 170 (85% bazowej prędkości Titana), więc każdy statek może uciec bez ulepszonych silników; szybsze są tylko szarże i wypady po ostrzeżeniu oraz elity z cechą „swift”. Dotąd roje od świata 2 miały do 180.

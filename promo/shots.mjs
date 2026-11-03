@@ -45,7 +45,7 @@ const swarm = {
   shots: [
     { dur: 2 * B2, warm: 1.5, setup: () => { const P = window.__promo; P.stage('2-4', { at: 60, weapons: [['pulse', 5], ['singularity', 5], ['flame', 5], ['blaster', 5]] }); P.stress(300); },
       cap: { t: '300+ ENEMIES', s: 'ON SCREEN AT ONCE', y: 0.17, at: 0.2 } },
-    { dur: B2, warm: 0.5, setup: () => { const P = window.__promo; const g = P.stage('3-3', { at: 40, weapons: [['blaster', 3], ['spread', 2]] }); delete g.openCards; g.gainXp((g.xpNext - g.xp) / g.player.xpMult + 1); },
+    { dur: B2, warm: 0.5, setup: () => { const P = window.__promo; const g = P.stage('3-3', { at: 40, weapons: [['blaster', 3], ['spread', 2]] }); delete g.openCards; g.gainXp((g.xpNext - g.xp) / g.player.xpMult + 1, true); },
       cap: { t: 'BUILD YOUR ARSENAL', s: 'PICK YOUR UPGRADES', y: 0.84, at: 0.1 } },
     { dur: 1.5 * B2, warm: 1, setup: () => { const P = window.__promo; P.stage('4-3', { at: 45, r: 50, weapons: [['flame', 5, true], ['orbit', 5]] }); P.stress(140); },
       cap: { t: 'INFERNO', s: 'FLAMETHROWER · EVOLVED', y: 0.17, at: 0.15 } },

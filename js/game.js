@@ -18,6 +18,9 @@ const DRAG_SENS = 1.5;
 const MAX_LAG = 150;
 // the fastest a normal enemy chases (85% of the slowest ship's base speed, the Titan's 200)
 const CHASE_CAP = 170;
+// experience pacing (gainXp): the shortest time between two level-ups, and how many levels' worth may wait in the bank
+const LEVEL_GAP = 2.5;
+const XP_BANK_MAX = 2;
 const ARENA_SCALE = 1.5;
 // Crowd damage (v1.1): invulnerability after touching an enemy (shots and hazards keep 0.6 s), and the squeeze bonus.
 const CONTACT_INV = 0.3;
@@ -48,6 +51,7 @@ export class Game {
     this.kills = 0; this.coinsRun = 0;
     this.elitesKilled = 0;
     this.level = 1; this.xp = 0; this.xpNext = xpFor(1); this.pendingLevels = 0; this.pendingChests = 0;
+    this.xpBank = 0; this.lastLevelT = -99;
     this.weapons = []; this.passives = {};
     // weapon combos active this run, and the ones still to announce once the level-up cards close
     this.combos = new Set(); this.comboQueue = []; this.comboBannerT = 0;
@@ -912,13 +916,32 @@ export class Game {
   }
 
   // ---------------- level up / cards ----------------
-  gainXp(v) {
-    this.xp += v * this.player.xpMult;
-    while (this.xp >= this.xpNext) {
+  // Experience comes in through a bank (decided by Konrad, 2026-11-03: a big haul, e.g. a magnet or a bomb, opened the
+  // level-up cards one after another and broke the rhythm): at most one level every LEVEL_GAP seconds, the rest waits
+  // in the bank and flows in later (flowXp, every frame); a bank of more than XP_BANK_MAX levels' worth loses the
+  // excess, so one big haul gives a few levels, not a whole run of them. instant: test tools, all at once.
+  gainXp(v, instant = false) {
+    if (instant) {
+      this.xp += v * this.player.xpMult;
+      while (this.xp >= this.xpNext) { this.xp -= this.xpNext; this.level++; this.xpNext = xpFor(this.level); this.pendingLevels++; }
+      return;
+    }
+    this.xpBank = Math.min(this.xpBank + v * this.player.xpMult, this.xpNext * XP_BANK_MAX);
+    this.flowXp();
+  }
+
+  flowXp() {
+    if (this.xpBank <= 0) return;
+    const ready = this.time - this.lastLevelT >= LEVEL_GAP;
+    const move = Math.min(this.xpBank, ready ? this.xpNext - this.xp : Math.max(0, this.xpNext - this.xp - 1e-6));
+    this.xp += move;
+    this.xpBank -= move;
+    if (this.xp >= this.xpNext) {
       this.xp -= this.xpNext;
       this.level++;
       this.xpNext = xpFor(this.level);
       this.pendingLevels++;
+      this.lastLevelT = this.time;
     }
   }
 
@@ -1937,6 +1960,7 @@ export class Game {
       }
       return d2 < collectR * collectR;
     };
+    this.flowXp();
     for (let i = this.gems.length - 1; i >= 0; i--) {
       const g = this.gems[i];
       if (pull(g)) {

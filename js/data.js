@@ -886,8 +886,10 @@ export function stageIndex(id) {
   return ALL_STAGES.findIndex((s) => s.id === id);
 }
 
+// experience needed for the next level; a little gentler since build 148 (Konrad, 2026-11-03: fewer, steadier
+// level-ups), was 4 + 4(L-1) + (L-1)^1.6
 export function xpFor(level) {
-  return Math.floor(4 + (level - 1) * 4 + Math.pow(level - 1, 1.6));
+  return Math.floor(5 + (level - 1) * 4.5 + Math.pow(level - 1, 1.65));
 }
 
 // Endless mode (v1.3, decided by Konrad): one per world, opened by beating the whole game (the Void Heart), full game
