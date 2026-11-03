@@ -16,6 +16,10 @@ i wersja TEST (gracze tego nie widzą).
 
 - 
 
+## Build 146 · 2026-11-03
+- [Poprawka] Android: gra na pełnym ekranie, bez paska stanu u góry i paska nawigacji na dole (pojawiają się na chwilę po przeciągnięciu od krawędzi); ukrywa je ponownie po powrocie do gry.
+- [Narzędzia] Skrypty Androida same znajdują zainstalowane JDK 21 (Temurin, Microsoft, Oracle, Zulu, Corretto), bez ustawiania `VB_JAVA_HOME`.
+
 ## Build 145 · 2026-11-03
 - [Narzędzia] `npm run android:play|test|bundle` sam wybiera Javę zgodną z Gradle (17–24): najpierw tę z Android Studio, potem `JAVA_HOME`; z Javą 25 budowanie kończyło się błędem „Unsupported class file major version 69”. Gdy żadna nie pasuje, podaje, co zainstalować (`VB_JAVA_HOME`).
 

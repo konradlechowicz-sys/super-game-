@@ -7,7 +7,7 @@
 // and android/keystore.properties (passwords), both kept out of git; back them up (Google Play signs the app itself
 // and can replace a lost upload key, but that takes days).
 import { execSync, spawnSync } from 'node:child_process';
-import { cpSync, existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { cpSync, existsSync, mkdirSync, readdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { homedir } from 'node:os';
 import { createInterface } from 'node:readline/promises';
 
@@ -36,14 +36,20 @@ const javaVersion = (home) => {
     return m[1] === '1' ? +m[2] : +m[1];
   } catch { return 0; }
 };
-const javaCandidates = [env.VB_JAVA_HOME, studioJava, env.JAVA_HOME].filter(Boolean);
+// JDKs installed in the usual places (Temurin, Microsoft, Oracle, Zulu, Corretto), newest of each kind first
+const jdkDirs = WIN
+  ? ['C:\\Program Files\\Eclipse Adoptium', 'C:\\Program Files\\Microsoft', 'C:\\Program Files\\Java', 'C:\\Program Files\\Zulu', 'C:\\Program Files\\Amazon Corretto']
+  : ['/Library/Java/JavaVirtualMachines'];
+const installedJdks = jdkDirs.filter((d) => existsSync(d)).flatMap((d) => readdirSync(d).filter((n) => /jdk|zulu|corretto|temurin/i.test(n))
+  .sort().reverse().map((n) => (WIN ? `${d}\\${n}` : `${d}/${n}/Contents/Home`)));
+const javaCandidates = [env.VB_JAVA_HOME, studioJava, env.JAVA_HOME, ...installedJdks].filter(Boolean);
 const goodJava = javaCandidates.find((h) => { const v = javaVersion(h); return v >= 17 && v <= 24; });
 if (goodJava) env.JAVA_HOME = goodJava;
 else {
   const found = javaCandidates.map((h) => `  ${h}: Java ${javaVersion(h) || 'brak'}`).join('\n');
   bye(`Gradle potrzebuje Javy w wersji od 17 do 24, a znalazłem:\n${found}\n` +
-    'Zainstaluj JDK 21 (np. Eclipse Temurin 21 z adoptium.net) i ustaw zmienną VB_JAVA_HOME na jej folder,\n' +
-    'np. w PowerShell: $env:VB_JAVA_HOME = "C:\\Program Files\\Eclipse Adoptium\\jdk-21..." i uruchom ponownie.');
+    'Zainstaluj JDK 21, np. w PowerShell: winget install EclipseAdoptium.Temurin.21.JDK\n' +
+    '(albo z adoptium.net, wersja 21 LTS) i uruchom ponownie; skrypt sam je znajdzie.');
 }
 console.log(`Java dla Gradle: ${env.JAVA_HOME} (wersja ${javaVersion(env.JAVA_HOME)})`);
 const defaultSdk = WIN ? `${env.LOCALAPPDATA}\\Android\\Sdk` : `${homedir()}/Library/Android/sdk`;
