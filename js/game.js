@@ -16,6 +16,8 @@ const MAX_WEAPONS = 4;
 const MAX_PASSIVES = 4;
 const DRAG_SENS = 1.5;
 const MAX_LAG = 150;
+// the fastest a normal enemy chases (85% of the slowest ship's base speed, the Titan's 200)
+const CHASE_CAP = 170;
 const ARENA_SCALE = 1.5;
 // Crowd damage (v1.1): invulnerability after touching an enemy (shots and hazards keep 0.6 s), and the squeeze bonus.
 const CONTACT_INV = 0.3;
@@ -499,6 +501,18 @@ export class Game {
     this.app.audio.setTrack(this.stage.world.music || 'game');
   }
 
+  // A chaser's own way of steering (see the enemy loop in update): how late it reacts to the ship's turns, how far
+  // ahead it aims, the side it approaches from, its wander and how fast it can turn. Swarms are the nimblest.
+  steerFor(e, dx, dy, d) {
+    const p = this.player, pack = !!e.def.pack || e.def.speed >= 100;
+    return {
+      pvx: p.vx || 0, pvy: p.vy || 0,
+      react: rand(0.25, 0.9), lead: pack ? rand(0.2, 1) : rand(0, 0.5), flank: rand(-0.9, 0.9),
+      ww: rand(0.6, 1.4), wph: rand(0, TAU), pace: rand(0.92, 1.05), agil: pack ? rand(2.5, 4.5) : rand(1.5, 3),
+      vx: (dx / d) * e.speed, vy: (dy / d) * e.speed,
+    };
+  }
+
   // ---------------- spawning ----------------
   spawnEnemy(type, x, y, elite = false, traits = []) {
     const d = ENEMIES[type], st = this.stage;
@@ -511,6 +525,10 @@ export class Game {
       rot: 0, state: 'chase', t: 0, cd: rand(0.5, 2), kbRes: d.speed === 0 ? 0 : elite ? 0.25 : d.r > 18 ? 0.4 : 1, alpha: 1,
     };
     e.maxHp = e.hp;
+    // Every ship can outrun the crowd (decided by Konrad, 2026-11-03: swarms faster than the ship left no way out but
+    // an area weapon): the chase speed is at most CHASE_CAP; the pressure comes from numbers and directions. Faster
+    // only: dashes and lunges after their warning, and elites with the 'swift' trait (applyTraits below).
+    if (d.ai !== 'drift') e.speed = Math.min(e.speed, CHASE_CAP);
     if (traits.length) this.applyTraits(e, traits);
     if (d.ai === 'drift') {
       const p = this.player;
@@ -1209,13 +1227,24 @@ export class Game {
       if (e.def.speed === 0 && !e.elite && d > 1100) { e.dead = true; continue; }
       let mx = (dx / d) * e.speed, my = (dy / d) * e.speed;
       const ai = e.def.ai;
-      // interception (decided by Konrad, 2026-11-01: crowds that only trail the ship clump into one mass): two of
-      // every three fast chasers (swarms and anything 100+ fast without its own way of moving) head for where the
-      // ship will be, up to 1.4 s ahead, so they cut it off and come from the front and the sides too
-      if (!ai && (e.def.pack || e.def.speed >= 100) && e.id % 3 && d > 90) {
-        const lead = Math.min(1.4, d / Math.max(60, e.speed));
-        const ix = dx + (p.vx || 0) * lead, iy = dy + (p.vy || 0) * lead, il = Math.hypot(ix, iy) || 1;
-        mx = (ix / il) * e.speed; my = (iy / il) * e.speed;
+      // Chasers steer like a flock, not as one body (decided by Konrad: 2026-11-01 crowds that only trailed the ship
+      // clumped into one mass; 2026-11-03 the interceptors then turned all at once with the ship). Each one has its
+      // own late picture of where the ship is going (reaction 0.25-0.9 s), its own lead, a side it comes from while
+      // still far, a slow wander, and inertia: it turns in an arc instead of snapping to the new heading.
+      if (!ai && e.def.speed > 0) {
+        const s = e.st || (e.st = this.steerFor(e, dx, dy, d));
+        const kr = Math.min(1, dt / s.react);
+        s.pvx += ((p.vx || 0) - s.pvx) * kr; s.pvy += ((p.vy || 0) - s.pvy) * kr;
+        const lead = Math.min(1.2, d / Math.max(60, e.speed)) * s.lead;
+        let tx = dx + s.pvx * lead, ty = dy + s.pvy * lead;
+        const far = clamp((d - 120) / 380, 0, 1);
+        const ang = (s.flank + Math.sin(this.time * s.ww + s.wph) * 0.35) * far;
+        const c = Math.cos(ang), sn = Math.sin(ang);
+        const rx = tx * c - ty * sn, ry = tx * sn + ty * c, rl = Math.hypot(rx, ry) || 1;
+        const want = e.speed * s.pace * (1 + 0.08 * Math.sin(this.time * s.ww * 1.7 + s.wph));
+        const ka = Math.min(1, dt * s.agil);
+        s.vx += ((rx / rl) * want - s.vx) * ka; s.vy += ((ry / rl) * want - s.vy) * ka;
+        mx = s.vx; my = s.vy;
       }
       let bounded = true, separate = true;
       if (ai === 'dash') {

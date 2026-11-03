@@ -16,6 +16,10 @@ i wersja TEST (gracze tego nie widzą).
 
 - 
 
+## Build 147 · 2026-11-03
+- [Zmiana] Wrogowie poruszają się jak stado, a nie jeden obiekt: każdy ma własny czas reakcji na skręt statku (0,25–0,9 s), własne wyprzedzenie, stronę, z której podchodzi, lekkie myszkowanie i bezwładność (skręca łukiem). Rój nie zmienia już kierunku synchronicznie ze statkiem.
+- [Balans] Zwykli wrogowie gonią najwyżej z prędkością 170 (85% bazowej prędkości Titana), więc każdy statek może uciec bez ulepszonych silników; szybsze są tylko szarże i wypady po ostrzeżeniu oraz elity z cechą „swift”. Dotąd roje od świata 2 miały do 180.
+
 ## Build 146 · 2026-11-03
 - [Poprawka] Android: gra na pełnym ekranie, bez paska stanu u góry i paska nawigacji na dole (pojawiają się na chwilę po przeciągnięciu od krawędzi); ukrywa je ponownie po powrocie do gry.
 - [Narzędzia] Skrypty Androida same znajdują zainstalowane JDK 21 (Temurin, Microsoft, Oracle, Zulu, Corretto), bez ustawiania `VB_JAVA_HOME`.
