@@ -16,6 +16,28 @@ i wersja TEST (gracze tego nie widzą).
 
 - 
 
+## Build 146 · 2026-11-03
+- [Poprawka] Android: gra na pełnym ekranie, bez paska stanu u góry i paska nawigacji na dole (pojawiają się na chwilę po przeciągnięciu od krawędzi); ukrywa je ponownie po powrocie do gry.
+- [Narzędzia] Skrypty Androida same znajdują zainstalowane JDK 21 (Temurin, Microsoft, Oracle, Zulu, Corretto), bez ustawiania `VB_JAVA_HOME`.
+
+## Build 145 · 2026-11-03
+- [Narzędzia] `npm run android:play|test|bundle` sam wybiera Javę zgodną z Gradle (17–24): najpierw tę z Android Studio, potem `JAVA_HOME`; z Javą 25 budowanie kończyło się błędem „Unsupported class file major version 69”. Gdy żadna nie pasuje, podaje, co zainstalować (`VB_JAVA_HOME`).
+
+## Build 144 · 2026-11-02
+- [Nowe] Android: rankingi trybu Endless w Google Play Games (ta sama obsługa co Game Center na iPhonie); włączą się, gdy w Play Console powstanie projekt Play Games i 10 tablic wyników, a ich identyfikatory trafią do gry.
+- [Narzędzia] `appstore/GOOGLE-PLAY.md`: instrukcja Play Console krok po kroku (konto, aplikacja, pierwszy pakiet, produkt „Full Game”, zamknięte testy 12 osób × 14 dni, formularze, Play Games, premiera).
+
+## Build 143 · 2026-11-02
+- [Nowe] Android: zakup pełnej gry przez Google Play (Billing 7.1.1): cena ze sklepu, zakup, płatności oczekujące, przywracanie zakupu z konta Google i potwierdzanie zakupów; ten sam produkt co w App Store (`com.konradlechowicz.voidblaster.fullgame`). Działa, gdy produkt zostanie założony w Play Console.
+- [Zmiana] Komunikaty sklepu na Androidzie mówią o Google Play i koncie Google zamiast App Store i Apple ID.
+
+## Build 142 · 2026-11-02
+- [Nowe] Android: przycisk „wstecz” działa jak w grze: pomija scenę fabuły, zamyka okienko, pauzuje bieg albo cofa o ekran; w menu głównym chowa aplikację w tle.
+- [Narzędzia] `npm run android:bundle`: podpisany pakiet `.aab` dla Google Play (`dist/void-blaster-build-N.aab`); za pierwszym razem tworzy klucz do wysyłania (`android/void-blaster-upload.jks` + `android/keystore.properties`, poza gitem — zrób kopię zapasową).
+
+## Build 141 · 2026-11-02
+- [Narzędzia] Plan projektu (CLAUDE.md): nowa sekcja „PC / Steam” z listą zadań (pad w walce i w menu, sterowanie myszą, podpowiedzi przycisków, ustawienia sterowania, układ poziomy, ustawienia PC, Steamworks i strona sklepu). Gra bez zmian.
+
 ## Build 140 · 2026-11-02
 - [Narzędzia] Opisy do TikToka, Instagrama i YouTube dla 4 filmików kampanii 2.0 (`appstore/2.0/video/SOCIAL-CAPTIONS.md`). Gra bez zmian.
 
