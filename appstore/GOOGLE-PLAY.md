@@ -54,7 +54,7 @@ Dostępne dopiero, gdy w Play Console jest przesłany pakiet z biblioteką Billi
 ## 6. Treść sklepu i wymagane formularze (w trakcie testów)
 - **Strona sklepu (Główna strona sklepu):** krótki opis (80 znaków), pełny opis, ikona 512×512, grafika promocyjna
   1024×500 (`appstore/2.0/google-play-feature-1024x500.png`), co najmniej 2 zrzuty ekranu telefonu (pionowe), filmik
-  YouTube opcjonalnie (np. VB-01 z `appstore/2.0/video`). Teksty przygotuję na prośbę.
+  YouTube opcjonalnie (np. VB-01 z `appstore/2.0/video`). Teksty: `appstore/GOOGLE-PLAY-LISTING.md`.
 - **Polityka prywatności:** https://konradlechowicz-sys.github.io/super-game-/site/privacy.html (ta sama co w App Store).
 - **Bezpieczeństwo danych:** gra nie zbiera danych osobowych; zapis jest na telefonie. Zakupy obsługuje Google Play, a
   rankingi Google Play Games (to usługi Google, zaznacz zgodnie z ankietą, jeśli pyta o dane konta gracza).

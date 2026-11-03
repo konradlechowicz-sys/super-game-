@@ -16,6 +16,9 @@ i wersja TEST (gracze tego nie widzą).
 
 - 
 
+## Build 151 · 2026-11-03
+- [App Store] Teksty strony gry w Google Play (`appstore/GOOGLE-PLAY-LISTING.md`): nazwa, krótki i pełny opis 2.0, kategoria, tagi, grafiki, lista 8 zrzutów ekranu, tekst „Co nowego”. Gra bez zmian.
+
 ## Build 150 · 2026-11-03
 - [Balans] Groźniejsi bossowie (wszystkich 10):
   - mocniejsze ataki: w walce z bossem trafienia od bossa, jego pocisków, wiązek i moździerzy bolą ×1,6;
