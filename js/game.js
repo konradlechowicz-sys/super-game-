@@ -646,6 +646,8 @@ export class Game {
         const a = (i / ev.count) * TAU;
         this.spawnEnemy(ev.enemy, clamp(p.x + Math.cos(a) * R, -hw, hw), clamp(p.y + Math.sin(a) * R, -hh, hh));
       }
+    } else if (ev.type === 'pattern') {
+      this.attackPattern(ev);
     } else if (ev.type === 'elite') {
       // a stationary elite (turret) is placed in sight, closer than a normal turret
       const pos = ENEMIES[ev.enemy].speed > 0 ? this.posFor(ev.enemy) : this.nearPos(150);
@@ -670,6 +672,57 @@ export class Game {
         e.vx = Math.cos(a + Math.PI) * sp; e.vy = Math.sin(a + Math.PI) * sp;
       }
     }
+  }
+
+  // Set attacks of worlds 2-10 (addPatterns in js/data.js): they come from somewhere, so the player has to position.
+  attackPattern(ev) {
+    const p = this.player, { vw, vh } = this.viewSize();
+    const hw = this.arena.w / 2 - 20, hh = this.arena.h / 2 - 20;
+    const at = (x, y) => [clamp(x, -hw, hw), clamp(y, -hh, hh)];
+    const edge = Math.hypot(vw, vh) / 2 + 40;
+    // a line across the approach, just off screen, marching in: each member aims straight ahead, no flanking
+    const wall = (a, count) => {
+      const cx = p.x + Math.cos(a) * edge, cy = p.y + Math.sin(a) * edge;
+      for (let i = 0; i < count; i++) {
+        const off = (i - (count - 1) / 2) * 34;
+        const e = this.spawnEnemy(ev.enemy, ...at(cx - Math.sin(a) * off, cy + Math.cos(a) * off));
+        e.st = { ...this.steerFor(e, p.x - e.x, p.y - e.y, Math.hypot(p.x - e.x, p.y - e.y) || 1), flank: 0, lead: 0.15, react: 0.6 };
+      }
+    };
+    const a = rand(0, TAU);
+    if (ev.kind === 'wall') wall(a, ev.count);
+    else if (ev.kind === 'pincer') { wall(a, Math.ceil(ev.count / 2)); wall(a + Math.PI, Math.floor(ev.count / 2)); }
+    else if (ev.kind === 'gapring') {
+      // a ring around where the ship is now, with one gap that closes over 6 s while the ring tightens; then they chase
+      const R = Math.min(vw, vh) * 0.62 + 120;
+      for (let i = 0; i < ev.count; i++) {
+        const e = this.spawnEnemy(ev.enemy, p.x + Math.cos(a) * R, p.y + Math.sin(a) * R);
+        e.form = { cx: p.x, cy: p.y, gap: a, i, n: ev.count, R, t: 0 };
+        this.formPos(e, 0);
+      }
+    } else if (ev.kind === 'snipers') {
+      // an arc of ranged enemies far on one side: running away does not help, they have to be hunted down
+      for (let i = 0; i < ev.count; i++) {
+        const b = a + (i / Math.max(1, ev.count - 1) - 0.5) * 1.7;
+        this.spawnEnemy(ev.enemy, ...at(p.x + Math.cos(b) * 430, p.y + Math.sin(b) * 430));
+      }
+    } else if (ev.kind === 'hunter') {
+      // an elite commander with its escort; its aura makes nearby enemies faster and stronger while it lives
+      const pos = this.posFor(ev.enemy);
+      const e = this.spawnElite(ev.enemy, pos.x, pos.y, ['commander']);
+      e.hunter = true;
+    }
+  }
+
+  // where a member of a closing ring stands at time t: the gap shrinks from about 70 degrees to none in 6 s, the ring
+  // from R to a third of it
+  formPos(e, t) {
+    const f = e.form, k = Math.min(1, t / 6);
+    const gap = 1.2 * (1 - k), span = TAU - gap;
+    const ang = f.gap + gap / 2 + (f.n > 1 ? (f.i / (f.n - 1)) * span : 0);
+    const R = f.R * (1 - 0.65 * k);
+    e.x = clamp(f.cx + Math.cos(ang) * R, -this.arena.w / 2 + 20, this.arena.w / 2 - 20);
+    e.y = clamp(f.cy + Math.sin(ang) * R, -this.arena.h / 2 + 20, this.arena.h / 2 - 20);
   }
 
   // ---------------- hazards: telegraphed beams, mortar strikes, gravity wells ----------------
@@ -1248,6 +1301,18 @@ export class Game {
       const dx = p.x - e.x, dy = p.y - e.y, d = Math.hypot(dx, dy) || 1;
       // a stationary enemy left far behind is taken away (no kill), so new ones can come up near the ship
       if (e.def.speed === 0 && !e.elite && d > 1100) { e.dead = true; continue; }
+      // a member of a closing ring (attackPattern) holds its place in the ring, then chases like the rest
+      if (e.form) {
+        e.form.t += dt;
+        if (e.form.t < 6) {
+          const ox = e.x, oy = e.y;
+          this.formPos(e, e.form.t);
+          e.rot = Math.atan2(e.y - oy, e.x - ox) || e.rot;
+          if (Math.hypot(p.x - e.x, p.y - e.y) < e.r + p.r) contacts.push(e);
+          continue;
+        }
+        e.form = null;
+      }
       let mx = (dx / d) * e.speed, my = (dy / d) * e.speed;
       const ai = e.def.ai;
       // Chasers steer like a flock, not as one body (decided by Konrad: 2026-11-01 crowds that only trailed the ship

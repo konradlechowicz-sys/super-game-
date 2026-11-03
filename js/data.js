@@ -880,6 +880,48 @@ export const LEGACY_WORLDS = [
   },
 ];
 
+// Attack patterns (decided by Konrad, 2026-11-03: from world 2 on every sector played the same, run and grab an area
+// weapon): besides the spawns all around the ship, sectors of worlds 2-10 get set attacks that make the player position
+// and choose: a wall from one side, a pincer from two, a ring with a closing gap, ranged snipers that have to be hunted
+// down, and a priority target (an elite commander whose aura makes its escort stronger). Two to five per sector, more
+// in later worlds, placed between the sector's own events; the kinds rotate per world and sector (Game.runEvent).
+const PATTERN_KINDS = ['wall', 'gapring', 'snipers', 'pincer', 'hunter'];
+const PATTERN_MSG = { wall: 'FLANK ATTACK', pincer: 'PINCER ATTACK', gapring: 'ENCIRCLEMENT', snipers: 'SNIPERS', hunter: 'PRIORITY TARGET' };
+const RANGED_AI = ['shoot', 'lob', 'turret', 'seeker'];
+function addPatterns(world) {
+  const w = world.id;
+  if (w < 2) return;
+  const types = [...new Set(world.stages.flatMap((st) => st.enemies.map((e) => e[0])))];
+  // the snipers: enemies that shoot first, then turrets, artillery, homing orbs
+  const ranged = RANGED_AI.map((ai) => types.find((t) => ENEMIES[t]?.ai === ai)).find(Boolean);
+  world.stages.forEach((st, si) => {
+    const n = si + 1, end = (st.bossAt || st.duration) - 20;
+    const swarm = st.enemies[0][0];
+    // the priority target: the toughest plain chaser of the sector
+    const movers = st.enemies.map((e) => e[0]).filter((t) => ENEMIES[t]?.speed > 0 && !ENEMIES[t].ai);
+    const mover = movers.sort((a, b) => ENEMIES[b].hp - ENEMIES[a].hp)[0] || swarm;
+    const want = (st.boss ? 1 : n <= 2 ? 2 : n <= 4 ? 3 : 4) + (w >= 6 && !st.boss ? 1 : 0);
+    const taken = st.events.map((e) => e.t);
+    const slots = [];
+    for (let t = 35; t < end && slots.length < want; t += 5) {
+      if (taken.every((x) => Math.abs(x - t) >= 14) && slots.every((x) => t - x >= 28)) slots.push(t);
+    }
+    slots.forEach((t, k) => {
+      let kind = PATTERN_KINDS[(w + n + k) % PATTERN_KINDS.length];
+      if (kind === 'snipers' && !ranged) kind = 'pincer';
+      const ev = { t, type: 'pattern', kind, msg: PATTERN_MSG[kind] };
+      if (kind === 'wall') Object.assign(ev, { enemy: swarm, count: Math.min(30, 14 + 2 * w) });
+      if (kind === 'pincer') Object.assign(ev, { enemy: swarm, count: Math.min(36, 16 + 2 * w) });
+      if (kind === 'gapring') Object.assign(ev, { enemy: swarm, count: Math.min(44, 22 + 2 * w) });
+      if (kind === 'snipers') Object.assign(ev, { enemy: ranged, count: Math.min(9, 4 + Math.floor(w / 2)) });
+      if (kind === 'hunter') Object.assign(ev, { enemy: mover });
+      st.events.push(ev);
+    });
+    st.events.sort((a, b) => a.t - b.t);
+  });
+}
+for (const w of WORLDS) addPatterns(w);
+
 export const ALL_STAGES = WORLDS.flatMap((w) => w.stages.map((s) => ({ ...s, world: w })));
 
 export function stageIndex(id) {

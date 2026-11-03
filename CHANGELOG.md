@@ -16,6 +16,14 @@ i wersja TEST (gracze tego nie widzą).
 
 - 
 
+## Build 149 · 2026-11-03
+- [Nowe] Ataki ze wzorem w sektorach światów 2–10 (od 2 do 5 na sektor, częściej w dalszych światach; boss: jeden przed bossem), żeby gra wymagała ustawiania się, a nie tylko ucieczki:
+  - FLANK ATTACK: zwarta linia wrogów nadciąga z jednej strony;
+  - PINCER ATTACK: dwie linie z przeciwnych stron naraz;
+  - ENCIRCLEMENT: pierścień wokół statku z luką, która zamyka się w 6 s, a pierścień się zaciska; potem wrogowie ruszają w pościg;
+  - SNIPERS: łuk wrogów strzelających z dystansu (z danego świata); ucieczka nic nie daje, trzeba ich zestrzelić;
+  - PRIORITY TARGET: elita-dowódca z eskortą, która wzmacnia pobliskich wrogów, dopóki żyje.
+
 ## Build 148 · 2026-11-03
 - [Balans] Awanse nie wyskakują już seriami: doświadczenie trafia do „banku”, który daje najwyżej jeden poziom na 2,5 s, a resztę oddaje później. Z jednej dużej porcji (magnes, bomba, masa kryształów) bank przyjmuje najwyżej dwa poziomy zapasu, więc daje kilka awansów zamiast całej serii.
 - [Balans] Łagodniejsza krzywa doświadczenia (około 8–10% mniej awansów w sektorze). W pomiarze (4 sektory, 3,5 min) przed zmianą zdarzały się 2–3 okienka w ciągu 0,3 s, po zmianie najkrótszy odstęp to 2,5 s.
