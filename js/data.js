@@ -880,6 +880,13 @@ export const LEGACY_WORLDS = [
   },
 ];
 
+// Denser boss attacks (decided by Konrad, 2026-11-03: the bosses were too easy): bigger bursts and summons. The rest
+// (harder hits, shorter pauses, fury, the special attack) is in Game (BOSS_DMG, BOSS_REST, FURY_AT).
+for (const b of Object.values(BOSSES)) {
+  if (b.burstN) b.burstN = Math.round(b.burstN * 1.3);
+  if (b.summonN) b.summonN += 1;
+}
+
 // Attack patterns (decided by Konrad, 2026-11-03: from world 2 on every sector played the same, run and grab an area
 // weapon): besides the spawns all around the ship, sectors of worlds 2-10 get set attacks that make the player position
 // and choose: a wall from one side, a pincer from two, a ring with a closing gap, ranged snipers that have to be hunted

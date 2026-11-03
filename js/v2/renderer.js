@@ -522,7 +522,7 @@ export async function createV2Renderer(app) {
         s.body.alpha = (e.alpha ?? 1) * (1 - k * 0.6);
         s.body.scale.set(((e.r * 4.2) / 1024) * (1 - rise * 0.6));
         s.body.rotation = Math.PI;
-        s.inner.tint = e.flash > 0 ? 0xffb0ff : 0xffffff;
+        s.inner.tint = e.flash > 0 ? 0xffb0ff : furyTint(e);
         // the gun rings turn opposite ways, faster with each phase; the weak points beat with it
         const rage = (e.phase || 1) - 1, t = game.time;
         s.outer.rotation = t * (0.25 + rage * 0.2);
@@ -540,7 +540,7 @@ export async function createV2Renderer(app) {
         s.body.position.set(e.x, e.y);
         s.body.alpha = (e.alpha ?? 1) * (1 - k * 0.7);
         s.body.scale.set(((e.r * 4.1) / 1024) * (1 - k * 0.5));
-        s.inner.tint = s.core.tint = e.flash > 0 ? 0xffb0ff : 0xffffff;
+        s.inner.tint = s.core.tint = e.flash > 0 ? 0xffb0ff : furyTint(e);
         const rage = (e.phase || 1) - 1, t = game.time;
         // the cannon turns after the ship (its art faces up); the flash sits at the muzzle, along the aim
         const aim = (e.aim ?? -Math.PI / 2) + Math.PI / 2;
@@ -572,7 +572,7 @@ export async function createV2Renderer(app) {
           s.body.rotation = s.heading;
         } else s.body.rotation = t * TAU * (jb.spin || 0) * (1 + rage * 0.5);
         // one drawing per phase (the Void Heart's cage breaking open)
-        s.bodies.forEach((b, i) => { b.visible = i === Math.min(s.bodies.length - 1, rage); b.tint = e.flash > 0 ? 0xffb0ff : 0xffffff; });
+        s.bodies.forEach((b, i) => { b.visible = i === Math.min(s.bodies.length - 1, rage); b.tint = e.flash > 0 ? 0xffb0ff : furyTint(e); });
         s.halo.alpha = (0.16 + 0.06 * Math.sin(t * 3)) * (1 + rage * 0.5);
         s.weak.forEach((g, i) => { g.alpha = 0.4 + 0.35 * Math.sin(t * (4 + rage * 3) + i * 1.6) + rage * 0.15; });
         continue;
@@ -592,7 +592,7 @@ export async function createV2Renderer(app) {
         s.body.rotation = s.heading;
         s.body.alpha = (e.alpha ?? 1) * (1 - k * 0.7);
         s.body.scale.set(((e.r * 3.8) / 1024) * (1 - k * 0.4));
-        s.inner.tint = e.flash > 0 ? 0xffb0ff : 0xffffff;
+        s.inner.tint = e.flash > 0 ? 0xffb0ff : furyTint(e);
         s.halo.alpha = (0.16 + 0.06 * Math.sin(t * 3)) * (1 + rage * 0.5);
         s.core.alpha = 0.5 + 0.3 * Math.sin(t * (4 + rage * 3)) + rage * 0.15;
         s.weak.forEach((g, i) => { g.alpha = 0.45 + 0.35 * Math.sin(t * (4 + rage * 3) + i * 1.6) + rage * 0.15; });
@@ -617,7 +617,7 @@ export async function createV2Renderer(app) {
         s.body.rotation = s.heading + Math.sin(t * 3.2) * 0.035;
         s.body.alpha = (e.alpha ?? 1) * (1 - k * 0.7);
         s.body.scale.set(((e.r * 4.0) / 1024) * (1 - k * 0.4) * (1 + 0.012 * Math.sin(t * 6.4)));
-        s.inner.tint = e.flash > 0 ? 0xffb0ff : 0xffffff;
+        s.inner.tint = e.flash > 0 ? 0xffb0ff : furyTint(e);
         s.halo.alpha = (0.18 + 0.08 * Math.sin(t * 4)) * (1 + rage * 0.5);
         s.core.alpha = 0.5 + 0.3 * Math.sin(t * (4 + rage * 3)) + rage * 0.15;
         s.weak.forEach((g, i) => { g.alpha = 0.45 + 0.35 * Math.sin(t * (4 + rage * 3) + i * 1.6) + rage * 0.15; });
@@ -633,7 +633,7 @@ export async function createV2Renderer(app) {
         const k = Math.max(0, e.spawnT) / 1.2, rise = k * k;
         s.body.position.set(e.x - rise * 520, e.y + rise * 900);
         s.body.alpha = (e.alpha ?? 1) * (1 - k * 0.6);
-        s.inner.tint = e.flash > 0 ? 0xffb0ff : 0xffffff;
+        s.inner.tint = e.flash > 0 ? 0xffb0ff : furyTint(e);
         s.body.rotation = Math.PI + Math.sin(game.time * 1.3) * 0.05 - rise * 0.5;
         s.body.scale.set(((e.r * 4.6) / 1024) * (1 - rise * 0.65));
         // engines burn harder while it rises; the glows beat faster and brighter once it is enraged
@@ -927,6 +927,14 @@ function makeModules(tex, L, mounts) {
       });
     },
   };
+}
+
+// A boss in fury (below half health, Game.updateBoss) pulses red.
+function furyTint(e) {
+  if (!e.fury) return 0xffffff;
+  const k = 0.5 + 0.5 * Math.sin(performance.now() / 120);
+  const g = Math.round(255 - 150 * k), bl = Math.round(255 - 160 * k);
+  return (255 << 16) | (g << 8) | bl;
 }
 
 // A pool of sprites in one layer: begin() each frame, next() for every object drawn, end() hides the unused rest.

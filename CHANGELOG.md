@@ -16,6 +16,13 @@ i wersja TEST (gracze tego nie widzą).
 
 - 
 
+## Build 150 · 2026-11-03
+- [Balans] Groźniejsi bossowie (wszystkich 10):
+  - mocniejsze ataki: w walce z bossem trafienia od bossa, jego pocisków, wiązek i moździerzy bolą ×1,6;
+  - gęściej i częściej: przerwy między atakami krótsze o 30%, salwy o 30% gęstsze, przy wezwaniach jeden sługa więcej;
+  - FURY poniżej 50% życia: boss pulsuje na czerwono, rusza się o 30% szybciej, przerwy jeszcze o 35% krótsze, atak specjalny częściej;
+  - atak specjalny co 11–14 s: trzy szerokie wiązki wycelowane w statek, zapowiadane przez 1,5 s („!! INCOMING !!”), każda zabiera 40% kadłuba (mniej z tarczą i pancerzem).
+
 ## Build 149 · 2026-11-03
 - [Nowe] Ataki ze wzorem w sektorach światów 2–10 (od 2 do 5 na sektor, częściej w dalszych światach; boss: jeden przed bossem), żeby gra wymagała ustawiania się, a nie tylko ucieczki:
   - FLANK ATTACK: zwarta linia wrogów nadciąga z jednej strony;

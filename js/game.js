@@ -21,6 +21,13 @@ const CHASE_CAP = 170;
 // experience pacing (gainXp): the shortest time between two level-ups, and how many levels' worth may wait in the bank
 const LEVEL_GAP = 2.5;
 const XP_BANK_MAX = 2;
+// deadlier bosses (decided by Konrad, 2026-11-03: the bosses were too easy): every hit the ship takes during a boss
+// fight from the boss and its attacks hurts this much more, the pauses between attacks are this much shorter, and
+// below half health the boss goes into a fury (faster, shorter pauses still, its special attack more often)
+const BOSS_DMG = 1.6;
+const BOSS_REST = 0.7;
+const BOSS_SRC = new Set(['boss', 'bullet', 'beam', 'mortar']);
+const FURY_AT = 0.5;
 const ARENA_SCALE = 1.5;
 // Crowd damage (v1.1): invulnerability after touching an enemy (shots and hazards keep 0.6 s), and the squeeze bonus.
 const CONTACT_INV = 0.3;
@@ -405,12 +412,19 @@ export class Game {
   }
 
   // inv = invulnerability after the hit: 0.6 s for shots and hazards, shorter for touching enemies (see CONTACT_INV)
+  // the world's damage level, rising towards the end of the sector (hurtPlayer)
+  dmgScale() {
+    const T = this.tune;
+    return T.dmg * (1 + T.ramp * this.progress());
+  }
+
   hurtPlayer(dmg, src = '?', inv = 0.6) {
     const p = this.player;
     if (p.inv > 0 || this.state !== 'play' || this.app.god) return;
     // the world's damage level, rising towards the end of the sector
     const T = this.tune;
-    dmg *= T.dmg * (1 + T.ramp * this.progress());
+    if (this.boss && !this.boss.dead && BOSS_SRC.has(src)) dmg *= BOSS_DMG;
+    dmg *= this.dmgScale();
     dmg = Math.max(1, dmg - p.armor);
     // the Phase Shield soaks what it can
     dmg = shieldHit(this, dmg);
@@ -796,7 +810,7 @@ export class Game {
             const [x0, y0, x1, y1] = this.beamEnds(h);
             const vx = x1 - x0, vy = y1 - y0, l2 = vx * vx + vy * vy || 1;
             const t = clamp(((p.x - x0) * vx + (p.y - y0) * vy) / l2, 0, 1);
-            if (Math.hypot(p.x - (x0 + vx * t), p.y - (y0 + vy * t)) < h.w / 2 + p.r - 3) this.hurtPlayer(h.dmg, 'beam');
+            if (Math.hypot(p.x - (x0 + vx * t), p.y - (y0 + vy * t)) < h.w / 2 + p.r - 3) this.hurtPlayer(h.pct ? (h.pct * p.maxHp) / this.dmgScale() : h.dmg, h.pct ? 'special' : 'beam');
           }
         }
         if (h.t > h.warn + h.dur) done = true;
@@ -1637,6 +1651,23 @@ export class Game {
       this.shake = 14;
       this.bossSummon(b, 10);
     }
+    if (!b.fury && b.hp < b.maxHp * FURY_AT) {
+      b.fury = true;
+      this.ui.banner(`${b.name} · FURY`, 'it hits harder and faster now');
+      this.sfx('boss');
+      this.shake = 16;
+    }
+    // the special attack: three wide beams aimed at the ship, announced for 1.5 s, each takes 40% of the hull
+    b.specT = (b.specT ?? 9) - dt * (b.fury ? 1.6 : 1);
+    if (b.specT <= 0 && b.mode === 'idle') {
+      b.specT = rand(11, 14);
+      const aim = Math.atan2(dy, dx);
+      for (let k = -1; k <= 1; k++) {
+        this.addHazard({ kind: 'beam', owner: b, x: b.x, y: b.y, a: aim + k * 0.42, len: 1500, w: 84, warn: 1.5, dur: 0.6, dmg: 0, pct: 0.4, rot: 0 });
+      }
+      this.text(b.x, b.y - b.r - 20, '!! INCOMING !!', '#ff4d6d', true);
+      this.sfx('warn');
+    }
     const enr = b.phase - 1;
     const fast = 1 + enr * 0.25;
     b.rot += dt * (0.6 + enr * 0.6);
@@ -1672,9 +1703,10 @@ export class Game {
         b.mode = 'idle';
         b.ghost = false;
         b.alpha = 1;
-        b.atkT = def.rest * (1 - enr * 0.25);
+        b.atkT = def.rest * (1 - enr * 0.25) * BOSS_REST * (b.fury ? 0.65 : 1);
       }
     }
+    if (b.fury) { mx *= 1.3; my *= 1.3; }
     b.x += mx * dt;
     b.y += my * dt;
     const hw = this.arena.w / 2 - b.r, hh = this.arena.h / 2 - b.r;
