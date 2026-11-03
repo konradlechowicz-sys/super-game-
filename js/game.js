@@ -16,6 +16,18 @@ const MAX_WEAPONS = 4;
 const MAX_PASSIVES = 4;
 const DRAG_SENS = 1.5;
 const MAX_LAG = 150;
+// the fastest a normal enemy chases (85% of the slowest ship's base speed, the Titan's 200)
+const CHASE_CAP = 170;
+// experience pacing (gainXp): the shortest time between two level-ups, and how many levels' worth may wait in the bank
+const LEVEL_GAP = 2.5;
+const XP_BANK_MAX = 2;
+// deadlier bosses (decided by Konrad, 2026-11-03: the bosses were too easy): every hit the ship takes during a boss
+// fight from the boss and its attacks hurts this much more, the pauses between attacks are this much shorter, and
+// below half health the boss goes into a fury (faster, shorter pauses still, its special attack more often)
+const BOSS_DMG = 1.6;
+const BOSS_REST = 0.7;
+const BOSS_SRC = new Set(['boss', 'bullet', 'beam', 'mortar']);
+const FURY_AT = 0.5;
 const ARENA_SCALE = 1.5;
 // Crowd damage (v1.1): invulnerability after touching an enemy (shots and hazards keep 0.6 s), and the squeeze bonus.
 const CONTACT_INV = 0.3;
@@ -46,6 +58,7 @@ export class Game {
     this.kills = 0; this.coinsRun = 0;
     this.elitesKilled = 0;
     this.level = 1; this.xp = 0; this.xpNext = xpFor(1); this.pendingLevels = 0; this.pendingChests = 0;
+    this.xpBank = 0; this.lastLevelT = -99;
     this.weapons = []; this.passives = {};
     // weapon combos active this run, and the ones still to announce once the level-up cards close
     this.combos = new Set(); this.comboQueue = []; this.comboBannerT = 0;
@@ -399,12 +412,19 @@ export class Game {
   }
 
   // inv = invulnerability after the hit: 0.6 s for shots and hazards, shorter for touching enemies (see CONTACT_INV)
+  // the world's damage level, rising towards the end of the sector (hurtPlayer)
+  dmgScale() {
+    const T = this.tune;
+    return T.dmg * (1 + T.ramp * this.progress());
+  }
+
   hurtPlayer(dmg, src = '?', inv = 0.6) {
     const p = this.player;
     if (p.inv > 0 || this.state !== 'play' || this.app.god) return;
     // the world's damage level, rising towards the end of the sector
     const T = this.tune;
-    dmg *= T.dmg * (1 + T.ramp * this.progress());
+    if (this.boss && !this.boss.dead && BOSS_SRC.has(src)) dmg *= BOSS_DMG;
+    dmg *= this.dmgScale();
     dmg = Math.max(1, dmg - p.armor);
     // the Phase Shield soaks what it can
     dmg = shieldHit(this, dmg);
@@ -499,6 +519,18 @@ export class Game {
     this.app.audio.setTrack(this.stage.world.music || 'game');
   }
 
+  // A chaser's own way of steering (see the enemy loop in update): how late it reacts to the ship's turns, how far
+  // ahead it aims, the side it approaches from, its wander and how fast it can turn. Swarms are the nimblest.
+  steerFor(e, dx, dy, d) {
+    const p = this.player, pack = !!e.def.pack || e.def.speed >= 100;
+    return {
+      pvx: p.vx || 0, pvy: p.vy || 0,
+      react: rand(0.25, 0.9), lead: pack ? rand(0.2, 1) : rand(0, 0.5), flank: rand(-0.9, 0.9),
+      ww: rand(0.6, 1.4), wph: rand(0, TAU), pace: rand(0.92, 1.05), agil: pack ? rand(2.5, 4.5) : rand(1.5, 3),
+      vx: (dx / d) * e.speed, vy: (dy / d) * e.speed,
+    };
+  }
+
   // ---------------- spawning ----------------
   spawnEnemy(type, x, y, elite = false, traits = []) {
     const d = ENEMIES[type], st = this.stage;
@@ -511,6 +543,10 @@ export class Game {
       rot: 0, state: 'chase', t: 0, cd: rand(0.5, 2), kbRes: d.speed === 0 ? 0 : elite ? 0.25 : d.r > 18 ? 0.4 : 1, alpha: 1,
     };
     e.maxHp = e.hp;
+    // Every ship can outrun the crowd (decided by Konrad, 2026-11-03: swarms faster than the ship left no way out but
+    // an area weapon): the chase speed is at most CHASE_CAP; the pressure comes from numbers and directions. Faster
+    // only: dashes and lunges after their warning, and elites with the 'swift' trait (applyTraits below).
+    if (d.ai !== 'drift') e.speed = Math.min(e.speed, CHASE_CAP);
     if (traits.length) this.applyTraits(e, traits);
     if (d.ai === 'drift') {
       const p = this.player;
@@ -624,6 +660,8 @@ export class Game {
         const a = (i / ev.count) * TAU;
         this.spawnEnemy(ev.enemy, clamp(p.x + Math.cos(a) * R, -hw, hw), clamp(p.y + Math.sin(a) * R, -hh, hh));
       }
+    } else if (ev.type === 'pattern') {
+      this.attackPattern(ev);
     } else if (ev.type === 'elite') {
       // a stationary elite (turret) is placed in sight, closer than a normal turret
       const pos = ENEMIES[ev.enemy].speed > 0 ? this.posFor(ev.enemy) : this.nearPos(150);
@@ -648,6 +686,57 @@ export class Game {
         e.vx = Math.cos(a + Math.PI) * sp; e.vy = Math.sin(a + Math.PI) * sp;
       }
     }
+  }
+
+  // Set attacks of worlds 2-10 (addPatterns in js/data.js): they come from somewhere, so the player has to position.
+  attackPattern(ev) {
+    const p = this.player, { vw, vh } = this.viewSize();
+    const hw = this.arena.w / 2 - 20, hh = this.arena.h / 2 - 20;
+    const at = (x, y) => [clamp(x, -hw, hw), clamp(y, -hh, hh)];
+    const edge = Math.hypot(vw, vh) / 2 + 40;
+    // a line across the approach, just off screen, marching in: each member aims straight ahead, no flanking
+    const wall = (a, count) => {
+      const cx = p.x + Math.cos(a) * edge, cy = p.y + Math.sin(a) * edge;
+      for (let i = 0; i < count; i++) {
+        const off = (i - (count - 1) / 2) * 34;
+        const e = this.spawnEnemy(ev.enemy, ...at(cx - Math.sin(a) * off, cy + Math.cos(a) * off));
+        e.st = { ...this.steerFor(e, p.x - e.x, p.y - e.y, Math.hypot(p.x - e.x, p.y - e.y) || 1), flank: 0, lead: 0.15, react: 0.6 };
+      }
+    };
+    const a = rand(0, TAU);
+    if (ev.kind === 'wall') wall(a, ev.count);
+    else if (ev.kind === 'pincer') { wall(a, Math.ceil(ev.count / 2)); wall(a + Math.PI, Math.floor(ev.count / 2)); }
+    else if (ev.kind === 'gapring') {
+      // a ring around where the ship is now, with one gap that closes over 6 s while the ring tightens; then they chase
+      const R = Math.min(vw, vh) * 0.62 + 120;
+      for (let i = 0; i < ev.count; i++) {
+        const e = this.spawnEnemy(ev.enemy, p.x + Math.cos(a) * R, p.y + Math.sin(a) * R);
+        e.form = { cx: p.x, cy: p.y, gap: a, i, n: ev.count, R, t: 0 };
+        this.formPos(e, 0);
+      }
+    } else if (ev.kind === 'snipers') {
+      // an arc of ranged enemies far on one side: running away does not help, they have to be hunted down
+      for (let i = 0; i < ev.count; i++) {
+        const b = a + (i / Math.max(1, ev.count - 1) - 0.5) * 1.7;
+        this.spawnEnemy(ev.enemy, ...at(p.x + Math.cos(b) * 430, p.y + Math.sin(b) * 430));
+      }
+    } else if (ev.kind === 'hunter') {
+      // an elite commander with its escort; its aura makes nearby enemies faster and stronger while it lives
+      const pos = this.posFor(ev.enemy);
+      const e = this.spawnElite(ev.enemy, pos.x, pos.y, ['commander']);
+      e.hunter = true;
+    }
+  }
+
+  // where a member of a closing ring stands at time t: the gap shrinks from about 70 degrees to none in 6 s, the ring
+  // from R to a third of it
+  formPos(e, t) {
+    const f = e.form, k = Math.min(1, t / 6);
+    const gap = 1.2 * (1 - k), span = TAU - gap;
+    const ang = f.gap + gap / 2 + (f.n > 1 ? (f.i / (f.n - 1)) * span : 0);
+    const R = f.R * (1 - 0.65 * k);
+    e.x = clamp(f.cx + Math.cos(ang) * R, -this.arena.w / 2 + 20, this.arena.w / 2 - 20);
+    e.y = clamp(f.cy + Math.sin(ang) * R, -this.arena.h / 2 + 20, this.arena.h / 2 - 20);
   }
 
   // ---------------- hazards: telegraphed beams, mortar strikes, gravity wells ----------------
@@ -721,7 +810,7 @@ export class Game {
             const [x0, y0, x1, y1] = this.beamEnds(h);
             const vx = x1 - x0, vy = y1 - y0, l2 = vx * vx + vy * vy || 1;
             const t = clamp(((p.x - x0) * vx + (p.y - y0) * vy) / l2, 0, 1);
-            if (Math.hypot(p.x - (x0 + vx * t), p.y - (y0 + vy * t)) < h.w / 2 + p.r - 3) this.hurtPlayer(h.dmg, 'beam');
+            if (Math.hypot(p.x - (x0 + vx * t), p.y - (y0 + vy * t)) < h.w / 2 + p.r - 3) this.hurtPlayer(h.pct ? (h.pct * p.maxHp) / this.dmgScale() : h.dmg, h.pct ? 'special' : 'beam');
           }
         }
         if (h.t > h.warn + h.dur) done = true;
@@ -894,13 +983,32 @@ export class Game {
   }
 
   // ---------------- level up / cards ----------------
-  gainXp(v) {
-    this.xp += v * this.player.xpMult;
-    while (this.xp >= this.xpNext) {
+  // Experience comes in through a bank (decided by Konrad, 2026-11-03: a big haul, e.g. a magnet or a bomb, opened the
+  // level-up cards one after another and broke the rhythm): at most one level every LEVEL_GAP seconds, the rest waits
+  // in the bank and flows in later (flowXp, every frame); a bank of more than XP_BANK_MAX levels' worth loses the
+  // excess, so one big haul gives a few levels, not a whole run of them. instant: test tools, all at once.
+  gainXp(v, instant = false) {
+    if (instant) {
+      this.xp += v * this.player.xpMult;
+      while (this.xp >= this.xpNext) { this.xp -= this.xpNext; this.level++; this.xpNext = xpFor(this.level); this.pendingLevels++; }
+      return;
+    }
+    this.xpBank = Math.min(this.xpBank + v * this.player.xpMult, this.xpNext * XP_BANK_MAX);
+    this.flowXp();
+  }
+
+  flowXp() {
+    if (this.xpBank <= 0) return;
+    const ready = this.time - this.lastLevelT >= LEVEL_GAP;
+    const move = Math.min(this.xpBank, ready ? this.xpNext - this.xp : Math.max(0, this.xpNext - this.xp - 1e-6));
+    this.xp += move;
+    this.xpBank -= move;
+    if (this.xp >= this.xpNext) {
       this.xp -= this.xpNext;
       this.level++;
       this.xpNext = xpFor(this.level);
       this.pendingLevels++;
+      this.lastLevelT = this.time;
     }
   }
 
@@ -1207,15 +1315,38 @@ export class Game {
       const dx = p.x - e.x, dy = p.y - e.y, d = Math.hypot(dx, dy) || 1;
       // a stationary enemy left far behind is taken away (no kill), so new ones can come up near the ship
       if (e.def.speed === 0 && !e.elite && d > 1100) { e.dead = true; continue; }
+      // a member of a closing ring (attackPattern) holds its place in the ring, then chases like the rest
+      if (e.form) {
+        e.form.t += dt;
+        if (e.form.t < 6) {
+          const ox = e.x, oy = e.y;
+          this.formPos(e, e.form.t);
+          e.rot = Math.atan2(e.y - oy, e.x - ox) || e.rot;
+          if (Math.hypot(p.x - e.x, p.y - e.y) < e.r + p.r) contacts.push(e);
+          continue;
+        }
+        e.form = null;
+      }
       let mx = (dx / d) * e.speed, my = (dy / d) * e.speed;
       const ai = e.def.ai;
-      // interception (decided by Konrad, 2026-11-01: crowds that only trail the ship clump into one mass): two of
-      // every three fast chasers (swarms and anything 100+ fast without its own way of moving) head for where the
-      // ship will be, up to 1.4 s ahead, so they cut it off and come from the front and the sides too
-      if (!ai && (e.def.pack || e.def.speed >= 100) && e.id % 3 && d > 90) {
-        const lead = Math.min(1.4, d / Math.max(60, e.speed));
-        const ix = dx + (p.vx || 0) * lead, iy = dy + (p.vy || 0) * lead, il = Math.hypot(ix, iy) || 1;
-        mx = (ix / il) * e.speed; my = (iy / il) * e.speed;
+      // Chasers steer like a flock, not as one body (decided by Konrad: 2026-11-01 crowds that only trailed the ship
+      // clumped into one mass; 2026-11-03 the interceptors then turned all at once with the ship). Each one has its
+      // own late picture of where the ship is going (reaction 0.25-0.9 s), its own lead, a side it comes from while
+      // still far, a slow wander, and inertia: it turns in an arc instead of snapping to the new heading.
+      if (!ai && e.def.speed > 0) {
+        const s = e.st || (e.st = this.steerFor(e, dx, dy, d));
+        const kr = Math.min(1, dt / s.react);
+        s.pvx += ((p.vx || 0) - s.pvx) * kr; s.pvy += ((p.vy || 0) - s.pvy) * kr;
+        const lead = Math.min(1.2, d / Math.max(60, e.speed)) * s.lead;
+        let tx = dx + s.pvx * lead, ty = dy + s.pvy * lead;
+        const far = clamp((d - 120) / 380, 0, 1);
+        const ang = (s.flank + Math.sin(this.time * s.ww + s.wph) * 0.35) * far;
+        const c = Math.cos(ang), sn = Math.sin(ang);
+        const rx = tx * c - ty * sn, ry = tx * sn + ty * c, rl = Math.hypot(rx, ry) || 1;
+        const want = e.speed * s.pace * (1 + 0.08 * Math.sin(this.time * s.ww * 1.7 + s.wph));
+        const ka = Math.min(1, dt * s.agil);
+        s.vx += ((rx / rl) * want - s.vx) * ka; s.vy += ((ry / rl) * want - s.vy) * ka;
+        mx = s.vx; my = s.vy;
       }
       let bounded = true, separate = true;
       if (ai === 'dash') {
@@ -1520,6 +1651,23 @@ export class Game {
       this.shake = 14;
       this.bossSummon(b, 10);
     }
+    if (!b.fury && b.hp < b.maxHp * FURY_AT) {
+      b.fury = true;
+      this.ui.banner(`${b.name} · FURY`, 'it hits harder and faster now');
+      this.sfx('boss');
+      this.shake = 16;
+    }
+    // the special attack: three wide beams aimed at the ship, announced for 1.5 s, each takes 40% of the hull
+    b.specT = (b.specT ?? 9) - dt * (b.fury ? 1.6 : 1);
+    if (b.specT <= 0 && b.mode === 'idle') {
+      b.specT = rand(11, 14);
+      const aim = Math.atan2(dy, dx);
+      for (let k = -1; k <= 1; k++) {
+        this.addHazard({ kind: 'beam', owner: b, x: b.x, y: b.y, a: aim + k * 0.42, len: 1500, w: 84, warn: 1.5, dur: 0.6, dmg: 0, pct: 0.4, rot: 0 });
+      }
+      this.text(b.x, b.y - b.r - 20, '!! INCOMING !!', '#ff4d6d', true);
+      this.sfx('warn');
+    }
     const enr = b.phase - 1;
     const fast = 1 + enr * 0.25;
     b.rot += dt * (0.6 + enr * 0.6);
@@ -1555,9 +1703,10 @@ export class Game {
         b.mode = 'idle';
         b.ghost = false;
         b.alpha = 1;
-        b.atkT = def.rest * (1 - enr * 0.25);
+        b.atkT = def.rest * (1 - enr * 0.25) * BOSS_REST * (b.fury ? 0.65 : 1);
       }
     }
+    if (b.fury) { mx *= 1.3; my *= 1.3; }
     b.x += mx * dt;
     b.y += my * dt;
     const hw = this.arena.w / 2 - b.r, hh = this.arena.h / 2 - b.r;
@@ -1908,6 +2057,7 @@ export class Game {
       }
       return d2 < collectR * collectR;
     };
+    this.flowXp();
     for (let i = this.gems.length - 1; i >= 0; i--) {
       const g = this.gems[i];
       if (pull(g)) {

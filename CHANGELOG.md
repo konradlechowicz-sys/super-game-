@@ -16,6 +16,30 @@ i wersja TEST (gracze tego nie widzą).
 
 - 
 
+## Build 150 · 2026-11-03
+- [Balans] Groźniejsi bossowie (wszystkich 10):
+  - mocniejsze ataki: w walce z bossem trafienia od bossa, jego pocisków, wiązek i moździerzy bolą ×1,6;
+  - gęściej i częściej: przerwy między atakami krótsze o 30%, salwy o 30% gęstsze, przy wezwaniach jeden sługa więcej;
+  - FURY poniżej 50% życia: boss pulsuje na czerwono, rusza się o 30% szybciej, przerwy jeszcze o 35% krótsze, atak specjalny częściej;
+  - atak specjalny co 11–14 s: trzy szerokie wiązki wycelowane w statek, zapowiadane przez 1,5 s („!! INCOMING !!”), każda zabiera 40% kadłuba (mniej z tarczą i pancerzem).
+
+## Build 149 · 2026-11-03
+- [Nowe] Ataki ze wzorem w sektorach światów 2–10 (od 2 do 5 na sektor, częściej w dalszych światach; boss: jeden przed bossem), żeby gra wymagała ustawiania się, a nie tylko ucieczki:
+  - FLANK ATTACK: zwarta linia wrogów nadciąga z jednej strony;
+  - PINCER ATTACK: dwie linie z przeciwnych stron naraz;
+  - ENCIRCLEMENT: pierścień wokół statku z luką, która zamyka się w 6 s, a pierścień się zaciska; potem wrogowie ruszają w pościg;
+  - SNIPERS: łuk wrogów strzelających z dystansu (z danego świata); ucieczka nic nie daje, trzeba ich zestrzelić;
+  - PRIORITY TARGET: elita-dowódca z eskortą, która wzmacnia pobliskich wrogów, dopóki żyje.
+
+## Build 148 · 2026-11-03
+- [Balans] Awanse nie wyskakują już seriami: doświadczenie trafia do „banku”, który daje najwyżej jeden poziom na 2,5 s, a resztę oddaje później. Z jednej dużej porcji (magnes, bomba, masa kryształów) bank przyjmuje najwyżej dwa poziomy zapasu, więc daje kilka awansów zamiast całej serii.
+- [Balans] Łagodniejsza krzywa doświadczenia (około 8–10% mniej awansów w sektorze). W pomiarze (4 sektory, 3,5 min) przed zmianą zdarzały się 2–3 okienka w ciągu 0,3 s, po zmianie najkrótszy odstęp to 2,5 s.
+- [Narzędzia] LEVEL UP i „Boss now” w panelu testera dają poziomy od razu, z pominięciem banku.
+
+## Build 147 · 2026-11-03
+- [Zmiana] Wrogowie poruszają się jak stado, a nie jeden obiekt: każdy ma własny czas reakcji na skręt statku (0,25–0,9 s), własne wyprzedzenie, stronę, z której podchodzi, lekkie myszkowanie i bezwładność (skręca łukiem). Rój nie zmienia już kierunku synchronicznie ze statkiem.
+- [Balans] Zwykli wrogowie gonią najwyżej z prędkością 170 (85% bazowej prędkości Titana), więc każdy statek może uciec bez ulepszonych silników; szybsze są tylko szarże i wypady po ostrzeżeniu oraz elity z cechą „swift”. Dotąd roje od świata 2 miały do 180.
+
 ## Build 146 · 2026-11-03
 - [Poprawka] Android: gra na pełnym ekranie, bez paska stanu u góry i paska nawigacji na dole (pojawiają się na chwilę po przeciągnięciu od krawędzi); ukrywa je ponownie po powrocie do gry.
 - [Narzędzia] Skrypty Androida same znajdują zainstalowane JDK 21 (Temurin, Microsoft, Oracle, Zulu, Corretto), bez ustawiania `VB_JAVA_HOME`.

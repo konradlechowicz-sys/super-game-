@@ -49,7 +49,7 @@ export function installTestKit(app) {
     const t = Math.max(0, g.stage.bossAt - 8);
     g.stage.events.forEach((e, i) => { if (e.t < t) g.eventsDone.add(i); });
     g.time = t;
-    for (let i = 0; i < opts.levels; i++) g.gainXp((g.xpNext - g.xp) / g.player.xpMult);
+    for (let i = 0; i < opts.levels; i++) g.gainXp((g.xpNext - g.xp) / g.player.xpMult, true);
   };
 
   function menuPanel() {
@@ -166,7 +166,7 @@ export function installTestKit(app) {
       close: resume,
       opt: (ds) => { opts[ds.k] = !opts[ds.k]; keep(); apply(); ui.closeModal(); g.state = 'play'; gamePanel(); },
       speed: (ds) => { app.timeScale = +ds.n; resume(); },
-      level: act(() => g.gainXp((g.xpNext - g.xp) / g.player.xpMult)),
+      level: act(() => g.gainXp((g.xpNext - g.xp) / g.player.xpMult, true)),
       heal: act(() => { g.player.hp = g.player.maxHp; }),
       elite: (ds) => act(() => {
         const types = st.enemies.filter(([, at]) => at <= g.time).map(([t]) => t);
