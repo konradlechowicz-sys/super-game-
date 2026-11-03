@@ -104,6 +104,14 @@ Next, in this order unless Konrad says otherwise:
   combos, 3 perk sets and 3 super combos (three weapons at LV 5, `super` in `js/combos.js`). All on neon effects until
   ChatGPT's icons and effects come (brief C5-C7).
 
+## Later: coin crates (idea from Konrad's tests, 2026-11-03; saved for later, not started)
+Once every shop upgrade is bought, coins have nothing left to buy. Idea: supply crates bought with coins before a run,
+in three tiers (cheap / medium / expensive), each giving a random weapon or perk at the start of the run, at a starting
+level that rises with the tier (e.g. cheap LV 1-2, medium LV 2-3, expensive LV 3-4); the contents are drawn at random.
+To settle with Konrad before building: prices, whether one crate per run or several, whether the crate is opened in
+the hangar (seen before the run) or at the start of the run, and the opening animation. Coins are only earned in
+play (no coin sales), so this stays fair.
+
 ## PC / Steam (idea, added to the task list by Konrad 2026-11-02; after the iPhone + Android launch)
 The game can go to Steam wrapped as a desktop app (Electron, Tauri or NW.js) with Steamworks (achievements, Endless
 leaderboards instead of Game Center, cloud saves); sold as a paid game (no paywall), the trial as a separate demo.
