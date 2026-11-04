@@ -16,6 +16,9 @@ i wersja TEST (gracze tego nie widzą).
 
 - 
 
+## Build 153 · 2026-11-04
+- [Narzędzia] `npm run review` i `npm run release` nie zatrzymują się już na plikach, które Capacitor generuje sam przy `npm run android:test` (`android/app/capacitor.build.gradle`, `android/capacitor.settings.gradle`, zasoby w `android/app/src/main/assets`): pytają, jak przy plikach Xcode, i odrzucają je (kopia w `.git/`).
+
 ## Build 152 · 2026-11-04
 - [Nowe] Skrzynie zaopatrzenia za monety (pomysł Konrada z testów): na odprawie sektora wybierasz skrzynię (jedna na bieg, wybór jest zapamiętany), monety pobiera LAUNCH, a skrzynia otwiera się z animacją w pierwszej sekundzie biegu:
   - Standard (250): 1 losowa broń albo perk na LV 1–3;

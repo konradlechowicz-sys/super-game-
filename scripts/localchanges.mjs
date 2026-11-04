@@ -1,10 +1,15 @@
 // Shared by `npm run review` and `npm run release`: both switch versions, which needs a clean checkout.
-// Xcode rewrites its own project files without asking (signing team, scheme, settings checks), so local changes
-// under ios/ are expected and are discarded after a confirmation, with a backup patch kept in .git/.
+// Xcode rewrites its own project files without asking (signing team, scheme, settings checks), and `npx cap sync`
+// (npm run android:play / android:test) rewrites Capacitor's generated Android files, on Windows with other line
+// endings; so local changes under ios/ and in those generated files are expected and are discarded after a
+// confirmation, with a backup patch kept in .git/.
 // A version-only change to package-lock.json (left by npm install) is discarded silently.
 // Changes anywhere else are real work and still stop the script.
 import { execSync } from 'node:child_process';
 import { writeFileSync } from 'node:fs';
+
+// Capacitor's generated Android files, rewritten by every npx cap sync
+const ANDROID_GENERATED = /^android\/(app\/capacitor\.build\.gradle|capacitor\.settings\.gradle|capacitor-cordova-android-plugins\/|app\/src\/main\/assets\/)/;
 
 const sh = (cmd) => execSync(cmd, { encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'], maxBuffer: 64 << 20 }).trim();
 
@@ -24,15 +29,18 @@ export async function clearLocalChanges(ask, bye) {
   const files = status.split('\n').filter(Boolean).map((l) => l.slice(3).replace(/^.* -> /, ''));
   if (!files.length) return;
   const list = files.map((f) => '  ' + f).join('\n');
-  if (files.some((f) => !f.startsWith('ios/'))) {
+  const generated = (f) => f.startsWith('ios/') || ANDROID_GENERATED.test(f);
+  if (files.some((f) => !generated(f))) {
     bye(`Te pliki projektu mają niezapisane zmiany:\n${list}\n` +
       'Odłóż je komendą „git stash” (można je przywrócić: „git stash pop”) i uruchom ponownie.', 1);
   }
-  console.log(`Xcode zmienił pliki projektu iOS (to normalne, robi to sam, np. przy wyborze zespołu do podpisu):\n${list}`);
+  console.log(`Xcode albo Capacitor zmienił swoje pliki projektu (to normalne, robią to same, np. przy podpisie albo\n` +
+    `przy npm run android:test):\n${list}`);
   const a = await ask('[Enter] odrzuć te zmiany i kontynuuj  [n] przerwij: ');
   if (a === 'n') bye('Przerwano, nic nie zostało zmienione.');
-  const backup = `${sh('git rev-parse --git-dir')}/vb-xcode-changes-${new Date().toISOString().replace(/[:.]/g, '-')}.patch`;
-  writeFileSync(backup, sh('git diff HEAD -- ios') + '\n');
-  execSync('git checkout -q HEAD -- ios', { stdio: 'inherit' });
+  const backup = `${sh('git rev-parse --git-dir')}/vb-generated-changes-${new Date().toISOString().replace(/[:.]/g, '-')}.patch`;
+  const paths = files.map((f) => `"${f}"`).join(' ');
+  writeFileSync(backup, sh(`git diff HEAD -- ${paths}`) + '\n');
+  execSync(`git checkout -q HEAD -- ${paths}`, { stdio: 'inherit' });
   console.log(`Odrzucone. Kopia tych zmian: ${backup}\n`);
 }
