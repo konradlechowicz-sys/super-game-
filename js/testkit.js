@@ -141,6 +141,9 @@ export function installTestKit(app) {
         ${Object.entries(TRAITS).map(([id, t]) => btn('elite', t.name, `data-trait="${id}" style="color:${t.color}"`)).join('')}
         ${btn('skip', 'SKIP 30 S')}
         ${btn('stress', 'STRESS +300')}
+        ${btn('crate', 'CRATE: STANDARD', 'data-k="standard"')}
+        ${btn('crate', 'CRATE: MILITARY', 'data-k="military"')}
+        ${btn('crate', 'CRATE: PROTOTYPE', 'data-k="prototype"')}
         ${st.boss && !g.boss && !g.bossDefeated ? btn('summon', 'BOSS NOW') : ''}
         ${btn('win', st.endless ? 'END RUN' : 'WIN SECTOR')}
         ${st.endless ? '' : btn('win3', 'WIN · 3 STARS')}
@@ -213,6 +216,8 @@ export function installTestKit(app) {
           g.spawnEnemy(pool[i % pool.length], x, y);
         }
       }),
+      // a supply crate opened now, as if bought on the briefing (no coins taken)
+      crate: (ds) => { ui.closeModal(); g.state = 'play'; g.crate = ds.k; g.time = Math.max(g.time, 0.8); },
       win: act(() => winNow()),
       // as if every goal was met: kill goal reached and every elite of the sector destroyed
       win3: act(() => { g.kills = Math.max(g.kills, st.kills); g.elitesKilled = st.elites; winNow(); }),

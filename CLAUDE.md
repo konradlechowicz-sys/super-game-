@@ -104,6 +104,12 @@ Next, in this order unless Konrad says otherwise:
   combos, 3 perk sets and 3 super combos (three weapons at LV 5, `super` in `js/combos.js`). All on neon effects until
   ChatGPT's icons and effects come (brief C5-C7).
 
+## Coin crates (Konrad's idea from his tests 2026-11-03, built 2026-11-04 in build 152)
+Supply crates bought with coins on the sector briefing (one per run, chosen on the briefing and remembered in
+`save.crate`, paid at LAUNCH only, never by RETRY/NEXT), opened 0.8 s into the run: Standard 250 (1 item, LV 1-3),
+Military 700 (2 items, LV 2-4), Prototype 1800 (3 items, LV 3-5); random weapons or perks, no evolutions. Table and
+draw in `js/crates.js` (tune prices and odds there), choice and opening in `js/ui.js` (`crateRow`, `crateOpen`).
+
 ## PC / Steam (idea, added to the task list by Konrad 2026-11-02; after the iPhone + Android launch)
 The game can go to Steam wrapped as a desktop app (Electron, Tauri or NW.js) with Steamworks (achievements, Endless
 leaderboards instead of Game Center, cloud saves); sold as a paid game (no paywall), the trial as a separate demo.

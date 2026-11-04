@@ -1,4 +1,5 @@
 import { TAU, rand, randi, clamp, lerp, pick, weightedPick, angleLerp, SpatialHash } from './util.js';
+import { rollCrate, applyCrate, crateCard } from './crates.js';
 import { ENEMIES, BOSSES, PASSIVES, PASSIVE_MAX, SHIPS, TRAITS, WORLD_TUNING, ENDLESS, xpFor, stageIndex, shopBonus } from './data.js';
 import { WEAPONS, WEAPON_MAX, weaponStats } from './weapons.js';
 import { COMBOS, COMBO_LEVEL, comboActive, combosFor } from './combos.js';
@@ -37,8 +38,10 @@ const CROWD_MAX = 2.5;
 let nextId = 1;
 
 export class Game {
-  constructor(app, stage) {
+  // opts.crate: the supply crate bought at LAUNCH (js/crates.js), opened 0.8 s into the run
+  constructor(app, stage, opts = {}) {
     this.app = app;
+    this.crate = opts.crate || null;
     this.ui = app.ui;
     this.stage = stage;
     this.tune = WORLD_TUNING[stage.world?.id] || WORLD_TUNING[1];
@@ -1163,7 +1166,7 @@ export class Game {
 
   // ---------------- main update ----------------
   update(rawDt) {
-    if (this.state === 'levelup' || this.state === 'paused' || this.state === 'revive' || this.state === 'over') return;
+    if (this.state === 'levelup' || this.state === 'crate' || this.state === 'paused' || this.state === 'revive' || this.state === 'over') return;
     this.slowmo = Math.min(1, this.slowmo + rawDt * (this.state === 'play' ? 1.5 : 0.25));
     // a tutorial hint waiting for the player slows the action down
     if (this.state === 'play') this.slowmo = Math.min(this.slowmo, this.tut.update(rawDt));
@@ -1218,6 +1221,20 @@ export class Game {
     this.cam.y = clamp(this.cam.y, -ey, ey);
     this.shake = Math.max(0, this.shake - rawDt * 40);
     this.flash = Math.max(0, this.flash - rawDt);
+
+    // the supply crate bought at LAUNCH opens 0.8 s into the run: the game waits while its items are shown
+    if (this.crate && this.state === 'play' && this.time >= 0.8) {
+      const tier = this.crate, items = rollCrate(this, tier);
+      this.crate = null;
+      this.state = 'crate';
+      this.sfx('chest');
+      this.ui.crateOpen(tier, items.map(crateCard), () => {
+        applyCrate(this, items);
+        if (this.state === 'crate') this.state = 'play';
+        this.player.inv = Math.max(this.player.inv, 0.6);
+        this.app.input.resetDrag();
+      });
+    }
 
     if (this.state === 'play') {
       if (this.pendingChests > 0) this.openCards(true);
