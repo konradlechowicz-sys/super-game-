@@ -3,6 +3,7 @@ import { WEAPONS } from './weapons.js';
 import { COMBOS } from './combos.js';
 import { codexSections, codexName } from './codex.js';
 import { STORY, STORY_ORDER, sceneAfterWorld } from './story.js';
+import { CRATES, CRATE_ORDER } from './crates.js';
 import { icon, uiArt } from './icons.js';
 import { fmtTime } from './util.js';
 import { shipSprite } from './sprites.js';
@@ -360,6 +361,7 @@ export class UI {
         ${goal(2, eliteGoal(st))}
       </ul>
       <div class="brief-ship"><canvas data-ship="${ship.id}" width="96" height="96"></canvas><div><b>${esc(ship.name)}</b><br><small>${esc(WEAPONS[ship.weapon].name)}</small></div><button class="btn small" data-act="hangar">CHANGE</button></div>
+      ${this.crateRow()}
       <div class="modal-actions">
         <button class="btn" data-act="close">BACK</button>
         <button class="btn primary" data-act="launch">LAUNCH</button>
@@ -367,8 +369,51 @@ export class UI {
     `, {
       close: () => this.closeModal(),
       hangar: () => { this.closeModal(); this.hangar(() => this.map()); },
-      launch: () => { this.closeModal(); this.app.startStage(id); },
+      crate: (ds) => { this.save.crate = ds.k; this.app.persist(); this.briefing(id); },
+      launch: () => {
+        this.closeModal();
+        // the chosen supply crate is paid here, once, for this run only (RETRY and NEXT do not buy one)
+        const tier = CRATES[this.save.crate] ? this.save.crate : null;
+        if (tier && this.save.coins >= CRATES[tier].cost) {
+          this.save.coins -= CRATES[tier].cost;
+          this.app.persist();
+          this.app.startStage(id, { crate: tier });
+        } else {
+          if (tier) this.toast(`Not enough coins for the ${CRATES[tier].name}`);
+          this.app.startStage(id);
+        }
+      },
     });
+  }
+
+  // The supply crate choice on the briefing (js/crates.js): none or one of three, remembered between briefings.
+  crateRow() {
+    const coins = this.save.coins, sel = CRATES[this.save.crate] ? this.save.crate : 'none';
+    const opt = (k) => {
+      const c = CRATES[k], short = c.cost - coins;
+      return `<button class="crate-opt ${sel === k ? 'on' : ''} ${short > 0 ? 'short' : ''}" style="--kc:${c.color}" data-act="crate" data-k="${k}">
+        <b>${c.name.replace(' Crate', '')}</b><span>${COIN}${c.cost.toLocaleString('en-US')}</span><small>${c.items} item${c.items > 1 ? 's' : ''} · LV ${c.levels[0][0]}-${c.levels[c.levels.length - 1][0]}</small>
+        ${short > 0 ? `<em>${short.toLocaleString('en-US')} short</em>` : ''}</button>`;
+    };
+    return `<div class="crate-row"><div class="crate-head">SUPPLY CRATE <span>random weapons or perks to start with</span></div>
+      <div class="crate-opts"><button class="crate-opt none ${sel === 'none' ? 'on' : ''}" data-act="crate" data-k="none"><b>None</b><span>&nbsp;</span><small>no crate</small></button>${CRATE_ORDER.map(opt).join('')}</div></div>`;
+  }
+
+  // A supply crate opening at the start of a run: its items turn over one after another, then GO.
+  crateOpen(tier, cards, onGo) {
+    const c = CRATES[tier];
+    const html = cards.map((it, i) => `
+      <div class="crate-card" style="--cc:${it.color};--kc:${c.color};animation-delay:${0.35 + i * 0.45}s">
+        <img src="${icon(it.icon, it.color, false, it.art)}" alt="">
+        <div><b>${esc(it.name)}</b><small>${it.kind === 'weapon' ? 'WEAPON' : 'PERK'}</small></div>
+        <span class="crate-lv">LV ${it.level}</span>
+      </div>`).join('');
+    this.modal(`
+      <div class="lu-title" style="color:${c.color}">${esc(c.name.toUpperCase())}</div>
+      <div class="muted center">Supplies for this run</div>
+      <div class="crate-cards">${html}</div>
+      <div class="modal-actions"><button class="btn primary" data-act="go">GO</button></div>
+    `, { go: () => { this.closeModal(); onGo(); } }, 'crate-open', 350 + cards.length * 450);
   }
 
   // ======================= HANGAR =======================
@@ -836,7 +881,7 @@ export class UI {
         ${invite ? '<button class="btn primary" data-act="full">CONTINUE</button>' : ''}
       </div>
       ${r.newEntries?.length ? `<div class="codex-new">NEW IN CODEX: ${r.newEntries.map((k) => esc(codexName(k))).join(', ')}</div>` : ''}
-      ${!r.won ? '<p class="tiny muted center">Tip: spend coins on permanent Upgrades to get stronger.</p>' : ''}
+      ${!r.won ? `<p class="tiny muted center">Tip: spend coins on permanent Upgrades${this.save.coins >= 250 ? ', or pick a supply crate on the sector briefing' : ''} to get stronger.</p>` : ''}
     `, {
       map: () => { this.closeModal(); this.app.endRun(); story(() => this.map()); },
       retry: () => { this.closeModal(); this.app.startStage(r.stage.id); },

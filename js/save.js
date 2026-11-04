@@ -15,6 +15,8 @@ const fresh = () => ({
   veteran: false,
   coins: 0,
   stars: {},
+  // the supply crate chosen on the last briefing (js/crates.js): 'none' | 'standard' | 'military' | 'prototype'
+  crate: 'none',
   // story scenes already played (js/story.js: intro, w1 ... w9, outro -> 1); the Codex's Log replays them
   story: {},
   // Codex entries discovered in any run (key -> 1); kept by Reset progress

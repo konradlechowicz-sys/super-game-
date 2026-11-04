@@ -211,16 +211,17 @@ app.playStory = (key, done) => {
   playStory(key, done);
 };
 
-app.startStage = (id) => {
+// opts.crate: a supply crate already paid for on the briefing (js/crates.js)
+app.startStage = (id, opts = {}) => {
   if (app.needsFullGame(id)) { app.ui.paywall(); return; }
   // the intro plays once, before the journey's first sector
-  if (id === ALL_STAGES[0].id && !app.save.story?.intro) { app.playStory('intro', () => app.startStage(id)); return; }
+  if (id === ALL_STAGES[0].id && !app.save.story?.intro) { app.playStory('intro', () => app.startStage(id, opts)); return; }
   const st = ALL_STAGES.find((s) => s.id === id);
   const stage = DEV && params.get('fast') ? { ...st, duration: st.duration / 6, bossAt: st.bossAt && st.bossAt / 6, events: st.events.map((e) => ({ ...e, t: e.t / 6 })) } : st;
   app.bg.setTheme(st.world.theme);
   input.resetDrag();
   app.ui.showHud();
-  app.game = new Game(app, stage);
+  app.game = new Game(app, stage, opts);
   app.audio.setTrack(st.world.music || 'game');
 };
 

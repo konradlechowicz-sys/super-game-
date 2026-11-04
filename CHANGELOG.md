@@ -16,6 +16,14 @@ i wersja TEST (gracze tego nie widzą).
 
 - 
 
+## Build 152 · 2026-11-04
+- [Nowe] Skrzynie zaopatrzenia za monety (pomysł Konrada z testów): na odprawie sektora wybierasz skrzynię (jedna na bieg, wybór jest zapamiętany), monety pobiera LAUNCH, a skrzynia otwiera się z animacją w pierwszej sekundzie biegu:
+  - Standard (250): 1 losowa broń albo perk na LV 1–3;
+  - Military (700): 2 przedmioty na LV 2–4;
+  - Prototype (1800): 3 przedmioty na LV 3–5.
+  Bez powtórek, z poszanowaniem slotów (4 bronie, 4 perki), bez ewolucji. RETRY i NEXT nie kupują skrzyni. Przy braku monet bieg rusza bez skrzyni.
+- [Narzędzia] Panel testera w biegu: przyciski CRATE: STANDARD / MILITARY / PROTOTYPE (otwarcie od razu, bez monet).
+
 ## Build 151 · 2026-11-03
 - [App Store] Teksty strony gry w Google Play (`appstore/GOOGLE-PLAY-LISTING.md`): nazwa, krótki i pełny opis 2.0, kategoria, tagi, grafiki, lista 8 zrzutów ekranu, tekst „Co nowego”. Gra bez zmian.
 

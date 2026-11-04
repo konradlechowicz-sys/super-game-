@@ -521,3 +521,29 @@ body.v2-loading::after {
 .story-thanks h3 { font: 600 11px 'Orbitron', sans-serif; letter-spacing: 0.22em; color: var(--muted); margin: 0 0 12px; }
 .story-thanks p { font-size: 15px !important; margin: 0 0 10px !important; }
 .story-thanks b { font-size: 16px !important; }
+
+/* ---- supply crates (js/crates.js): the choice on the briefing and the opening at the start of a run ---- */
+.crate-row { margin: 12px 0 4px; }
+.crate-head { font: 600 11px 'Orbitron', sans-serif; letter-spacing: 0.16em; color: var(--muted); margin-bottom: 8px; }
+.crate-head span { font: 500 12px 'Rajdhani', sans-serif; letter-spacing: 0; margin-left: 6px; text-transform: none; }
+.crate-opts { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
+.crate-opt { position: relative; display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 8px 2px 7px;
+  background: var(--panel-2); border: 1px solid var(--line); border-radius: 3px; color: var(--text); font: inherit; }
+.crate-opt b { font: 700 11px 'Orbitron', sans-serif; letter-spacing: 0.04em; color: var(--kc, var(--muted)); }
+.crate-opt span { font: 600 13px 'Rajdhani', sans-serif; color: var(--gold); display: flex; align-items: center; gap: 3px; }
+.crate-opt small { font-size: 10.5px; color: var(--muted); line-height: 1.2; text-align: center; }
+.crate-opt em { position: absolute; left: 0; right: 0; bottom: -15px; font: normal 600 10px 'Rajdhani', sans-serif; color: var(--red); }
+.crate-opt.on { border-color: var(--kc, var(--line-2)); box-shadow: inset 0 0 0 1px var(--kc, var(--line-2)); background: color-mix(in srgb, var(--kc, #59627a) 10%, var(--panel-2)); }
+.crate-opt.short { opacity: 0.55; }
+.crate-opt.none b { color: var(--muted); }
+.crate-cards { display: flex; flex-direction: column; gap: 8px; margin: 16px 0 6px; }
+.crate-card { display: flex; align-items: center; gap: 12px; padding: 10px 12px; background: var(--panel); border: 1px solid var(--line);
+  border-left: 3px solid var(--cc); border-radius: 3px; opacity: 0; transform: translateY(8px) scale(0.97);
+  animation: crate-in 0.45s ease-out forwards; }
+.crate-card img { width: 44px; height: 44px; flex: none; }
+.crate-card b { display: block; font-size: 16px; color: color-mix(in srgb, var(--cc) 55%, var(--text)); }
+.crate-card small { font: 600 10px 'Orbitron', sans-serif; letter-spacing: 0.14em; color: var(--muted); }
+.crate-card .crate-lv { margin-left: auto; font: 800 16px 'Orbitron', sans-serif; color: var(--kc); }
+@keyframes crate-in { 0% { opacity: 0; transform: translateY(8px) scale(0.97); box-shadow: none; }
+  60% { opacity: 1; transform: none; box-shadow: 0 0 22px color-mix(in srgb, var(--kc) 45%, transparent); }
+  100% { opacity: 1; transform: none; box-shadow: none; } }
