@@ -36,6 +36,11 @@ VOID BLASTER 2.0: A WHOLE NEW JOURNEY
 • Endless mode in every world after the journey
 Full Game owners keep everything they bought. Your progress starts over with a veteran bonus and the Veteran Striker skin.
 
+## Build 155 · 2026-11-05
+- [App Store] Zrzuty ekranu 2.0 z prawdziwej gry, 8 scen z podpisami (rój, boss w furii, ulepszenia, mapa 10 światów, fabuła, Europa, Codex, hangar): App Store 6,9" (1320×2868) i 6,5" (1284×2778) oraz Google Play (1080×1920) w `appstore/2.0/screenshots/`, plus zrzut ekranu zakupu do recenzji Apple.
+- [Zmiana] Cena pełnej gry w przeglądarce i w testowym pliku StoreKit (symulator): 4,99 USD jak w sklepie.
+- [Narzędzia] `node promo/screens.mjs` robi wszystkie zrzuty od nowa (po `npm run build:web`).
+
 ## Build 154 · 2026-11-05
 - [Zmiana] Nowa ikona aplikacji 2.0 (Art Bible ST1: Striker na tle roju) na iPhonie i Androidzie (zwykła, okrągła i adaptacyjna; `proto2/make-app-icon.py`).
 - [App Store] Wydanie 2.0 przygotowane do `npm run release`: gałąź łączy `v2` z `main` (bez konfliktów, zawartość jak `v2`), nowe teksty App Store dla 2.0 (`appstore/LISTING.md`: opis, tekst promocyjny, słowa kluczowe, What's New, notatki dla recenzji, produkt „Full Game” za 4,99 USD), podsumowanie „Następne wydanie”.

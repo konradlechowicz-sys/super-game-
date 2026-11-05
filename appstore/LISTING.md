@@ -117,7 +117,7 @@ leaderboards, unlocked after finishing the journey.
 | Price | USD 4.99 for 2.0 (was 3.99; owners keep the purchase) |
 | Display name (30) | Void Blaster Full Game |
 | Description (45) | Worlds 3-10, 8 bosses, 2 ships, all upgrades |
-| Review screenshot | the paywall of 2.0 (`appstore/2.0/screenshots/` holds one) |
+| Review screenshot | the paywall of 2.0 (`appstore/2.0/screenshots/iap-review-fullgame.jpg`) |
 
 ## Game Center
 10 Endless leaderboards for the 2.0 worlds, added to version 2.0.0: `appstore/GAME-CENTER.md`, section "Wersja 2.0".

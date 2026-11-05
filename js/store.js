@@ -15,7 +15,7 @@ export function createStore(app, dev) {
   const store = {
     // 'native' | 'dev' | 'none'
     mode: native ? 'native' : dev ? 'dev' : 'none',
-    price: native ? null : dev ? '$3.99' : null,
+    price: native ? null : dev ? '$4.99' : null,
     busy: false,
   };
 
