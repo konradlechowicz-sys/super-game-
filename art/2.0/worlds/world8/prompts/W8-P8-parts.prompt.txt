@@ -1,0 +1,28 @@
+STYLE (keep identical across all images):
+Game art for "Void Blaster", a top-down mobile space shooter (survivors-like).
+Camera: top-down orthographic, looking straight down, no perspective.
+Look: stylized sci-fi with a neon accent. Dark, rich materials (gunmetal, carbon,
+matte ceramic) lit from the top-left, glowing edges and emissive lights only where
+noted. Detail level: high but clean - panel lines, vents, rivets; no grunge overload.
+The background must stay dark and calm so bright game objects read on top of it:
+no bright cyan anywhere (cyan belongs to the player), magenta only as thin traces.
+Rendering: crisp edges, soft bloom on glowing parts only, no motion blur, no depth of
+field, not photorealistic. No text, no logo, no watermark.
+
+WORLD 8 "THE RIFT GATE": the gateway out of the Solar System, guarded by the Void
+Collective (an alien machine intelligence). Space here is cracked like glass: floating
+shards of reality with sharp glowing edges, warped and smeared stars, a gigantic gate
+ring far below. Void #04020a, rift white #f4f0ff, violet #8a4dff (dark #2a1050),
+magenta #ff2d95 for the Collective. No light source: the shard edges and rifts glow
+cold white. Mood: the last threshold, unstable, wrong. 50% machine, 50% organic.
+
+TASK: The world-8 boss "Gatekeeper": a guardian made of rings, seen from directly
+above, 1024x1024, plain flat dark background (#05010f): three concentric rotating
+rings of armored segments around a magenta core, portal openings in the rings, white
+glowing edges, 3-4 glowing weak points (ring hinges, core). Then a second image:
+exploded parts sheet at one scale with generous space: core, each ring separately,
+each weak point; plus the complete assembled boss at the same scale in the bottom-right
+corner. No text.
+
+PRODUCTION NOTES (the attached approved P1 is a style/material reference, not a composition to reproduce):
+PARTS SHEET only. Second reference is the exact boss design to disassemble; first is approved arena style. Flat #05010f background, strict overhead orthographic, same design and materials as boss, separate INTACT modules with wide empty gutters. No text or grid, no random broken shards. Square 2400x2400, THREE COLUMNS and THREE ROWS. Row1 small core (without rings), OUTER ring alone, MIDDLE ring alone. Row2 INNER ring alone, weakpoint hinge1, weakpoint hinge2. Row3 weakpoint hinge3, weakpoint hinge4, full assembled boss bottom-right. Exactly three independent flat circular rings, each contains its own portals and crystal-rimmed armor, NO nested rings or core inside those separate ring modules. Each ring whole and complete. Violet-white crystal edges, dark armor and subtle organic links, no scenery.

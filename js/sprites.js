@@ -204,7 +204,7 @@ export function enemySprite(shape, color, r, variant = '') {
   }, 14);
 }
 
-// ---------- Boss: Hive Mother, drawn in layers so they can spin independently ----------
+// ---------- Boss: the Harvester (Hive Mother in 1.x; internal id 'hive'), drawn in layers so they can spin independently ----------
 export function bossLayer(layer, color, r, flash = false, sides = 6) {
   return sprite(`boss:${layer}:${color}:${r}:${flash}:${sides}`, r * 1.2, (g) => {
     const c = flash ? '#ffffff' : color;

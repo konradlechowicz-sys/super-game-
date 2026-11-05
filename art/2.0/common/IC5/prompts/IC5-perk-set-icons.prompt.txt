@@ -1,0 +1,35 @@
+STYLE (keep identical across all images):
+Game art for "Void Blaster", a top-down mobile space shooter (survivors-
+like).
+Camera: top-down orthographic, looking straight down, no perspective.
+Look: stylized sci-fi with a neon accent. Dark, rich materials (gunmetal, 
+carbon,
+matte ceramic) lit from the top-left, glowing edges and emissive lights only 
+where
+noted. Detail level: high but clean - panel lines, vents, rivets; no grunge 
+overload.
+The background must stay dark and calm so bright game objects read on top of 
+it:
+no bright cyan anywhere (cyan belongs to the player), magenta only as thin 
+traces.
+Rendering: crisp edges, soft bloom on glowing parts only, no motion blur, no 
+depth of
+field, not photorealistic. No text, no logo, no watermark.
+
+TASK: a sheet of 8 perk set icons matching the attached perk icon sheet. Each 
+set fuses
+the two perk symbols named below into one symbol in one tile. Border teal 
+#3dffc8, a
+thin second inner line to tell sets from weapon combos. Grid of 4 columns, 
+plain flat
+background #05010f. No text.
+1) OVERDRIVE: Power Core + Overclock;
+2) RAM PLATING: Armor Plating + Thrusters (a plated ram prow);
+3) SINGULARITY: Tractor Beam + Amplifier (crystals spiraling into a point);
+4) HIT & RUN: Thrusters + Overclock (a flame trail with speed chevrons);
+5) LAST STAND: Power Core + Armor Plating (a cracked plate over a blazing 
+core);
+6) SCORCHED TRAIL: Thermal Core + Thrusters (a trail of fire);
+7) BASTION FIELD: Phase Shield + Armor Plating (a shield bursting into a 
+wave);
+8) SALVAGE CORE: Targeting Matrix + Tractor Beam (a reticle over a crystal).

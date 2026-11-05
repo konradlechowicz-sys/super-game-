@@ -1,0 +1,26 @@
+STYLE (keep identical across all images):
+Game art for "Void Blaster", a top-down mobile space shooter (survivors-like).
+Camera: top-down orthographic, looking straight down, no perspective.
+Look: stylized sci-fi with a neon accent. Dark, rich materials (gunmetal, carbon,
+matte ceramic) lit from the top-left, glowing edges and emissive lights only where
+noted. Detail level: high but clean - panel lines, vents, rivets; no grunge overload.
+The background must stay dark and calm so bright game objects read on top of it:
+no bright cyan anywhere (cyan belongs to the player), magenta only as thin traces.
+Rendering: crisp edges, soft bloom on glowing parts only, no motion blur, no depth of
+field, not photorealistic. No text, no logo, no watermark.
+
+WORLD 3 "LUNAR BRIDGEHEAD": just above the Moon's surface, where the Void Collective
+(an alien machine intelligence) built its forward base. Its conduits grow into the rock
+like roots: black-violet pipes #1a0f24 with magenta #ff2d95 veins. Gray regolith
+#2b2a33/#4a4856 with highlights #8d8a99, near-black shadows #0a0910 (no atmosphere),
+pale violet accents #b8a9d9, non-glowing frost #cfd8ef. Hard sunlight from the top-left,
+long sharp black shadows. Ruins of a human lunar base. Mood: sparse, hostile, first
+living growth. 90% machine, 10% organic.
+
+TASK: Concept of the battle arena, 941x1672 portrait, seen from directly above: gray
+regolith with a few big craters, Collective conduits branching across the ground like
+roots and converging toward one large crater, ruins of a human base (domes, antennas,
+a rover), crater rims and rock ridges framing the edges. Calm, dark center. No ships,
+no enemies.
+
+VARIANT B composition: a sparse winding open central play space between two offset crater rims. The largest crater is toward the upper-left, with root-like conduits converging into it along the perimeter. The ruined human base is concentrated toward the right and lower perimeter, with broken domes, a rover and antennas. Keep the center dark and spacious. Strict vertical overhead plan view, no horizon. Full-bleed portrait, target 941x1672. Generate one image only, no labels.

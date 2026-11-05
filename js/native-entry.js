@@ -9,8 +9,9 @@ const Store = registerPlugin('VoidStore');
 // Game Center bridge (leaderboards) implemented in ios/App/App/GameCenterPlugin.swift.
 const GameCenter = registerPlugin('VoidGameCenter');
 
-// Android has no purchase plugin yet (Google Play Billing comes later), so it plays as the free trial.
-// Leaderboards on Android wait for Google Play Games.
-const ios = Capacitor.getPlatform() === 'ios';
-const store = ios ? Store : null;
-window.__native = Capacitor.isNativePlatform() ? { Haptics, ImpactStyle, NotificationType, Preferences, Store: store, GameCenter: ios ? GameCenter : null } : null;
+// The same "VoidStore" plugin on Android: Google Play Billing (android/app/src/main/java/.../StorePlugin.java).
+// Leaderboards: Game Center on iOS, Google Play Games on Android (PlayGamesPlugin.java), both as "VoidGameCenter".
+const platform = Capacitor.getPlatform();
+const ios = platform === 'ios';
+const store = ios || platform === 'android' ? Store : null;
+window.__native = Capacitor.isNativePlatform() ? { platform, Haptics, ImpactStyle, NotificationType, Preferences, Store: store, GameCenter: store ? GameCenter : null } : null;

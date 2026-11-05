@@ -1,0 +1,33 @@
+STYLE (keep identical across all images):
+Game art for "Void Blaster", a top-down mobile space shooter (survivors-
+like).
+Camera: top-down orthographic, looking straight down, no perspective.
+Look: stylized sci-fi with a neon accent. Dark, rich materials (gunmetal, 
+carbon,
+matte ceramic) lit from the top-left, glowing edges and emissive lights only 
+where
+noted. Detail level: high but clean - panel lines, vents, rivets; no grunge 
+overload.
+The background must stay dark and calm so bright game objects read on top of 
+it:
+no bright cyan anywhere (cyan belongs to the player), magenta only as thin 
+traces.
+Rendering: crisp edges, soft bloom on glowing parts only, no motion blur, no 
+depth of
+field, not photorealistic. No text, no logo, no watermark.
+
+TASK: two portrait menu backgrounds, 1290x2796 each, dark and calm so buttons 
+and text
+stay readable, all detail kept away from the center:
+1) HANGAR: the inside of a dark orbital hangar bay, a landing pad with amber 
+#ffb02e
+   guide lights in the middle (a ship will be placed there in code), gantries 
+at the
+   edges, Earth's limb glowing through a window at the top;
+2) JOURNEY MAP: deep space with the route of the journey as a faint dotted 
+line from
+   Earth at the bottom to a magenta #ff2d95 glow of the Nexus at the top, the
+   Collective's thin magenta circuitry spreading down from the top. No 
+planets drawn
+   on the route (the world tokens are added in code).
+No text.

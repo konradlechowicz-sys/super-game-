@@ -1,0 +1,29 @@
+OUTPUT SIZE: exactly 1024 pixels wide by 1024 pixels high.
+
+STYLE (keep identical across all images):
+Game art for "Void Blaster", a top-down mobile space shooter (survivors-like).
+Camera: top-down orthographic, looking straight down, no perspective.
+Look: stylized sci-fi with a neon accent. Dark, rich materials (gunmetal, carbon,
+matte ceramic) lit from the top-left, glowing edges and emissive lights only where
+noted. Detail level: high but clean - panel lines, vents, rivets; no grunge overload.
+The background must stay dark and calm so bright game objects read on top of it:
+no bright cyan anywhere (cyan belongs to the player), magenta only as thin traces.
+Rendering: crisp edges, soft bloom on glowing parts only, no motion blur, no depth of
+field, not photorealistic. No text, no logo, no watermark.
+
+WORLD 2 "SIEGE OF EARTH": low orbit, 400 km above night-side Earth, during the
+landing of the Void Collective (an alien machine intelligence). We fight above a cloud
+layer; under it, coastlines and city lights, some cities burning. Colors: night
+#070b1a, clouds #222b44-#3a4566, tiny warm city lights #ffb347, fires #ff5a2e,
+lightning #e8f0ff, the Collective's tethers and web in magenta #ff2d95.
+No sun (night): clouds lit from below by cities and fires, from above by lightning.
+Mood: siege, storm, the last defense of home. 100% machine.
+
+TASK: Seamless tileable texture 1024x1024 of a night cloud layer seen from above, on a
+plain flat black background (#000000): soft cloud tops in dark blue-gray
+(#222b44-#3a4566) with gaps between them, faintly lit from below in warm orange. No
+bright spots, no landmarks. Tiles on all four edges. Deliver the single tile.
+
+PRODUCTION TEXTURE: Generate an evenly distributed seamless square cloud texture using the approved W2 aesthetic described above. Use sculpted dark navy blue-gray clouds with restrained warm underlighting. Remove ALL ground, cities, coastlines, fires, wrecks, lightning, tethers, magenta nodes, and arena framing. Keep only soft low-contrast cloud tops and pure black empty gaps. No horizon, no perspective, no border, no vignette, no central composition or large landmark. Opposite left/right and top/bottom edges must continue exactly as a repeating texture, with cloud forms crossing the edges and wrapping seamlessly. Preserve a low gameplay-background brightness, dim navy/blue-gray clouds with minimal subtle muted orange within undersides. Output one single 1024x1024 tile, not a tiled preview.
+VARIANT A: rounded broken cloud clusters with broad connected black gaps, approximately half the canvas empty, soft volumetric small-scale cloud lobes, naturally scattered at uniform scale.
+Seamless periodic boundary conditions: the forms at right match and continue at left at the same vertical coordinates; bottom matches top at the same horizontal coordinates. No straight visible seams.

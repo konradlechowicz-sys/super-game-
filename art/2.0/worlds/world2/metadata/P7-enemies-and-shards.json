@@ -1,0 +1,393 @@
+{
+  "background": "#05010f",
+  "facing": "up",
+  "world_units_to_pixels": 4.6875,
+  "enemies": [
+    {
+      "name": "interceptor",
+      "relative_size": 30,
+      "content_size": [
+        125,
+        141
+      ],
+      "file": "graphics/W2-P7-enemies/W2-P7-interceptor.png"
+    },
+    {
+      "name": "lander-pod",
+      "relative_size": 34,
+      "content_size": [
+        118,
+        159
+      ],
+      "file": "graphics/W2-P7-enemies/W2-P7-lander-pod.png"
+    },
+    {
+      "name": "gunship",
+      "relative_size": 44,
+      "content_size": [
+        202,
+        206
+      ],
+      "file": "graphics/W2-P7-enemies/W2-P7-gunship.png"
+    },
+    {
+      "name": "sky-mine",
+      "relative_size": 30,
+      "content_size": [
+        141,
+        140
+      ],
+      "file": "graphics/W2-P7-enemies/W2-P7-sky-mine.png"
+    },
+    {
+      "name": "bomber",
+      "relative_size": 44,
+      "content_size": [
+        206,
+        198
+      ],
+      "file": "graphics/W2-P7-enemies/W2-P7-bomber.png"
+    },
+    {
+      "name": "siege-walker",
+      "relative_size": 64,
+      "content_size": [
+        249,
+        300
+      ],
+      "file": "graphics/W2-P7-enemies/W2-P7-siege-walker.png"
+    }
+  ],
+  "elite": {
+    "file": "graphics/W2-P7-elite-and-shards/W2-P7-interceptor-elite.png",
+    "scale": 1.6,
+    "content_max_px": 226
+  },
+  "individual_png_padding_px": 12,
+  "death_shards": [
+    {
+      "enemy": "interceptor",
+      "row": 1,
+      "fragments": [
+        {
+          "file": "graphics/W2-P7-elite-and-shards/W2-P7-interceptor-shard-1.png",
+          "position_on_body_png": [
+            36,
+            0
+          ],
+          "content_size": [
+            53,
+            66
+          ],
+          "scale": 1.0
+        },
+        {
+          "file": "graphics/W2-P7-elite-and-shards/W2-P7-interceptor-shard-2.png",
+          "position_on_body_png": [
+            0,
+            47
+          ],
+          "content_size": [
+            64,
+            82
+          ],
+          "scale": 1.0
+        },
+        {
+          "file": "graphics/W2-P7-elite-and-shards/W2-P7-interceptor-shard-3.png",
+          "position_on_body_png": [
+            62,
+            50
+          ],
+          "content_size": [
+            63,
+            80
+          ],
+          "scale": 1.0
+        },
+        {
+          "file": "graphics/W2-P7-elite-and-shards/W2-P7-interceptor-shard-4.png",
+          "position_on_body_png": [
+            37,
+            86
+          ],
+          "content_size": [
+            75,
+            55
+          ],
+          "scale": 1.0
+        }
+      ]
+    },
+    {
+      "enemy": "lander-pod",
+      "row": 2,
+      "fragments": [
+        {
+          "file": "graphics/W2-P7-elite-and-shards/W2-P7-lander-pod-shard-1.png",
+          "position_on_body_png": [
+            11,
+            0
+          ],
+          "content_size": [
+            96,
+            68
+          ],
+          "scale": 1.0
+        },
+        {
+          "file": "graphics/W2-P7-elite-and-shards/W2-P7-lander-pod-shard-2.png",
+          "position_on_body_png": [
+            0,
+            43
+          ],
+          "content_size": [
+            62,
+            98
+          ],
+          "scale": 1.0
+        },
+        {
+          "file": "graphics/W2-P7-elite-and-shards/W2-P7-lander-pod-shard-3.png",
+          "position_on_body_png": [
+            59,
+            42
+          ],
+          "content_size": [
+            59,
+            96
+          ],
+          "scale": 1.0
+        },
+        {
+          "file": "graphics/W2-P7-elite-and-shards/W2-P7-lander-pod-shard-4.png",
+          "position_on_body_png": [
+            12,
+            101
+          ],
+          "content_size": [
+            99,
+            58
+          ],
+          "scale": 1.0
+        }
+      ]
+    },
+    {
+      "enemy": "gunship",
+      "row": 3,
+      "fragments": [
+        {
+          "file": "graphics/W2-P7-elite-and-shards/W2-P7-gunship-shard-1.png",
+          "position_on_body_png": [
+            59,
+            0
+          ],
+          "content_size": [
+            83,
+            96
+          ],
+          "scale": 1.0
+        },
+        {
+          "file": "graphics/W2-P7-elite-and-shards/W2-P7-gunship-shard-2.png",
+          "position_on_body_png": [
+            0,
+            67
+          ],
+          "content_size": [
+            101,
+            116
+          ],
+          "scale": 1.0
+        },
+        {
+          "file": "graphics/W2-P7-elite-and-shards/W2-P7-gunship-shard-3.png",
+          "position_on_body_png": [
+            101,
+            71
+          ],
+          "content_size": [
+            101,
+            118
+          ],
+          "scale": 1.0
+        },
+        {
+          "file": "graphics/W2-P7-elite-and-shards/W2-P7-gunship-shard-4.png",
+          "position_on_body_png": [
+            32,
+            115
+          ],
+          "content_size": [
+            133,
+            91
+          ],
+          "scale": 1.0
+        }
+      ]
+    },
+    {
+      "enemy": "sky-mine",
+      "row": 4,
+      "fragments": [
+        {
+          "file": "graphics/W2-P7-elite-and-shards/W2-P7-sky-mine-shard-1.png",
+          "position_on_body_png": [
+            33,
+            0
+          ],
+          "content_size": [
+            75,
+            72
+          ],
+          "scale": 1.0
+        },
+        {
+          "file": "graphics/W2-P7-elite-and-shards/W2-P7-sky-mine-shard-2.png",
+          "position_on_body_png": [
+            0,
+            39
+          ],
+          "content_size": [
+            69,
+            68
+          ],
+          "scale": 1.0
+        },
+        {
+          "file": "graphics/W2-P7-elite-and-shards/W2-P7-sky-mine-shard-3.png",
+          "position_on_body_png": [
+            68,
+            37
+          ],
+          "content_size": [
+            73,
+            69
+          ],
+          "scale": 1.0
+        },
+        {
+          "file": "graphics/W2-P7-elite-and-shards/W2-P7-sky-mine-shard-4.png",
+          "position_on_body_png": [
+            49,
+            83
+          ],
+          "content_size": [
+            44,
+            57
+          ],
+          "scale": 1.0
+        }
+      ]
+    },
+    {
+      "enemy": "bomber",
+      "row": 5,
+      "fragments": [
+        {
+          "file": "graphics/W2-P7-elite-and-shards/W2-P7-bomber-shard-1.png",
+          "position_on_body_png": [
+            55,
+            0
+          ],
+          "content_size": [
+            96,
+            102
+          ],
+          "scale": 1.0
+        },
+        {
+          "file": "graphics/W2-P7-elite-and-shards/W2-P7-bomber-shard-2.png",
+          "position_on_body_png": [
+            0,
+            66
+          ],
+          "content_size": [
+            108,
+            97
+          ],
+          "scale": 1.0
+        },
+        {
+          "file": "graphics/W2-P7-elite-and-shards/W2-P7-bomber-shard-3.png",
+          "position_on_body_png": [
+            107,
+            64
+          ],
+          "content_size": [
+            99,
+            104
+          ],
+          "scale": 1.0
+        },
+        {
+          "file": "graphics/W2-P7-elite-and-shards/W2-P7-bomber-shard-4.png",
+          "position_on_body_png": [
+            54,
+            113
+          ],
+          "content_size": [
+            96,
+            85
+          ],
+          "scale": 1.0
+        }
+      ]
+    },
+    {
+      "enemy": "siege-walker",
+      "row": 6,
+      "fragments": [
+        {
+          "file": "graphics/W2-P7-elite-and-shards/W2-P7-siege-walker-shard-1.png",
+          "position_on_body_png": [
+            14,
+            0
+          ],
+          "content_size": [
+            222,
+            105
+          ],
+          "scale": 1.0
+        },
+        {
+          "file": "graphics/W2-P7-elite-and-shards/W2-P7-siege-walker-shard-2.png",
+          "position_on_body_png": [
+            14,
+            100
+          ],
+          "content_size": [
+            223,
+            138
+          ],
+          "scale": 1.0
+        },
+        {
+          "file": "graphics/W2-P7-elite-and-shards/W2-P7-siege-walker-shard-3.png",
+          "position_on_body_png": [
+            0,
+            219
+          ],
+          "content_size": [
+            82,
+            81
+          ],
+          "scale": 1.0
+        },
+        {
+          "file": "graphics/W2-P7-elite-and-shards/W2-P7-siege-walker-shard-4.png",
+          "position_on_body_png": [
+            168,
+            220
+          ],
+          "content_size": [
+            81,
+            80
+          ],
+          "scale": 1.0
+        }
+      ]
+    }
+  ]
+}

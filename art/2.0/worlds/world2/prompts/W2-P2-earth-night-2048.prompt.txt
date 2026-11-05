@@ -1,0 +1,26 @@
+STYLE (keep identical across all images):
+Game art for "Void Blaster", a top-down mobile space shooter (survivors-like).
+Camera: top-down orthographic, looking straight down, no perspective.
+Look: stylized sci-fi with a neon accent. Dark, rich materials (gunmetal, carbon,
+matte ceramic) lit from the top-left, glowing edges and emissive lights only where
+noted. Detail level: high but clean - panel lines, vents, rivets; no grunge overload.
+The background must stay dark and calm so bright game objects read on top of it:
+no bright cyan anywhere (cyan belongs to the player), magenta only as thin traces.
+Rendering: crisp edges, soft bloom on glowing parts only, no motion blur, no depth of
+field, not photorealistic. No text, no logo, no watermark.
+
+WORLD 2 "SIEGE OF EARTH": low orbit, 400 km above night-side Earth, during the
+landing of the Void Collective (an alien machine intelligence). We fight above a cloud
+layer; under it, coastlines and city lights, some cities burning. Colors: night
+#070b1a, clouds #222b44-#3a4566, tiny warm city lights #ffb347, fires #ff5a2e,
+lightning #e8f0ff, the Collective's tethers and web in magenta #ff2d95.
+No sun (night): clouds lit from below by cities and fires, from above by lightning.
+Mood: siege, storm, the last defense of home. 100% machine.
+
+TASK: Seamless tileable texture 2048x2048 of night-side Earth seen straight down from
+low orbit: dark ocean and land, coastlines, networks of tiny warm city lights, a few
+burning cities (orange glow), no clouds (clouds are a separate layer). Very dark
+overall, low contrast. Tiles on all four edges. Deliver the single tile.
+
+LAYER DERIVATION FROM APPROVED CONCEPT: Transform the supplied approved W2 P1 concept into its isolated cloudless distant Earth surface layer. Keep its stylized night palette, tiny warm city light networks, dark ocean, dark land and small distant fire clusters. Replace the portrait arena composition with a square seamless surface texture. Remove all clouds, fog, haze, lightning, tethers, magenta, machines, wrecks, stars, horizon, planetary limb and arena borders. Entire image is Earth's surface seen vertically downward. Background must be extremely dark and low contrast, with lights as small separate points, never broad glowing patches. Only a few modest distant orange fire clusters. No bright central city or detailed recognizable continent. No cyan. No labels. Seamless wrapping on all four edges; coastlines and light patterns continue at opposite matching coordinates. One single 2048x2048 tile, no tiled preview or frame.
+VARIANT B: More land and more branching, irregular coastal bays and estuaries, with a restrained finer web of warm settlements well spread across dark land. Include large dark water gaps and broad unlit land. Two small distant fire clusters, no large bright focus. Low contrast throughout.

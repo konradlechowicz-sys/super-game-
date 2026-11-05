@@ -1,0 +1,33 @@
+STORY SCENES for "Void Blaster", a mobile space shooter. Make 17 separate images, one per
+task below, each a PORTRAIT 1080x1920 (9:16) cinematic illustration for a story cutscene.
+Style: painterly sci-fi concept art, dramatic composition and lighting, the same world as
+the game art: dark rich materials (gunmetal, carbon), deep space blacks, warm amber
+#ffb02e for humans, magenta #ff2d95 and violet #b04dff for the Void Collective (an alien
+machine intelligence that rewrites worlds and grows more organic the deeper we go), the
+player's ship glows cyan #2ff3ff. Keep the lower third darker and calm (subtitles go
+there). No text, no letters, no logos, no UI, no watermark. Same look across all 17.
+The player's ship is the attached Striker (striker-parts-sheet.webp), small in frame.
+SC0a: night-side Earth from high orbit, city lights, a ring of human orbital defense
+  stations in calm amber light. Quiet before the storm.
+SC0b: the same view: a magenta web of glowing circuit strands spreads out of the dark and
+  wraps the defense stations.
+SC0c: burning wreckage of the defense ring, debris drifting, a damaged human carrier in
+  the background, Earth below.
+SC0d: from the carrier's open hangar one small ship launches toward the debris field,
+  engine glow cyan. Hope against the odds.
+SC1: alien landing pods falling through clouds toward night cities, fire trails, magenta.
+SC2: the Moon, magenta veins running from a dark alien base across its gray surface.
+SC3: Mars seen from orbit, black crystal spreading over the red dust like an infection.
+SC4: the asteroid belt full of glowing factory asteroids, molten orange furnaces.
+SC5: Jupiter's storm bands, a relay of antennas overgrown with pink tissue in the clouds.
+SC6: Europa's translucent ice, beneath it the green glow of something enormous.
+SC7: at the edge of the Solar System a gigantic ring gate, space around it cracked like
+  glass, violet-white light; the small ship before it.
+SC8: beyond the gate a living planet covered in nests and egg sacs, sickly green light.
+SC9: the Nexus emerging from darkness: a colossal brain of circuits and neurons, pulsing
+  magenta and violet; the small ship approaching.
+SC10a: the Nexus's heart cracking apart, a wave of white light spreading through it.
+SC10b: a split view: the Moon, Mars and a factory asteroid, their magenta veins going dark.
+SC10c: the small ship flying back through the dying gate ring toward a distant Sun.
+SC10d: dawn over Earth from orbit, a new defense station under construction, the small
+  ship docked in its hangar. Peace, warm light.

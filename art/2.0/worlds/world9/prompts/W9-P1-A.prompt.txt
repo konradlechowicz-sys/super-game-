@@ -1,0 +1,27 @@
+STYLE (keep identical across all images):
+Game art for "Void Blaster", a top-down mobile space shooter (survivors-like).
+Camera: top-down orthographic, looking straight down, no perspective.
+Look: stylized sci-fi with a neon accent. Dark, rich materials (gunmetal, carbon,
+matte ceramic) lit from the top-left, glowing edges and emissive lights only where
+noted. Detail level: high but clean - panel lines, vents, rivets; no grunge overload.
+The background must stay dark and calm so bright game objects read on top of it:
+no bright cyan anywhere (cyan belongs to the player), magenta only as thin traces.
+Rendering: crisp edges, soft bloom on glowing parts only, no motion blur, no depth of
+field, not photorealistic. No text, no logo, no watermark.
+
+WORLD 9 "BROOD WORLD": the breeding world of the Void Collective (an alien machine
+intelligence): the ground is living tissue fused with metal plates, it breathes; nests
+hatch enemies. STYLIZED, never realistic flesh, no blood, no gore. Dark matte tissue
+#2a0f18/#4a1a28 with veins #6e2a40, embedded metal #3a3440, acid green #9dff3d,
+bioluminescent violet #7a3dff and small pale pink points #ff8fbf. The floor is NOT
+glowing magenta (magenta #ff2d95 is only in enemy cores). Weak light from below, from
+bioluminescence and acid. Mood: inside a living organism. 30% machine, 70% organic.
+
+TASK: Concept of the battle arena, 941x1672 portrait, seen from directly above: dark
+living tissue with embedded metal plates and veins, three nests, egg sacs, metal
+rib-like arches, two acid pools, bioluminescent fungi, walls of membranes and ribs
+framing the edges. Stylized, no gore. Calm, dark center. No ships, no enemies.
+
+
+
+Production composition: Full-bleed vertical portrait 941:1672. True 90-degree overhead orthographic game view, no perspective. Stylized dark biomechanical material, crisp clean geometric forms; matte burgundy membrane fused with small dark gunmetal plates. No realistic flesh, blood, exposed viscera or gore. Three distinct empty nest structures near perimeter, two separate small acid-green pools in outer thirds, clustered egg sacs and violet fungi beside metal rib arches. Keep the middle half of the arena calm, dark and readable with only low-contrast thin veins. The floor is dark matte, NOT magenta neon; any pale pink points extremely tiny and sparse. Raised rib/membrane perimeter, no horizon. No enemies, ships, text, UI or labels. Unmistakably biological breeding world, no ice, no lava, no industrial furnace.

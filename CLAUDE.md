@@ -4,7 +4,44 @@
   Talk to Konrad in Polish; the game itself is in English.
 - Neon space survivor for iPhone. Vanilla JS + Canvas, no framework. Code map is in README.md.
 
-## Shared handoff with Codex
+## Art direction and ChatGPT (decided by Konrad, 2026-10-27)
+
+- Konrad relays everything between Claude and ChatGPT himself: Claude writes prompts, Konrad pastes them, reviews and
+  sends the images back. `AI-HANDOFF.md` is no longer used for new assignments.
+- The source of all 2.0 visuals and ChatGPT prompts is the Claude Doc "Void Blaster 2.0 – Art Bible"
+  (https://claude.ai/artifact/A6CDwwg4WSEQ3v99p9ZbMc): tab "Art Bible" (world cards, shared rules), tab "Prompty"
+  (style block, a world block per world, tasks W1-P1 … W10-P8, then the shared tasks) and tab "Zadania i status" (every
+  task code, its status and order, old names). Task codes (2026-10-31): `Wn-Pk` worlds, `SH` ships, `EL` elite
+  overlays, `FX` effects, `PU` pickups, `IC` icons, `UI` interface, `ST` store art; the code starts the file name and
+  Konrad's message. `art/2.0/CHATGPT-BRIEF.md` keeps only the rules and file specs (its tasks A-G are replaced).
+  The shared set (IC, EL, FX, PU, SH4, UI3-5, ST) came on 2026-10-31: originals in `art/2.0/common`, game textures by
+  `proto2/make-common.py` (`ui-...` pictures are for the HTML screens, `js/icons.js`); built in one build per group.
+  Change a world's card and its prompts together.
+  Decided by Konrad 2026-11-01: UI1 (image frames) and SH6 (evolved modules) dropped; the interface stays code-drawn,
+  and SH5 weapon modules sit on every ship (`MOUNTS` in `js/v2/renderer.js`, build 134), evolved ones turn gold in code.
+- Sector names of all 10 worlds (6 each, the 6th is the boss): Art Bible tab "Art Bible", table "Nazwy sektorów".
+  All world and sector names approved by Konrad (world 1 on 2026-10-28, worlds 2-10 on 2026-10-31; in `js/data.js`). On `v2` the map
+  shows all 10 worlds; worlds not built yet were "under construction" (`PLANNED_WORLDS` in `js/data.js`, empty since build 117: story +
+  planned sectors). Built: world 1 (build 91), world 2 "Siege of Earth" (build 98, from ChatGPT's approved W2 set
+  in `art/2.0/worlds/world2`, textures by `proto2/make-world2.py`, look `js/v2/siege.js`) and world 3 "Lunar
+  Bridgehead" (build 106, W3 set in `art/2.0/worlds/world3`, `proto2/make-world3.py`, look `js/v2/lunar.js`, craters
+  as cover `js/cover.js`) and world 4 "Red Conversion" (build 108, W4 set in `art/2.0/worlds/world4`,
+  `proto2/make-world4.py`, look `js/v2/mars.js`, crystal network and dust storms `js/crystal.js`) and world 5
+  "Foundry Belt" (build 109, W5 set in `art/2.0/worlds/world5`, `proto2/make-world5.py`, look `js/v2/foundry.js`,
+  drifting asteroids as moving cover in `js/cover.js`). Worlds 6-10 share one pipeline (from build 113): textures by
+  `proto2/make-worlds.py N`, look `js/v2/journey.js` (one scene, each world's settings in `CFG`), mechanics
+  `js/worldfx.js` (wind, ice, rifts, acid), sectors from `journey()` in `js/data.js`. World 6 "Storm Relay" (build
+  113), world 7 "Abyss of Europa" (build 114), world 8 "The Rift Gate" (build 115), world 9 "Brood World" (build 116), world 10 "The Nexus" (build 117: all 10 worlds built); each next world is its own build on a branch stacked on the previous one. ChatGPT's packs
+  over about 18 MB do not fit one chat upload: Konrad sends them split into parts. The 1.x worlds 2-4 (`LEGACY_WORLDS`) are no longer played. 2.0 free trial = worlds 1-2.
+- Music: the 2.0 theme is the menu music for good; no separate M1 track.
+- Story (accepted by Konrad 2026-11-01, script in the Claude Doc "Void Blaster 2.0 – Fabuła"
+  https://claude.ai/artifact/YGAi7N4QxktYtx4ad9ZbKc): intro before sector 1-1, a transmission after each boss of worlds
+  1-9, outro + credits after the Void Heart; Admiral Hale (Earth Command) and the Void Collective, player call sign
+  Vanguard. Scenes and texts in `js/story.js` (played once, `save.story`; Codex tab Log replays them), pictures Art
+  Bible SC0a-SC10d by `proto2/make-story.py` (`ui-sc-<code>`, from ChatGPT's scenes in `art/2.0/common/SC/selected`,
+  in the game since build 138).
+
+## Shared handoff with Codex (paused, see above)
 
 - Before starting a task, read the root `AI-HANDOFF.md` for a pending assignment or status from Codex.
 - For a handoff, use the same `claude/...` branch and commit the handoff update with the work. Work sequentially: only one agent edits that branch at a time.
@@ -25,7 +62,9 @@
   2.0 decisions (Konrad, 2026-10-26; execution plan in the Claude Doc "Void Blaster 2.0 – plan wykonawczy"): the 10
   new worlds replace the 4 of 1.x; all 10 ship at once, iOS and Android the same day; the "1.4" content (OVERLOAD
   minute, Railgun, Flamethrower, Singularity Cannon, 12 combos, 8 perk sets, 3 super combos) goes into 2.0; 2.0 is a
-  free update for Full Game owners (same app, same product); progress starts over, with a bonus for 1.x veterans;
+  free update for Full Game owners (same app, same product); progress starts over, with a bonus for 1.x veterans
+  (decided 2026-10-31, `migrate` in `js/save.js`: 300 coins + 10 per 1.x star + half the coins spent on upgrades, at
+  most 2,000, a one-time welcome screen, `save.veteran` unlocks the Veteran Striker skin, art `SH7` in `art/2.0/common/SH7`, in the game since build 132; no badge);
   the full game costs more for new players (about USD 4.99). 2.0 is built in the same app on its own accepted line
   `v2` (decided by Konrad, 2026-10-27; see "Two lines" below), so `main` stays releasable as 1.x until launch. Stage 1
   (builds 68-70, in `main`) put the PixiJS look behind a switch in the TEST panel; on `v2` 2.0 becomes the normal game.
@@ -33,11 +72,66 @@
 - 2.0 performance gate 1 passed (Konrad, 2026-10-27, iPhone 17 Pro Max, TEST variant with the 2.0 look): a steady
   60 FPS with about 180 enemies on screen. 2.0 balance must use this: noticeably more enemies at once than 1.x
   (bigger waves and swarms), keeping a margin for older iPhones.
+  Rechecked 2026-11-01 (Konrad, iPhone 17 Pro Max, with all the shared art of builds 123-127): adding masses of enemies
+  (STRESS +300) changes nothing. Older iPhones not checked yet.
+
+## 2.0 to-do (Konrad, 2026-10-28)
+World 1 is complete in the 2.0 look (build 91, accepted; Konrad played it on his iPhone and is very happy with it).
+Next, in this order unless Konrad says otherwise:
+1. World-1 mechanics: falling wrecks (shadow + amber warning, then the pass; hurts enemies and the ship) and bigger
+   waves (see the performance gate).
+2. Game speed and balance: Konrad finds the game a bit slow; ask him what exactly (ship, enemies, shots, level-ups,
+   sectors, the Harvester, fuel-tank blast) before changing numbers.
+   First pass of 1 and 2 done (build 97, 2026-10-28): `Game.fallingWreck` (stage field `wrecks`), world-1 sectors
+   rebalanced in `js/data.js` (more and faster enemies, bigger rings, max 200 on the field, kill goals checked with a
+   headless run). Konrad tests on the iPhone; tune from his notes.
+3. Redesign the start screen and the pop-ups (level-up cards, crates, results, paywall and other modals): today they
+   are too colourful for the mature, darker palette of world 1 and the character of 2.0. Make them darker and calmer,
+   in the Art Bible's colours (gunmetal, deep space, amber and magenta accents), keeping them readable.
+   First pass done (build 93, 2026-10-28): the style is described at the top of `css/style.css` (one amber accent,
+   magenta for the Collective, gold for coins and stars, hairlines, sharp corners, bracket corners on pop-ups, almost no
+   glow); the title scene and the joystick follow it. Konrad reviews it; further changes build on it.
+4. The new 2.0 arsenal in `PLAN-2.0-ARSENAL.md` (Railgun, Flamethrower, Singularity Cannon, 3 new perks, their
+   evolutions, 6 combos, 3 perk sets, 3 super combos).
+
+Done 2026-10-29: Konrad's iPhone report (performance great, speed good, music great, world 2 beautiful; difficulty
+rose a lot but it is too early to judge: leave it; sound did not come back after a notification: fixed in build 105)
+and world 3 "Lunar Bridgehead" (build 106, accepted). World 4 "Red Conversion" built in build 108 (Konrad's choice
+over the weapon system, accepted) and world 5 "Foundry Belt" in build 109; Konrad tests them on the iPhone.
+Next, in this order unless Konrad says otherwise:
+- Weapon system rework, stage 1 done (build 110): Railgun, Flamethrower, Singularity Cannon with their evolutions, the
+  perks Targeting Matrix, Thermal Core, Phase Shield; mechanics in `js/arsenal.js`. Stage 2 done (build 111): the 6
+  combos, 3 perk sets and 3 super combos (three weapons at LV 5, `super` in `js/combos.js`). All on neon effects until
+  ChatGPT's icons and effects come (brief C5-C7).
+
+## Coin crates (Konrad's idea from his tests 2026-11-03, built 2026-11-04 in build 152)
+Supply crates bought with coins on the sector briefing (one per run, chosen on the briefing and remembered in
+`save.crate`, paid at LAUNCH only, never by RETRY/NEXT), opened 0.8 s into the run: Standard 250 (1 item, LV 1-3),
+Military 700 (2 items, LV 2-4), Prototype 1800 (3 items, LV 3-5); random weapons or perks, no evolutions. Table and
+draw in `js/crates.js` (tune prices and odds there), choice and opening in `js/ui.js` (`crateRow`, `crateOpen`).
+
+## PC / Steam (idea, added to the task list by Konrad 2026-11-02; after the iPhone + Android launch)
+The game can go to Steam wrapped as a desktop app (Electron, Tauri or NW.js) with Steamworks (achievements, Endless
+leaderboards instead of Game Center, cloud saves); sold as a paid game (no paywall), the trial as a separate demo.
+Tasks, in this order:
+1. Gamepad in combat: Gamepad API, left stick (dead zone) and d-pad into the existing analog path (`input.jx/jy` in
+   `js/main.js`), Start = pause. Keyboard (WASD/arrows, Esc/P) and mouse drag already work.
+2. Menus from gamepad and keyboard: one generic focus system in `js/ui.js` (highlight, arrows/d-pad move, A/Enter
+   confirm, B/Esc back, level-up cards 1/2/3, lists scrolled with the stick). Also useful on Android/iOS gamepads.
+3. Mouse steering mode: the ship follows the cursor (hidden cursor), as an alternative to WASD.
+4. Button prompts matching the device in use (Xbox, PlayStation, keyboard) in the tutorial and on buttons.
+5. Control settings: device choice, stick sensitivity (key remapping optional).
+6. Landscape layout for monitors, Steam Deck and tablets (the biggest part: arena, menus, HUD, level-up cards, story).
+7. PC settings (fullscreen, resolution, V-Sync), Windows build (Steam Deck runs it), Mac/Linux optional.
+8. Steam: Steamworks account (100 USD Steam Direct fee, tax and bank details), store page as Coming Soon at least
+   2 weeks before launch, landscape trailer (`promo/record.mjs`), AI content disclosure (ChatGPT art, Suno music;
+   check that the Suno tracks were made on a plan that allows commercial use).
 
 ## Android (decided by Konrad)
 Android launches with 2.0 (Google Play needs 12 testers for 14 days on a new account before publishing, so closed
-testing should start during 2.0 work). Project in `android/`, see README.md. Until Google
-Play Billing exists, Android is trial-only. This cloud environment cannot build Android (no SDK); Konrad builds in
+testing should start during 2.0 work). Project in `android/`, see README.md. Google Play Billing is the same
+"VoidStore" plugin as on iOS (`android/.../StorePlugin.java`, Billing 7.1.1, product id as on the App Store, build 143);
+back button `MainActivity.java` → `app.handleBack`; `npm run android:bundle` makes the signed `.aab` (upload key out of git). This cloud environment cannot build Android (no SDK); Konrad builds in
 Android Studio on his Mac (`npm run android:open`; `npm run android:play` / `npm run android:test` install and
 launch the normal game / the TEST app "VB Test" on the emulator or phone).
 
@@ -107,7 +201,9 @@ Konrad decides what becomes the real game: **never push to `main`**. `main` hold
 1. **Repo:** commit and push to a `claude/...` branch: `claude/v2-...` (from `origin/v2`) for 2.0 work, another
    `claude/...` branch (from `origin/main`) for 1.x fixes and tools. Do not merge into `main` or `v2`.
 2. **Shareable previews:** `npm run build:web` produces `dist/void-blaster.html` and `dist/void-blaster-test.html`
-   (whole game in one file each). Republish them to the existing artifacts (keep the URLs):
+   (the game's code, about 0.8 MB each) and `dist/assets/` (the 2.0 pictures and music, shared by both; since build
+   106, when one file no longer fit the 16 MB artifact limit). Publish each page with every file of `dist/assets` as
+   its `files` (published path `assets/<name>`). Republish them to the existing artifacts (keep the URLs):
    normal https://claude.ai/artifact/LvvWrttnsoUNQZYBt7HgDo, TEST https://claude.ai/artifact/T9TmADoewKYcxJgXLp4YCk.
    Both always show the newest candidate.
 3. **Tell Konrad the build number and to run `npm run review` on his Mac.** The script lists every `claude/...`
@@ -126,6 +222,7 @@ Konrad decides what becomes the real game: **never push to `main`**. `main` hold
 
 ## Checks before pushing
 - `node --check js/*.js`, then load the game with Playwright (`index.html?dev&god`) and confirm no page errors.
+  On the `v2` line the unbundled dev page cannot load PixiJS and shows the 1.x look; check the 2.0 look in `dist/`.
 - Also load `dist/void-blaster-test.html` and open the 🛠 panel; confirm the normal page has no 🛠 button.
 - Dev URL flags: `?test` turns on the TEST variant on the unbundled page, `?dev` unlocks all sectors of the purchased content, `&full` grants the full game (simulated purchase),
   `&fast=1`, `&ts=4`, `&god`, `&coins=1000`. Without `&full`, worlds 2-4 show the paywall.

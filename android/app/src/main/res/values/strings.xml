@@ -4,4 +4,7 @@
     <string name="title_activity_main">Void Blaster</string>
     <string name="package_name">com.konradlechowicz.voidblaster</string>
     <string name="custom_url_scheme">com.konradlechowicz.voidblaster</string>
+    <!-- Google Play Games (Endless leaderboards, PlayGamesPlugin.java): the project id from Play Console →
+         Play Games Services → Configuration. Empty = leaderboards off on Android. -->
+    <string name="game_services_project_id" translatable="false"></string>
 </resources>

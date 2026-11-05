@@ -1,0 +1,75 @@
+{
+  "coordinate_space": [
+    1024,
+    1024
+  ],
+  "boss": "W5-P8-foundry-mother-1024.png",
+  "mount_reference_centers": {
+    "arm-nw": [
+      254,
+      265
+    ],
+    "arm-ne": [
+      771,
+      265
+    ],
+    "arm-sw": [
+      205,
+      701
+    ],
+    "arm-se": [
+      821,
+      701
+    ],
+    "bay-west": [
+      250,
+      523
+    ],
+    "bay-east": [
+      776,
+      523
+    ],
+    "weak-point-bay-west": [
+      171,
+      516
+    ],
+    "weak-point-bay-east": [
+      854,
+      516
+    ],
+    "weak-point-furnace-west": [
+      346,
+      219
+    ],
+    "weak-point-furnace-east": [
+      681,
+      219
+    ]
+  },
+  "normalizations": {
+    "body": 820,
+    "arm-nw": 350,
+    "arm-ne": 350,
+    "arm-sw": 260,
+    "arm-se": 260,
+    "bay-west": 430,
+    "bay-east": 430,
+    "weak-point-bay-west": 260,
+    "weak-point-bay-east": 260,
+    "weak-point-furnace-west": 280,
+    "weak-point-furnace-east": 280
+  },
+  "assembled_in_parts_sheet": {
+    "region": [
+      1984,
+      1984,
+      3008,
+      3008
+    ],
+    "size": [
+      1024,
+      1024
+    ]
+  },
+  "note": "Isolated generated renderings at production scale. Approximate attachment guide, not a pixel-perfect reconstruction rig. Bay panels include the assembly bay structure; furnace modules also appear in the body base. Hide covered body elements during animation if required."
+}

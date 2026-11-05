@@ -1,0 +1,432 @@
+{
+  "name": "Storm Relay",
+  "enemy": [
+    "ion-kite",
+    "gas-mine",
+    "relay-jelly",
+    "static-ray",
+    "vortex",
+    "cloud-whale"
+  ],
+  "sizes": [
+    32,
+    34,
+    36,
+    46,
+    50,
+    66
+  ],
+  "elite": "ion-kite",
+  "props": [
+    "relay-antenna",
+    "lightning-rod",
+    "cable-tissue-tangle",
+    "gas-mine-balloon",
+    "coil-node",
+    "broken-bronze-panel",
+    "signal-amplifier-intact",
+    "signal-amplifier-exploded",
+    "gas-tank-intact",
+    "gas-tank-exploded"
+  ],
+  "boss": "storm-eye",
+  "parts": [
+    "core",
+    "armored-segment-1",
+    "armored-segment-2",
+    "armored-segment-3",
+    "armored-segment-4",
+    "cloud-arm-1",
+    "cloud-arm-2",
+    "cloud-arm-3",
+    "cloud-arm-4",
+    "weak-point-1",
+    "weak-point-2",
+    "weak-point-3",
+    "weak-point-4"
+  ],
+  "floor": "platforms",
+  "floor_count": 3,
+  "far_size": [
+    2048,
+    1024
+  ],
+  "far_tile": "horizontal",
+  "phases": 1,
+  "constraints": [
+    "Three floating platforms 400-800 px, flat dark bronze tops with membranes, generous separation",
+    "Far background dark horizontal bands, small eddies, no Great Red Spot",
+    "Overlay all wind streaks in one horizontal direction",
+    "Boss ring of separate armored segments, lightning core with magenta heart and spiral cloud arms"
+  ],
+  "world": 6,
+  "expected_production_png": {
+    "W6-P1-arena-concept.png": {
+      "role": "P1",
+      "size": [
+        941,
+        1672
+      ],
+      "approval_required": true
+    },
+    "W6-P2-background.png": {
+      "role": "P2",
+      "size": [
+        2048,
+        1024
+      ],
+      "tile": "horizontal"
+    },
+    "W6-P3-platforms-sheet.png": {
+      "role": "P3-sheet",
+      "count": 3
+    },
+    "W6-P3-platforms/W6-P3-1.png": {
+      "role": "P3-item",
+      "content_max_range": [
+        400,
+        800
+      ]
+    },
+    "W6-P3-platforms/W6-P3-2.png": {
+      "role": "P3-item",
+      "content_max_range": [
+        400,
+        800
+      ]
+    },
+    "W6-P3-platforms/W6-P3-3.png": {
+      "role": "P3-item",
+      "content_max_range": [
+        400,
+        800
+      ]
+    },
+    "W6-P4-overlay.png": {
+      "role": "P4",
+      "size": [
+        1024,
+        1024
+      ],
+      "tile": "both",
+      "background": "#000000"
+    },
+    "W6-P5-props-sheet.png": {
+      "role": "P5-sheet",
+      "count": 10
+    },
+    "W6-P5-props/W6-P5-relay-antenna.png": {
+      "role": "P5-item"
+    },
+    "W6-P5-props/W6-P5-lightning-rod.png": {
+      "role": "P5-item"
+    },
+    "W6-P5-props/W6-P5-cable-tissue-tangle.png": {
+      "role": "P5-item"
+    },
+    "W6-P5-props/W6-P5-gas-mine-balloon.png": {
+      "role": "P5-item"
+    },
+    "W6-P5-props/W6-P5-coil-node.png": {
+      "role": "P5-item"
+    },
+    "W6-P5-props/W6-P5-broken-bronze-panel.png": {
+      "role": "P5-item"
+    },
+    "W6-P5-props/W6-P5-signal-amplifier-intact.png": {
+      "role": "P5-item"
+    },
+    "W6-P5-props/W6-P5-signal-amplifier-exploded.png": {
+      "role": "P5-item"
+    },
+    "W6-P5-props/W6-P5-gas-tank-intact.png": {
+      "role": "P5-item"
+    },
+    "W6-P5-props/W6-P5-gas-tank-exploded.png": {
+      "role": "P5-item"
+    },
+    "W6-P6-border-pieces-sheet.png": {
+      "role": "P6-sheet",
+      "count": 8
+    },
+    "W6-P6-border-pieces/W6-P6-border-top.png": {
+      "role": "P6-strip",
+      "size": [
+        1024,
+        160
+      ],
+      "tile": "long-axis"
+    },
+    "W6-P6-border-pieces/W6-P6-border-bottom.png": {
+      "role": "P6-strip",
+      "size": [
+        1024,
+        160
+      ],
+      "tile": "long-axis"
+    },
+    "W6-P6-border-pieces/W6-P6-border-left.png": {
+      "role": "P6-strip",
+      "size": [
+        160,
+        1024
+      ],
+      "tile": "long-axis"
+    },
+    "W6-P6-border-pieces/W6-P6-border-right.png": {
+      "role": "P6-strip",
+      "size": [
+        160,
+        1024
+      ],
+      "tile": "long-axis"
+    },
+    "W6-P6-border-pieces/W6-P6-corner-top-left.png": {
+      "role": "P6-corner",
+      "size": [
+        256,
+        256
+      ]
+    },
+    "W6-P6-border-pieces/W6-P6-corner-top-right.png": {
+      "role": "P6-corner",
+      "size": [
+        256,
+        256
+      ]
+    },
+    "W6-P6-border-pieces/W6-P6-corner-bottom-left.png": {
+      "role": "P6-corner",
+      "size": [
+        256,
+        256
+      ]
+    },
+    "W6-P6-border-pieces/W6-P6-corner-bottom-right.png": {
+      "role": "P6-corner",
+      "size": [
+        256,
+        256
+      ]
+    },
+    "W6-P7-enemies-sheet.png": {
+      "role": "P7-enemies-sheet",
+      "count": 6
+    },
+    "W6-P7-enemies/W6-P7-ion-kite.png": {
+      "role": "P7-enemy",
+      "relative_units": 32,
+      "target_content_max": 145
+    },
+    "W6-P7-enemies/W6-P7-gas-mine.png": {
+      "role": "P7-enemy",
+      "relative_units": 34,
+      "target_content_max": 155
+    },
+    "W6-P7-enemies/W6-P7-relay-jelly.png": {
+      "role": "P7-enemy",
+      "relative_units": 36,
+      "target_content_max": 164
+    },
+    "W6-P7-enemies/W6-P7-static-ray.png": {
+      "role": "P7-enemy",
+      "relative_units": 46,
+      "target_content_max": 209
+    },
+    "W6-P7-enemies/W6-P7-vortex.png": {
+      "role": "P7-enemy",
+      "relative_units": 50,
+      "target_content_max": 227
+    },
+    "W6-P7-enemies/W6-P7-cloud-whale.png": {
+      "role": "P7-enemy",
+      "relative_units": 66,
+      "target_content_max": 300
+    },
+    "W6-P7-elite-and-shards-sheet.png": {
+      "role": "P7-elite-shards-sheet",
+      "count": 25
+    },
+    "W6-P7-elite-and-shards/W6-P7-ion-kite-elite.png": {
+      "role": "P7-elite",
+      "scale_vs_normal": 1.6
+    },
+    "W6-P7-elite-and-shards/W6-P7-ion-kite-shard-1.png": {
+      "role": "P7-shard",
+      "enemy": "ion-kite"
+    },
+    "W6-P7-elite-and-shards/W6-P7-ion-kite-shard-2.png": {
+      "role": "P7-shard",
+      "enemy": "ion-kite"
+    },
+    "W6-P7-elite-and-shards/W6-P7-ion-kite-shard-3.png": {
+      "role": "P7-shard",
+      "enemy": "ion-kite"
+    },
+    "W6-P7-elite-and-shards/W6-P7-ion-kite-shard-4.png": {
+      "role": "P7-shard",
+      "enemy": "ion-kite"
+    },
+    "W6-P7-elite-and-shards/W6-P7-gas-mine-shard-1.png": {
+      "role": "P7-shard",
+      "enemy": "gas-mine"
+    },
+    "W6-P7-elite-and-shards/W6-P7-gas-mine-shard-2.png": {
+      "role": "P7-shard",
+      "enemy": "gas-mine"
+    },
+    "W6-P7-elite-and-shards/W6-P7-gas-mine-shard-3.png": {
+      "role": "P7-shard",
+      "enemy": "gas-mine"
+    },
+    "W6-P7-elite-and-shards/W6-P7-gas-mine-shard-4.png": {
+      "role": "P7-shard",
+      "enemy": "gas-mine"
+    },
+    "W6-P7-elite-and-shards/W6-P7-relay-jelly-shard-1.png": {
+      "role": "P7-shard",
+      "enemy": "relay-jelly"
+    },
+    "W6-P7-elite-and-shards/W6-P7-relay-jelly-shard-2.png": {
+      "role": "P7-shard",
+      "enemy": "relay-jelly"
+    },
+    "W6-P7-elite-and-shards/W6-P7-relay-jelly-shard-3.png": {
+      "role": "P7-shard",
+      "enemy": "relay-jelly"
+    },
+    "W6-P7-elite-and-shards/W6-P7-relay-jelly-shard-4.png": {
+      "role": "P7-shard",
+      "enemy": "relay-jelly"
+    },
+    "W6-P7-elite-and-shards/W6-P7-static-ray-shard-1.png": {
+      "role": "P7-shard",
+      "enemy": "static-ray"
+    },
+    "W6-P7-elite-and-shards/W6-P7-static-ray-shard-2.png": {
+      "role": "P7-shard",
+      "enemy": "static-ray"
+    },
+    "W6-P7-elite-and-shards/W6-P7-static-ray-shard-3.png": {
+      "role": "P7-shard",
+      "enemy": "static-ray"
+    },
+    "W6-P7-elite-and-shards/W6-P7-static-ray-shard-4.png": {
+      "role": "P7-shard",
+      "enemy": "static-ray"
+    },
+    "W6-P7-elite-and-shards/W6-P7-vortex-shard-1.png": {
+      "role": "P7-shard",
+      "enemy": "vortex"
+    },
+    "W6-P7-elite-and-shards/W6-P7-vortex-shard-2.png": {
+      "role": "P7-shard",
+      "enemy": "vortex"
+    },
+    "W6-P7-elite-and-shards/W6-P7-vortex-shard-3.png": {
+      "role": "P7-shard",
+      "enemy": "vortex"
+    },
+    "W6-P7-elite-and-shards/W6-P7-vortex-shard-4.png": {
+      "role": "P7-shard",
+      "enemy": "vortex"
+    },
+    "W6-P7-elite-and-shards/W6-P7-cloud-whale-shard-1.png": {
+      "role": "P7-shard",
+      "enemy": "cloud-whale"
+    },
+    "W6-P7-elite-and-shards/W6-P7-cloud-whale-shard-2.png": {
+      "role": "P7-shard",
+      "enemy": "cloud-whale"
+    },
+    "W6-P7-elite-and-shards/W6-P7-cloud-whale-shard-3.png": {
+      "role": "P7-shard",
+      "enemy": "cloud-whale"
+    },
+    "W6-P7-elite-and-shards/W6-P7-cloud-whale-shard-4.png": {
+      "role": "P7-shard",
+      "enemy": "cloud-whale"
+    },
+    "W6-P8-storm-eye.png": {
+      "role": "P8-boss",
+      "size": [
+        1024,
+        1024
+      ],
+      "phase": 1
+    },
+    "W6-P8-parts-sheet.png": {
+      "role": "P8-sheet",
+      "parts": 13,
+      "assembled_copy": "bottom-right, identical render and scale"
+    },
+    "W6-P8-parts/W6-P8-core.png": {
+      "role": "P8-part"
+    },
+    "W6-P8-parts/W6-P8-armored-segment-1.png": {
+      "role": "P8-part"
+    },
+    "W6-P8-parts/W6-P8-armored-segment-2.png": {
+      "role": "P8-part"
+    },
+    "W6-P8-parts/W6-P8-armored-segment-3.png": {
+      "role": "P8-part"
+    },
+    "W6-P8-parts/W6-P8-armored-segment-4.png": {
+      "role": "P8-part"
+    },
+    "W6-P8-parts/W6-P8-cloud-arm-1.png": {
+      "role": "P8-part"
+    },
+    "W6-P8-parts/W6-P8-cloud-arm-2.png": {
+      "role": "P8-part"
+    },
+    "W6-P8-parts/W6-P8-cloud-arm-3.png": {
+      "role": "P8-part"
+    },
+    "W6-P8-parts/W6-P8-cloud-arm-4.png": {
+      "role": "P8-part"
+    },
+    "W6-P8-parts/W6-P8-weak-point-1.png": {
+      "role": "P8-part"
+    },
+    "W6-P8-parts/W6-P8-weak-point-2.png": {
+      "role": "P8-part"
+    },
+    "W6-P8-parts/W6-P8-weak-point-3.png": {
+      "role": "P8-part"
+    },
+    "W6-P8-parts/W6-P8-weak-point-4.png": {
+      "role": "P8-part"
+    }
+  },
+  "order": [
+    "P1-review",
+    "P3",
+    "P2",
+    "P4",
+    "P5",
+    "P6",
+    "P7-enemies",
+    "P7-elite-shards",
+    "P8-boss",
+    "P8-parts"
+  ],
+  "delivery_rules": {
+    "zip_size_exclusive_limit": 30000000,
+    "zip_target_limit": 29500000,
+    "preserve_sources": true,
+    "preserve_exact_prompts": true,
+    "qa": [
+      "all sheets and each extracted sprite visually inspected",
+      "exact output dimensions and scaling metadata",
+      "tiles repeated 3x3 (W6 P2 horizontal) and half-shifted",
+      "RGBA ice over ocean (W7)",
+      "all border joins and repeated strips, assembled frame",
+      "CRC, full PNG decode and SHA256 for every archive file",
+      "each delivery file exactly once across split ZIPs",
+      "full boss in parts sheet identical rendering and size",
+      "P1 user approval evidence"
+    ]
+  }
+}

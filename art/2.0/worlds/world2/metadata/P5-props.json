@@ -1,0 +1,156 @@
+{
+  "background": "#05010f",
+  "sprites": [
+    {
+      "name": "tether-node",
+      "content_size": [
+        279,
+        280
+      ],
+      "content_box": [
+        31,
+        30,
+        310,
+        310
+      ],
+      "file": "graphics/W2-P5-props/W2-P5-tether-node.png"
+    },
+    {
+      "name": "crashed-lander",
+      "content_size": [
+        238,
+        280
+      ],
+      "content_box": [
+        393,
+        30,
+        631,
+        310
+      ],
+      "file": "graphics/W2-P5-props/W2-P5-crashed-lander.png"
+    },
+    {
+      "name": "anti-air-platform-wreck",
+      "content_size": [
+        245,
+        280
+      ],
+      "content_box": [
+        732,
+        30,
+        977,
+        310
+      ],
+      "file": "graphics/W2-P5-props/W2-P5-anti-air-platform-wreck.png"
+    },
+    {
+      "name": "fighter-wreck",
+      "content_size": [
+        110,
+        96
+      ],
+      "content_box": [
+        115,
+        387,
+        225,
+        483
+      ],
+      "file": "graphics/W2-P5-props/W2-P5-fighter-wreck.png"
+    },
+    {
+      "name": "burning-debris",
+      "content_size": [
+        104,
+        110
+      ],
+      "content_box": [
+        460,
+        380,
+        564,
+        490
+      ],
+      "file": "graphics/W2-P5-props/W2-P5-burning-debris.png"
+    },
+    {
+      "name": "drone-wreck",
+      "content_size": [
+        110,
+        100
+      ],
+      "content_box": [
+        799,
+        385,
+        909,
+        485
+      ],
+      "file": "graphics/W2-P5-props/W2-P5-drone-wreck.png"
+    },
+    {
+      "name": "flak-intact",
+      "content_size": [
+        200,
+        192
+      ],
+      "content_box": [
+        240,
+        554,
+        440,
+        746
+      ],
+      "file": "graphics/W2-P5-props/W2-P5-flak-intact.png"
+    },
+    {
+      "name": "flak-destroyed",
+      "content_size": [
+        234,
+        197
+      ],
+      "content_box": [
+        567,
+        552,
+        801,
+        749
+      ],
+      "file": "graphics/W2-P5-props/W2-P5-flak-destroyed.png"
+    },
+    {
+      "name": "beacon-intact",
+      "content_size": [
+        220,
+        219
+      ],
+      "content_box": [
+        230,
+        771,
+        450,
+        990
+      ],
+      "file": "graphics/W2-P5-props/W2-P5-beacon-intact.png"
+    },
+    {
+      "name": "beacon-destroyed",
+      "content_size": [
+        224,
+        210
+      ],
+      "content_box": [
+        572,
+        775,
+        796,
+        985
+      ],
+      "file": "graphics/W2-P5-props/W2-P5-beacon-destroyed.png"
+    }
+  ],
+  "individual_png_padding_px": 12,
+  "intact_destroyed_pairs": [
+    [
+      "flak-intact",
+      "flak-destroyed"
+    ],
+    [
+      "beacon-intact",
+      "beacon-destroyed"
+    ]
+  ]
+}

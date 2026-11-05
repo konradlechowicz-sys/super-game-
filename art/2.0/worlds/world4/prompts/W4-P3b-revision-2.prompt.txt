@@ -1,0 +1,25 @@
+STYLE (keep identical across all images):
+Game art for "Void Blaster", a top-down mobile space shooter (survivors-like).
+Camera: top-down orthographic, looking straight down, no perspective.
+Look: stylized sci-fi with a neon accent. Dark, rich materials (gunmetal, carbon,
+matte ceramic) lit from the top-left, glowing edges and emissive lights only where
+noted. Detail level: high but clean - panel lines, vents, rivets; no grunge overload.
+The background must stay dark and calm so bright game objects read on top of it:
+no bright cyan anywhere (cyan belongs to the player), magenta only as thin traces.
+Rendering: crisp edges, soft bloom on glowing parts only, no motion blur, no depth of
+field, not photorealistic. No text, no logo, no watermark.
+
+WORLD 4 "RED CONVERSION": low above a Mars plain in the middle of being rewritten by the
+Void Collective (an alien machine intelligence): a network of black crystal spreads over
+the red dust. Matte rust dust #4a1d14/#6e2b1c with highlights #9c4a30, black crystal
+#0d0a12 with facets #3b2a4a and an ember glow #ff5a2e inside, magenta #ff2d95 veins in
+the crystal, brown dusty haze #5a2a1f. Weak reddish sun from the top-left, diffused by
+dust. Mood: unease, a planet being converted. 80% machine, crystal growths.
+Mars is dusty and matte, never bright orange.
+
+TASK: The same tile as the attached Martian dust tile (same size, same dunes and rocks
+in the same places), but overgrown by the black crystal network: thin black crystal
+plates and veins covering most of the ground, faint ember glow inside the cracks, a few
+thin magenta veins. Tiles on all four edges. Deliver the single tile.
+
+Revision to the converted ground tile: increase black crystal coverage substantially to approximately 75–80% of the surface. Image1 is the exact approved unconverted 1024x1024 dust EDIT TARGET: preserve dune and stone positions underneath conversion. Image2 is the current converted draft: expand and connect its thin flat obsidian plates so only small irregular rust-dust islands remain, about 20–25% exposed ground. Plate networks should be broad connected mats rather than sparse isolated strands. No tall spikes, no big crystals, no roads, no objects. Extremely dark #0d0a12 plates and subtle #3b2a4a facets, very few faint tiny ember fissures, hairline magenta only. NOT lava, NOT bright orange ground. Image3 approved arena is style reference only. Deliver single flat seamless 1024x1024 tile on all four edges.

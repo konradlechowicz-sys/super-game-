@@ -1,0 +1,1978 @@
+{
+  "W4-P5-crystal-spires": {
+    "source": "variants\\W4-P5-source.png",
+    "source_cell": [
+      0,
+      0,
+      420,
+      450
+    ],
+    "trim_bounds": [
+      14,
+      11,
+      420,
+      436
+    ],
+    "estimated_backdrop": [
+      4.0,
+      0.0,
+      14.0
+    ],
+    "file": "W4-P5-props/W4-P5-crystal-spires.png",
+    "content_size": [
+      267,
+      280
+    ],
+    "size": [
+      291,
+      304
+    ],
+    "scale_factor": 0.6588235294117647,
+    "sheet_box": [
+      122,
+      116,
+      389,
+      396
+    ]
+  },
+  "W4-P5-half-converted-habitat": {
+    "source": "variants\\W4-P5-source.png",
+    "source_cell": [
+      420,
+      0,
+      830,
+      450
+    ],
+    "trim_bounds": [
+      26,
+      42,
+      386,
+      420
+    ],
+    "estimated_backdrop": [
+      4.0,
+      0.0,
+      14.0
+    ],
+    "file": "W4-P5-props/W4-P5-half-converted-habitat.png",
+    "content_size": [
+      267,
+      280
+    ],
+    "size": [
+      291,
+      304
+    ],
+    "scale_factor": 0.7407407407407407,
+    "sheet_box": [
+      634,
+      116,
+      901,
+      396
+    ]
+  },
+  "W4-P5-growth-node": {
+    "source": "variants\\W4-P5-source.png",
+    "source_cell": [
+      830,
+      0,
+      1254,
+      450
+    ],
+    "trim_bounds": [
+      0,
+      11,
+      412,
+      450
+    ],
+    "estimated_backdrop": [
+      4.0,
+      1.0,
+      14.0
+    ],
+    "file": "W4-P5-props/W4-P5-growth-node.png",
+    "content_size": [
+      263,
+      280
+    ],
+    "size": [
+      287,
+      304
+    ],
+    "scale_factor": 0.6378132118451025,
+    "sheet_box": [
+      1148,
+      116,
+      1411,
+      396
+    ]
+  },
+  "W4-P5-buried-rover": {
+    "source": "variants\\W4-P5-source.png",
+    "source_cell": [
+      40,
+      450,
+      380,
+      660
+    ],
+    "trim_bounds": [
+      72,
+      10,
+      290,
+      203
+    ],
+    "estimated_backdrop": [
+      5.0,
+      0.0,
+      14.0
+    ],
+    "file": "W4-P5-props/W4-P5-buried-rover.png",
+    "content_size": [
+      100,
+      89
+    ],
+    "size": [
+      124,
+      113
+    ],
+    "scale_factor": 0.45871559633027525,
+    "sheet_box": [
+      206,
+      616,
+      306,
+      705
+    ]
+  },
+  "W4-P5-crystal-shards": {
+    "source": "variants\\W4-P5-source.png",
+    "source_cell": [
+      460,
+      450,
+      780,
+      660
+    ],
+    "trim_bounds": [
+      63,
+      29,
+      265,
+      191
+    ],
+    "estimated_backdrop": [
+      5.0,
+      0.0,
+      14.0
+    ],
+    "file": "W4-P5-props/W4-P5-crystal-shards.png",
+    "content_size": [
+      100,
+      80
+    ],
+    "size": [
+      124,
+      104
+    ],
+    "scale_factor": 0.49504950495049505,
+    "sheet_box": [
+      718,
+      620,
+      818,
+      700
+    ]
+  },
+  "W4-P5-supply-drop": {
+    "source": "variants\\W4-P5-source.png",
+    "source_cell": [
+      890,
+      450,
+      1190,
+      660
+    ],
+    "trim_bounds": [
+      58,
+      52,
+      223,
+      177
+    ],
+    "estimated_backdrop": [
+      5.0,
+      0.0,
+      14.0
+    ],
+    "file": "W4-P5-props/W4-P5-supply-drop.png",
+    "content_size": [
+      100,
+      76
+    ],
+    "size": [
+      124,
+      100
+    ],
+    "scale_factor": 0.6060606060606061,
+    "sheet_box": [
+      1230,
+      622,
+      1330,
+      698
+    ]
+  },
+  "W4-P5-crystal-intact": {
+    "source": "variants\\W4-P5-source.png",
+    "source_cell": [
+      60,
+      660,
+      390,
+      894
+    ],
+    "trim_bounds": [
+      29,
+      14,
+      298,
+      234
+    ],
+    "estimated_backdrop": [
+      5.0,
+      0.0,
+      14.0
+    ],
+    "file": "W4-P5-props/W4-P5-crystal-intact.png",
+    "content_size": [
+      220,
+      180
+    ],
+    "size": [
+      244,
+      204
+    ],
+    "scale_factor": 0.8178438661710037,
+    "sheet_box": [
+      146,
+      910,
+      366,
+      1090
+    ]
+  },
+  "W4-P5-crystal-destroyed": {
+    "source": "variants\\W4-P5-source.png",
+    "source_cell": [
+      470,
+      660,
+      800,
+      894
+    ],
+    "trim_bounds": [
+      9,
+      27,
+      299,
+      234
+    ],
+    "estimated_backdrop": [
+      5.0,
+      0.0,
+      14.0
+    ],
+    "file": "W4-P5-props/W4-P5-crystal-destroyed.png",
+    "content_size": [
+      237,
+      169
+    ],
+    "size": [
+      261,
+      193
+    ],
+    "scale_factor": 0.8178438661710037,
+    "sheet_box": [
+      650,
+      916,
+      887,
+      1085
+    ]
+  },
+  "W4-P5-pylon-intact": {
+    "source": "variants\\W4-P5-source.png",
+    "source_cell": [
+      60,
+      894,
+      390,
+      1254
+    ],
+    "trim_bounds": [
+      41,
+      0,
+      273,
+      316
+    ],
+    "estimated_backdrop": [
+      4.0,
+      1.0,
+      14.0
+    ],
+    "file": "W4-P5-props/W4-P5-pylon-intact.png",
+    "content_size": [
+      184,
+      250
+    ],
+    "size": [
+      208,
+      274
+    ],
+    "scale_factor": 0.7911392405063291,
+    "sheet_box": [
+      164,
+      1215,
+      348,
+      1465
+    ]
+  },
+  "W4-P5-pylon-destroyed": {
+    "source": "variants\\W4-P5-source.png",
+    "source_cell": [
+      470,
+      894,
+      800,
+      1254
+    ],
+    "trim_bounds": [
+      17,
+      23,
+      308,
+      314
+    ],
+    "estimated_backdrop": [
+      4.0,
+      1.0,
+      14.0
+    ],
+    "file": "W4-P5-props/W4-P5-pylon-destroyed.png",
+    "content_size": [
+      230,
+      230
+    ],
+    "size": [
+      254,
+      254
+    ],
+    "scale_factor": 0.7911392405063291,
+    "sheet_box": [
+      653,
+      1225,
+      883,
+      1455
+    ]
+  },
+  "W4-P7-crystal-mite": {
+    "source": "variants\\W4-P7-enemies-source.png",
+    "source_cell": [
+      0,
+      0,
+      500,
+      393
+    ],
+    "trim_bounds": [
+      154,
+      113,
+      370,
+      343
+    ],
+    "estimated_backdrop": [
+      5.0,
+      0.0,
+      11.0
+    ],
+    "file": "W4-P7-enemies/W4-P7-crystal-mite.png",
+    "content_size": [
+      102,
+      109
+    ],
+    "size": [
+      126,
+      133
+    ],
+    "scale_factor": 0.47391304347826085,
+    "sheet_box": [
+      205,
+      116,
+      307,
+      225
+    ]
+  },
+  "W4-P7-shard-drone": {
+    "source": "variants\\W4-P7-enemies-source.png",
+    "source_cell": [
+      500,
+      0,
+      1024,
+      393
+    ],
+    "trim_bounds": [
+      101,
+      75,
+      400,
+      389
+    ],
+    "estimated_backdrop": [
+      5.0,
+      0.0,
+      11.0
+    ],
+    "file": "W4-P7-enemies/W4-P7-shard-drone.png",
+    "content_size": [
+      138,
+      145
+    ],
+    "size": [
+      162,
+      169
+    ],
+    "scale_factor": 0.46178343949044587,
+    "sheet_box": [
+      699,
+      98,
+      837,
+      243
+    ]
+  },
+  "W4-P7-dust-stalker": {
+    "source": "variants\\W4-P7-enemies-source.png",
+    "source_cell": [
+      0,
+      393,
+      500,
+      860
+    ],
+    "trim_bounds": [
+      96,
+      11,
+      418,
+      467
+    ],
+    "estimated_backdrop": [
+      5.0,
+      0.0,
+      11.0
+    ],
+    "file": "W4-P7-enemies/W4-P7-dust-stalker.png",
+    "content_size": [
+      116,
+      164
+    ],
+    "size": [
+      140,
+      188
+    ],
+    "scale_factor": 0.35964912280701755,
+    "sheet_box": [
+      198,
+      418,
+      314,
+      582
+    ]
+  },
+  "W4-P7-prism-node": {
+    "source": "variants\\W4-P7-enemies-source.png",
+    "source_cell": [
+      500,
+      393,
+      1024,
+      860
+    ],
+    "trim_bounds": [
+      78,
+      62,
+      435,
+      422
+    ],
+    "estimated_backdrop": [
+      5.0,
+      0.0,
+      11.0
+    ],
+    "file": "W4-P7-enemies/W4-P7-prism-node.png",
+    "content_size": [
+      180,
+      182
+    ],
+    "size": [
+      204,
+      206
+    ],
+    "scale_factor": 0.5055555555555555,
+    "sheet_box": [
+      678,
+      409,
+      858,
+      591
+    ]
+  },
+  "W4-P7-spreader": {
+    "source": "variants\\W4-P7-enemies-source.png",
+    "source_cell": [
+      0,
+      860,
+      500,
+      1536
+    ],
+    "trim_bounds": [
+      40,
+      30,
+      458,
+      534
+    ],
+    "estimated_backdrop": [
+      5.0,
+      0.0,
+      11.0
+    ],
+    "file": "W4-P7-enemies/W4-P7-spreader.png",
+    "content_size": [
+      188,
+      227
+    ],
+    "size": [
+      212,
+      251
+    ],
+    "scale_factor": 0.4503968253968254,
+    "sheet_box": [
+      162,
+      716,
+      350,
+      943
+    ]
+  },
+  "W4-P7-crystal-golem": {
+    "source": "variants\\W4-P7-enemies-source.png",
+    "source_cell": [
+      500,
+      860,
+      1024,
+      1536
+    ],
+    "trim_bounds": [
+      3,
+      1,
+      493,
+      584
+    ],
+    "estimated_backdrop": [
+      5.0,
+      0.0,
+      11.0
+    ],
+    "file": "W4-P7-enemies/W4-P7-crystal-golem.png",
+    "content_size": [
+      252,
+      300
+    ],
+    "size": [
+      276,
+      324
+    ],
+    "scale_factor": 0.5145797598627787,
+    "sheet_box": [
+      642,
+      680,
+      894,
+      980
+    ]
+  },
+  "W4-P7-shard-drone-elite": {
+    "source": "variants\\W4-P7-elite-source.png",
+    "source_cell": [
+      250,
+      0,
+      780,
+      415
+    ],
+    "trim_bounds": [
+      35,
+      8,
+      489,
+      409
+    ],
+    "estimated_backdrop": [
+      4.0,
+      0.0,
+      10.0
+    ],
+    "file": "W4-P7-elite-and-shards/W4-P7-shard-drone-elite.png",
+    "content_size": [
+      232,
+      205
+    ],
+    "size": [
+      256,
+      229
+    ],
+    "scale_factor": 0.5110132158590308,
+    "sheet_box": [
+      396,
+      58,
+      628,
+      263
+    ]
+  },
+  "W4-P7-crystal-mite-shard-1": {
+    "source": "variants\\W4-P7-elite-source.png",
+    "source_cell": [
+      0,
+      415,
+      270,
+      550
+    ],
+    "trim_bounds": [
+      121,
+      16,
+      224,
+      106
+    ],
+    "estimated_backdrop": [
+      4.0,
+      0.0,
+      10.0
+    ],
+    "file": "W4-P7-elite-and-shards/W4-P7-crystal-mite-shard-1.png",
+    "content_size": [
+      38,
+      33
+    ],
+    "size": [
+      62,
+      57
+    ],
+    "scale_factor": 0.37037037037037035,
+    "sheet_box": [
+      109,
+      394,
+      147,
+      427
+    ]
+  },
+  "W4-P7-crystal-mite-shard-2": {
+    "source": "variants\\W4-P7-elite-source.png",
+    "source_cell": [
+      270,
+      415,
+      520,
+      550
+    ],
+    "trim_bounds": [
+      66,
+      7,
+      184,
+      119
+    ],
+    "estimated_backdrop": [
+      5.0,
+      0.0,
+      10.0
+    ],
+    "file": "W4-P7-elite-and-shards/W4-P7-crystal-mite-shard-2.png",
+    "content_size": [
+      44,
+      41
+    ],
+    "size": [
+      68,
+      65
+    ],
+    "scale_factor": 0.37037037037037035,
+    "sheet_box": [
+      362,
+      390,
+      406,
+      431
+    ]
+  },
+  "W4-P7-crystal-mite-shard-3": {
+    "source": "variants\\W4-P7-elite-source.png",
+    "source_cell": [
+      520,
+      415,
+      770,
+      550
+    ],
+    "trim_bounds": [
+      40,
+      17,
+      202,
+      119
+    ],
+    "estimated_backdrop": [
+      5.0,
+      0.0,
+      10.0
+    ],
+    "file": "W4-P7-elite-and-shards/W4-P7-crystal-mite-shard-3.png",
+    "content_size": [
+      60,
+      38
+    ],
+    "size": [
+      84,
+      62
+    ],
+    "scale_factor": 0.37037037037037035,
+    "sheet_box": [
+      610,
+      391,
+      670,
+      429
+    ]
+  },
+  "W4-P7-crystal-mite-shard-4": {
+    "source": "variants\\W4-P7-elite-source.png",
+    "source_cell": [
+      770,
+      415,
+      1024,
+      550
+    ],
+    "trim_bounds": [
+      37,
+      24,
+      124,
+      124
+    ],
+    "estimated_backdrop": [
+      5.0,
+      0.0,
+      10.0
+    ],
+    "file": "W4-P7-elite-and-shards/W4-P7-crystal-mite-shard-4.png",
+    "content_size": [
+      32,
+      37
+    ],
+    "size": [
+      56,
+      61
+    ],
+    "scale_factor": 0.37037037037037035,
+    "sheet_box": [
+      880,
+      392,
+      912,
+      429
+    ]
+  },
+  "W4-P7-shard-drone-shard-1": {
+    "source": "variants\\W4-P7-elite-source.png",
+    "source_cell": [
+      0,
+      550,
+      270,
+      705
+    ],
+    "trim_bounds": [
+      96,
+      19,
+      264,
+      134
+    ],
+    "estimated_backdrop": [
+      4.0,
+      0.0,
+      9.0
+    ],
+    "file": "W4-P7-elite-and-shards/W4-P7-shard-drone-shard-1.png",
+    "content_size": [
+      73,
+      50
+    ],
+    "size": [
+      97,
+      74
+    ],
+    "scale_factor": 0.4371584699453552,
+    "sheet_box": [
+      92,
+      575,
+      165,
+      625
+    ]
+  },
+  "W4-P7-shard-drone-shard-2": {
+    "source": "variants\\W4-P7-elite-source.png",
+    "source_cell": [
+      270,
+      550,
+      520,
+      705
+    ],
+    "trim_bounds": [
+      43,
+      13,
+      225,
+      135
+    ],
+    "estimated_backdrop": [
+      5.0,
+      0.0,
+      10.0
+    ],
+    "file": "W4-P7-elite-and-shards/W4-P7-shard-drone-shard-2.png",
+    "content_size": [
+      80,
+      53
+    ],
+    "size": [
+      104,
+      77
+    ],
+    "scale_factor": 0.4371584699453552,
+    "sheet_box": [
+      344,
+      574,
+      424,
+      627
+    ]
+  },
+  "W4-P7-shard-drone-shard-3": {
+    "source": "variants\\W4-P7-elite-source.png",
+    "source_cell": [
+      520,
+      550,
+      770,
+      705
+    ],
+    "trim_bounds": [
+      27,
+      19,
+      210,
+      145
+    ],
+    "estimated_backdrop": [
+      5.0,
+      0.0,
+      10.0
+    ],
+    "file": "W4-P7-elite-and-shards/W4-P7-shard-drone-shard-3.png",
+    "content_size": [
+      80,
+      55
+    ],
+    "size": [
+      104,
+      79
+    ],
+    "scale_factor": 0.4371584699453552,
+    "sheet_box": [
+      600,
+      572,
+      680,
+      627
+    ]
+  },
+  "W4-P7-shard-drone-shard-4": {
+    "source": "variants\\W4-P7-elite-source.png",
+    "source_cell": [
+      770,
+      550,
+      1024,
+      705
+    ],
+    "trim_bounds": [
+      36,
+      34,
+      153,
+      155
+    ],
+    "estimated_backdrop": [
+      4.0,
+      0.0,
+      10.0
+    ],
+    "file": "W4-P7-elite-and-shards/W4-P7-shard-drone-shard-4.png",
+    "content_size": [
+      51,
+      53
+    ],
+    "size": [
+      75,
+      77
+    ],
+    "scale_factor": 0.4371584699453552,
+    "sheet_box": [
+      870,
+      574,
+      921,
+      627
+    ]
+  },
+  "W4-P7-dust-stalker-shard-1": {
+    "source": "variants\\W4-P7-elite-source.png",
+    "source_cell": [
+      0,
+      705,
+      270,
+      900
+    ],
+    "trim_bounds": [
+      104,
+      0,
+      238,
+      195
+    ],
+    "estimated_backdrop": [
+      4.0,
+      0.0,
+      9.0
+    ],
+    "file": "W4-P7-elite-and-shards/W4-P7-dust-stalker-shard-1.png",
+    "content_size": [
+      65,
+      95
+    ],
+    "size": [
+      89,
+      119
+    ],
+    "scale_factor": 0.48717948717948717,
+    "sheet_box": [
+      96,
+      742,
+      161,
+      837
+    ]
+  },
+  "W4-P7-dust-stalker-shard-2": {
+    "source": "variants\\W4-P7-elite-source.png",
+    "source_cell": [
+      270,
+      705,
+      520,
+      900
+    ],
+    "trim_bounds": [
+      44,
+      0,
+      201,
+      169
+    ],
+    "estimated_backdrop": [
+      5.0,
+      0.0,
+      10.0
+    ],
+    "file": "W4-P7-elite-and-shards/W4-P7-dust-stalker-shard-2.png",
+    "content_size": [
+      76,
+      82
+    ],
+    "size": [
+      100,
+      106
+    ],
+    "scale_factor": 0.48717948717948717,
+    "sheet_box": [
+      346,
+      749,
+      422,
+      831
+    ]
+  },
+  "W4-P7-dust-stalker-shard-3": {
+    "source": "variants\\W4-P7-elite-source.png",
+    "source_cell": [
+      520,
+      705,
+      770,
+      900
+    ],
+    "trim_bounds": [
+      25,
+      7,
+      216,
+      184
+    ],
+    "estimated_backdrop": [
+      4.0,
+      0.0,
+      10.0
+    ],
+    "file": "W4-P7-elite-and-shards/W4-P7-dust-stalker-shard-3.png",
+    "content_size": [
+      93,
+      86
+    ],
+    "size": [
+      117,
+      110
+    ],
+    "scale_factor": 0.48717948717948717,
+    "sheet_box": [
+      594,
+      747,
+      687,
+      833
+    ]
+  },
+  "W4-P7-dust-stalker-shard-4": {
+    "source": "variants\\W4-P7-elite-source.png",
+    "source_cell": [
+      770,
+      705,
+      1024,
+      900
+    ],
+    "trim_bounds": [
+      50,
+      33,
+      143,
+      167
+    ],
+    "estimated_backdrop": [
+      4.0,
+      0.0,
+      10.0
+    ],
+    "file": "W4-P7-elite-and-shards/W4-P7-dust-stalker-shard-4.png",
+    "content_size": [
+      45,
+      65
+    ],
+    "size": [
+      69,
+      89
+    ],
+    "scale_factor": 0.48717948717948717,
+    "sheet_box": [
+      874,
+      758,
+      919,
+      823
+    ]
+  },
+  "W4-P7-prism-node-shard-1": {
+    "source": "variants\\W4-P7-elite-source.png",
+    "source_cell": [
+      0,
+      900,
+      270,
+      1056
+    ],
+    "trim_bounds": [
+      119,
+      0,
+      242,
+      133
+    ],
+    "estimated_backdrop": [
+      4.0,
+      0.0,
+      10.0
+    ],
+    "file": "W4-P7-elite-and-shards/W4-P7-prism-node-shard-1.png",
+    "content_size": [
+      64,
+      70
+    ],
+    "size": [
+      88,
+      94
+    ],
+    "scale_factor": 0.5235602094240838,
+    "sheet_box": [
+      96,
+      945,
+      160,
+      1015
+    ]
+  },
+  "W4-P7-prism-node-shard-2": {
+    "source": "variants\\W4-P7-elite-source.png",
+    "source_cell": [
+      270,
+      900,
+      520,
+      1056
+    ],
+    "trim_bounds": [
+      38,
+      0,
+      211,
+      145
+    ],
+    "estimated_backdrop": [
+      5.0,
+      0.0,
+      10.0
+    ],
+    "file": "W4-P7-elite-and-shards/W4-P7-prism-node-shard-2.png",
+    "content_size": [
+      91,
+      76
+    ],
+    "size": [
+      115,
+      100
+    ],
+    "scale_factor": 0.5235602094240838,
+    "sheet_box": [
+      338,
+      942,
+      429,
+      1018
+    ]
+  },
+  "W4-P7-prism-node-shard-3": {
+    "source": "variants\\W4-P7-elite-source.png",
+    "source_cell": [
+      520,
+      900,
+      770,
+      1056
+    ],
+    "trim_bounds": [
+      22,
+      14,
+      213,
+      143
+    ],
+    "estimated_backdrop": [
+      5.0,
+      0.0,
+      10.0
+    ],
+    "file": "W4-P7-elite-and-shards/W4-P7-prism-node-shard-3.png",
+    "content_size": [
+      100,
+      68
+    ],
+    "size": [
+      124,
+      92
+    ],
+    "scale_factor": 0.5235602094240838,
+    "sheet_box": [
+      590,
+      946,
+      690,
+      1014
+    ]
+  },
+  "W4-P7-prism-node-shard-4": {
+    "source": "variants\\W4-P7-elite-source.png",
+    "source_cell": [
+      770,
+      900,
+      1024,
+      1056
+    ],
+    "trim_bounds": [
+      28,
+      23,
+      147,
+      152
+    ],
+    "estimated_backdrop": [
+      4.0,
+      0.0,
+      10.0
+    ],
+    "file": "W4-P7-elite-and-shards/W4-P7-prism-node-shard-4.png",
+    "content_size": [
+      62,
+      68
+    ],
+    "size": [
+      86,
+      92
+    ],
+    "scale_factor": 0.5235602094240838,
+    "sheet_box": [
+      865,
+      946,
+      927,
+      1014
+    ]
+  },
+  "W4-P7-spreader-shard-1": {
+    "source": "variants\\W4-P7-elite-source.png",
+    "source_cell": [
+      0,
+      1056,
+      270,
+      1220
+    ],
+    "trim_bounds": [
+      56,
+      6,
+      259,
+      145
+    ],
+    "estimated_backdrop": [
+      4.0,
+      0.0,
+      9.0
+    ],
+    "file": "W4-P7-elite-and-shards/W4-P7-spreader-shard-1.png",
+    "content_size": [
+      118,
+      81
+    ],
+    "size": [
+      142,
+      105
+    ],
+    "scale_factor": 0.5825242718446602,
+    "sheet_box": [
+      69,
+      1130,
+      187,
+      1211
+    ]
+  },
+  "W4-P7-spreader-shard-2": {
+    "source": "variants\\W4-P7-elite-source.png",
+    "source_cell": [
+      270,
+      1056,
+      520,
+      1220
+    ],
+    "trim_bounds": [
+      27,
+      8,
+      229,
+      147
+    ],
+    "estimated_backdrop": [
+      4.0,
+      0.0,
+      10.0
+    ],
+    "file": "W4-P7-elite-and-shards/W4-P7-spreader-shard-2.png",
+    "content_size": [
+      118,
+      81
+    ],
+    "size": [
+      142,
+      105
+    ],
+    "scale_factor": 0.5825242718446602,
+    "sheet_box": [
+      325,
+      1130,
+      443,
+      1211
+    ]
+  },
+  "W4-P7-spreader-shard-3": {
+    "source": "variants\\W4-P7-elite-source.png",
+    "source_cell": [
+      520,
+      1056,
+      770,
+      1220
+    ],
+    "trim_bounds": [
+      25,
+      22,
+      231,
+      146
+    ],
+    "estimated_backdrop": [
+      5.0,
+      0.0,
+      10.0
+    ],
+    "file": "W4-P7-elite-and-shards/W4-P7-spreader-shard-3.png",
+    "content_size": [
+      120,
+      72
+    ],
+    "size": [
+      144,
+      96
+    ],
+    "scale_factor": 0.5825242718446602,
+    "sheet_box": [
+      580,
+      1134,
+      700,
+      1206
+    ]
+  },
+  "W4-P7-spreader-shard-4": {
+    "source": "variants\\W4-P7-elite-source.png",
+    "source_cell": [
+      770,
+      1056,
+      1024,
+      1220
+    ],
+    "trim_bounds": [
+      15,
+      6,
+      188,
+      164
+    ],
+    "estimated_backdrop": [
+      4.0,
+      0.0,
+      10.0
+    ],
+    "file": "W4-P7-elite-and-shards/W4-P7-spreader-shard-4.png",
+    "content_size": [
+      101,
+      92
+    ],
+    "size": [
+      125,
+      116
+    ],
+    "scale_factor": 0.5825242718446602,
+    "sheet_box": [
+      846,
+      1124,
+      947,
+      1216
+    ]
+  },
+  "W4-P7-crystal-golem-shard-1": {
+    "source": "variants\\W4-P7-elite-source.png",
+    "source_cell": [
+      0,
+      1220,
+      270,
+      1536
+    ],
+    "trim_bounds": [
+      53,
+      0,
+      255,
+      284
+    ],
+    "estimated_backdrop": [
+      4.0,
+      0.0,
+      9.0
+    ],
+    "file": "W4-P7-elite-and-shards/W4-P7-crystal-golem-shard-1.png",
+    "content_size": [
+      113,
+      159
+    ],
+    "size": [
+      137,
+      183
+    ],
+    "scale_factor": 0.5594405594405595,
+    "sheet_box": [
+      72,
+      1280,
+      185,
+      1439
+    ]
+  },
+  "W4-P7-crystal-golem-shard-2": {
+    "source": "variants\\W4-P7-elite-source.png",
+    "source_cell": [
+      270,
+      1220,
+      520,
+      1536
+    ],
+    "trim_bounds": [
+      17,
+      3,
+      244,
+      264
+    ],
+    "estimated_backdrop": [
+      4.0,
+      0.0,
+      9.0
+    ],
+    "file": "W4-P7-elite-and-shards/W4-P7-crystal-golem-shard-2.png",
+    "content_size": [
+      127,
+      146
+    ],
+    "size": [
+      151,
+      170
+    ],
+    "scale_factor": 0.5594405594405595,
+    "sheet_box": [
+      320,
+      1287,
+      447,
+      1433
+    ]
+  },
+  "W4-P7-crystal-golem-shard-3": {
+    "source": "variants\\W4-P7-elite-source.png",
+    "source_cell": [
+      520,
+      1220,
+      770,
+      1536
+    ],
+    "trim_bounds": [
+      31,
+      8,
+      201,
+      294
+    ],
+    "estimated_backdrop": [
+      4.0,
+      0.0,
+      9.0
+    ],
+    "file": "W4-P7-elite-and-shards/W4-P7-crystal-golem-shard-3.png",
+    "content_size": [
+      95,
+      160
+    ],
+    "size": [
+      119,
+      184
+    ],
+    "scale_factor": 0.5594405594405595,
+    "sheet_box": [
+      592,
+      1280,
+      687,
+      1440
+    ]
+  },
+  "W4-P7-crystal-golem-shard-4": {
+    "source": "variants\\W4-P7-elite-source.png",
+    "source_cell": [
+      770,
+      1220,
+      1024,
+      1536
+    ],
+    "trim_bounds": [
+      5,
+      13,
+      207,
+      287
+    ],
+    "estimated_backdrop": [
+      4.0,
+      0.0,
+      10.0
+    ],
+    "file": "W4-P7-elite-and-shards/W4-P7-crystal-golem-shard-4.png",
+    "content_size": [
+      113,
+      153
+    ],
+    "size": [
+      137,
+      177
+    ],
+    "scale_factor": 0.5594405594405595,
+    "sheet_box": [
+      840,
+      1284,
+      953,
+      1437
+    ]
+  },
+  "W4-P8-body": {
+    "source": "variants\\W4-P8-parts-source.png",
+    "source_cell": [
+      0,
+      0,
+      628,
+      605
+    ],
+    "trim_bounds": [
+      54,
+      53,
+      624,
+      582
+    ],
+    "estimated_backdrop": [
+      3.0,
+      0.0,
+      9.0
+    ],
+    "file": "W4-P8-parts/W4-P8-body.png",
+    "content_size": [
+      700,
+      650
+    ],
+    "size": [
+      724,
+      674
+    ],
+    "scale_factor": 1.2280701754385965,
+    "sheet_box": [
+      250,
+      175,
+      950,
+      825
+    ]
+  },
+  "W4-P8-leg-nw": {
+    "source": "variants\\W4-P8-parts-source.png",
+    "source_cell": [
+      630,
+      0,
+      925,
+      340
+    ],
+    "trim_bounds": [
+      20,
+      36,
+      262,
+      340
+    ],
+    "estimated_backdrop": [
+      3.0,
+      0.0,
+      9.0
+    ],
+    "file": "W4-P8-parts/W4-P8-leg-nw.png",
+    "content_size": [
+      239,
+      300
+    ],
+    "size": [
+      263,
+      324
+    ],
+    "scale_factor": 0.9868421052631579,
+    "sheet_box": [
+      1530,
+      200,
+      1769,
+      500
+    ]
+  },
+  "W4-P8-leg-ne": {
+    "source": "variants\\W4-P8-parts-source.png",
+    "source_cell": [
+      925,
+      0,
+      1254,
+      340
+    ],
+    "trim_bounds": [
+      20,
+      34,
+      263,
+      340
+    ],
+    "estimated_backdrop": [
+      3.0,
+      0.0,
+      9.0
+    ],
+    "file": "W4-P8-parts/W4-P8-leg-ne.png",
+    "content_size": [
+      238,
+      300
+    ],
+    "size": [
+      262,
+      324
+    ],
+    "scale_factor": 0.9803921568627451,
+    "sheet_box": [
+      2381,
+      200,
+      2619,
+      500
+    ]
+  },
+  "W4-P8-leg-sw": {
+    "source": "variants\\W4-P8-parts-source.png",
+    "source_cell": [
+      630,
+      340,
+      925,
+      675
+    ],
+    "trim_bounds": [
+      9,
+      0,
+      275,
+      327
+    ],
+    "estimated_backdrop": [
+      3.0,
+      0.0,
+      9.0
+    ],
+    "file": "W4-P8-parts/W4-P8-leg-sw.png",
+    "content_size": [
+      325,
+      400
+    ],
+    "size": [
+      349,
+      424
+    ],
+    "scale_factor": 1.2232415902140672,
+    "sheet_box": [
+      1488,
+      850,
+      1813,
+      1250
+    ]
+  },
+  "W4-P8-leg-se": {
+    "source": "variants\\W4-P8-parts-source.png",
+    "source_cell": [
+      925,
+      340,
+      1254,
+      675
+    ],
+    "trim_bounds": [
+      9,
+      0,
+      275,
+      326
+    ],
+    "estimated_backdrop": [
+      3.0,
+      0.0,
+      9.0
+    ],
+    "file": "W4-P8-parts/W4-P8-leg-se.png",
+    "content_size": [
+      326,
+      400
+    ],
+    "size": [
+      350,
+      424
+    ],
+    "scale_factor": 1.2269938650306749,
+    "sheet_box": [
+      2337,
+      850,
+      2663,
+      1250
+    ]
+  },
+  "W4-P8-cannon-west": {
+    "source": "variants\\W4-P8-parts-source.png",
+    "source_cell": [
+      140,
+      615,
+      310,
+      1010
+    ],
+    "trim_bounds": [
+      35,
+      17,
+      158,
+      386
+    ],
+    "estimated_backdrop": [
+      3.0,
+      0.0,
+      9.0
+    ],
+    "file": "W4-P8-parts/W4-P8-cannon-west.png",
+    "content_size": [
+      118,
+      355
+    ],
+    "size": [
+      142,
+      379
+    ],
+    "scale_factor": 0.962059620596206,
+    "sheet_box": [
+      241,
+      1272,
+      359,
+      1627
+    ]
+  },
+  "W4-P8-cannon-east": {
+    "source": "variants\\W4-P8-parts-source.png",
+    "source_cell": [
+      330,
+      615,
+      505,
+      1010
+    ],
+    "trim_bounds": [
+      31,
+      17,
+      152,
+      386
+    ],
+    "estimated_backdrop": [
+      3.0,
+      0.0,
+      9.0
+    ],
+    "file": "W4-P8-parts/W4-P8-cannon-east.png",
+    "content_size": [
+      116,
+      355
+    ],
+    "size": [
+      140,
+      379
+    ],
+    "scale_factor": 0.962059620596206,
+    "sheet_box": [
+      742,
+      1272,
+      858,
+      1627
+    ]
+  },
+  "W4-P8-weak-point-nw": {
+    "source": "variants\\W4-P8-parts-source.png",
+    "source_cell": [
+      40,
+      1030,
+      187,
+      1175
+    ],
+    "trim_bounds": [
+      18,
+      9,
+      135,
+      137
+    ],
+    "estimated_backdrop": [
+      3.0,
+      0.0,
+      9.0
+    ],
+    "file": "W4-P8-parts/W4-P8-weak-point-nw.png",
+    "content_size": [
+      82,
+      90
+    ],
+    "size": [
+      106,
+      114
+    ],
+    "scale_factor": 0.703125,
+    "sheet_box": [
+      159,
+      2555,
+      241,
+      2645
+    ]
+  },
+  "W4-P8-weak-point-ne": {
+    "source": "variants\\W4-P8-parts-source.png",
+    "source_cell": [
+      187,
+      1030,
+      330,
+      1175
+    ],
+    "trim_bounds": [
+      6,
+      9,
+      126,
+      137
+    ],
+    "estimated_backdrop": [
+      3.0,
+      0.0,
+      9.0
+    ],
+    "file": "W4-P8-parts/W4-P8-weak-point-ne.png",
+    "content_size": [
+      84,
+      90
+    ],
+    "size": [
+      108,
+      114
+    ],
+    "scale_factor": 0.703125,
+    "sheet_box": [
+      508,
+      2555,
+      592,
+      2645
+    ]
+  },
+  "W4-P8-weak-point-sw": {
+    "source": "variants\\W4-P8-parts-source.png",
+    "source_cell": [
+      330,
+      1030,
+      470,
+      1175
+    ],
+    "trim_bounds": [
+      7,
+      8,
+      127,
+      137
+    ],
+    "estimated_backdrop": [
+      3.0,
+      0.0,
+      9.0
+    ],
+    "file": "W4-P8-parts/W4-P8-weak-point-sw.png",
+    "content_size": [
+      84,
+      90
+    ],
+    "size": [
+      108,
+      114
+    ],
+    "scale_factor": 0.6976744186046512,
+    "sheet_box": [
+      858,
+      2555,
+      942,
+      2645
+    ]
+  },
+  "W4-P8-weak-point-se": {
+    "source": "variants\\W4-P8-parts-source.png",
+    "source_cell": [
+      470,
+      1030,
+      610,
+      1175
+    ],
+    "trim_bounds": [
+      7,
+      8,
+      126,
+      137
+    ],
+    "estimated_backdrop": [
+      3.0,
+      0.0,
+      9.0
+    ],
+    "file": "W4-P8-parts/W4-P8-weak-point-se.png",
+    "content_size": [
+      83,
+      90
+    ],
+    "size": [
+      107,
+      114
+    ],
+    "scale_factor": 0.6976744186046512,
+    "sheet_box": [
+      1208,
+      2555,
+      1291,
+      2645
+    ]
+  },
+  "W4-P6-border-top": {
+    "file": "W4-P6-border-pieces/W4-P6-border-top.png",
+    "size": [
+      1024,
+      160
+    ],
+    "source_cell": [
+      32,
+      20,
+      1224,
+      204
+    ]
+  },
+  "W4-P6-border-bottom": {
+    "file": "W4-P6-border-pieces/W4-P6-border-bottom.png",
+    "size": [
+      1024,
+      160
+    ],
+    "source_cell": [
+      32,
+      229,
+      1224,
+      390
+    ]
+  },
+  "W4-P6-border-left": {
+    "file": "W4-P6-border-pieces/W4-P6-border-left.png",
+    "size": [
+      160,
+      1024
+    ],
+    "source_cell": [
+      36,
+      444,
+      232,
+      1212
+    ]
+  },
+  "W4-P6-border-right": {
+    "file": "W4-P6-border-pieces/W4-P6-border-right.png",
+    "size": [
+      160,
+      1024
+    ],
+    "source_cell": [
+      310,
+      444,
+      502,
+      1212
+    ]
+  },
+  "W4-P6-corner-top-left": {
+    "file": "W4-P6-border-pieces/W4-P6-corner-top-left.png",
+    "size": [
+      256,
+      256
+    ],
+    "source_cell": [
+      576,
+      482,
+      859,
+      750
+    ]
+  },
+  "W4-P6-corner-top-right": {
+    "file": "W4-P6-border-pieces/W4-P6-corner-top-right.png",
+    "size": [
+      256,
+      256
+    ],
+    "source_cell": [
+      934,
+      482,
+      1221,
+      750
+    ]
+  },
+  "W4-P6-corner-bottom-left": {
+    "file": "W4-P6-border-pieces/W4-P6-corner-bottom-left.png",
+    "size": [
+      256,
+      256
+    ],
+    "source_cell": [
+      576,
+      824,
+      859,
+      1075
+    ]
+  },
+  "W4-P6-corner-bottom-right": {
+    "file": "W4-P6-border-pieces/W4-P6-corner-bottom-right.png",
+    "size": [
+      256,
+      256
+    ],
+    "source_cell": [
+      934,
+      824,
+      1221,
+      1075
+    ]
+  }
+}
