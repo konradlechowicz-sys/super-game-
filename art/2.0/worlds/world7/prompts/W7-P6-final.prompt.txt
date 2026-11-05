@@ -1,0 +1,26 @@
+STYLE (keep identical across all images):
+Game art for "Void Blaster", a top-down mobile space shooter (survivors-like).
+Camera: top-down orthographic, looking straight down, no perspective.
+Look: stylized sci-fi with a neon accent. Dark, rich materials (gunmetal, carbon,
+matte ceramic) lit from the top-left, glowing edges and emissive lights only where
+noted. Detail level: high but clean - panel lines, vents, rivets; no grunge overload.
+The background must stay dark and calm so bright game objects read on top of it:
+no bright cyan anywhere (cyan belongs to the player), magenta only as thin traces.
+Rendering: crisp edges, soft bloom on glowing parts only, no motion blur, no depth of
+field, not photorealistic. No text, no logo, no watermark.
+
+WORLD 7 "ABYSS OF EUROPA": just above a thick, translucent ice sheet on Europa; under
+it a dark ocean where the Void Collective (an alien machine intelligence) rewrote alien
+sea life into hybrids. Ice is muted steel-blue and violet, NEVER bright cyan:
+#141c30/#26304e with edges #4a5680. Ocean #05060f. Bioluminescence in toxic green
+#3dff8a and violet #7a3dff. Circuit-vines #2a1438 with magenta #ff2d95 nodes. Almost no
+light from above; light comes from below the ice. Mood: depth, pressure, something
+huge moving underneath. 50% machine, 50% organic.
+
+TASK: Arena border pieces seen from directly above on a plain flat dark background
+(#05010f), well apart: 4 straight strips (top, bottom, left, right), each 1024 px long
+and about 160 px thick, tileable along their length: jagged ice pressure ridges with
+deep cracks, clean readable inner edge. Plus 4 matching corners 256x256.
+
+PRODUCTION NOTES (the attached approved P1 is a style/material reference, not a composition to reproduce):
+Square production parts sheet on flat #05010f. Four LONG strips arranged as separate OPEN SQUARE FRAME: top strip at top, bottom strip at bottom, left/right vertical strips at left/right, all inset with blank margins, never connected. Each about 1024 long and 160 thick. Four separate L-shaped corners (TL,TR,BL,BR) arranged 2x2 INSIDE the frame, with empty inner quadrants. Blank gutters between all eight pieces, no floor or center object. Strict top-down plan view, no perspective. Clean inward edge, tileable along strip length, no labels or text. Jagged dark steel-blue/violet ice pressure ridges, deep cracks, clean readable inner contour. No cyan, bright snow-white, green lighting, vines, creatures or central lake. Ice seen directly from overhead, tips and cracks visible, no side-view cliff walls.

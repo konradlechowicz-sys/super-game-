@@ -10,15 +10,703 @@ i wersja TEST (gracze tego nie widzą).
 
 ## Następne wydanie
 
-<!-- Podsumowanie zmian od v1.3.0; uzupełnia Claude przy każdym buildzie. -->
+<!-- Podsumowanie zmian od v2.0.0; uzupełnia Claude przy każdym buildzie. -->
 
 ### What's New (App Store)
 
 - 
 
+## v2.0.0 · build 155 · 2026-11-05 · App Store
+
+**Void Blaster 2.0** (linia `v2`, buildy 68–154): cała gra od nowa w wyglądzie 2.0 (PixiJS, grafiki ChatGPT, muzyka Suno).
+- 10 nowych światów po 6 sektorów, od orbity Ziemi do Nexusa; każdy z własnymi wrogami, mechaniką i atmosferą.
+- 10 bossów z furią i atakami specjalnymi; ataki ze wzorem (flanka, kleszcze, pierścień, snajperzy, cel priorytetowy).
+- Arsenał 2.0: Railgun, Miotacz ognia, Singularity Cannon, 11 ewolucji, 12 kombosów, 8 zestawów perków, 3 super kombosy;
+  moduły broni na statku.
+- Fabuła: intro, 9 transmisji między światami, outro z napisami; Codex z zakładką LOG.
+- Skrzynie zaopatrzenia za monety, bank doświadczenia (spokojniejsze awanse), stadne zachowanie wrogów.
+- Postęp od nowa z premią weterana (monety + skórka Veteran Striker); pełna gra kupiona w 1.x zostaje.
+- Wersja próbna: światy 1–2. Pełna gra: ok. 4,99 USD dla nowych graczy.
+- Android: ta sama gra, zakup przez Google Play, przycisk wstecz, pełny ekran.
+- Nowa ikona aplikacji.
+
+### What's New (App Store)
+
+VOID BLASTER 2.0: A WHOLE NEW JOURNEY
+• 10 new worlds, from Earth's orbit to the heart of the Void Collective, 60 sectors
+• 10 bosses with fury phases and special attacks
+• A fresh look: hand-drawn art, a new soundtrack and an illustrated story
+• 11 weapons with evolutions, 12 combos, 8 perk sets and 3 super combos, shown on your ship
+• Smarter enemy swarms and set attack patterns
+• Supply crates: spend your coins on a stronger start
+• Endless mode in every world after the journey
+Full Game owners keep everything they bought. Your progress starts over with a veteran bonus and the Veteran Striker skin.
+
+### Wszystkie zmiany (buildy 67–155)
+
+**Nowe**
+- Pierwszy build linii 2.0 (`v2`): nowy wygląd (PixiJS, grafika świata 1) jest teraz zwykłym wyglądem gry, bez włączania w 🛠. Przy numerze builda widać „2.0 dev” (w TEST: „TEST 2.0 dev · build N”), w Ustawieniach też. (build 73)
+- Wersja 2.0: nowy ekran startowy w duchu zwiastuna. Ziemia nocą pod siecią Kolektywu, po której nitkach płyną impulsy; satelity na orbicie co chwilę są „przepisywane” (migają w wersję Kolektywu z różowym błyskiem i wracają); Striker 2.0 unosi się przed Ziemią z pracującymi silnikami; migoczące gwiazdy. Ciemne pasy pod logo i przyciskami, żeby wszystko było czytelne. Na pozostałych ekranach menu (mapa, hangar, ulepszenia…) ta sama scena jest przyciemniona i bez statku. Phantom, Titan i złoty Striker na razie w starym wyglądzie, do czasu ich grafiki 2.0. (build 75)
+- Wersja 2.0: Phantom i Titan w nowej grafice (z arkuszy ChatGPT, warianty wybrane przez Konrada: Phantom 1, Titan 4). W walce widać teraz zawsze wybrany statek, a nie Strikera; Phantom ma magentowy płomień, Titan cztery złote, płomienie rosną z prędkością, a w skrętach statek się przechyla. Złoty Striker ma złoty odcień. (build 76)
+- Ekran startowy 2.0: emblemat (Striker w neonowym pierścieniu) nad napisem VOID BLASTER, z pulsującą poświatą; na ekranie startowym stoi wybrany statek. Ciemny pas pod logo jest teraz dłuższy (logo czytelne na sieci Kolektywu), satelity krążą niżej, przy horyzoncie. (build 76)
+- Muzyka w menu 2.0: temat główny z Suno zamiast syntezatora. Intro gra raz, potem w pętli 24 takty po dropie (35,5–76 s), szew pętli wypada na początku frazy. W walce na razie gra dawna muzyka; utwór menu M1 z Suno zastąpi temat, gdy powstanie. (build 76)
+- Wersja 2.0: muzyka świata 1 od Konrada (Suno). W sektorach świata 1 gra „Orbital Ruins”: intro raz, potem w pętli główna część utworu (takty 27–65, ok. 65 s). Przy bossie gra jego wersja bossowa: intro, potem pętla walki (ok. 42 s). Pętle są dobrane analizą (tempo ~140 i ~148 BPM, najbardziej podobny dźwięk na obu końcach, dopasowanie do uderzeń perkusji), a szew przygotowany tak, żeby przeskok był niesłyszalny. Pozostałe światy na razie grają dawną muzykę; boss każdego świata gra utwór bossa świata 1. (build 80)
+- Wersja 2.0, świat 1 „Orbital Ruins” według Art Bible: zamiast płyt podłogi na całej arenie walczymy w próżni wysoko nad Ziemią. Czarny kosmos z gwiazdami w dwóch warstwach głębi, daleki ciemny sierp Ziemi (przesuwa się wolniej niż arena), przyciemnione pole drobnego wraku, 3–5 „wysp” z połamanych płyt pokładów stacji, dryfujące martwe satelity, które co chwilę migają w wersję Kolektywu, i przerywana bursztynowa bariera na brzegu areny. Na razie z dostępnych grafik (zwiastun, kafel płyt); po grafikach z ChatGPT podmienimy tekstury. (build 81)
+- Wersja 2.0, świat 1: pole drobnego wraku z grafiki ChatGPT (zadanie W1 P3a): odłamki płyt, kable, śruby i pierścienie zamiast kształtów rysowanych w kodzie. Kafel łączy się bez szwu, a wrak jest na tyle ciemny, że wrogowie wyraźnie się od niego odcinają. (build 83)
+- 2.0, świat 1 (Orbital Ruins): wyspy pokładów stacji obronnych to teraz grafika z ChatGPT (W1 P3b) – ciemny metal z bursztynowymi pasami, odsłonięte kratownice i magentowe ślady Kolektywu zamiast prowizorycznych wycinków podłogi. (build 84)
+- 2.0, świat 1: rekwizyty z ChatGPT (W1 P5) – złamane maszty i skrzydła paneli słonecznych, wraki ludzkich wieżyczek na pokładach, martwe satelity, kapsuły ratunkowe i iskrzące wiązki kabli dryfują po arenie. (build 85)
+- 2.0, świat 1: zbiorniki paliwa z bursztynowym słabym punktem – zestrzelony wybucha (promień 150) i rani wrogów wokół, ale też statek, jeśli jest za blisko; zbiorniki odpalają się nawzajem. Skrzynie z amunicją rozpadają się na 3–5 monet, czasem z apteczką albo magnesem. Zniszczone zostają jako wraki, co 30 s pojawia się nowy (do 9 naraz). Bronie trafiają je jak wrogów, ale ich nie celują. (build 85)
+- 2.0, świat 1: krawędź areny z ChatGPT (W1 P6) – pierścień wraków stacji, paneli słonecznych i satelitów z bursztynową heksagonalną tarczą od strony areny, która powoli pulsuje. Zastępuje przerywaną linię. (build 86)
+- 2.0, świat 1: tło dalekie z ChatGPT (W1 P2) – Ziemia nocą w lewym dolnym rogu, z niebieską poświatą atmosfery i światłami miast, przesuwa się wolniej niż arena (głębia). Zastępuje wycinek Ziemi ze zwiastuna. (build 87)
+- 2.0, świat 1: nakładka bliska z ChatGPT (W1 P4) – pył, drobne odłamki i iskry tuż przed kamerą, nad akcją; przesuwają się szybciej niż arena, więc widać głębię. Delikatna, nie zasłania wrogów. (build 88)
+- 2.0, boss świata 1 (Harvester, W1 P8): ostrzejsza grafika i świecące części z arkusza – rdzeń pulsuje, boczne kapsuły na zmianę, dziób się rozjaśnia; w szale (druga faza) wszystko świeci mocniej i szybciej. Boss wlatuje od strony Ziemi, z głębi, rosnąc, z silnikami na pełnej mocy. (build 89)
+- 2.0: szczątki wrogów z ChatGPT (W1 P7) – zestrzelony wróg rozpada się na 2–3 kawałki swojego kadłuba (elita na 4), które rozlatują się, obracają i gasną w około sekundę. Każdy z 6 typów wrogów ma własne szczątki; naraz leci najwyżej 160 kawałków, więc wydajność przy dużych falach się nie zmienia. (build 90)
+- 2.0, świat 1: spadający wrak – co 25–35 s przez arenę, blisko statku, przelatuje duży fragment pokładu stacji. Najpierw przez ok. 1,8 s bursztynowy korytarz z biegnącymi szewronami i rosnącym cieniem (plus dźwięk ostrzeżenia), potem szybki przelot z obrotem: drobni wrogowie giną od razu, ciężcy dostają mocno, zbiorniki paliwa wybuchają, a statek, który został w korytarzu, traci ok. 19 punktów. Działa też w Endless świata 1. (build 97)
+- 2.0: świat 2 „Siege of Earth” jest grywalny – 6 sektorów (Burning Sky, Tether Storm, Cloud Wall, City of Fire, Home Front, Landing Citadel), cały z grafik ChatGPT (komplet W2 P1–P8). Walczymy nocą nad burzą: pod nami Ziemia ze światłami miast, która powoli przesuwa się w dole, półprzezroczyste chmury, płonące wraki obrony i magentowe węzły lin Kolektywu, na brzegu ściany burzowych chmur, a tuż przed kamerą strzępy chmur, iskry i deszcz. (build 98)
+- 2.0, świat 2: mechanika świata – wały chmur zasłaniają wrogów (widać tylko ich magentowe rdzenie), a co 5–9 s uderza błyskawica: ekran błyska, burzowe ściany się rozświetlają, a chmury na chwilę rzedną i odsłaniają wszystko. (build 98)
+- 2.0, świat 2: sześciu nowych wrogów z siły desantowej – Interceptor (szybkie klucze po 3–5), Lander Pod (zniszczony wypuszcza 3 interceptory), Gunship (salwy po 3 pociski z dystansu), Sky Mine (podlatuje i wybucha), Raider (celuje i szarżuje), Siege Walker (wolny, bardzo wytrzymały); elita interceptora ma własną grafikę, każdy wróg własne szczątki. (build 98)
+- 2.0, świat 2: boss LANDING CITADEL – latająca forteca z dwoma pierścieniami dział, które obracają się w przeciwne strony (w kolejnych fazach coraz szybciej), z czterema pulsującymi słabymi punktami; trzy fazy, spirale i wirujące promienie, ostrzał moździerzowy, desant interceptorów i min; wynurza się z chmur. (build 98)
+- 2.0, świat 2: rekwizyty do zestrzelenia – baterie przeciwlotnicze (amunicja wybucha i rani wszystko wokół) i pylony-nadajniki Kolektywu (póki stoją, wzmacniają i przyspieszają wrogów w promieniu ok. 240; zniszczone wyrzucają monety i czasem apteczkę albo magnes). (build 98)
+- 2.0, świat 2: własna muzyka „Siege of Earth” (Suno) – w sektorach utwór oblężenia (146 BPM; wstęp ok. 39 s, potem zapętlone 48 taktów od wejścia na pełną moc, ok. 79 s), przy Landing Citadel utwór bossa (151 BPM; wstęp skrócony do ok. 13 s, potem zapętlone ok. 76 s). Pętle z płynnym szwem, głośność dopasowana do świata 1. (build 99)
+- Świat 3 „Lunar Bridgehead” (pełna wersja): 6 sektorów (Dark Side, Sea of Tranquility, Crater Run, Rooted Base, Mortar Fields, Moon Spire) w grafice ChatGPT. Regolit Księżyca z koleinami, ruiny ludzkiej bazy (kopuły, łazik, anteny, panele), przewody Kolektywu pełzające po gruncie jak korzenie z pulsującą magentą, skalne grzbiety na brzegu areny, unoszący się pył; wrogowie rzucają twarde cienie. (build 106)
+- Mechanika świata 3: wielkie kratery są osłoną, czyli pociski wrogów rozbijają się na nich (własne strzały lecą nad nimi). Kolektyw odpowiada moździerzami: gniazda moździerzy w gruncie i ostrzał, którego kratery nie zatrzymują. (build 106)
+- 6 wrogów świata 3: Probe (stada sond), Conduit Crawler (z elitą w złotym pierścieniu), Lunar Hopper (porusza się skokami), Mortar Node (wystrzeliwuje pocisk po łuku tam, gdzie jest statek), Crater Turret (obraca działo za statkiem i strzela wachlarzem), Regolith Golem (ciężki). Każdy rozpada się na własne odłamki. (build 106)
+- Boss MOON SPIRE: wieża-działo wrośnięta w krater. Nie rusza się, a jej działo obraca się za statkiem i po ładowaniu strzela serią ciężkich pocisków. Do tego ostrzał moździerzowy, spirale, wiązki i posiłki, 3 fazy, świecące słabe punkty i korzenie, które się poruszają. (build 106)
+- Rekwizyty świata 3: ludzkie stanowiska moździerzy (wybuchają), pompy Kolektywu (wzmacniają wrogów wokół, rozbite dają łup), skrzynie z zapasami. (build 106)
+- Muzyka świata 3 (Suno): sektor i boss, z płynnie dobranymi pętlami. (build 106)
+- Świat 4 „Red Conversion” (pełna wersja): 6 sektorów (Red Dust, Black Veins, Dust Storm, Glass Canyon, Olympus Shadow, Red Colossus) w grafice ChatGPT. Matowy czerwony pył Marsa z wydmami, kryształowe iglice, przejęta ludzka kopuła, zakopane łaziki, ściany kanionu z czarnymi kryształowymi klifami, pył niesiony wiatrem. (build 108)
+- Mechanika świata 4: sieć czarnego kryształu rośnie w trakcie sektora z kilku węzłów, a Spreadery kładą świeży kryształ tam, gdzie idą (po chwili zanika). Na krysztale statek jest spowolniony. Co jakiś czas nadchodzi burza pyłowa: widok zamyka się wokół statku, a Dust Stalkery znikają w pyle. (build 108)
+- 6 wrogów świata 4: Crystal Mite (roje), Shard Drone (strzela, elita w złotym pierścieniu), Dust Stalker (szarżuje), Prism Node (osadzony w gruncie, strzela dookoła), Spreader (kładzie kryształ), Crystal Golem (ciężki, rozpada się na Mity). Każdy rozpada się na własne odłamki, wszyscy rzucają cienie. (build 108)
+- Boss RED COLOSSUS: chodząca forteca z czarnego kryształu. Idzie za statkiem i obraca się w jego stronę, wokół statku wyrasta kryształ z pierścieniem odłamków, do tego wiązki, spirale, ostrzał i posiłki. 3 fazy, pulsujące słabe punkty w stawach nóg, świecące działa przy strzałach. (build 108)
+- Rekwizyty świata 4: kryształowe skupiska (rozpryskują się w wybuch odłamków), przejęte pylony energetyczne (wzmacniają wrogów wokół, rozbite dają łup), zrzuty z zapasami. (build 108)
+- Muzyka świata 4 (Suno): sektor i boss, z płynnie dobranymi pętlami. (build 108)
+- Świat 5 „Foundry Belt” (pełna wersja): 6 sektorów (Ore Drift, Assembly Line, Smelter Ring, Drone Yards, Hull Forge, Foundry Mother) w grafice ChatGPT. Lot nad wydrążoną planetoidą-fabryką: skała cięta w tarasy, szyny i stalowe płyty, a przez rozpadliny widać kosmos z dalekimi planetoidami-fabrykami. Do tego pulsujące piece, suwnice z niedokończonymi kadłubami, taśmociągi, ramiona spawalnicze sypiące iskrami, krawędzie tarasów z rusztowaniami, żar i popiół w powietrzu. (build 109)
+- Mechanika świata 5: dryfujące planetoidy są ruchomą osłoną. Pociski wrogów rozbijają się na nich, ale planetoidy powoli płyną i odbijają się od brzegu areny, więc trzeba się z nimi przesuwać. Maszyny da się niszczyć: zbiorniki paliwa wybuchają, kondensatory wzmacniają wrogów wokół, a rozbite dają łup. (build 109)
+- 6 wrogów świata 5: Forge Drone (roje, elita w złotym pierścieniu), Welder (szarżuje), Assembler Turret (osadzona, obraca się i strzela w statek), Rock Drifter (przelatuje przez arenę jak planetoida), Ore Hauler (ciężki, rozpada się na drony), Worker Mech (trzyma dystans i strzela). Wszyscy z odłamkami i cieniami. (build 109)
+- Boss FOUNDRY MOTHER: pancerna fabryka, która buduje armię w trakcie walki. Z dwóch zatok po bokach wypuszcza oddziały dronów, welderów i mechów (zatoki rozbłyskują przy budowie). Do tego płynny żużel (ostrzał), iskry (spirale, salwy) i wiązki. 3 fazy, pulsujące słabe punkty (zamki zatok i wyloty pieców). (build 109)
+- Muzyka świata 5 (Suno): sektor i boss, z płynnie dobranymi pętlami. (build 109)
+- Nowy arsenał 2.0, etap 1: 3 nowe bronie. (build 110)
+- 3 nowe perki: (build 110)
+- Ikony nowych broni i perków; Codex sam je obejmuje. (build 110)
+- Nowy arsenał 2.0, etap 2: 6 kombosów nowych broni (obie bronie na poziomie 3). (build 111)
+- 3 nowe zestawy perków (oba perki na poziomie 3). (build 111)
+- 3 super kombosy z trzech broni (wszystkie na poziomie 5 albo po ewolucji, złota ramka na karcie, baner „SUPER COMBO!”). (build 111)
+- Codex ma sekcję SUPER COMBOS; karty podpowiadają też super kombosy, gdy masz już pozostałe dwie bronie. (build 111)
+- Świat 6 „Storm Relay” (pełna wersja): 6 sektorów (Gas Giant, Ion Winds, Antenna Field, Living Signal, Deep Transmission, Storm Eye) w grafice ChatGPT. Lot nad burzami Jowisza: pod statkiem przesuwają się kłęby chmur gazowego olbrzyma, w burzy unoszą się mosiężne platformy przekaźnika, są anteny, piorunochrony i świecące cewki, a brzeg areny tworzą ściany burzy z piorunami. (build 113)
+- Mechanika świata 6: porywy wiatru. Co kilkanaście sekund baner „WIND SHEAR” i przez kilka sekund wiatr spycha statek i pociski wrogów, a chmury i nakładka płyną z wiatrem. Burze piorunów (ostrzał) jako zdarzenie świata. (build 113)
+- 6 wrogów świata 6: Ion Kite (roje, elita w złotym pierścieniu), Gas Mine (wybucha przy statku), Relay Jelly (strzela), Static Ray (szarżuje), Vortex (wir, który wciąga statek, od sektora 2), Cloud Whale (ciężki, rozpada się na Ion Kite). Z odłamkami i cieniami. (build 113)
+- Boss STORM EYE: żywa burza krążąca wokół statku, z wolno obracającym się okiem i pulsującymi słabymi punktami. Atakuje spiralami iskier, uderzeniami piorunów, wiązkami i rojami. Ma 3 fazy. (build 113)
+- Rekwizyty świata 6: zbiorniki gazu (wybuchają) i wzmacniacze sygnału (wzmacniają wrogów wokół, rozbite dają łup). Muzyka świata 6 (Suno): sektor i boss, z płynnie dobranymi pętlami. (build 113)
+- Świat 7 „Abyss of Europa” (pełna wersja): 6 sektorów (Ice Shelf, Thin Ice, Glow Beneath, Cold Hatchery, The Deep Call, Abyss Leviathan) w grafice ChatGPT. Pod półprzezroczystym lodem Europy widać ciemny ocean ze świecącym życiem; są lodowe iglice, zamarznięte hybrydy, zielono świecące szczeliny, parujące kominy i lodowe ściany na brzegu areny. (build 114)
+- Mechanika świata 7: śliski lód. Statek ma bezwładność, ślizga się i dopiero po chwili skręca tam, gdzie go kierujesz. Spod lodu wynurzają się węgorze-hybrydy: znikają i pojawiają się obok statku. Zdarzenie świata to fala „BENEATH THE ICE”. (build 114)
+- 6 wrogów świata 7: Ice Wisp (roje), Frost Crab (elita w złotym pierścieniu), Tentacle Mine (wybucha przy statku), Spore Lantern (osadzona w lodzie, strzela dookoła), Eel Hybrid (wynurza się spod lodu), Leviathan Spawn (ciężki, rozpada się na Ice Wisp). (build 114)
+- Boss ABYSS LEVIATHAN: przepisane morskie życie wielkości okrętu. Obraca się w stronę statku, szarżuje, macki zamiatają wiązkami, do tego salwy, spirale, ostrzał i posiłki. Ma 3 fazy. (build 114)
+- Rekwizyty świata 7: kapsuły uwięzione w lodzie (łup) i zarodnikowe latarnie Kolektywu (wzmacniają wrogów wokół). Muzyka świata 7 (Suno): sektor i boss. (build 114)
+- Świat 8 „The Rift Gate” (pełna wersja): 6 sektorów (Shattered Space, Mirror Shards, Echoes of Home, Gate Rings, No Return, Gatekeeper) w grafice ChatGPT. Za Układem Słonecznym, nad gigantycznym pierścieniem wrót: wolno obracające się zakrzywione niebo, unoszące się szklane odłamki rzeczywistości, segmenty pierścieni, pylony strażników, uśpione oczy i ściany światła na brzegu areny. (build 115)
+- Mechanika świata 8: pary szczelin. Statek, który wleci w szczelinę, wylatuje z jej pary (z krótką przerwą, żeby nie skakać w kółko). To samo dzieje się z pociskami wrogów, więc strzał może przyjść z drugiego końca areny. Zdarzenie świata to „GRAVITY TEAR”, czyli studnie grawitacyjne. (build 115)
+- 6 wrogów świata 8: Shard Swarm Unit (roje), Echo (pojawia się obok statku), Phase Walker (szarżuje, elita w złotym pierścieniu), Null Orb (pociski samonaprowadzające), Rift Spawner (osadzony w przestrzeni, wypuszcza roje odłamków), Gate Sentinel (ciężki, strzela). (build 115)
+- Boss GATEKEEPER: trzy obracające się pierścienie wrót wokół rdzenia. Zagina przestrzeń (teleport), strzela spiralami i wiązkami przez portale, wysyła roje i echa. Ma 3 fazy. (build 115)
+- Rekwizyty świata 8: kondensatory pierścieni (wybuchają) i kotwice szczelin (wzmacniają wrogów wokół). Muzyka świata 8 (Suno): sektor i boss. (build 115)
+- Świat 9 „Brood World” (pełna wersja): 6 sektorów (Living Ground, Breathing Fields, Spawning Pits, Acid Marsh, Egg Chambers, Brood Matriarch) w grafice ChatGPT. Świat lęgowy Kolektywu: oddychająca, żywa ziemia z żył i metalu, łukowate żebra, gniazda, skupiska jaj, świecące grzyby i organiczne ściany na brzegu areny. (build 116)
+- Mechanika świata 9: jeziorka kwasu parzą statek, gdy w nie wleci, a gniazda wrastają w ziemię i wypuszczają larwy, dopóki się ich nie zniszczy. Zdarzenie świata to „ACID RAIN”, czyli ostrzał kwasem. (build 116)
+- 6 wrogów świata 9: Larva (roje), Leech (szarżuje), Spitter (pluje z dystansu, elita w złotym pierścieniu), Nest (osadzone w ziemi, wypuszcza larwy), Brood Sac (pęka na larwy), Carapace Beetle (ciężki). (build 116)
+- Boss BROOD MATRIARCH: matka roju. Pełznie za statkiem i obraca się w jego stronę, rzuca się na niego, pluje kwasem (ostrzał, salwy, spirale) i przez całą walkę składa larwy i pijawki. Ma 3 fazy. (build 116)
+- Rekwizyty świata 9: worki lęgowe pełne kwasu (wybuchają) i serca gniazd (wypuszczają larwy, póki stoją; potem łup). Muzyka świata 9 (Suno): sektor i boss. (build 116)
+- Świat 10 „The Nexus” (pełna wersja), koniec podróży: 6 sektorów (Neural Shore, Synapse Storm, Broken Geometry, Heartbeat, The Cage, Void Heart) w grafice ChatGPT. Serce Kolektywu: wolno obracająca się sieć neuronowa w tle, podłoga z obwodów, niemożliwe ramy, pęknięte pierścienie, węzły neuronów, pąki-oczy i ściany na brzegu areny. Mapa nie ma już światów „w budowie”: cała podróż 1-10 jest grywalna. (build 117)
+- Mechanika świata 10: wszystko naraz. Podmuchy wiatru, pary szczelin, które przenoszą statek i pociski, oraz jeziorka kwasu. Zdarzenia świata: „GRAVITY COLLAPSE” (studnie grawitacyjne) w pierwszych sektorach i „NEURAL STORM” (ostrzał) w późniejszych. (build 117)
+- 6 wrogów świata 10: Synapse Swarm (roje), Wraith (pojawia się obok statku, elita w złotym pierścieniu), Eye (pociski samonaprowadzające), Voidling (roje), Neuron Node (osadzony w ziemi, celuje w statek), Overseer (ciężki, strzela). Wraith, Eye i Voidling wracają z 1.x w nowej grafice i są trochę silniejsze. (build 117)
+- Boss VOID HEART, ostatni boss gry: bijące serce Kolektywu w pierścieniu klatki. W każdej z 3 faz wygląda inaczej (klatka pęka, rdzeń jaśnieje). Zagina przestrzeń (teleport), otwiera czarne dziury, strzela spiralami, wiązkami i salwami, ostrzeliwuje arenę i wzywa upiory oraz roje synaps. Pokonanie go otwiera tryb Endless we wszystkich światach. (build 117)
+- Rekwizyty świata 10: skupiska neuronów (wybuchają) i kotwice pierścieni klatki (wzmacniają wrogów wokół). Muzyka świata 10 (Suno): sektor i boss. (build 117)
+- Przejście z 1.x na 2.0: przy pierwszym uruchomieniu 2.0 zapis z 1.x zaczyna podróż od nowa (gwiazdki, przebyte sektory, rekordy Endless i ulepszenia ze sklepu znikają, bo światy 2–4 to w 2.0 zupełnie inne miejsca). Zostają: zakup pełnej wersji, statki, skórki, ustawienia, Codex, seria dziennych nagród i statystyki. Stary zapis jest zachowany w całości jako kopia. (build 120)
+- Nagroda weterana: gracz, który grał w 1.x, dostaje monety na start (300 + 10 za każdą gwiazdkę z 1.x, najwyżej 72, + połowa monet wydanych na ulepszenia; najwyżej 2 000) i jednorazowy ekran „WELCOME BACK, PILOT”. Zapis zapamiętuje, że gracz jest weteranem (skórka „Veteran” dojdzie, gdy będzie gotowa jej grafika). (build 120)
+- Nowe ikony od ChatGPT (Art Bible IC1–IC6) zamiast prostych neonowych symboli: 11 broni, 11 ewolucji, 9 perków, 12 kombosów broni, 8 zestawów perków i 3 super kombosy. Widać je na kartach awansu, w Codexie, na liście broni w pauzie, w hangarze i w sklepie ulepszeń (ulepszenia mają ikony podobnych perków, naprawa i monety ikony znajdziek). (build 123)
+- Efekty nowych broni z grafik ChatGPT (Art Bible FX5–FX7) zamiast prostych neonowych kształtów: płomień Flamethrowera (niebieski po ewolucji w Inferno), płonący grunt (napalm, Inferno, Scorched Trail, Phoenix Rail), ogień na palących się wrogach, kula i wir czarnej dziury Singularity Cannon z jej zapadnięciem (większe, złote po ewolucji w Event Horizon), wiązka Railguna z ładowaniem przy statku, błyskiem wystrzału i wybuchem na końcu (Gauss Lance w złotej wersji). (build 124)
+- Elity z cechami mają pierścienie z grafik ChatGPT (Art Bible EL1): obracający się pierścień w kolorze każdej cechy i jej odznakę nad nazwą (SWIFT, BULWARK, BERSERKER, COMMANDER, SHIELDED). (build 125)
+- Nowe znajdźki na arenie (Art Bible PU1): kryształy doświadczenia w trzech rozmiarach (zielone, największe złote), moneta, zestaw naprawczy, magnes, bomba i skrzynia bossa. (build 125)
+- Reszta efektów z grafik ChatGPT: pociski broni (Pulse Blaster, Photon Storm, Scatter Gun i Flak Cannon, rakiety, pociski dronów) i miny (Art Bible FX1), iskry trafień w kolorze broni (FX2), eksplozje w trzech wielkościach: wróg, elita i duże wybuchy, boss (FX3), błyskawice Arc Coil i złote Tempest (FX4), fale Nova Pulse i Supernova, bańka Phase Shield z rozpryskiem przy pęknięciu i tarcze wrogów z cechą SHIELDED (FX8), portal przy pojawianiu się wrogów, błysk przybycia elity i ostrzegawczy krąg przed ostrzałem (FX9). (build 126)
+- Gold Striker z własnych, złotych części od ChatGPT (Art Bible SH4) zamiast złotego zabarwienia Strikera. (build 127)
+- Ekran sektorów: żeton każdego świata na zakładkach (wyszarzony, gdy świat jest zamknięty) i duży żeton przy nazwie świata, a w tle mapa podróży od Ziemi do Nexusa (UI3, UI4). (build 127)
+- Hangar: statki w ujęciu 3/4 (Striker, Phantom, Titan, Gold Striker, UI5) i tło hangaru z widokiem na Ziemię (UI3). (build 127)
+- Atmosfera w światach 3–10, jak chmury w świecie 2: dryfujące, półprzezroczyste ławice powietrza w kolorze świata, mgiełka pod wrogami i kilka cienkich ławic nad nimi. Pył na Księżycu i Marsie, dym w fabryce, chmury burzowe na Jowiszu (niesie je wiatr świata 6), mgła nad lodem Europy, zasłony światła przy wrotach, mgła zarodników, mgiełka Nexusa. Na razie rysowane w kodzie; zastąpią je grafiki od ChatGPT (nowe zadania W3-P9 … W10-P9 w Art Bible). (build 130)
+- Skórka Veteran Striker (grafika SH7 od ChatGPT) dla graczy z wersji 1.x: wybór „Veteran” w hangarze przy Strikerze; statek w grze i na ekranie tytułowym złożony z nowych części, w hangarze render 3/4. (build 132)
+- Atmosfera światów 3–10 z grafik ChatGPT (W3-P9 … W10-P9): pył księżycowy, marsjańskie chmury pyłu, dym fabryk, burzowe chmury Jowisza, mgła nad lodem Europy, zorze przy Wrotach, zarodnikowa mgła Brood World i neuronowa mgiełka Nexusa zastępują mgłę rysowaną kodem; jasność wyrównana tak, by była subtelna jak chmury w świecie 2. (build 133)
+- Bronie widać na statku (grafika SH5 od ChatGPT): każda zdobyta broń pojawia się jako moduł na skrzydłach lub przy kadłubie Strikera, Phantoma i Titana (także w skórkach Gold i Veteran), do 4 modułów w kolejności zdobycia; broń po ewolucji ma złoty moduł z poświatą. (build 134)
+- Fabuła 2.0 (scenariusz zaakceptowany przez Konrada): intro przed pierwszym sektorem (4 plansze), transmisja po pokonaniu bossa każdego ze światów 1–9 i outro z napisami końcowymi po Void Heart. Admirał Hale z Dowództwa Ziemi i przechwycone sygnały Kolektywu, tekst pisany na żywo pod powoli przesuwającą się planszą; stuknięcie przyspiesza lub przechodzi dalej, SKIP pomija scenę. (build 136)
+- Każda scena gra się sama raz; w Codexie nowa sekcja LOG pozwala obejrzeć obejrzane sceny ponownie. W wersji próbnej transmisja po świecie 2 poprzedza zaproszenie do pełnej gry. (build 136)
+- Napisy końcowe: podziękowania (SPECIAL THANKS) dla Suno i ChatGPT, „wspaniałych członków załogi, pełnych kreatywnych pomysłów i niestrudzonych w działaniu”, oraz dla Claude'a, „wspaniałego project managera”. (build 137)
+- Sceny fabuły mają właściwe ilustracje od ChatGPT (Art Bible SC0a–SC10d, 17 plansz): intro, 9 transmisji między światami i outro zamiast teł z konceptów światów. (build 138)
+- Cztery filmiki kampanii 2.0 w `appstore/2.0/video/` (z okładkami): VB-01 „The Invasion” (zwiastun fabularny, 32 s), VB-02 „The Swarm” (chaos gameplayu, 22 s), VB-03 „Ten Bosses” (31 s), VB-04 „10 Worlds · 54 Ways to Fight” (światy, Codex, hangar, 29 s). (build 139)
+- Android: przycisk „wstecz” działa jak w grze: pomija scenę fabuły, zamyka okienko, pauzuje bieg albo cofa o ekran; w menu głównym chowa aplikację w tle. (build 142)
+- Android: zakup pełnej gry przez Google Play (Billing 7.1.1): cena ze sklepu, zakup, płatności oczekujące, przywracanie zakupu z konta Google i potwierdzanie zakupów; ten sam produkt co w App Store (`com.konradlechowicz.voidblaster.fullgame`). Działa, gdy produkt zostanie założony w Play Console. (build 143)
+- Android: rankingi trybu Endless w Google Play Games (ta sama obsługa co Game Center na iPhonie); włączą się, gdy w Play Console powstanie projekt Play Games i 10 tablic wyników, a ich identyfikatory trafią do gry. (build 144)
+- Ataki ze wzorem w sektorach światów 2–10 (od 2 do 5 na sektor, częściej w dalszych światach; boss: jeden przed bossem), żeby gra wymagała ustawiania się, a nie tylko ucieczki: (build 149)
+- Skrzynie zaopatrzenia za monety (pomysł Konrada z testów): na odprawie sektora wybierasz skrzynię (jedna na bieg, wybór jest zapamiętany), monety pobiera LAUNCH, a skrzynia otwiera się z animacją w pierwszej sekundzie biegu: (build 152)
+
+**Zmiana**
+- Rysowanie gry wydzielone z logiki (js/render-canvas.js), żeby wersja 2.0 mogła rysować ten sam stan gry. Wygląd i rozgrywka 1.x bez zmian; normalna i sklepowa wersja nie zawierają PixiJS. (build 68)
+- Wersja 2.0: bronie wokół statku (ostrza i aura Orbit, drony) i miny rysuje teraz warstwa PixiJS (karta graficzna). Wyglądają tak samo jak wcześniej. Na starym rysowaniu zostały już tylko paski życia, liczby obrażeń, strzałki do elit i bossa oraz czerwony ekran przy niskim zdrowiu. To kończy przenoszenie obrazu w etapie 1. (build 74)
+- W aplikacji (iPhone, Android) muzyka menu gra od razu po uruchomieniu gry, bez czekania na pierwsze dotknięcie. W przeglądarce, także w podglądzie w Claude, nadal startuje po pierwszym kliknięciu, bo przeglądarki nie pozwalają inaczej. (build 79)
+- 2.0: boss świata 1 nazywa się teraz HARVESTER (wcześniej Hive Mother) – na pasku życia, w nazwie sektora 1-6 i na ekranie po jego pokonaniu. (build 91)
+- 2.0: nowy, stonowany i bardziej technologiczny styl interfejsu – grafitowe panele, cienkie linie, ostre narożniki, narożne „klamry” na okienkach, prawie bez neonowej poświaty. Jeden akcent – bursztyn ze świata 1 – oznacza akcje i wybór (PLAY, LAUNCH, RESUME, aktywne przełączniki); magenta tylko dla Kolektywu (boss, porażka); złoto tylko dla monet i gwiazdek. Dotyczy ekranu startowego, mapy sektorów, hangaru, ulepszeń, Codexu, codziennej nagrody, ustawień, okna zakupu, kart level-up, pauzy, wyników, HUD-u, banerów i podpowiedzi. (build 93)
+- 2.0: logo w nowym stylu – „VOID” jasnym metalem, „BLASTER” bursztynem między cienkimi liniami. (build 93)
+- 2.0: tło ekranu tytułowego spokojniejsze – sieć Kolektywu i jej impulsy przygaszone, delikatniejsza poświata emblematu, ciemniejsze tło za ekranami sektorów, hangaru i ulepszeń. (build 93)
+- 2.0: joystick jak celownik – ciemny dysk z cienkim pierścieniem, bursztynowe znaczniki i płaska gałka z bursztynowym środkiem, bez neonowego blasku. (build 93)
+- 2.0: świat 1 nazywa się teraz ORBITAL RUINS (wcześniej Neon Nebula), a jego sektory: 1-1 Dead Orbit, 1-2 Debris Field, 1-3 Broken Ring, 1-4 Rewritten Signal, 1-5 Last Picket, 1-6 Harvester. Nowe nazwy widać na mapie sektorów, w odprawie, na banerze na starcie i na ekranie wyników. (build 94)
+- 2.0: mapa sektorów pokazuje całą podróż – 10 światów (Orbital Ruins, Siege of Earth, Lunar Bridgehead, Red Conversion, Foundry Belt, Storm Relay, Abyss of Europa, The Rift Gate, Brood World, The Nexus) w dwóch rzędach zakładek. Światy 2–10 mają kartę „UNDER CONSTRUCTION” z krótką historią i sześcioma zaplanowanymi sektorami (szósty to boss). Stare światy 2–4 z 1.x nie są już grywalne. (build 96)
+- 2.0: po pokonaniu Harvestera ekran wyników mówi „WORLD CLEAR” i zapowiada następny świat (w budowie) zamiast „Galaxy saved”. Endless otwiera się po pokonaniu ostatniego zbudowanego bossa (na razie Harvestera). (build 96)
+- 2.0: darmowa część to światy 1–2 (decyzja z planu 2.0); okno zakupu opisuje pełną podróż: światy 3–10 i 8 bossów. (build 96)
+- 2.0: przy bossie gra muzyka bossa danego świata (świat 1: Harvester, świat 2: Landing Citadel). (build 99)
+- Efekty nowych broni są na razie neonowe; grafiki od ChatGPT podmienimy, gdy przyjdą. Kombosy, zestawy perków i super kombosy nowych broni to etap 2. (build 110)
+- Railgun sam celuje: przed każdym strzałem wybiera linię, na której trafi najwięcej wrogów (elity i bossy liczą się podwójnie i poczwórnie), także za statkiem. Wcześniej strzelał w kierunku lotu, a goniący rój był z tyłu (uwaga Konrada). W symulacji, gdy statek ucieka przed rojem, Railgun wypada teraz na równi z Seeker Missiles, Nova Pulse i Proximity Mines. (build 112)
+- Phase Shield to teraz osłona z zapasem: pochłania 25 obrażeń (+10 na każdy poziom, 65 na poziomie 5) przed kadłubem i odnawia się do pełna w 4 s, gdy przez 2,5 s nic w statek nie trafi. Wcześniej blokowała jedno trafienie co 16 s i przy częstych kontaktach nic nie dawała (uwaga Konrada). Wokół statku widać pierścień, który blednie w miarę zużycia, i łuk pokazujący, ile osłony zostało; „SHIELD DOWN”, gdy się wyczerpie. (build 112)
+- Bastion Field (Phase Shield + Armor Plating): fala odrzucająca wrogów, gdy osłona się wyczerpie, i o 30% szybsze odnawianie. (build 112)
+- Każdy zapis sprzed 2.0 zaczyna podróż od świata 1, także zapis z wcześniejszych testowych buildów 2.0 z postępem w światach 5–10 (w buildzie 120 taki zostawał bez zmian). Kto grał wcześniej, dostaje monety weterana i ekran powitalny. (build 121)
+- Muzyka przechodzi płynnie: przy zmianie utworu (np. gdy pojawia się boss) poprzedni wycisza się przez 2 s, a nowy narasta przez ok. 2 s, zamiast szybkiego cięcia. (build 129)
+- Płomień Flamethrowera jest subtelniejszy: półprzezroczysty, węższy, sięga tylko do celu i łagodnie pojawia się i znika. Płonący grunt jest mniejszy i przygaszony. (build 129)
+- Wrogowie przechwytują: dwa na trzy szybkie stwory (roje i wszystko, co ma prędkość 100+ i nie ma własnego sposobu ruchu) lecą tam, dokąd zmierza statek (do 1,4 s naprzód), a nie tylko za nim. Tłum nadlatuje też z przodu i z boków, zamiast ciągnąć się jedną masą za statkiem. (build 130)
+- Płomień silnika złotej skórki wycięty czysto (bez ciemnej obwódki). (build 132)
+- Nowa muzyka świata 6 „Storm Relay” (wersja 2 z Suno, pasuje do reszty ścieżki): sektory ok. 137 BPM z pętlą 32 taktów (ok. 56 s), boss ok. 140 BPM z pętlą 36 taktów (ok. 62 s) i 8 taktami wejścia; punkty pętli dobrane tak jak w światach 7–10 (bez słyszalnego skoku). (build 135)
+- Do czasu plansz od ChatGPT (Art Bible SC0a–SC10d) sceny mają tła z konceptów światów. (build 136)
+- Komunikaty sklepu na Androidzie mówią o Google Play i koncie Google zamiast App Store i Apple ID. (build 143)
+- Wrogowie poruszają się jak stado, a nie jeden obiekt: każdy ma własny czas reakcji na skręt statku (0,25–0,9 s), własne wyprzedzenie, stronę, z której podchodzi, lekkie myszkowanie i bezwładność (skręca łukiem). Rój nie zmienia już kierunku synchronicznie ze statkiem. (build 147)
+- Nowa ikona aplikacji 2.0 (Art Bible ST1: Striker na tle roju) na iPhonie i Androidzie (zwykła, okrągła i adaptacyjna; `proto2/make-app-icon.py`). (build 154)
+- Cena pełnej gry w przeglądarce i w testowym pliku StoreKit (symulator): 4,99 USD jak w sklepie. (build 155)
+
+**Balans**
+- 2.0, świat 1: szybsze tempo – ok. 45% więcej wrogów od pierwszej sekundy, większe fale (np. 1-1: 24 i 40 zamiast 16 i 28; 1-5: 56 swarmerów), wrogowie o ok. 8% szybsi i wcześniej w grze, limit na polu 140–200 (zapas względem bramki wydajności 180 przy 60 FPS). Harvester pojawia się po 2:00 zamiast 2:30. (build 97)
+- 2.0, świat 1: cele zabójstw do gwiazdek podniesione do nowej liczby wrogów (1-1: 900, 1-2: 1250, 1-3: 1400, 1-4: 1650, 1-5: 1700, 1-6: 700) – sprawdzone symulacją, tak samo trudne jak w 1.x. (build 97)
+- 2.0, świat 2: tempo świata 1 o stopień trudniej; cele zabójstw i wytrzymałość bossa ustawione symulacją (walka z Citadel zwykle poniżej minuty, najwyżej ok. 2:20). Muzyka: na razie utwór świata 1, dopóki świat 2 nie ma własnego. (build 98)
+- Nieruchomych wrogów (wieżyczki, moździerze) jest naraz najwyżej 3–6 na sektor, a te zostawione daleko za statkiem znikają. Sektory sprawdzone symulacją: cele zestrzeleń osiągalne, boss pokonywany w 0,5–2 min. (build 106)
+- Sektory świata 4 sprawdzone symulacją: cele zestrzeleń osiągalne, boss pokonywany w ok. 1–3 min. (build 108)
+- Sektory świata 5 sprawdzone symulacją: cele zestrzeleń osiągalne, boss pokonywany w ok. 1 min przy aktywnym statku. (build 109)
+- Nowe bronie porównane w symulacji z dotychczasowymi: Railgun i Flamethrower jak bronie obszarowe (Missiles, Nova Pulse, Mines), Singularity Cannon na poziomie 1 jak Arc Coil. (build 110)
+- Strojenie trudności dla światów 5–10, każdy o stopień trudniejszy. Świat 5 przez przeoczenie używał strojenia świata 1, więc jest teraz trochę trudniejszy (symulacja: dalej wygrywany). (build 113)
+- Zwykli wrogowie gonią najwyżej z prędkością 170 (85% bazowej prędkości Titana), więc każdy statek może uciec bez ulepszonych silników; szybsze są tylko szarże i wypady po ostrzeżeniu oraz elity z cechą „swift”. Dotąd roje od świata 2 miały do 180. (build 147)
+- Awanse nie wyskakują już seriami: doświadczenie trafia do „banku”, który daje najwyżej jeden poziom na 2,5 s, a resztę oddaje później. Z jednej dużej porcji (magnes, bomba, masa kryształów) bank przyjmuje najwyżej dwa poziomy zapasu, więc daje kilka awansów zamiast całej serii. (build 148)
+- Łagodniejsza krzywa doświadczenia (około 8–10% mniej awansów w sektorze). W pomiarze (4 sektory, 3,5 min) przed zmianą zdarzały się 2–3 okienka w ciągu 0,3 s, po zmianie najkrótszy odstęp to 2,5 s. (build 148)
+- Groźniejsi bossowie (wszystkich 10): (build 150)
+
+**Poprawka**
+- Wersja 2.0: hangar i odprawa przed sektorem pokazują statki w nowej grafice (Striker, Phantom, Titan, z płomieniami silników); złoty Striker ma złoty odcień. (build 77)
+- Muzyka w menu 2.0 była za cicha: głośność tematu prawie dwa razy większa. Jak każda muzyka w przeglądarce i w aplikacji, startuje po pierwszym dotknięciu ekranu. (build 77)
+- Muzyka menu 2.0: plik muzyki jest wczytywany bez pobierania (fetch), które zabezpieczone strony mogą blokować. Gdy nagranie nie da się odtworzyć na danym urządzeniu, gra przechodzi na dawną muzykę z syntezatora zamiast milczeć. (build 78)
+- 2.0, świat 2: muzyka nie przeskakuje już nienaturalnie przy zapętleniu. Tempo nagrań z Suno lekko „pływa”, a koniec pętli był przesunięty o 80–100 ms względem rytmu (perkusja się potykała). Nowe punkty pętli znalezione przeszukaniem całych utworów i wyrównane co do milisekundy: sektor zapętla 48 taktów od 54 s (ok. 79 s muzyki), boss 24 takty o najbardziej zgodnym brzmieniu (ok. 38 s) po ok. 13 s wstępu. (build 100)
+- Dźwięk wraca po powiadomieniu, połączeniu albo powrocie z innej aplikacji: przy pierwszym dotknięciu ekranu gra uruchamia dźwięk od nowa (iOS potrafił zostawić go zawieszonego), a muzyka gra dalej od pętli, bez ponownego intro. (build 105)
+- Świat 2: trzecia gwiazdka (wszystkie elity) była niemożliwa do zdobycia, a cel sektora pokazywał „undefined”. Elity świata 2 są teraz liczone; ich trudność bez zmian. (build 106)
+- Gravity Mines (ewolucja) nie zawieszają już gry, gdy w ich zasięgu stoi rekwizyt (zbiornik, skrzynia, bateria). (build 106)
+- Grafiki 2.0 wczytują się odporniej: przy kilkuset obrazkach naraz przeglądarka czasem odmawiała ich dekodowania i gra spadała do wyglądu 1.x. (build 114)
+- Start gry: zanim wczytają się grafiki 2.0, nie pokazuje się już przez chwilę wygląd 1.x. Ekran jest ciemny z pulsującym napisem LOADING, a menu pojawia się dopiero razem z grafiką 2.0 (najwyżej po 20 s pokazuje się to, co jest). (build 128)
+- Okna wyższe niż ekran (np. panel testera 🛠) dają się przewijać palcem, więc da się dojść do przycisku DONE. Wcześniej gra blokowała przesuwanie wszędzie poza listami. (build 128)
+- Eksplozje (także przy porażce) nie szarpią: klatki animacji płynnie przechodzą jedna w drugą, a wybuch na końcu łagodnie gaśnie. (build 129)
+- Muzyka światów 7–10 (sektory i bossowie) ma nowe pętle bez słyszalnych skoków: koniec pętli trzyma się rytmu z dokładnością do 0,035 s (wcześniej do 0,12 s), a przy wyborze porównany był też rytm przed skokiem. Muzyka świata 6 czeka na nowe utwory z Suno. (build 131)
+- Android: gra na pełnym ekranie, bez paska stanu u góry i paska nawigacji na dole (pojawiają się na chwilę po przeciągnięciu od krawędzi); ukrywa je ponownie po powrocie do gry. (build 146)
+
+**App Store**
+- `appstore/GAME-CENTER.md`: lista 10 rankingów Endless do założenia przed premierą 2.0 (nowe nazwy światów, rankingi w5-w10). (build 117)
+- Materiały do sklepów 2.0 w `appstore/2.0`: ikona aplikacji 1024 px (ST1, jeszcze nie podmieniona w aplikacji), grafika Google Play 1024×500 (ST2) i key art 2048 px (ST3). (build 127)
+- Teksty strony gry w Google Play (`appstore/GOOGLE-PLAY-LISTING.md`): nazwa, krótki i pełny opis 2.0, kategoria, tagi, grafiki, lista 8 zrzutów ekranu, tekst „Co nowego”. Gra bez zmian. (build 151)
+- Wydanie 2.0 przygotowane do `npm run release`: gałąź łączy `v2` z `main` (bez konfliktów, zawartość jak `v2`), nowe teksty App Store dla 2.0 (`appstore/LISTING.md`: opis, tekst promocyjny, słowa kluczowe, What's New, notatki dla recenzji, produkt „Full Game” za 4,99 USD), podsumowanie „Następne wydanie”. (build 154)
+- Zrzuty ekranu 2.0 z prawdziwej gry, 8 scen z podpisami (rój, boss w furii, ulepszenia, mapa 10 światów, fabuła, Europa, Codex, hangar): App Store 6,9" (1320×2868) i 6,5" (1284×2778) oraz Google Play (1080×1920) w `appstore/2.0/screenshots/`, plus zrzut ekranu zakupu do recenzji Apple. (build 155)
+
+**Narzędzia**
+- CHANGELOG.md: sekcja wydania v1.3.0 skopiowana z gałęzi release, v1.2.1 oznaczone jako niewydane (ten sam build wyszedł jako 1.3.0). CLAUDE.md: 1.3.0 wydane, linia 1.x zamrożona (tylko poprawki błędów), cała nowa praca to 2.0. Gra bez zmian. (build 67)
+- Wersja 2.0, etap 1 (tylko wariant TEST): w panelu 🛠 przełącznik „2.0 look (PixiJS, world 1 art)”. Włącza nową warstwę PixiJS (WebGL): podłoga świata 1 z kafla, Striker złożony z części (przechyla się w skrętach, płomienie silników rosną z prędkością), wrogowie z grafiki 2.0 z poświatą, Harvester jako boss świata 1. Strzały, efekty, paski i HUD na razie po staremu, na wierzchu. (build 68)
+- Przycisk STRESS +300 w panelu 🛠: 300 wrogów naraz, do pomiaru FPS na telefonie (bramka 1: stałe 60 FPS). (build 68)
+- Uporządkowane uruchamianie testów: 3 miejsca (przeglądarka, symulator, iPhone) × 2 warianty (zwykła gra, TEST). `npm start` pyta gdzie i którą wersję; skróty `npm run web|sim|phone` oraz `:test`. Każde uruchomienie wypisuje ramkę: build, gałąź (zaakceptowana czy kandydat), miejsce, wariant. `npm run review` pyta też: symulator czy iPhone. `npm run xcode` przygotowuje zwykłą grę i otwiera Xcode. Ściągawka po polsku: JAK-TESTOWAC.md. Stare `play`/`play:test` nadal działają. Gra bez zmian. (build 69)
+- Wersja 2.0, etap 1 (tylko wariant TEST, „2.0 look” w 🛠): strzały, pociski wrogów, kryształy, monety i apteczki, cząsteczki, fale uderzeniowe i błyskawice rysuje teraz warstwa PixiJS (karta graficzna). Strzały, pociski i kryształy dostały miękką poświatę w swoim kolorze. Na starym rysowaniu zostały tylko bronie wokół statku, miny, paski życia, liczby obrażeń i HUD. (build 70)
+- CLAUDE.md: zapisana bramka 1 wersji 2.0 (stałe 60 FPS przy ok. 180 wrogach na iPhonie 17 Pro Max) i decyzja Konrada: balans 2.0 ma mieć wyraźnie więcej przeciwników naraz niż 1.x. Zwykła gra bez zmian. (build 70)
+- Testowanie i akceptacja buildów działa też na Windowsie: `npm start`, `npm run web` / `web:test`, `npm run review` (uruchamia build w przeglądarce albo na Androidzie) i komendy Androida. Symulator, iPhone i wydanie do App Store zostają na Macu (na Windowsie skrypt mówi to wprost). `npm start` i `review` mają też opcję [a] Android. Instrukcja instalacji na Windowsie: JAK-TESTOWAC.md. Gra bez zmian. (build 71)
+- Dwie linie: `main` = Void Blaster 1.x (tylko poprawki, z niej wydania), `v2` = zaakceptowane buildy wersji 2.0. `npm run review` pokazuje nowe buildy w dwóch grupach („1.x → main” i „2.0 → v2”) i sam akceptuje do właściwej linii; po wszystkim wraca na `main`. `npm run release` wydaje tylko `main`. Ramka `npm start` pokazuje, czy to 1.x czy 2.0. Opis w JAK-TESTOWAC.md. Gra bez zmian. (build 72)
+- W panelu 🛠 przełącznik „1.x look (compare with 2.0)” zamiast „2.0 look”: pozwala porównać ze starym wyglądem. (build 73)
+- Panel 🛠 pokazuje na górze stan muzyki (np. „recording "menu"”, „synth …”, „waiting for the first tap”) i powód, jeśli nagranie się nie wczytało. (build 78)
+- Notatki projektu: Konrad sam pośredniczy między Claude'em a ChatGPT (AI-HANDOFF.md zamknięty), źródłem promptów jest Claude Doc „Void Blaster 2.0 – Art Bible”, temat główny zostaje muzyką menu na stałe. (build 81)
+- Zaakceptowany koncept areny świata 1 „Orbital Ruins” (ChatGPT, zadanie W1 P1) zapisany w art/2.0/worlds/world1/concept-orbital-ruins.webp; jest wzorem dla kolejnych grafik świata 1. Gra bez zmian. (build 82)
+- Lista zadań 2.0 w notatkach projektu: mechanika świata 1, tempo i balans, ciemniejszy, spokojniejszy ekran startowy i okienka (dopasowane do świata 1). Gra bez zmian. (build 92)
+- Nazwy sektorów wszystkich 10 światów 2.0 zapisane w Art Bible (tabela „Nazwy sektorów”) i w notatkach projektu. Świat 1 zatwierdzony, światy 2–10 to propozycja. Gra bez zmian. (build 95)
+- Podgląd w przeglądarce odchudzony o nieużywany obraz bossa świata 2 i lżejszy kafel chmur, żeby z nową muzyką zmieścił się w limicie (15,8 MB). (build 99)
+- Plan nowego arsenału 2.0 na później (`PLAN-2.0-ARSENAL.md`): 3 bronie (Railgun, Flamethrower, Singularity Cannon), 3 perki (Targeting Matrix, Thermal Core, Phase Shield), ich ewolucje, 6 kombosów, 3 zestawy perków i 3 super kombosy. Gra bez zmian. (build 101)
+- Lista zadań na następną sesję w notatkach projektu: przebudowa systemu broni (nowy arsenał z `PLAN-2.0-ARSENAL.md`) i świat 3 „Lunar Bridgehead”. Gra bez zmian. (build 102)
+- Kolejność zadań na następną sesję: najpierw raport z telefonu (wydajność, trudność, pętle muzyki, chmury i błyskawice), potem świat 3 „Lunar Bridgehead” (grafiki i muzyka gotowe), potem przebudowa systemu broni. Gra bez zmian. (build 103)
+- Podgląd w przeglądarce jest teraz podzielony: strona z kodem gry (ok. 0,8 MB) i osobne pliki grafik i muzyki w `dist/assets` (jeden plik przekroczyłby limit 16 MB). (build 106)
+- Świat 4 „Red Conversion”: pierwsza część grafik od ChatGPT (koncept, podłoża, nakładka, rekwizyty, brzegi areny, spis plików) w `art/2.0/worlds/world4` i muzyka Suno (sektor, boss) w `art/2.0/audio`. Czekają na resztę (narożniki, wrogowie, boss); gra bez zmian. (build 107)
+- Panel testera: przyciski nowych kombosów, zestawów i super kombosów. (build 111)
+- Wspólna podstawa światów 6–10: skrypt tekstur `proto2/make-worlds.py`, jedna scena 2.0 (`js/v2/journey.js`), mechaniki (`js/worldfx.js`), wspólne rysowanie bossów (słabe punkty wykrywane automatycznie na rysunku) i szablon sektorów. (build 113)
+- Podgląd na claude.ai: grafiki 2.0 idą w kilku plikach zbiorczych (jeden na świat i jeden wspólny) zamiast ponad 400 osobnych, bo wersja podglądu mieści najwyżej 511 plików. Gra w aplikacji się nie zmienia. (build 115)
+- Podgląd na claude.ai: po buildzie 115 strona z linku mogła pokazywać stary wygląd 1.x, bo podgląd nie pozwala stronie pobierać własnych plików (`fetch`), a tak wczytywały się paczki grafik 2.0; tak samo mogła milczeć muzyka. Grafiki i muzyka idą teraz w plikach skryptów wczytywanych jak zwykłe pliki. Gra w aplikacji się nie zmienia. (build 118)
+- Art Bible kompletna: wszystkie zadania graficzne 2.0 mają jeden schemat kodów (W1-P1 … W10-P8 dla światów, SH statki, EL elity, FX efekty, PU znajdźki, IC ikony, UI interfejs, ST sklepy), prompty do zadań wspólnych są w zakładce Prompty, a nowa zakładka „Zadania i status” zbiera stan i kolejność. `CHATGPT-BRIEF.md` wskazuje na nowe kody. Gra się nie zmienia. (build 119)
+- Zapis ma teraz numer wersji (2). (build 120)
+- Panel testera 🛠: przycisk „SIMULATE 1.x SAVE” zamienia bieżący zapis w zapis podobny do 1.x i pokazuje przejście na 2.0 z ekranem weterana. (build 120)
+- Nazwy wszystkich 10 światów i 60 sektorów zatwierdzone przez Konrada (Art Bible i CLAUDE.md). Gra się nie zmienia: te nazwy już w niej są. (build 122)
+- Komplet grafik wspólnych od ChatGPT (ikony, efekty, elity, znajdźki, Gold Striker, interfejs, materiały do sklepów) zapisany w `art/2.0/common`; tekstury do gry robi `proto2/make-common.py`. Pozostałe grafiki z tej paczki wchodzą w kolejnych buildach. (build 123)
+- Do sprawdzenia płynności: naraz rysuje się najwyżej 70 płonących wrogów; efekty są w osobnej paczce (`fx`), przycięte do rozmiaru w grze. (build 124)
+- Pod kątem płynności: naraz najwyżej 40 iskier trafień, 60 eksplozji i 24 portale (roje bez portali); pociski rysuje PixiJS jak dotąd, tylko z nowymi teksturami. (build 126)
+- Nowy prompt do Suno na muzykę świata 6 (sektor i boss) w `art/2.0/audio/SUNO-PROMPTS.md`: ten sam rdzeń stylu co reszta ścieżki dźwiękowej zamiast drum and bass. (build 129)
+- Wydajność: na iPhonie 17 Pro Max ze wszystkimi nowymi grafikami dokładanie masy wrogów nic nie zmienia (test Konrada); zapisane w CLAUDE.md. (build 131)
+- Panel testera: przyciski odtwarzania każdej sceny i „FORGET SEEN”. (build 136)
+- Nagrywarka filmików reklamowych 2.0 (`npm run promo:video -- <invasion|swarm|bosses|worlds>`, `promo/record.mjs`, ujęcia w `promo/shots.mjs`): nagrywa prawdziwą grę klatka po klatce (1080×1920, 30 kl./s), z napisami w stylu gry, muzyką z gry i planszą „COMING SOON · iPhone & Android”; wyniki w `appstore/2.0/video/`. Gra bez zmian. (build 139)
+- Opisy do TikToka, Instagrama i YouTube dla 4 filmików kampanii 2.0 (`appstore/2.0/video/SOCIAL-CAPTIONS.md`). Gra bez zmian. (build 140)
+- Plan projektu (CLAUDE.md): nowa sekcja „PC / Steam” z listą zadań (pad w walce i w menu, sterowanie myszą, podpowiedzi przycisków, ustawienia sterowania, układ poziomy, ustawienia PC, Steamworks i strona sklepu). Gra bez zmian. (build 141)
+- `npm run android:bundle`: podpisany pakiet `.aab` dla Google Play (`dist/void-blaster-build-N.aab`); za pierwszym razem tworzy klucz do wysyłania (`android/void-blaster-upload.jks` + `android/keystore.properties`, poza gitem — zrób kopię zapasową). (build 142)
+- `appstore/GOOGLE-PLAY.md`: instrukcja Play Console krok po kroku (konto, aplikacja, pierwszy pakiet, produkt „Full Game”, zamknięte testy 12 osób × 14 dni, formularze, Play Games, premiera). (build 144)
+- `npm run android:play|test|bundle` sam wybiera Javę zgodną z Gradle (17–24): najpierw tę z Android Studio, potem `JAVA_HOME`; z Javą 25 budowanie kończyło się błędem „Unsupported class file major version 69”. Gdy żadna nie pasuje, podaje, co zainstalować (`VB_JAVA_HOME`). (build 145)
+- Skrypty Androida same znajdują zainstalowane JDK 21 (Temurin, Microsoft, Oracle, Zulu, Corretto), bez ustawiania `VB_JAVA_HOME`. (build 146)
+- LEVEL UP i „Boss now” w panelu testera dają poziomy od razu, z pominięciem banku. (build 148)
+- Panel testera w biegu: przyciski CRATE: STANDARD / MILITARY / PROTOTYPE (otwarcie od razu, bez monet). (build 152)
+- `npm run review` i `npm run release` nie zatrzymują się już na plikach, które Capacitor generuje sam przy `npm run android:test` (`android/app/capacitor.build.gradle`, `android/capacitor.settings.gradle`, zasoby w `android/app/src/main/assets`): pytają, jak przy plikach Xcode, i odrzucają je (kopia w `.git/`). (build 153)
+- `node promo/screens.mjs` robi wszystkie zrzuty od nowa (po `npm run build:web`). (build 155)
+
+## Build 155 · 2026-11-05
+- [App Store] Zrzuty ekranu 2.0 z prawdziwej gry, 8 scen z podpisami (rój, boss w furii, ulepszenia, mapa 10 światów, fabuła, Europa, Codex, hangar): App Store 6,9" (1320×2868) i 6,5" (1284×2778) oraz Google Play (1080×1920) w `appstore/2.0/screenshots/`, plus zrzut ekranu zakupu do recenzji Apple.
+- [Zmiana] Cena pełnej gry w przeglądarce i w testowym pliku StoreKit (symulator): 4,99 USD jak w sklepie.
+- [Narzędzia] `node promo/screens.mjs` robi wszystkie zrzuty od nowa (po `npm run build:web`).
+
+## Build 154 · 2026-11-05
+- [Zmiana] Nowa ikona aplikacji 2.0 (Art Bible ST1: Striker na tle roju) na iPhonie i Androidzie (zwykła, okrągła i adaptacyjna; `proto2/make-app-icon.py`).
+- [App Store] Wydanie 2.0 przygotowane do `npm run release`: gałąź łączy `v2` z `main` (bez konfliktów, zawartość jak `v2`), nowe teksty App Store dla 2.0 (`appstore/LISTING.md`: opis, tekst promocyjny, słowa kluczowe, What's New, notatki dla recenzji, produkt „Full Game” za 4,99 USD), podsumowanie „Następne wydanie”.
+
+## Build 153 · 2026-11-04
+- [Narzędzia] `npm run review` i `npm run release` nie zatrzymują się już na plikach, które Capacitor generuje sam przy `npm run android:test` (`android/app/capacitor.build.gradle`, `android/capacitor.settings.gradle`, zasoby w `android/app/src/main/assets`): pytają, jak przy plikach Xcode, i odrzucają je (kopia w `.git/`).
+
+## Build 152 · 2026-11-04
+- [Nowe] Skrzynie zaopatrzenia za monety (pomysł Konrada z testów): na odprawie sektora wybierasz skrzynię (jedna na bieg, wybór jest zapamiętany), monety pobiera LAUNCH, a skrzynia otwiera się z animacją w pierwszej sekundzie biegu:
+  - Standard (250): 1 losowa broń albo perk na LV 1–3;
+  - Military (700): 2 przedmioty na LV 2–4;
+  - Prototype (1800): 3 przedmioty na LV 3–5.
+  Bez powtórek, z poszanowaniem slotów (4 bronie, 4 perki), bez ewolucji. RETRY i NEXT nie kupują skrzyni. Przy braku monet bieg rusza bez skrzyni.
+- [Narzędzia] Panel testera w biegu: przyciski CRATE: STANDARD / MILITARY / PROTOTYPE (otwarcie od razu, bez monet).
+
+## Build 151 · 2026-11-03
+- [App Store] Teksty strony gry w Google Play (`appstore/GOOGLE-PLAY-LISTING.md`): nazwa, krótki i pełny opis 2.0, kategoria, tagi, grafiki, lista 8 zrzutów ekranu, tekst „Co nowego”. Gra bez zmian.
+
+## Build 150 · 2026-11-03
+- [Balans] Groźniejsi bossowie (wszystkich 10):
+  - mocniejsze ataki: w walce z bossem trafienia od bossa, jego pocisków, wiązek i moździerzy bolą ×1,6;
+  - gęściej i częściej: przerwy między atakami krótsze o 30%, salwy o 30% gęstsze, przy wezwaniach jeden sługa więcej;
+  - FURY poniżej 50% życia: boss pulsuje na czerwono, rusza się o 30% szybciej, przerwy jeszcze o 35% krótsze, atak specjalny częściej;
+  - atak specjalny co 11–14 s: trzy szerokie wiązki wycelowane w statek, zapowiadane przez 1,5 s („!! INCOMING !!”), każda zabiera 40% kadłuba (mniej z tarczą i pancerzem).
+
+## Build 149 · 2026-11-03
+- [Nowe] Ataki ze wzorem w sektorach światów 2–10 (od 2 do 5 na sektor, częściej w dalszych światach; boss: jeden przed bossem), żeby gra wymagała ustawiania się, a nie tylko ucieczki:
+  - FLANK ATTACK: zwarta linia wrogów nadciąga z jednej strony;
+  - PINCER ATTACK: dwie linie z przeciwnych stron naraz;
+  - ENCIRCLEMENT: pierścień wokół statku z luką, która zamyka się w 6 s, a pierścień się zaciska; potem wrogowie ruszają w pościg;
+  - SNIPERS: łuk wrogów strzelających z dystansu (z danego świata); ucieczka nic nie daje, trzeba ich zestrzelić;
+  - PRIORITY TARGET: elita-dowódca z eskortą, która wzmacnia pobliskich wrogów, dopóki żyje.
+
+## Build 148 · 2026-11-03
+- [Balans] Awanse nie wyskakują już seriami: doświadczenie trafia do „banku”, który daje najwyżej jeden poziom na 2,5 s, a resztę oddaje później. Z jednej dużej porcji (magnes, bomba, masa kryształów) bank przyjmuje najwyżej dwa poziomy zapasu, więc daje kilka awansów zamiast całej serii.
+- [Balans] Łagodniejsza krzywa doświadczenia (około 8–10% mniej awansów w sektorze). W pomiarze (4 sektory, 3,5 min) przed zmianą zdarzały się 2–3 okienka w ciągu 0,3 s, po zmianie najkrótszy odstęp to 2,5 s.
+- [Narzędzia] LEVEL UP i „Boss now” w panelu testera dają poziomy od razu, z pominięciem banku.
+
+## Build 147 · 2026-11-03
+- [Zmiana] Wrogowie poruszają się jak stado, a nie jeden obiekt: każdy ma własny czas reakcji na skręt statku (0,25–0,9 s), własne wyprzedzenie, stronę, z której podchodzi, lekkie myszkowanie i bezwładność (skręca łukiem). Rój nie zmienia już kierunku synchronicznie ze statkiem.
+- [Balans] Zwykli wrogowie gonią najwyżej z prędkością 170 (85% bazowej prędkości Titana), więc każdy statek może uciec bez ulepszonych silników; szybsze są tylko szarże i wypady po ostrzeżeniu oraz elity z cechą „swift”. Dotąd roje od świata 2 miały do 180.
+
+## Build 146 · 2026-11-03
+- [Poprawka] Android: gra na pełnym ekranie, bez paska stanu u góry i paska nawigacji na dole (pojawiają się na chwilę po przeciągnięciu od krawędzi); ukrywa je ponownie po powrocie do gry.
+- [Narzędzia] Skrypty Androida same znajdują zainstalowane JDK 21 (Temurin, Microsoft, Oracle, Zulu, Corretto), bez ustawiania `VB_JAVA_HOME`.
+
+## Build 145 · 2026-11-03
+- [Narzędzia] `npm run android:play|test|bundle` sam wybiera Javę zgodną z Gradle (17–24): najpierw tę z Android Studio, potem `JAVA_HOME`; z Javą 25 budowanie kończyło się błędem „Unsupported class file major version 69”. Gdy żadna nie pasuje, podaje, co zainstalować (`VB_JAVA_HOME`).
+
+## Build 144 · 2026-11-02
+- [Nowe] Android: rankingi trybu Endless w Google Play Games (ta sama obsługa co Game Center na iPhonie); włączą się, gdy w Play Console powstanie projekt Play Games i 10 tablic wyników, a ich identyfikatory trafią do gry.
+- [Narzędzia] `appstore/GOOGLE-PLAY.md`: instrukcja Play Console krok po kroku (konto, aplikacja, pierwszy pakiet, produkt „Full Game”, zamknięte testy 12 osób × 14 dni, formularze, Play Games, premiera).
+
+## Build 143 · 2026-11-02
+- [Nowe] Android: zakup pełnej gry przez Google Play (Billing 7.1.1): cena ze sklepu, zakup, płatności oczekujące, przywracanie zakupu z konta Google i potwierdzanie zakupów; ten sam produkt co w App Store (`com.konradlechowicz.voidblaster.fullgame`). Działa, gdy produkt zostanie założony w Play Console.
+- [Zmiana] Komunikaty sklepu na Androidzie mówią o Google Play i koncie Google zamiast App Store i Apple ID.
+
+## Build 142 · 2026-11-02
+- [Nowe] Android: przycisk „wstecz” działa jak w grze: pomija scenę fabuły, zamyka okienko, pauzuje bieg albo cofa o ekran; w menu głównym chowa aplikację w tle.
+- [Narzędzia] `npm run android:bundle`: podpisany pakiet `.aab` dla Google Play (`dist/void-blaster-build-N.aab`); za pierwszym razem tworzy klucz do wysyłania (`android/void-blaster-upload.jks` + `android/keystore.properties`, poza gitem — zrób kopię zapasową).
+
+## Build 141 · 2026-11-02
+- [Narzędzia] Plan projektu (CLAUDE.md): nowa sekcja „PC / Steam” z listą zadań (pad w walce i w menu, sterowanie myszą, podpowiedzi przycisków, ustawienia sterowania, układ poziomy, ustawienia PC, Steamworks i strona sklepu). Gra bez zmian.
+
+## Build 140 · 2026-11-02
+- [Narzędzia] Opisy do TikToka, Instagrama i YouTube dla 4 filmików kampanii 2.0 (`appstore/2.0/video/SOCIAL-CAPTIONS.md`). Gra bez zmian.
+
+## Build 139 · 2026-11-02
+- [Narzędzia] Nagrywarka filmików reklamowych 2.0 (`npm run promo:video -- <invasion|swarm|bosses|worlds>`, `promo/record.mjs`, ujęcia w `promo/shots.mjs`): nagrywa prawdziwą grę klatka po klatce (1080×1920, 30 kl./s), z napisami w stylu gry, muzyką z gry i planszą „COMING SOON · iPhone & Android”; wyniki w `appstore/2.0/video/`. Gra bez zmian.
+- [Nowe] Cztery filmiki kampanii 2.0 w `appstore/2.0/video/` (z okładkami): VB-01 „The Invasion” (zwiastun fabularny, 32 s), VB-02 „The Swarm” (chaos gameplayu, 22 s), VB-03 „Ten Bosses” (31 s), VB-04 „10 Worlds · 54 Ways to Fight” (światy, Codex, hangar, 29 s).
+
+## Build 138 · 2026-11-02
+- [Nowe] Sceny fabuły mają właściwe ilustracje od ChatGPT (Art Bible SC0a–SC10d, 17 plansz): intro, 9 transmisji między światami i outro zamiast teł z konceptów światów.
+
+## Build 137 · 2026-11-01
+- [Nowe] Napisy końcowe: podziękowania (SPECIAL THANKS) dla Suno i ChatGPT, „wspaniałych członków załogi, pełnych kreatywnych pomysłów i niestrudzonych w działaniu”, oraz dla Claude'a, „wspaniałego project managera”.
+
+## Build 136 · 2026-11-01
+- [Nowe] Fabuła 2.0 (scenariusz zaakceptowany przez Konrada): intro przed pierwszym sektorem (4 plansze), transmisja po pokonaniu bossa każdego ze światów 1–9 i outro z napisami końcowymi po Void Heart. Admirał Hale z Dowództwa Ziemi i przechwycone sygnały Kolektywu, tekst pisany na żywo pod powoli przesuwającą się planszą; stuknięcie przyspiesza lub przechodzi dalej, SKIP pomija scenę.
+- [Nowe] Każda scena gra się sama raz; w Codexie nowa sekcja LOG pozwala obejrzeć obejrzane sceny ponownie. W wersji próbnej transmisja po świecie 2 poprzedza zaproszenie do pełnej gry.
+- [Zmiana] Do czasu plansz od ChatGPT (Art Bible SC0a–SC10d) sceny mają tła z konceptów światów.
+- [Narzędzia] Panel testera: przyciski odtwarzania każdej sceny i „FORGET SEEN”.
+
+## Build 135 · 2026-11-01
+- [Zmiana] Nowa muzyka świata 6 „Storm Relay” (wersja 2 z Suno, pasuje do reszty ścieżki): sektory ok. 137 BPM z pętlą 32 taktów (ok. 56 s), boss ok. 140 BPM z pętlą 36 taktów (ok. 62 s) i 8 taktami wejścia; punkty pętli dobrane tak jak w światach 7–10 (bez słyszalnego skoku).
+
+## Build 134 · 2026-11-01
+- [Nowe] Bronie widać na statku (grafika SH5 od ChatGPT): każda zdobyta broń pojawia się jako moduł na skrzydłach lub przy kadłubie Strikera, Phantoma i Titana (także w skórkach Gold i Veteran), do 4 modułów w kolejności zdobycia; broń po ewolucji ma złoty moduł z poświatą.
+
+## Build 133 · 2026-11-01
+- [Nowe] Atmosfera światów 3–10 z grafik ChatGPT (W3-P9 … W10-P9): pył księżycowy, marsjańskie chmury pyłu, dym fabryk, burzowe chmury Jowisza, mgła nad lodem Europy, zorze przy Wrotach, zarodnikowa mgła Brood World i neuronowa mgiełka Nexusa zastępują mgłę rysowaną kodem; jasność wyrównana tak, by była subtelna jak chmury w świecie 2.
+
+## Build 132 · 2026-11-01
+- [Nowe] Skórka Veteran Striker (grafika SH7 od ChatGPT) dla graczy z wersji 1.x: wybór „Veteran” w hangarze przy Strikerze; statek w grze i na ekranie tytułowym złożony z nowych części, w hangarze render 3/4.
+- [Zmiana] Płomień silnika złotej skórki wycięty czysto (bez ciemnej obwódki).
+
+## Build 131 · 2026-11-01
+- [Poprawka] Muzyka światów 7–10 (sektory i bossowie) ma nowe pętle bez słyszalnych skoków: koniec pętli trzyma się rytmu z dokładnością do 0,035 s (wcześniej do 0,12 s), a przy wyborze porównany był też rytm przed skokiem. Muzyka świata 6 czeka na nowe utwory z Suno.
+- [Narzędzia] Wydajność: na iPhonie 17 Pro Max ze wszystkimi nowymi grafikami dokładanie masy wrogów nic nie zmienia (test Konrada); zapisane w CLAUDE.md.
+
+## Build 130 · 2026-11-01
+- [Zmiana] Wrogowie przechwytują: dwa na trzy szybkie stwory (roje i wszystko, co ma prędkość 100+ i nie ma własnego sposobu ruchu) lecą tam, dokąd zmierza statek (do 1,4 s naprzód), a nie tylko za nim. Tłum nadlatuje też z przodu i z boków, zamiast ciągnąć się jedną masą za statkiem.
+- [Nowe] Atmosfera w światach 3–10, jak chmury w świecie 2: dryfujące, półprzezroczyste ławice powietrza w kolorze świata, mgiełka pod wrogami i kilka cienkich ławic nad nimi. Pył na Księżycu i Marsie, dym w fabryce, chmury burzowe na Jowiszu (niesie je wiatr świata 6), mgła nad lodem Europy, zasłony światła przy wrotach, mgła zarodników, mgiełka Nexusa. Na razie rysowane w kodzie; zastąpią je grafiki od ChatGPT (nowe zadania W3-P9 … W10-P9 w Art Bible).
+
+## Build 129 · 2026-11-01
+- [Zmiana] Muzyka przechodzi płynnie: przy zmianie utworu (np. gdy pojawia się boss) poprzedni wycisza się przez 2 s, a nowy narasta przez ok. 2 s, zamiast szybkiego cięcia.
+- [Zmiana] Płomień Flamethrowera jest subtelniejszy: półprzezroczysty, węższy, sięga tylko do celu i łagodnie pojawia się i znika. Płonący grunt jest mniejszy i przygaszony.
+- [Poprawka] Eksplozje (także przy porażce) nie szarpią: klatki animacji płynnie przechodzą jedna w drugą, a wybuch na końcu łagodnie gaśnie.
+- [Narzędzia] Nowy prompt do Suno na muzykę świata 6 (sektor i boss) w `art/2.0/audio/SUNO-PROMPTS.md`: ten sam rdzeń stylu co reszta ścieżki dźwiękowej zamiast drum and bass.
+
+## Build 128 · 2026-11-01
+- [Poprawka] Start gry: zanim wczytają się grafiki 2.0, nie pokazuje się już przez chwilę wygląd 1.x. Ekran jest ciemny z pulsującym napisem LOADING, a menu pojawia się dopiero razem z grafiką 2.0 (najwyżej po 20 s pokazuje się to, co jest).
+- [Poprawka] Okna wyższe niż ekran (np. panel testera 🛠) dają się przewijać palcem, więc da się dojść do przycisku DONE. Wcześniej gra blokowała przesuwanie wszędzie poza listami.
+
+## Build 127 · 2026-10-31
+- [Nowe] Gold Striker z własnych, złotych części od ChatGPT (Art Bible SH4) zamiast złotego zabarwienia Strikera.
+- [Nowe] Ekran sektorów: żeton każdego świata na zakładkach (wyszarzony, gdy świat jest zamknięty) i duży żeton przy nazwie świata, a w tle mapa podróży od Ziemi do Nexusa (UI3, UI4).
+- [Nowe] Hangar: statki w ujęciu 3/4 (Striker, Phantom, Titan, Gold Striker, UI5) i tło hangaru z widokiem na Ziemię (UI3).
+- [App Store] Materiały do sklepów 2.0 w `appstore/2.0`: ikona aplikacji 1024 px (ST1, jeszcze nie podmieniona w aplikacji), grafika Google Play 1024×500 (ST2) i key art 2048 px (ST3).
+
+## Build 126 · 2026-10-31
+- [Nowe] Reszta efektów z grafik ChatGPT: pociski broni (Pulse Blaster, Photon Storm, Scatter Gun i Flak Cannon, rakiety, pociski dronów) i miny (Art Bible FX1), iskry trafień w kolorze broni (FX2), eksplozje w trzech wielkościach: wróg, elita i duże wybuchy, boss (FX3), błyskawice Arc Coil i złote Tempest (FX4), fale Nova Pulse i Supernova, bańka Phase Shield z rozpryskiem przy pęknięciu i tarcze wrogów z cechą SHIELDED (FX8), portal przy pojawianiu się wrogów, błysk przybycia elity i ostrzegawczy krąg przed ostrzałem (FX9).
+- [Narzędzia] Pod kątem płynności: naraz najwyżej 40 iskier trafień, 60 eksplozji i 24 portale (roje bez portali); pociski rysuje PixiJS jak dotąd, tylko z nowymi teksturami.
+
+## Build 125 · 2026-10-31
+- [Nowe] Elity z cechami mają pierścienie z grafik ChatGPT (Art Bible EL1): obracający się pierścień w kolorze każdej cechy i jej odznakę nad nazwą (SWIFT, BULWARK, BERSERKER, COMMANDER, SHIELDED).
+- [Nowe] Nowe znajdźki na arenie (Art Bible PU1): kryształy doświadczenia w trzech rozmiarach (zielone, największe złote), moneta, zestaw naprawczy, magnes, bomba i skrzynia bossa.
+
+## Build 124 · 2026-10-31
+- [Nowe] Efekty nowych broni z grafik ChatGPT (Art Bible FX5–FX7) zamiast prostych neonowych kształtów: płomień Flamethrowera (niebieski po ewolucji w Inferno), płonący grunt (napalm, Inferno, Scorched Trail, Phoenix Rail), ogień na palących się wrogach, kula i wir czarnej dziury Singularity Cannon z jej zapadnięciem (większe, złote po ewolucji w Event Horizon), wiązka Railguna z ładowaniem przy statku, błyskiem wystrzału i wybuchem na końcu (Gauss Lance w złotej wersji).
+- [Narzędzia] Do sprawdzenia płynności: naraz rysuje się najwyżej 70 płonących wrogów; efekty są w osobnej paczce (`fx`), przycięte do rozmiaru w grze.
+
+## Build 123 · 2026-10-31
+- [Nowe] Nowe ikony od ChatGPT (Art Bible IC1–IC6) zamiast prostych neonowych symboli: 11 broni, 11 ewolucji, 9 perków, 12 kombosów broni, 8 zestawów perków i 3 super kombosy. Widać je na kartach awansu, w Codexie, na liście broni w pauzie, w hangarze i w sklepie ulepszeń (ulepszenia mają ikony podobnych perków, naprawa i monety ikony znajdziek).
+- [Narzędzia] Komplet grafik wspólnych od ChatGPT (ikony, efekty, elity, znajdźki, Gold Striker, interfejs, materiały do sklepów) zapisany w `art/2.0/common`; tekstury do gry robi `proto2/make-common.py`. Pozostałe grafiki z tej paczki wchodzą w kolejnych buildach.
+
+## Build 122 · 2026-10-31
+- [Narzędzia] Nazwy wszystkich 10 światów i 60 sektorów zatwierdzone przez Konrada (Art Bible i CLAUDE.md). Gra się nie zmienia: te nazwy już w niej są.
+
+## Build 121 · 2026-10-31
+- [Zmiana] Każdy zapis sprzed 2.0 zaczyna podróż od świata 1, także zapis z wcześniejszych testowych buildów 2.0 z postępem w światach 5–10 (w buildzie 120 taki zostawał bez zmian). Kto grał wcześniej, dostaje monety weterana i ekran powitalny.
+
+## Build 120 · 2026-10-31
+- [Nowe] Przejście z 1.x na 2.0: przy pierwszym uruchomieniu 2.0 zapis z 1.x zaczyna podróż od nowa (gwiazdki, przebyte sektory, rekordy Endless i ulepszenia ze sklepu znikają, bo światy 2–4 to w 2.0 zupełnie inne miejsca). Zostają: zakup pełnej wersji, statki, skórki, ustawienia, Codex, seria dziennych nagród i statystyki. Stary zapis jest zachowany w całości jako kopia.
+- [Nowe] Nagroda weterana: gracz, który grał w 1.x, dostaje monety na start (300 + 10 za każdą gwiazdkę z 1.x, najwyżej 72, + połowa monet wydanych na ulepszenia; najwyżej 2 000) i jednorazowy ekran „WELCOME BACK, PILOT”. Zapis zapamiętuje, że gracz jest weteranem (skórka „Veteran” dojdzie, gdy będzie gotowa jej grafika).
+- [Narzędzia] Zapis ma teraz numer wersji (2).
+- [Narzędzia] Panel testera 🛠: przycisk „SIMULATE 1.x SAVE” zamienia bieżący zapis w zapis podobny do 1.x i pokazuje przejście na 2.0 z ekranem weterana.
+
+## Build 119 · 2026-10-31
+- [Narzędzia] Art Bible kompletna: wszystkie zadania graficzne 2.0 mają jeden schemat kodów (W1-P1 … W10-P8 dla światów, SH statki, EL elity, FX efekty, PU znajdźki, IC ikony, UI interfejs, ST sklepy), prompty do zadań wspólnych są w zakładce Prompty, a nowa zakładka „Zadania i status” zbiera stan i kolejność. `CHATGPT-BRIEF.md` wskazuje na nowe kody. Gra się nie zmienia.
+
+## Build 118 · 2026-10-31
+- [Narzędzia] Podgląd na claude.ai: po buildzie 115 strona z linku mogła pokazywać stary wygląd 1.x, bo podgląd nie pozwala stronie pobierać własnych plików (`fetch`), a tak wczytywały się paczki grafik 2.0; tak samo mogła milczeć muzyka. Grafiki i muzyka idą teraz w plikach skryptów wczytywanych jak zwykłe pliki. Gra w aplikacji się nie zmienia.
+
+## Build 117 · 2026-10-31
+- [Nowe] Świat 10 „The Nexus” (pełna wersja), koniec podróży: 6 sektorów (Neural Shore, Synapse Storm, Broken Geometry, Heartbeat, The Cage, Void Heart) w grafice ChatGPT. Serce Kolektywu: wolno obracająca się sieć neuronowa w tle, podłoga z obwodów, niemożliwe ramy, pęknięte pierścienie, węzły neuronów, pąki-oczy i ściany na brzegu areny. Mapa nie ma już światów „w budowie”: cała podróż 1-10 jest grywalna.
+- [Nowe] Mechanika świata 10: wszystko naraz. Podmuchy wiatru, pary szczelin, które przenoszą statek i pociski, oraz jeziorka kwasu. Zdarzenia świata: „GRAVITY COLLAPSE” (studnie grawitacyjne) w pierwszych sektorach i „NEURAL STORM” (ostrzał) w późniejszych.
+- [Nowe] 6 wrogów świata 10: Synapse Swarm (roje), Wraith (pojawia się obok statku, elita w złotym pierścieniu), Eye (pociski samonaprowadzające), Voidling (roje), Neuron Node (osadzony w ziemi, celuje w statek), Overseer (ciężki, strzela). Wraith, Eye i Voidling wracają z 1.x w nowej grafice i są trochę silniejsze.
+- [Nowe] Boss VOID HEART, ostatni boss gry: bijące serce Kolektywu w pierścieniu klatki. W każdej z 3 faz wygląda inaczej (klatka pęka, rdzeń jaśnieje). Zagina przestrzeń (teleport), otwiera czarne dziury, strzela spiralami, wiązkami i salwami, ostrzeliwuje arenę i wzywa upiory oraz roje synaps. Pokonanie go otwiera tryb Endless we wszystkich światach.
+- [Nowe] Rekwizyty świata 10: skupiska neuronów (wybuchają) i kotwice pierścieni klatki (wzmacniają wrogów wokół). Muzyka świata 10 (Suno): sektor i boss.
+- [App Store] `appstore/GAME-CENTER.md`: lista 10 rankingów Endless do założenia przed premierą 2.0 (nowe nazwy światów, rankingi w5-w10).
+
+## Build 116 · 2026-10-31
+- [Nowe] Świat 9 „Brood World” (pełna wersja): 6 sektorów (Living Ground, Breathing Fields, Spawning Pits, Acid Marsh, Egg Chambers, Brood Matriarch) w grafice ChatGPT. Świat lęgowy Kolektywu: oddychająca, żywa ziemia z żył i metalu, łukowate żebra, gniazda, skupiska jaj, świecące grzyby i organiczne ściany na brzegu areny.
+- [Nowe] Mechanika świata 9: jeziorka kwasu parzą statek, gdy w nie wleci, a gniazda wrastają w ziemię i wypuszczają larwy, dopóki się ich nie zniszczy. Zdarzenie świata to „ACID RAIN”, czyli ostrzał kwasem.
+- [Nowe] 6 wrogów świata 9: Larva (roje), Leech (szarżuje), Spitter (pluje z dystansu, elita w złotym pierścieniu), Nest (osadzone w ziemi, wypuszcza larwy), Brood Sac (pęka na larwy), Carapace Beetle (ciężki).
+- [Nowe] Boss BROOD MATRIARCH: matka roju. Pełznie za statkiem i obraca się w jego stronę, rzuca się na niego, pluje kwasem (ostrzał, salwy, spirale) i przez całą walkę składa larwy i pijawki. Ma 3 fazy.
+- [Nowe] Rekwizyty świata 9: worki lęgowe pełne kwasu (wybuchają) i serca gniazd (wypuszczają larwy, póki stoją; potem łup). Muzyka świata 9 (Suno): sektor i boss.
+
+## Build 115 · 2026-10-31
+- [Nowe] Świat 8 „The Rift Gate” (pełna wersja): 6 sektorów (Shattered Space, Mirror Shards, Echoes of Home, Gate Rings, No Return, Gatekeeper) w grafice ChatGPT. Za Układem Słonecznym, nad gigantycznym pierścieniem wrót: wolno obracające się zakrzywione niebo, unoszące się szklane odłamki rzeczywistości, segmenty pierścieni, pylony strażników, uśpione oczy i ściany światła na brzegu areny.
+- [Nowe] Mechanika świata 8: pary szczelin. Statek, który wleci w szczelinę, wylatuje z jej pary (z krótką przerwą, żeby nie skakać w kółko). To samo dzieje się z pociskami wrogów, więc strzał może przyjść z drugiego końca areny. Zdarzenie świata to „GRAVITY TEAR”, czyli studnie grawitacyjne.
+- [Nowe] 6 wrogów świata 8: Shard Swarm Unit (roje), Echo (pojawia się obok statku), Phase Walker (szarżuje, elita w złotym pierścieniu), Null Orb (pociski samonaprowadzające), Rift Spawner (osadzony w przestrzeni, wypuszcza roje odłamków), Gate Sentinel (ciężki, strzela).
+- [Nowe] Boss GATEKEEPER: trzy obracające się pierścienie wrót wokół rdzenia. Zagina przestrzeń (teleport), strzela spiralami i wiązkami przez portale, wysyła roje i echa. Ma 3 fazy.
+- [Nowe] Rekwizyty świata 8: kondensatory pierścieni (wybuchają) i kotwice szczelin (wzmacniają wrogów wokół). Muzyka świata 8 (Suno): sektor i boss.
+- [Narzędzia] Podgląd na claude.ai: grafiki 2.0 idą w kilku plikach zbiorczych (jeden na świat i jeden wspólny) zamiast ponad 400 osobnych, bo wersja podglądu mieści najwyżej 511 plików. Gra w aplikacji się nie zmienia.
+
+## Build 114 · 2026-10-31
+- [Nowe] Świat 7 „Abyss of Europa” (pełna wersja): 6 sektorów (Ice Shelf, Thin Ice, Glow Beneath, Cold Hatchery, The Deep Call, Abyss Leviathan) w grafice ChatGPT. Pod półprzezroczystym lodem Europy widać ciemny ocean ze świecącym życiem; są lodowe iglice, zamarznięte hybrydy, zielono świecące szczeliny, parujące kominy i lodowe ściany na brzegu areny.
+- [Nowe] Mechanika świata 7: śliski lód. Statek ma bezwładność, ślizga się i dopiero po chwili skręca tam, gdzie go kierujesz. Spod lodu wynurzają się węgorze-hybrydy: znikają i pojawiają się obok statku. Zdarzenie świata to fala „BENEATH THE ICE”.
+- [Nowe] 6 wrogów świata 7: Ice Wisp (roje), Frost Crab (elita w złotym pierścieniu), Tentacle Mine (wybucha przy statku), Spore Lantern (osadzona w lodzie, strzela dookoła), Eel Hybrid (wynurza się spod lodu), Leviathan Spawn (ciężki, rozpada się na Ice Wisp).
+- [Nowe] Boss ABYSS LEVIATHAN: przepisane morskie życie wielkości okrętu. Obraca się w stronę statku, szarżuje, macki zamiatają wiązkami, do tego salwy, spirale, ostrzał i posiłki. Ma 3 fazy.
+- [Nowe] Rekwizyty świata 7: kapsuły uwięzione w lodzie (łup) i zarodnikowe latarnie Kolektywu (wzmacniają wrogów wokół). Muzyka świata 7 (Suno): sektor i boss.
+- [Poprawka] Grafiki 2.0 wczytują się odporniej: przy kilkuset obrazkach naraz przeglądarka czasem odmawiała ich dekodowania i gra spadała do wyglądu 1.x.
+
+## Build 113 · 2026-10-31
+- [Nowe] Świat 6 „Storm Relay” (pełna wersja): 6 sektorów (Gas Giant, Ion Winds, Antenna Field, Living Signal, Deep Transmission, Storm Eye) w grafice ChatGPT. Lot nad burzami Jowisza: pod statkiem przesuwają się kłęby chmur gazowego olbrzyma, w burzy unoszą się mosiężne platformy przekaźnika, są anteny, piorunochrony i świecące cewki, a brzeg areny tworzą ściany burzy z piorunami.
+- [Nowe] Mechanika świata 6: porywy wiatru. Co kilkanaście sekund baner „WIND SHEAR” i przez kilka sekund wiatr spycha statek i pociski wrogów, a chmury i nakładka płyną z wiatrem. Burze piorunów (ostrzał) jako zdarzenie świata.
+- [Nowe] 6 wrogów świata 6: Ion Kite (roje, elita w złotym pierścieniu), Gas Mine (wybucha przy statku), Relay Jelly (strzela), Static Ray (szarżuje), Vortex (wir, który wciąga statek, od sektora 2), Cloud Whale (ciężki, rozpada się na Ion Kite). Z odłamkami i cieniami.
+- [Nowe] Boss STORM EYE: żywa burza krążąca wokół statku, z wolno obracającym się okiem i pulsującymi słabymi punktami. Atakuje spiralami iskier, uderzeniami piorunów, wiązkami i rojami. Ma 3 fazy.
+- [Nowe] Rekwizyty świata 6: zbiorniki gazu (wybuchają) i wzmacniacze sygnału (wzmacniają wrogów wokół, rozbite dają łup). Muzyka świata 6 (Suno): sektor i boss, z płynnie dobranymi pętlami.
+- [Balans] Strojenie trudności dla światów 5–10, każdy o stopień trudniejszy. Świat 5 przez przeoczenie używał strojenia świata 1, więc jest teraz trochę trudniejszy (symulacja: dalej wygrywany).
+- [Narzędzia] Wspólna podstawa światów 6–10: skrypt tekstur `proto2/make-worlds.py`, jedna scena 2.0 (`js/v2/journey.js`), mechaniki (`js/worldfx.js`), wspólne rysowanie bossów (słabe punkty wykrywane automatycznie na rysunku) i szablon sektorów.
+
+## Build 112 · 2026-10-31
+- [Zmiana] Railgun sam celuje: przed każdym strzałem wybiera linię, na której trafi najwięcej wrogów (elity i bossy liczą się podwójnie i poczwórnie), także za statkiem. Wcześniej strzelał w kierunku lotu, a goniący rój był z tyłu (uwaga Konrada). W symulacji, gdy statek ucieka przed rojem, Railgun wypada teraz na równi z Seeker Missiles, Nova Pulse i Proximity Mines.
+- [Zmiana] Phase Shield to teraz osłona z zapasem: pochłania 25 obrażeń (+10 na każdy poziom, 65 na poziomie 5) przed kadłubem i odnawia się do pełna w 4 s, gdy przez 2,5 s nic w statek nie trafi. Wcześniej blokowała jedno trafienie co 16 s i przy częstych kontaktach nic nie dawała (uwaga Konrada). Wokół statku widać pierścień, który blednie w miarę zużycia, i łuk pokazujący, ile osłony zostało; „SHIELD DOWN”, gdy się wyczerpie.
+- [Zmiana] Bastion Field (Phase Shield + Armor Plating): fala odrzucająca wrogów, gdy osłona się wyczerpie, i o 30% szybsze odnawianie.
+
+## Build 111 · 2026-10-29
+- [Nowe] Nowy arsenał 2.0, etap 2: 6 kombosów nowych broni (obie bronie na poziomie 3).
+  - Ion Rail (Railgun + Arc Coil): każdy przebity wróg wypuszcza błyskawicę do sąsiada.
+  - Shrapnel Rail (Railgun + Scatter Gun): koniec wiązki rozpryskuje się w wachlarz śrutu.
+  - Napalm Mines (Flamethrower + Proximity Mines): wybuch miny zostawia plamę ognia.
+  - Fire Blades (Flamethrower + Orbit Blades): ostrza podpalają wrogów.
+  - Gravity Barrage (Singularity Cannon + Seeker Missiles): rakiety skręcają do czarnych dziur, a wrogowie w dziurze dostają od nich +50%.
+  - Collapse (Singularity Cannon + Nova Pulse): fala Nova od razu zapada czarne dziury w wybuchy.
+- [Nowe] 3 nowe zestawy perków (oba perki na poziomie 3).
+  - Scorched Trail (Thermal Core + Thrusters): w ruchu zostawiasz płonący ślad.
+  - Bastion Field (Phase Shield + Armor Plating): gdy tarcza pęka, fala odrzuca wrogów, a tarcza odnawia się o 30% szybciej.
+  - Salvage Core (Targeting Matrix + Tractor Beam): zabójstwo krytykiem zostawia dodatkowy kryształ XP.
+- [Nowe] 3 super kombosy z trzech broni (wszystkie na poziomie 5 albo po ewolucji, złota ramka na karcie, baner „SUPER COMBO!”).
+  - Thunderstorm (Railgun + Arc Coil + Proximity Mines): co 6 s błyskawice trafiają 8 wrogów na ekranie, a każde trafienie zostawia minę.
+  - Supernova Core (Nova Pulse + Singularity Cannon + Flamethrower): co 4. fala Nova wciąga wrogów do środka i zostawia pierścień ognia.
+  - Phoenix Rail (Railgun + Flamethrower + Pulse Blaster): wiązki zostawiają linię ognia, a raz na przelot śmiertelne trafienie zamienia się w burzę ognia wokół statku i 30% kadłuba.
+- [Nowe] Codex ma sekcję SUPER COMBOS; karty podpowiadają też super kombosy, gdy masz już pozostałe dwie bronie.
+- [Narzędzia] Panel testera: przyciski nowych kombosów, zestawów i super kombosów.
+
+## Build 110 · 2026-10-29
+- [Nowe] Nowy arsenał 2.0, etap 1: 3 nowe bronie.
+  - Railgun: ładuje się i strzela wiązką przez wszystkich wrogów na linii lotu, więc celuje się ruchem statku. Ewolucja Gauss Lance (z Targeting Matrix): dwie wiązki, wybuch na końcu linii, a trafienia krytyczne rozbijają tarcze elit.
+  - Flamethrower: strumień ognia z bliska, trafieni płoną 3 s. Ewolucja Inferno (z Thermal Core): szeroki niebieski płomień, który zostawia płonący grunt.
+  - Singularity Cannon: wolna kula, która zatrzymuje się i zmienia w czarną dziurę wciągającą i raniącą wrogów. Ewolucja Event Horizon (z Tractor Beam): wielkie czarne dziury, które na koniec zapadają się w wybuch.
+- [Nowe] 3 nowe perki:
+  - Targeting Matrix: +6% szansy na trafienie krytyczne (×2 obrażeń, złota liczba z „!”).
+  - Thermal Core: +8% szansy, że każde trafienie podpali wroga, i ogień silniejszy o 20%.
+  - Phase Shield: tarcza wokół statku blokuje jedno trafienie i odnawia się co 16 s, krócej z każdym poziomem.
+- [Nowe] Ikony nowych broni i perków; Codex sam je obejmuje.
+- [Balans] Nowe bronie porównane w symulacji z dotychczasowymi: Railgun i Flamethrower jak bronie obszarowe (Missiles, Nova Pulse, Mines), Singularity Cannon na poziomie 1 jak Arc Coil.
+- [Zmiana] Efekty nowych broni są na razie neonowe; grafiki od ChatGPT podmienimy, gdy przyjdą. Kombosy, zestawy perków i super kombosy nowych broni to etap 2.
+
+## Build 109 · 2026-10-29
+- [Nowe] Świat 5 „Foundry Belt” (pełna wersja): 6 sektorów (Ore Drift, Assembly Line, Smelter Ring, Drone Yards, Hull Forge, Foundry Mother) w grafice ChatGPT. Lot nad wydrążoną planetoidą-fabryką: skała cięta w tarasy, szyny i stalowe płyty, a przez rozpadliny widać kosmos z dalekimi planetoidami-fabrykami. Do tego pulsujące piece, suwnice z niedokończonymi kadłubami, taśmociągi, ramiona spawalnicze sypiące iskrami, krawędzie tarasów z rusztowaniami, żar i popiół w powietrzu.
+- [Nowe] Mechanika świata 5: dryfujące planetoidy są ruchomą osłoną. Pociski wrogów rozbijają się na nich, ale planetoidy powoli płyną i odbijają się od brzegu areny, więc trzeba się z nimi przesuwać. Maszyny da się niszczyć: zbiorniki paliwa wybuchają, kondensatory wzmacniają wrogów wokół, a rozbite dają łup.
+- [Nowe] 6 wrogów świata 5: Forge Drone (roje, elita w złotym pierścieniu), Welder (szarżuje), Assembler Turret (osadzona, obraca się i strzela w statek), Rock Drifter (przelatuje przez arenę jak planetoida), Ore Hauler (ciężki, rozpada się na drony), Worker Mech (trzyma dystans i strzela). Wszyscy z odłamkami i cieniami.
+- [Nowe] Boss FOUNDRY MOTHER: pancerna fabryka, która buduje armię w trakcie walki. Z dwóch zatok po bokach wypuszcza oddziały dronów, welderów i mechów (zatoki rozbłyskują przy budowie). Do tego płynny żużel (ostrzał), iskry (spirale, salwy) i wiązki. 3 fazy, pulsujące słabe punkty (zamki zatok i wyloty pieców).
+- [Nowe] Muzyka świata 5 (Suno): sektor i boss, z płynnie dobranymi pętlami.
+- [Balans] Sektory świata 5 sprawdzone symulacją: cele zestrzeleń osiągalne, boss pokonywany w ok. 1 min przy aktywnym statku.
+
+## Build 108 · 2026-10-29
+- [Nowe] Świat 4 „Red Conversion” (pełna wersja): 6 sektorów (Red Dust, Black Veins, Dust Storm, Glass Canyon, Olympus Shadow, Red Colossus) w grafice ChatGPT. Matowy czerwony pył Marsa z wydmami, kryształowe iglice, przejęta ludzka kopuła, zakopane łaziki, ściany kanionu z czarnymi kryształowymi klifami, pył niesiony wiatrem.
+- [Nowe] Mechanika świata 4: sieć czarnego kryształu rośnie w trakcie sektora z kilku węzłów, a Spreadery kładą świeży kryształ tam, gdzie idą (po chwili zanika). Na krysztale statek jest spowolniony. Co jakiś czas nadchodzi burza pyłowa: widok zamyka się wokół statku, a Dust Stalkery znikają w pyle.
+- [Nowe] 6 wrogów świata 4: Crystal Mite (roje), Shard Drone (strzela, elita w złotym pierścieniu), Dust Stalker (szarżuje), Prism Node (osadzony w gruncie, strzela dookoła), Spreader (kładzie kryształ), Crystal Golem (ciężki, rozpada się na Mity). Każdy rozpada się na własne odłamki, wszyscy rzucają cienie.
+- [Nowe] Boss RED COLOSSUS: chodząca forteca z czarnego kryształu. Idzie za statkiem i obraca się w jego stronę, wokół statku wyrasta kryształ z pierścieniem odłamków, do tego wiązki, spirale, ostrzał i posiłki. 3 fazy, pulsujące słabe punkty w stawach nóg, świecące działa przy strzałach.
+- [Nowe] Rekwizyty świata 4: kryształowe skupiska (rozpryskują się w wybuch odłamków), przejęte pylony energetyczne (wzmacniają wrogów wokół, rozbite dają łup), zrzuty z zapasami.
+- [Nowe] Muzyka świata 4 (Suno): sektor i boss, z płynnie dobranymi pętlami.
+- [Balans] Sektory świata 4 sprawdzone symulacją: cele zestrzeleń osiągalne, boss pokonywany w ok. 1–3 min.
+
+## Build 107 · 2026-10-29
+- [Narzędzia] Świat 4 „Red Conversion”: pierwsza część grafik od ChatGPT (koncept, podłoża, nakładka, rekwizyty, brzegi areny, spis plików) w `art/2.0/worlds/world4` i muzyka Suno (sektor, boss) w `art/2.0/audio`. Czekają na resztę (narożniki, wrogowie, boss); gra bez zmian.
+
+## Build 106 · 2026-10-29
+- [Nowe] Świat 3 „Lunar Bridgehead” (pełna wersja): 6 sektorów (Dark Side, Sea of Tranquility, Crater Run, Rooted Base, Mortar Fields, Moon Spire) w grafice ChatGPT. Regolit Księżyca z koleinami, ruiny ludzkiej bazy (kopuły, łazik, anteny, panele), przewody Kolektywu pełzające po gruncie jak korzenie z pulsującą magentą, skalne grzbiety na brzegu areny, unoszący się pył; wrogowie rzucają twarde cienie.
+- [Nowe] Mechanika świata 3: wielkie kratery są osłoną, czyli pociski wrogów rozbijają się na nich (własne strzały lecą nad nimi). Kolektyw odpowiada moździerzami: gniazda moździerzy w gruncie i ostrzał, którego kratery nie zatrzymują.
+- [Nowe] 6 wrogów świata 3: Probe (stada sond), Conduit Crawler (z elitą w złotym pierścieniu), Lunar Hopper (porusza się skokami), Mortar Node (wystrzeliwuje pocisk po łuku tam, gdzie jest statek), Crater Turret (obraca działo za statkiem i strzela wachlarzem), Regolith Golem (ciężki). Każdy rozpada się na własne odłamki.
+- [Nowe] Boss MOON SPIRE: wieża-działo wrośnięta w krater. Nie rusza się, a jej działo obraca się za statkiem i po ładowaniu strzela serią ciężkich pocisków. Do tego ostrzał moździerzowy, spirale, wiązki i posiłki, 3 fazy, świecące słabe punkty i korzenie, które się poruszają.
+- [Nowe] Rekwizyty świata 3: ludzkie stanowiska moździerzy (wybuchają), pompy Kolektywu (wzmacniają wrogów wokół, rozbite dają łup), skrzynie z zapasami.
+- [Nowe] Muzyka świata 3 (Suno): sektor i boss, z płynnie dobranymi pętlami.
+- [Balans] Nieruchomych wrogów (wieżyczki, moździerze) jest naraz najwyżej 3–6 na sektor, a te zostawione daleko za statkiem znikają. Sektory sprawdzone symulacją: cele zestrzeleń osiągalne, boss pokonywany w 0,5–2 min.
+- [Poprawka] Świat 2: trzecia gwiazdka (wszystkie elity) była niemożliwa do zdobycia, a cel sektora pokazywał „undefined”. Elity świata 2 są teraz liczone; ich trudność bez zmian.
+- [Poprawka] Gravity Mines (ewolucja) nie zawieszają już gry, gdy w ich zasięgu stoi rekwizyt (zbiornik, skrzynia, bateria).
+- [Narzędzia] Podgląd w przeglądarce jest teraz podzielony: strona z kodem gry (ok. 0,8 MB) i osobne pliki grafik i muzyki w `dist/assets` (jeden plik przekroczyłby limit 16 MB).
+
+## Build 105 · 2026-10-29
+- [Poprawka] Dźwięk wraca po powiadomieniu, połączeniu albo powrocie z innej aplikacji: przy pierwszym dotknięciu ekranu gra uruchamia dźwięk od nowa (iOS potrafił zostawić go zawieszonego), a muzyka gra dalej od pętli, bez ponownego intro.
+
+## Build 103 · 2026-10-28
+- [Narzędzia] Kolejność zadań na następną sesję: najpierw raport z telefonu (wydajność, trudność, pętle muzyki, chmury i błyskawice), potem świat 3 „Lunar Bridgehead” (grafiki i muzyka gotowe), potem przebudowa systemu broni. Gra bez zmian.
+
+## Build 102 · 2026-10-28
+- [Narzędzia] Lista zadań na następną sesję w notatkach projektu: przebudowa systemu broni (nowy arsenał z `PLAN-2.0-ARSENAL.md`) i świat 3 „Lunar Bridgehead”. Gra bez zmian.
+
+## Build 101 · 2026-10-28
+- [Narzędzia] Plan nowego arsenału 2.0 na później (`PLAN-2.0-ARSENAL.md`): 3 bronie (Railgun, Flamethrower, Singularity Cannon), 3 perki (Targeting Matrix, Thermal Core, Phase Shield), ich ewolucje, 6 kombosów, 3 zestawy perków i 3 super kombosy. Gra bez zmian.
+
+## Build 100 · 2026-10-28
+- [Poprawka] 2.0, świat 2: muzyka nie przeskakuje już nienaturalnie przy zapętleniu. Tempo nagrań z Suno lekko „pływa”, a koniec pętli był przesunięty o 80–100 ms względem rytmu (perkusja się potykała). Nowe punkty pętli znalezione przeszukaniem całych utworów i wyrównane co do milisekundy: sektor zapętla 48 taktów od 54 s (ok. 79 s muzyki), boss 24 takty o najbardziej zgodnym brzmieniu (ok. 38 s) po ok. 13 s wstępu.
+
+## Build 99 · 2026-10-28
+- [Nowe] 2.0, świat 2: własna muzyka „Siege of Earth” (Suno) – w sektorach utwór oblężenia (146 BPM; wstęp ok. 39 s, potem zapętlone 48 taktów od wejścia na pełną moc, ok. 79 s), przy Landing Citadel utwór bossa (151 BPM; wstęp skrócony do ok. 13 s, potem zapętlone ok. 76 s). Pętle z płynnym szwem, głośność dopasowana do świata 1.
+- [Zmiana] 2.0: przy bossie gra muzyka bossa danego świata (świat 1: Harvester, świat 2: Landing Citadel).
+- [Narzędzia] Podgląd w przeglądarce odchudzony o nieużywany obraz bossa świata 2 i lżejszy kafel chmur, żeby z nową muzyką zmieścił się w limicie (15,8 MB).
+
+## Build 98 · 2026-10-28
+- [Nowe] 2.0: świat 2 „Siege of Earth” jest grywalny – 6 sektorów (Burning Sky, Tether Storm, Cloud Wall, City of Fire, Home Front, Landing Citadel), cały z grafik ChatGPT (komplet W2 P1–P8). Walczymy nocą nad burzą: pod nami Ziemia ze światłami miast, która powoli przesuwa się w dole, półprzezroczyste chmury, płonące wraki obrony i magentowe węzły lin Kolektywu, na brzegu ściany burzowych chmur, a tuż przed kamerą strzępy chmur, iskry i deszcz.
+- [Nowe] 2.0, świat 2: mechanika świata – wały chmur zasłaniają wrogów (widać tylko ich magentowe rdzenie), a co 5–9 s uderza błyskawica: ekran błyska, burzowe ściany się rozświetlają, a chmury na chwilę rzedną i odsłaniają wszystko.
+- [Nowe] 2.0, świat 2: sześciu nowych wrogów z siły desantowej – Interceptor (szybkie klucze po 3–5), Lander Pod (zniszczony wypuszcza 3 interceptory), Gunship (salwy po 3 pociski z dystansu), Sky Mine (podlatuje i wybucha), Raider (celuje i szarżuje), Siege Walker (wolny, bardzo wytrzymały); elita interceptora ma własną grafikę, każdy wróg własne szczątki.
+- [Nowe] 2.0, świat 2: boss LANDING CITADEL – latająca forteca z dwoma pierścieniami dział, które obracają się w przeciwne strony (w kolejnych fazach coraz szybciej), z czterema pulsującymi słabymi punktami; trzy fazy, spirale i wirujące promienie, ostrzał moździerzowy, desant interceptorów i min; wynurza się z chmur.
+- [Nowe] 2.0, świat 2: rekwizyty do zestrzelenia – baterie przeciwlotnicze (amunicja wybucha i rani wszystko wokół) i pylony-nadajniki Kolektywu (póki stoją, wzmacniają i przyspieszają wrogów w promieniu ok. 240; zniszczone wyrzucają monety i czasem apteczkę albo magnes).
+- [Balans] 2.0, świat 2: tempo świata 1 o stopień trudniej; cele zabójstw i wytrzymałość bossa ustawione symulacją (walka z Citadel zwykle poniżej minuty, najwyżej ok. 2:20). Muzyka: na razie utwór świata 1, dopóki świat 2 nie ma własnego.
+
+## Build 97 · 2026-10-28
+- [Nowe] 2.0, świat 1: spadający wrak – co 25–35 s przez arenę, blisko statku, przelatuje duży fragment pokładu stacji. Najpierw przez ok. 1,8 s bursztynowy korytarz z biegnącymi szewronami i rosnącym cieniem (plus dźwięk ostrzeżenia), potem szybki przelot z obrotem: drobni wrogowie giną od razu, ciężcy dostają mocno, zbiorniki paliwa wybuchają, a statek, który został w korytarzu, traci ok. 19 punktów. Działa też w Endless świata 1.
+- [Balans] 2.0, świat 1: szybsze tempo – ok. 45% więcej wrogów od pierwszej sekundy, większe fale (np. 1-1: 24 i 40 zamiast 16 i 28; 1-5: 56 swarmerów), wrogowie o ok. 8% szybsi i wcześniej w grze, limit na polu 140–200 (zapas względem bramki wydajności 180 przy 60 FPS). Harvester pojawia się po 2:00 zamiast 2:30.
+- [Balans] 2.0, świat 1: cele zabójstw do gwiazdek podniesione do nowej liczby wrogów (1-1: 900, 1-2: 1250, 1-3: 1400, 1-4: 1650, 1-5: 1700, 1-6: 700) – sprawdzone symulacją, tak samo trudne jak w 1.x.
+
+## Build 96 · 2026-10-28
+- [Zmiana] 2.0: mapa sektorów pokazuje całą podróż – 10 światów (Orbital Ruins, Siege of Earth, Lunar Bridgehead, Red Conversion, Foundry Belt, Storm Relay, Abyss of Europa, The Rift Gate, Brood World, The Nexus) w dwóch rzędach zakładek. Światy 2–10 mają kartę „UNDER CONSTRUCTION” z krótką historią i sześcioma zaplanowanymi sektorami (szósty to boss). Stare światy 2–4 z 1.x nie są już grywalne.
+- [Zmiana] 2.0: po pokonaniu Harvestera ekran wyników mówi „WORLD CLEAR” i zapowiada następny świat (w budowie) zamiast „Galaxy saved”. Endless otwiera się po pokonaniu ostatniego zbudowanego bossa (na razie Harvestera).
+- [Zmiana] 2.0: darmowa część to światy 1–2 (decyzja z planu 2.0); okno zakupu opisuje pełną podróż: światy 3–10 i 8 bossów.
+
+## Build 95 · 2026-10-28
+- [Narzędzia] Nazwy sektorów wszystkich 10 światów 2.0 zapisane w Art Bible (tabela „Nazwy sektorów”) i w notatkach projektu. Świat 1 zatwierdzony, światy 2–10 to propozycja. Gra bez zmian.
+
+## Build 94 · 2026-10-28
+- [Zmiana] 2.0: świat 1 nazywa się teraz ORBITAL RUINS (wcześniej Neon Nebula), a jego sektory: 1-1 Dead Orbit, 1-2 Debris Field, 1-3 Broken Ring, 1-4 Rewritten Signal, 1-5 Last Picket, 1-6 Harvester. Nowe nazwy widać na mapie sektorów, w odprawie, na banerze na starcie i na ekranie wyników.
+
+## Build 93 · 2026-10-28
+- [Zmiana] 2.0: nowy, stonowany i bardziej technologiczny styl interfejsu – grafitowe panele, cienkie linie, ostre narożniki, narożne „klamry” na okienkach, prawie bez neonowej poświaty. Jeden akcent – bursztyn ze świata 1 – oznacza akcje i wybór (PLAY, LAUNCH, RESUME, aktywne przełączniki); magenta tylko dla Kolektywu (boss, porażka); złoto tylko dla monet i gwiazdek. Dotyczy ekranu startowego, mapy sektorów, hangaru, ulepszeń, Codexu, codziennej nagrody, ustawień, okna zakupu, kart level-up, pauzy, wyników, HUD-u, banerów i podpowiedzi.
+- [Zmiana] 2.0: logo w nowym stylu – „VOID” jasnym metalem, „BLASTER” bursztynem między cienkimi liniami.
+- [Zmiana] 2.0: tło ekranu tytułowego spokojniejsze – sieć Kolektywu i jej impulsy przygaszone, delikatniejsza poświata emblematu, ciemniejsze tło za ekranami sektorów, hangaru i ulepszeń.
+- [Zmiana] 2.0: joystick jak celownik – ciemny dysk z cienkim pierścieniem, bursztynowe znaczniki i płaska gałka z bursztynowym środkiem, bez neonowego blasku.
+
+## Build 92 · 2026-10-28
+- [Narzędzia] Lista zadań 2.0 w notatkach projektu: mechanika świata 1, tempo i balans, ciemniejszy, spokojniejszy ekran startowy i okienka (dopasowane do świata 1). Gra bez zmian.
+
+## Build 91 · 2026-10-27
+- [Zmiana] 2.0: boss świata 1 nazywa się teraz HARVESTER (wcześniej Hive Mother) – na pasku życia, w nazwie sektora 1-6 i na ekranie po jego pokonaniu.
+
+## Build 90 · 2026-10-27
+- [Nowe] 2.0: szczątki wrogów z ChatGPT (W1 P7) – zestrzelony wróg rozpada się na 2–3 kawałki swojego kadłuba (elita na 4), które rozlatują się, obracają i gasną w około sekundę. Każdy z 6 typów wrogów ma własne szczątki; naraz leci najwyżej 160 kawałków, więc wydajność przy dużych falach się nie zmienia.
+
+## Build 89 · 2026-10-27
+- [Nowe] 2.0, boss świata 1 (Harvester, W1 P8): ostrzejsza grafika i świecące części z arkusza – rdzeń pulsuje, boczne kapsuły na zmianę, dziób się rozjaśnia; w szale (druga faza) wszystko świeci mocniej i szybciej. Boss wlatuje od strony Ziemi, z głębi, rosnąc, z silnikami na pełnej mocy.
+
+## Build 88 · 2026-10-27
+- [Nowe] 2.0, świat 1: nakładka bliska z ChatGPT (W1 P4) – pył, drobne odłamki i iskry tuż przed kamerą, nad akcją; przesuwają się szybciej niż arena, więc widać głębię. Delikatna, nie zasłania wrogów.
+
+## Build 87 · 2026-10-27
+- [Nowe] 2.0, świat 1: tło dalekie z ChatGPT (W1 P2) – Ziemia nocą w lewym dolnym rogu, z niebieską poświatą atmosfery i światłami miast, przesuwa się wolniej niż arena (głębia). Zastępuje wycinek Ziemi ze zwiastuna.
+
+## Build 86 · 2026-10-27
+- [Nowe] 2.0, świat 1: krawędź areny z ChatGPT (W1 P6) – pierścień wraków stacji, paneli słonecznych i satelitów z bursztynową heksagonalną tarczą od strony areny, która powoli pulsuje. Zastępuje przerywaną linię.
+
+## Build 85 · 2026-10-27
+- [Nowe] 2.0, świat 1: rekwizyty z ChatGPT (W1 P5) – złamane maszty i skrzydła paneli słonecznych, wraki ludzkich wieżyczek na pokładach, martwe satelity, kapsuły ratunkowe i iskrzące wiązki kabli dryfują po arenie.
+- [Nowe] 2.0, świat 1: zbiorniki paliwa z bursztynowym słabym punktem – zestrzelony wybucha (promień 150) i rani wrogów wokół, ale też statek, jeśli jest za blisko; zbiorniki odpalają się nawzajem. Skrzynie z amunicją rozpadają się na 3–5 monet, czasem z apteczką albo magnesem. Zniszczone zostają jako wraki, co 30 s pojawia się nowy (do 9 naraz). Bronie trafiają je jak wrogów, ale ich nie celują.
+
+## Build 84 · 2026-10-27
+- [Nowe] 2.0, świat 1 (Orbital Ruins): wyspy pokładów stacji obronnych to teraz grafika z ChatGPT (W1 P3b) – ciemny metal z bursztynowymi pasami, odsłonięte kratownice i magentowe ślady Kolektywu zamiast prowizorycznych wycinków podłogi.
+
+## Build 83 · 2026-10-27
+- [Nowe] Wersja 2.0, świat 1: pole drobnego wraku z grafiki ChatGPT (zadanie W1 P3a): odłamki płyt, kable, śruby i pierścienie zamiast kształtów rysowanych w kodzie. Kafel łączy się bez szwu, a wrak jest na tyle ciemny, że wrogowie wyraźnie się od niego odcinają.
+
+## Build 82 · 2026-10-27
+- [Narzędzia] Zaakceptowany koncept areny świata 1 „Orbital Ruins” (ChatGPT, zadanie W1 P1) zapisany w art/2.0/worlds/world1/concept-orbital-ruins.webp; jest wzorem dla kolejnych grafik świata 1. Gra bez zmian.
+
+## Build 81 · 2026-10-27
+- [Nowe] Wersja 2.0, świat 1 „Orbital Ruins” według Art Bible: zamiast płyt podłogi na całej arenie walczymy w próżni wysoko nad Ziemią. Czarny kosmos z gwiazdami w dwóch warstwach głębi, daleki ciemny sierp Ziemi (przesuwa się wolniej niż arena), przyciemnione pole drobnego wraku, 3–5 „wysp” z połamanych płyt pokładów stacji, dryfujące martwe satelity, które co chwilę migają w wersję Kolektywu, i przerywana bursztynowa bariera na brzegu areny. Na razie z dostępnych grafik (zwiastun, kafel płyt); po grafikach z ChatGPT podmienimy tekstury.
+- [Narzędzia] Notatki projektu: Konrad sam pośredniczy między Claude'em a ChatGPT (AI-HANDOFF.md zamknięty), źródłem promptów jest Claude Doc „Void Blaster 2.0 – Art Bible”, temat główny zostaje muzyką menu na stałe.
+
+## Build 80 · 2026-10-27
+- [Nowe] Wersja 2.0: muzyka świata 1 od Konrada (Suno). W sektorach świata 1 gra „Orbital Ruins”: intro raz, potem w pętli główna część utworu (takty 27–65, ok. 65 s). Przy bossie gra jego wersja bossowa: intro, potem pętla walki (ok. 42 s). Pętle są dobrane analizą (tempo ~140 i ~148 BPM, najbardziej podobny dźwięk na obu końcach, dopasowanie do uderzeń perkusji), a szew przygotowany tak, żeby przeskok był niesłyszalny. Pozostałe światy na razie grają dawną muzykę; boss każdego świata gra utwór bossa świata 1.
+
+## Build 79 · 2026-10-27
+- [Zmiana] W aplikacji (iPhone, Android) muzyka menu gra od razu po uruchomieniu gry, bez czekania na pierwsze dotknięcie. W przeglądarce, także w podglądzie w Claude, nadal startuje po pierwszym kliknięciu, bo przeglądarki nie pozwalają inaczej.
+
+## Build 78 · 2026-10-27
+- [Poprawka] Muzyka menu 2.0: plik muzyki jest wczytywany bez pobierania (fetch), które zabezpieczone strony mogą blokować. Gdy nagranie nie da się odtworzyć na danym urządzeniu, gra przechodzi na dawną muzykę z syntezatora zamiast milczeć.
+- [Narzędzia] Panel 🛠 pokazuje na górze stan muzyki (np. „recording "menu"”, „synth …”, „waiting for the first tap”) i powód, jeśli nagranie się nie wczytało.
+
+## Build 77 · 2026-10-27
+- [Poprawka] Wersja 2.0: hangar i odprawa przed sektorem pokazują statki w nowej grafice (Striker, Phantom, Titan, z płomieniami silników); złoty Striker ma złoty odcień.
+- [Poprawka] Muzyka w menu 2.0 była za cicha: głośność tematu prawie dwa razy większa. Jak każda muzyka w przeglądarce i w aplikacji, startuje po pierwszym dotknięciu ekranu.
+
+## Build 76 · 2026-10-27
+- [Nowe] Wersja 2.0: Phantom i Titan w nowej grafice (z arkuszy ChatGPT, warianty wybrane przez Konrada: Phantom 1, Titan 4). W walce widać teraz zawsze wybrany statek, a nie Strikera; Phantom ma magentowy płomień, Titan cztery złote, płomienie rosną z prędkością, a w skrętach statek się przechyla. Złoty Striker ma złoty odcień.
+- [Nowe] Ekran startowy 2.0: emblemat (Striker w neonowym pierścieniu) nad napisem VOID BLASTER, z pulsującą poświatą; na ekranie startowym stoi wybrany statek. Ciemny pas pod logo jest teraz dłuższy (logo czytelne na sieci Kolektywu), satelity krążą niżej, przy horyzoncie.
+- [Nowe] Muzyka w menu 2.0: temat główny z Suno zamiast syntezatora. Intro gra raz, potem w pętli 24 takty po dropie (35,5–76 s), szew pętli wypada na początku frazy. W walce na razie gra dawna muzyka; utwór menu M1 z Suno zastąpi temat, gdy powstanie.
+
+## Build 75 · 2026-10-27
+- [Nowe] Wersja 2.0: nowy ekran startowy w duchu zwiastuna. Ziemia nocą pod siecią Kolektywu, po której nitkach płyną impulsy; satelity na orbicie co chwilę są „przepisywane” (migają w wersję Kolektywu z różowym błyskiem i wracają); Striker 2.0 unosi się przed Ziemią z pracującymi silnikami; migoczące gwiazdy. Ciemne pasy pod logo i przyciskami, żeby wszystko było czytelne. Na pozostałych ekranach menu (mapa, hangar, ulepszenia…) ta sama scena jest przyciemniona i bez statku. Phantom, Titan i złoty Striker na razie w starym wyglądzie, do czasu ich grafiki 2.0.
+
+## Build 74 · 2026-10-27
+- [Zmiana] Wersja 2.0: bronie wokół statku (ostrza i aura Orbit, drony) i miny rysuje teraz warstwa PixiJS (karta graficzna). Wyglądają tak samo jak wcześniej. Na starym rysowaniu zostały już tylko paski życia, liczby obrażeń, strzałki do elit i bossa oraz czerwony ekran przy niskim zdrowiu. To kończy przenoszenie obrazu w etapie 1.
+
+## Build 73 · 2026-10-27
+- [Nowe] Pierwszy build linii 2.0 (`v2`): nowy wygląd (PixiJS, grafika świata 1) jest teraz zwykłym wyglądem gry, bez włączania w 🛠. Przy numerze builda widać „2.0 dev” (w TEST: „TEST 2.0 dev · build N”), w Ustawieniach też.
+- [Narzędzia] W panelu 🛠 przełącznik „1.x look (compare with 2.0)” zamiast „2.0 look”: pozwala porównać ze starym wyglądem.
+
+## Build 72 · 2026-10-27
+- [Narzędzia] Dwie linie: `main` = Void Blaster 1.x (tylko poprawki, z niej wydania), `v2` = zaakceptowane buildy wersji 2.0. `npm run review` pokazuje nowe buildy w dwóch grupach („1.x → main” i „2.0 → v2”) i sam akceptuje do właściwej linii; po wszystkim wraca na `main`. `npm run release` wydaje tylko `main`. Ramka `npm start` pokazuje, czy to 1.x czy 2.0. Opis w JAK-TESTOWAC.md. Gra bez zmian.
+
+## Build 71 · 2026-10-27
+- [Narzędzia] Testowanie i akceptacja buildów działa też na Windowsie: `npm start`, `npm run web` / `web:test`, `npm run review` (uruchamia build w przeglądarce albo na Androidzie) i komendy Androida. Symulator, iPhone i wydanie do App Store zostają na Macu (na Windowsie skrypt mówi to wprost). `npm start` i `review` mają też opcję [a] Android. Instrukcja instalacji na Windowsie: JAK-TESTOWAC.md. Gra bez zmian.
+
+## Build 70 · 2026-10-27
+- [Narzędzia] Wersja 2.0, etap 1 (tylko wariant TEST, „2.0 look” w 🛠): strzały, pociski wrogów, kryształy, monety i apteczki, cząsteczki, fale uderzeniowe i błyskawice rysuje teraz warstwa PixiJS (karta graficzna). Strzały, pociski i kryształy dostały miękką poświatę w swoim kolorze. Na starym rysowaniu zostały tylko bronie wokół statku, miny, paski życia, liczby obrażeń i HUD.
+- [Narzędzia] CLAUDE.md: zapisana bramka 1 wersji 2.0 (stałe 60 FPS przy ok. 180 wrogach na iPhonie 17 Pro Max) i decyzja Konrada: balans 2.0 ma mieć wyraźnie więcej przeciwników naraz niż 1.x. Zwykła gra bez zmian.
+
+## Build 69 · 2026-10-27
+- [Narzędzia] Uporządkowane uruchamianie testów: 3 miejsca (przeglądarka, symulator, iPhone) × 2 warianty (zwykła gra, TEST). `npm start` pyta gdzie i którą wersję; skróty `npm run web|sim|phone` oraz `:test`. Każde uruchomienie wypisuje ramkę: build, gałąź (zaakceptowana czy kandydat), miejsce, wariant. `npm run review` pyta też: symulator czy iPhone. `npm run xcode` przygotowuje zwykłą grę i otwiera Xcode. Ściągawka po polsku: JAK-TESTOWAC.md. Stare `play`/`play:test` nadal działają. Gra bez zmian.
+
+## Build 68 · 2026-10-27
+- [Narzędzia] Wersja 2.0, etap 1 (tylko wariant TEST): w panelu 🛠 przełącznik „2.0 look (PixiJS, world 1 art)”. Włącza nową warstwę PixiJS (WebGL): podłoga świata 1 z kafla, Striker złożony z części (przechyla się w skrętach, płomienie silników rosną z prędkością), wrogowie z grafiki 2.0 z poświatą, Harvester jako boss świata 1. Strzały, efekty, paski i HUD na razie po staremu, na wierzchu.
+- [Narzędzia] Przycisk STRESS +300 w panelu 🛠: 300 wrogów naraz, do pomiaru FPS na telefonie (bramka 1: stałe 60 FPS).
+- [Zmiana] Rysowanie gry wydzielone z logiki (js/render-canvas.js), żeby wersja 2.0 mogła rysować ten sam stan gry. Wygląd i rozgrywka 1.x bez zmian; normalna i sklepowa wersja nie zawierają PixiJS.
+
+## Build 67 · 2026-10-27
+- [Narzędzia] CHANGELOG.md: sekcja wydania v1.3.0 skopiowana z gałęzi release, v1.2.1 oznaczone jako niewydane (ten sam build wyszedł jako 1.3.0). CLAUDE.md: 1.3.0 wydane, linia 1.x zamrożona (tylko poprawki błędów), cała nowa praca to 2.0. Gra bez zmian.
+
+## Build 66 · 2026-10-27
+- [Narzędzia] CHANGELOG.md: sekcja wydania v1.2.1 (build 65: tryb Endless i rankingi Game Center) skopiowana z gałęzi release, „Następne wydanie” wyczyszczone. CLAUDE.md: zawartość planowanej 1.3 wyszła jako v1.2.1. Gra bez zmian.
+
 ## v1.3.0 · build 66 · 2026-10-27 · App Store
 
 _Ten sam build 65 co v1.2.1, wydany ponownie jako v1.3.0._
+
+- Tryb Endless w każdym świecie: po pokonaniu Void Heart (pełna wersja) gra trwa do zniszczenia statku, wynik to liczba zabitych wrogów. Co minutę fala, co 2,5 minuty elita, co 5 minut boss świata, wrogowie stale mocniejsi. Monety z przelotu plus 40 za każdą minutę, rekord każdego świata zapisany.
+- Rankingi Game Center: osobny ranking Endless dla każdego świata.
+- Wersja tylko na iOS; Android dopiero z 2.0.
+
+### What's New (App Store)
+
+- Endless mode: beat the Void Heart to open Endless in every world. The swarm never stops: a wave every minute, an elite every 2.5 minutes and the world's boss every 5 minutes, and enemies keep getting tougher. Your score is your kill count.
+- Game Center leaderboards: one Endless leaderboard per world. How long can you last?
+- Coins from every Endless run, plus a bonus for each minute survived.
+
+### Wszystkie zmiany (buildy 53–65)
+
+**Nowe**
+- Tryb Endless (pełna wersja, otwiera się po pokonaniu Void Heart): karta „∞ ENDLESS” pod sektorami każdego świata, z rekordem. Przelot trwa do zniszczenia statku, a wynik to liczba zabitych wrogów. Wrogowie świata (jak w jego 5. sektorze), wytrzymałość i obrażenia rosną przez pierwsze 6 minut i dalej. Co minutę fala (pierścień, natarcie albo zagrożenie świata: asteroidy, ostrzał, rozbłyski, studnie grawitacyjne), co 2,5 minuty elita z cechą (po 10 minutach z dwiema), co 5 minut boss świata, za każdym razem o połowę wytrzymalszy; po jego zniszczeniu gra toczy się dalej. Licznik czasu liczy w górę. (build 62)
+- Ekran wyników Endless: wynik, „NEW BEST”, czas, liczba bossów, monety z przelotu i premia 40 monet za każdą minutę. Rekord każdego świata zapisany (`save.endless`). (build 62)
+- Rankingi Game Center (iOS): wynik Endless trafia do rankingu świata; przycisk rankingu w odprawie i na ekranie wyników. Logowanie do Game Center dopiero po odblokowaniu Endless. Na stronie w przeglądarce i na Androidzie rankingów nie ma (przyciski ukryte). Rankingi trzeba założyć w App Store Connect: instrukcja w `appstore/GAME-CENTER.md`. (build 62)
+
+**Zmiana**
+- Na koniec gry (po Void Heart) wyniki mówią, że Endless jest otwarty w każdym świecie. (build 62)
+
+**Narzędzia**
+- CHANGELOG.md: sekcja wydania v1.2.0 (build 52) skopiowana z gałęzi release, „Następne wydanie” wyczyszczone. CLAUDE.md: 1.2.0 wydane, 2.0 dopiero po 1.3, w 2.0 10 światów po 6 sektorów. (build 53)
+- `art/2.0/CHATGPT-BRIEF.md`: kompletna instrukcja dla ChatGPT do grafiki wersji 2.0 (blok stylu, zasady, 10 światów z wrogami i bossami, 11 broni z ewolucjami, combo, interfejs, efekty jako paski klatek, materiały do sklepów; zadania A–G w kolejności produkcji). (build 54)
+- Instrukcja dla ChatGPT (`art/2.0/CHATGPT-BRIEF.md`): fabuła 2.0 (Void Collective, podróż od orbity Ziemi do serca wroga), 10 światów w kolejności podróży z mechaniką, kolorami, proporcją techniki i organiki, 6 wrogami i bossem każdy; boss świata 1 to Harvester; mapa podróży zamiast mapy galaktyki. CLAUDE.md i README grafik uzupełnione. (build 55)
+- Zwiastun 2.0 (10 s, pionowy 1080×1920) zrobiony w silniku PixiJS z grafik `art/2.0/teaser/` (zadania T1–T4 od ChatGPT): Kolektyw przejmuje orbitę Ziemi, start Strikera z hangaru, walka z combo ION BOLTS, nadlatujący boss (na razie sylwetka elitarnego drona, dopóki nie ma Harvestera), plansza tytułowa. `npm run teaser` buduje stronę, `npm run teaser:video` nagrywa MP4. Gra bez zmian. (build 56)
+- Zwiastun 2.0 dostał dźwięk: muzykę i efekty syntezowane w Web Audio, jak w grze (bez plików i licencji), zgrane co do klatki z animacją. Ciemny dron i szept Kolektywu nad Ziemią, alarm, silniki i start w hangarze, rytm 141 BPM w walce z uderzeniem na combo, „braam”, syrena i ładowanie rdzenia przy bossie, wielkie uderzenie i jasny akord na tytule. Strzały, wybuchy, pioruny i przejęcia satelitów brzmią dokładnie wtedy, gdy dzieją się na ekranie. MP4 ma dźwięk AAC wyrównany do -14 LUFS (standard serwisów społecznościowych); strona zwiastuna gra z dźwiękiem po dotknięciu. (build 57)
+- Nowe grafiki 2.0 od ChatGPT w `art/2.0/`: podłoga świata 1 (A1; z podglądu 2×2 wycięty kafel bez szwów), boss Harvester (A6: cały, kadłub, arkusz i 16 wyciętych części), emblemat logo (E3). Zwiastun używa ich zamiast zastępstw: prawdziwy Harvester z pulsującym rdzeniem, silnikami i wyrzutniami, z których wypadają drony, emblemat na planszy tytułowej i nowa podłoga w walce. Gra bez zmian. (build 58)
+- Zwiastun 2.0: efekty dźwiękowe zaprojektowane od nowa, każdy z kilku warstw (uderzenie, przesterowane „ciało”, niski bas, ogon w pogłosie, iskry, odłamki, stereo). Lasery z modulacją FM (jonowe z trzaskiem), wybuchy z odłamkami (duże wrogowie mocniej), trzaskające pioruny, cyfrowe przejmowanie satelitów, robotyczny szept Kolektywu, klakson alarmu, zapłon i ryk silników, dopalacz przy starcie, wyrzutnie dronów Harvestera, metaliczne trafienia w bossa, fala uderzeniowa combo, filmowe uderzenia na cięciach. Muzyka i efekty są teraz osobnymi ścieżkami (muzyka czeka na Suno); nagranie zostawia obraz bez dźwięku i obie ścieżki, więc muzykę można podłożyć bez ponownego nagrywania. (build 59)
+- Zwiastun 2.0 ma 15 sekund i muzykę z Suno (`art/2.0/audio/`), a cięcia leżą na taktach utworu (142 BPM): Ziemia na mrocznym wstępie, start Strikera w ostatnim takcie przed wejściem bitu, walka od wejścia bitu, combo na pierwszą miarę taktu, boss, a plansza tytułowa na końcowym uderzeniu utworu. Z efektów zostały tylko subtelne strzały pod muzyką (decyzja Konrada); pełny zestaw efektów można włączyć opcją. Czasy ujęć są w jednym miejscu (`teaser/timeline.js`), a fragment muzyki wycina `npm run teaser`. (build 60)
+- `art/2.0/audio/SUNO-PROMPTS.md`: katalog promptów do Suno dla całej muzyki 2.0. Każdy z 10 światów ma własny temat (utwór sektora i utwór bossa robiony funkcją Cover z sektora), do tego menu i hangar, mapa podróży, tryb Endless, intro, zakończenie i porażka. Zawiera zasady (płatny plan, WAV, nazwy plików, pętle) i tabelę postępu. Dokument koncepcji 2.0 uzupełniony o muzykę. (build 61)
+- Panel 🛠 w Endless: „BOSS NOW” przywołuje bossa, „SKIP 30 S” przesuwa czas, „END RUN” kończy przelot z wynikiem. (build 62)
+- Projekt iOS: nowy plik `GameCenterPlugin.swift` i uprawnienie Game Center (`App.entitlements`). Plan 1.3: najpierw iOS (Endless + Game Center), potem Android. (build 62)
+- Plan wersji (CLAUDE.md, decyzja Konrada): 1.3 wychodzi tylko na iOS (tryb Endless i rankingi Game Center, gotowe w buildzie 62), a premiera na Androidzie (Google Play, zakupy, Google Play Games) przesuwa się do 2.0. Zamknięte testy Google Play (12 testerów przez 14 dni) warto zacząć w trakcie prac nad 2.0. Gra bez zmian. (build 63)
+- `art/2.0/audio/SUNO-PROMPTS.md`: nowe prompty do Suno dla światów 1–4 (sektor i boss). Wszystkie mają wspólny rdzeń stylu tematu głównego ze zwiastuna (kinowy sci-fi, orkiestra z synthwave, braamy, chóry, arpeggia), a różnią się tempem, tonacją, instrumentem prowadzącym i teksturą świata: zimny syntezator i szum radia (W1, 140 BPM), bohaterskie dęciaki i taiko w burzy (W2, 146 BPM), chór bez słów i daleki ostrzał w pustce (W3, 128 BPM), kryształowe dzwonki, pustynny wiatr i pierwsze „oddechy” (W4, 136 BPM). Gra bez zmian. (build 64)
+- CLAUDE.md: decyzje Konrada o 2.0 (10 nowych światów zamiast 4, wszystkie naraz na iOS i Androidzie, zawartość „1.4” w 2.0, aktualizacja za darmo dla kupujących 1.x, postęp od nowa z bonusem dla weteranów, cena ok. 4,99 USD dla nowych graczy, 2.0 za przełącznikiem widocznym tylko w wersji TEST do premiery). Plan wykonawczy w dokumencie „Void Blaster 2.0 – plan wykonawczy”. Gra bez zmian. (build 65)
+
+## v1.2.1 · build 65 · 2026-10-27 · nie wydane
+
+_Ten sam build wyszedł do App Store jako v1.3.0._
 
 - Tryb Endless w każdym świecie: po pokonaniu Void Heart (pełna wersja) gra trwa do zniszczenia statku, wynik to liczba zabitych wrogów. Co minutę fala, co 2,5 minuty elita, co 5 minut boss świata, wrogowie stale mocniejsi. Monety z przelotu plus 40 za każdą minutę, rekord każdego świata zapisany.
 - Rankingi Game Center: osobny ranking Endless dla każdego świata.

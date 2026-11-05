@@ -1,0 +1,27 @@
+STYLE (keep identical across all images):
+Game art for "Void Blaster", a top-down mobile space shooter (survivors-like).
+Camera: top-down orthographic, looking straight down, no perspective.
+Look: stylized sci-fi with a neon accent. Dark, rich materials (gunmetal, carbon,
+matte ceramic) lit from the top-left, glowing edges and emissive lights only where
+noted. Detail level: high but clean - panel lines, vents, rivets; no grunge overload.
+The background must stay dark and calm so bright game objects read on top of it:
+no bright cyan anywhere (cyan belongs to the player), magenta only as thin traces.
+Rendering: crisp edges, soft bloom on glowing parts only, no motion blur, no depth of
+field, not photorealistic. No text, no logo, no watermark.
+
+WORLD 6 "STORM RELAY": high in Jupiter's atmosphere, above storm bands, among the
+floating platforms of a relay the Void Collective (an alien machine intelligence) uses
+to transmit deep into space. Its antennas are overgrown with membranes and living
+tissue. Muted storm bands #2e241b/#5a4330/#8a6f4e, bronze metal #b0783a (dark
+#4a3524), electric yellow #ffe23d lightning and coils, deep pink tissue #6a2a4a with
+magenta #ff2d95 veins. Diffuse golden light from above, sharp lightning flashes.
+Mood: wind, electricity, a pulsing signal. 70% machine, 30% organic.
+
+TASK: Arena border pieces seen from directly above on a plain flat dark background
+(#05010f), well apart: 4 straight strips (top, bottom, left, right), each 1024 px long
+and about 160 px thick, tileable along their length: a spinning wall of dense storm
+clouds with yellow lightning inside, clean readable inner edge. Plus 4 matching
+corners 256x256.
+
+PRODUCTION NOTES (the attached approved P1 is a style/material reference, not a composition to reproduce):
+Square production parts sheet on flat #05010f. Arrange four LONG thin border strips as an OPEN SQUARE FRAME: top at top edge inset margin; bottom at bottom edge inset margin; left vertical at left edge, right vertical at right edge. Each strip separate, not touching others, approximately 1024 long and 160 thick. Inside the large EMPTY frame place FOUR separate L-shaped corners in a 2x2 arrangement (top-left, top-right, bottom-left, bottom-right orientations respectively); corners 256 square at same material scale as strips. Clear blank gaps between all 8 parts. Top-down orthographic, no perspective. Clean inward-facing edge. The strips must be tileable along their length. Do not connect the frame parts, do not add a center object, floor, labels, grid or text. Dense muted brown storm cloud wall with sparse yellow internal lightning, clean soft but legible inward cloud boundary. No planets, bronze parts, antennas or tissue. Outer edge thick clouds; inner edge calm dark. Make each corner an L-shaped storm-cloud bank with a truly empty inner quadrant.

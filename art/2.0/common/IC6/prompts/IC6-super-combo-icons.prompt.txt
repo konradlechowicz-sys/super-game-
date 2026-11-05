@@ -1,0 +1,34 @@
+STYLE (keep identical across all images):
+Game art for "Void Blaster", a top-down mobile space shooter (survivors-
+like).
+Camera: top-down orthographic, looking straight down, no perspective.
+Look: stylized sci-fi with a neon accent. Dark, rich materials (gunmetal, 
+carbon,
+matte ceramic) lit from the top-left, glowing edges and emissive lights only 
+where
+noted. Detail level: high but clean - panel lines, vents, rivets; no grunge 
+overload.
+The background must stay dark and calm so bright game objects read on top of 
+it:
+no bright cyan anywhere (cyan belongs to the player), magenta only as thin 
+traces.
+Rendering: crisp edges, soft bloom on glowing parts only, no motion blur, no 
+depth of
+field, not photorealistic. No text, no logo, no watermark.
+
+TASK: a sheet of 3 super combo icons, the rarest rewards in the game, 
+matching the
+attached evolution icon sheet (doubled gold #ffd23d border) but grander: each 
+fuses the
+three weapon symbols named below into one symbol, with a faint gold glow 
+around the
+tile. One row, generous space, plain flat background #05010f. No text.
+1) THUNDERSTORM: Railgun + Arc Coil + Proximity Mines (a storm cloud striking 
+mines
+   with lightning), main color #fff27d;
+2) SUPERNOVA CORE: Nova Pulse + Singularity Cannon + Flamethrower (a star 
+collapsing
+   inward inside a ring of fire), main color #ffd23d;
+3) PHOENIX RAIL: Railgun + Flamethrower + Pulse Blaster (a fire bird along a 
+beam),
+   main color #ff9a3d.

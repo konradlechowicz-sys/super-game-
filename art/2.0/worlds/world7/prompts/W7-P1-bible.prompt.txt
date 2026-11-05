@@ -1,0 +1,24 @@
+STYLE (keep identical across all images):
+Game art for "Void Blaster", a top-down mobile space shooter (survivors-like).
+Camera: top-down orthographic, looking straight down, no perspective.
+Look: stylized sci-fi with a neon accent. Dark, rich materials (gunmetal, carbon,
+matte ceramic) lit from the top-left, glowing edges and emissive lights only where
+noted. Detail level: high but clean - panel lines, vents, rivets; no grunge overload.
+The background must stay dark and calm so bright game objects read on top of it:
+no bright cyan anywhere (cyan belongs to the player), magenta only as thin traces.
+Rendering: crisp edges, soft bloom on glowing parts only, no motion blur, no depth of
+field, not photorealistic. No text, no logo, no watermark.
+
+WORLD 7 "ABYSS OF EUROPA": just above a thick, translucent ice sheet on Europa; under
+it a dark ocean where the Void Collective (an alien machine intelligence) rewrote alien
+sea life into hybrids. Ice is muted steel-blue and violet, NEVER bright cyan:
+#141c30/#26304e with edges #4a5680. Ocean #05060f. Bioluminescence in toxic green
+#3dff8a and violet #7a3dff. Circuit-vines #2a1438 with magenta #ff2d95 nodes. Almost no
+light from above; light comes from below the ice. Mood: depth, pressure, something
+huge moving underneath. 50% machine, 50% organic.
+
+TASK: Concept of the battle arena, 941x1672 portrait, seen from directly above: a
+translucent ice sheet with cracks, green and violet light glowing from below, the huge
+dark shadow of a creature under the ice, circuit-vines creeping over the ice, frozen
+hybrid carcasses, ice spires, steaming vents and crevasses, pressure ridges framing
+the edges. Calm, dark center. No ships, no enemies.

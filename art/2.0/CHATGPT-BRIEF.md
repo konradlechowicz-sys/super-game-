@@ -1,4 +1,10 @@
 <!--
+UWAGA (2026-10-31): lista zadań z części 4 (A-G) jest zastąpiona. Wszystkie zadania i prompty są w Claude Doc
+"Void Blaster 2.0 – Art Bible" (https://claude.ai/artifact/A6CDwwg4WSEQ3v99p9ZbMc) pod nowymi kodami: W1-P1 … W10-P8
+(światy), SH (statki), EL (elity), FX (efekty), PU (znajdźki), IC (ikony), UI (interfejs), ST (sklepy); przejście
+starych nazw na nowe i status są w zakładce "Zadania i status". Ten plik zostaje jako opis zasad (część 1) i
+formatów plików (część 5).
+
 Dla Konrada: to kompletna instrukcja dla ChatGPT do grafiki wersji 2.0. Wklej ją w całości na początku nowej
 rozmowy (albo dołącz ten plik) razem z obrazkami-wzorcami: art/2.0/ship/striker.webp, art/2.0/enemies/world1/
 enemies-sheet.webp i art/2.0/worlds/tech-ruin-concept.webp. Potem pisz tylko: "Next task: B2" itd.

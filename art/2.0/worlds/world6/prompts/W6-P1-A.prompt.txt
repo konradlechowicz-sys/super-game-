@@ -1,0 +1,28 @@
+STYLE (keep identical across all images):
+Game art for "Void Blaster", a top-down mobile space shooter (survivors-like).
+Camera: top-down orthographic, looking straight down, no perspective.
+Look: stylized sci-fi with a neon accent. Dark, rich materials (gunmetal, carbon,
+matte ceramic) lit from the top-left, glowing edges and emissive lights only where
+noted. Detail level: high but clean - panel lines, vents, rivets; no grunge overload.
+The background must stay dark and calm so bright game objects read on top of it:
+no bright cyan anywhere (cyan belongs to the player), magenta only as thin traces.
+Rendering: crisp edges, soft bloom on glowing parts only, no motion blur, no depth of
+field, not photorealistic. No text, no logo, no watermark.
+
+WORLD 6 "STORM RELAY": high in Jupiter's atmosphere, above storm bands, among the
+floating platforms of a relay the Void Collective (an alien machine intelligence) uses
+to transmit deep into space. Its antennas are overgrown with membranes and living
+tissue. Muted storm bands #2e241b/#5a4330/#8a6f4e, bronze metal #b0783a (dark
+#4a3524), electric yellow #ffe23d lightning and coils, deep pink tissue #6a2a4a with
+magenta #ff2d95 veins. Diffuse golden light from above, sharp lightning flashes.
+Mood: wind, electricity, a pulsing signal. 70% machine, 30% organic.
+
+TASK: Concept of the battle arena, 941x1672 portrait, seen from directly above: muted
+Jupiter storm bands far below, three floating relay platforms (bronze metal grown over
+with membranes), antennas, gas mine balloons, wind-blown cloud streaks, at one edge the
+base of a huge relay antenna beaming a pulsing magenta beam into space, storm-wall
+clouds framing the edges. Calm center. No ships, no enemies.
+
+
+
+REFERENCE: attached image is the approved W5 concept, for rendering style, crisp material language, dark calm gameplay center and level of polish only. Change the world to W6 as specified above. Compose a full-bleed vertical portrait with the exact 941:1672 aspect ratio; no title, UI, legend or labels. Keep ALL three distinct floating relay platforms visible from straight overhead; do not show their side walls. The huge antenna sits at an outer edge and its narrow beam stays away from the center. No ground, no rock, no furnaces. Clearly show one gas-mine balloon prop with a small top-down gas envelope near an outer platform; this is a prop, not an enemy.

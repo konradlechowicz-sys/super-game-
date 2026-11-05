@@ -1,0 +1,433 @@
+{
+  "name": "The Rift Gate",
+  "enemy": [
+    "shard-swarm-unit",
+    "echo",
+    "phase-walker",
+    "null-orb",
+    "rift-spawner",
+    "gate-sentinel"
+  ],
+  "sizes": [
+    22,
+    32,
+    40,
+    48,
+    52,
+    60
+  ],
+  "elite": "phase-walker",
+  "props": [
+    "gate-ring-segment",
+    "guardian-pylon",
+    "rift",
+    "floating-ring-fragment",
+    "shard-cluster",
+    "dormant-sentinel-eye",
+    "rift-anchor-intact",
+    "rift-anchor-broken",
+    "ring-capacitor-intact",
+    "ring-capacitor-broken"
+  ],
+  "boss": "gatekeeper",
+  "parts": [
+    "core",
+    "ring-outer",
+    "ring-middle",
+    "ring-inner",
+    "weak-point-1",
+    "weak-point-2",
+    "weak-point-3",
+    "weak-point-4"
+  ],
+  "floor": "reality-shards",
+  "floor_count": 6,
+  "far_size": [
+    2048,
+    2048
+  ],
+  "far_tile": "none",
+  "phases": 1,
+  "constraints": [
+    "Six glass shards 200-600 px; dark EMPTY interiors, images added in game",
+    "Non-tiled background with gigantic far-below ring and gravitational lensing",
+    "Gatekeeper three concentric separate rings with portal openings",
+    "White-violet event horizon border; no kaleidoscope in central play space"
+  ],
+  "world": 8,
+  "expected_production_png": {
+    "W8-P1-arena-concept.png": {
+      "role": "P1",
+      "size": [
+        941,
+        1672
+      ],
+      "approval_required": true
+    },
+    "W8-P2-background.png": {
+      "role": "P2",
+      "size": [
+        2048,
+        2048
+      ],
+      "tile": "none"
+    },
+    "W8-P3-reality-shards-sheet.png": {
+      "role": "P3-sheet",
+      "count": 6
+    },
+    "W8-P3-reality-shards/W8-P3-1.png": {
+      "role": "P3-item",
+      "content_max_range": [
+        200,
+        600
+      ]
+    },
+    "W8-P3-reality-shards/W8-P3-2.png": {
+      "role": "P3-item",
+      "content_max_range": [
+        200,
+        600
+      ]
+    },
+    "W8-P3-reality-shards/W8-P3-3.png": {
+      "role": "P3-item",
+      "content_max_range": [
+        200,
+        600
+      ]
+    },
+    "W8-P3-reality-shards/W8-P3-4.png": {
+      "role": "P3-item",
+      "content_max_range": [
+        200,
+        600
+      ]
+    },
+    "W8-P3-reality-shards/W8-P3-5.png": {
+      "role": "P3-item",
+      "content_max_range": [
+        200,
+        600
+      ]
+    },
+    "W8-P3-reality-shards/W8-P3-6.png": {
+      "role": "P3-item",
+      "content_max_range": [
+        200,
+        600
+      ]
+    },
+    "W8-P4-overlay.png": {
+      "role": "P4",
+      "size": [
+        1024,
+        1024
+      ],
+      "tile": "both",
+      "background": "#000000"
+    },
+    "W8-P5-props-sheet.png": {
+      "role": "P5-sheet",
+      "count": 10
+    },
+    "W8-P5-props/W8-P5-gate-ring-segment.png": {
+      "role": "P5-item"
+    },
+    "W8-P5-props/W8-P5-guardian-pylon.png": {
+      "role": "P5-item"
+    },
+    "W8-P5-props/W8-P5-rift.png": {
+      "role": "P5-item"
+    },
+    "W8-P5-props/W8-P5-floating-ring-fragment.png": {
+      "role": "P5-item"
+    },
+    "W8-P5-props/W8-P5-shard-cluster.png": {
+      "role": "P5-item"
+    },
+    "W8-P5-props/W8-P5-dormant-sentinel-eye.png": {
+      "role": "P5-item"
+    },
+    "W8-P5-props/W8-P5-rift-anchor-intact.png": {
+      "role": "P5-item"
+    },
+    "W8-P5-props/W8-P5-rift-anchor-broken.png": {
+      "role": "P5-item"
+    },
+    "W8-P5-props/W8-P5-ring-capacitor-intact.png": {
+      "role": "P5-item"
+    },
+    "W8-P5-props/W8-P5-ring-capacitor-broken.png": {
+      "role": "P5-item"
+    },
+    "W8-P6-border-pieces-sheet.png": {
+      "role": "P6-sheet",
+      "count": 8
+    },
+    "W8-P6-border-pieces/W8-P6-border-top.png": {
+      "role": "P6-strip",
+      "size": [
+        1024,
+        160
+      ],
+      "tile": "long-axis"
+    },
+    "W8-P6-border-pieces/W8-P6-border-bottom.png": {
+      "role": "P6-strip",
+      "size": [
+        1024,
+        160
+      ],
+      "tile": "long-axis"
+    },
+    "W8-P6-border-pieces/W8-P6-border-left.png": {
+      "role": "P6-strip",
+      "size": [
+        160,
+        1024
+      ],
+      "tile": "long-axis"
+    },
+    "W8-P6-border-pieces/W8-P6-border-right.png": {
+      "role": "P6-strip",
+      "size": [
+        160,
+        1024
+      ],
+      "tile": "long-axis"
+    },
+    "W8-P6-border-pieces/W8-P6-corner-top-left.png": {
+      "role": "P6-corner",
+      "size": [
+        256,
+        256
+      ]
+    },
+    "W8-P6-border-pieces/W8-P6-corner-top-right.png": {
+      "role": "P6-corner",
+      "size": [
+        256,
+        256
+      ]
+    },
+    "W8-P6-border-pieces/W8-P6-corner-bottom-left.png": {
+      "role": "P6-corner",
+      "size": [
+        256,
+        256
+      ]
+    },
+    "W8-P6-border-pieces/W8-P6-corner-bottom-right.png": {
+      "role": "P6-corner",
+      "size": [
+        256,
+        256
+      ]
+    },
+    "W8-P7-enemies-sheet.png": {
+      "role": "P7-enemies-sheet",
+      "count": 6
+    },
+    "W8-P7-enemies/W8-P7-shard-swarm-unit.png": {
+      "role": "P7-enemy",
+      "relative_units": 22,
+      "target_content_max": 110
+    },
+    "W8-P7-enemies/W8-P7-echo.png": {
+      "role": "P7-enemy",
+      "relative_units": 32,
+      "target_content_max": 160
+    },
+    "W8-P7-enemies/W8-P7-phase-walker.png": {
+      "role": "P7-enemy",
+      "relative_units": 40,
+      "target_content_max": 200
+    },
+    "W8-P7-enemies/W8-P7-null-orb.png": {
+      "role": "P7-enemy",
+      "relative_units": 48,
+      "target_content_max": 240
+    },
+    "W8-P7-enemies/W8-P7-rift-spawner.png": {
+      "role": "P7-enemy",
+      "relative_units": 52,
+      "target_content_max": 260
+    },
+    "W8-P7-enemies/W8-P7-gate-sentinel.png": {
+      "role": "P7-enemy",
+      "relative_units": 60,
+      "target_content_max": 300
+    },
+    "W8-P7-elite-and-shards-sheet.png": {
+      "role": "P7-elite-shards-sheet",
+      "count": 25
+    },
+    "W8-P7-elite-and-shards/W8-P7-phase-walker-elite.png": {
+      "role": "P7-elite",
+      "scale_vs_normal": 1.6
+    },
+    "W8-P7-elite-and-shards/W8-P7-shard-swarm-unit-shard-1.png": {
+      "role": "P7-shard",
+      "enemy": "shard-swarm-unit"
+    },
+    "W8-P7-elite-and-shards/W8-P7-shard-swarm-unit-shard-2.png": {
+      "role": "P7-shard",
+      "enemy": "shard-swarm-unit"
+    },
+    "W8-P7-elite-and-shards/W8-P7-shard-swarm-unit-shard-3.png": {
+      "role": "P7-shard",
+      "enemy": "shard-swarm-unit"
+    },
+    "W8-P7-elite-and-shards/W8-P7-shard-swarm-unit-shard-4.png": {
+      "role": "P7-shard",
+      "enemy": "shard-swarm-unit"
+    },
+    "W8-P7-elite-and-shards/W8-P7-echo-shard-1.png": {
+      "role": "P7-shard",
+      "enemy": "echo"
+    },
+    "W8-P7-elite-and-shards/W8-P7-echo-shard-2.png": {
+      "role": "P7-shard",
+      "enemy": "echo"
+    },
+    "W8-P7-elite-and-shards/W8-P7-echo-shard-3.png": {
+      "role": "P7-shard",
+      "enemy": "echo"
+    },
+    "W8-P7-elite-and-shards/W8-P7-echo-shard-4.png": {
+      "role": "P7-shard",
+      "enemy": "echo"
+    },
+    "W8-P7-elite-and-shards/W8-P7-phase-walker-shard-1.png": {
+      "role": "P7-shard",
+      "enemy": "phase-walker"
+    },
+    "W8-P7-elite-and-shards/W8-P7-phase-walker-shard-2.png": {
+      "role": "P7-shard",
+      "enemy": "phase-walker"
+    },
+    "W8-P7-elite-and-shards/W8-P7-phase-walker-shard-3.png": {
+      "role": "P7-shard",
+      "enemy": "phase-walker"
+    },
+    "W8-P7-elite-and-shards/W8-P7-phase-walker-shard-4.png": {
+      "role": "P7-shard",
+      "enemy": "phase-walker"
+    },
+    "W8-P7-elite-and-shards/W8-P7-null-orb-shard-1.png": {
+      "role": "P7-shard",
+      "enemy": "null-orb"
+    },
+    "W8-P7-elite-and-shards/W8-P7-null-orb-shard-2.png": {
+      "role": "P7-shard",
+      "enemy": "null-orb"
+    },
+    "W8-P7-elite-and-shards/W8-P7-null-orb-shard-3.png": {
+      "role": "P7-shard",
+      "enemy": "null-orb"
+    },
+    "W8-P7-elite-and-shards/W8-P7-null-orb-shard-4.png": {
+      "role": "P7-shard",
+      "enemy": "null-orb"
+    },
+    "W8-P7-elite-and-shards/W8-P7-rift-spawner-shard-1.png": {
+      "role": "P7-shard",
+      "enemy": "rift-spawner"
+    },
+    "W8-P7-elite-and-shards/W8-P7-rift-spawner-shard-2.png": {
+      "role": "P7-shard",
+      "enemy": "rift-spawner"
+    },
+    "W8-P7-elite-and-shards/W8-P7-rift-spawner-shard-3.png": {
+      "role": "P7-shard",
+      "enemy": "rift-spawner"
+    },
+    "W8-P7-elite-and-shards/W8-P7-rift-spawner-shard-4.png": {
+      "role": "P7-shard",
+      "enemy": "rift-spawner"
+    },
+    "W8-P7-elite-and-shards/W8-P7-gate-sentinel-shard-1.png": {
+      "role": "P7-shard",
+      "enemy": "gate-sentinel"
+    },
+    "W8-P7-elite-and-shards/W8-P7-gate-sentinel-shard-2.png": {
+      "role": "P7-shard",
+      "enemy": "gate-sentinel"
+    },
+    "W8-P7-elite-and-shards/W8-P7-gate-sentinel-shard-3.png": {
+      "role": "P7-shard",
+      "enemy": "gate-sentinel"
+    },
+    "W8-P7-elite-and-shards/W8-P7-gate-sentinel-shard-4.png": {
+      "role": "P7-shard",
+      "enemy": "gate-sentinel"
+    },
+    "W8-P8-gatekeeper.png": {
+      "role": "P8-boss",
+      "size": [
+        1024,
+        1024
+      ],
+      "phase": 1
+    },
+    "W8-P8-parts-sheet.png": {
+      "role": "P8-sheet",
+      "parts": 8,
+      "assembled_copy": "bottom-right, identical render and scale"
+    },
+    "W8-P8-parts/W8-P8-core.png": {
+      "role": "P8-part"
+    },
+    "W8-P8-parts/W8-P8-ring-outer.png": {
+      "role": "P8-part"
+    },
+    "W8-P8-parts/W8-P8-ring-middle.png": {
+      "role": "P8-part"
+    },
+    "W8-P8-parts/W8-P8-ring-inner.png": {
+      "role": "P8-part"
+    },
+    "W8-P8-parts/W8-P8-weak-point-1.png": {
+      "role": "P8-part"
+    },
+    "W8-P8-parts/W8-P8-weak-point-2.png": {
+      "role": "P8-part"
+    },
+    "W8-P8-parts/W8-P8-weak-point-3.png": {
+      "role": "P8-part"
+    },
+    "W8-P8-parts/W8-P8-weak-point-4.png": {
+      "role": "P8-part"
+    }
+  },
+  "order": [
+    "P1-review",
+    "P3",
+    "P2",
+    "P4",
+    "P5",
+    "P6",
+    "P7-enemies",
+    "P7-elite-shards",
+    "P8-boss",
+    "P8-parts"
+  ],
+  "delivery_rules": {
+    "zip_size_exclusive_limit": 30000000,
+    "zip_target_limit": 29500000,
+    "preserve_sources": true,
+    "preserve_exact_prompts": true,
+    "qa": [
+      "all sheets and each extracted sprite visually inspected",
+      "exact output dimensions and scaling metadata",
+      "tiles repeated 3x3 (W6 P2 horizontal) and half-shifted",
+      "RGBA ice over ocean (W7)",
+      "all border joins and repeated strips, assembled frame",
+      "CRC, full PNG decode and SHA256 for every archive file",
+      "each delivery file exactly once across split ZIPs",
+      "full boss in parts sheet identical rendering and size",
+      "P1 user approval evidence"
+    ]
+  }
+}

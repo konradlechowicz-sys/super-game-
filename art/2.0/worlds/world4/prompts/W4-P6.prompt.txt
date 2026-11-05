@@ -1,0 +1,25 @@
+STYLE (keep identical across all images):
+Game art for "Void Blaster", a top-down mobile space shooter (survivors-like).
+Camera: top-down orthographic, looking straight down, no perspective.
+Look: stylized sci-fi with a neon accent. Dark, rich materials (gunmetal, carbon,
+matte ceramic) lit from the top-left, glowing edges and emissive lights only where
+noted. Detail level: high but clean - panel lines, vents, rivets; no grunge overload.
+The background must stay dark and calm so bright game objects read on top of it:
+no bright cyan anywhere (cyan belongs to the player), magenta only as thin traces.
+Rendering: crisp edges, soft bloom on glowing parts only, no motion blur, no depth of
+field, not photorealistic. No text, no logo, no watermark.
+
+WORLD 4 "RED CONVERSION": low above a Mars plain in the middle of being rewritten by the
+Void Collective (an alien machine intelligence): a network of black crystal spreads over
+the red dust. Matte rust dust #4a1d14/#6e2b1c with highlights #9c4a30, black crystal
+#0d0a12 with facets #3b2a4a and an ember glow #ff5a2e inside, magenta #ff2d95 veins in
+the crystal, brown dusty haze #5a2a1f. Weak reddish sun from the top-left, diffused by
+dust. Mood: unease, a planet being converted. 80% machine, crystal growths.
+Mars is dusty and matte, never bright orange.
+
+TASK: Arena border pieces seen from directly above on a plain flat dark background
+(#05010f), well apart: 4 straight strips (top, bottom, left, right), each 1024 px long
+and about 160 px thick, tileable along their length: red canyon walls with black
+crystal cliffs, clean readable inner edge. Plus 4 matching corners 256x256.
+
+Execution direction: production modular border sheet ONLY. Reference image is the approved W4 concept: match its layered red canyon rock, aggressive black crystal blades with tiny magenta veins and scarce ember cracks. Strict orthographic overhead, showing top faces, no horizon, no isometric view. Layout on a square sheet with generous solid #05010f gaps: top horizontal strip across top at about y=5-17%; bottom horizontal strip at y=23-35%; left vertical strip at x=4-17%, y=42-96%; right vertical strip at x=27-40%, y=42-96%; four L-shaped corners in the lower-right in a 2x2 grid. Top and left strips have their open arena-facing sides toward down and right; bottom and right strips open toward up and left. Corner top-left is solid along top and left with open lower-right; top-right is solid top/right; bottom-left solid bottom/left; bottom-right solid bottom/right. Exactly eight pieces, no terrain in the empty spaces, no text. Straight ends square-cut for seamless tiling, similar crystal scale and rock height on all pieces, no detached extra objects.

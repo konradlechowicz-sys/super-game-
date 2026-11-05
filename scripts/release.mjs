@@ -4,6 +4,7 @@
 // release = exactly what goes to the App Store, one tag vX.Y.Z per release.
 // The script picks an accepted build from main, merges it into `release`, stamps the public version and a build
 // number (the accepted build's own, if possible), tags it vX.Y.Z, pushes branch + tag and opens Xcode for Archive.
+// Only main is ever released: the 2.0 line (`v2`) is not offered here; for the 2.0 launch it is first merged into main.
 // main is never modified, so cloud work keeps merging cleanly.
 // CHANGELOG.md: each build is listed with its changes, the release shows everything since the previous release and
 // stamps a full summary into the release's CHANGELOG.md and tag, plus the App Store "What's New" text.
@@ -15,6 +16,10 @@ import { buildsBetween, describe, FILE as CHANGELOG, grouped, parse, readAt, sta
 import { clearLocalChanges } from './localchanges.mjs';
 
 const sh = (cmd) => execSync(cmd, { encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'] }).trim();
+if (process.platform !== 'darwin') {
+  console.log('Wydanie do App Store robi się tylko na Macu (Xcode → Archive). Uruchom npm run release na Macu.');
+  process.exit(1);
+}
 const run = (cmd) => execSync(cmd, { stdio: 'inherit' });
 // Answers are queued line by line, so typed-ahead or piped answers are never lost between questions.
 const rl = createInterface({ input: process.stdin });
@@ -46,8 +51,8 @@ run('git fetch -q --prune --tags origin');
 if (!versionAt('origin/main')) bye('W main nie ma jeszcze zaakceptowanej wersji gry. Najpierw: npm run review', 1);
 
 // Earlier releases: tags vX.Y.Z, each annotated with the accepted commit it came from.
-const tags = sh("git tag -l 'v*.*.*'").split('\n').filter(Boolean).sort(cmpVer).reverse();
-const releases = tags.map((t) => ({ tag: t, info: versionAt(t), note: sh(`git tag -l --format='%(contents)' ${t}`) }));
+const tags = sh('git tag -l "v*.*.*"').split('\n').filter(Boolean).sort(cmpVer).reverse();
+const releases = tags.map((t) => ({ tag: t, info: versionAt(t), note: sh(`git tag -l --format="%(contents)" ${t}`) }));
 const releasedFrom = new Map(releases.map((r) => [(r.note.match(/from ([0-9a-f]{40})/) || [])[1], r.tag]));
 
 console.log(releases.length
@@ -56,7 +61,7 @@ console.log(releases.length
 
 // Accepted builds on main, newest first, one entry per build number.
 const seen = new Set();
-const builds = sh("git log --first-parent -n 30 --format='%H|%cr' origin/main").split('\n').filter(Boolean)
+const builds = sh('git log --first-parent -n 30 --format="%H|%cr" origin/main').split('\n').filter(Boolean)
   .map((l) => { const [sha, when] = l.split('|'); return { sha, when, v: versionAt(sha) }; })
   .filter((b) => b.v && !seen.has(b.v.build) && seen.add(b.v.build))
   .slice(0, 8);

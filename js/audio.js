@@ -1,4 +1,5 @@
-// All sound is synthesized with Web Audio: no files, no licensing.
+// Sound effects are synthesized with Web Audio. Music is synthesized too, unless a track has a recording (2.0 music
+// made with Suno, registered by setRecording): then the recording plays instead, its intro once and then its loop.
 const midi = (n) => 440 * Math.pow(2, (n - 69) / 12);
 
 const TRACKS = {
@@ -10,6 +11,15 @@ const TRACKS = {
   game4: { bpm: 128, chords: [[36, 48, 51, 55], [44, 56, 60, 63], [39, 51, 55, 58], [43, 55, 59, 62]], drums: true, pad: false, hard: true },
   boss: { bpm: 140, chords: [[45, 57, 60, 64], [46, 58, 62, 65], [38, 50, 53, 57], [40, 52, 56, 59]], drums: true, pad: false, hard: true },
 };
+// 2.0 worlds 2-5's bosses: their recordings (js/v2/music.gen.js) play; without them, the synthesized boss track
+TRACKS.boss2 = TRACKS.boss3 = TRACKS.boss4 = TRACKS.boss5 = TRACKS.boss;
+// worlds 5-10 have no synthesized tracks of their own (the 1.x line had four worlds)
+TRACKS.game5 = TRACKS.game7 = TRACKS.game9 = TRACKS.game3;
+TRACKS.game6 = TRACKS.game8 = TRACKS.game10 = TRACKS.game4;
+TRACKS.boss6 = TRACKS.boss7 = TRACKS.boss8 = TRACKS.boss9 = TRACKS.boss10 = TRACKS.boss;
+
+// how long a recorded track takes to fade in and out when the music changes (seconds)
+const FADE_IN = 2.2, FADE_OUT = 2.0;
 
 export class AudioEngine {
   constructor() {
@@ -17,42 +27,78 @@ export class AudioEngine {
     this.sfxOn = true;
     this.musicOn = true;
     this.last = {};
-    this.track = null;
+    this.track = null; // the synthesized track being played
+    this.wanted = null; // the track the game asked for
+    this.recordings = {}; // name -> { url, loopStart, loopEnd, gain }
+    this.buffers = {}; // name -> Promise<AudioBuffer>
+    this.playing = null; // { name, src, gain } of the recording being played
+    this.recError = ''; // why the last recording failed to load (shown in the TEST panel)
     this.step = 0;
     this.nextTime = 0;
     this.xpPitch = 0;
     this.xpLast = 0;
   }
 
+  // Called on every tap and key press (iOS lets audio start or resume only inside a user gesture).
   unlock() {
     const AC = window.AudioContext || window.webkitAudioContext;
     if (!AC) return;
-    if (!this.ctx) {
-      const c = (this.ctx = new AC());
-      this.master = c.createDynamicsCompressor();
-      this.master.threshold.value = -14;
-      this.master.ratio.value = 6;
-      this.master.connect(c.destination);
-      this.sfxGain = c.createGain();
-      this.sfxGain.gain.value = 0.55;
-      this.sfxGain.connect(this.master);
-      this.musicGain = c.createGain();
-      this.musicGain.gain.value = this.musicOn ? 0.32 : 0;
-      this.musicGain.connect(this.master);
-      const len = c.sampleRate;
-      this.noiseBuf = c.createBuffer(1, len, c.sampleRate);
-      const d = this.noiseBuf.getChannelData(0);
-      for (let i = 0; i < len; i++) d[i] = Math.random() * 2 - 1;
-      // Simple echo for the lead synth
-      this.delay = c.createDelay(1);
-      this.delay.delayTime.value = 0.36;
-      const fb = c.createGain();
-      fb.gain.value = 0.32;
-      this.delay.connect(fb).connect(this.delay);
-      this.delay.connect(this.musicGain);
-      this.timer = setInterval(() => this.schedule(), 25);
-    }
-    if (this.ctx.state === 'suspended') this.ctx.resume();
+    // After the app was in the background or a notification interrupted the sound, iOS can leave the context
+    // 'interrupted', or 'running' but silent, and resume() does not bring it back: start a fresh one instead.
+    if (this.ctx && this.stale) this.restart();
+    if (!this.ctx) this.build(new AC());
+    if (this.ctx.state !== 'running') this.ctx.resume().catch(() => {});
+  }
+
+  build(c) {
+    this.ctx = c;
+    this.stale = false;
+    this.master = c.createDynamicsCompressor();
+    this.master.threshold.value = -14;
+    this.master.ratio.value = 6;
+    this.master.connect(c.destination);
+    this.sfxGain = c.createGain();
+    this.sfxGain.gain.value = 0.55;
+    this.sfxGain.connect(this.master);
+    this.musicGain = c.createGain();
+    this.musicGain.gain.value = this.musicOn ? 0.32 : 0;
+    this.musicGain.connect(this.master);
+    const len = c.sampleRate;
+    this.noiseBuf = c.createBuffer(1, len, c.sampleRate);
+    const d = this.noiseBuf.getChannelData(0);
+    for (let i = 0; i < len; i++) d[i] = Math.random() * 2 - 1;
+    // Simple echo for the lead synth
+    this.delay = c.createDelay(1);
+    this.delay.delayTime.value = 0.36;
+    const fb = c.createGain();
+    fb.gain.value = 0.32;
+    this.delay.connect(fb).connect(this.delay);
+    this.delay.connect(this.musicGain);
+    this.nextTime = c.currentTime + 0.1;
+    this.timer ??= setInterval(() => this.schedule(), 25);
+    // the system took the sound away (a call, a notification, another app): rebuild on the next tap
+    c.onstatechange = () => { if (c === this.ctx && c.state !== 'running' && c.state !== 'closed') this.stale = true; };
+    if (this.recordings[this.wanted]) this.playRecording(this.wanted, true);
+  }
+
+  restart() {
+    const old = this.ctx;
+    this.ctx = null;
+    this.playing = null;
+    old.onstatechange = null;
+    old.close().catch(() => {});
+  }
+
+  // the page went to the background (main.js): silence now, a fresh context when the player is back
+  sleep() {
+    if (!this.ctx) return;
+    this.stale = true;
+    this.ctx.suspend().catch(() => {});
+  }
+
+  // the page is visible again: try to resume at once; if iOS refuses, the next tap rebuilds (unlock)
+  wake() {
+    if (this.ctx && this.ctx.state !== 'running') this.ctx.resume().catch(() => {});
   }
 
   setMusicOn(on) {
@@ -61,10 +107,77 @@ export class AudioEngine {
   }
 
   setTrack(name) {
-    if (this.track === name) return;
+    if (this.wanted === name) return;
+    this.wanted = name;
+    if (this.recordings[name]) {
+      this.track = null;
+      this.playRecording(name);
+      return;
+    }
+    this.stopRecording();
     this.track = name;
     this.step = 0;
     if (this.ctx) this.nextTime = this.ctx.currentTime + 0.1;
+  }
+
+  // A recording for a track: from now on it plays instead of the synthesized one.
+  setRecording(name, rec) {
+    this.recordings[name] = rec;
+    if (this.wanted === name) { this.wanted = null; this.setTrack(name); }
+  }
+
+  // again: the track was already playing before the context was rebuilt, so it goes on from its loop, not the intro
+  playRecording(name, again = false) {
+    if (!this.ctx || this.playing?.name === name) return;
+    this.stopRecording();
+    const rec = this.recordings[name], ctx = this.ctx;
+    this.buffers[name] ??= bytesOf(rec.url).then((b) => new Promise((ok, no) => ctx.decodeAudioData(b, ok, no)));
+    this.buffers[name].then((buf) => {
+      if (this.ctx !== ctx || this.wanted !== name || this.playing?.name === name) return;
+      const src = this.ctx.createBufferSource();
+      src.buffer = buf;
+      src.loop = true;
+      src.loopStart = rec.loopStart;
+      src.loopEnd = Math.min(rec.loopEnd, buf.duration);
+      const gain = this.ctx.createGain();
+      const t = this.ctx.currentTime;
+      // a slow fade-in under the previous track's fade-out (stopRecording): the switch to a boss's music is a
+      // crossfade, not a cut (Konrad, 2026-11-01)
+      gain.gain.setValueAtTime(0, t);
+      gain.gain.linearRampToValueAtTime((rec.gain ?? 1) * 0.35, t + 0.8);
+      gain.gain.linearRampToValueAtTime(rec.gain ?? 1, t + FADE_IN);
+      src.connect(gain).connect(this.musicGain);
+      src.start(t, again ? src.loopStart : 0);
+      this.playing = { name, src, gain };
+    }).catch((e) => {
+      // the context was rebuilt while decoding: decode again in the new one
+      if (this.ctx !== ctx) { delete this.buffers[name]; if (this.ctx && this.wanted === name) this.playRecording(name, again); return; }
+      // a recording that cannot be decoded here: fall back to the synthesized track, so there is never silence
+      this.recError = `${name}: ${e?.message || e}`;
+      delete this.recordings[name];
+      delete this.buffers[name];
+      if (this.wanted === name) { this.wanted = null; this.setTrack(name); }
+    });
+  }
+
+  // For the TEST panel: what the music is doing right now.
+  musicStatus() {
+    if (!this.ctx) return 'waiting for the first tap';
+    if (this.playing) return `recording "${this.playing.name}" (${this.ctx.state})`;
+    const failed = this.recError ? ` · recording failed: ${this.recError}` : '';
+    if (this.wanted && this.recordings[this.wanted]) return `loading "${this.wanted}"…${failed}`;
+    return `synth "${this.track}" (${this.ctx.state})${failed}`;
+  }
+
+  stopRecording() {
+    const p = this.playing;
+    if (!p) return;
+    this.playing = null;
+    const t = this.ctx.currentTime;
+    p.gain.gain.cancelScheduledValues(t);
+    p.gain.gain.setValueAtTime(p.gain.gain.value, t);
+    p.gain.gain.linearRampToValueAtTime(0, t + FADE_OUT);
+    p.src.stop(t + FADE_OUT + 0.05);
   }
 
   // ---------- primitives ----------
@@ -215,4 +328,21 @@ export class AudioEngine {
       if (s % 2 === 1) this.noise({ dur: 0.04, vol: tr.hard ? 0.07 : 0.05, type: 'highpass', f0: 8000, at: t, dest: M });
     }
   }
+}
+
+// The bytes of a recording. Embedded data: URLs are decoded here instead of fetched, because sandboxed pages (the
+// preview on claude.ai) may forbid fetch even for data: URLs. The web previews keep each track in a script of its own
+// (assets/music-<name>.js, scripts/v2-assets.mjs) that puts its data: URL in window.__vbMusic.
+function bytesOf(url) {
+  if (url.endsWith('.js')) {
+    return new Promise((ok, no) => { const s = document.createElement('script'); s.src = url; s.onload = ok; s.onerror = no; document.head.appendChild(s); })
+      .then(() => bytesOf(window.__vbMusic[url]));
+  }
+  if (!url.startsWith('data:')) return fetch(url).then((r) => r.arrayBuffer());
+  return new Promise((resolve) => {
+    const bin = atob(url.slice(url.indexOf(',') + 1));
+    const bytes = new Uint8Array(bin.length);
+    for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+    resolve(bytes.buffer);
+  });
 }

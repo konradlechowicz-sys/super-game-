@@ -1,0 +1,28 @@
+STYLE (keep identical across all images):
+Game art for "Void Blaster", a top-down mobile space shooter (survivors-like).
+Camera: top-down orthographic, looking straight down, no perspective.
+Look: stylized sci-fi with a neon accent. Dark, rich materials (gunmetal, carbon,
+matte ceramic) lit from the top-left, glowing edges and emissive lights only where
+noted. Detail level: high but clean - panel lines, vents, rivets; no grunge overload.
+The background must stay dark and calm so bright game objects read on top of it:
+no bright cyan anywhere (cyan belongs to the player), magenta only as thin traces.
+Rendering: crisp edges, soft bloom on glowing parts only, no motion blur, no depth of
+field, not photorealistic. No text, no logo, no watermark.
+
+WORLD 3 "LUNAR BRIDGEHEAD": just above the Moon's surface, where the Void Collective
+(an alien machine intelligence) built its forward base. Its conduits grow into the rock
+like roots: black-violet pipes #1a0f24 with magenta #ff2d95 veins. Gray regolith
+#2b2a33/#4a4856 with highlights #8d8a99, near-black shadows #0a0910 (no atmosphere),
+pale violet accents #b8a9d9, non-glowing frost #cfd8ef. Hard sunlight from the top-left,
+long sharp black shadows. Ruins of a human lunar base. Mood: sparse, hostile, first
+living growth. 90% machine, 10% organic.
+
+TASK: The world-3 boss "Moon Spire": a cannon tower growing out of a crater, seen from
+directly above, 1024x1024, plain flat dark background (#05010f): a round armored
+crown with a huge magenta cannon core in the middle, roots of conduits spreading from
+its base into the rock, 3-4 glowing weak points (root nodes, cannon vents). Then a
+second image: exploded parts sheet at one scale with generous space: crown, cannon
+core, each root, each weak point, muzzle flash; plus the complete assembled boss at the
+same scale in the bottom-right corner. No text.
+
+MUZZLE-FLASH INSERT ONLY, VARIANT B: create a single isolated top-down energy muzzle flash matching the central magenta cannon reactor of the attached Moon Spire. Show only the energy flash, no boss hardware or terrain. A compact pale white-pink luminous center with eight short irregular magenta rays and a faint soft violet bloom, crisp stylized sci-fi effect, no orange fire, no cyan. Symmetric overhead burst with layered curved energy arcs, mostly compact, generous empty flat #05010f margins around all glow; no text. This will be normalized to the cannon bore scale and placed as a separate element on its exact exploded-parts sheet. The attached boss is a style and color reference, not the output composition.

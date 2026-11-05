@@ -1,8 +1,10 @@
 // TEST build only: the tester's panel (🛠). Normal and App Store builds never contain this file: main.js loads it
 // behind the __TEST__ build flag and esbuild drops it, and `build.mjs --release` fails if MARKER is found.
 import { ALL_STAGES, BOSSES, TRAITS } from './data.js';
-import { COMBOS, COMBO_LEVEL } from './combos.js';
+import { COMBOS, COMBO_LEVEL, levelFor } from './combos.js';
 import { WEAPONS } from './weapons.js';
+import { importSave } from './save.js';
+import { STORY_ORDER } from './story.js';
 
 // Everything lives inside installTestKit (no top-level code), so bundlers drop the whole module when it is not called.
 export function installTestKit(app) {
@@ -11,13 +13,15 @@ export function installTestKit(app) {
   const BOSS_STAGES = ALL_STAGES.filter((s) => s.boss);
   const titleCase = (s) => s.toLowerCase().replace(/\b\w/g, (c) => c.toUpperCase());
   const ui = app.ui;
-  let opts = { god: false, unlockAll: true, fps: false, levels: 12 };
+  let opts = { god: false, unlockAll: true, fps: false, oldLook: false, levels: 12 };
   try { opts = { ...opts, ...JSON.parse(localStorage.getItem(KEY) || '{}') }; } catch { /* defaults */ }
   const keep = () => { try { localStorage.setItem(KEY, JSON.stringify(opts)); } catch { /* not saved */ } };
   const apply = () => {
     app.god = opts.god;
     app.testUnlockAll = opts.unlockAll;
     fpsEl.hidden = !opts.fps;
+    // the 2.0 line loads its look itself (js/main.js); this only switches back to the 1.x look to compare
+    app.oldLook = opts.oldLook;
   };
 
   document.body.classList.add('test-build');
@@ -45,7 +49,7 @@ export function installTestKit(app) {
     const t = Math.max(0, g.stage.bossAt - 8);
     g.stage.events.forEach((e, i) => { if (e.t < t) g.eventsDone.add(i); });
     g.time = t;
-    for (let i = 0; i < opts.levels; i++) g.gainXp((g.xpNext - g.xp) / g.player.xpMult);
+    for (let i = 0; i < opts.levels; i++) g.gainXp((g.xpNext - g.xp) / g.player.xpMult, true);
   };
 
   function menuPanel() {
@@ -55,7 +59,9 @@ export function installTestKit(app) {
     ui.modal(`
       <div class="modal-kicker tk-kicker" data-kit="${MARKER}">TEST PANEL</div>
       <h2>TESTER</h2>
+      <div class="tk-head">Music: ${app.audio.musicStatus()}</div>
       ${tog('god', 'God mode (no damage)')}
+      ${tog('oldLook', '1.x look (compare with 2.0)')}
       ${tog('unlockAll', 'All sectors unlocked')}
       <button class="toggle ${app.store.isFull() ? 'on' : ''}" data-act="tkfull"><span>Full game (simulated)</span><i></i></button>
       ${tog('fps', 'FPS counter')}
@@ -68,6 +74,12 @@ export function installTestKit(app) {
         ${btn('stars', '3 STARS EVERYWHERE')}
         ${btn('tips', 'RESET TUTORIAL')}
         ${btn('reset', 'RESET PROGRESS')}
+        ${btn('vet', 'SIMULATE 1.x SAVE')}
+      </div>
+      <div class="tk-head">Story scenes (js/story.js)</div>
+      <div class="tk-row">
+        ${STORY_ORDER.map((k) => btn('story', k.toUpperCase(), `data-k="${k}"`)).join('')}
+        ${btn('storyreset', 'FORGET SEEN')}
       </div>
       <p class="tiny muted center">Coins: ${s.coins.toLocaleString('en-US')} · Stars: ${Object.values(s.stars).reduce((a, b) => a + b, 0)}/${ALL_STAGES.length * 3}</p>
       <div class="modal-actions"><button class="btn primary" data-act="close">DONE</button></div>
@@ -83,9 +95,22 @@ export function installTestKit(app) {
         app.persist(); ui.toast('Every sector cleared with 3 stars'); menuPanel();
       },
       tips: () => { s.tips = {}; s.tipsOff = false; app.persist(); ui.toast('Tutorial will show again'); menuPanel(); },
+      story: (ds) => { ui.closeModal(); app.playStory(ds.k, menuPanel); },
+      storyreset: () => { s.story = {}; app.persist(); ui.toast('Story scenes will play again'); menuPanel(); },
       reset: (ds, el) => {
         if (!el.dataset.confirm) { el.dataset.confirm = '1'; el.textContent = 'TAP AGAIN'; return; }
         app.resetProgress(); ui.toast('Progress reset'); menuPanel();
+      },
+      // turns the current save into a 1.x-like one (no save version, 1.x stars, shop upgrades, 40 runs) and loads it,
+      // so the move to 2.0 and the veteran welcome (js/save.js) can be tried on the phone
+      vet: (ds, el) => {
+        if (!el.dataset.confirm) { el.dataset.confirm = '1'; el.textContent = 'TAP AGAIN'; return; }
+        const old = { ...s, v: undefined, veteran: false, veteranWelcome: null, endless: { 1: { kills: 800, time: 600 } },
+          stats: { ...s.stats, runs: Math.max(40, s.stats.runs) }, shop: { power: 4, hull: 3, thrust: 2, magnet: 2 },
+          stars: {}, cleared: {}, worldStars: {} };
+        for (const w of [1, 2, 3]) for (let n = 1; n <= 6; n++) { old.stars[`${w}-${n}`] = 3; old.cleared[`${w}-${n}`] = true; }
+        app.save = importSave(JSON.stringify(old));
+        app.persist(); ui.closeModal(); ui.menu(); ui.veteran();
       },
     }, 'testkit');
   }
@@ -101,6 +126,7 @@ export function installTestKit(app) {
       <div class="modal-kicker tk-kicker">TEST PANEL · ${st.id} · ${Math.floor(g.time)} s</div>
       <h2>TESTER</h2>
       ${tog('god', 'God mode (no damage)')}
+      ${tog('oldLook', '1.x look (compare with 2.0)')}
       ${tog('fps', 'FPS counter')}
       <div class="tk-head">Game speed</div>
       <div class="tk-row">${[1, 2, 4].map((n) => `<button class="btn small ${n === app.timeScale ? 'primary' : ''}" data-act="speed" data-n="${n}">×${n}</button>`).join('')}</div>
@@ -114,13 +140,21 @@ export function installTestKit(app) {
       <div class="tk-row">
         ${Object.entries(TRAITS).map(([id, t]) => btn('elite', t.name, `data-trait="${id}" style="color:${t.color}"`)).join('')}
         ${btn('skip', 'SKIP 30 S')}
+        ${btn('stress', 'STRESS +300')}
+        ${btn('crate', 'CRATE: STANDARD', 'data-k="standard"')}
+        ${btn('crate', 'CRATE: MILITARY', 'data-k="military"')}
+        ${btn('crate', 'CRATE: PROTOTYPE', 'data-k="prototype"')}
         ${st.boss && !g.boss && !g.bossDefeated ? btn('summon', 'BOSS NOW') : ''}
         ${btn('win', st.endless ? 'END RUN' : 'WIN SECTOR')}
         ${st.endless ? '' : btn('win3', 'WIN · 3 STARS')}
       </div>
       <div class="tk-head">Give a combo (both weapons to LV ${COMBO_LEVEL})</div>
       <div class="tk-row">
-        ${Object.entries(COMBOS).filter(([, c]) => !c.perk).map(([id, c]) => btn('combo', c.name.toUpperCase(), `data-id="${id}" style="color:${c.color}"`)).join('')}
+        ${Object.entries(COMBOS).filter(([, c]) => !c.perk && !c.super).map(([id, c]) => btn('combo', c.name.toUpperCase(), `data-id="${id}" style="color:${c.color}"`)).join('')}
+      </div>
+      <div class="tk-head">Give a super combo (three weapons to LV 5)</div>
+      <div class="tk-row">
+        ${Object.entries(COMBOS).filter(([, c]) => c.super).map(([id, c]) => btn('combo', c.name.toUpperCase(), `data-id="${id}" style="color:${c.color}"`)).join('')}
       </div>
       <div class="tk-head">Give an evolution (weapon to LV 5, evolved)</div>
       <div class="tk-row">
@@ -135,7 +169,7 @@ export function installTestKit(app) {
       close: resume,
       opt: (ds) => { opts[ds.k] = !opts[ds.k]; keep(); apply(); ui.closeModal(); g.state = 'play'; gamePanel(); },
       speed: (ds) => { app.timeScale = +ds.n; resume(); },
-      level: act(() => g.gainXp((g.xpNext - g.xp) / g.player.xpMult)),
+      level: act(() => g.gainXp((g.xpNext - g.xp) / g.player.xpMult, true)),
       heal: act(() => { g.player.hp = g.player.maxHp; }),
       elite: (ds) => act(() => {
         const types = st.enemies.filter(([, at]) => at <= g.time).map(([t]) => t);
@@ -168,10 +202,22 @@ export function installTestKit(app) {
         for (const id of c.parts) {
           let w = g.weapons.find((x) => x.id === id);
           if (!w) { g.addWeapon(id); w = g.weapons[g.weapons.length - 1]; }
-          w.level = Math.max(w.level, COMBO_LEVEL);
+          w.level = Math.max(w.level, levelFor(c));
         }
         g.checkCombos();
       })(),
+      // performance test for the 2.0 plan's gate 1: 300 more enemies of this sector around the ship
+      stress: act(() => {
+        const pool = st.enemies.map((e) => e[0]);
+        const hw = g.arena.w / 2 - 40, hh = g.arena.h / 2 - 40;
+        for (let i = 0; i < 300; i++) {
+          const a = Math.random() * Math.PI * 2, d = 160 + Math.random() * 520;
+          const x = Math.max(-hw, Math.min(hw, g.player.x + Math.cos(a) * d)), y = Math.max(-hh, Math.min(hh, g.player.y + Math.sin(a) * d));
+          g.spawnEnemy(pool[i % pool.length], x, y);
+        }
+      }),
+      // a supply crate opened now, as if bought on the briefing (no coins taken)
+      crate: (ds) => { ui.closeModal(); g.state = 'play'; g.crate = ds.k; g.time = Math.max(g.time, 0.8); },
       win: act(() => winNow()),
       // as if every goal was met: kill goal reached and every elite of the sector destroyed
       win3: act(() => { g.kills = Math.max(g.kills, st.kills); g.elitesKilled = st.elites; winNow(); }),

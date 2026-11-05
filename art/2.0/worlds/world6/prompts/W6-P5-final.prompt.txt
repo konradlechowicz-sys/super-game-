@@ -1,0 +1,28 @@
+STYLE (keep identical across all images):
+Game art for "Void Blaster", a top-down mobile space shooter (survivors-like).
+Camera: top-down orthographic, looking straight down, no perspective.
+Look: stylized sci-fi with a neon accent. Dark, rich materials (gunmetal, carbon,
+matte ceramic) lit from the top-left, glowing edges and emissive lights only where
+noted. Detail level: high but clean - panel lines, vents, rivets; no grunge overload.
+The background must stay dark and calm so bright game objects read on top of it:
+no bright cyan anywhere (cyan belongs to the player), magenta only as thin traces.
+Rendering: crisp edges, soft bloom on glowing parts only, no motion blur, no depth of
+field, not photorealistic. No text, no logo, no watermark.
+
+WORLD 6 "STORM RELAY": high in Jupiter's atmosphere, above storm bands, among the
+floating platforms of a relay the Void Collective (an alien machine intelligence) uses
+to transmit deep into space. Its antennas are overgrown with membranes and living
+tissue. Muted storm bands #2e241b/#5a4330/#8a6f4e, bronze metal #b0783a (dark
+#4a3524), electric yellow #ffe23d lightning and coils, deep pink tissue #6a2a4a with
+magenta #ff2d95 veins. Diffuse golden light from above, sharp lightning flashes.
+Mood: wind, electricity, a pulsing signal. 70% machine, 30% organic.
+
+TASK: Props sheet seen from directly above, plain flat dark background (#05010f), one
+scale, generous space between items. Large (200-320 px): a relay antenna dish grown
+over with membranes, a lightning rod tower with yellow coils, a tangle of cables and
+tissue. Small (60-120 px): a floating gas mine balloon, a coil node, a broken bronze
+panel. Destructible (2): a signal amplifier and a gas tank, each also shown exploded.
+No text.
+
+PRODUCTION NOTES (the attached approved P1 is a style/material reference, not a composition to reproduce):
+Render ONLY the isolated sprite sheet, not an arena. True 90-degree overhead ORTHOGRAPHIC PLAN VIEW, top surfaces, no horizon or side view; no object cut off. Flat #05010f background with no ground shadows, no captions, no grid lines. Clear silhouettes with 15 percent blank gutters. Landscape 2400x1600, EXACTLY FIVE COLUMNS and TWO ROWS, ten distinct cells, one object per cell, all at one scale. Read left-to-right top row: 1 membrane-covered relay dish (large), 2 lightning rod with yellow coils (large, draw its circular top view), 3 cable/tissue tangle (large), 4 small gas balloon (round from overhead), 5 small coil node. Bottom row: 6 small broken bronze panel, 7 intact signal amplifier, 8 same amplifier exploded with scattered bronze casing (same size and design as 7), 9 intact gas tank, 10 same tank exploded (same size as 9). Small props physically one third of large props. Empty room around all items; no scenery or extra objects.

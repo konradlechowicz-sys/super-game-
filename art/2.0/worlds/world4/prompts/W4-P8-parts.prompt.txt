@@ -1,0 +1,28 @@
+STYLE (keep identical across all images):
+Game art for "Void Blaster", a top-down mobile space shooter (survivors-like).
+Camera: top-down orthographic, looking straight down, no perspective.
+Look: stylized sci-fi with a neon accent. Dark, rich materials (gunmetal, carbon,
+matte ceramic) lit from the top-left, glowing edges and emissive lights only where
+noted. Detail level: high but clean - panel lines, vents, rivets; no grunge overload.
+The background must stay dark and calm so bright game objects read on top of it:
+no bright cyan anywhere (cyan belongs to the player), magenta only as thin traces.
+Rendering: crisp edges, soft bloom on glowing parts only, no motion blur, no depth of
+field, not photorealistic. No text, no logo, no watermark.
+
+WORLD 4 "RED CONVERSION": low above a Mars plain in the middle of being rewritten by the
+Void Collective (an alien machine intelligence): a network of black crystal spreads over
+the red dust. Matte rust dust #4a1d14/#6e2b1c with highlights #9c4a30, black crystal
+#0d0a12 with facets #3b2a4a and an ember glow #ff5a2e inside, magenta #ff2d95 veins in
+the crystal, brown dusty haze #5a2a1f. Weak reddish sun from the top-left, diffused by
+dust. Mood: unease, a planet being converted. 80% machine, crystal growths.
+Mars is dusty and matte, never bright orange.
+
+TASK: The world-4 boss "Red Colossus": a walking fortress made of black alien crystal,
+seen from directly above, 1024x1024, plain flat dark background (#05010f): a massive
+faceted body with an ember-and-magenta core, four heavy legs, crystal cannons on its
+back, 3-4 glowing weak points (leg joints, core vents). Then a second image: exploded
+parts sheet at one scale with generous space: body, each leg, each cannon, each weak
+point; plus the complete assembled boss at the same scale in the bottom-right corner.
+No text.
+
+Execution direction for this invocation: create ONLY the SECOND image: disassembled parts of the EXACT boss in image1, preserving every crystal armor shape, reactor, machinery, cannon and leg. Image2 approved W4 arena is material continuity only. A spacious square production sheet on perfectly uniform #05010f. Exactly 12 isolated elements: one central BODY without its attached four legs or two cannons; FOUR complete articulated legs (NW,NE,SW,SE), TWO separate up-facing long artillery cannons, FOUR separate circular magenta hip weak-point modules, and ONE complete assembled boss at bottom-right. The body retains its central elongated crystal reactor and layered wing armor. All parts retain original orientations and the SAME scale relative to the assembled boss; no giant separate body compared with assembled version. Layout: body in upper-left quadrant; four legs in a 2x2 group in upper-right half; two cannons side-by-side in lower-left middle; four small weak-point modules along bottom-left; complete assembled boss occupies bottom-right quadrant. Large dark gutters, none touching, each whole object with margin. Complete boss same design with EXACTLY FOUR legs and TWO cannons; never replace it with a different creature. Orthographic vertical overhead. No labels, no numbers, no grid, no extra fragments, no ground shadows.

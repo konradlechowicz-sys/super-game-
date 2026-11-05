@@ -1,0 +1,28 @@
+STYLE (keep identical across all images):
+Game art for "Void Blaster", a top-down mobile space shooter (survivors-like).
+Camera: top-down orthographic, looking straight down, no perspective.
+Look: stylized sci-fi with a neon accent. Dark, rich materials (gunmetal, carbon,
+matte ceramic) lit from the top-left, glowing edges and emissive lights only where
+noted. Detail level: high but clean - panel lines, vents, rivets; no grunge overload.
+The background must stay dark and calm so bright game objects read on top of it:
+no bright cyan anywhere (cyan belongs to the player), magenta only as thin traces.
+Rendering: crisp edges, soft bloom on glowing parts only, no motion blur, no depth of
+field, not photorealistic. No text, no logo, no watermark.
+
+WORLD 8 "THE RIFT GATE": the gateway out of the Solar System, guarded by the Void
+Collective (an alien machine intelligence). Space here is cracked like glass: floating
+shards of reality with sharp glowing edges, warped and smeared stars, a gigantic gate
+ring far below. Void #04020a, rift white #f4f0ff, violet #8a4dff (dark #2a1050),
+magenta #ff2d95 for the Collective. No light source: the shard edges and rifts glow
+cold white. Mood: the last threshold, unstable, wrong. 50% machine, 50% organic.
+
+TASK: The world-8 boss "Gatekeeper": a guardian made of rings, seen from directly
+above, 1024x1024, plain flat dark background (#05010f): three concentric rotating
+rings of armored segments around a magenta core, portal openings in the rings, white
+glowing edges, 3-4 glowing weak points (ring hinges, core). Then a second image:
+exploded parts sheet at one scale with generous space: core, each ring separately,
+each weak point; plus the complete assembled boss at the same scale in the bottom-right
+corner. No text.
+
+PRODUCTION NOTES (the attached approved P1 is a style/material reference, not a composition to reproduce):
+One assembled boss ONLY, square 1024x1024, complete sprite with generous margins on flat #05010f. Strict 90-degree orthographic dorsal TOP VIEW, no oblique front view, no shadow, arena, labels or text. All appendages in image plane, clean readable silhouette. Gatekeeper: exactly THREE concentric complete but segmented circular armored RINGS, separated by clear dark annular gaps, around a small magenta CORE. All rings viewed flat from directly above, no perspective ellipse. Dark armor with white glowing crystal edges and violet machine-organic links. Several distinct portal openings integrated into rings. FOUR visible glowing weakpoint hinge modules at cardinal positions. No central humanoid, eyes, tentacles, planets or starscape.

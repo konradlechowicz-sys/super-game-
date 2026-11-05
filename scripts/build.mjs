@@ -3,6 +3,9 @@
 import { build } from 'esbuild';
 import { cpSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 
+// the 2.0 textures for the TEST variant's 2.0 look (js/v2/)
+await import('./v2-assets.mjs');
+
 const out = 'www';
 rmSync(out, { recursive: true, force: true });
 mkdirSync(out, { recursive: true });
@@ -28,6 +31,7 @@ await build({
 if (channel === 'release' && readFileSync(`${out}/app.js`, 'utf8').includes('VB-TESTKIT')) {
   throw new Error('Release build contains the TEST panel (js/testkit.js). Stopping.');
 }
+// (the 2.0 line, js/edition.js, contains the 2.0 look (js/v2/, PixiJS) in every build; main's builds stop if they do)
 
 for (const dir of ['css', 'fonts', 'icons']) cpSync(dir, `${out}/${dir}`, { recursive: true });
 

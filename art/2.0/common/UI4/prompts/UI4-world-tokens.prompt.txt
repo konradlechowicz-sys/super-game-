@@ -1,0 +1,35 @@
+STYLE (keep identical across all images):
+Game art for "Void Blaster", a top-down mobile space shooter (survivors-
+like).
+Camera: top-down orthographic, looking straight down, no perspective.
+Look: stylized sci-fi with a neon accent. Dark, rich materials (gunmetal, 
+carbon,
+matte ceramic) lit from the top-left, glowing edges and emissive lights only 
+where
+noted. Detail level: high but clean - panel lines, vents, rivets; no grunge 
+overload.
+The background must stay dark and calm so bright game objects read on top of 
+it:
+no bright cyan anywhere (cyan belongs to the player), magenta only as thin 
+traces.
+Rendering: crisp edges, soft bloom on glowing parts only, no motion blur, no 
+depth of
+field, not photorealistic. No text, no logo, no watermark.
+
+TASK: 10 world tokens for the journey map, each 256x256, round, seen from 
+slightly above,
+on a plain flat background #05010f, one row of 5 and a second row of 5, in 
+this order:
+1) Earth's orbit with wreckage; 2) Earth at night under attack; 3) the Moon 
+with
+craters; 4) red Mars with black crystal; 5) an asteroid turned into a 
+factory; 6)
+Jupiter's storm bands; 7) icy Europa glowing from beneath; 8) a ring-shaped 
+gate in
+warped space; 9) a fleshy brood planet with acid-green #9dff3d lights; 10) 
+the Nexus, a
+magenta #ff2d95 heart in a ring cage. Then the same 10 LOCKED: dimmed to grey 
+and
+overgrown with thin magenta circuitry. Then one PATH CONNECTOR piece: a short 
+dotted
+segment in amber #ffb02e, tileable along its length. No text.

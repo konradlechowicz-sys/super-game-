@@ -320,37 +320,41 @@ Lyrics:
 ```
 
 ### W6 Storm Relay: Jowisz, nadajnik Kolektywu, wiatr (70/30)
+Wersja 2 (2026-11-01). Pierwsza wersja (drum and bass, 170 BPM) za bardzo odstawała od reszty ścieżki dźwiękowej
+(Konrad po testach na telefonie). Nowa trzyma wspólny rdzeń stylu ze światów 1–4 i tematu głównego, a burzę niesie
+tekstura (wiatr, trzaski elektryczności, sygnał nadajnika), nie gatunek.
+
 Sektor (`w06-storm-relay-sector`):
 ```
 Style of Music:
-electric storm drum and bass, 170 BPM, G minor, fast breakbeats, crackling electric synths, deep rolling bass, wind and thunder textures, signal glitches, high tension, sci-fi video game music, instrumental, steady energy, loopable
+dark cinematic sci-fi, hybrid orchestral synthwave, 138 BPM, G minor, deep sub bass, pulsing analog arpeggios, massive brass braams, heavy cinematic drums, storm atmosphere, howling wind and distant thunder, crackling electric static, pulsing radio beacon signal, tense and vast, epic video game soundtrack, instrumental, steady energy, loopable
 ```
 ```
 Exclude Styles:
-vocals, singing, rap, lo-fi, acoustic guitar, happy pop
+vocals, singing, rap, drum and bass, breakbeat, dubstep, lo-fi, acoustic guitar, happy pop
 ```
 ```
 Lyrics:
-[Intro: wind, distant thunder, radio glitch]
-[Rush: fast breakbeats, rolling bass]
-[Theme: electric synth melody]
-[Rush: thunder hits, steady]
+[Intro: wind, distant thunder, beacon signal pulse]
+[Groove: heavy drums, pulsing arpeggio, sub bass]
+[Theme: brass and synth melody over the storm]
+[Groove: crackling static, steady]
 [Theme: full energy, steady]
 [End]
 ```
-Boss (`w06-storm-relay-boss`, Cover sektora):
+Boss (`w06-storm-relay-boss`, Cover nowego sektora):
 ```
 Style of Music:
-furious lightning storm boss battle, 174 BPM, heavy drum and bass, distorted reese bass, thunder impacts, electric choir stabs, brass braams, chaotic energy, dark sci-fi boss music, instrumental, steady energy, loopable
+dark cinematic sci-fi boss battle, hybrid orchestral synthwave, 144 BPM, G minor, pounding cinematic drums, massive brass braams, distorted sub bass, thunder impacts, electric choir stabs, storm raging at full force, overwhelming and heroic, epic video game boss music, instrumental, steady energy, loopable
 ```
 ```
 Exclude Styles:
-vocals with lyrics, rap, lo-fi, acoustic guitar, calm ambient
+vocals with lyrics, rap, drum and bass, breakbeat, dubstep, lo-fi, acoustic guitar, calm ambient
 ```
 ```
 Lyrics:
-[Intro: lightning strike]
-[Battle: heavy breakbeats, reese bass, choir stabs]
+[Intro: lightning strike, storm swells]
+[Battle: pounding drums, brass braams, theme]
 [Breakdown: half-time thunder]
 [Battle: full energy]
 [End]
@@ -569,19 +573,19 @@ Lyrics:
 | Plik | Utwór | Status |
 | --- | --- | --- |
 | `void-blaster-theme-suno.mp3` | temat główny | gotowy, użyty w zwiastunie |
-| `menu-hangar` | M1 menu i hangar | do zrobienia |
+| `menu-hangar` | M1 menu i hangar | niepotrzebny: menu gra temat główny na stałe (decyzja Konrada, 2026-10-27) |
 | `journey-map` | M2 mapa podróży | do zrobienia |
 | `endless` | M3 tryb Endless | do zrobienia |
-| `w01-orbital-ruins-sector` / `-boss` | W1 | do zrobienia |
-| `w02-siege-of-earth-sector` / `-boss` | W2 | do zrobienia |
-| `w03-lunar-bridgehead-sector` / `-boss` | W3 | do zrobienia |
-| `w04-red-conversion-sector` / `-boss` | W4 | do zrobienia |
-| `w05-foundry-belt-sector` / `-boss` | W5 | do zrobienia |
-| `w06-storm-relay-sector` / `-boss` | W6 | do zrobienia |
-| `w07-abyss-of-europa-sector` / `-boss` | W7 | do zrobienia |
-| `w08-rift-gate-sector` / `-boss` | W8 | do zrobienia |
-| `w09-brood-world-sector` / `-boss` | W9 | do zrobienia |
-| `w10-nexus-sector` / `-boss` | W10 | do zrobienia |
+| `w01-orbital-ruins-sector` / `-boss` | W1 | gotowe (2026-10-27), w grze: pętle w `proto2/make-music.py` |
+| `w02-siege-of-earth-sector` / `-boss` | W2 | gotowe (2026-10-28), w grze (`game2`, `boss2`): pętle w `proto2/make-music.py` |
+| `w03-lunar-bridgehead-sector` / `-boss` | W3 | gotowe (2026-10-29), w grze (`game3`, `boss3`): pętle w `proto2/make-music.py` |
+| `w04-red-conversion-sector` / `-boss` | W4 | gotowe (2026-10-29), w grze (`game4`, `boss4`): pętle w `proto2/make-music.py` |
+| `w05-foundry-belt-sector` / `-boss` | W5 | gotowe (2026-10-29), w grze (`game5`, `boss5`): pętle w `proto2/make-music.py` |
+| `w06-storm-relay-sector` / `-boss` | W6 | wersja 2 (prompt wyżej) w grze od buildu 135 (`game6`, `boss6`); wersja 1 odstawała od reszty |
+| `w07-abyss-of-europa-sector` / `-boss` | W7 | gotowe (2026-10-31), w grze (`game7`, `boss7`): pętle w `proto2/make-music.py` |
+| `w08-rift-gate-sector` / `-boss` | W8 | gotowe (2026-10-31), w grze (`game8`, `boss8`): pętle w `proto2/make-music.py` |
+| `w09-brood-world-sector` / `-boss` | W9 | gotowe (2026-10-31), w grze (`game9`, `boss9`): pętle w `proto2/make-music.py` |
+| `w10-nexus-sector` / `-boss` | W10 | gotowe (2026-10-31), w grze (`game10`, `boss10`): pętle w `proto2/make-music.py` |
 | `film-intro` | F1 intro (opcjonalnie) | do zrobienia |
 | `film-ending` | F2 zakończenie | do zrobienia |
 | `film-defeat` | F3 porażka | do zrobienia |

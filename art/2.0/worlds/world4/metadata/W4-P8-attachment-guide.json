@@ -1,0 +1,63 @@
+{
+  "coordinate_space": [
+    1024,
+    1024
+  ],
+  "boss": "W4-P8-red-colossus-1024.png",
+  "mount_reference_centers": {
+    "leg-nw": [
+      257,
+      302
+    ],
+    "leg-ne": [
+      767,
+      302
+    ],
+    "leg-sw": [
+      273,
+      630
+    ],
+    "leg-se": [
+      751,
+      630
+    ],
+    "cannon-west": [
+      369,
+      350
+    ],
+    "cannon-east": [
+      654,
+      350
+    ],
+    "weak-point-nw": [
+      257,
+      302
+    ],
+    "weak-point-ne": [
+      767,
+      302
+    ],
+    "weak-point-sw": [
+      273,
+      630
+    ],
+    "weak-point-se": [
+      751,
+      630
+    ]
+  },
+  "note": "Art attachment reference, not a pixel-perfect automatic reconstruction rig. Parts are isolated generated renderings, normalized against the complete boss dimensions.",
+  "normalization_max_dimension_px": {
+    "body": 700,
+    "leg-nw": 300,
+    "leg-ne": 300,
+    "leg-sw": 400,
+    "leg-se": 400,
+    "cannon-west": 355,
+    "cannon-east": 355,
+    "weak-point-nw": 90,
+    "weak-point-ne": 90,
+    "weak-point-sw": 90,
+    "weak-point-se": 90
+  }
+}

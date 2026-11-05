@@ -1,0 +1,226 @@
+{
+  "background": "#05010f",
+  "individual_png_padding_px": 12,
+  "sprites": [
+    {
+      "name": "crater-1",
+      "content_size": [
+        420,
+        413
+      ],
+      "content_box": [
+        46,
+        74,
+        466,
+        487
+      ],
+      "scale_factor": 1.423728813559322,
+      "file": "graphics/W3-P5-props/W3-P5-crater-1.webp"
+    },
+    {
+      "name": "crater-2",
+      "content_size": [
+        416,
+        420
+      ],
+      "content_box": [
+        560,
+        70,
+        976,
+        490
+      ],
+      "scale_factor": 1.4093959731543624,
+      "file": "graphics/W3-P5-props/W3-P5-crater-2.webp"
+    },
+    {
+      "name": "crater-3",
+      "content_size": [
+        420,
+        405
+      ],
+      "content_box": [
+        1070,
+        78,
+        1490,
+        483
+      ],
+      "scale_factor": 1.386138613861386,
+      "file": "graphics/W3-P5-props/W3-P5-crater-3.webp"
+    },
+    {
+      "name": "conduit-junction",
+      "content_size": [
+        373,
+        420
+      ],
+      "content_box": [
+        1606,
+        70,
+        1979,
+        490
+      ],
+      "scale_factor": 1.2923076923076924,
+      "file": "graphics/W3-P5-props/W3-P5-conduit-junction.webp"
+    },
+    {
+      "name": "habitat-dome-broken",
+      "content_size": [
+        238,
+        260
+      ],
+      "content_box": [
+        137,
+        670,
+        375,
+        930
+      ],
+      "scale_factor": 0.7975460122699386,
+      "file": "graphics/W3-P5-props/W3-P5-habitat-dome-broken.webp"
+    },
+    {
+      "name": "lunar-rover-wreck",
+      "content_size": [
+        260,
+        231
+      ],
+      "content_box": [
+        638,
+        685,
+        898,
+        916
+      ],
+      "scale_factor": 0.8253968253968254,
+      "file": "graphics/W3-P5-props/W3-P5-lunar-rover-wreck.webp"
+    },
+    {
+      "name": "comms-antenna-array",
+      "content_size": [
+        260,
+        241
+      ],
+      "content_box": [
+        1150,
+        680,
+        1410,
+        921
+      ],
+      "scale_factor": 0.8387096774193549,
+      "file": "graphics/W3-P5-props/W3-P5-comms-antenna-array.webp"
+    },
+    {
+      "name": "supply-crate",
+      "content_size": [
+        100,
+        98
+      ],
+      "content_box": [
+        206,
+        1191,
+        306,
+        1289
+      ],
+      "scale_factor": 0.6024096385542169,
+      "file": "graphics/W3-P5-props/W3-P5-supply-crate.webp"
+    },
+    {
+      "name": "solar-panel",
+      "content_size": [
+        100,
+        64
+      ],
+      "content_box": [
+        718,
+        1208,
+        818,
+        1272
+      ],
+      "scale_factor": 0.546448087431694,
+      "file": "graphics/W3-P5-props/W3-P5-solar-panel.webp"
+    },
+    {
+      "name": "conduit-segment",
+      "content_size": [
+        100,
+        53
+      ],
+      "content_box": [
+        1230,
+        1214,
+        1330,
+        1267
+      ],
+      "scale_factor": 0.4608294930875576,
+      "file": "graphics/W3-P5-props/W3-P5-conduit-segment.webp"
+    },
+    {
+      "name": "mortar-intact",
+      "content_size": [
+        300,
+        294
+      ],
+      "content_box": [
+        106,
+        1583,
+        406,
+        1877
+      ],
+      "scale_factor": 1.048951048951049,
+      "file": "graphics/W3-P5-props/W3-P5-mortar-intact.webp"
+    },
+    {
+      "name": "mortar-destroyed",
+      "content_size": [
+        295,
+        306
+      ],
+      "content_box": [
+        621,
+        1577,
+        916,
+        1883
+      ],
+      "scale_factor": 1.048951048951049,
+      "file": "graphics/W3-P5-props/W3-P5-mortar-destroyed.webp"
+    },
+    {
+      "name": "pump-intact",
+      "content_size": [
+        300,
+        230
+      ],
+      "content_box": [
+        1130,
+        1615,
+        1430,
+        1845
+      ],
+      "scale_factor": 0.9900990099009901,
+      "file": "graphics/W3-P5-props/W3-P5-pump-intact.webp"
+    },
+    {
+      "name": "pump-destroyed",
+      "content_size": [
+        298,
+        265
+      ],
+      "content_box": [
+        1643,
+        1598,
+        1941,
+        1863
+      ],
+      "scale_factor": 0.9900990099009901,
+      "file": "graphics/W3-P5-props/W3-P5-pump-destroyed.webp"
+    }
+  ],
+  "intact_destroyed_pairs": [
+    [
+      "mortar-intact",
+      "mortar-destroyed"
+    ],
+    [
+      "pump-intact",
+      "pump-destroyed"
+    ]
+  ]
+}

@@ -1,0 +1,28 @@
+STYLE (keep identical across all images):
+Game art for "Void Blaster", a top-down mobile space shooter (survivors-like).
+Camera: top-down orthographic, looking straight down, no perspective.
+Look: stylized sci-fi with a neon accent. Dark, rich materials (gunmetal, carbon,
+matte ceramic) lit from the top-left, glowing edges and emissive lights only where
+noted. Detail level: high but clean - panel lines, vents, rivets; no grunge overload.
+The background must stay dark and calm so bright game objects read on top of it:
+no bright cyan anywhere (cyan belongs to the player), magenta only as thin traces.
+Rendering: crisp edges, soft bloom on glowing parts only, no motion blur, no depth of
+field, not photorealistic. No text, no logo, no watermark.
+
+WORLD 8 "THE RIFT GATE": the gateway out of the Solar System, guarded by the Void
+Collective (an alien machine intelligence). Space here is cracked like glass: floating
+shards of reality with sharp glowing edges, warped and smeared stars, a gigantic gate
+ring far below. Void #04020a, rift white #f4f0ff, violet #8a4dff (dark #2a1050),
+magenta #ff2d95 for the Collective. No light source: the shard edges and rifts glow
+cold white. Mood: the last threshold, unstable, wrong. 50% machine, 50% organic.
+
+TASK: Concept of the battle arena, 941x1672 portrait, seen from directly above: warped
+dark space with smeared stars, a gigantic gate ring far below with violet light inside,
+large floating glass-like shards of reality with glowing white edges (each showing a
+faint image of another place inside), gate ring segments, two white-edged rifts, the
+arena edge folding into a white-violet event horizon. Calm, dark center. No ships, no
+enemies.
+
+
+
+Production composition: Full-bleed vertical portrait 941:1672. True 90-degree overhead orthographic game view. Dark calm central play space, sparse thin white-violet glowing lines, crisp stylized sci-fi rendering, NOT a busy kaleidoscope. Giant distant gate is an understated dark circular structure behind the play area with faint violet depth, not a bright central spotlight. Exactly two narrow white-edged rifts near opposite outer edges. Several separated large angular glass shards near the edges, with very faint recognizable glimpses of Earth orbit, gray Moon, muted red Mars and steel-violet Europa ice, each shard showing one place; reflections are subtle, not a collage or pictures with frames. Lens-distorted stars, event horizon framing outer perimeter. No cyan, no ships, no enemies, no text or UI. Upper and lower outer clusters asymmetrical.

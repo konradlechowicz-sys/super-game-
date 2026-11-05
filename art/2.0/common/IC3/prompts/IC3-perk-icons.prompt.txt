@@ -1,0 +1,31 @@
+STYLE (keep identical across all images):
+Game art for "Void Blaster", a top-down mobile space shooter (survivors-
+like).
+Camera: top-down orthographic, looking straight down, no perspective.
+Look: stylized sci-fi with a neon accent. Dark, rich materials (gunmetal, 
+carbon,
+matte ceramic) lit from the top-left, glowing edges and emissive lights only 
+where
+noted. Detail level: high but clean - panel lines, vents, rivets; no grunge 
+overload.
+The background must stay dark and calm so bright game objects read on top of 
+it:
+no bright cyan anywhere (cyan belongs to the player), magenta only as thin 
+traces.
+Rendering: crisp edges, soft bloom on glowing parts only, no motion blur, no 
+depth of
+field, not photorealistic. No text, no logo, no watermark.
+
+TASK: a sheet of 9 perk icons matching the attached weapon icon sheet (same 
+tile,
+border in the perk's color, grid of 3 columns, plain flat background 
+#05010f). No text.
+1) POWER CORE, red-pink #ff3d6e: a glowing reactor core with energy lines;
+2) OVERCLOCK, gold #ffd23d: a gauge needle pushed into the top of its scale;
+3) THRUSTERS, orange #ff8a2a: twin engine flames seen from behind;
+4) ARMOR PLATING, green #3dff8a: three overlapping hull plates;
+5) TRACTOR BEAM, sky blue #3dc8ff: a beam pulling small crystals in;
+6) AMPLIFIER, violet #b06bff: a ring with arrows pushing outward;
+7) TARGETING MATRIX, pale gold #fff2a8: a targeting reticle locked on a dot;
+8) THERMAL CORE, deep orange #ff7a1a: a core wrapped in flame;
+9) PHASE SHIELD, electric blue #7df9ff: a hexagon shield bubble.

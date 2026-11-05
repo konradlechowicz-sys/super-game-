@@ -1,0 +1,41 @@
+STYLE (keep identical across all images):
+Game art for "Void Blaster", a top-down mobile space shooter (survivors-
+like).
+Camera: top-down orthographic, looking straight down, no perspective.
+Look: stylized sci-fi with a neon accent. Dark, rich materials (gunmetal, 
+carbon,
+matte ceramic) lit from the top-left, glowing edges and emissive lights only 
+where
+noted. Detail level: high but clean - panel lines, vents, rivets; no grunge 
+overload.
+The background must stay dark and calm so bright game objects read on top of 
+it:
+no bright cyan anywhere (cyan belongs to the player), magenta only as thin 
+traces.
+Rendering: crisp edges, soft bloom on glowing parts only, no motion blur, no 
+depth of
+field, not photorealistic. No text, no logo, no watermark.
+
+TASK: a sheet of 12 weapon combo icons matching the attached weapon icon 
+sheet. Each
+combo fuses the two weapon symbols named below into one new symbol in one 
+tile (not
+two icons side by side). Border teal #3dffc8, the symbol keeps both weapons' 
+colors.
+Grid of 4 columns, plain flat background #05010f. No text.
+1) STORM MINES: Arc Coil + Proximity Mines (a mine throwing lightning);
+2) CLUSTER MISSILES: Seeker Missiles + Scatter Gun (a missile bursting into 
+pellets);
+3) BLADE NOVA: Orbit Blades + Nova Pulse (blades riding a shockwave ring);
+4) TWIN LINK: Wingman Drone + Pulse Blaster (drone and ship firing together);
+5) ION BOLTS: Pulse Blaster + Arc Coil (a bolt sparking to a second target);
+6) MINELAYER: Seeker Missiles + Proximity Mines (a missile dropping a mine);
+7) ION RAIL: Railgun + Arc Coil (a beam with lightning branching off it);
+8) SHRAPNEL RAIL: Railgun + Scatter Gun (a beam ending in a fan of pellets);
+9) NAPALM MINES: Flamethrower + Proximity Mines (a mine leaving a pool of 
+fire);
+10) FIRE BLADES: Flamethrower + Orbit Blades (burning crescent blades);
+11) GRAVITY BARRAGE: Singularity Cannon + Seeker Missiles (missiles curving 
+into a hole);
+12) COLLAPSE: Singularity Cannon + Nova Pulse (a black hole collapsing into a 
+blast).

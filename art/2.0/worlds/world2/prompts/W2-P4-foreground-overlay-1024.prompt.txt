@@ -1,0 +1,25 @@
+STYLE (keep identical across all images):
+Game art for "Void Blaster", a top-down mobile space shooter (survivors-like).
+Camera: top-down orthographic, looking straight down, no perspective.
+Look: stylized sci-fi with a neon accent. Dark, rich materials (gunmetal, carbon,
+matte ceramic) lit from the top-left, glowing edges and emissive lights only where
+noted. Detail level: high but clean - panel lines, vents, rivets; no grunge overload.
+The background must stay dark and calm so bright game objects read on top of it:
+no bright cyan anywhere (cyan belongs to the player), magenta only as thin traces.
+Rendering: crisp edges, soft bloom on glowing parts only, no motion blur, no depth of
+field, not photorealistic. No text, no logo, no watermark.
+
+WORLD 2 "SIEGE OF EARTH": low orbit, 400 km above night-side Earth, during the
+landing of the Void Collective (an alien machine intelligence). We fight above a cloud
+layer; under it, coastlines and city lights, some cities burning. Colors: night
+#070b1a, clouds #222b44-#3a4566, tiny warm city lights #ffb347, fires #ff5a2e,
+lightning #e8f0ff, the Collective's tethers and web in magenta #ff2d95.
+No sun (night): clouds lit from below by cities and fires, from above by lightning.
+Mood: siege, storm, the last defense of home. 100% machine.
+
+TASK: Seamless tileable overlay 1024x1024 on plain black (#000000; it is blended
+additively in the game): wisps of cloud close to the camera, sparse glowing re-entry
+embers, thin rain streaks. Sparse, mostly empty. Tiles on all four edges.
+
+ISOLATED OVERLAY DERIVATION: Transform the supplied approved W2 arena concept into ONLY a sparse close-camera effects layer. Replace the entire scene with pure flat black #000000 covering at least 85 percent of the image. Remove all ground, coastlines, city lights, lightning, machine tethers, nodes, wrecks, dense storm walls, and all arena framing. Keep only scattered delicate wisps of nearby bluish-gray cloud, a very few tiny warm re-entry embers, and sparse thin short rain streaks, seen straight down. This is a dark gameplay overlay for additive blending, with no opaque background fog. Very low opacity-looking dim wisps, no bright white patches, no bright cyan, no magenta. Random uniform distribution, no vignette or central focal composition. Match approved W2 cloud colors. Seamless wrapping across left/right and top/bottom, including rain and wisps. Deliver one single square 1024x1024 texture, no labels and no tiled preview.
+VARIANT A: especially sparse, airy fine isolated curls of cloud, only a few near-vertical rain dashes and tiny dim orange embers. Most of the frame is completely black.

@@ -1,0 +1,737 @@
+// Drawing a run with Canvas 2D, the 1.x look: reads the state of a Game (js/game.js) and draws it; the game logic
+// never draws. The 2.0 look (PixiJS) lives in js/v2/ and reads the same state.
+import { TAU, rand, clamp, lerp } from './util.js';
+import { TRAITS } from './data.js';
+import { PROPS } from './props.js';
+import { WEAPONS, weaponStats } from './weapons.js';
+import {
+  shipSprite, enemySprite, bossLayer, boltSprite, missileSprite, orbSprite, gemSprite,
+  glowDot, mineSprite, pickupSprite,
+} from './sprites.js';
+
+// The camera of this frame, with screen shake. When the 2.0 look is on, it is worked out once per frame
+// (game.frameCam) so both layers shake together.
+export function frameCamera(game) {
+  const shx = game.shake ? rand(-game.shake, game.shake) * 0.5 : 0;
+  const shy = game.shake ? rand(-game.shake, game.shake) * 0.5 : 0;
+  return { cx: game.cam.x + shx, cy: game.cam.y + shy };
+}
+
+// overlay: the 2.0 look (js/v2/) has drawn the background, the floor, the ship, every enemy or boss it has art for
+// (marked e.v2), shots, enemy bullets, gems, pickups, mines, weapons, particles, rings and lightning on its own canvas below; this
+// canvas is cleared and draws everything else on top.
+export function renderGame(game, ctx, overlay = false) {
+  const app = game.app;
+  const { W, H, dpr, zoom } = app;
+  const { cx, cy } = game.frameCam || frameCamera(game);
+  if (overlay) { ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height); }
+  else app.bg.draw(ctx, cx * zoom, cy * zoom, app.time);
+
+  const k = dpr * zoom, ox = dpr * W / 2 - cx * k, oy = dpr * H / 2 - cy * k;
+  const base = () => ctx.setTransform(k, 0, 0, k, ox, oy);
+  const R = {
+    ctx,
+    rot(spr, x, y, a, sc = 1) {
+      const c = Math.cos(a) * k * sc, s = Math.sin(a) * k * sc;
+      ctx.setTransform(c, s, -s, c, x * k + ox, y * k + oy);
+      ctx.drawImage(spr.canvas, -spr.half, -spr.half, spr.half * 2, spr.half * 2);
+      ctx.setTransform(k, 0, 0, k, ox, oy);
+    },
+    img(spr, x, y, sc = 1) {
+      const h = spr.half * sc;
+      ctx.drawImage(spr.canvas, x - h, y - h, h * 2, h * 2);
+    },
+  };
+  base();
+  const { vw, vh } = game.viewSize();
+  const x0 = cx - vw / 2 - 60, x1 = cx + vw / 2 + 60, y0 = cy - vh / 2 - 60, y1 = cy + vh / 2 + 60;
+  const vis = (o, m = 0) => o.x > x0 - m && o.x < x1 + m && o.y > y0 - m && o.y < y1 + m;
+
+  if (!overlay) drawArena(game, ctx, x0, x1, y0, y1);
+  // 2.0 world 3's craters (js/cover.js) and the props (js/props.js) as plain shapes; the 2.0 look draws them with art
+  if (!overlay) for (const c of game.cover) {
+    if (!vis(c, c.r)) continue;
+    ctx.fillStyle = 'rgba(0,0,0,0.35)'; ctx.strokeStyle = '#8d8a99'; ctx.lineWidth = 3;
+    ctx.beginPath(); ctx.arc(c.x, c.y, c.r, 0, TAU); ctx.fill(); ctx.stroke();
+  }
+  // world 4's black crystal network (js/crystal.js)
+  if (!overlay && game.crystal) for (const c of game.crystal.patches) {
+    if (!vis(c, c.r)) continue;
+    ctx.fillStyle = 'rgba(40,10,50,0.55)'; ctx.strokeStyle = 'rgba(255,45,149,0.5)'; ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.arc(c.x, c.y, c.r, 0, TAU); ctx.fill(); ctx.stroke();
+  }
+  if (!overlay) for (const o of game.props) {
+    if (!vis(o, 40) || (o.dead && !PROPS[o.prop].broken)) continue;
+    ctx.globalAlpha = o.dead ? 0.35 : 1;
+    ctx.fillStyle = o.flash > 0 ? '#ffffff' : '#3a4152';
+    ctx.strokeStyle = o.prop === 'tank' ? '#ffb02e' : '#8a94aa';
+    ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.rect(o.x - o.r * 1.4, o.y - o.r * 0.8, o.r * 2.8, o.r * 1.6); ctx.fill(); ctx.stroke();
+    ctx.globalAlpha = 1;
+  }
+
+  ctx.globalCompositeOperation = 'lighter';
+  // mines
+  if (!overlay) for (const m of game.mines) if (vis(m)) R.img(mineSprite(m.pull ? '#b06bff' : '#ffd23d', m.arm <= 0 && Math.sin(game.time * 12) > 0), m.x, m.y);
+  // gems & pickups
+  if (!overlay) for (const g of game.gems) {
+    if (!vis(g)) continue;
+    const col = g.v >= 10 ? '#ff4dd8' : g.v >= 3 ? '#3dff8a' : '#2fd2ff';
+    R.img(gemSprite(col), g.x, g.y, g.v >= 10 ? 1.4 : g.v >= 3 ? 1.15 : 1);
+  }
+  if (!overlay) for (const pk of game.pickups) {
+    if (!vis(pk)) continue;
+    const bob = pk.kind === 'coin' ? 1 : 1 + Math.sin(game.time * 5) * 0.1;
+    R.img(pickupSprite(pk.kind), pk.x, pk.y, bob);
+  }
+  // damaging rings
+  if (!overlay) for (const r of game.rings) {
+    const a = 1 - Math.max(0, r.t - r.dur) / 0.15;
+    ctx.globalAlpha = 0.85 * a;
+    ctx.strokeStyle = r.color;
+    ctx.lineWidth = 5;
+    ctx.beginPath(); ctx.arc(r.x, r.y, Math.max(1, r.r), 0, TAU); ctx.stroke();
+    ctx.globalAlpha = 0.15 * a;
+    ctx.fillStyle = r.color;
+    ctx.fill();
+  }
+  ctx.globalAlpha = 1;
+  drawHazards(game, ctx, overlay);
+  drawArsenal(game, ctx);
+  ctx.globalCompositeOperation = 'source-over';
+
+  // enemies
+  for (const e of game.enemies) {
+    if (e.dead || !vis(e, e.r)) continue;
+    const sc = e.spawnT > 0 ? Math.max(0.05, 1 - e.spawnT / 0.35) : 1;
+    if (e.boss) { if (!(overlay && e.v2)) drawBoss(game, R, e, sc); continue; }
+    if (e.seg) {
+      R.rot(enemySprite('prism', e.color, Math.round(e.r), e.flash > 0 ? 'flash' : ''), e.x, e.y, e.rot + Math.PI, sc);
+      continue;
+    }
+    const variant = e.flash > 0 ? 'flash' : e.elite ? 'elite' : '';
+    let ex = e.x, ey = e.y;
+    if (e.state === 'wind' || e.state === 'fuse') { ex += rand(-2, 2); ey += rand(-2, 2); }
+    if (e.alpha < 1) ctx.globalAlpha = Math.max(0.05, e.alpha);
+    if (!(overlay && e.v2)) R.rot(enemySprite(e.shape, e.color, Math.round(e.r), variant), ex, ey, e.rot, sc);
+    ctx.globalAlpha = 1;
+    if (e.elite) drawBar(game, ctx, e.x, e.y + e.r + 10, 34, e.hp / e.maxHp, '#ffd23d');
+    if (e.traits) drawTraits(game, ctx, e);
+    else if (e.shield > 0) { ctx.strokeStyle = TRAITS.shielded.color; ctx.globalAlpha = 0.7; ctx.lineWidth = 1.5; ctx.beginPath(); ctx.arc(e.x, e.y, e.r + 4, 0, TAU); ctx.stroke(); ctx.globalAlpha = 1; }
+  }
+
+  // player bullets / enemy bullets
+  ctx.globalCompositeOperation = 'lighter';
+  if (!overlay) for (const pr of game.proj) {
+    if (!vis(pr)) continue;
+    let spr;
+    switch (pr.look) {
+      case 'bolt': spr = boltSprite(pr.color, 12, 3); break;
+      case 'photon': spr = boltSprite(pr.color, 22, 4); break;
+      case 'pellet': spr = orbSprite(pr.color, 4); break;
+      case 'missile': spr = missileSprite(pr.color); break;
+      default: spr = boltSprite(pr.color, 8, 2.5);
+    }
+    R.rot(spr, pr.x, pr.y, pr.a, 1);
+  }
+  const ebs = orbSprite('#ff2d55', 6), ehs = orbSprite('#ff4dd8', 7);
+  if (!overlay) for (const b of game.ebullets) if (vis(b)) R.img(b.homing ? ehs : ebs, b.x, b.y);
+
+  // weapon visuals (blades, drones)
+  if (!overlay) for (const w of game.weapons) {
+    const def = WEAPONS[w.id];
+    if (def.render && game.state !== 'dying' && game.state !== 'over') def.render(w, game, R, weaponStats(w));
+  }
+  ctx.globalCompositeOperation = 'source-over';
+
+  // player
+  const p = game.player;
+  if (game.state !== 'dying' && game.state !== 'over') {
+    const blink = p.inv > 0 && Math.floor(game.time * 20) % 2 === 0;
+    if (!overlay) {
+      ctx.globalAlpha = blink ? 0.35 : 1;
+      ctx.globalCompositeOperation = 'lighter';
+      const fl = glowDot(game.ship.color, 14);
+      R.img(fl, p.x - Math.cos(p.facing) * 14, p.y - Math.sin(p.facing) * 14, 0.7 + Math.random() * 0.4 + Math.min(1, p.moving / 300) * 0.5);
+      ctx.globalCompositeOperation = 'source-over';
+      R.rot(shipSprite(game.ship.shape, game.ship.color, game.flash > 0.15), p.x, p.y, p.facing, 1);
+      ctx.globalAlpha = 1;
+    }
+    drawBar(game, ctx, p.x, p.y + 26, 40, p.hp / p.maxHp, p.hp / p.maxHp > 0.35 ? '#3dff8a' : '#ff3d6e');
+  }
+
+  game.tut.renderWorld(ctx);
+  if (overlay) drawEffectsArt(game, ctx);
+
+  // particles, explosions, lightning
+  ctx.globalCompositeOperation = 'lighter';
+  if (!overlay) for (const q of game.particles) {
+    if (!vis(q)) continue;
+    ctx.globalAlpha = q.life / q.max;
+    R.img(glowDot(q.color, 8), q.x, q.y, (q.size / 8) * (0.4 + 0.6 * (q.life / q.max)));
+  }
+  if (!overlay) for (const f of game.fx) {
+    const t = f.t / f.dur;
+    ctx.globalAlpha = (1 - t) * 0.9;
+    ctx.strokeStyle = f.color;
+    ctx.lineWidth = f.width * (1 - t) + 1;
+    ctx.beginPath(); ctx.arc(f.x, f.y, f.max * (0.2 + 0.8 * Math.sqrt(t)), 0, TAU); ctx.stroke();
+  }
+  if (!overlay) for (const b of game.bolts) {
+    const a = b.t / 0.2;
+    for (const [lw, col, al] of [[7, b.color, 0.35], [2, '#ffffff', 1]]) {
+      ctx.globalAlpha = al * a;
+      ctx.strokeStyle = col;
+      ctx.lineWidth = lw;
+      ctx.beginPath();
+      ctx.moveTo(b.pts[0], b.pts[1]);
+      for (let i = 2; i < b.pts.length; i += 2) ctx.lineTo(b.pts[i], b.pts[i + 1]);
+      ctx.stroke();
+    }
+  }
+  ctx.globalAlpha = 1;
+  ctx.globalCompositeOperation = 'source-over';
+
+  // damage numbers
+  if (game.texts.length) {
+    ctx.font = '700 13px Rajdhani, sans-serif';
+    ctx.textAlign = 'center';
+    for (const t of game.texts) {
+      ctx.globalAlpha = Math.min(1, t.t * 3);
+      ctx.fillStyle = t.color;
+      ctx.fillText(t.str, t.x, t.y);
+    }
+    ctx.globalAlpha = 1;
+  }
+
+  // screen-space overlays
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  if (game.boss && !vis(game.boss, -40)) drawOffscreenArrow(game, ctx, game.boss, cx, cy);
+  // elites off screen get an arrow in the colour of their (first) trait, so the player can hunt them down
+  for (const e of game.enemies) {
+    if (!e.elite || e.dead || e.boss || vis(e, -20)) continue;
+    drawOffscreenArrow(game, ctx, e, cx, cy, e.traits ? TRAITS[[...e.traits][0]].color : '#ffd23d', 0.75);
+  }
+  const low = p.hp / p.maxHp;
+  if (low < 0.35 || game.flash > 0) {
+    const a = Math.max(game.flash * 1.5, low < 0.35 ? (0.35 - low) * 1.4 * (0.7 + 0.3 * Math.sin(game.time * 6)) : 0);
+    const g = ctx.createRadialGradient(W / 2, H / 2, Math.min(W, H) * 0.3, W / 2, H / 2, Math.max(W, H) * 0.75);
+    g.addColorStop(0, 'rgba(255,30,80,0)');
+    g.addColorStop(1, `rgba(255,30,80,${Math.min(0.6, a)})`);
+    ctx.fillStyle = g;
+    ctx.fillRect(0, 0, W, H);
+  }
+}
+
+function drawArena(game, ctx, x0, x1, y0, y1) {
+  const hw = game.arena.w / 2, hh = game.arena.h / 2;
+  const grid = game.stage.world.theme.grid;
+  const gs = 64;
+  ctx.strokeStyle = grid;
+  ctx.lineWidth = 1;
+  ctx.globalAlpha = 0.09;
+  ctx.beginPath();
+  const ax0 = Math.max(-hw, x0), ax1 = Math.min(hw, x1), ay0 = Math.max(-hh, y0), ay1 = Math.min(hh, y1);
+  for (let x = Math.ceil(ax0 / gs) * gs; x <= ax1; x += gs) { ctx.moveTo(x, ay0); ctx.lineTo(x, ay1); }
+  for (let y = Math.ceil(ay0 / gs) * gs; y <= ay1; y += gs) { ctx.moveTo(ax0, y); ctx.lineTo(ax1, y); }
+  ctx.stroke();
+  ctx.globalAlpha = 0.2;
+  ctx.lineWidth = 12;
+  ctx.strokeRect(-hw, -hh, hw * 2, hh * 2);
+  ctx.globalAlpha = 0.9;
+  ctx.lineWidth = 2.5;
+  ctx.strokeStyle = grid;
+  ctx.strokeRect(-hw, -hh, hw * 2, hh * 2);
+  ctx.globalAlpha = 1;
+}
+
+function drawBoss(game, R, b, sc) {
+  const fl = b.flash > 0;
+  const def = b.def;
+  const ctx = R.ctx;
+  const pulse = 1 + Math.sin(game.time * 4) * 0.04;
+  if (b.alpha < 1) ctx.globalAlpha = Math.max(0.05, b.alpha);
+  const inner = b.phase >= 2 ? (b.phase >= 3 ? '#ffffff' : '#ffd23d') : def.inner;
+  R.rot(bossLayer('outer', b.color, b.r, fl, def.sides), b.x, b.y, def.move === 'serpent' ? b.heading : b.rot, sc * pulse);
+  R.rot(bossLayer('inner', inner, b.r, fl, def.sides), b.x, b.y, b.rot2, sc);
+  R.rot(bossLayer('core', b.color, b.r, fl, def.sides), b.x, b.y, 0, sc * (1 + Math.sin(game.time * 8) * 0.08));
+  ctx.globalAlpha = 1;
+  if (b.mode === 'charge' && b.modeT > 0.45) {
+    ctx.globalAlpha = 0.35;
+    ctx.strokeStyle = '#ff2d55';
+    ctx.lineWidth = b.r * 1.4;
+    ctx.beginPath();
+    ctx.moveTo(b.x, b.y);
+    ctx.lineTo(b.x + Math.cos(b.dir) * 500, b.y + Math.sin(b.dir) * 500);
+    ctx.stroke();
+    ctx.globalAlpha = 1;
+  }
+}
+
+// One frame of an effect strip (proto2/make-common.py: frames side by side), centred on (x, y), turned by rot.
+// Like frame, but between two frames it blends them, so a short strip (8 frames) plays smoothly however long it lasts
+function frameBlend(ctx, img, frames, f, x, y, w, h, rot = 0) {
+  const a = ctx.globalAlpha, i = Math.max(0, Math.min(frames - 1, Math.floor(f))), k = Math.min(1, Math.max(0, f - i));
+  if (i >= frames - 1 || k < 0.02) { frame(ctx, img, frames, i, x, y, w, h, rot); return; }
+  ctx.globalAlpha = a * (1 - k); frame(ctx, img, frames, i, x, y, w, h, rot);
+  ctx.globalAlpha = a * k; frame(ctx, img, frames, i + 1, x, y, w, h, rot);
+  ctx.globalAlpha = a;
+}
+
+function frame(ctx, img, frames, f, x, y, w, h, rot = 0) {
+  const cw = img.width / frames, i = Math.min(frames - 1, Math.max(0, Math.floor(f)));
+  if (!rot) { ctx.drawImage(img, i * cw, 0, cw, img.height, x - w / 2, y - h / 2, w, h); return; }
+  ctx.save(); ctx.translate(x, y); ctx.rotate(rot);
+  ctx.drawImage(img, i * cw, 0, cw, img.height, -w / 2, -h / 2, w, h);
+  ctx.restore();
+}
+
+// The 2.0 arsenal's effects drawn with ChatGPT's art (Art Bible FX5-FX7, js/v2/renderer.js app.fxArt) when the 2.0
+// look has loaded it (their black is transparency, proto2/make-common.py), as added light: the flame, burning ground and burning
+// enemies, black holes and their collapse, railgun beams with their charge, muzzle flash and end blast. Returns false
+// when the art is not there (the 1.x look, the dev page): then drawArsenal's neon shapes stand in.
+function drawArsenalArt(game, ctx) {
+  const art = game.app.fxArt;
+  if (!art || !art('hole')) return false;
+  const t = game.time, p = game.player, A = 12; // A: frames per second of the looping strips
+  ctx.globalCompositeOperation = 'lighter';
+  // burning ground
+  for (const f of game.fires) {
+    const k = Math.min(1, f.t / 0.2) * Math.min(1, (f.dur - f.t) / 0.5);
+    ctx.globalAlpha = 0.6 * k;
+    frameBlend(ctx, art(f.blue ? 'inferno-ground' : 'fire-ground'), 8, (t * A + f.x * 0.37) % 7.99, f.x, f.y, f.r * 2.1, f.r * 2.1);
+  }
+  // burning enemies (the busiest effect: at most 70 at once)
+  ctx.globalAlpha = 0.85;
+  const burn = art('burn');
+  let n = 0;
+  for (const e of game.enemies) {
+    if (e.dead || !(e.burnT > 0) || e.boss) continue;
+    if (++n > 70) break;
+    const s = Math.max(26, e.r * 2.4);
+    frame(ctx, burn, 8, (t * A + e.id) % 8, e.x, e.y - e.r * 0.3, s, s);
+  }
+  // the flame: drawn while the Flamethrower fires (it fires every ~0.1 s). Subtle (Konrad, 2026-11-01: it looked like
+  // an extra object bigger than the ship): see-through, only as long as the way to its target, narrower, fading in
+  // and out, its frames blended
+  for (const w of game.weapons) {
+    const since = t - (w.coneAt ?? -9);
+    if (w.id !== 'flame' || !(since < 0.22)) continue;
+    const img = art(w.evolved ? 'inferno-cone' : 'flame-cone'), len = w.coneLen, wid = Math.max(30, Math.tan(w.coneW) * len * 1.05);
+    ctx.globalAlpha = 0.5 * Math.min(1, (0.22 - since) / 0.1);
+    frameBlend(ctx, img, 8, (t * 12) % 7.99, p.x + Math.cos(w.coneA) * (10 + len / 2), p.y + Math.sin(w.coneA) * (10 + len / 2), len, wid, w.coneA);
+  }
+  // the railgun's charge glow at the nose, the last 0.45 s before a shot
+  for (const w of game.weapons) {
+    if (w.id !== 'rail' || !(w.t > 0 && w.t < 0.45)) continue;
+    ctx.globalAlpha = 0.9;
+    frame(ctx, art(w.evolved ? 'gauss-charge' : 'rail-charge'), 6, (1 - w.t / 0.45) * 6, p.x, p.y, 54, 54);
+  }
+  // beams: the body tiled along the line, the muzzle flash and the end blast
+  for (const b of game.beams) {
+    const k = 1 - b.t / b.dur, gauss = b.color === '#fff2a8';
+    const body = art(gauss ? 'gauss-beam' : 'rail-beam');
+    const a = Math.atan2(b.y1 - b.y0, b.x1 - b.x0), len = Math.hypot(b.x1 - b.x0, b.y1 - b.y0);
+    const h = b.w * 2.6, seg = body.width * (h / body.height);
+    ctx.globalAlpha = Math.min(1, k * 1.4);
+    ctx.save(); ctx.translate(b.x0, b.y0); ctx.rotate(a);
+    for (let d = 0; d < len; d += seg) {
+      const part = Math.min(seg, len - d);
+      ctx.drawImage(body, 0, 0, body.width * (part / seg), body.height, d, -h / 2, part, h);
+    }
+    ctx.restore();
+    const f = (b.t / b.dur) * 6;
+    frame(ctx, art(gauss ? 'gauss-muzzle' : 'rail-muzzle'), 6, f, b.x0, b.y0, b.w * 5, b.w * 5, a);
+    frame(ctx, art(gauss ? 'gauss-end' : 'rail-end'), 6, f, b.x1, b.y1, b.w * 6, b.w * 6, a);
+  }
+  // black holes: a dark core under the light (additive light cannot darken), then the swirl
+  for (const h of game.holes) {
+    if (h.t < h.fly) {
+      ctx.globalAlpha = 1;
+      frame(ctx, art(h.evo ? 'eh-orb' : 'hole-orb'), 8, (t * A) % 8, h.x, h.y, h.evo ? 50 : 42, h.evo ? 50 : 42);
+      continue;
+    }
+    const k = Math.min(1, (h.t - h.fly) / 0.25) * Math.min(1, (h.fly + h.dur - h.t) / 0.25 + 0.2);
+    ctx.globalCompositeOperation = 'source-over';
+    const gr = ctx.createRadialGradient(h.x, h.y, 0, h.x, h.y, h.r * 0.55);
+    gr.addColorStop(0, `rgba(0,0,0,${0.9 * k})`); gr.addColorStop(1, 'rgba(0,0,0,0)');
+    ctx.fillStyle = gr; ctx.globalAlpha = 1;
+    ctx.beginPath(); ctx.arc(h.x, h.y, h.r * 0.55, 0, TAU); ctx.fill();
+    ctx.globalCompositeOperation = 'lighter';
+    ctx.globalAlpha = k;
+    const d = h.r * 1.7;
+    frame(ctx, art(h.evo ? 'eh-hole' : 'hole'), 8, (t * A) % 8, h.x, h.y, d, d, t * 0.8);
+  }
+  // collapses
+  for (const c of game.collapses) {
+    ctx.globalAlpha = 1;
+    const d = c.r * 2.4;
+    frame(ctx, art(c.evo ? 'eh-collapse' : 'collapse'), 8, (c.t / 0.45) * 8, c.x, c.y, d, d);
+  }
+  ctx.globalAlpha = 1;
+  ctx.globalCompositeOperation = 'source-over';
+  return true;
+}
+
+// The hit spark colours (Art Bible FX2), matched to a shot's colour by the nearest one
+const HIT = { cyan: [47, 243, 255], orange: [255, 138, 42], 'red-pink': [255, 61, 110], violet: [196, 107, 255], 'electric-blue': [125, 249, 255],
+  teal: [61, 255, 200], green: [157, 255, 61], gold: [255, 210, 61], 'white-blue': [200, 240, 255], 'fire-orange': [255, 122, 26], 'dark-violet': [176, 107, 255] };
+const hitCache = new Map();
+function hitOf(hex) {
+  let n = hitCache.get(hex);
+  if (n) return n;
+  const c = [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16) || 0);
+  let best = Infinity;
+  for (const [k, v] of Object.entries(HIT)) {
+    const d = (v[0] - c[0]) ** 2 + (v[1] - c[1]) ** 2 + (v[2] - c[2]) ** 2;
+    if (d < best) { best = d; n = k; }
+  }
+  hitCache.set(hex, n);
+  return n;
+}
+
+// The 2.0 look's effects with ChatGPT's art (Art Bible FX2-FX4, FX8, FX9; js/v2/renderer.js app.fxArt), over
+// everything the 2.0 look draws: explosions (small for an enemy, medium, large for a boss), lightning, hit sparks,
+// Nova Pulse's rings, enemy spawn portals and the flash of an arriving elite. The 2.0 look skips its own simple
+// versions of these when the art is there.
+function drawEffectsArt(game, ctx) {
+  const art = game.app.fxArt;
+  if (!art || !art('boom-small')) return;
+  const t = game.time;
+  ctx.globalCompositeOperation = 'lighter';
+  // spawn portals (not for swarm packs: too many) and elite arrivals
+  let n = 0;
+  for (const e of game.enemies) {
+    if (!(e.spawnT > 0) || e.dead || e.boss) continue;
+    const k = 1 - e.spawnT / 0.35;
+    if (e.elite) { ctx.globalAlpha = 1; frame(ctx, art('elite-in'), 8, k * 8, e.x, e.y, e.r * 6, e.r * 6); }
+    else if (!e.def?.pack && ++n <= 24) { ctx.globalAlpha = 0.9; frame(ctx, art('portal'), 8, k * 8, e.x, e.y, e.r * 3.6, e.r * 3.6); }
+  }
+  // Nova Pulse's rings (supernova when evolved)
+  for (const r of game.rings) {
+    if (r.color !== '#3dffc8' && r.color !== '#e0fff6') continue;
+    const k = 1 - Math.max(0, r.t - r.dur) / 0.15;
+    ctx.globalAlpha = 0.95 * k;
+    const d = Math.max(20, r.r) * 2.3;
+    frame(ctx, art(r.color === '#e0fff6' ? 'supernova' : 'nova'), 8, Math.min(7, (r.t / r.dur) * 8), r.x, r.y, d, d);
+  }
+  // explosions
+  for (const f of game.fx) {
+    const k = f.t / f.dur, kind = f.max >= 160 ? 'large' : f.max >= 60 ? 'medium' : 'small';
+    const d = Math.min(560, f.max * (kind === 'small' ? 2.8 : 2.2));
+    // blended frames and a soft fade at the end: the 8 frames no longer jerk (Konrad, 2026-11-01)
+    ctx.globalAlpha = Math.min(1, (1 - k) * 4);
+    frameBlend(ctx, art(`boom-${kind}`), 8, k * 7.99, f.x, f.y, d * (0.9 + 0.1 * k), d * (0.9 + 0.1 * k));
+  }
+  // lightning: a textured segment between every two points
+  for (const b of game.bolts) {
+    const tempest = b.color === '#fff27d';
+    ctx.globalAlpha = Math.min(1, (b.t / 0.2) * 1.5);
+    for (let i = 0; i + 3 < b.pts.length; i += 2) {
+      const x0 = b.pts[i], y0 = b.pts[i + 1], x1 = b.pts[i + 2], y1 = b.pts[i + 3];
+      const len = Math.hypot(x1 - x0, y1 - y0);
+      const img = art(`${tempest ? 'tempest' : 'arc'}-${1 + ((i / 2 + Math.floor(t * 20)) % 6)}`);
+      ctx.save(); ctx.translate(x0, y0); ctx.rotate(Math.atan2(y1 - y0, x1 - x0));
+      ctx.drawImage(img, 0, -12, len, 24);
+      ctx.restore();
+    }
+  }
+  // hit sparks
+  for (const s of game.sparks) {
+    ctx.globalAlpha = 1;
+    frame(ctx, art(`hit-${hitOf(s.color)}`), 8, (s.t / 0.25) * 8, s.x, s.y, 34, 34);
+  }
+  ctx.globalAlpha = 1;
+  ctx.globalCompositeOperation = 'source-over';
+}
+
+// The 2.0 arsenal (js/arsenal.js): burning ground, black holes, railgun beams (in neon when its art is not loaded,
+// drawArsenalArt above) and the Phase Shield around the ship.
+function drawArsenal(game, ctx) {
+  const t = game.time, p = game.player;
+  if (drawArsenalArt(game, ctx)) { drawShield(game, ctx); return; }
+  ctx.globalCompositeOperation = 'lighter';
+  for (const f of game.fires) {
+    const k = Math.min(1, f.t / 0.2) * Math.min(1, (f.dur - f.t) / 0.5);
+    const gr = ctx.createRadialGradient(f.x, f.y, 0, f.x, f.y, f.r);
+    gr.addColorStop(0, `rgba(125,184,255,${0.45 * k})`);
+    gr.addColorStop(0.6, `rgba(255,138,42,${(0.3 + 0.1 * Math.sin(t * 20 + f.x)) * k})`);
+    gr.addColorStop(1, 'rgba(255,90,20,0)');
+    ctx.fillStyle = gr;
+    ctx.beginPath(); ctx.arc(f.x, f.y, f.r, 0, TAU); ctx.fill();
+  }
+  for (const b of game.beams) {
+    const k = 1 - b.t / b.dur;
+    ctx.strokeStyle = b.color; ctx.lineCap = 'round';
+    ctx.globalAlpha = 0.35 * k; ctx.lineWidth = b.w * 1.8;
+    ctx.beginPath(); ctx.moveTo(b.x0, b.y0); ctx.lineTo(b.x1, b.y1); ctx.stroke();
+    ctx.globalAlpha = k; ctx.lineWidth = b.w * 0.45; ctx.strokeStyle = '#ffffff';
+    ctx.stroke();
+  }
+  ctx.globalAlpha = 1;
+  ctx.globalCompositeOperation = 'source-over';
+  for (const h of game.holes) {
+    if (h.t < h.fly) {
+      ctx.fillStyle = '#1a0628'; ctx.strokeStyle = h.color; ctx.lineWidth = 3;
+      ctx.beginPath(); ctx.arc(h.x, h.y, 10, 0, TAU); ctx.fill(); ctx.stroke();
+      continue;
+    }
+    const k = Math.min(1, (h.t - h.fly) / 0.25) * Math.min(1, (h.fly + h.dur - h.t) / 0.25 + 0.2);
+    const r = h.r * 0.42 * k;
+    const gr = ctx.createRadialGradient(h.x, h.y, 0, h.x, h.y, h.r);
+    gr.addColorStop(0, 'rgba(0,0,0,0.95)');
+    gr.addColorStop(0.35, 'rgba(20,4,40,0.8)');
+    gr.addColorStop(1, 'rgba(60,10,90,0)');
+    ctx.globalAlpha = k;
+    ctx.fillStyle = gr;
+    ctx.beginPath(); ctx.arc(h.x, h.y, h.r, 0, TAU); ctx.fill();
+    ctx.strokeStyle = h.color; ctx.lineWidth = 3;
+    ctx.beginPath(); ctx.arc(h.x, h.y, r, t * 6, t * 6 + TAU * 0.75); ctx.stroke();
+    ctx.globalAlpha = 1;
+  }
+  drawShield(game, ctx);
+}
+
+// the Phase Shield: a ring that fades and thins as it soaks damage, and an arc showing how full it is
+function drawShield(game, ctx) {
+  const t = game.time, p = game.player, art = game.app.fxArt;
+  // its shattering (Art Bible FX8), 0.4 s after it breaks
+  if (art?.('pshield-break') && t - (game.shieldBroke ?? -9) < 0.4) {
+    ctx.globalCompositeOperation = 'lighter'; ctx.globalAlpha = 1;
+    frame(ctx, art('pshield-break'), 8, ((t - game.shieldBroke) / 0.4) * 8, p.x, p.y, (p.r + 26) * 2.6, (p.r + 26) * 2.6);
+    ctx.globalCompositeOperation = 'source-over';
+  }
+  if (p.shield > 0 && game.state === 'play') {
+    const k = p.shield / p.shieldMax;
+    if (art?.('pshield')) {
+      ctx.globalCompositeOperation = 'lighter'; ctx.globalAlpha = 0.3 + 0.55 * k;
+      frame(ctx, art('pshield'), 8, (t * 10) % 8, p.x, p.y, (p.r + 24) * 2.5, (p.r + 24) * 2.5);
+      ctx.globalCompositeOperation = 'source-over';
+    }
+    ctx.strokeStyle = '#7df9ff';
+    ctx.globalAlpha = (0.2 + 0.35 * k) * (0.85 + 0.15 * Math.sin(t * 4)); ctx.lineWidth = 1 + 2 * k;
+    ctx.beginPath(); ctx.arc(p.x, p.y, p.r + 16, 0, TAU); ctx.stroke();
+    ctx.globalAlpha = 0.8; ctx.lineWidth = 2.5;
+    ctx.beginPath(); ctx.arc(p.x, p.y, p.r + 21, -Math.PI / 2, -Math.PI / 2 + TAU * k); ctx.stroke();
+    ctx.globalAlpha = 1;
+  }
+}
+
+function drawHazards(game, ctx, overlay) {
+  const t = game.time;
+  for (const h of game.hazards) {
+    if (h.kind === 'wreck') {
+      drawWreck(h, ctx, t, overlay);
+      ctx.globalCompositeOperation = 'lighter';
+    } else if (h.kind === 'beam') {
+      const [x0, y0, x1, y1] = game.beamEnds(h);
+      const col = h.centered ? '#ffb52e' : '#ff2d55';
+      ctx.beginPath();
+      ctx.moveTo(x0, y0);
+      ctx.lineTo(x1, y1);
+      if (h.t < h.warn) {
+        // telegraph: thin pulsing guide that thickens as the shot nears
+        const k = h.t / h.warn;
+        ctx.globalAlpha = 0.25 + 0.35 * k + 0.2 * Math.sin(t * 30);
+        ctx.strokeStyle = col;
+        ctx.lineWidth = 2 + h.w * 0.35 * k;
+        ctx.stroke();
+      } else {
+        const k = 1 - Math.max(0, h.t - h.warn - h.dur + 0.15) / 0.15;
+        ctx.globalAlpha = 0.45 * k;
+        ctx.strokeStyle = col;
+        ctx.lineWidth = h.w * 1.6;
+        ctx.stroke();
+        ctx.globalAlpha = 0.95 * k;
+        ctx.lineWidth = h.w * 0.6;
+        ctx.stroke();
+        ctx.strokeStyle = '#ffffff';
+        ctx.lineWidth = h.w * 0.22;
+        ctx.stroke();
+      }
+    } else if (h.kind === 'mortar') {
+      const k = Math.min(1, h.t / h.warn);
+      const warn = game.app.fxArt?.('warn');
+      if (warn) {
+        // ChatGPT's warning circle (Art Bible FX9) filling up as the shell nears
+        ctx.globalAlpha = 0.9;
+        frame(ctx, warn, 8, k * 8, h.x, h.y, h.r * 2.3, h.r * 2.3);
+      } else {
+        ctx.globalAlpha = 0.6 + 0.3 * Math.sin(t * 25);
+        ctx.strokeStyle = h.color || '#ff8a2a';
+        ctx.lineWidth = 2;
+        ctx.beginPath(); ctx.arc(h.x, h.y, h.r, 0, TAU); ctx.stroke();
+        ctx.globalAlpha = 0.25;
+        ctx.fillStyle = h.color || '#ff5a1a';
+        ctx.beginPath(); ctx.arc(h.x, h.y, h.r * k, 0, TAU); ctx.fill();
+      }
+      // a shell lobbed by a mortar node (world 3): it arcs from the node to the circle while the warning runs
+      if (h.from) {
+        const sx = lerp(h.from.x, h.x, k), sy = lerp(h.from.y, h.y, k) - Math.sin(k * Math.PI) * 140;
+        ctx.globalAlpha = 1;
+        ctx.fillStyle = '#ffd0ea';
+        ctx.beginPath(); ctx.arc(sx, sy, 4 + Math.sin(k * Math.PI) * 3, 0, TAU); ctx.fill();
+      }
+    } else if (h.kind === 'well') {
+      const k = Math.min(1, h.t / h.warn) * Math.min(1, (h.dur - h.t) / 0.4);
+      ctx.globalAlpha = 0.35 * k;
+      ctx.strokeStyle = '#9d4dff';
+      ctx.lineWidth = 2;
+      for (let i = 0; i < 3; i++) {
+        const rr = h.pullR * (((t * 0.6 + i / 3) % 1));
+        ctx.beginPath(); ctx.arc(h.x, h.y, h.pullR - rr, 0, TAU); ctx.stroke();
+      }
+      ctx.globalCompositeOperation = 'source-over';
+      ctx.globalAlpha = 0.9 * k;
+      const g = ctx.createRadialGradient(h.x, h.y, 0, h.x, h.y, h.r * 2.4);
+      g.addColorStop(0, '#000000');
+      g.addColorStop(0.45, '#05000c');
+      g.addColorStop(0.6, '#b04dff');
+      g.addColorStop(1, 'rgba(157,77,255,0)');
+      ctx.fillStyle = g;
+      ctx.beginPath(); ctx.arc(h.x, h.y, h.r * 2.4, 0, TAU); ctx.fill();
+      ctx.globalCompositeOperation = 'lighter';
+      ctx.globalAlpha = 0.8 * k;
+      ctx.strokeStyle = '#ff2d95';
+      ctx.lineWidth = 2.5;
+      for (let i = 0; i < 3; i++) {
+        const a = t * 3 + (i / 3) * TAU;
+        ctx.beginPath(); ctx.arc(h.x, h.y, h.r * 1.4, a, a + 1.2); ctx.stroke();
+      }
+    }
+  }
+  ctx.globalAlpha = 1;
+}
+
+// The falling wreck of world 1 (Game.fallingWreck): while it warns, an amber corridor along its path with chevrons
+// running its way and a shadow growing where it will pass the ship; then the wreck itself (the 2.0 look draws it as
+// a sprite, js/v2/renderer.js, so the overlay skips it).
+function drawWreck(h, ctx, t, overlay) {
+  const k = Math.min(1, h.t / h.warn), c = Math.cos(h.a), s = Math.sin(h.a);
+  const len = Math.hypot(h.x1 - h.x0, h.y1 - h.y0), mx = (h.x0 + h.x1) / 2, my = (h.y0 + h.y1) / 2;
+  ctx.save();
+  ctx.translate(mx, my); ctx.rotate(h.a);
+  const fade = h.t < h.warn ? 1 : Math.max(0, 1 - (h.t - h.warn) / h.dur);
+  ctx.globalCompositeOperation = 'source-over';
+  ctx.globalAlpha = (0.1 + 0.06 * Math.sin(t * 14)) * fade;
+  ctx.fillStyle = '#ffb02e';
+  ctx.fillRect(-len / 2, -h.w / 2, len, h.w);
+  ctx.globalAlpha = 0.75 * fade;
+  ctx.strokeStyle = '#ffb02e';
+  ctx.lineWidth = 2;
+  ctx.setLineDash([18, 12]); ctx.lineDashOffset = -t * 120;
+  ctx.beginPath(); ctx.moveTo(-len / 2, -h.w / 2); ctx.lineTo(len / 2, -h.w / 2); ctx.moveTo(-len / 2, h.w / 2); ctx.lineTo(len / 2, h.w / 2); ctx.stroke();
+  ctx.setLineDash([]);
+  if (h.t < h.warn) {
+    // chevrons running the wreck's way
+    ctx.globalAlpha = 0.55 + 0.3 * k;
+    ctx.lineWidth = 3;
+    const step = 90, off = (t * 260) % step;
+    for (let x = -len / 2 + off; x < len / 2; x += step) {
+      ctx.beginPath(); ctx.moveTo(x - 12, -16); ctx.lineTo(x + 4, 0); ctx.lineTo(x - 12, 16); ctx.stroke();
+    }
+  }
+  ctx.restore();
+  // its shadow: grows at the middle of the path while it warns, then runs with the wreck
+  const sx = h.t < h.warn ? mx : h.x, sy = h.t < h.warn ? my : h.y;
+  ctx.globalCompositeOperation = 'source-over';
+  ctx.globalAlpha = 0.5 * (h.t < h.warn ? k : 1) * fade;
+  const g = ctx.createRadialGradient(sx, sy, 0, sx, sy, h.w);
+  g.addColorStop(0, 'rgba(0,0,0,0.9)'); g.addColorStop(1, 'rgba(0,0,0,0)');
+  ctx.fillStyle = g;
+  ctx.beginPath(); ctx.ellipse(sx, sy, h.w * (0.6 + 0.4 * k), h.w * 0.6 * (0.6 + 0.4 * k), h.a, 0, TAU); ctx.fill();
+  if (!overlay && h.t >= h.warn) {
+    // the 1.x look: a plain dark slab
+    ctx.save();
+    ctx.translate(h.x, h.y); ctx.rotate(h.a + (h.t - h.warn) * h.spin);
+    ctx.globalAlpha = 1;
+    ctx.fillStyle = '#3a4152'; ctx.strokeStyle = '#ffb02e'; ctx.lineWidth = 2;
+    ctx.fillRect(-h.w * 0.8, -h.w * 0.45, h.w * 1.6, h.w * 0.9); ctx.strokeRect(-h.w * 0.8, -h.w * 0.45, h.w * 1.6, h.w * 0.9);
+    ctx.restore();
+  }
+  ctx.globalAlpha = 1;
+}
+
+// Trait elites: a ring per trait, names over the health bar, the shield, a swift charge line, command links.
+function drawTraits(game, ctx, e) {
+  const list = [...e.traits];
+  const pulse = 0.5 + 0.5 * Math.sin(game.app.time * 5);
+  const art = game.app.fxArt;
+  ctx.save();
+  ctx.lineWidth = 2;
+  list.forEach((id, i) => {
+    // ChatGPT's trait ring (Art Bible EL1) turning slowly, or a neon ring
+    const ring = art?.(`el-${id}`);
+    if (ring) {
+      const d = (e.r + 12 + i * 8) * 2.25;
+      ctx.globalAlpha = 0.75 + pulse * 0.25;
+      ctx.save(); ctx.translate(e.x, e.y); ctx.rotate(game.time * (i % 2 ? -0.6 : 0.6));
+      ctx.drawImage(ring, -d / 2, -d / 2, d, d);
+      ctx.restore();
+      return;
+    }
+    const c = TRAITS[id].color;
+    ctx.strokeStyle = c; ctx.shadowColor = c; ctx.shadowBlur = 10;
+    ctx.globalAlpha = 0.55 + pulse * 0.35;
+    ctx.beginPath(); ctx.arc(e.x, e.y, e.r + 7 + i * 5, 0, TAU); ctx.stroke();
+  });
+  ctx.shadowBlur = 0; ctx.globalAlpha = 1;
+  if (e.traits.has('bulwark')) { ctx.strokeStyle = TRAITS.bulwark.color; ctx.globalAlpha = 0.18; ctx.setLineDash([6, 8]); ctx.beginPath(); ctx.arc(e.x, e.y, e.r + 160, 0, TAU); ctx.stroke(); ctx.setLineDash([]); ctx.globalAlpha = 1; }
+  if (e.enraged) { ctx.fillStyle = TRAITS.berserker.color; ctx.globalAlpha = 0.18 + pulse * 0.12; ctx.beginPath(); ctx.arc(e.x, e.y, e.r + 4, 0, TAU); ctx.fill(); ctx.globalAlpha = 1; }
+  if (e.sw?.phase === 'wind') {
+    ctx.strokeStyle = TRAITS.swift.color; ctx.globalAlpha = 0.7; ctx.lineWidth = 3; ctx.setLineDash([10, 8]);
+    ctx.beginPath(); ctx.moveTo(e.x, e.y); ctx.lineTo(e.x + Math.cos(e.sw.dir) * 380, e.y + Math.sin(e.sw.dir) * 380); ctx.stroke();
+    ctx.setLineDash([]); ctx.globalAlpha = 1;
+  }
+  if (e.traits.has('commander')) {
+    ctx.strokeStyle = TRAITS.commander.color; ctx.globalAlpha = 0.22; ctx.lineWidth = 1;
+    const near = game.tmp3 || [];
+    let n = 0;
+    for (const o of near) { if (o.buffT > 0 && !o.dead && n++ < 14) { ctx.beginPath(); ctx.moveTo(e.x, e.y); ctx.lineTo(o.x, o.y); ctx.stroke(); } }
+    ctx.globalAlpha = 1;
+  }
+  if (e.maxShield) drawBar(game, ctx, e.x, e.y + e.r + 16, 34, e.shield / e.maxShield, TRAITS.shielded.color);
+  // the shield bubble (Art Bible FX8) while it holds
+  if (e.shield > 0 && art?.('eshield')) {
+    ctx.globalCompositeOperation = 'lighter'; ctx.globalAlpha = 0.75;
+    frame(ctx, art('eshield'), 8, (game.time * 10 + e.id) % 8, e.x, e.y, (e.r + 10) * 2.6, (e.r + 10) * 2.6);
+    ctx.globalCompositeOperation = 'source-over'; ctx.globalAlpha = 1;
+  }
+  ctx.font = "700 10px 'Orbitron', sans-serif";
+  ctx.textAlign = 'center';
+  ctx.fillStyle = TRAITS[list[0]].color;
+  ctx.shadowColor = '#000'; ctx.shadowBlur = 4;
+  ctx.fillText(list.map((id) => TRAITS[id].name).join(' · '), e.x, e.y - e.r - 14);
+  // the traits' badges (Art Bible EL1) above the name
+  if (art?.('elb-swift')) {
+    ctx.shadowBlur = 0;
+    list.forEach((id, i) => ctx.drawImage(art(`elb-${id}`), e.x - list.length * 10 + i * 20, e.y - e.r - 44, 20, 20));
+  }
+  ctx.restore();
+}
+
+function drawBar(game, ctx, x, y, w, frac, color) {
+  ctx.fillStyle = 'rgba(0,0,0,0.55)';
+  ctx.fillRect(x - w / 2 - 1, y - 1, w + 2, 5);
+  ctx.fillStyle = color;
+  ctx.fillRect(x - w / 2, y, w * clamp(frac, 0, 1), 3);
+}
+
+function drawOffscreenArrow(game, ctx, t, cx, cy, color = '#ff2d6f', size = 1) {
+  const { W, H } = game.app;
+  const a = Math.atan2(t.y - cy, t.x - cx);
+  const m = 40;
+  const x = clamp(W / 2 + Math.cos(a) * W, m, W - m), y = clamp(H / 2 + Math.sin(a) * H, m + 60, H - m);
+  ctx.save();
+  ctx.translate(x, y);
+  ctx.rotate(a);
+  ctx.scale(size, size);
+  ctx.fillStyle = color;
+  ctx.shadowColor = color;
+  ctx.shadowBlur = 12;
+  ctx.beginPath();
+  ctx.moveTo(14, 0); ctx.lineTo(-8, 10); ctx.lineTo(-3, 0); ctx.lineTo(-8, -10);
+  ctx.closePath();
+  ctx.fill();
+  ctx.restore();
+}

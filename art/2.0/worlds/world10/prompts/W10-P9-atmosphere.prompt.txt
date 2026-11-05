@@ -1,0 +1,23 @@
+STYLE (keep identical across all images):
+Game art for "Void Blaster", a top-down mobile space shooter (survivors-like).
+Camera: top-down orthographic, looking straight down, no perspective.
+Look: stylized sci-fi with a neon accent. Dark, rich materials (gunmetal, carbon,
+matte ceramic) lit from the top-left, glowing edges and emissive lights only where
+noted. Detail level: high but clean - panel lines, vents, rivets; no grunge overload.
+The background must stay dark and calm so bright game objects read on top of it:
+no bright cyan anywhere (cyan belongs to the player), magenta only as thin traces.
+Rendering: crisp edges, soft bloom on glowing parts only, no motion blur, no depth of
+field, not photorealistic. No text, no logo, no watermark.
+WORLD 10 "THE NEXUS": the heart of the Void Collective (an alien machine intelligence):
+a living mind of circuits and neurons where geometry stops making sense. Circuit traces
+branch like dendrites, neuron nodes, floating impossible shapes (frames and stairs that
+lead nowhere), broken rings orbiting. Darkness #000000/#0a0414, dominant violet #b04dff
+(dark #3a1060), magenta #ff2d95 everywhere a little, tiny white sparks. Everything
+glows from inside in pulses, like a heartbeat; between pulses the world is dark.
+Mood: the finale, awe and dread. Full fusion of machine and organism.
+TASK W10-P9: an atmosphere sheet for this world: 4 large, soft, see-through shapes of
+the world's air: neural haze, magenta-violet mist with faint threads like synapses. Each in its own 1024x1024 square, 2x2 grid, seen from directly
+above, on a plain flat black background #000000 (the game lays them over the arena
+with transparency: black is fully transparent, brighter is more opaque). Soft edges
+that fade completely to black before the square's border, no hard shapes, no objects,
+no structures, low contrast inside, varied outlines between the four. No text.

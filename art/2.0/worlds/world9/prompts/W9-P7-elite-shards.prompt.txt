@@ -1,0 +1,30 @@
+STYLE (keep identical across all images):
+Game art for "Void Blaster", a top-down mobile space shooter (survivors-like).
+Camera: top-down orthographic, looking straight down, no perspective.
+Look: stylized sci-fi with a neon accent. Dark, rich materials (gunmetal, carbon,
+matte ceramic) lit from the top-left, glowing edges and emissive lights only where
+noted. Detail level: high but clean - panel lines, vents, rivets; no grunge overload.
+The background must stay dark and calm so bright game objects read on top of it:
+no bright cyan anywhere (cyan belongs to the player), magenta only as thin traces.
+Rendering: crisp edges, soft bloom on glowing parts only, no motion blur, no depth of
+field, not photorealistic. No text, no logo, no watermark.
+
+WORLD 9 "BROOD WORLD": the breeding world of the Void Collective (an alien machine
+intelligence): the ground is living tissue fused with metal plates, it breathes; nests
+hatch enemies. STYLIZED, never realistic flesh, no blood, no gore. Dark matte tissue
+#2a0f18/#4a1a28 with veins #6e2a40, embedded metal #3a3440, acid green #9dff3d,
+bioluminescent violet #7a3dff and small pale pink points #ff8fbf. The floor is NOT
+glowing magenta (magenta #ff2d95 is only in enemy cores). Weak light from below, from
+bioluminescence and acid. Mood: inside a living organism. 30% machine, 70% organic.
+
+TASK: Enemy sheet, 6 enemies, facing up, seen from directly above, one scale, plain
+flat dark background (#05010f), well apart. Mostly organic creatures with some metal
+parts: stylized and geometric, never realistic animals, no gore; glowing magenta core,
+acid-green and violet accents. Relative sizes: larva 26, leech 30, spitter 36, nest
+(stationary) 56, brood sac 60, carapace beetle 64 (the biggest drawn about 300 px).
+Then, on a second image: an elite spitter (1.6x, heavier carapace, a gold ring) and,
+for each of the 6, 3-4 broken shards of its body for the death animation (stylized, no
+gore), one row per enemy. No text.
+
+PRODUCTION NOTES (the attached approved P1 is a style/material reference, not a composition to reproduce):
+SECOND image ONLY: elite and death shards of the six creatures in attached enemy sheet (second reference). First reference is approved arena for style. Portrait sheet 1600x2400, plain #05010f. EXACT arrangement: top dedicated band ONE elite centered, then SIX clearly separated HORIZONTAL ROWS, one row per enemy type in original reading order; each row exactly FOUR separate recognizable broken body modules from that type. Total one elite and 24 loose shards. No complete normal enemies. No touching objects, generous blank outer margin and row/column gaps. Keep source materials, magenta core fragments, orientation top-down. Broken parts clean stylized sci-fi, no gore. Each shard is a DIFFERENT chunk (hull, appendage, core piece, armor), no repeated identical chunks. Elite is 1.6 times normal with heavier armor and a thin GOLD ring; gold is unique to elite, not debris. No text or drawn grid. Elite is spitter. Six shard rows: larva, leech, spitter, stationary nest, brood sac, carapace beetle. Match attached dorsal carapaces, dark burgundy membranes, acid-green and violet details. No blood, realistic flesh or gore; clean broken chitin/metal modules, not wet meat.

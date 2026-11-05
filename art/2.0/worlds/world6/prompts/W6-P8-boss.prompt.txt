@@ -1,0 +1,29 @@
+STYLE (keep identical across all images):
+Game art for "Void Blaster", a top-down mobile space shooter (survivors-like).
+Camera: top-down orthographic, looking straight down, no perspective.
+Look: stylized sci-fi with a neon accent. Dark, rich materials (gunmetal, carbon,
+matte ceramic) lit from the top-left, glowing edges and emissive lights only where
+noted. Detail level: high but clean - panel lines, vents, rivets; no grunge overload.
+The background must stay dark and calm so bright game objects read on top of it:
+no bright cyan anywhere (cyan belongs to the player), magenta only as thin traces.
+Rendering: crisp edges, soft bloom on glowing parts only, no motion blur, no depth of
+field, not photorealistic. No text, no logo, no watermark.
+
+WORLD 6 "STORM RELAY": high in Jupiter's atmosphere, above storm bands, among the
+floating platforms of a relay the Void Collective (an alien machine intelligence) uses
+to transmit deep into space. Its antennas are overgrown with membranes and living
+tissue. Muted storm bands #2e241b/#5a4330/#8a6f4e, bronze metal #b0783a (dark
+#4a3524), electric yellow #ffe23d lightning and coils, deep pink tissue #6a2a4a with
+magenta #ff2d95 veins. Diffuse golden light from above, sharp lightning flashes.
+Mood: wind, electricity, a pulsing signal. 70% machine, 30% organic.
+
+TASK: The world-6 boss "Storm Eye": a cyclone creature seen from directly above,
+1024x1024, plain flat dark background (#05010f): a ring of armored bronze-and-tissue
+segments around a lightning core with a magenta heart, cloud arms spiraling out, 3-4
+glowing weak points (segment joints, core vents). Then a second image: exploded parts
+sheet at one scale with generous space: core, each segment, each cloud arm, each weak
+point; plus the complete assembled boss at the same scale in the bottom-right corner.
+No text.
+
+PRODUCTION NOTES (the attached approved P1 is a style/material reference, not a composition to reproduce):
+ONLY one full assembled boss image now, no sheet or phases. Square 1024x1024, true 90-degree orthographic dorsal TOP VIEW. Entire silhouette plus all appendages complete within generous blank margins (10 percent), centered on flat #05010f. No arena, ground, shadow, UI, labels, letters, text or watermark. Crisp stylized science-fiction game sprite, clear silhouette and visible magenta core. Storm Eye: an annular cyclone creature built from FOUR distinct armored BRONZE-and-dark-pink-tissue curved segments forming a circular ring around a lightning core with magenta heart. FOUR thin curling storm-cloud arms radiate in the same clockwise spiral around the ring, all complete. FOUR clearly visible glowing weak-point modules at ring segment joints (electric-yellow sockets with magenta center). Core, ring and arms readable as separate animated modules. No tall antennas, tower sides or central platform floor. Lightning restrained within core. Top-down ring circular, not elliptical.
