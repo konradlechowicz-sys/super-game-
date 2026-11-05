@@ -1,8 +1,9 @@
-# App Store listing: Void Blaster
+# App Store listing: Void Blaster 2.0
 
-Everything to paste into App Store Connect. Character limits are Apple's; all texts below fit.
+Everything to paste into App Store Connect for version **2.0.0**. Character limits are Apple's; all texts below fit.
+The 1.x listing (version 1.0-1.3) is in git history. Google Play: `appstore/GOOGLE-PLAY-LISTING.md` (same story).
 
-## URLs (after GitHub Pages is enabled; see README)
+## URLs
 | Field | Value |
 |---|---|
 | Privacy Policy URL | https://konradlechowicz-sys.github.io/super-game-/site/privacy.html |
@@ -20,92 +21,110 @@ Everything to paste into App Store Connect. Character limits are Apple's; all te
 | Price | Free, with one in-app purchase (Full Game) |
 | Seller / developer name | Konrad Lechowicz |
 
-"Void Blaster" alone was taken on the App Store, so the store name is *Void Blaster: Neon Survivor*. The name under
-the icon on the iPhone, the logo and all marketing stay "Void Blaster"; the subtitle avoids repeating "Survivor".
+## Promotional text (170) · 143
+```text
+Void Blaster 2.0: 10 worlds from Earth's orbit to the Nexus, 10 bosses and a story to fight through. Free to try: worlds 1 and 2. No ads, ever.
+```
 
-## Promotional text (170)
-Free to try: play the whole first world and its boss. Unlock the full game once for 3 more worlds, 3 bosses and 2 ships. No ads, ever.
+## Keywords (100) · 89
+```text
+shooter,space,survivor,roguelite,arcade,neon,bullet hell,galaxy,shmup,boss,offline,sci-fi
+```
 
-## Keywords (100, comma-separated, no spaces)
-shooter,space,survivor,roguelite,arcade,neon,bullet hell,galaxy,shmup,asteroid,boss,offline
+## Description (4000) · 2492
+```text
+Earth's orbital defenses fell in eleven minutes. One ship made it out. Yours.
 
-## Description (4000)
-Blast your way through a glowing galaxy in Void Blaster, a fast neon space survivor built for one-thumb play.
+Void Blaster is a neon space survivor built for one-thumb play. Steer your ship while your weapons fire on their own, weave through hundreds of enemies, scoop up the crystals they drop and level up mid-fight. Every level-up offers three upgrades, so every run builds a different arsenal.
 
-Steer your ship with the joystick while your weapons fire on their own. Hundreds of enemies close in from every side: weave through the swarm, scoop up the crystals they drop and level up mid-fight. Every level-up offers three upgrades, so each run builds a different arsenal.
+ONE JOURNEY, 10 WORLDS
+Fight the Void Collective, a machine intelligence that rewrites whole worlds, from Earth's orbit to the heart of its empire:
+• Orbital Ruins and the Siege of Earth
+• The Lunar Bridgehead and Mars under conversion
+• The Foundry Belt, the storms of Jupiter and the ice of Europa
+• The Rift Gate, the Brood World and the Nexus itself
+60 sectors, each world with its own enemies, hazards and atmosphere: falling wrecks, dust storms, drifting asteroids, ion winds, sliding ice, reality rifts and acid.
+
+10 BOSSES
+From the Harvester to the Void Heart, every world ends with a boss that gets faster and deadlier as it weakens, with special attacks you have to dodge at the right moment.
 
 BUILD YOUR ARSENAL
-• 8 weapons: pulse blaster, scatter gun, seeker missiles, orbit blades, arc coil, nova pulse, wingman drones and proximity mines
-• 6 passive upgrades to boost damage, fire rate, speed, hull, pickup range and blast area
-• 4 weapon evolutions: max out a weapon, pair it with the right upgrade and turn it into a super weapon
+• 11 weapons, from the pulse blaster and seeker missiles to the railgun, flamethrower and singularity cannon
+• 11 evolutions that turn a maxed weapon into a super weapon
+• 9 perks, 12 weapon combos, 8 perk sets and 3 super combos
+• Weapon modules appear on your ship as you collect them
+• A Codex that records everything you discover
 
-4 WORLDS, 24 SECTORS
-• Neon Nebula: the swarm awakens
-• Crystal Belt: orbiting shards, prism gunners and drifting asteroids
-• Solar Forge: fused bombers, turrets, solar flares and mortar strikes
-• Void Core: teleporting wraiths, seeker eyes and gravity wells
+EVERY FIGHT IS DIFFERENT
+Flank attacks, pincers, closing rings, sniper lines and priority targets force you to read the battlefield, not just run in circles.
 
-EPIC BOSS FIGHTS
-Face the Hive Mother, the Crystal Serpent, the Forge Titan and the three-phase Void Heart, each with its own attack patterns.
+A STORY TO FIGHT THROUGH
+Illustrated transmissions from Earth Command and intercepted signals from the Collective follow you from world to world.
 
 FREE TO TRY
-Play the entire Neon Nebula world and defeat the Hive Mother for free. One purchase unlocks the full game: three more worlds, 18 sectors, three bosses, the Phantom and Titan ships, every upgrade level, plus 1,000 coins and the Gold Striker skin. No ads, no subscriptions, no energy timers.
+Play the first two worlds and their bosses for free. One purchase unlocks the full game: eight more worlds, their bosses, the Phantom and Titan ships, every upgrade level, 1,000 coins and the Gold Striker skin. No ads, no subscriptions, no energy timers.
 
 PROGRESS THAT STICKS
 • Earn up to 3 stars in every sector
 • Spend coins on permanent ship upgrades
-• Unlock 3 ships with different stats and starting weapons
-• Collect a bigger daily reward every day of your streak
+• Three ships with different stats and starting weapons
+• Daily rewards for your streak
+• Endless mode in every world after you finish the journey
 
-MADE FOR IPHONE
+Plays offline. Made by one independent developer.
+
+MADE FOR PHONES
 • Portrait, one-thumb controls: fixed joystick, floating joystick or drag anywhere
 • Haptic feedback on hits, level-ups and boss kills
-• Synthwave soundtrack with a different track for every world
-• Plays fully offline. No ads, no accounts, no tracking.
+• Game Center leaderboards for Endless mode
+```
 
-## What's New (version 1.0)
-First release: 4 worlds, 24 sectors, 4 bosses, 3 ships and 8 weapons.
+## What's New in version 2.0 (4000) · 608
+```text
+VOID BLASTER 2.0: A WHOLE NEW JOURNEY
+• 10 new worlds, from Earth's orbit to the heart of the Void Collective, 60 sectors
+• 10 bosses with fury phases and special attacks
+• A fresh look: hand-drawn art, a new soundtrack and an illustrated story
+• 11 weapons with evolutions, 12 combos, 8 perk sets and 3 super combos, shown on your ship
+• Smarter enemy swarms and set attack patterns
+• Supply crates: spend your coins on a stronger start
+• Endless mode in every world after the journey
+Full Game owners keep everything they bought. Your progress starts over with a veteran bonus and the Veteran Striker skin.
+```
 
 ## App Privacy (questionnaire)
-Answer **"No, we do not collect data from this app"** → result: **Data Not Collected**.
-Progress is stored only on the device; there are no analytics, ads or third-party SDKs. The purchase is handled
-entirely by Apple (StoreKit); the game never sees payment details.
+Unchanged from 1.x: **"No, we do not collect data from this app"** → **Data Not Collected**. Progress stays on the device;
+no analytics, ads or third-party SDKs. The purchase is handled by Apple (StoreKit), the leaderboards by Game Center.
 
 ## Age rating (questionnaire)
-- Cartoon or Fantasy Violence: the player shoots abstract neon shapes that burst into particles. No blood, no people.
-  Answer this honestly in the questionnaire; Apple shows the resulting rating before you save.
+- Cartoon or Fantasy Violence: the player shoots machines and alien creatures of the Void Collective; they burst into
+  sparks and debris. No blood, no people hurt. Infrequent/Mild.
 - Everything else (realistic violence, gambling, horror, user-generated content, web access, etc.): None / No.
 - In-app purchases: Yes (one non-consumable). Unrestricted web access: No.
 
 ## App Review notes
-No login or account is needed. The first sector unlocks immediately; later sectors unlock one by one.
-World 1 (6 sectors and the Hive Mother boss) is free. The "Full Game" in-app purchase unlocks worlds 2–4; it can be
-bought from the main menu (UNLOCK FULL GAME), from the locked worlds on the sector map, after defeating the Hive Mother,
-or restored in Settings → Restore purchases. The game works fully offline.
+No login or account is needed. Worlds 1 and 2 (12 sectors and two bosses) are free; sectors unlock one by one. The
+"Full Game" in-app purchase unlocks worlds 3-10; it can be bought from UNLOCK FULL GAME in the main menu, from the locked
+worlds on the sector map, or after the world 2 boss, and restored in Settings → Restore purchases. Existing Full Game
+owners from version 1.x keep the purchase. The game works fully offline; Game Center is only used for the Endless
+leaderboards, unlocked after finishing the journey.
 
-## In-app purchase (App Store Connect → Monetization → In-App Purchases)
+## In-app purchase (App Store Connect → Monetization → In-App Purchases → Full Game)
 | Field | Value |
 |---|---|
-| Type | Non-Consumable |
-| Reference name | Full Game |
+| Type | Non-Consumable (the same product as in 1.x; do not create a new one) |
 | Product ID | `com.konradlechowicz.voidblaster.fullgame` (must match `js/store.js`) |
-| Price | USD 3.99 (Apple converts it per country, e.g. about PLN 19.99) |
-| Family Sharing | On |
+| Price | USD 4.99 for 2.0 (was 3.99; owners keep the purchase) |
 | Display name (30) | Void Blaster Full Game |
-| Description (45) | 3 more worlds, 2 ships and every upgrade |
-| Review screenshot | `appstore/iap-review.jpg` |
-| Review notes | Opens from UNLOCK FULL GAME in the main menu. |
+| Description (45) | Worlds 3-10, 8 bosses, 2 ships, all upgrades |
+| Review screenshot | the paywall of 2.0 (`appstore/2.0/screenshots/` holds one) |
 
-Also: App Store Connect → Business → sign the **Paid Apps Agreement** and add bank and tax details (required before
-any purchase can be sold), and apply for the **App Store Small Business Program** (Apple's commission 15% instead of 30%).
+## Game Center
+10 Endless leaderboards for the 2.0 worlds, added to version 2.0.0: `appstore/GAME-CENTER.md`, section "Wersja 2.0".
 
 ## Screenshots
-`appstore/screenshots/` holds 7 captioned images at **1290 × 2796 px** (iPhone 6.9" display), in upload order:
-1. Blast the neon swarm · 2. Take down epic bosses · 3. Build your arsenal · 4. Dodge solar flares
-5. Survive the void · 6. 4 worlds, 24 sectors · 7. Upgrade your ship
-
-`appstore/screenshots-raw/` has the same scenes without captions (plus the main menu).
-Smaller iPhone sizes are generated by App Store Connect from the 6.9" set.
+`appstore/2.0/screenshots/6.9/` (1320 × 2868, iPhone 6.9") and `appstore/2.0/screenshots/6.5/` (1284 × 2778), the same
+8 scenes in upload order; smaller sizes are made by App Store Connect. Google Play: `appstore/2.0/screenshots/play/`.
 
 ## Copyright
 `2026 Konrad Lechowicz`

@@ -12,9 +12,33 @@ i wersja TEST (gracze tego nie widzą).
 
 <!-- Podsumowanie zmian od v1.3.0; uzupełnia Claude przy każdym buildzie. -->
 
+**Void Blaster 2.0** (linia `v2`, buildy 68–154): cała gra od nowa w wyglądzie 2.0 (PixiJS, grafiki ChatGPT, muzyka Suno).
+- 10 nowych światów po 6 sektorów, od orbity Ziemi do Nexusa; każdy z własnymi wrogami, mechaniką i atmosferą.
+- 10 bossów z furią i atakami specjalnymi; ataki ze wzorem (flanka, kleszcze, pierścień, snajperzy, cel priorytetowy).
+- Arsenał 2.0: Railgun, Miotacz ognia, Singularity Cannon, 11 ewolucji, 12 kombosów, 8 zestawów perków, 3 super kombosy;
+  moduły broni na statku.
+- Fabuła: intro, 9 transmisji między światami, outro z napisami; Codex z zakładką LOG.
+- Skrzynie zaopatrzenia za monety, bank doświadczenia (spokojniejsze awanse), stadne zachowanie wrogów.
+- Postęp od nowa z premią weterana (monety + skórka Veteran Striker); pełna gra kupiona w 1.x zostaje.
+- Wersja próbna: światy 1–2. Pełna gra: ok. 4,99 USD dla nowych graczy.
+- Android: ta sama gra, zakup przez Google Play, przycisk wstecz, pełny ekran.
+- Nowa ikona aplikacji.
+
 ### What's New (App Store)
 
-- 
+VOID BLASTER 2.0: A WHOLE NEW JOURNEY
+• 10 new worlds, from Earth's orbit to the heart of the Void Collective, 60 sectors
+• 10 bosses with fury phases and special attacks
+• A fresh look: hand-drawn art, a new soundtrack and an illustrated story
+• 11 weapons with evolutions, 12 combos, 8 perk sets and 3 super combos, shown on your ship
+• Smarter enemy swarms and set attack patterns
+• Supply crates: spend your coins on a stronger start
+• Endless mode in every world after the journey
+Full Game owners keep everything they bought. Your progress starts over with a veteran bonus and the Veteran Striker skin.
+
+## Build 154 · 2026-11-05
+- [Zmiana] Nowa ikona aplikacji 2.0 (Art Bible ST1: Striker na tle roju) na iPhonie i Androidzie (zwykła, okrągła i adaptacyjna; `proto2/make-app-icon.py`).
+- [App Store] Wydanie 2.0 przygotowane do `npm run release`: gałąź łączy `v2` z `main` (bez konfliktów, zawartość jak `v2`), nowe teksty App Store dla 2.0 (`appstore/LISTING.md`: opis, tekst promocyjny, słowa kluczowe, What's New, notatki dla recenzji, produkt „Full Game” za 4,99 USD), podsumowanie „Następne wydanie”.
 
 ## Build 153 · 2026-11-04
 - [Narzędzia] `npm run review` i `npm run release` nie zatrzymują się już na plikach, które Capacitor generuje sam przy `npm run android:test` (`android/app/capacitor.build.gradle`, `android/capacitor.settings.gradle`, zasoby w `android/app/src/main/assets`): pytają, jak przy plikach Xcode, i odrzucają je (kopia w `.git/`).
