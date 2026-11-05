@@ -1,0 +1,28 @@
+STYLE (keep identical across all images):
+Game art for "Void Blaster", a top-down mobile space shooter (survivors-like).
+Camera: top-down orthographic, looking straight down, no perspective.
+Look: stylized sci-fi with a neon accent. Dark, rich materials (gunmetal, carbon,
+matte ceramic) lit from the top-left, glowing edges and emissive lights only where
+noted. Detail level: high but clean - panel lines, vents, rivets; no grunge overload.
+The background must stay dark and calm so bright game objects read on top of it:
+no bright cyan anywhere (cyan belongs to the player), magenta only as thin traces.
+Rendering: crisp edges, soft bloom on glowing parts only, no motion blur, no depth of
+field, not photorealistic. No text, no logo, no watermark.
+
+WORLD 9 "BROOD WORLD": the breeding world of the Void Collective (an alien machine
+intelligence): the ground is living tissue fused with metal plates, it breathes; nests
+hatch enemies. STYLIZED, never realistic flesh, no blood, no gore. Dark matte tissue
+#2a0f18/#4a1a28 with veins #6e2a40, embedded metal #3a3440, acid green #9dff3d,
+bioluminescent violet #7a3dff and small pale pink points #ff8fbf. The floor is NOT
+glowing magenta (magenta #ff2d95 is only in enemy cores). Weak light from below, from
+bioluminescence and acid. Mood: inside a living organism. 30% machine, 70% organic.
+
+TASK: The world-9 boss "Brood Matriarch": the queen of the brood seen from directly
+above, 1024x1024, plain flat dark background (#05010f): an armored head and thorax
+with metal plates, a long abdomen carrying egg sacs, a magenta core, 3-4 glowing weak
+points (egg sacs, core). Stylized, no gore. Then a second image: exploded parts sheet
+at one scale with generous space: head, thorax, abdomen, each egg sac, each leg; plus
+the complete assembled boss at the same scale in the bottom-right corner. No text.
+
+PRODUCTION NOTES (the attached approved P1 is a style/material reference, not a composition to reproduce):
+PARTS SHEET ONLY, matching full boss in second reference EXACTLY in design/materials, first reference is arena style. Flat #05010f, top-down orthographic, generous gaps, no touching, text or labels. Each moving module whole, detached, not a random broken shard. Common design scale. Portrait 2400x3000, FOUR COLUMNS and FIVE ROWS, one module per cell. Row1 HEAD, THORAX, long ABDOMEN without egg sacs, egg sac1. Row2 egg sacs2,3,4, leg1. Row3 legs2,3,4,5. Row4 leg6, weakpoint1, weakpoint2, weakpoint3. Row5 weakpoint4 left, two blank cells, complete assembled queen bottom-right. Total 17 isolated modules plus assembled. Exactly SIX separate articulated legs, FOUR egg sacs, FOUR small sockets. Clean burgundy stylized membrane/chitin and dark metal, no blood or gore. Every part intact and separate.

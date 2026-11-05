@@ -1,0 +1,34 @@
+STYLE (keep identical across all images):
+Game art for "Void Blaster", a top-down mobile space shooter (survivors-
+like).
+Camera: top-down orthographic, looking straight down, no perspective.
+Look: stylized sci-fi with a neon accent. Dark, rich materials (gunmetal, 
+carbon,
+matte ceramic) lit from the top-left, glowing edges and emissive lights only 
+where
+noted. Detail level: high but clean - panel lines, vents, rivets; no grunge 
+overload.
+The background must stay dark and calm so bright game objects read on top of 
+it:
+no bright cyan anywhere (cyan belongs to the player), magenta only as thin 
+traces.
+Rendering: crisp edges, soft bloom on glowing parts only, no motion blur, no 
+depth of
+field, not photorealistic. No text, no logo, no watermark.
+
+TASK: black hole effects for the Singularity Cannon, seen from directly 
+above, on plain
+flat black #000000, each a strip of 8 frames in one row, frame 1 on the left:
+1) ORB: the slow projectile, a dark core in a violet #b06bff glow, 128x128 
+cells,
+   looping;
+2) BLACK HOLE: a swirling disk of violet light spiraling into a pure black 
+center,
+   256x256 cells, looping (frame 8 flows into frame 1);
+3) COLLAPSE: the hole imploding, then bursting into a violet-white ring, 
+384x384 cells.
+Then the same three for the EVENT HORIZON evolution: bigger, with a bright 
+gold-white
+accretion ring around the disk. The black center must stay pure black 
+#000000.
+No text.

@@ -1,0 +1,3340 @@
+{
+  "world": 6,
+  "name": "Storm Relay",
+  "generator": "built-in image_gen",
+  "assets": {
+    "W6-P3-platforms/W6-P3-1.png": {
+      "source": "W6\\variants\\W6-P3-final-source.png",
+      "source_cell": [
+        0,
+        0,
+        645,
+        819
+      ],
+      "trim_bounds": [
+        29,
+        22,
+        639,
+        729
+      ],
+      "background_estimate": [
+        4.0,
+        1.0,
+        12.0
+      ],
+      "file": "W6-P3-platforms/W6-P3-1.png",
+      "source_content_size": [
+        610,
+        707
+      ],
+      "content_size": [
+        587,
+        680
+      ],
+      "size": [
+        611,
+        704
+      ],
+      "scale_factor": 0.9618104667609618,
+      "content_box": [
+        12,
+        12,
+        599,
+        692
+      ],
+      "luminance_limit": 0.3,
+      "atlas_box": [
+        74,
+        58,
+        685,
+        762
+      ],
+      "atlas": "W6-P3-platforms-sheet.png"
+    },
+    "W6-P3-platforms/W6-P3-2.png": {
+      "source": "W6\\variants\\W6-P3-final-source.png",
+      "source_cell": [
+        645,
+        0,
+        1320,
+        819
+      ],
+      "trim_bounds": [
+        30,
+        31,
+        657,
+        733
+      ],
+      "background_estimate": [
+        4.0,
+        1.0,
+        12.0
+      ],
+      "file": "W6-P3-platforms/W6-P3-2.png",
+      "source_content_size": [
+        627,
+        702
+      ],
+      "content_size": [
+        572,
+        640
+      ],
+      "size": [
+        596,
+        664
+      ],
+      "scale_factor": 0.9116809116809117,
+      "content_box": [
+        12,
+        12,
+        584,
+        652
+      ],
+      "luminance_limit": 0.3,
+      "atlas_box": [
+        842,
+        78,
+        1438,
+        742
+      ],
+      "atlas": "W6-P3-platforms-sheet.png"
+    },
+    "W6-P3-platforms/W6-P3-3.png": {
+      "source": "W6\\variants\\W6-P3-final-source.png",
+      "source_cell": [
+        1320,
+        0,
+        1920,
+        819
+      ],
+      "trim_bounds": [
+        46,
+        23,
+        571,
+        770
+      ],
+      "background_estimate": [
+        4.0,
+        1.0,
+        12.0
+      ],
+      "file": "W6-P3-platforms/W6-P3-3.png",
+      "source_content_size": [
+        525,
+        747
+      ],
+      "content_size": [
+        422,
+        600
+      ],
+      "size": [
+        446,
+        624
+      ],
+      "scale_factor": 0.8032128514056225,
+      "content_box": [
+        12,
+        12,
+        434,
+        612
+      ],
+      "luminance_limit": 0.3,
+      "atlas_box": [
+        1677,
+        98,
+        2123,
+        722
+      ],
+      "atlas": "W6-P3-platforms-sheet.png"
+    },
+    "W6-P3-platforms-sheet.png": {
+      "items": [
+        "W6-P3-platforms/W6-P3-1.png",
+        "W6-P3-platforms/W6-P3-2.png",
+        "W6-P3-platforms/W6-P3-3.png"
+      ],
+      "boxes": [
+        [
+          74,
+          58,
+          685,
+          762
+        ],
+        [
+          842,
+          78,
+          1438,
+          742
+        ],
+        [
+          1677,
+          98,
+          2123,
+          722
+        ]
+      ],
+      "size": [
+        2280,
+        820
+      ],
+      "operation": "Technical layout at recorded sprite scale, no overlapping boxes"
+    },
+    "W6-P2-background.png": {
+      "source": "W6\\variants\\W6-P2-final-source.png",
+      "native_size": [
+        1774,
+        887
+      ],
+      "size": [
+        2048,
+        1024
+      ],
+      "mode": "RGB",
+      "processing": "Minimum-error overlap cuts on existing source pixels, exact stored opposite edges; original retained; output normalization",
+      "upscaled": true
+    },
+    "W6-P4-overlay.png": {
+      "source": "W6\\variants\\W6-P4-final-source.png",
+      "native_size": [
+        1254,
+        1254
+      ],
+      "size": [
+        1024,
+        1024
+      ],
+      "mode": "RGB",
+      "processing": "Minimum-error overlap cuts on existing source pixels, exact stored opposite edges; original retained; output normalization",
+      "upscaled": false
+    },
+    "W6-P5-props/W6-P5-relay-antenna.png": {
+      "source": "W6\\variants\\W6-P5-camera-corrected-source.png",
+      "source_cell": [
+        0,
+        0,
+        485,
+        560
+      ],
+      "trim_bounds": [
+        17,
+        88,
+        479,
+        527
+      ],
+      "background_estimate": [
+        4.0,
+        0.0,
+        12.0
+      ],
+      "file": "W6-P5-props/W6-P5-relay-antenna.png",
+      "source_content_size": [
+        462,
+        439
+      ],
+      "content_size": [
+        300,
+        285
+      ],
+      "size": [
+        324,
+        309
+      ],
+      "scale_factor": 0.6493506493506493,
+      "content_box": [
+        12,
+        12,
+        312,
+        297
+      ],
+      "atlas_box": [
+        38,
+        46,
+        362,
+        355
+      ],
+      "atlas": "W6-P5-props-sheet.png"
+    },
+    "W6-P5-props/W6-P5-lightning-rod.png": {
+      "source": "W6\\variants\\W6-P5-camera-corrected-source.png",
+      "source_cell": [
+        485,
+        0,
+        785,
+        560
+      ],
+      "trim_bounds": [
+        16,
+        186,
+        281,
+        498
+      ],
+      "background_estimate": [
+        4.0,
+        0.0,
+        12.0
+      ],
+      "file": "W6-P5-props/W6-P5-lightning-rod.png",
+      "source_content_size": [
+        265,
+        312
+      ],
+      "content_size": [
+        238,
+        280
+      ],
+      "size": [
+        262,
+        304
+      ],
+      "scale_factor": 0.8974358974358975,
+      "content_box": [
+        12,
+        12,
+        250,
+        292
+      ],
+      "atlas_box": [
+        469,
+        48,
+        731,
+        352
+      ],
+      "atlas": "W6-P5-props-sheet.png"
+    },
+    "W6-P5-props/W6-P5-cable-tissue-tangle.png": {
+      "source": "W6\\variants\\W6-P5-camera-corrected-source.png",
+      "source_cell": [
+        785,
+        0,
+        1090,
+        560
+      ],
+      "trim_bounds": [
+        0,
+        170,
+        289,
+        510
+      ],
+      "background_estimate": [
+        4.0,
+        0.0,
+        12.0
+      ],
+      "file": "W6-P5-props/W6-P5-cable-tissue-tangle.png",
+      "source_content_size": [
+        289,
+        340
+      ],
+      "content_size": [
+        238,
+        280
+      ],
+      "size": [
+        262,
+        304
+      ],
+      "scale_factor": 0.8235294117647058,
+      "content_box": [
+        12,
+        12,
+        250,
+        292
+      ],
+      "atlas_box": [
+        869,
+        48,
+        1131,
+        352
+      ],
+      "atlas": "W6-P5-props-sheet.png"
+    },
+    "W6-P5-props/W6-P5-gas-mine-balloon.png": {
+      "source": "W6\\variants\\W6-P5-camera-corrected-source.png",
+      "source_cell": [
+        1090,
+        0,
+        1320,
+        560
+      ],
+      "trim_bounds": [
+        7,
+        238,
+        212,
+        451
+      ],
+      "background_estimate": [
+        4.0,
+        0.0,
+        13.0
+      ],
+      "file": "W6-P5-props/W6-P5-gas-mine-balloon.png",
+      "source_content_size": [
+        205,
+        213
+      ],
+      "content_size": [
+        96,
+        100
+      ],
+      "size": [
+        120,
+        124
+      ],
+      "scale_factor": 0.4694835680751174,
+      "content_box": [
+        12,
+        12,
+        108,
+        112
+      ],
+      "atlas_box": [
+        1340,
+        138,
+        1460,
+        262
+      ],
+      "atlas": "W6-P5-props-sheet.png"
+    },
+    "W6-P5-props/W6-P5-coil-node.png": {
+      "source": "W6\\variants\\W6-P5-camera-corrected-source.png",
+      "source_cell": [
+        1320,
+        0,
+        1536,
+        560
+      ],
+      "trim_bounds": [
+        20,
+        268,
+        189,
+        441
+      ],
+      "background_estimate": [
+        4.0,
+        0.0,
+        13.0
+      ],
+      "file": "W6-P5-props/W6-P5-coil-node.png",
+      "source_content_size": [
+        169,
+        173
+      ],
+      "content_size": [
+        98,
+        100
+      ],
+      "size": [
+        122,
+        124
+      ],
+      "scale_factor": 0.5780346820809249,
+      "content_box": [
+        12,
+        12,
+        110,
+        112
+      ],
+      "atlas_box": [
+        139,
+        538,
+        261,
+        662
+      ],
+      "atlas": "W6-P5-props-sheet.png"
+    },
+    "W6-P5-props/W6-P5-broken-bronze-panel.png": {
+      "source": "W6\\variants\\W6-P5-camera-corrected-source.png",
+      "source_cell": [
+        0,
+        560,
+        285,
+        1024
+      ],
+      "trim_bounds": [
+        35,
+        104,
+        285,
+        333
+      ],
+      "background_estimate": [
+        4.0,
+        0.0,
+        12.0
+      ],
+      "file": "W6-P5-props/W6-P5-broken-bronze-panel.png",
+      "source_content_size": [
+        250,
+        229
+      ],
+      "content_size": [
+        100,
+        92
+      ],
+      "size": [
+        124,
+        116
+      ],
+      "scale_factor": 0.4,
+      "content_box": [
+        12,
+        12,
+        112,
+        104
+      ],
+      "atlas_box": [
+        538,
+        542,
+        662,
+        658
+      ],
+      "atlas": "W6-P5-props-sheet.png"
+    },
+    "W6-P5-props/W6-P5-signal-amplifier-intact.png": {
+      "source": "W6\\variants\\W6-P5-camera-corrected-source.png",
+      "source_cell": [
+        285,
+        560,
+        595,
+        1024
+      ],
+      "trim_bounds": [
+        23,
+        73,
+        285,
+        342
+      ],
+      "background_estimate": [
+        4.0,
+        0.0,
+        12.0
+      ],
+      "file": "W6-P5-props/W6-P5-signal-amplifier-intact.png",
+      "source_content_size": [
+        262,
+        269
+      ],
+      "content_size": [
+        175,
+        180
+      ],
+      "size": [
+        199,
+        204
+      ],
+      "scale_factor": 0.6691449814126395,
+      "content_box": [
+        12,
+        12,
+        187,
+        192
+      ],
+      "atlas_box": [
+        900,
+        498,
+        1099,
+        702
+      ],
+      "atlas": "W6-P5-props-sheet.png"
+    },
+    "W6-P5-props/W6-P5-signal-amplifier-exploded.png": {
+      "source": "W6\\variants\\W6-P5-camera-corrected-source.png",
+      "source_cell": [
+        595,
+        560,
+        935,
+        1024
+      ],
+      "trim_bounds": [
+        0,
+        25,
+        319,
+        377
+      ],
+      "background_estimate": [
+        4.0,
+        0.0,
+        12.0
+      ],
+      "file": "W6-P5-props/W6-P5-signal-amplifier-exploded.png",
+      "source_content_size": [
+        319,
+        352
+      ],
+      "content_size": [
+        213,
+        236
+      ],
+      "size": [
+        237,
+        260
+      ],
+      "scale_factor": 0.6691449814126395,
+      "content_box": [
+        12,
+        12,
+        225,
+        248
+      ],
+      "atlas_box": [
+        1282,
+        470,
+        1519,
+        730
+      ],
+      "atlas": "W6-P5-props-sheet.png"
+    },
+    "W6-P5-props/W6-P5-gas-tank-intact.png": {
+      "source": "W6\\variants\\W6-P5-camera-corrected-source.png",
+      "source_cell": [
+        935,
+        560,
+        1200,
+        1024
+      ],
+      "trim_bounds": [
+        7,
+        79,
+        241,
+        317
+      ],
+      "background_estimate": [
+        4.0,
+        0.0,
+        12.0
+      ],
+      "file": "W6-P5-props/W6-P5-gas-tank-intact.png",
+      "source_content_size": [
+        234,
+        238
+      ],
+      "content_size": [
+        177,
+        180
+      ],
+      "size": [
+        201,
+        204
+      ],
+      "scale_factor": 0.7563025210084033,
+      "content_box": [
+        12,
+        12,
+        189,
+        192
+      ],
+      "atlas_box": [
+        100,
+        898,
+        301,
+        1102
+      ],
+      "atlas": "W6-P5-props-sheet.png"
+    },
+    "W6-P5-props/W6-P5-gas-tank-exploded.png": {
+      "source": "W6\\variants\\W6-P5-camera-corrected-source.png",
+      "source_cell": [
+        1215,
+        560,
+        1536,
+        1024
+      ],
+      "trim_bounds": [
+        0,
+        23,
+        299,
+        369
+      ],
+      "background_estimate": [
+        4.0,
+        1.0,
+        12.0
+      ],
+      "file": "W6-P5-props/W6-P5-gas-tank-exploded.png",
+      "source_content_size": [
+        299,
+        346
+      ],
+      "content_size": [
+        226,
+        262
+      ],
+      "size": [
+        250,
+        286
+      ],
+      "scale_factor": 0.7563025210084033,
+      "content_box": [
+        12,
+        12,
+        238,
+        274
+      ],
+      "atlas_box": [
+        475,
+        857,
+        725,
+        1143
+      ],
+      "atlas": "W6-P5-props-sheet.png"
+    },
+    "W6-P5-props-sheet.png": {
+      "items": [
+        "W6-P5-props/W6-P5-relay-antenna.png",
+        "W6-P5-props/W6-P5-lightning-rod.png",
+        "W6-P5-props/W6-P5-cable-tissue-tangle.png",
+        "W6-P5-props/W6-P5-gas-mine-balloon.png",
+        "W6-P5-props/W6-P5-coil-node.png",
+        "W6-P5-props/W6-P5-broken-bronze-panel.png",
+        "W6-P5-props/W6-P5-signal-amplifier-intact.png",
+        "W6-P5-props/W6-P5-signal-amplifier-exploded.png",
+        "W6-P5-props/W6-P5-gas-tank-intact.png",
+        "W6-P5-props/W6-P5-gas-tank-exploded.png"
+      ],
+      "boxes": [
+        [
+          38,
+          46,
+          362,
+          355
+        ],
+        [
+          469,
+          48,
+          731,
+          352
+        ],
+        [
+          869,
+          48,
+          1131,
+          352
+        ],
+        [
+          1340,
+          138,
+          1460,
+          262
+        ],
+        [
+          139,
+          538,
+          261,
+          662
+        ],
+        [
+          538,
+          542,
+          662,
+          658
+        ],
+        [
+          900,
+          498,
+          1099,
+          702
+        ],
+        [
+          1282,
+          470,
+          1519,
+          730
+        ],
+        [
+          100,
+          898,
+          301,
+          1102
+        ],
+        [
+          475,
+          857,
+          725,
+          1143
+        ]
+      ],
+      "size": [
+        1600,
+        1200
+      ],
+      "operation": "Technical layout at recorded sprite scale, no overlapping boxes"
+    },
+    "W6-P7-enemies/W6-P7-ion-kite.png": {
+      "source": "W6\\variants\\W6-P7-enemies-source.png",
+      "source_cell": [
+        0,
+        0,
+        500,
+        450
+      ],
+      "trim_bounds": [
+        122,
+        50,
+        377,
+        374
+      ],
+      "background_estimate": [
+        6.0,
+        0.0,
+        13.0
+      ],
+      "file": "W6-P7-enemies/W6-P7-ion-kite.png",
+      "source_content_size": [
+        255,
+        324
+      ],
+      "content_size": [
+        114,
+        145
+      ],
+      "size": [
+        138,
+        169
+      ],
+      "scale_factor": 0.44753086419753085,
+      "content_box": [
+        12,
+        12,
+        126,
+        157
+      ],
+      "atlas_box": [
+        111,
+        116,
+        249,
+        285
+      ],
+      "atlas": "W6-P7-enemies-sheet.png"
+    },
+    "W6-P7-enemies/W6-P7-gas-mine.png": {
+      "source": "W6\\variants\\W6-P7-enemies-source.png",
+      "source_cell": [
+        500,
+        0,
+        950,
+        450
+      ],
+      "trim_bounds": [
+        24,
+        43,
+        369,
+        382
+      ],
+      "background_estimate": [
+        6.0,
+        1.0,
+        14.0
+      ],
+      "file": "W6-P7-enemies/W6-P7-gas-mine.png",
+      "source_content_size": [
+        345,
+        339
+      ],
+      "content_size": [
+        155,
+        152
+      ],
+      "size": [
+        179,
+        176
+      ],
+      "scale_factor": 0.4492753623188406,
+      "content_box": [
+        12,
+        12,
+        167,
+        164
+      ],
+      "atlas_box": [
+        450,
+        112,
+        629,
+        288
+      ],
+      "atlas": "W6-P7-enemies-sheet.png"
+    },
+    "W6-P7-enemies/W6-P7-relay-jelly.png": {
+      "source": "W6\\variants\\W6-P7-enemies-source.png",
+      "source_cell": [
+        950,
+        0,
+        1448,
+        380
+      ],
+      "trim_bounds": [
+        38,
+        30,
+        391,
+        374
+      ],
+      "background_estimate": [
+        6.0,
+        1.0,
+        14.0
+      ],
+      "file": "W6-P7-enemies/W6-P7-relay-jelly.png",
+      "source_content_size": [
+        353,
+        344
+      ],
+      "content_size": [
+        164,
+        160
+      ],
+      "size": [
+        188,
+        184
+      ],
+      "scale_factor": 0.46458923512747874,
+      "content_box": [
+        12,
+        12,
+        176,
+        172
+      ],
+      "atlas_box": [
+        806,
+        108,
+        994,
+        292
+      ],
+      "atlas": "W6-P7-enemies-sheet.png"
+    },
+    "W6-P7-enemies/W6-P7-static-ray.png": {
+      "source": "W6\\variants\\W6-P7-enemies-source.png",
+      "source_cell": [
+        0,
+        450,
+        515,
+        1086
+      ],
+      "trim_bounds": [
+        20,
+        9,
+        512,
+        473
+      ],
+      "background_estimate": [
+        6.0,
+        0.0,
+        13.0
+      ],
+      "file": "W6-P7-enemies/W6-P7-static-ray.png",
+      "source_content_size": [
+        492,
+        464
+      ],
+      "content_size": [
+        209,
+        197
+      ],
+      "size": [
+        233,
+        221
+      ],
+      "scale_factor": 0.4247967479674797,
+      "content_box": [
+        12,
+        12,
+        221,
+        209
+      ],
+      "atlas_box": [
+        64,
+        490,
+        297,
+        711
+      ],
+      "atlas": "W6-P7-enemies-sheet.png"
+    },
+    "W6-P7-enemies/W6-P7-vortex.png": {
+      "source": "W6\\variants\\W6-P7-enemies-source.png",
+      "source_cell": [
+        515,
+        450,
+        930,
+        1086
+      ],
+      "trim_bounds": [
+        2,
+        37,
+        400,
+        436
+      ],
+      "background_estimate": [
+        6.0,
+        1.0,
+        13.0
+      ],
+      "file": "W6-P7-enemies/W6-P7-vortex.png",
+      "source_content_size": [
+        398,
+        399
+      ],
+      "content_size": [
+        226,
+        227
+      ],
+      "size": [
+        250,
+        251
+      ],
+      "scale_factor": 0.568922305764411,
+      "content_box": [
+        12,
+        12,
+        238,
+        239
+      ],
+      "atlas_box": [
+        415,
+        474,
+        665,
+        725
+      ],
+      "atlas": "W6-P7-enemies-sheet.png"
+    },
+    "W6-P7-enemies/W6-P7-cloud-whale.png": {
+      "source": "W6\\variants\\W6-P7-enemies-source.png",
+      "source_cell": [
+        930,
+        380,
+        1448,
+        1086
+      ],
+      "trim_bounds": [
+        0,
+        0,
+        475,
+        678
+      ],
+      "background_estimate": [
+        6.0,
+        1.0,
+        13.0
+      ],
+      "file": "W6-P7-enemies/W6-P7-cloud-whale.png",
+      "source_content_size": [
+        475,
+        678
+      ],
+      "content_size": [
+        210,
+        300
+      ],
+      "size": [
+        234,
+        324
+      ],
+      "scale_factor": 0.4424778761061947,
+      "content_box": [
+        12,
+        12,
+        222,
+        312
+      ],
+      "atlas_box": [
+        783,
+        438,
+        1017,
+        762
+      ],
+      "atlas": "W6-P7-enemies-sheet.png"
+    },
+    "W6-P7-enemies-sheet.png": {
+      "items": [
+        "W6-P7-enemies/W6-P7-ion-kite.png",
+        "W6-P7-enemies/W6-P7-gas-mine.png",
+        "W6-P7-enemies/W6-P7-relay-jelly.png",
+        "W6-P7-enemies/W6-P7-static-ray.png",
+        "W6-P7-enemies/W6-P7-vortex.png",
+        "W6-P7-enemies/W6-P7-cloud-whale.png"
+      ],
+      "boxes": [
+        [
+          111,
+          116,
+          249,
+          285
+        ],
+        [
+          450,
+          112,
+          629,
+          288
+        ],
+        [
+          806,
+          108,
+          994,
+          292
+        ],
+        [
+          64,
+          490,
+          297,
+          711
+        ],
+        [
+          415,
+          474,
+          665,
+          725
+        ],
+        [
+          783,
+          438,
+          1017,
+          762
+        ]
+      ],
+      "size": [
+        1080,
+        800
+      ],
+      "operation": "Technical layout at recorded sprite scale, no overlapping boxes"
+    },
+    "W6-P7-elite-and-shards/W6-P7-ion-kite-elite.png": {
+      "source": "W6\\variants\\W6-P7-elite-corrected-source.png",
+      "source_cell": [
+        0,
+        0,
+        1254,
+        1254
+      ],
+      "trim_bounds": [
+        94,
+        55,
+        1159,
+        1128
+      ],
+      "background_estimate": [
+        5.0,
+        1.0,
+        12.0
+      ],
+      "file": "W6-P7-elite-and-shards/W6-P7-ion-kite-elite.png",
+      "source_content_size": [
+        1065,
+        1073
+      ],
+      "content_size": [
+        230,
+        232
+      ],
+      "size": [
+        254,
+        256
+      ],
+      "scale_factor": 0.21621621621621623,
+      "content_box": [
+        12,
+        12,
+        242,
+        244
+      ],
+      "atlas_box": [
+        473,
+        62,
+        727,
+        318
+      ],
+      "atlas": "W6-P7-elite-and-shards-sheet.png"
+    },
+    "W6-P7-elite-and-shards/W6-P7-ion-kite-shard-1.png": {
+      "source": "W6\\variants\\W6-P7-elite-shards-source.png",
+      "source_cell": [
+        51,
+        398,
+        244,
+        558
+      ],
+      "trim_bounds": [
+        3,
+        4,
+        189,
+        156
+      ],
+      "background_estimate": [
+        5.0,
+        0.0,
+        11.0
+      ],
+      "file": "W6-P7-elite-and-shards/W6-P7-ion-kite-shard-1.png",
+      "source_content_size": [
+        186,
+        152
+      ],
+      "content_size": [
+        80,
+        65
+      ],
+      "size": [
+        104,
+        89
+      ],
+      "scale_factor": 0.42857142857142855,
+      "content_box": [
+        12,
+        12,
+        92,
+        77
+      ],
+      "atlas_box": [
+        98,
+        416,
+        202,
+        505
+      ],
+      "atlas": "W6-P7-elite-and-shards-sheet.png"
+    },
+    "W6-P7-elite-and-shards/W6-P7-ion-kite-shard-2.png": {
+      "source": "W6\\variants\\W6-P7-elite-shards-source.png",
+      "source_cell": [
+        298,
+        390,
+        490,
+        565
+      ],
+      "trim_bounds": [
+        3,
+        4,
+        188,
+        171
+      ],
+      "background_estimate": [
+        5.0,
+        0.0,
+        12.0
+      ],
+      "file": "W6-P7-elite-and-shards/W6-P7-ion-kite-shard-2.png",
+      "source_content_size": [
+        185,
+        167
+      ],
+      "content_size": [
+        79,
+        72
+      ],
+      "size": [
+        103,
+        96
+      ],
+      "scale_factor": 0.42857142857142855,
+      "content_box": [
+        12,
+        12,
+        91,
+        84
+      ],
+      "atlas_box": [
+        398,
+        412,
+        501,
+        508
+      ],
+      "atlas": "W6-P7-elite-and-shards-sheet.png"
+    },
+    "W6-P7-elite-and-shards/W6-P7-ion-kite-shard-3.png": {
+      "source": "W6\\variants\\W6-P7-elite-shards-source.png",
+      "source_cell": [
+        529,
+        404,
+        734,
+        548
+      ],
+      "trim_bounds": [
+        4,
+        3,
+        202,
+        140
+      ],
+      "background_estimate": [
+        5.0,
+        0.0,
+        12.0
+      ],
+      "file": "W6-P7-elite-and-shards/W6-P7-ion-kite-shard-3.png",
+      "source_content_size": [
+        198,
+        137
+      ],
+      "content_size": [
+        85,
+        59
+      ],
+      "size": [
+        109,
+        83
+      ],
+      "scale_factor": 0.42857142857142855,
+      "content_box": [
+        12,
+        12,
+        97,
+        71
+      ],
+      "atlas_box": [
+        696,
+        418,
+        805,
+        501
+      ],
+      "atlas": "W6-P7-elite-and-shards-sheet.png"
+    },
+    "W6-P7-elite-and-shards/W6-P7-ion-kite-shard-4.png": {
+      "source": "W6\\variants\\W6-P7-elite-shards-source.png",
+      "source_cell": [
+        760,
+        396,
+        971,
+        555
+      ],
+      "trim_bounds": [
+        5,
+        4,
+        208,
+        155
+      ],
+      "background_estimate": [
+        5.0,
+        0.0,
+        12.0
+      ],
+      "file": "W6-P7-elite-and-shards/W6-P7-ion-kite-shard-4.png",
+      "source_content_size": [
+        203,
+        151
+      ],
+      "content_size": [
+        87,
+        65
+      ],
+      "size": [
+        111,
+        89
+      ],
+      "scale_factor": 0.42857142857142855,
+      "content_box": [
+        12,
+        12,
+        99,
+        77
+      ],
+      "atlas_box": [
+        994,
+        416,
+        1105,
+        505
+      ],
+      "atlas": "W6-P7-elite-and-shards-sheet.png"
+    },
+    "W6-P7-elite-and-shards/W6-P7-gas-mine-shard-1.png": {
+      "source": "W6\\variants\\W6-P7-elite-shards-source.png",
+      "source_cell": [
+        62,
+        568,
+        243,
+        735
+      ],
+      "trim_bounds": [
+        3,
+        2,
+        177,
+        162
+      ],
+      "background_estimate": [
+        5.0,
+        0.0,
+        11.0
+      ],
+      "file": "W6-P7-elite-and-shards/W6-P7-gas-mine-shard-1.png",
+      "source_content_size": [
+        174,
+        160
+      ],
+      "content_size": [
+        85,
+        78
+      ],
+      "size": [
+        109,
+        102
+      ],
+      "scale_factor": 0.4869109947643979,
+      "content_box": [
+        12,
+        12,
+        97,
+        90
+      ],
+      "atlas_box": [
+        96,
+        629,
+        205,
+        731
+      ],
+      "atlas": "W6-P7-elite-and-shards-sheet.png"
+    },
+    "W6-P7-elite-and-shards/W6-P7-gas-mine-shard-2.png": {
+      "source": "W6\\variants\\W6-P7-elite-shards-source.png",
+      "source_cell": [
+        309,
+        583,
+        479,
+        737
+      ],
+      "trim_bounds": [
+        4,
+        4,
+        166,
+        150
+      ],
+      "background_estimate": [
+        5.0,
+        0.0,
+        11.0
+      ],
+      "file": "W6-P7-elite-and-shards/W6-P7-gas-mine-shard-2.png",
+      "source_content_size": [
+        162,
+        146
+      ],
+      "content_size": [
+        79,
+        71
+      ],
+      "size": [
+        103,
+        95
+      ],
+      "scale_factor": 0.4869109947643979,
+      "content_box": [
+        12,
+        12,
+        91,
+        83
+      ],
+      "atlas_box": [
+        398,
+        632,
+        501,
+        727
+      ],
+      "atlas": "W6-P7-elite-and-shards-sheet.png"
+    },
+    "W6-P7-elite-and-shards/W6-P7-gas-mine-shard-3.png": {
+      "source": "W6\\variants\\W6-P7-elite-shards-source.png",
+      "source_cell": [
+        529,
+        568,
+        727,
+        737
+      ],
+      "trim_bounds": [
+        5,
+        0,
+        196,
+        165
+      ],
+      "background_estimate": [
+        5.0,
+        0.0,
+        12.0
+      ],
+      "file": "W6-P7-elite-and-shards/W6-P7-gas-mine-shard-3.png",
+      "source_content_size": [
+        191,
+        165
+      ],
+      "content_size": [
+        93,
+        80
+      ],
+      "size": [
+        117,
+        104
+      ],
+      "scale_factor": 0.4869109947643979,
+      "content_box": [
+        12,
+        12,
+        105,
+        92
+      ],
+      "atlas_box": [
+        692,
+        628,
+        809,
+        732
+      ],
+      "atlas": "W6-P7-elite-and-shards-sheet.png"
+    },
+    "W6-P7-elite-and-shards/W6-P7-gas-mine-shard-4.png": {
+      "source": "W6\\variants\\W6-P7-elite-shards-source.png",
+      "source_cell": [
+        773,
+        581,
+        969,
+        737
+      ],
+      "trim_bounds": [
+        4,
+        4,
+        193,
+        152
+      ],
+      "background_estimate": [
+        5.0,
+        0.0,
+        12.0
+      ],
+      "file": "W6-P7-elite-and-shards/W6-P7-gas-mine-shard-4.png",
+      "source_content_size": [
+        189,
+        148
+      ],
+      "content_size": [
+        92,
+        72
+      ],
+      "size": [
+        116,
+        96
+      ],
+      "scale_factor": 0.4869109947643979,
+      "content_box": [
+        12,
+        12,
+        104,
+        84
+      ],
+      "atlas_box": [
+        992,
+        632,
+        1108,
+        728
+      ],
+      "atlas": "W6-P7-elite-and-shards-sheet.png"
+    },
+    "W6-P7-elite-and-shards/W6-P7-relay-jelly-shard-1.png": {
+      "source": "W6\\variants\\W6-P7-elite-shards-source.png",
+      "source_cell": [
+        73,
+        750,
+        249,
+        887
+      ],
+      "trim_bounds": [
+        4,
+        3,
+        172,
+        132
+      ],
+      "background_estimate": [
+        6.0,
+        0.0,
+        11.0
+      ],
+      "file": "W6-P7-elite-and-shards/W6-P7-relay-jelly-shard-1.png",
+      "source_content_size": [
+        168,
+        129
+      ],
+      "content_size": [
+        82,
+        63
+      ],
+      "size": [
+        106,
+        87
+      ],
+      "scale_factor": 0.48712871287128706,
+      "content_box": [
+        12,
+        12,
+        94,
+        75
+      ],
+      "atlas_box": [
+        97,
+        856,
+        203,
+        943
+      ],
+      "atlas": "W6-P7-elite-and-shards-sheet.png"
+    },
+    "W6-P7-elite-and-shards/W6-P7-relay-jelly-shard-2.png": {
+      "source": "W6\\variants\\W6-P7-elite-shards-source.png",
+      "source_cell": [
+        306,
+        746,
+        492,
+        897
+      ],
+      "trim_bounds": [
+        4,
+        5,
+        182,
+        147
+      ],
+      "background_estimate": [
+        5.0,
+        0.0,
+        11.0
+      ],
+      "file": "W6-P7-elite-and-shards/W6-P7-relay-jelly-shard-2.png",
+      "source_content_size": [
+        178,
+        142
+      ],
+      "content_size": [
+        87,
+        69
+      ],
+      "size": [
+        111,
+        93
+      ],
+      "scale_factor": 0.48712871287128706,
+      "content_box": [
+        12,
+        12,
+        99,
+        81
+      ],
+      "atlas_box": [
+        394,
+        854,
+        505,
+        947
+      ],
+      "atlas": "W6-P7-elite-and-shards-sheet.png"
+    },
+    "W6-P7-elite-and-shards/W6-P7-relay-jelly-shard-3.png": {
+      "source": "W6\\variants\\W6-P7-elite-shards-source.png",
+      "source_cell": [
+        520,
+        749,
+        730,
+        902
+      ],
+      "trim_bounds": [
+        4,
+        4,
+        206,
+        153
+      ],
+      "background_estimate": [
+        6.0,
+        0.0,
+        12.0
+      ],
+      "file": "W6-P7-elite-and-shards/W6-P7-relay-jelly-shard-3.png",
+      "source_content_size": [
+        202,
+        149
+      ],
+      "content_size": [
+        98,
+        73
+      ],
+      "size": [
+        122,
+        97
+      ],
+      "scale_factor": 0.48712871287128706,
+      "content_box": [
+        12,
+        12,
+        110,
+        85
+      ],
+      "atlas_box": [
+        689,
+        852,
+        811,
+        949
+      ],
+      "atlas": "W6-P7-elite-and-shards-sheet.png"
+    },
+    "W6-P7-elite-and-shards/W6-P7-relay-jelly-shard-4.png": {
+      "source": "W6\\variants\\W6-P7-elite-shards-source.png",
+      "source_cell": [
+        763,
+        754,
+        955,
+        902
+      ],
+      "trim_bounds": [
+        5,
+        4,
+        189,
+        148
+      ],
+      "background_estimate": [
+        5.0,
+        0.0,
+        11.0
+      ],
+      "file": "W6-P7-elite-and-shards/W6-P7-relay-jelly-shard-4.png",
+      "source_content_size": [
+        184,
+        144
+      ],
+      "content_size": [
+        90,
+        70
+      ],
+      "size": [
+        114,
+        94
+      ],
+      "scale_factor": 0.48712871287128706,
+      "content_box": [
+        12,
+        12,
+        102,
+        82
+      ],
+      "atlas_box": [
+        993,
+        853,
+        1107,
+        947
+      ],
+      "atlas": "W6-P7-elite-and-shards-sheet.png"
+    },
+    "W6-P7-elite-and-shards/W6-P7-static-ray-shard-1.png": {
+      "source": "W6\\variants\\W6-P7-elite-shards-source.png",
+      "source_cell": [
+        44,
+        898,
+        269,
+        1078
+      ],
+      "trim_bounds": [
+        3,
+        0,
+        221,
+        176
+      ],
+      "background_estimate": [
+        5.0,
+        0.0,
+        12.0
+      ],
+      "file": "W6-P7-elite-and-shards/W6-P7-static-ray-shard-1.png",
+      "source_content_size": [
+        218,
+        176
+      ],
+      "content_size": [
+        125,
+        101
+      ],
+      "size": [
+        149,
+        125
+      ],
+      "scale_factor": 0.5752293577981651,
+      "content_box": [
+        12,
+        12,
+        137,
+        113
+      ],
+      "atlas_box": [
+        76,
+        1058,
+        225,
+        1183
+      ],
+      "atlas": "W6-P7-elite-and-shards-sheet.png"
+    },
+    "W6-P7-elite-and-shards/W6-P7-static-ray-shard-2.png": {
+      "source": "W6\\variants\\W6-P7-elite-shards-source.png",
+      "source_cell": [
+        301,
+        898,
+        501,
+        1081
+      ],
+      "trim_bounds": [
+        4,
+        0,
+        195,
+        178
+      ],
+      "background_estimate": [
+        5.0,
+        0.0,
+        12.0
+      ],
+      "file": "W6-P7-elite-and-shards/W6-P7-static-ray-shard-2.png",
+      "source_content_size": [
+        191,
+        178
+      ],
+      "content_size": [
+        110,
+        102
+      ],
+      "size": [
+        134,
+        126
+      ],
+      "scale_factor": 0.5752293577981651,
+      "content_box": [
+        12,
+        12,
+        122,
+        114
+      ],
+      "atlas_box": [
+        383,
+        1057,
+        517,
+        1183
+      ],
+      "atlas": "W6-P7-elite-and-shards-sheet.png"
+    },
+    "W6-P7-elite-and-shards/W6-P7-static-ray-shard-3.png": {
+      "source": "W6\\variants\\W6-P7-elite-shards-source.png",
+      "source_cell": [
+        537,
+        924,
+        735,
+        1068
+      ],
+      "trim_bounds": [
+        4,
+        4,
+        195,
+        139
+      ],
+      "background_estimate": [
+        5.0,
+        0.0,
+        12.0
+      ],
+      "file": "W6-P7-elite-and-shards/W6-P7-static-ray-shard-3.png",
+      "source_content_size": [
+        191,
+        135
+      ],
+      "content_size": [
+        110,
+        78
+      ],
+      "size": [
+        134,
+        102
+      ],
+      "scale_factor": 0.5752293577981651,
+      "content_box": [
+        12,
+        12,
+        122,
+        90
+      ],
+      "atlas_box": [
+        683,
+        1069,
+        817,
+        1171
+      ],
+      "atlas": "W6-P7-elite-and-shards-sheet.png"
+    },
+    "W6-P7-elite-and-shards/W6-P7-static-ray-shard-4.png": {
+      "source": "W6\\variants\\W6-P7-elite-shards-source.png",
+      "source_cell": [
+        766,
+        898,
+        984,
+        1086
+      ],
+      "trim_bounds": [
+        4,
+        1,
+        215,
+        184
+      ],
+      "background_estimate": [
+        5.0,
+        0.0,
+        12.0
+      ],
+      "file": "W6-P7-elite-and-shards/W6-P7-static-ray-shard-4.png",
+      "source_content_size": [
+        211,
+        183
+      ],
+      "content_size": [
+        121,
+        105
+      ],
+      "size": [
+        145,
+        129
+      ],
+      "scale_factor": 0.5752293577981651,
+      "content_box": [
+        12,
+        12,
+        133,
+        117
+      ],
+      "atlas_box": [
+        978,
+        1056,
+        1123,
+        1185
+      ],
+      "atlas": "W6-P7-elite-and-shards-sheet.png"
+    },
+    "W6-P7-elite-and-shards/W6-P7-vortex-shard-1.png": {
+      "source": "W6\\variants\\W6-P7-elite-shards-source.png",
+      "source_cell": [
+        72,
+        1083,
+        263,
+        1272
+      ],
+      "trim_bounds": [
+        4,
+        0,
+        187,
+        189
+      ],
+      "background_estimate": [
+        5.0,
+        0.0,
+        12.0
+      ],
+      "file": "W6-P7-elite-and-shards/W6-P7-vortex-shard-1.png",
+      "source_content_size": [
+        183,
+        189
+      ],
+      "content_size": [
+        118,
+        121
+      ],
+      "size": [
+        142,
+        145
+      ],
+      "scale_factor": 0.6424528301886792,
+      "content_box": [
+        12,
+        12,
+        130,
+        133
+      ],
+      "atlas_box": [
+        79,
+        1268,
+        221,
+        1413
+      ],
+      "atlas": "W6-P7-elite-and-shards-sheet.png"
+    },
+    "W6-P7-elite-and-shards/W6-P7-vortex-shard-2.png": {
+      "source": "W6\\variants\\W6-P7-elite-shards-source.png",
+      "source_cell": [
+        302,
+        1085,
+        513,
+        1272
+      ],
+      "trim_bounds": [
+        4,
+        4,
+        207,
+        187
+      ],
+      "background_estimate": [
+        5.0,
+        0.0,
+        12.0
+      ],
+      "file": "W6-P7-elite-and-shards/W6-P7-vortex-shard-2.png",
+      "source_content_size": [
+        203,
+        183
+      ],
+      "content_size": [
+        130,
+        118
+      ],
+      "size": [
+        154,
+        142
+      ],
+      "scale_factor": 0.6424528301886792,
+      "content_box": [
+        12,
+        12,
+        142,
+        130
+      ],
+      "atlas_box": [
+        373,
+        1269,
+        527,
+        1411
+      ],
+      "atlas": "W6-P7-elite-and-shards-sheet.png"
+    },
+    "W6-P7-elite-and-shards/W6-P7-vortex-shard-3.png": {
+      "source": "W6\\variants\\W6-P7-elite-shards-source.png",
+      "source_cell": [
+        531,
+        1083,
+        724,
+        1267
+      ],
+      "trim_bounds": [
+        4,
+        2,
+        189,
+        181
+      ],
+      "background_estimate": [
+        5.0,
+        0.0,
+        12.0
+      ],
+      "file": "W6-P7-elite-and-shards/W6-P7-vortex-shard-3.png",
+      "source_content_size": [
+        185,
+        179
+      ],
+      "content_size": [
+        119,
+        115
+      ],
+      "size": [
+        143,
+        139
+      ],
+      "scale_factor": 0.6424528301886792,
+      "content_box": [
+        12,
+        12,
+        131,
+        127
+      ],
+      "atlas_box": [
+        678,
+        1270,
+        821,
+        1409
+      ],
+      "atlas": "W6-P7-elite-and-shards-sheet.png"
+    },
+    "W6-P7-elite-and-shards/W6-P7-vortex-shard-4.png": {
+      "source": "W6\\variants\\W6-P7-elite-shards-source.png",
+      "source_cell": [
+        746,
+        1086,
+        967,
+        1269
+      ],
+      "trim_bounds": [
+        5,
+        4,
+        217,
+        180
+      ],
+      "background_estimate": [
+        5.0,
+        0.0,
+        12.0
+      ],
+      "file": "W6-P7-elite-and-shards/W6-P7-vortex-shard-4.png",
+      "source_content_size": [
+        212,
+        176
+      ],
+      "content_size": [
+        136,
+        113
+      ],
+      "size": [
+        160,
+        137
+      ],
+      "scale_factor": 0.6424528301886792,
+      "content_box": [
+        12,
+        12,
+        148,
+        125
+      ],
+      "atlas_box": [
+        970,
+        1272,
+        1130,
+        1409
+      ],
+      "atlas": "W6-P7-elite-and-shards-sheet.png"
+    },
+    "W6-P7-elite-and-shards/W6-P7-cloud-whale-shard-1.png": {
+      "source": "W6\\variants\\W6-P7-elite-shards-source.png",
+      "source_cell": [
+        28,
+        1273,
+        277,
+        1480
+      ],
+      "trim_bounds": [
+        3,
+        4,
+        245,
+        204
+      ],
+      "background_estimate": [
+        5.5,
+        0.0,
+        12.0
+      ],
+      "file": "W6-P7-elite-and-shards/W6-P7-cloud-whale-shard-1.png",
+      "source_content_size": [
+        242,
+        200
+      ],
+      "content_size": [
+        180,
+        149
+      ],
+      "size": [
+        204,
+        173
+      ],
+      "scale_factor": 0.743801652892562,
+      "content_box": [
+        12,
+        12,
+        192,
+        161
+      ],
+      "atlas_box": [
+        48,
+        1474,
+        252,
+        1647
+      ],
+      "atlas": "W6-P7-elite-and-shards-sheet.png"
+    },
+    "W6-P7-elite-and-shards/W6-P7-cloud-whale-shard-2.png": {
+      "source": "W6\\variants\\W6-P7-elite-shards-source.png",
+      "source_cell": [
+        290,
+        1280,
+        496,
+        1467
+      ],
+      "trim_bounds": [
+        4,
+        4,
+        201,
+        182
+      ],
+      "background_estimate": [
+        5.0,
+        0.0,
+        12.0
+      ],
+      "file": "W6-P7-elite-and-shards/W6-P7-cloud-whale-shard-2.png",
+      "source_content_size": [
+        197,
+        178
+      ],
+      "content_size": [
+        147,
+        132
+      ],
+      "size": [
+        171,
+        156
+      ],
+      "scale_factor": 0.743801652892562,
+      "content_box": [
+        12,
+        12,
+        159,
+        144
+      ],
+      "atlas_box": [
+        364,
+        1482,
+        535,
+        1638
+      ],
+      "atlas": "W6-P7-elite-and-shards-sheet.png"
+    },
+    "W6-P7-elite-and-shards/W6-P7-cloud-whale-shard-3.png": {
+      "source": "W6\\variants\\W6-P7-elite-shards-source.png",
+      "source_cell": [
+        527,
+        1268,
+        742,
+        1499
+      ],
+      "trim_bounds": [
+        4,
+        0,
+        210,
+        227
+      ],
+      "background_estimate": [
+        5.0,
+        0.0,
+        11.0
+      ],
+      "file": "W6-P7-elite-and-shards/W6-P7-cloud-whale-shard-3.png",
+      "source_content_size": [
+        206,
+        227
+      ],
+      "content_size": [
+        153,
+        169
+      ],
+      "size": [
+        177,
+        193
+      ],
+      "scale_factor": 0.743801652892562,
+      "content_box": [
+        12,
+        12,
+        165,
+        181
+      ],
+      "atlas_box": [
+        662,
+        1464,
+        839,
+        1657
+      ],
+      "atlas": "W6-P7-elite-and-shards-sheet.png"
+    },
+    "W6-P7-elite-and-shards/W6-P7-cloud-whale-shard-4.png": {
+      "source": "W6\\variants\\W6-P7-elite-shards-source.png",
+      "source_cell": [
+        766,
+        1268,
+        997,
+        1500
+      ],
+      "trim_bounds": [
+        4,
+        0,
+        228,
+        229
+      ],
+      "background_estimate": [
+        6.0,
+        0.0,
+        12.0
+      ],
+      "file": "W6-P7-elite-and-shards/W6-P7-cloud-whale-shard-4.png",
+      "source_content_size": [
+        224,
+        229
+      ],
+      "content_size": [
+        167,
+        170
+      ],
+      "size": [
+        191,
+        194
+      ],
+      "scale_factor": 0.743801652892562,
+      "content_box": [
+        12,
+        12,
+        179,
+        182
+      ],
+      "atlas_box": [
+        954,
+        1463,
+        1145,
+        1657
+      ],
+      "atlas": "W6-P7-elite-and-shards-sheet.png"
+    },
+    "W6-P7-elite-and-shards-sheet.png": {
+      "items": [
+        "W6-P7-elite-and-shards/W6-P7-ion-kite-elite.png",
+        "W6-P7-elite-and-shards/W6-P7-ion-kite-shard-1.png",
+        "W6-P7-elite-and-shards/W6-P7-ion-kite-shard-2.png",
+        "W6-P7-elite-and-shards/W6-P7-ion-kite-shard-3.png",
+        "W6-P7-elite-and-shards/W6-P7-ion-kite-shard-4.png",
+        "W6-P7-elite-and-shards/W6-P7-gas-mine-shard-1.png",
+        "W6-P7-elite-and-shards/W6-P7-gas-mine-shard-2.png",
+        "W6-P7-elite-and-shards/W6-P7-gas-mine-shard-3.png",
+        "W6-P7-elite-and-shards/W6-P7-gas-mine-shard-4.png",
+        "W6-P7-elite-and-shards/W6-P7-relay-jelly-shard-1.png",
+        "W6-P7-elite-and-shards/W6-P7-relay-jelly-shard-2.png",
+        "W6-P7-elite-and-shards/W6-P7-relay-jelly-shard-3.png",
+        "W6-P7-elite-and-shards/W6-P7-relay-jelly-shard-4.png",
+        "W6-P7-elite-and-shards/W6-P7-static-ray-shard-1.png",
+        "W6-P7-elite-and-shards/W6-P7-static-ray-shard-2.png",
+        "W6-P7-elite-and-shards/W6-P7-static-ray-shard-3.png",
+        "W6-P7-elite-and-shards/W6-P7-static-ray-shard-4.png",
+        "W6-P7-elite-and-shards/W6-P7-vortex-shard-1.png",
+        "W6-P7-elite-and-shards/W6-P7-vortex-shard-2.png",
+        "W6-P7-elite-and-shards/W6-P7-vortex-shard-3.png",
+        "W6-P7-elite-and-shards/W6-P7-vortex-shard-4.png",
+        "W6-P7-elite-and-shards/W6-P7-cloud-whale-shard-1.png",
+        "W6-P7-elite-and-shards/W6-P7-cloud-whale-shard-2.png",
+        "W6-P7-elite-and-shards/W6-P7-cloud-whale-shard-3.png",
+        "W6-P7-elite-and-shards/W6-P7-cloud-whale-shard-4.png"
+      ],
+      "boxes": [
+        [
+          473,
+          62,
+          727,
+          318
+        ],
+        [
+          98,
+          416,
+          202,
+          505
+        ],
+        [
+          398,
+          412,
+          501,
+          508
+        ],
+        [
+          696,
+          418,
+          805,
+          501
+        ],
+        [
+          994,
+          416,
+          1105,
+          505
+        ],
+        [
+          96,
+          629,
+          205,
+          731
+        ],
+        [
+          398,
+          632,
+          501,
+          727
+        ],
+        [
+          692,
+          628,
+          809,
+          732
+        ],
+        [
+          992,
+          632,
+          1108,
+          728
+        ],
+        [
+          97,
+          856,
+          203,
+          943
+        ],
+        [
+          394,
+          854,
+          505,
+          947
+        ],
+        [
+          689,
+          852,
+          811,
+          949
+        ],
+        [
+          993,
+          853,
+          1107,
+          947
+        ],
+        [
+          76,
+          1058,
+          225,
+          1183
+        ],
+        [
+          383,
+          1057,
+          517,
+          1183
+        ],
+        [
+          683,
+          1069,
+          817,
+          1171
+        ],
+        [
+          978,
+          1056,
+          1123,
+          1185
+        ],
+        [
+          79,
+          1268,
+          221,
+          1413
+        ],
+        [
+          373,
+          1269,
+          527,
+          1411
+        ],
+        [
+          678,
+          1270,
+          821,
+          1409
+        ],
+        [
+          970,
+          1272,
+          1130,
+          1409
+        ],
+        [
+          48,
+          1474,
+          252,
+          1647
+        ],
+        [
+          364,
+          1482,
+          535,
+          1638
+        ],
+        [
+          662,
+          1464,
+          839,
+          1657
+        ],
+        [
+          954,
+          1463,
+          1145,
+          1657
+        ]
+      ],
+      "size": [
+        1200,
+        1800
+      ],
+      "operation": "Technical layout at recorded sprite scale, no overlapping boxes"
+    },
+    "W6-P8-storm-eye.png": {
+      "source": "W6\\variants\\W6-P8-boss-source.png",
+      "native_size": [
+        1254,
+        1254
+      ],
+      "size": [
+        1024,
+        1024
+      ],
+      "processing": "Uniform Lanczos size normalization; full silhouette preserved",
+      "phase": 1,
+      "atlas_box": [
+        3338,
+        3338,
+        4362,
+        4362
+      ],
+      "atlas": "W6-P8-parts-sheet.png"
+    },
+    "W6-P8-parts/W6-P8-core.png": {
+      "source": "W6\\variants\\W6-P8-parts-source.png",
+      "source_cell": [
+        0,
+        0,
+        340,
+        330
+      ],
+      "trim_bounds": [
+        28,
+        22,
+        340,
+        310
+      ],
+      "background_estimate": [
+        4.0,
+        0.0,
+        11.0
+      ],
+      "file": "W6-P8-parts/W6-P8-core.png",
+      "source_content_size": [
+        312,
+        288
+      ],
+      "content_size": [
+        270,
+        249
+      ],
+      "size": [
+        294,
+        273
+      ],
+      "scale_factor": 0.8653846153846154,
+      "content_box": [
+        12,
+        12,
+        282,
+        261
+      ],
+      "scale_note": "Module scale calibrated against 1024px complete boss; separately generated art is not a pixel-exact animation rig",
+      "atlas_box": [
+        403,
+        414,
+        697,
+        687
+      ],
+      "atlas": "W6-P8-parts-sheet.png"
+    },
+    "W6-P8-parts/W6-P8-armored-segment-1.png": {
+      "source": "W6\\variants\\W6-P8-parts-source.png",
+      "source_cell": [
+        340,
+        0,
+        650,
+        330
+      ],
+      "trim_bounds": [
+        5,
+        27,
+        262,
+        328
+      ],
+      "background_estimate": [
+        5.0,
+        0.0,
+        11.0
+      ],
+      "file": "W6-P8-parts/W6-P8-armored-segment-1.png",
+      "source_content_size": [
+        257,
+        301
+      ],
+      "content_size": [
+        342,
+        400
+      ],
+      "size": [
+        366,
+        424
+      ],
+      "scale_factor": 1.3289036544850499,
+      "content_box": [
+        12,
+        12,
+        354,
+        412
+      ],
+      "scale_note": "Module scale calibrated against 1024px complete boss; separately generated art is not a pixel-exact animation rig",
+      "atlas_box": [
+        1467,
+        338,
+        1833,
+        762
+      ],
+      "atlas": "W6-P8-parts-sheet.png"
+    },
+    "W6-P8-parts/W6-P8-armored-segment-2.png": {
+      "source": "W6\\variants\\W6-P8-parts-source.png",
+      "source_cell": [
+        650,
+        0,
+        960,
+        330
+      ],
+      "trim_bounds": [
+        17,
+        26,
+        273,
+        317
+      ],
+      "background_estimate": [
+        5.0,
+        0.0,
+        11.0
+      ],
+      "file": "W6-P8-parts/W6-P8-armored-segment-2.png",
+      "source_content_size": [
+        256,
+        291
+      ],
+      "content_size": [
+        352,
+        400
+      ],
+      "size": [
+        376,
+        424
+      ],
+      "scale_factor": 1.3745704467353952,
+      "content_box": [
+        12,
+        12,
+        364,
+        412
+      ],
+      "scale_note": "Module scale calibrated against 1024px complete boss; separately generated art is not a pixel-exact animation rig",
+      "atlas_box": [
+        2562,
+        338,
+        2938,
+        762
+      ],
+      "atlas": "W6-P8-parts-sheet.png"
+    },
+    "W6-P8-parts/W6-P8-armored-segment-3.png": {
+      "source": "W6\\variants\\W6-P8-parts-source.png",
+      "source_cell": [
+        960,
+        0,
+        1254,
+        330
+      ],
+      "trim_bounds": [
+        13,
+        23,
+        261,
+        317
+      ],
+      "background_estimate": [
+        4.0,
+        0.0,
+        11.0
+      ],
+      "file": "W6-P8-parts/W6-P8-armored-segment-3.png",
+      "source_content_size": [
+        248,
+        294
+      ],
+      "content_size": [
+        337,
+        400
+      ],
+      "size": [
+        361,
+        424
+      ],
+      "scale_factor": 1.3605442176870748,
+      "content_box": [
+        12,
+        12,
+        349,
+        412
+      ],
+      "scale_note": "Module scale calibrated against 1024px complete boss; separately generated art is not a pixel-exact animation rig",
+      "atlas_box": [
+        3670,
+        338,
+        4031,
+        762
+      ],
+      "atlas": "W6-P8-parts-sheet.png"
+    },
+    "W6-P8-parts/W6-P8-armored-segment-4.png": {
+      "source": "W6\\variants\\W6-P8-parts-source.png",
+      "source_cell": [
+        0,
+        330,
+        340,
+        650
+      ],
+      "trim_bounds": [
+        35,
+        10,
+        331,
+        320
+      ],
+      "background_estimate": [
+        4.0,
+        0.0,
+        11.0
+      ],
+      "file": "W6-P8-parts/W6-P8-armored-segment-4.png",
+      "source_content_size": [
+        296,
+        310
+      ],
+      "content_size": [
+        382,
+        400
+      ],
+      "size": [
+        406,
+        424
+      ],
+      "scale_factor": 1.2903225806451613,
+      "content_box": [
+        12,
+        12,
+        394,
+        412
+      ],
+      "scale_note": "Module scale calibrated against 1024px complete boss; separately generated art is not a pixel-exact animation rig",
+      "atlas_box": [
+        347,
+        1438,
+        753,
+        1862
+      ],
+      "atlas": "W6-P8-parts-sheet.png"
+    },
+    "W6-P8-parts/W6-P8-cloud-arm-1.png": {
+      "source": "W6\\variants\\W6-P8-parts-source.png",
+      "source_cell": [
+        340,
+        330,
+        650,
+        720
+      ],
+      "trim_bounds": [
+        5,
+        15,
+        288,
+        378
+      ],
+      "background_estimate": [
+        5.0,
+        0.0,
+        11.0
+      ],
+      "file": "W6-P8-parts/W6-P8-cloud-arm-1.png",
+      "source_content_size": [
+        283,
+        363
+      ],
+      "content_size": [
+        421,
+        540
+      ],
+      "size": [
+        445,
+        564
+      ],
+      "scale_factor": 1.487603305785124,
+      "content_box": [
+        12,
+        12,
+        433,
+        552
+      ],
+      "scale_note": "Module scale calibrated against 1024px complete boss; separately generated art is not a pixel-exact animation rig",
+      "atlas_box": [
+        1428,
+        1368,
+        1873,
+        1932
+      ],
+      "atlas": "W6-P8-parts-sheet.png"
+    },
+    "W6-P8-parts/W6-P8-cloud-arm-2.png": {
+      "source": "W6\\variants\\W6-P8-parts-source.png",
+      "source_cell": [
+        650,
+        315,
+        930,
+        720
+      ],
+      "trim_bounds": [
+        0,
+        0,
+        247,
+        404
+      ],
+      "background_estimate": [
+        5.0,
+        0.0,
+        11.0
+      ],
+      "file": "W6-P8-parts/W6-P8-cloud-arm-2.png",
+      "source_content_size": [
+        247,
+        404
+      ],
+      "content_size": [
+        330,
+        540
+      ],
+      "size": [
+        354,
+        564
+      ],
+      "scale_factor": 1.3366336633663367,
+      "content_box": [
+        12,
+        12,
+        342,
+        552
+      ],
+      "scale_note": "Module scale calibrated against 1024px complete boss; separately generated art is not a pixel-exact animation rig",
+      "atlas_box": [
+        2573,
+        1368,
+        2927,
+        1932
+      ],
+      "atlas": "W6-P8-parts-sheet.png"
+    },
+    "W6-P8-parts/W6-P8-cloud-arm-3.png": {
+      "source": "W6\\variants\\W6-P8-parts-source.png",
+      "source_cell": [
+        930,
+        330,
+        1254,
+        720
+      ],
+      "trim_bounds": [
+        0,
+        16,
+        300,
+        389
+      ],
+      "background_estimate": [
+        4.0,
+        0.0,
+        11.0
+      ],
+      "file": "W6-P8-parts/W6-P8-cloud-arm-3.png",
+      "source_content_size": [
+        300,
+        373
+      ],
+      "content_size": [
+        434,
+        540
+      ],
+      "size": [
+        458,
+        564
+      ],
+      "scale_factor": 1.447721179624665,
+      "content_box": [
+        12,
+        12,
+        446,
+        552
+      ],
+      "scale_note": "Module scale calibrated against 1024px complete boss; separately generated art is not a pixel-exact animation rig",
+      "atlas_box": [
+        3621,
+        1368,
+        4079,
+        1932
+      ],
+      "atlas": "W6-P8-parts-sheet.png"
+    },
+    "W6-P8-parts/W6-P8-cloud-arm-4.png": {
+      "source": "W6\\variants\\W6-P8-parts-source.png",
+      "source_cell": [
+        0,
+        650,
+        410,
+        930
+      ],
+      "trim_bounds": [
+        22,
+        1,
+        383,
+        264
+      ],
+      "background_estimate": [
+        4.0,
+        0.0,
+        11.0
+      ],
+      "file": "W6-P8-parts/W6-P8-cloud-arm-4.png",
+      "source_content_size": [
+        361,
+        263
+      ],
+      "content_size": [
+        540,
+        393
+      ],
+      "size": [
+        564,
+        417
+      ],
+      "scale_factor": 1.4958448753462603,
+      "content_box": [
+        12,
+        12,
+        552,
+        405
+      ],
+      "scale_note": "Module scale calibrated against 1024px complete boss; separately generated art is not a pixel-exact animation rig",
+      "atlas_box": [
+        268,
+        2542,
+        832,
+        2959
+      ],
+      "atlas": "W6-P8-parts-sheet.png"
+    },
+    "W6-P8-parts/W6-P8-weak-point-1.png": {
+      "source": "W6\\variants\\W6-P8-parts-source.png",
+      "source_cell": [
+        405,
+        725,
+        610,
+        920
+      ],
+      "trim_bounds": [
+        2,
+        0,
+        160,
+        161
+      ],
+      "background_estimate": [
+        5.0,
+        0.0,
+        11.0
+      ],
+      "file": "W6-P8-parts/W6-P8-weak-point-1.png",
+      "source_content_size": [
+        158,
+        161
+      ],
+      "content_size": [
+        108,
+        110
+      ],
+      "size": [
+        132,
+        134
+      ],
+      "scale_factor": 0.6832298136645962,
+      "content_box": [
+        12,
+        12,
+        120,
+        122
+      ],
+      "scale_note": "Module scale calibrated against 1024px complete boss; separately generated art is not a pixel-exact animation rig",
+      "atlas_box": [
+        1584,
+        2683,
+        1716,
+        2817
+      ],
+      "atlas": "W6-P8-parts-sheet.png"
+    },
+    "W6-P8-parts/W6-P8-weak-point-2.png": {
+      "source": "W6\\variants\\W6-P8-parts-source.png",
+      "source_cell": [
+        640,
+        720,
+        830,
+        920
+      ],
+      "trim_bounds": [
+        9,
+        0,
+        173,
+        163
+      ],
+      "background_estimate": [
+        5.0,
+        0.0,
+        11.0
+      ],
+      "file": "W6-P8-parts/W6-P8-weak-point-2.png",
+      "source_content_size": [
+        164,
+        163
+      ],
+      "content_size": [
+        110,
+        109
+      ],
+      "size": [
+        134,
+        133
+      ],
+      "scale_factor": 0.6707317073170732,
+      "content_box": [
+        12,
+        12,
+        122,
+        121
+      ],
+      "scale_note": "Module scale calibrated against 1024px complete boss; separately generated art is not a pixel-exact animation rig",
+      "atlas_box": [
+        2683,
+        2684,
+        2817,
+        2817
+      ],
+      "atlas": "W6-P8-parts-sheet.png"
+    },
+    "W6-P8-parts/W6-P8-weak-point-3.png": {
+      "source": "W6\\variants\\W6-P8-parts-source.png",
+      "source_cell": [
+        900,
+        720,
+        1110,
+        920
+      ],
+      "trim_bounds": [
+        10,
+        0,
+        197,
+        152
+      ],
+      "background_estimate": [
+        5.0,
+        0.0,
+        11.0
+      ],
+      "file": "W6-P8-parts/W6-P8-weak-point-3.png",
+      "source_content_size": [
+        187,
+        152
+      ],
+      "content_size": [
+        110,
+        89
+      ],
+      "size": [
+        134,
+        113
+      ],
+      "scale_factor": 0.5882352941176471,
+      "content_box": [
+        12,
+        12,
+        122,
+        101
+      ],
+      "scale_note": "Module scale calibrated against 1024px complete boss; separately generated art is not a pixel-exact animation rig",
+      "atlas_box": [
+        3783,
+        2694,
+        3917,
+        2807
+      ],
+      "atlas": "W6-P8-parts-sheet.png"
+    },
+    "W6-P8-parts/W6-P8-weak-point-4.png": {
+      "source": "W6\\variants\\W6-P8-parts-source.png",
+      "source_cell": [
+        0,
+        930,
+        310,
+        1190
+      ],
+      "trim_bounds": [
+        67,
+        23,
+        248,
+        198
+      ],
+      "background_estimate": [
+        4.0,
+        0.0,
+        11.0
+      ],
+      "file": "W6-P8-parts/W6-P8-weak-point-4.png",
+      "source_content_size": [
+        181,
+        175
+      ],
+      "content_size": [
+        110,
+        106
+      ],
+      "size": [
+        134,
+        130
+      ],
+      "scale_factor": 0.6077348066298343,
+      "content_box": [
+        12,
+        12,
+        122,
+        118
+      ],
+      "scale_note": "Module scale calibrated against 1024px complete boss; separately generated art is not a pixel-exact animation rig",
+      "atlas_box": [
+        483,
+        3785,
+        617,
+        3915
+      ],
+      "atlas": "W6-P8-parts-sheet.png"
+    },
+    "W6-P8-parts-sheet.png": {
+      "items": [
+        "W6-P8-parts/W6-P8-core.png",
+        "W6-P8-parts/W6-P8-armored-segment-1.png",
+        "W6-P8-parts/W6-P8-armored-segment-2.png",
+        "W6-P8-parts/W6-P8-armored-segment-3.png",
+        "W6-P8-parts/W6-P8-armored-segment-4.png",
+        "W6-P8-parts/W6-P8-cloud-arm-1.png",
+        "W6-P8-parts/W6-P8-cloud-arm-2.png",
+        "W6-P8-parts/W6-P8-cloud-arm-3.png",
+        "W6-P8-parts/W6-P8-cloud-arm-4.png",
+        "W6-P8-parts/W6-P8-weak-point-1.png",
+        "W6-P8-parts/W6-P8-weak-point-2.png",
+        "W6-P8-parts/W6-P8-weak-point-3.png",
+        "W6-P8-parts/W6-P8-weak-point-4.png",
+        "W6-P8-storm-eye.png"
+      ],
+      "boxes": [
+        [
+          403,
+          414,
+          697,
+          687
+        ],
+        [
+          1467,
+          338,
+          1833,
+          762
+        ],
+        [
+          2562,
+          338,
+          2938,
+          762
+        ],
+        [
+          3670,
+          338,
+          4031,
+          762
+        ],
+        [
+          347,
+          1438,
+          753,
+          1862
+        ],
+        [
+          1428,
+          1368,
+          1873,
+          1932
+        ],
+        [
+          2573,
+          1368,
+          2927,
+          1932
+        ],
+        [
+          3621,
+          1368,
+          4079,
+          1932
+        ],
+        [
+          268,
+          2542,
+          832,
+          2959
+        ],
+        [
+          1584,
+          2683,
+          1716,
+          2817
+        ],
+        [
+          2683,
+          2684,
+          2817,
+          2817
+        ],
+        [
+          3783,
+          2694,
+          3917,
+          2807
+        ],
+        [
+          483,
+          3785,
+          617,
+          3915
+        ],
+        [
+          3338,
+          3338,
+          4362,
+          4362
+        ]
+      ],
+      "size": [
+        4400,
+        4400
+      ],
+      "operation": "Technical layout at recorded sprite scale, no overlapping boxes",
+      "identical_assembled_boss": "W6-P8-storm-eye.png"
+    },
+    "W6-P1-arena-concept.png": {
+      "source": "Human-approved P1 review copy",
+      "size": [
+        941,
+        1672
+      ]
+    },
+    "W6-P6-border-pieces/W6-P6-border-top.png": {
+      "source": "D:\\void blaster art\\W6\\variants\\W6-P6-final-source.png",
+      "source_cell": [
+        20,
+        15,
+        1230,
+        145
+      ],
+      "size": [
+        1024,
+        160
+      ],
+      "processing": "Crop; uniform thickness scaling; minimum-error cut for periodic strip ends and corner joins; 512px vertical modules repeated twice; background normalization. Originals preserved."
+    },
+    "W6-P6-border-pieces/W6-P6-border-bottom.png": {
+      "source": "D:\\void blaster art\\W6\\variants\\W6-P6-final-source.png",
+      "source_cell": [
+        20,
+        1090,
+        1230,
+        1225
+      ],
+      "size": [
+        1024,
+        160
+      ],
+      "processing": "Crop; uniform thickness scaling; minimum-error cut for periodic strip ends and corner joins; 512px vertical modules repeated twice; background normalization. Originals preserved."
+    },
+    "W6-P6-border-pieces/W6-P6-border-left.png": {
+      "source": "D:\\void blaster art\\W6\\variants\\W6-P6-final-source.png",
+      "source_cell": [
+        15,
+        160,
+        145,
+        1080
+      ],
+      "size": [
+        160,
+        1024
+      ],
+      "processing": "Crop; uniform thickness scaling; minimum-error cut for periodic strip ends and corner joins; 512px vertical modules repeated twice; background normalization. Originals preserved."
+    },
+    "W6-P6-border-pieces/W6-P6-border-right.png": {
+      "source": "D:\\void blaster art\\W6\\variants\\W6-P6-final-source.png",
+      "source_cell": [
+        1110,
+        160,
+        1235,
+        1080
+      ],
+      "size": [
+        160,
+        1024
+      ],
+      "processing": "Crop; uniform thickness scaling; minimum-error cut for periodic strip ends and corner joins; 512px vertical modules repeated twice; background normalization. Originals preserved."
+    },
+    "W6-P6-border-pieces/W6-P6-corner-top-left.png": {
+      "source": "D:\\void blaster art\\W6\\variants\\W6-P6-final-source.png",
+      "source_cell": [
+        220,
+        220,
+        550,
+        550
+      ],
+      "size": [
+        256,
+        256
+      ],
+      "processing": "Crop; uniform thickness scaling; minimum-error cut for periodic strip ends and corner joins; 512px vertical modules repeated twice; background normalization. Originals preserved."
+    },
+    "W6-P6-border-pieces/W6-P6-corner-top-right.png": {
+      "source": "D:\\void blaster art\\W6\\variants\\W6-P6-final-source.png",
+      "source_cell": [
+        700,
+        220,
+        1040,
+        550
+      ],
+      "size": [
+        256,
+        256
+      ],
+      "processing": "Crop; uniform thickness scaling; minimum-error cut for periodic strip ends and corner joins; 512px vertical modules repeated twice; background normalization. Originals preserved."
+    },
+    "W6-P6-border-pieces/W6-P6-corner-bottom-left.png": {
+      "source": "D:\\void blaster art\\W6\\variants\\W6-P6-final-source.png",
+      "source_cell": [
+        220,
+        665,
+        550,
+        980
+      ],
+      "size": [
+        256,
+        256
+      ],
+      "processing": "Crop; uniform thickness scaling; minimum-error cut for periodic strip ends and corner joins; 512px vertical modules repeated twice; background normalization. Originals preserved."
+    },
+    "W6-P6-border-pieces/W6-P6-corner-bottom-right.png": {
+      "source": "D:\\void blaster art\\W6\\variants\\W6-P6-final-source.png",
+      "source_cell": [
+        700,
+        665,
+        1040,
+        980
+      ],
+      "size": [
+        256,
+        256
+      ],
+      "processing": "Crop; uniform thickness scaling; minimum-error cut for periodic strip ends and corner joins; 512px vertical modules repeated twice; background normalization. Originals preserved."
+    }
+  },
+  "limitations": [
+    "P2 is technically normalized/upscaled from recorded native dimensions",
+    "Separately generated boss modules match design and calibrated scale but are not a pixel-exact rig"
+  ],
+  "status": "production complete, technical and visual reviews passed",
+  "visual_review": [
+    "Three dark bronze platforms separated, floor brightness capped at 30%.",
+    "Ion kite elite corrected with full gold ring; cloud whale full nose restored."
+  ]
+}

@@ -1,0 +1,27 @@
+STYLE (keep identical across all images):
+Game art for "Void Blaster", a top-down mobile space shooter (survivors-like).
+Camera: top-down orthographic, looking straight down, no perspective.
+Look: stylized sci-fi with a neon accent. Dark, rich materials (gunmetal, carbon,
+matte ceramic) lit from the top-left, glowing edges and emissive lights only where
+noted. Detail level: high but clean - panel lines, vents, rivets; no grunge overload.
+The background must stay dark and calm so bright game objects read on top of it:
+no bright cyan anywhere (cyan belongs to the player), magenta only as thin traces.
+Rendering: crisp edges, soft bloom on glowing parts only, no motion blur, no depth of
+field, not photorealistic. No text, no logo, no watermark.
+
+WORLD 10 "THE NEXUS": the heart of the Void Collective (an alien machine intelligence):
+a living mind of circuits and neurons where geometry stops making sense. Circuit traces
+branch like dendrites, neuron nodes, floating impossible shapes (frames and stairs that
+lead nowhere), broken rings orbiting. Darkness #000000/#0a0414, dominant violet #b04dff
+(dark #3a1060), magenta #ff2d95 everywhere a little, tiny white sparks. Everything
+glows from inside in pulses, like a heartbeat; between pulses the world is dark.
+Mood: the finale, awe and dread. Full fusion of machine and organism.
+
+TASK: Arena border pieces seen from directly above on a plain flat dark background
+(#05010f), well apart: 4 straight strips (top, bottom, left, right), each 1024 px long
+and about 160 px thick, tileable along their length: a dense tangle of neurons, circuit
+cables and broken ring segments, faint violet glow, clean readable inner edge. Plus 4
+matching corners 256x256.
+
+PRODUCTION NOTES (the attached approved P1 is a style/material reference, not a composition to reproduce):
+Square production parts sheet on flat #05010f. Arrange four LONG thin border strips as an OPEN SQUARE FRAME: top at top edge inset margin; bottom at bottom edge inset margin; left vertical at left edge, right vertical at right edge. Each strip separate, not touching others, approximately 1024 long and 160 thick. Inside the large EMPTY frame place FOUR separate L-shaped corners in a 2x2 arrangement (top-left, top-right, bottom-left, bottom-right orientations respectively); corners 256 square at same material scale as strips. Clear blank gaps between all 8 parts. Top-down orthographic, no perspective. Clean inward-facing edge. The strips must be tileable along their length. Do not connect the frame parts, do not add a center object, floor, labels, grid or text. Dense tangle of black/violet neurons, circuit cables and broken ring segments with faint violet glow only in thin lines and tiny nodes. Clean dark inner boundary, restrained emission. Each corner is L-shaped neuron/cable mass with genuinely empty inner quadrant. No heart, eye, center radial neuron or floor.

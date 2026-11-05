@@ -1,0 +1,29 @@
+STYLE (keep identical across all images):
+Game art for "Void Blaster", a top-down mobile space shooter (survivors-like).
+Camera: top-down orthographic, looking straight down, no perspective.
+Look: stylized sci-fi with a neon accent. Dark, rich materials (gunmetal, carbon,
+matte ceramic) lit from the top-left, glowing edges and emissive lights only where
+noted. Detail level: high but clean - panel lines, vents, rivets; no grunge overload.
+The background must stay dark and calm so bright game objects read on top of it:
+no bright cyan anywhere (cyan belongs to the player), magenta only as thin traces.
+Rendering: crisp edges, soft bloom on glowing parts only, no motion blur, no depth of
+field, not photorealistic. No text, no logo, no watermark.
+
+WORLD 5 "FOUNDRY BELT": the asteroid belt turned into factories by the Void Collective
+(an alien machine intelligence); here it builds its army. We fly over the surface of a
+hollowed factory asteroid: dark rock cut into geometric terraces, rails and steel
+plates, glowing furnace pits; through chasms we see space and other factory asteroids
+far below. Rock #241f1b/#3e3630 (highlights #5e5248), steel #4a525c/#7a8490, molten
+metal #ff7a1a with a #ffc070 center, magenta #ff2d95 on the Collective's assembly lines.
+Warm light from the furnaces (from below and the side), weak sun from the top-left.
+Mood: industrial, relentless production. 80% machine (worker units).
+
+TASK: Concept of the battle arena, 941x1672 portrait, seen from directly above: the
+terraced rock surface of a factory asteroid with rails and conveyor belts, two furnace
+pits glowing orange, assembly gantries holding half-built enemy hulls, a chasm showing
+space and distant factory asteroids, terrace edges and scaffolding framing the edges.
+Calm, dark center. No ships, no enemies.
+
+ART DIRECTION FROM KONRAD: Preserve an aggressive, menacing industrial character. Heavy layered armor, angular cutting edges, brutal foundry machinery, clawlike assembly gantries and armored housings. This is a working alien war factory built into asteroid rock. Convey menace through silhouette and construction, while keeping the playing surface calm and dark. Molten metal is restricted to the two furnace pits, never a lava landscape. Strict vertical orthographic camera with no horizon. Do not draw text or warning lettering. The provided tech-ruin reference is ONLY for rendering quality, material readability and dark center; do not copy its layout. The W4 reference is ONLY for continuity of art style; replace the Martian ground and crystals with W5 rock terraces and steel. No complete ships or active enemies; only unfinished hulls in gantries.
+
+COMPOSITION B: A fractured war foundry. A broad dark terraced combat platform occupies the central 65% of the portrait. An irregular black chasm cleaves peripheral rock shelves, revealing deep space and tiny orange factory asteroid lights. Brutal angular assembly gantries and layered serrated steel plates cluster on the upper-left and lower-right perimeter. Two separate orange furnace pits at upper-right and lower-left, ore conveyors and rails embedded in the boundary terraces. More jagged, asymmetric and predatory silhouettes while maintaining a broad unobstructed dark central playing area.

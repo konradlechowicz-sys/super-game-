@@ -1,0 +1,431 @@
+{
+  "name": "The Nexus",
+  "enemy": [
+    "synapse-swarm-unit",
+    "voidling",
+    "wraith",
+    "eye",
+    "neuron-node",
+    "overseer"
+  ],
+  "sizes": [
+    22,
+    26,
+    40,
+    44,
+    48,
+    64
+  ],
+  "elite": "wraith",
+  "props": [
+    "neuron-node",
+    "impossible-floating-frame",
+    "broken-ring-fragment",
+    "synapse-knot",
+    "eye-bud",
+    "circuit-shard",
+    "neuron-cluster-intact",
+    "neuron-cluster-broken",
+    "ring-anchor-intact",
+    "ring-anchor-broken"
+  ],
+  "boss": "void-heart",
+  "parts": [
+    "heart",
+    "ring-outer",
+    "ring-middle",
+    "ring-inner",
+    "eye-1",
+    "eye-2",
+    "eye-3",
+    "eye-4",
+    "weak-point-1",
+    "weak-point-2",
+    "weak-point-3",
+    "weak-point-4"
+  ],
+  "floor": "dendrite-circuits",
+  "floor_count": 1,
+  "far_size": [
+    2048,
+    2048
+  ],
+  "far_tile": "none",
+  "phases": 3,
+  "constraints": [
+    "P8 BEFORE P2; attach final phase-1 boss as reference to P2: same object far below",
+    "Three boss phase images: closed broken-ring cage, cage broken open, exposed cracked brighter heart",
+    "Four orbiting eyes and three separate broken rings",
+    "P2 includes two small light-bending black holes, small distant heart",
+    "More geometry and light, less flesh than W9"
+  ],
+  "world": 10,
+  "expected_production_png": {
+    "W10-P1-arena-concept.png": {
+      "role": "P1",
+      "size": [
+        941,
+        1672
+      ],
+      "approval_required": true
+    },
+    "W10-P2-background.png": {
+      "role": "P2",
+      "size": [
+        2048,
+        2048
+      ],
+      "tile": "none"
+    },
+    "W10-P3-floor.png": {
+      "role": "P3",
+      "size": [
+        1024,
+        1024
+      ],
+      "tile": "both",
+      "alpha_required": false
+    },
+    "W10-P4-overlay.png": {
+      "role": "P4",
+      "size": [
+        1024,
+        1024
+      ],
+      "tile": "both",
+      "background": "#000000"
+    },
+    "W10-P5-props-sheet.png": {
+      "role": "P5-sheet",
+      "count": 10
+    },
+    "W10-P5-props/W10-P5-neuron-node.png": {
+      "role": "P5-item"
+    },
+    "W10-P5-props/W10-P5-impossible-floating-frame.png": {
+      "role": "P5-item"
+    },
+    "W10-P5-props/W10-P5-broken-ring-fragment.png": {
+      "role": "P5-item"
+    },
+    "W10-P5-props/W10-P5-synapse-knot.png": {
+      "role": "P5-item"
+    },
+    "W10-P5-props/W10-P5-eye-bud.png": {
+      "role": "P5-item"
+    },
+    "W10-P5-props/W10-P5-circuit-shard.png": {
+      "role": "P5-item"
+    },
+    "W10-P5-props/W10-P5-neuron-cluster-intact.png": {
+      "role": "P5-item"
+    },
+    "W10-P5-props/W10-P5-neuron-cluster-broken.png": {
+      "role": "P5-item"
+    },
+    "W10-P5-props/W10-P5-ring-anchor-intact.png": {
+      "role": "P5-item"
+    },
+    "W10-P5-props/W10-P5-ring-anchor-broken.png": {
+      "role": "P5-item"
+    },
+    "W10-P6-border-pieces-sheet.png": {
+      "role": "P6-sheet",
+      "count": 8
+    },
+    "W10-P6-border-pieces/W10-P6-border-top.png": {
+      "role": "P6-strip",
+      "size": [
+        1024,
+        160
+      ],
+      "tile": "long-axis"
+    },
+    "W10-P6-border-pieces/W10-P6-border-bottom.png": {
+      "role": "P6-strip",
+      "size": [
+        1024,
+        160
+      ],
+      "tile": "long-axis"
+    },
+    "W10-P6-border-pieces/W10-P6-border-left.png": {
+      "role": "P6-strip",
+      "size": [
+        160,
+        1024
+      ],
+      "tile": "long-axis"
+    },
+    "W10-P6-border-pieces/W10-P6-border-right.png": {
+      "role": "P6-strip",
+      "size": [
+        160,
+        1024
+      ],
+      "tile": "long-axis"
+    },
+    "W10-P6-border-pieces/W10-P6-corner-top-left.png": {
+      "role": "P6-corner",
+      "size": [
+        256,
+        256
+      ]
+    },
+    "W10-P6-border-pieces/W10-P6-corner-top-right.png": {
+      "role": "P6-corner",
+      "size": [
+        256,
+        256
+      ]
+    },
+    "W10-P6-border-pieces/W10-P6-corner-bottom-left.png": {
+      "role": "P6-corner",
+      "size": [
+        256,
+        256
+      ]
+    },
+    "W10-P6-border-pieces/W10-P6-corner-bottom-right.png": {
+      "role": "P6-corner",
+      "size": [
+        256,
+        256
+      ]
+    },
+    "W10-P7-enemies-sheet.png": {
+      "role": "P7-enemies-sheet",
+      "count": 6
+    },
+    "W10-P7-enemies/W10-P7-synapse-swarm-unit.png": {
+      "role": "P7-enemy",
+      "relative_units": 22,
+      "target_content_max": 103
+    },
+    "W10-P7-enemies/W10-P7-voidling.png": {
+      "role": "P7-enemy",
+      "relative_units": 26,
+      "target_content_max": 122
+    },
+    "W10-P7-enemies/W10-P7-wraith.png": {
+      "role": "P7-enemy",
+      "relative_units": 40,
+      "target_content_max": 188
+    },
+    "W10-P7-enemies/W10-P7-eye.png": {
+      "role": "P7-enemy",
+      "relative_units": 44,
+      "target_content_max": 206
+    },
+    "W10-P7-enemies/W10-P7-neuron-node.png": {
+      "role": "P7-enemy",
+      "relative_units": 48,
+      "target_content_max": 225
+    },
+    "W10-P7-enemies/W10-P7-overseer.png": {
+      "role": "P7-enemy",
+      "relative_units": 64,
+      "target_content_max": 300
+    },
+    "W10-P7-elite-and-shards-sheet.png": {
+      "role": "P7-elite-shards-sheet",
+      "count": 25
+    },
+    "W10-P7-elite-and-shards/W10-P7-wraith-elite.png": {
+      "role": "P7-elite",
+      "scale_vs_normal": 1.6
+    },
+    "W10-P7-elite-and-shards/W10-P7-synapse-swarm-unit-shard-1.png": {
+      "role": "P7-shard",
+      "enemy": "synapse-swarm-unit"
+    },
+    "W10-P7-elite-and-shards/W10-P7-synapse-swarm-unit-shard-2.png": {
+      "role": "P7-shard",
+      "enemy": "synapse-swarm-unit"
+    },
+    "W10-P7-elite-and-shards/W10-P7-synapse-swarm-unit-shard-3.png": {
+      "role": "P7-shard",
+      "enemy": "synapse-swarm-unit"
+    },
+    "W10-P7-elite-and-shards/W10-P7-synapse-swarm-unit-shard-4.png": {
+      "role": "P7-shard",
+      "enemy": "synapse-swarm-unit"
+    },
+    "W10-P7-elite-and-shards/W10-P7-voidling-shard-1.png": {
+      "role": "P7-shard",
+      "enemy": "voidling"
+    },
+    "W10-P7-elite-and-shards/W10-P7-voidling-shard-2.png": {
+      "role": "P7-shard",
+      "enemy": "voidling"
+    },
+    "W10-P7-elite-and-shards/W10-P7-voidling-shard-3.png": {
+      "role": "P7-shard",
+      "enemy": "voidling"
+    },
+    "W10-P7-elite-and-shards/W10-P7-voidling-shard-4.png": {
+      "role": "P7-shard",
+      "enemy": "voidling"
+    },
+    "W10-P7-elite-and-shards/W10-P7-wraith-shard-1.png": {
+      "role": "P7-shard",
+      "enemy": "wraith"
+    },
+    "W10-P7-elite-and-shards/W10-P7-wraith-shard-2.png": {
+      "role": "P7-shard",
+      "enemy": "wraith"
+    },
+    "W10-P7-elite-and-shards/W10-P7-wraith-shard-3.png": {
+      "role": "P7-shard",
+      "enemy": "wraith"
+    },
+    "W10-P7-elite-and-shards/W10-P7-wraith-shard-4.png": {
+      "role": "P7-shard",
+      "enemy": "wraith"
+    },
+    "W10-P7-elite-and-shards/W10-P7-eye-shard-1.png": {
+      "role": "P7-shard",
+      "enemy": "eye"
+    },
+    "W10-P7-elite-and-shards/W10-P7-eye-shard-2.png": {
+      "role": "P7-shard",
+      "enemy": "eye"
+    },
+    "W10-P7-elite-and-shards/W10-P7-eye-shard-3.png": {
+      "role": "P7-shard",
+      "enemy": "eye"
+    },
+    "W10-P7-elite-and-shards/W10-P7-eye-shard-4.png": {
+      "role": "P7-shard",
+      "enemy": "eye"
+    },
+    "W10-P7-elite-and-shards/W10-P7-neuron-node-shard-1.png": {
+      "role": "P7-shard",
+      "enemy": "neuron-node"
+    },
+    "W10-P7-elite-and-shards/W10-P7-neuron-node-shard-2.png": {
+      "role": "P7-shard",
+      "enemy": "neuron-node"
+    },
+    "W10-P7-elite-and-shards/W10-P7-neuron-node-shard-3.png": {
+      "role": "P7-shard",
+      "enemy": "neuron-node"
+    },
+    "W10-P7-elite-and-shards/W10-P7-neuron-node-shard-4.png": {
+      "role": "P7-shard",
+      "enemy": "neuron-node"
+    },
+    "W10-P7-elite-and-shards/W10-P7-overseer-shard-1.png": {
+      "role": "P7-shard",
+      "enemy": "overseer"
+    },
+    "W10-P7-elite-and-shards/W10-P7-overseer-shard-2.png": {
+      "role": "P7-shard",
+      "enemy": "overseer"
+    },
+    "W10-P7-elite-and-shards/W10-P7-overseer-shard-3.png": {
+      "role": "P7-shard",
+      "enemy": "overseer"
+    },
+    "W10-P7-elite-and-shards/W10-P7-overseer-shard-4.png": {
+      "role": "P7-shard",
+      "enemy": "overseer"
+    },
+    "W10-P8-void-heart-phase-1.png": {
+      "role": "P8-boss",
+      "size": [
+        1024,
+        1024
+      ],
+      "phase": 1
+    },
+    "W10-P8-void-heart-phase-2.png": {
+      "role": "P8-boss",
+      "size": [
+        1024,
+        1024
+      ],
+      "phase": 2
+    },
+    "W10-P8-void-heart-phase-3.png": {
+      "role": "P8-boss",
+      "size": [
+        1024,
+        1024
+      ],
+      "phase": 3
+    },
+    "W10-P8-parts-sheet.png": {
+      "role": "P8-sheet",
+      "parts": 12,
+      "assembled_copy": "bottom-right, identical render and scale"
+    },
+    "W10-P8-parts/W10-P8-heart.png": {
+      "role": "P8-part"
+    },
+    "W10-P8-parts/W10-P8-ring-outer.png": {
+      "role": "P8-part"
+    },
+    "W10-P8-parts/W10-P8-ring-middle.png": {
+      "role": "P8-part"
+    },
+    "W10-P8-parts/W10-P8-ring-inner.png": {
+      "role": "P8-part"
+    },
+    "W10-P8-parts/W10-P8-eye-1.png": {
+      "role": "P8-part"
+    },
+    "W10-P8-parts/W10-P8-eye-2.png": {
+      "role": "P8-part"
+    },
+    "W10-P8-parts/W10-P8-eye-3.png": {
+      "role": "P8-part"
+    },
+    "W10-P8-parts/W10-P8-eye-4.png": {
+      "role": "P8-part"
+    },
+    "W10-P8-parts/W10-P8-weak-point-1.png": {
+      "role": "P8-part"
+    },
+    "W10-P8-parts/W10-P8-weak-point-2.png": {
+      "role": "P8-part"
+    },
+    "W10-P8-parts/W10-P8-weak-point-3.png": {
+      "role": "P8-part"
+    },
+    "W10-P8-parts/W10-P8-weak-point-4.png": {
+      "role": "P8-part"
+    }
+  },
+  "order": [
+    "P1-review",
+    "P3",
+    "P4",
+    "P5",
+    "P6",
+    "P7-enemies",
+    "P7-elite-shards",
+    "P8-boss",
+    "P8-phase-2",
+    "P8-phase-3",
+    "P8-parts",
+    "P2-using-P8-reference"
+  ],
+  "delivery_rules": {
+    "zip_size_exclusive_limit": 30000000,
+    "zip_target_limit": 29500000,
+    "preserve_sources": true,
+    "preserve_exact_prompts": true,
+    "qa": [
+      "all sheets and each extracted sprite visually inspected",
+      "exact output dimensions and scaling metadata",
+      "tiles repeated 3x3 (W6 P2 horizontal) and half-shifted",
+      "RGBA ice over ocean (W7)",
+      "all border joins and repeated strips, assembled frame",
+      "CRC, full PNG decode and SHA256 for every archive file",
+      "each delivery file exactly once across split ZIPs",
+      "full boss in parts sheet identical rendering and size",
+      "P1 user approval evidence"
+    ]
+  }
+}

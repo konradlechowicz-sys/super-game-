@@ -1,0 +1,28 @@
+STYLE (keep identical across all images):
+Game art for "Void Blaster", a top-down mobile space shooter (survivors-like).
+Camera: top-down orthographic, looking straight down, no perspective.
+Look: stylized sci-fi with a neon accent. Dark, rich materials (gunmetal, carbon,
+matte ceramic) lit from the top-left, glowing edges and emissive lights only where
+noted. Detail level: high but clean - panel lines, vents, rivets; no grunge overload.
+The background must stay dark and calm so bright game objects read on top of it:
+no bright cyan anywhere (cyan belongs to the player), magenta only as thin traces.
+Rendering: crisp edges, soft bloom on glowing parts only, no motion blur, no depth of
+field, not photorealistic. No text, no logo, no watermark.
+
+WORLD 4 "RED CONVERSION": low above a Mars plain in the middle of being rewritten by the
+Void Collective (an alien machine intelligence): a network of black crystal spreads over
+the red dust. Matte rust dust #4a1d14/#6e2b1c with highlights #9c4a30, black crystal
+#0d0a12 with facets #3b2a4a and an ember glow #ff5a2e inside, magenta #ff2d95 veins in
+the crystal, brown dusty haze #5a2a1f. Weak reddish sun from the top-left, diffused by
+dust. Mood: unease, a planet being converted. 80% machine, crystal growths.
+Mars is dusty and matte, never bright orange.
+
+TASK: Enemy sheet, 6 enemies, facing up, seen from directly above, one scale, plain
+flat dark background (#05010f), well apart. Machines growing black crystal, with a
+glowing magenta core and ember-red accents. Relative sizes: crystal mite 24, shard
+drone 32, dust stalker 36, prism node 40, spreader 50 (lays crystal), crystal golem 66
+(the biggest drawn about 300 px). Then, on a second image: an elite shard drone (1.6x,
+heavier crystal armor, a gold ring) and, for each of the 6, 3-4 broken shards of its
+body for the death animation, one row per enemy. No text.
+
+Execution direction for this invocation: create ONLY the FIRST image (six intact enemies); the second elite/debris image will be a separate invocation. Use image1 approved W4 arena for obsidian/ember materials; image2 approved W1 enemies for rendering and crisp clean machine detail ONLY, not their colors or exact designs. Arrange six isolated sprites on #05010f in a 2-column, 3-row invisible grid: top-left crystal mite (compact pointed machine with six short blade legs), top-right shard drone (sleek angular diamond winged drone); middle-left dust stalker (elongated predatory machine with four long scythe legs), middle-right prism node (faceted crystal prism turret with four small stabilizer pods); bottom-left spreader (wide six-legged heavy unit with crystal deposition nozzle at rear), bottom-right crystal golem (biggest, squat armored quadrupedal siege robot with enormous crystal shoulder plates). Clearly UP-facing orientation for every machine, entirely top-down, no standing humanoid, no side faces, no isometric camera. Strong aggressive silhouettes, 80% visible machinery, black crystal growths not rock piles, every unit has a clearly readable magenta core with scarce ember accents. No gold on regulars. Keep correct size ratios 24:32:36:40:50:66 with golem about300px. Generous empty margins. No terrain bases, no cast ground shadow, no labels, no grid. Do not draw extra variants or debris.

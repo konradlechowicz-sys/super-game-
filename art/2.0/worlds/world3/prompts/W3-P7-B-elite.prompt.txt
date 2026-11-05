@@ -1,0 +1,29 @@
+STYLE (keep identical across all images):
+Game art for "Void Blaster", a top-down mobile space shooter (survivors-like).
+Camera: top-down orthographic, looking straight down, no perspective.
+Look: stylized sci-fi with a neon accent. Dark, rich materials (gunmetal, carbon,
+matte ceramic) lit from the top-left, glowing edges and emissive lights only where
+noted. Detail level: high but clean - panel lines, vents, rivets; no grunge overload.
+The background must stay dark and calm so bright game objects read on top of it:
+no bright cyan anywhere (cyan belongs to the player), magenta only as thin traces.
+Rendering: crisp edges, soft bloom on glowing parts only, no motion blur, no depth of
+field, not photorealistic. No text, no logo, no watermark.
+
+WORLD 3 "LUNAR BRIDGEHEAD": just above the Moon's surface, where the Void Collective
+(an alien machine intelligence) built its forward base. Its conduits grow into the rock
+like roots: black-violet pipes #1a0f24 with magenta #ff2d95 veins. Gray regolith
+#2b2a33/#4a4856 with highlights #8d8a99, near-black shadows #0a0910 (no atmosphere),
+pale violet accents #b8a9d9, non-glowing frost #cfd8ef. Hard sunlight from the top-left,
+long sharp black shadows. Ruins of a human lunar base. Mood: sparse, hostile, first
+living growth. 90% machine, 10% organic.
+
+TASK: Enemy sheet, 6 enemies, facing up, seen from directly above, one scale, plain
+flat dark background (#05010f), well apart. Machines with a glowing magenta core,
+pale gray-violet armor, the first ones with dark living conduit tissue. Relative
+sizes: probe swarm unit 22, conduit crawler 32, lunar hopper 34, mortar node
+(stationary, set in the ground) 44, crater turret (stationary) 48, regolith golem 64
+(the biggest drawn about 300 px). Then, on a second image: an elite conduit crawler
+(1.6x, heavier armor, a gold ring) and, for each of the 6, 3-4 broken shards of its
+body for the death animation, one row per enemy. No text.
+
+ELITE INSERT FOR THE SECOND IMAGE, VARIANT B: generate ONLY one elite conduit crawler, centered and fully isolated on flat #05010f, no text. First input is the exact ordinary variant B crawler reference: preserve its round segmented pale armor body, eight articulated limbs, dark branching living cords, magenta reactor and upward facing orientation. Upgrade it with thicker overlapping pale gray-violet armor, tougher curved limb guards and a thin gold reward ring around its central reactor, inside the overall limb span. It should read as the same machine at 1.6x scale, not a different enemy. Exact overhead orthographic view and top-left lighting. Generous empty margins around every limb, no cropping, no extra units or detached debris. Second input is the approved W3 palette/material reference. Death shards will be cut from the actual six source bodies and assembled with this elite into the required second sheet, retaining their true scale.

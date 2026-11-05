@@ -1,0 +1,26 @@
+STYLE (keep identical across all images):
+Game art for "Void Blaster", a top-down mobile space shooter (survivors-like).
+Camera: top-down orthographic, looking straight down, no perspective.
+Look: stylized sci-fi with a neon accent. Dark, rich materials (gunmetal, carbon,
+matte ceramic) lit from the top-left, glowing edges and emissive lights only where
+noted. Detail level: high but clean - panel lines, vents, rivets; no grunge overload.
+The background must stay dark and calm so bright game objects read on top of it:
+no bright cyan anywhere (cyan belongs to the player), magenta only as thin traces.
+Rendering: crisp edges, soft bloom on glowing parts only, no motion blur, no depth of
+field, not photorealistic. No text, no logo, no watermark.
+
+WORLD 9 "BROOD WORLD": the breeding world of the Void Collective (an alien machine
+intelligence): the ground is living tissue fused with metal plates, it breathes; nests
+hatch enemies. STYLIZED, never realistic flesh, no blood, no gore. Dark matte tissue
+#2a0f18/#4a1a28 with veins #6e2a40, embedded metal #3a3440, acid green #9dff3d,
+bioluminescent violet #7a3dff and small pale pink points #ff8fbf. The floor is NOT
+glowing magenta (magenta #ff2d95 is only in enemy cores). Weak light from below, from
+bioluminescence and acid. Mood: inside a living organism. 30% machine, 70% organic.
+
+TASK: Arena border pieces seen from directly above on a plain flat dark background
+(#05010f), well apart: 4 straight strips (top, bottom, left, right), each 1024 px long
+and about 160 px thick, tileable along their length: walls of thick membranes and
+metal ribs, faint veins, clean readable inner edge. Plus 4 matching corners 256x256.
+
+PRODUCTION NOTES (the attached approved P1 is a style/material reference, not a composition to reproduce):
+Square production parts sheet on flat #05010f. Arrange four LONG thin border strips as an OPEN SQUARE FRAME: top at top edge inset margin; bottom at bottom edge inset margin; left vertical at left edge, right vertical at right edge. Each strip separate, not touching others, approximately 1024 long and 160 thick. Inside the large EMPTY frame place FOUR separate L-shaped corners in a 2x2 arrangement (top-left, top-right, bottom-left, bottom-right orientations respectively); corners 256 square at same material scale as strips. Clear blank gaps between all 8 parts. Top-down orthographic, no perspective. Clean inward-facing edge. The strips must be tileable along their length. Do not connect the frame parts, do not add a center object, floor, labels, grid or text. Thick dark burgundy membranes and gunmetal ribs, faint veins, stylized science-fiction material, NO gore, wet flesh, bright pink or magenta field. Ribs frame inward calm empty space. Each corner an L-shaped membrane and metal-rib wall with genuinely empty inner quadrant.

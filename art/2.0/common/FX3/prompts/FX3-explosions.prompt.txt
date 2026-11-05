@@ -1,0 +1,29 @@
+STYLE (keep identical across all images):
+Game art for "Void Blaster", a top-down mobile space shooter (survivors-
+like).
+Camera: top-down orthographic, looking straight down, no perspective.
+Look: stylized sci-fi with a neon accent. Dark, rich materials (gunmetal, 
+carbon,
+matte ceramic) lit from the top-left, glowing edges and emissive lights only 
+where
+noted. Detail level: high but clean - panel lines, vents, rivets; no grunge 
+overload.
+The background must stay dark and calm so bright game objects read on top of 
+it:
+no bright cyan anywhere (cyan belongs to the player), magenta only as thin 
+traces.
+Rendering: crisp edges, soft bloom on glowing parts only, no motion blur, no 
+depth of
+field, not photorealistic. No text, no logo, no watermark.
+
+TASK: three explosion animations seen from directly above, each a strip of 8 
+frames in
+one row, frame 1 on the left, on plain flat black #000000: SMALL (enemy 
+death, 256x256
+cells): a quick hot flash with a ring of debris sparks; MEDIUM (elite, 
+384x384 cells):
+a bigger flash, a shockwave ring and a few magenta #ff2d95 sparks of the 
+Collective;
+LARGE (boss, 512x512 cells): a layered blast, a wide shockwave ring and 
+lingering
+embers. Hot white-orange cores, no smoke columns (top-down view). No text.

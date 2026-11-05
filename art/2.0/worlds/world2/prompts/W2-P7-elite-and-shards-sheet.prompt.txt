@@ -1,0 +1,30 @@
+STYLE (keep identical across all images):
+Game art for "Void Blaster", a top-down mobile space shooter (survivors-like).
+Camera: top-down orthographic, looking straight down, no perspective.
+Look: stylized sci-fi with a neon accent. Dark, rich materials (gunmetal, carbon,
+matte ceramic) lit from the top-left, glowing edges and emissive lights only where
+noted. Detail level: high but clean - panel lines, vents, rivets; no grunge overload.
+The background must stay dark and calm so bright game objects read on top of it:
+no bright cyan anywhere (cyan belongs to the player), magenta only as thin traces.
+Rendering: crisp edges, soft bloom on glowing parts only, no motion blur, no depth of
+field, not photorealistic. No text, no logo, no watermark.
+
+WORLD 2 "SIEGE OF EARTH": low orbit, 400 km above night-side Earth, during the
+landing of the Void Collective (an alien machine intelligence). We fight above a cloud
+layer; under it, coastlines and city lights, some cities burning. Colors: night
+#070b1a, clouds #222b44-#3a4566, tiny warm city lights #ffb347, fires #ff5a2e,
+lightning #e8f0ff, the Collective's tethers and web in magenta #ff2d95.
+No sun (night): clouds lit from below by cities and fires, from above by lightning.
+Mood: siege, storm, the last defense of home. 100% machine.
+
+TASK: Enemy sheet, 6 enemies of the landing force, facing up (nose to the top of the
+image), each seen from directly above, one scale, plain flat dark background (#05010f),
+well apart. Hard angular machines with a glowing magenta #ff2d95 core, accents in fire
+red and white-hot. Relative sizes: interceptor 30, lander pod 34 (it opens to release
+small drones), gunship 44, sky mine 30, bomber 44, siege walker 64 (the biggest drawn
+about 300 px). Then, on a second image: an elite interceptor (1.6x, heavier armor, a
+gold ring) and, for each of the 6, 3-4 broken shards of its body for the death
+animation, in one row per enemy. No text.
+
+CURRENT SUBTASK: create ONLY the matching elite interceptor, isolated and centered on completely flat dark #05010f. This image will be combined with the faithfully cut body shards into the second P7 sheet afterward. Use the supplied individual interceptor as the exact design reference and edit target. Keep its upward-facing orientation, distinctive nose and wing silhouette, gunmetal/carbon material language, magenta central circular core and restrained fire-red/white-hot lights. Upgrade this same craft with thicker layered armor plates and slightly larger shoulder/engine housings; it must visibly remain the same interceptor family. Add a clean thin GOLD identification ring encircling the elite unit, centered around the craft, with subtle warm gold glow. Gold only for the identification ring. Elite is intended at 1.6x the normal interceptor's size in the final game sprite sheet. Strict 90-degree top-down orthographic view, no perspective. One single complete intact elite enemy with ample background padding, no text, numerals, logo, scenery, separate parts, extra ships, damage or cyan. Preserve the entire ring without clipping.
+VARIANT A: preserve the single pointed arrowhead nose, short swept wings, circular core and central rear point of the reference; add blocky industrial armor overlays.

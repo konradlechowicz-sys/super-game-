@@ -1,0 +1,25 @@
+STYLE (keep identical across all images):
+Game art for "Void Blaster", a top-down mobile space shooter (survivors-like).
+Camera: top-down orthographic, looking straight down, no perspective.
+Look: stylized sci-fi with a neon accent. Dark, rich materials (gunmetal, carbon,
+matte ceramic) lit from the top-left, glowing edges and emissive lights only where
+noted. Detail level: high but clean - panel lines, vents, rivets; no grunge overload.
+The background must stay dark and calm so bright game objects read on top of it:
+no bright cyan anywhere (cyan belongs to the player), magenta only as thin traces.
+Rendering: crisp edges, soft bloom on glowing parts only, no motion blur, no depth of
+field, not photorealistic. No text, no logo, no watermark.
+
+WORLD 6 "STORM RELAY": high in Jupiter's atmosphere, above storm bands, among the
+floating platforms of a relay the Void Collective (an alien machine intelligence) uses
+to transmit deep into space. Its antennas are overgrown with membranes and living
+tissue. Muted storm bands #2e241b/#5a4330/#8a6f4e, bronze metal #b0783a (dark
+#4a3524), electric yellow #ffe23d lightning and coils, deep pink tissue #6a2a4a with
+magenta #ff2d95 veins. Diffuse golden light from above, sharp lightning flashes.
+Mood: wind, electricity, a pulsing signal. 70% machine, 30% organic.
+
+TASK: Seamless tileable overlay 1024x1024 on plain black (#000000; blended additively):
+fast wind-blown cloud streaks, all in one horizontal direction, a few raindrops. Soft,
+mostly empty. Tiles on all four edges.
+
+PRODUCTION NOTES (the attached approved P1 is a style/material reference, not a composition to reproduce):
+Only square 1024x1024 additive overlay, pure black background, extremely sparse soft gray-brown wind/cloud streaks ALL running left-to-right horizontally, a few tiny rain streaks. No lightning, scenery, platforms, storm wall, large cloud bank or vignette. At least 85 percent of image pure or near black. Edge-to-edge seamless tile, no focal center, no text. Effects should be subtle enough not to obscure gameplay.

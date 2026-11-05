@@ -1,0 +1,42 @@
+STYLE (keep identical across all images):
+Game art for "Void Blaster", a top-down mobile space shooter (survivors-
+like).
+Camera: top-down orthographic, looking straight down, no perspective.
+Look: stylized sci-fi with a neon accent. Dark, rich materials (gunmetal, 
+carbon,
+matte ceramic) lit from the top-left, glowing edges and emissive lights only 
+where
+noted. Detail level: high but clean - panel lines, vents, rivets; no grunge 
+overload.
+The background must stay dark and calm so bright game objects read on top of 
+it:
+no bright cyan anywhere (cyan belongs to the player), magenta only as thin 
+traces.
+Rendering: crisp edges, soft bloom on glowing parts only, no motion blur, no 
+depth of
+field, not photorealistic. No text, no logo, no watermark.
+
+TASK: a sheet of game projectiles seen from directly above, each pointing 
+RIGHT, on a
+plain flat black background #000000 (it will be added as light), glow 
+included, one
+scale, generous space. Two rows: top row the 11 normal projectiles, bottom 
+row the same
+11 after evolution (bigger, brighter, more detail), in this order:
+Pulse Blaster bolt (cyan #2ff3ff) / Photon Storm bolt; Scatter Gun pellet 
+(orange
+#ff8a2a) / Flak Cannon shell; Seeker Missile (#ff3d6e, small exhaust) / Swarm 
+Barrage
+missile; Orbit Blade (violet #c46bff crescent) / Plasma Halo blade; Arc Coil 
+spark
+(#7df9ff) / Tempest spark (#fff27d); Nova Pulse wave fragment (teal #3dffc8) 
+/
+Supernova fragment; Drone bolt (green #9dff3d) / Squadron bolt; Proximity 
+Mine (gold
+#ffd23d) / Gravity Mine; Railgun slug (#c8f0ff) / Gauss Lance slug; flame 
+blob
+(#ff8a2a) / blue Inferno blob (#8fd8ff); Singularity orb (#b06bff) / Event 
+Horizon orb.
+Projectiles are small: about 24-64 px in game, so simple, bright, readable 
+shapes.
+No text.

@@ -48,6 +48,10 @@ export const PASSIVES = {
   armor: { name: 'Armor Plating', color: '#3dff8a', icon: 'armor', desc: '+20 max hull, +0.15 hull/sec' },
   tractor: { name: 'Tractor Beam', color: '#3dc8ff', icon: 'tractor', desc: '+30% pickup range' },
   amplifier: { name: 'Amplifier', color: '#b06bff', icon: 'amplifier', desc: '+12% area of effect' },
+  // 2.0 arsenal (PLAN-2.0-ARSENAL.md; mechanics in js/arsenal.js)
+  targeting: { name: 'Targeting Matrix', color: '#fff2a8', icon: 'targeting', desc: '+6% critical hit chance (x2 damage)' },
+  thermal: { name: 'Thermal Core', color: '#ff7a1a', icon: 'thermal', desc: '+8% chance hits set enemies on fire, fire +20%' },
+  phase: { name: 'Phase Shield', color: '#7df9ff', icon: 'phase', desc: 'A shield soaks 25 damage (+10 per level) and recharges when you are not hit' },
 };
 export const PASSIVE_MAX = 5;
 
@@ -67,17 +71,160 @@ export const ENEMIES = {
   turret: { hp: 70, speed: 0, dmg: 8, r: 16, xp: 4, color: '#ffc23d', shape: 'turret', ai: 'turret', spin: 0.7 },
   golem: { hp: 220, speed: 30, dmg: 14, r: 24, xp: 8, color: '#ff3d1a', shape: 'square', spin: 0.4 },
   // Void Core
-  wraith: { hp: 30, speed: 80, dmg: 7, r: 12, xp: 3, color: '#c86bff', shape: 'wraith', ai: 'blink' },
-  eye: { hp: 50, speed: 40, dmg: 8, r: 15, xp: 4, color: '#ff4dd8', shape: 'eye', ai: 'seeker' },
-  voidling: { hp: 10, speed: 130, dmg: 4, r: 8, xp: 1, color: '#9d4dff', shape: 'dart', pack: [4, 6] },
+  // the void's own (1.x world 4); 2.0 world 10 "The Nexus" brings them back, a little tougher (build 117)
+  wraith: { hp: 40, speed: 80, dmg: 9, r: 13, xp: 3, color: '#c86bff', shape: 'wraith', ai: 'blink' },
+  eye: { hp: 56, speed: 42, dmg: 9, r: 16, xp: 4, color: '#ff4dd8', shape: 'eye', ai: 'seeker' },
+  voidling: { hp: 12, speed: 135, dmg: 5, r: 9, xp: 1, color: '#9d4dff', shape: 'dart', pack: [4, 6] },
+  // 2.0 world 2 "Siege of Earth": the landing force (art: proto2/make-world2.py; shapes are the 1.x look's fallback)
+  interceptor: { hp: 10, speed: 135, dmg: 5, r: 10, xp: 1, color: '#ff2d95', shape: 'dart', pack: [3, 5] },
+  lander: { hp: 50, speed: 52, dmg: 10, r: 12, xp: 3, color: '#ff4dd8', shape: 'circle', split: 'interceptor' },
+  gunship: { hp: 48, speed: 46, dmg: 9, r: 15, xp: 4, color: '#ff3d9a', shape: 'hex', ai: 'shoot', shots: 3, fire: 3.6 },
+  skymine: { hp: 22, speed: 92, dmg: 6, r: 11, xp: 2, color: '#ff6ab4', shape: 'bomb', ai: 'fuse', spin: 2 },
+  raider: { hp: 40, speed: 62, dmg: 10, r: 15, xp: 3, color: '#ff2d6f', shape: 'diamond', ai: 'dash' },
+  walker: { hp: 230, speed: 30, dmg: 14, r: 22, xp: 8, color: '#c84dff', shape: 'square' },
+  // 2.0 world 3 "Lunar Bridgehead": the bridgehead's garrison (art: proto2/make-world3.py). The mortar node and the
+  // crater turret are set in the ground (speed 0): the node lobs shells at the ship (ai 'lob'), the turret turns to
+  // aim (aim); the hopper moves in leaps (ai 'hop').
+  probe: { hp: 9, speed: 140, dmg: 4, r: 8, xp: 1, color: '#ff2d95', shape: 'dart', pack: [3, 5] },
+  crawler: { hp: 30, speed: 76, dmg: 7, r: 11, xp: 2, color: '#ff4dd8', shape: 'circle' },
+  hopper: { hp: 38, speed: 50, dmg: 9, r: 12, xp: 3, color: '#ff3d9a', shape: 'diamond', ai: 'hop' },
+  mortarnode: { hp: 60, speed: 0, dmg: 8, r: 16, xp: 4, color: '#ff2d95', shape: 'turret', ai: 'lob' },
+  cturret: { hp: 75, speed: 0, dmg: 8, r: 17, xp: 4, color: '#ff6ab4', shape: 'turret', ai: 'turret', aim: true },
+  rgolem: { hp: 260, speed: 28, dmg: 15, r: 23, xp: 9, color: '#b8a9d9', shape: 'square' },
+  // 2.0 world 4 "Red Conversion": machines growing black crystal (art: proto2/make-world4.py). The Spreader lays crystal
+  // (ai 'lay', js/crystal.js), the prism node is set in the ground and fires all around, the crystal golem bursts into
+  // mites; the dust stalker charges and fades into dust storms (js/v2/mars.js).
+  mite: { hp: 9, speed: 145, dmg: 4, r: 9, xp: 1, color: '#ff2d95', shape: 'dart', pack: [3, 5] },
+  sdrone: { hp: 40, speed: 50, dmg: 8, r: 12, xp: 3, color: '#ff3d9a', shape: 'hex', ai: 'shoot', shots: 2, fire: 3.4 },
+  stalker: { hp: 42, speed: 64, dmg: 10, r: 13, xp: 3, color: '#ff5a2e', shape: 'diamond', ai: 'dash' },
+  prismnode: { hp: 80, speed: 0, dmg: 8, r: 14, xp: 4, color: '#ff4dd8', shape: 'turret', ai: 'turret' },
+  spreader: { hp: 70, speed: 40, dmg: 10, r: 18, xp: 5, color: '#c84dff', shape: 'circle', ai: 'lay' },
+  cgolem: { hp: 280, speed: 28, dmg: 15, r: 24, xp: 9, color: '#ff5a2e', shape: 'square', split: 'mite' },
+  // 2.0 world 5 "Foundry Belt": the factory's workers (art: proto2/make-world5.py). The welder charges, the assembler
+  // turret is set in the ground and aims, the rock drifter floats straight across the arena like an asteroid, the ore
+  // hauler bursts into forge drones, the worker mech keeps its distance and shoots.
+  fdrone: { hp: 11, speed: 130, dmg: 5, r: 11, xp: 1, color: '#ff2d95', shape: 'dart', pack: [3, 5] },
+  welder: { hp: 36, speed: 62, dmg: 9, r: 12, xp: 3, color: '#ff7a1a', shape: 'diamond', ai: 'dash' },
+  aturret: { hp: 80, speed: 0, dmg: 8, r: 17, xp: 4, color: '#ff6ab4', shape: 'turret', ai: 'turret', aim: true },
+  drifter: { hp: 170, speed: 70, dmg: 14, r: 20, xp: 5, color: '#a08c7a', shape: 'rock', ai: 'drift', spin: 0.5 },
+  hauler: { hp: 240, speed: 30, dmg: 14, r: 21, xp: 9, color: '#ff7a1a', shape: 'square', split: 'fdrone' },
+  wmech: { hp: 46, speed: 48, dmg: 9, r: 14, xp: 4, color: '#ff3d9a', shape: 'hex', ai: 'shoot', shots: 3, fire: 3.4 },
+  // 2.0 world 6 "Storm Relay": the relay's swarm in Jupiter's storms (art: proto2/make-worlds.py). The vortex drags the
+  // ship in (ai 'vortex'), the cloud whale bursts into ion kites.
+  ionkite: { hp: 11, speed: 140, dmg: 5, r: 11, xp: 1, color: '#ff2d95', shape: 'dart', pack: [3, 5] },
+  gasmine: { hp: 24, speed: 95, dmg: 6, r: 12, xp: 2, color: '#ffb02e', shape: 'bomb', ai: 'fuse', spin: 2 },
+  jelly: { hp: 40, speed: 46, dmg: 8, r: 12, xp: 3, color: '#ff4dd8', shape: 'circle', ai: 'shoot', shots: 3, fire: 3.4 },
+  staticray: { hp: 42, speed: 64, dmg: 10, r: 15, xp: 3, color: '#ff3d9a', shape: 'diamond', ai: 'dash' },
+  vortex: { hp: 120, speed: 32, dmg: 10, r: 17, xp: 5, color: '#c84dff', shape: 'circle', ai: 'vortex', spin: 2.5 },
+  cloudwhale: { hp: 300, speed: 26, dmg: 15, r: 23, xp: 9, color: '#e3b778', shape: 'square', split: 'ionkite' },
+  // 2.0 world 7 "Abyss of Europa": rewritten sea life under the ice. The eel hybrid dives under the ice and comes up
+  // next to the ship (ai 'blink'), the spore lantern is set in the ice and fires all around, the leviathan spawn
+  // bursts into ice wisps.
+  icewisp: { hp: 10, speed: 135, dmg: 5, r: 10, xp: 1, color: '#4fd1e0', shape: 'dart', pack: [3, 5] },
+  frostcrab: { hp: 44, speed: 66, dmg: 9, r: 14, xp: 3, color: '#8fb4ff', shape: 'hex' },
+  tmine: { hp: 26, speed: 90, dmg: 6, r: 12, xp: 2, color: '#ff4dd8', shape: 'bomb', ai: 'fuse', spin: 1.5 },
+  lantern: { hp: 80, speed: 0, dmg: 8, r: 15, xp: 4, color: '#3dff8a', shape: 'turret', ai: 'turret' },
+  eel: { hp: 50, speed: 70, dmg: 10, r: 17, xp: 4, color: '#4fd1e0', shape: 'wraith', ai: 'blink' },
+  lspawn: { hp: 290, speed: 28, dmg: 15, r: 22, xp: 9, color: '#7a5cff', shape: 'square', split: 'icewisp' },
+  // 2.0 world 8 "The Rift Gate": the gate's guards, made of glass and light. The echo blinks next to the ship, the
+  // null orb fires homing shots, the rift spawner is set in space and breeds shard units (ai 'nest').
+  shardunit: { hp: 9, speed: 150, dmg: 4, r: 8, xp: 1, color: '#b9a8ff', shape: 'dart', pack: [4, 6] },
+  echo: { hp: 32, speed: 78, dmg: 7, r: 11, xp: 3, color: '#c46bff', shape: 'wraith', ai: 'blink' },
+  phasewalker: { hp: 44, speed: 66, dmg: 10, r: 14, xp: 3, color: '#b9a8ff', shape: 'diamond', ai: 'dash' },
+  nullorb: { hp: 52, speed: 42, dmg: 8, r: 16, xp: 4, color: '#ff4dd8', shape: 'eye', ai: 'seeker' },
+  riftspawner: { hp: 110, speed: 0, dmg: 8, r: 18, xp: 5, color: '#c46bff', shape: 'turret', ai: 'nest', spawn: 'shardunit' },
+  sentinel: { hp: 290, speed: 26, dmg: 15, r: 21, xp: 9, color: '#e9c4ff', shape: 'square', ai: 'shoot', shots: 4, fire: 3.8 },
+  // 2.0 world 9 "Brood World": the Collective's brood, flesh and metal. The leech lunges, the spitter keeps its distance
+  // and spits, the nest is grown into the ground and breeds larvae (ai 'nest'), the brood sac bursts into larvae, the
+  // carapace beetle is the heavy one.
+  larva: { hp: 10, speed: 140, dmg: 5, r: 9, xp: 1, color: '#8fd35a', shape: 'dart', pack: [4, 6] },
+  leech: { hp: 38, speed: 68, dmg: 9, r: 13, xp: 3, color: '#ff4dd8', shape: 'diamond', ai: 'dash' },
+  spitter: { hp: 44, speed: 50, dmg: 9, r: 14, xp: 3, color: '#9dff3d', shape: 'hex', ai: 'shoot', shots: 3, fire: 3.2 },
+  nest: { hp: 120, speed: 0, dmg: 8, r: 19, xp: 5, color: '#ff2d95', shape: 'turret', ai: 'nest', spawn: 'larva' },
+  broodsac: { hp: 90, speed: 34, dmg: 10, r: 17, xp: 5, color: '#c46bff', shape: 'circle', split: 'larva' },
+  beetle: { hp: 310, speed: 26, dmg: 16, r: 22, xp: 9, color: '#6a8a4a', shape: 'square' },
+  // 2.0 world 10 "The Nexus": the Collective's mind (with the void's wraiths, eyes and voidlings above). Synapse swarms,
+  // neuron nodes grown into the ground that aim at the ship, the overseer is the heavy one and shoots.
+  synapse: { hp: 11, speed: 150, dmg: 5, r: 9, xp: 1, color: '#ff2d95', shape: 'dart', pack: [4, 6] },
+  neuronnode: { hp: 100, speed: 0, dmg: 8, r: 18, xp: 5, color: '#ff4dd8', shape: 'turret', ai: 'turret', aim: true },
+  overseer: { hp: 330, speed: 26, dmg: 16, r: 22, xp: 10, color: '#c86bff', shape: 'square', ai: 'shoot', shots: 4, fire: 3.6 },
 };
 
 export const BOSSES = {
   hive: {
     // First boss: deliberately forgiving (weaker, slower bullets, fewer minions, long pauses).
-    name: 'HIVE MOTHER', hp: 5000, speed: 42, dmg: 18, r: 58, color: '#ff2d6f', inner: '#ff8ad0', sides: 6,
+    // 2.0 (decided by Konrad, 2026-10-27): the world-1 boss is the Harvester; its id stays 'hive' (saves, Codex)
+    name: 'HARVESTER', hp: 5000, speed: 42, dmg: 18, r: 58, color: '#ff2d6f', inner: '#ff8ad0', sides: 6,
     move: 'chase', rest: 1.9, phases: [0.5], attacks: ['spiral', 'burst', 'summon', 'charge'], summon: ['drone', 'swarmer'],
     bulletDmg: 7, bulletSpeed: 0.85, burstN: 16, summonN: 5, bgSpawn: 0.2,
+  },
+  // 2.0 world 2: the Landing Citadel, a flying fortress with turning gun rings over a burning city. Three phases:
+  // spirals and turning beams from the rings, shelling (mortars), and drops of interceptors and sky mines. Its health is
+  // close to the Harvester's: the three phases make it the harder fight (a headless run: 20-140 s with the boss, most under a minute).
+  citadel: {
+    name: 'LANDING CITADEL', hp: 4800, speed: 30, dmg: 20, r: 70, color: '#ff2d95', inner: '#ff8ad0', sides: 8,
+    move: 'chase', rest: 1.6, phases: [0.6, 0.3], attacks: ['spiral', 'summon', 'beams', 'burst', 'mortar', 'spiral'],
+    summon: ['interceptor', 'skymine'], bulletDmg: 8, bulletSpeed: 0.9, burstN: 18, summonN: 4, bgSpawn: 0.1,
+  },
+  // 2.0 world 3: the Moon Spire, a cannon tower grown out of a crater. It never moves (move 'anchor'): its cannon turns
+  // after the ship and fires heavy shells (cannon), it shells the ground (mortar), sweeps beams from its roots and sends
+  // probes and hoppers. Craters (the world's cover) stop its shots too. Three phases.
+  spire: {
+    name: 'MOON SPIRE', hp: 5600, speed: 0, dmg: 20, r: 78, color: '#ff2d95', inner: '#ff8ad0', sides: 8,
+    move: 'anchor', rest: 1.5, phases: [0.6, 0.3], attacks: ['cannon', 'mortar', 'spiral', 'summon', 'cannon', 'beams', 'burst'],
+    summon: ['probe', 'hopper'], bulletDmg: 8, bulletSpeed: 0.9, burstN: 18, summonN: 5, bgSpawn: 0.12,
+  },
+  // 2.0 world 4: the Red Colossus, a walking fortress of black crystal. It strides after the ship, makes crystal burst
+  // out of the ground around it (crystal: the ship is slowed there), sweeps beams from its cannons, shells and spirals,
+  // and sends mites and shard drones. Three phases.
+  colossus: {
+    name: 'RED COLOSSUS', hp: 4400, speed: 26, dmg: 22, r: 80, color: '#ff2d95', inner: '#ff5a2e', sides: 6,
+    move: 'chase', rest: 1.5, phases: [0.6, 0.3], attacks: ['crystal', 'spiral', 'summon', 'beams', 'crystal', 'mortar', 'burst'],
+    summon: ['sdrone', 'mite'], bulletDmg: 8, bulletSpeed: 0.9, burstN: 18, summonN: 4, bgSpawn: 0.1,
+  },
+  // 2.0 world 5: the Foundry Mother, a mobile armored factory. It crawls after the ship and builds its army during the
+  // fight: its two assembly bays put out squads of drones, welders and mechs (build); it pours molten slag (mortar),
+  // sprays sparks (spiral, burst) and sweeps beams. Three phases.
+  foundry: {
+    name: 'FOUNDRY MOTHER', hp: 4600, speed: 20, dmg: 22, r: 85, color: '#ff2d95', inner: '#ff7a1a', sides: 8,
+    move: 'chase', rest: 1.6, phases: [0.6, 0.3], attacks: ['build', 'spiral', 'mortar', 'build', 'beams', 'burst'],
+    summon: ['fdrone', 'welder', 'wmech'], bulletDmg: 8, bulletSpeed: 0.9, burstN: 18, summonN: 3, bgSpawn: 0.1,
+  },
+  // 2.0 world 6: the Storm Eye, the relay's heart, a living storm that circles the ship: spirals of sparks, lightning
+  // strikes (mortar), beams and swarms of ion kites and static rays. Three phases.
+  stormeye: {
+    name: 'STORM EYE', hp: 4600, speed: 60, dmg: 20, r: 82, color: '#ff2d95', inner: '#e3b778', sides: 8,
+    move: 'float', rest: 1.5, phases: [0.6, 0.3], attacks: ['spiral', 'mortar', 'summon', 'beams', 'burst', 'mortar'],
+    summon: ['ionkite', 'staticray'], bulletDmg: 8, bulletSpeed: 0.9, burstN: 18, summonN: 4, bgSpawn: 0.1,
+  },
+  // 2.0 world 7: the Abyss Leviathan, rewritten sea life the size of a ship, breaking up through the ice: it charges,
+  // sweeps its tentacles (beams), sprays bursts and spirals, shells the ice and sends wisps and tentacle mines.
+  leviathan: {
+    name: 'ABYSS LEVIATHAN', hp: 4800, speed: 34, dmg: 22, r: 84, color: '#4fd1e0', inner: '#ff2d95', sides: 8,
+    move: 'chase', rest: 1.5, phases: [0.6, 0.3], attacks: ['charge', 'burst', 'summon', 'spiral', 'beams', 'mortar'],
+    summon: ['icewisp', 'tmine'], bulletDmg: 8, bulletSpeed: 0.9, burstN: 18, summonN: 4, bgSpawn: 0.1,
+  },
+  // 2.0 world 8: the Gatekeeper, three turning rings of the gate around a core. It folds space (teleport), throws
+  // spirals and beams through its portals and sends shard swarms and echoes.
+  gatekeeper: {
+    name: 'GATEKEEPER', hp: 4800, speed: 55, dmg: 20, r: 84, color: '#b9a8ff', inner: '#ff2d95', sides: 8,
+    move: 'float', rest: 1.4, phases: [0.6, 0.3], attacks: ['teleport', 'spiral', 'beams', 'summon', 'burst', 'teleport'],
+    summon: ['shardunit', 'echo'], bulletDmg: 8, bulletSpeed: 0.9, burstN: 18, summonN: 4, bgSpawn: 0.1,
+  },
+  // 2.0 world 9: the Brood Matriarch, the mother of the brood. She crawls after the ship and lunges (charge), spits acid
+  // (mortar, burst, spiral) and lays larvae and leeches the whole fight.
+  matriarch: {
+    name: 'BROOD MATRIARCH', hp: 5000, speed: 30, dmg: 22, r: 86, color: '#9dff3d', inner: '#ff2d95', sides: 8,
+    move: 'chase', rest: 1.5, phases: [0.6, 0.3], attacks: ['summon', 'mortar', 'charge', 'burst', 'summon', 'spiral'],
+    summon: ['larva', 'leech'], bulletDmg: 8, bulletSpeed: 0.9, burstN: 18, summonN: 5, bgSpawn: 0.1,
+  },
+  // 2.0 world 10: the Void Heart, the heart of the Collective and the end of the journey. A beating core that changes
+  // in each of its three phases (its own art per phase): it folds space (teleport), opens black holes, throws spirals,
+  // beams, bursts and shells, and calls wraiths and synapse swarms. (The 1.x Void Heart is voidheart below.)
+  nexusheart: {
+    name: 'VOID HEART', hp: 5600, speed: 55, dmg: 22, r: 90, color: '#ff2d95', inner: '#b04dff', sides: 8,
+    move: 'float', rest: 1.3, phases: [0.6, 0.3], attacks: ['spiral', 'teleport', 'blackhole', 'beams', 'summon', 'burst', 'mortar'],
+    summon: ['wraith', 'synapse'], bulletDmg: 8, bulletSpeed: 0.95, burstN: 20, summonN: 5, bgSpawn: 0.1,
   },
   serpent: {
     name: 'CRYSTAL SERPENT', hp: 15000, speed: 120, dmg: 22, r: 34, color: '#2ff3ff', inner: '#b4fff0', sides: 5,
@@ -95,62 +242,131 @@ export const BOSSES = {
   },
 };
 
+// World 1 of 2.0, "Orbital Ruins" (Art Bible; sector names decided 2026-10-28, Konrad can rename them).
+// 2.0 pace (Konrad, 2026-10-28: the game felt a bit slow; performance gate 1: about 180 enemies at 60 FPS): about
+// 45% more spawns than 1.x from the first second, bigger rings, enemies 8% faster and in play sooner, at most 200
+// on the field (a margin for older iPhones), a shorter wait for the Harvester. Kill goals keep the share of 1.x: in a
+// headless run (god mode, the ship idle, always the first card) 1.x reached about 1.4x its goal, so does 2.0.
+// wrecks: [first, every] seconds of the falling wreck (Game.fallingWreck), the world's own hazard.
 const W1 = [
   {
-    id: '1-1', name: 'First Contact', duration: 180, hp: 1.5, speed: 1, rate: [0.9, 3.2], max: 110, kills: 600,
-    enemies: [['drone', 0, 10], ['swarmer', 45, 5]],
+    id: '1-1', name: 'Dead Orbit', duration: 180, hp: 1.5, speed: 1.08, rate: [1.3, 4.6], max: 140, kills: 900, wrecks: [50, 34],
+    enemies: [['drone', 0, 10], ['swarmer', 25, 5]],
     events: [
-      { t: 60, type: 'ring', enemy: 'drone', count: 16, msg: 'INCOMING SWARM' },
+      { t: 50, type: 'ring', enemy: 'drone', count: 24, msg: 'INCOMING SWARM' },
       { t: 100, type: 'elite', enemy: 'drone', msg: 'ELITE DETECTED' },
-      { t: 150, type: 'ring', enemy: 'swarmer', count: 28, msg: 'FINAL WAVE' },
+      { t: 150, type: 'ring', enemy: 'swarmer', count: 40, msg: 'FINAL WAVE' },
     ],
   },
   {
-    id: '1-2', name: 'Swarm Front', duration: 195, hp: 1.8, speed: 1.03, rate: [1, 3.6], max: 130, kills: 850,
-    enemies: [['drone', 0, 10], ['swarmer', 10, 6], ['dasher', 35, 4]],
+    id: '1-2', name: 'Debris Field', duration: 195, hp: 1.8, speed: 1.11, rate: [1.5, 5.2], max: 160, kills: 1250, wrecks: [40, 30],
+    enemies: [['drone', 0, 10], ['swarmer', 8, 6], ['dasher', 25, 4]],
     events: [
-      { t: 70, type: 'ring', enemy: 'swarmer', count: 30, msg: 'SWARM INCOMING' },
+      { t: 60, type: 'ring', enemy: 'swarmer', count: 44, msg: 'SWARM INCOMING' },
       { t: 110, type: 'elite', enemy: 'dasher', msg: 'ELITE DETECTED' },
       { t: 165, type: 'surge', dur: 25, mul: 2, msg: 'FINAL WAVE' },
     ],
   },
   {
-    id: '1-3', name: 'Glass Fields', duration: 210, hp: 2.1, speed: 1.05, rate: [1.1, 4], max: 150, kills: 950,
-    enemies: [['drone', 0, 10], ['swarmer', 10, 5], ['dasher', 25, 4], ['shooter', 40, 4]],
+    id: '1-3', name: 'Broken Ring', duration: 210, hp: 2.1, speed: 1.13, rate: [1.6, 5.8], max: 175, kills: 1400, wrecks: [35, 28],
+    enemies: [['drone', 0, 10], ['swarmer', 8, 5], ['dasher', 18, 4], ['shooter', 30, 4]],
     events: [
-      { t: 60, type: 'ring', enemy: 'drone', count: 24, msg: 'INCOMING SWARM' },
+      { t: 55, type: 'ring', enemy: 'drone', count: 36, msg: 'INCOMING SWARM' },
       { t: 105, type: 'elite', enemy: 'shooter', msg: 'ELITE DETECTED' },
-      { t: 150, type: 'ring', enemy: 'swarmer', count: 36, msg: 'SWARM INCOMING' },
+      { t: 145, type: 'ring', enemy: 'swarmer', count: 52, msg: 'SWARM INCOMING' },
       { t: 180, type: 'surge', dur: 30, mul: 2, msg: 'FINAL WAVE' },
     ],
   },
   {
-    id: '1-4', name: 'Heavy Metal', duration: 225, hp: 2.4, speed: 1.07, rate: [1.1, 4.3], max: 165, kills: 1050,
-    enemies: [['drone', 0, 10], ['swarmer', 10, 5], ['dasher', 25, 4], ['shooter', 40, 3], ['tank', 50, 3]],
+    id: '1-4', name: 'Rewritten Signal', duration: 225, hp: 2.4, speed: 1.15, rate: [1.6, 6.2], max: 190, kills: 1650, wrecks: [35, 26],
+    enemies: [['drone', 0, 10], ['swarmer', 8, 5], ['dasher', 18, 4], ['shooter', 30, 3], ['tank', 40, 3]],
     events: [
-      { t: 80, type: 'elite', enemy: 'tank', msg: 'ELITE DETECTED' },
-      { t: 120, type: 'ring', enemy: 'dasher', count: 14, msg: 'DASHER PACK' },
+      { t: 75, type: 'elite', enemy: 'tank', msg: 'ELITE DETECTED' },
+      { t: 115, type: 'ring', enemy: 'dasher', count: 20, msg: 'DASHER PACK' },
       { t: 160, type: 'elite', enemy: 'tank', msg: 'ELITE DETECTED' },
       { t: 195, type: 'surge', dur: 30, mul: 2, msg: 'FINAL WAVE' },
     ],
   },
   {
-    id: '1-5', name: 'Split Storm', duration: 240, hp: 2.8, speed: 1.09, rate: [1.2, 4.6], max: 180, kills: 1200,
-    enemies: [['drone', 0, 9], ['swarmer', 10, 5], ['dasher', 25, 4], ['shooter', 40, 3], ['tank', 55, 3], ['splitter', 30, 5]],
+    id: '1-5', name: 'Last Picket', duration: 240, hp: 2.8, speed: 1.17, rate: [1.7, 6.6], max: 200, kills: 1700, wrecks: [30, 24],
+    enemies: [['drone', 0, 9], ['swarmer', 8, 5], ['dasher', 18, 4], ['shooter', 30, 3], ['tank', 45, 3], ['splitter', 22, 5]],
     events: [
-      { t: 70, type: 'ring', enemy: 'splitter', count: 12, msg: 'SPLITTERS INCOMING' },
+      { t: 65, type: 'ring', enemy: 'splitter', count: 16, msg: 'SPLITTERS INCOMING' },
       { t: 110, type: 'elite', enemy: 'splitter', msg: 'ELITE DETECTED' },
-      { t: 150, type: 'ring', enemy: 'swarmer', count: 40, msg: 'SWARM INCOMING' },
+      { t: 150, type: 'ring', enemy: 'swarmer', count: 56, msg: 'SWARM INCOMING' },
       { t: 180, type: 'elite', enemy: 'tank', msg: 'ELITE DETECTED' },
       { t: 210, type: 'surge', dur: 30, mul: 2, msg: 'FINAL WAVE' },
     ],
   },
   {
-    id: '1-6', name: 'Hive Mother', duration: 150, bossAt: 150, boss: 'hive', hp: 2.3, speed: 1.1, rate: [1, 3.4], max: 130, kills: 600,
-    enemies: [['drone', 0, 9], ['swarmer', 10, 5], ['dasher', 25, 4], ['shooter', 40, 2], ['splitter', 45, 3], ['tank', 70, 1]],
+    id: '1-6', name: 'Harvester', duration: 120, bossAt: 120, boss: 'hive', hp: 2.3, speed: 1.18, rate: [1.5, 5], max: 170, kills: 700, wrecks: [40, 30],
+    enemies: [['drone', 0, 9], ['swarmer', 8, 5], ['dasher', 20, 4], ['shooter', 30, 2], ['splitter', 35, 3], ['tank', 55, 1]],
     events: [
-      { t: 50, type: 'ring', enemy: 'drone', count: 20, msg: 'INCOMING SWARM' },
-      { t: 100, type: 'elite', enemy: 'drone', msg: 'ELITE DETECTED' },
+      { t: 40, type: 'ring', enemy: 'drone', count: 30, msg: 'INCOMING SWARM' },
+      { t: 80, type: 'elite', enemy: 'drone', msg: 'ELITE DETECTED' },
+    ],
+  },
+];
+
+// World 2 of 2.0, "Siege of Earth" (Art Bible; sector names from its table "Nazwy sektorów"). The 2.0 pace of world 1,
+// a step tougher: the landing force arrives one type per sector, the Siege Walker in 2-4. The world's mechanic is
+// in its look (js/v2/siege.js): cloud banks hide enemies until lightning strikes.
+const W2_2 = [
+  {
+    id: '2-1', name: 'Burning Sky', duration: 195, hp0: 1.4, hp: 3.0, speed: 1.12, rate: [1.5, 5.0], max: 160, kills: 1550,
+    enemies: [['interceptor', 0, 10], ['lander', 20, 4], ['skymine', 40, 3]],
+    events: [
+      { t: 55, type: 'ring', enemy: 'interceptor', count: 30, msg: 'INTERCEPTORS INCOMING' },
+      { t: 100, type: 'elite', enemy: 'interceptor', msg: 'ELITE DETECTED' },
+      { t: 150, type: 'ring', enemy: 'skymine', count: 24, msg: 'MINEFIELD' },
+    ],
+  },
+  {
+    id: '2-2', name: 'Tether Storm', duration: 210, hp0: 1.5, hp: 3.2, speed: 1.14, rate: [1.6, 5.6], max: 175, kills: 1850,
+    enemies: [['interceptor', 0, 10], ['lander', 10, 4], ['skymine', 25, 3], ['gunship', 30, 4]],
+    events: [
+      { t: 60, type: 'ring', enemy: 'lander', count: 16, msg: 'LANDING WAVE' },
+      { t: 110, type: 'elite', enemy: 'gunship', msg: 'ELITE DETECTED' },
+      { t: 175, type: 'surge', dur: 30, mul: 2, msg: 'FINAL WAVE' },
+    ],
+  },
+  {
+    id: '2-3', name: 'Cloud Wall', duration: 225, hp0: 1.6, hp: 3.4, speed: 1.15, rate: [1.7, 6.0], max: 180, kills: 2000,
+    enemies: [['interceptor', 0, 10], ['lander', 10, 4], ['skymine', 20, 3], ['gunship', 30, 3], ['raider', 20, 4]],
+    events: [
+      { t: 55, type: 'ring', enemy: 'interceptor', count: 44, msg: 'INTERCEPTORS INCOMING' },
+      { t: 105, type: 'elite', enemy: 'raider', msg: 'ELITE DETECTED' },
+      { t: 150, type: 'ring', enemy: 'raider', count: 18, msg: 'RAIDER PACK' },
+      { t: 190, type: 'surge', dur: 30, mul: 2, msg: 'FINAL WAVE' },
+    ],
+  },
+  {
+    id: '2-4', name: 'City of Fire', duration: 240, hp0: 1.7, hp: 3.6, speed: 1.17, rate: [1.7, 6.4], max: 185, kills: 2100,
+    enemies: [['interceptor', 0, 10], ['lander', 10, 4], ['skymine', 20, 3], ['gunship', 30, 3], ['raider', 20, 4], ['walker', 40, 3]],
+    events: [
+      { t: 80, type: 'elite', enemy: 'walker', msg: 'ELITE DETECTED' },
+      { t: 120, type: 'ring', enemy: 'lander', count: 20, msg: 'LANDING WAVE' },
+      { t: 165, type: 'elite', enemy: 'walker', msg: 'ELITE DETECTED' },
+      { t: 205, type: 'surge', dur: 30, mul: 2, msg: 'FINAL WAVE' },
+    ],
+  },
+  {
+    id: '2-5', name: 'Home Front', duration: 255, hp0: 1.8, hp: 3.9, speed: 1.19, rate: [1.8, 6.8], max: 185, kills: 2100,
+    enemies: [['interceptor', 0, 9], ['lander', 10, 4], ['skymine', 15, 3], ['gunship', 25, 3], ['raider', 20, 4], ['walker', 40, 3]],
+    events: [
+      { t: 60, type: 'ring', enemy: 'skymine', count: 30, msg: 'MINEFIELD' },
+      { t: 105, type: 'elite', enemy: 'gunship', msg: 'ELITE DETECTED' },
+      { t: 150, type: 'ring', enemy: 'interceptor', count: 56, msg: 'INTERCEPTORS INCOMING' },
+      { t: 185, type: 'elite', enemy: 'walker', msg: 'ELITE DETECTED' },
+      { t: 225, type: 'surge', dur: 30, mul: 2, msg: 'FINAL WAVE' },
+    ],
+  },
+  {
+    id: '2-6', name: 'Landing Citadel', duration: 120, bossAt: 120, boss: 'citadel', hp0: 1.6, hp: 3.4, speed: 1.2, rate: [1.6, 5.2], max: 175, kills: 900,
+    enemies: [['interceptor', 0, 9], ['lander', 10, 4], ['skymine', 20, 3], ['gunship', 30, 2], ['raider', 35, 3], ['walker', 55, 1]],
+    events: [
+      { t: 40, type: 'ring', enemy: 'interceptor', count: 30, msg: 'INTERCEPTORS INCOMING' },
+      { t: 80, type: 'elite', enemy: 'raider', msg: 'ELITE DETECTED' },
     ],
   },
 ];
@@ -280,6 +496,304 @@ for (const st of [...W1, ...W2, ...W3, ...W4]) {
   });
 }
 
+// World 3 of 2.0, "Lunar Bridgehead" (Art Bible; sector names from its table "Nazwy sektorów"). A step tougher than
+// world 2 through WORLD_TUNING, the same pace. The world's mechanic: craters are cover (enemy shots break on them,
+// js/cover.js), and the Collective answers with mortars: mortar nodes in the ground and barrages (event 'mortar').
+// fixed: at most that many turrets and mortar nodes at once (Game.spawnOne).
+const W3_3 = [
+  {
+    id: '3-1', name: 'Dark Side', duration: 195, fixed: 3, hp0: 1.4, hp: 3.0, speed: 1.12, rate: [1.5, 5.0], max: 160, kills: 1500,
+    enemies: [['probe', 0, 10], ['crawler', 15, 5], ['cturret', 40, 2]],
+    events: [
+      { t: 55, type: 'ring', enemy: 'probe', count: 34, msg: 'PROBE SWARM' },
+      { t: 100, type: 'elite', enemy: 'crawler', msg: 'ELITE DETECTED' },
+      { t: 150, type: 'ring', enemy: 'crawler', count: 22, msg: 'CRAWLERS INCOMING' },
+    ],
+  },
+  {
+    id: '3-2', name: 'Sea of Tranquility', duration: 210, fixed: 4, hp0: 1.5, hp: 3.2, speed: 1.14, rate: [1.6, 5.6], max: 175, kills: 1800,
+    enemies: [['probe', 0, 10], ['crawler', 10, 5], ['cturret', 25, 2], ['hopper', 30, 4]],
+    events: [
+      { t: 60, type: 'ring', enemy: 'hopper', count: 16, msg: 'HOPPERS INCOMING' },
+      { t: 110, type: 'elite', enemy: 'cturret', msg: 'ELITE DETECTED' },
+      { t: 175, type: 'surge', dur: 30, mul: 2, msg: 'FINAL WAVE' },
+    ],
+  },
+  {
+    id: '3-3', name: 'Crater Run', duration: 225, fixed: 5, hp0: 1.6, hp: 3.4, speed: 1.15, rate: [1.7, 6.0], max: 180, kills: 1950,
+    enemies: [['probe', 0, 10], ['crawler', 10, 5], ['cturret', 20, 2], ['hopper', 20, 4], ['mortarnode', 35, 2]],
+    events: [
+      { t: 55, type: 'ring', enemy: 'probe', count: 46, msg: 'PROBE SWARM' },
+      { t: 90, type: 'mortar', count: 6, msg: 'MORTAR BARRAGE' },
+      { t: 120, type: 'elite', enemy: 'hopper', msg: 'ELITE DETECTED' },
+      { t: 190, type: 'surge', dur: 30, mul: 2, msg: 'FINAL WAVE' },
+    ],
+  },
+  {
+    id: '3-4', name: 'Rooted Base', duration: 240, fixed: 5, hp0: 1.7, hp: 3.6, speed: 1.17, rate: [1.7, 6.4], max: 185, kills: 2050,
+    enemies: [['probe', 0, 10], ['crawler', 10, 5], ['cturret', 20, 2], ['hopper', 20, 4], ['mortarnode', 30, 2], ['rgolem', 40, 3]],
+    events: [
+      { t: 80, type: 'elite', enemy: 'rgolem', msg: 'ELITE DETECTED' },
+      { t: 120, type: 'ring', enemy: 'crawler', count: 26, msg: 'CRAWLERS INCOMING' },
+      { t: 165, type: 'elite', enemy: 'rgolem', msg: 'ELITE DETECTED' },
+      { t: 205, type: 'surge', dur: 30, mul: 2, msg: 'FINAL WAVE' },
+    ],
+  },
+  {
+    id: '3-5', name: 'Mortar Fields', duration: 255, fixed: 6, hp0: 1.8, hp: 3.9, speed: 1.19, rate: [1.8, 6.8], max: 185, kills: 2050,
+    enemies: [['probe', 0, 9], ['crawler', 10, 5], ['cturret', 15, 2], ['hopper', 20, 4], ['mortarnode', 20, 3], ['rgolem', 40, 3]],
+    events: [
+      { t: 60, type: 'mortar', count: 7, msg: 'MORTAR BARRAGE' },
+      { t: 105, type: 'elite', enemy: 'mortarnode', msg: 'ELITE DETECTED' },
+      { t: 150, type: 'ring', enemy: 'probe', count: 56, msg: 'PROBE SWARM' },
+      { t: 170, type: 'mortar', count: 9, msg: 'MORTAR BARRAGE' },
+      { t: 190, type: 'elite', enemy: 'rgolem', msg: 'ELITE DETECTED' },
+      { t: 225, type: 'surge', dur: 30, mul: 2, msg: 'FINAL WAVE' },
+    ],
+  },
+  {
+    id: '3-6', name: 'Moon Spire', duration: 120, bossAt: 120, boss: 'spire', fixed: 4, hp0: 1.6, hp: 3.4, speed: 1.2, rate: [1.6, 5.2], max: 175, kills: 850,
+    enemies: [['probe', 0, 9], ['crawler', 10, 5], ['cturret', 20, 2], ['hopper', 30, 3], ['mortarnode', 40, 1], ['rgolem', 55, 1]],
+    events: [
+      { t: 40, type: 'ring', enemy: 'probe', count: 34, msg: 'PROBE SWARM' },
+      { t: 80, type: 'elite', enemy: 'hopper', msg: 'ELITE DETECTED' },
+    ],
+  },
+];
+
+// World 4 of 2.0, "Red Conversion" (Art Bible; sector names from its table "Nazwy sektorów"). A step tougher than
+// world 3 through WORLD_TUNING, the same pace. The world's mechanic (js/crystal.js): the black crystal network spreads
+// from a few growth nodes during the sector and Spreaders lay more, the ship is slowed on it; dust storms close the
+// view (storms: [first, every, duration] in seconds). fixed: at most that many prism nodes at once.
+const W4_4 = [
+  {
+    id: '4-1', name: 'Red Dust', duration: 195, fixed: 3, storms: [70, 70, 12], hp0: 1.4, hp: 3.0, speed: 1.12, rate: [1.5, 5.0], max: 160, kills: 1500,
+    enemies: [['mite', 0, 10], ['sdrone', 15, 4], ['spreader', 35, 2]],
+    events: [
+      { t: 55, type: 'ring', enemy: 'mite', count: 34, msg: 'MITE SWARM' },
+      { t: 100, type: 'elite', enemy: 'sdrone', msg: 'ELITE DETECTED' },
+      { t: 150, type: 'ring', enemy: 'sdrone', count: 16, msg: 'SHARD DRONES' },
+    ],
+  },
+  {
+    id: '4-2', name: 'Black Veins', duration: 210, fixed: 4, storms: [60, 65, 12], hp0: 1.5, hp: 3.2, speed: 1.14, rate: [1.6, 5.6], max: 175, kills: 1800,
+    enemies: [['mite', 0, 10], ['sdrone', 10, 4], ['spreader', 20, 2], ['prismnode', 30, 2]],
+    events: [
+      { t: 60, type: 'ring', enemy: 'spreader', count: 8, msg: 'SPREADERS INCOMING' },
+      { t: 110, type: 'elite', enemy: 'spreader', msg: 'ELITE DETECTED' },
+      { t: 175, type: 'surge', dur: 30, mul: 2, msg: 'FINAL WAVE' },
+    ],
+  },
+  {
+    id: '4-3', name: 'Dust Storm', duration: 225, fixed: 5, storms: [35, 45, 15], hp0: 1.6, hp: 3.4, speed: 1.15, rate: [1.7, 6.0], max: 180, kills: 1950,
+    enemies: [['mite', 0, 10], ['sdrone', 10, 4], ['spreader', 20, 2], ['prismnode', 25, 2], ['stalker', 15, 4]],
+    events: [
+      { t: 55, type: 'ring', enemy: 'mite', count: 46, msg: 'MITE SWARM' },
+      { t: 105, type: 'elite', enemy: 'stalker', msg: 'ELITE DETECTED' },
+      { t: 150, type: 'ring', enemy: 'stalker', count: 18, msg: 'STALKER PACK' },
+      { t: 190, type: 'surge', dur: 30, mul: 2, msg: 'FINAL WAVE' },
+    ],
+  },
+  {
+    id: '4-4', name: 'Glass Canyon', duration: 240, fixed: 5, storms: [55, 60, 12], hp0: 1.7, hp: 3.6, speed: 1.17, rate: [1.7, 6.4], max: 185, kills: 2050,
+    enemies: [['mite', 0, 10], ['sdrone', 10, 4], ['spreader', 20, 2], ['prismnode', 25, 2], ['stalker', 20, 4], ['cgolem', 40, 3]],
+    events: [
+      { t: 80, type: 'elite', enemy: 'cgolem', msg: 'ELITE DETECTED' },
+      { t: 120, type: 'ring', enemy: 'sdrone', count: 22, msg: 'SHARD DRONES' },
+      { t: 165, type: 'elite', enemy: 'prismnode', msg: 'ELITE DETECTED' },
+      { t: 205, type: 'surge', dur: 30, mul: 2, msg: 'FINAL WAVE' },
+    ],
+  },
+  {
+    id: '4-5', name: 'Olympus Shadow', duration: 255, fixed: 6, storms: [45, 55, 14], hp0: 1.8, hp: 3.9, speed: 1.19, rate: [1.8, 6.8], max: 185, kills: 2050,
+    enemies: [['mite', 0, 9], ['sdrone', 10, 4], ['spreader', 15, 3], ['prismnode', 20, 2], ['stalker', 20, 4], ['cgolem', 40, 3]],
+    events: [
+      { t: 60, type: 'ring', enemy: 'spreader', count: 10, msg: 'SPREADERS INCOMING' },
+      { t: 105, type: 'elite', enemy: 'stalker', msg: 'ELITE DETECTED' },
+      { t: 150, type: 'ring', enemy: 'mite', count: 56, msg: 'MITE SWARM' },
+      { t: 190, type: 'elite', enemy: 'cgolem', msg: 'ELITE DETECTED' },
+      { t: 225, type: 'surge', dur: 30, mul: 2, msg: 'FINAL WAVE' },
+    ],
+  },
+  {
+    id: '4-6', name: 'Red Colossus', duration: 120, bossAt: 120, boss: 'colossus', fixed: 4, storms: [50, 60, 10], hp0: 1.6, hp: 3.4, speed: 1.2, rate: [1.6, 5.2], max: 175, kills: 850,
+    enemies: [['mite', 0, 9], ['sdrone', 10, 4], ['spreader', 20, 2], ['stalker', 30, 3], ['prismnode', 40, 1], ['cgolem', 55, 1]],
+    events: [
+      { t: 40, type: 'ring', enemy: 'mite', count: 34, msg: 'MITE SWARM' },
+      { t: 80, type: 'elite', enemy: 'sdrone', msg: 'ELITE DETECTED' },
+    ],
+  },
+];
+
+// World 5 of 2.0, "Foundry Belt" (Art Bible; sector names from its table "Nazwy sektorów"). A step tougher than world 4
+// through WORLD_TUNING, the same pace. The world's mechanic: drifting asteroids are moving cover (enemy shots break on
+// them, js/cover.js), and the machinery can be destroyed (fuel tanks blow up, capacitors drive the enemies around them,
+// js/props.js). fixed: at most that many assembler turrets at once.
+const W5_5 = [
+  {
+    id: '5-1', name: 'Ore Drift', duration: 195, fixed: 3, hp0: 1.4, hp: 3.0, speed: 1.12, rate: [1.5, 5.0], max: 160, kills: 1350,
+    enemies: [['fdrone', 0, 10], ['welder', 15, 4], ['drifter', 30, 2]],
+    events: [
+      { t: 55, type: 'ring', enemy: 'fdrone', count: 34, msg: 'DRONE SWARM' },
+      { t: 100, type: 'elite', enemy: 'fdrone', msg: 'ELITE DETECTED' },
+      { t: 150, type: 'ring', enemy: 'drifter', count: 10, msg: 'ROCK STORM' },
+    ],
+  },
+  {
+    id: '5-2', name: 'Assembly Line', duration: 210, fixed: 4, hp0: 1.5, hp: 3.2, speed: 1.14, rate: [1.6, 5.6], max: 175, kills: 1800,
+    enemies: [['fdrone', 0, 10], ['welder', 10, 4], ['drifter', 25, 2], ['aturret', 30, 2]],
+    events: [
+      { t: 60, type: 'ring', enemy: 'welder', count: 18, msg: 'WELDERS INCOMING' },
+      { t: 110, type: 'elite', enemy: 'welder', msg: 'ELITE DETECTED' },
+      { t: 175, type: 'surge', dur: 30, mul: 2, msg: 'FINAL WAVE' },
+    ],
+  },
+  {
+    id: '5-3', name: 'Smelter Ring', duration: 225, fixed: 5, hp0: 1.6, hp: 3.4, speed: 1.15, rate: [1.7, 6.0], max: 180, kills: 1950,
+    enemies: [['fdrone', 0, 10], ['welder', 10, 4], ['drifter', 20, 2], ['aturret', 25, 2], ['wmech', 20, 4]],
+    events: [
+      { t: 55, type: 'ring', enemy: 'fdrone', count: 46, msg: 'DRONE SWARM' },
+      { t: 90, type: 'mortar', count: 6, msg: 'SLAG POUR' },
+      { t: 120, type: 'elite', enemy: 'wmech', msg: 'ELITE DETECTED' },
+      { t: 190, type: 'surge', dur: 30, mul: 2, msg: 'FINAL WAVE' },
+    ],
+  },
+  {
+    id: '5-4', name: 'Drone Yards', duration: 240, fixed: 5, hp0: 1.7, hp: 3.6, speed: 1.17, rate: [1.7, 6.4], max: 185, kills: 2050,
+    enemies: [['fdrone', 0, 11], ['welder', 10, 4], ['drifter', 20, 2], ['aturret', 25, 2], ['wmech', 20, 4], ['hauler', 40, 3]],
+    events: [
+      { t: 80, type: 'elite', enemy: 'hauler', msg: 'ELITE DETECTED' },
+      { t: 120, type: 'ring', enemy: 'fdrone', count: 56, msg: 'DRONE SWARM' },
+      { t: 165, type: 'elite', enemy: 'aturret', msg: 'ELITE DETECTED' },
+      { t: 205, type: 'surge', dur: 30, mul: 2, msg: 'FINAL WAVE' },
+    ],
+  },
+  {
+    id: '5-5', name: 'Hull Forge', duration: 255, fixed: 6, hp0: 1.8, hp: 3.9, speed: 1.19, rate: [1.8, 6.8], max: 185, kills: 2050,
+    enemies: [['fdrone', 0, 9], ['welder', 10, 4], ['drifter', 15, 3], ['aturret', 20, 2], ['wmech', 20, 4], ['hauler', 40, 3]],
+    events: [
+      { t: 60, type: 'ring', enemy: 'drifter', count: 12, msg: 'ROCK STORM' },
+      { t: 105, type: 'elite', enemy: 'welder', msg: 'ELITE DETECTED' },
+      { t: 150, type: 'mortar', count: 8, msg: 'SLAG POUR' },
+      { t: 190, type: 'elite', enemy: 'hauler', msg: 'ELITE DETECTED' },
+      { t: 225, type: 'surge', dur: 30, mul: 2, msg: 'FINAL WAVE' },
+    ],
+  },
+  {
+    id: '5-6', name: 'Foundry Mother', duration: 120, bossAt: 120, boss: 'foundry', fixed: 4, hp0: 1.6, hp: 3.4, speed: 1.2, rate: [1.6, 5.2], max: 175, kills: 850,
+    enemies: [['fdrone', 0, 9], ['welder', 10, 4], ['drifter', 20, 2], ['wmech', 30, 3], ['aturret', 40, 1], ['hauler', 55, 1]],
+    events: [
+      { t: 40, type: 'ring', enemy: 'fdrone', count: 34, msg: 'DRONE SWARM' },
+      { t: 80, type: 'elite', enemy: 'fdrone', msg: 'ELITE DETECTED' },
+    ],
+  },
+];
+
+// The six sectors of a 2.0 world from world 6 on, all built alike (the pace and goals of world 5): E names the world's
+// enemies by role (swarm: packs; basic; a, b: the specials; fixed: set in the ground, or null; tank), special(t) is
+// the world's own event, msg the swarm's banner. A world's mechanic lives in js/worldfx.js.
+function journey(w, names, E, special, msg) {
+  const fixed = E.fixed;
+  const id = (n) => `${w}-${n}`;
+  const st = (n, name, duration, cap, hp0, hp, speed, rate, max, kills, enemies, events, extra = {}) =>
+    ({ id: id(n), name, duration, fixed: cap, hp0, hp, speed, rate, max, kills, enemies: enemies.filter((e) => e[0]), events, ...extra });
+  return [
+    st(1, names[0], 195, 3, 1.4, 3.0, 1.12, [1.5, 5.0], 160, 1350, [[E.swarm, 0, 10], [E.basic, 15, 4], [E.a, 30, 2]], [
+      { t: 55, type: 'ring', enemy: E.swarm, count: 34, msg },
+      { t: 100, type: 'elite', enemy: E.basic, msg: 'ELITE DETECTED' },
+      { t: 150, type: 'ring', enemy: E.basic, count: 16, msg: 'INCOMING' },
+    ]),
+    st(2, names[1], 210, 4, 1.5, 3.2, 1.14, [1.6, 5.6], 175, 1800, [[E.swarm, 0, 10], [E.basic, 10, 4], [E.a, 25, 2], [fixed || E.b, 30, 2]], [
+      { t: 60, type: 'ring', enemy: E.a, count: 16, msg: 'INCOMING' },
+      special(85),
+      { t: 110, type: 'elite', enemy: E.a, msg: 'ELITE DETECTED' },
+      { t: 175, type: 'surge', dur: 30, mul: 2, msg: 'FINAL WAVE' },
+    ]),
+    st(3, names[2], 225, 5, 1.6, 3.4, 1.15, [1.7, 6.0], 180, 1950, [[E.swarm, 0, 10], [E.basic, 10, 4], [E.a, 20, 2], [fixed, 25, 2], [E.b, 20, 4]], [
+      { t: 55, type: 'ring', enemy: E.swarm, count: 46, msg },
+      special(90),
+      { t: 120, type: 'elite', enemy: E.b, msg: 'ELITE DETECTED' },
+      { t: 190, type: 'surge', dur: 30, mul: 2, msg: 'FINAL WAVE' },
+    ]),
+    st(4, names[3], 240, 5, 1.7, 3.6, 1.17, [1.7, 6.4], 185, 2050, [[E.swarm, 0, 11], [E.basic, 10, 4], [E.a, 20, 2], [fixed, 25, 2], [E.b, 20, 4], [E.tank, 40, 3]], [
+      { t: 80, type: 'elite', enemy: E.tank, msg: 'ELITE DETECTED' },
+      { t: 120, type: 'ring', enemy: E.swarm, count: 56, msg },
+      special(145),
+      { t: 165, type: 'elite', enemy: fixed || E.a, msg: 'ELITE DETECTED' },
+      { t: 205, type: 'surge', dur: 30, mul: 2, msg: 'FINAL WAVE' },
+    ]),
+    st(5, names[4], 255, 6, 1.8, 3.9, 1.19, [1.8, 6.8], 185, 2050, [[E.swarm, 0, 9], [E.basic, 10, 4], [E.a, 15, 3], [fixed, 20, 2], [E.b, 20, 4], [E.tank, 40, 3]], [
+      { t: 60, type: 'ring', enemy: E.a, count: 14, msg: 'INCOMING' },
+      { t: 105, type: 'elite', enemy: E.b, msg: 'ELITE DETECTED' },
+      special(150),
+      { t: 190, type: 'elite', enemy: E.tank, msg: 'ELITE DETECTED' },
+      { t: 225, type: 'surge', dur: 30, mul: 2, msg: 'FINAL WAVE' },
+    ]),
+    st(6, names[5], 120, 4, 1.6, 3.4, 1.2, [1.6, 5.2], 175, 850, [[E.swarm, 0, 9], [E.basic, 10, 4], [E.a, 20, 2], [E.b, 30, 3], [fixed, 40, 1], [E.tank, 55, 1]], [
+      { t: 40, type: 'ring', enemy: E.swarm, count: 34, msg },
+      { t: 80, type: 'elite', enemy: E.basic, msg: 'ELITE DETECTED' },
+    ], { bossAt: 120, boss: E.boss }),
+  ];
+}
+
+// World 6 of 2.0, "Storm Relay" (Art Bible; sector names from its table "Nazwy sektorów"): in Jupiter's storms the
+// Collective's relay calls into deep space. The world's mechanic: gusts of wind push the ship and the enemy shots
+// (js/worldfx.js); lightning strikes (mortar) as its event.
+const W6_6 = journey(6, ['Gas Giant', 'Ion Winds', 'Antenna Field', 'Living Signal', 'Deep Transmission', 'Storm Eye'],
+  { swarm: 'ionkite', basic: 'jelly', a: 'staticray', b: 'gasmine', fixed: null, tank: 'cloudwhale', boss: 'stormeye' },
+  (t) => ({ t, type: 'mortar', count: 7, msg: 'LIGHTNING STORM' }), 'ION SWARM');
+// vortices drift through the storm from the 2nd sector on
+for (const s of W6_6.slice(1)) s.enemies.push(['vortex', 45, 2]);
+
+// World 7 of 2.0, "Abyss of Europa": under Europa's ice, alien sea life has been rewritten. The world's mechanic:
+// slippery ice (the ship slides, js/worldfx.js) and enemies that come up from under it (the eel hybrid; the event).
+const W7_7 = journey(7, ['Ice Shelf', 'Thin Ice', 'Glow Beneath', 'Cold Hatchery', 'The Deep Call', 'Abyss Leviathan'],
+  { swarm: 'icewisp', basic: 'frostcrab', a: 'eel', b: 'tmine', fixed: 'lantern', tank: 'lspawn', boss: 'leviathan' },
+  (t) => ({ t, type: 'ring', enemy: 'eel', count: 10, msg: 'BENEATH THE ICE' }), 'WISP SWARM');
+
+// World 8 of 2.0, "The Rift Gate": the gate out of the Solar System. The world's mechanic: pairs of rifts that
+// teleport the ship and the enemy shots (js/worldfx.js); gravity tears (wells) as its event.
+const W8_8 = journey(8, ['Shattered Space', 'Mirror Shards', 'Echoes of Home', 'Gate Rings', 'No Return', 'Gatekeeper'],
+  { swarm: 'shardunit', basic: 'phasewalker', a: 'echo', b: 'nullorb', fixed: 'riftspawner', tank: 'sentinel', boss: 'gatekeeper' },
+  (t) => ({ t, type: 'well', count: 2, msg: 'GRAVITY TEAR' }), 'SHARD SWARM');
+
+// World 9 of 2.0, "Brood World": the Collective's breeding world, where the ground breathes. The world's mechanic:
+// acid pools that burn the ship (js/worldfx.js) and nests that breed larvae (the nest enemy, the nest-heart prop);
+// acid rain (mortar) as its event.
+const W9_9 = journey(9, ['Living Ground', 'Breathing Fields', 'Spawning Pits', 'Acid Marsh', 'Egg Chambers', 'Brood Matriarch'],
+  { swarm: 'larva', basic: 'spitter', a: 'leech', b: 'broodsac', fixed: 'nest', tank: 'beetle', boss: 'matriarch' },
+  (t) => ({ t, type: 'mortar', count: 8, msg: 'ACID RAIN' }), 'LARVA SWARM');
+
+// World 10 of 2.0, "The Nexus": the heart of the Collective and the end of the journey. The world's mechanic: all of
+// the journey's at once (gusts, rifts, acid; js/worldfx.js); its events: gravity collapses (wells) in the first half,
+// neural storms (mortar) after.
+const W10_10 = journey(10, ['Neural Shore', 'Synapse Storm', 'Broken Geometry', 'Heartbeat', 'The Cage', 'Void Heart'],
+  { swarm: 'synapse', basic: 'wraith', a: 'eye', b: 'voidling', fixed: 'neuronnode', tank: 'overseer', boss: 'nexusheart' },
+  (t) => (t < 120 ? { t, type: 'well', count: 2, msg: 'GRAVITY COLLAPSE' } : { t, type: 'mortar', count: 8, msg: 'NEURAL STORM' }), 'SYNAPSE STORM');
+
+// The 2.0 worlds after world 1 keep their own kill goals; their elites are counted for the 3rd star (world 2 missed
+// that until build 106: its 3rd star could not be won). World 2's elites stay without traits (Konrad tests its
+// difficulty first); world 3's carry one trait each, like world 1's.
+const ELITE_TRAITS_2 = {
+  '3-1': [['swift']], '3-2': [['shielded']], '3-3': [['commander']], '3-4': [['bulwark'], ['berserker']],
+  '3-5': [['shielded'], ['commander']], '3-6': [['swift']],
+  '4-1': [['berserker']], '4-2': [['shielded']], '4-3': [['swift']], '4-4': [['bulwark'], ['commander']],
+  '4-5': [['swift'], ['berserker']], '4-6': [['shielded']],
+  '5-1': [['shielded']], '5-2': [['berserker']], '5-3': [['commander']], '5-4': [['bulwark'], ['shielded']],
+  '5-5': [['swift'], ['commander']], '5-6': [['berserker']],
+};
+// worlds 6-10: one trait each, two on the double-elite sectors, cycling through the traits
+const CYCLE = ['swift', 'shielded', 'berserker', 'commander', 'bulwark'];
+for (let w = 6, k = 0; w <= 10; w++) for (let n = 1; n <= 6; n++) ELITE_TRAITS_2[`${w}-${n}`] = (n === 4 || n === 5 ? [0, 1] : [0]).map(() => [CYCLE[k++ % CYCLE.length]]);
+for (const st of [...W2_2, ...W3_3, ...W4_4, ...W5_5, ...W6_6, ...W7_7, ...W8_8, ...W9_9, ...W10_10]) {
+  st.elites = st.events.filter((e) => e.type === 'elite').length;
+  const list = (!W2_2.includes(st) && ELITE_TRAITS_2[st.id]) || [];
+  st.events.filter((e) => e.type === 'elite').forEach((e, i) => {
+    e.traits = list[i] || [];
+    if (e.traits.length) e.msg = `${e.traits.map((t) => TRAITS[t].name).join(' ')} ELITE`;
+  });
+}
+
 // Difficulty of each world on top of the sector settings (v1.2: weapon combos make the ship much stronger, so the paid
 // worlds hit harder). dmg: every hit on the ship, rising by `ramp` towards the end of a sector; hp: all enemies;
 // elite: elites on top of that; boss: bosses.
@@ -288,13 +802,70 @@ export const WORLD_TUNING = {
   2: { dmg: 1.4, ramp: 0.3, hp: 1.15, elite: 1.3, boss: 1.2 },
   3: { dmg: 1.6, ramp: 0.35, hp: 1.2, elite: 1.35, boss: 1.25 },
   4: { dmg: 1.8, ramp: 0.4, hp: 1.25, elite: 1.4, boss: 1.3 },
+  // 2.0 worlds 5-10 (build 113: world 5 had been left on world 1's tuning), one step up each
+  5: { dmg: 1.85, ramp: 0.4, hp: 1.27, elite: 1.42, boss: 1.32 },
+  6: { dmg: 1.9, ramp: 0.42, hp: 1.29, elite: 1.44, boss: 1.34 },
+  7: { dmg: 1.95, ramp: 0.42, hp: 1.31, elite: 1.46, boss: 1.36 },
+  8: { dmg: 2.0, ramp: 0.44, hp: 1.33, elite: 1.48, boss: 1.38 },
+  9: { dmg: 2.05, ramp: 0.44, hp: 1.35, elite: 1.5, boss: 1.4 },
+  10: { dmg: 2.1, ramp: 0.46, hp: 1.37, elite: 1.52, boss: 1.42 },
 };
+
+// The 2.0 journey (decided by Konrad, 2026-10-28): all 10 worlds are built (build 117).
+// Worlds still under construction would be listed here. The map
+// shows them with their story and planned sectors (Art Bible, table "Nazwy sektorów"); when a world is built, it gets
+// its stages and drops `soon`. The 1.x worlds 2-4 below (W2-W4, LEGACY_WORLDS) are no longer played; they stay as a
+// starting point for tuning the new worlds.
+const PLANNED_WORLDS = [
+];
 
 export const WORLDS = [
   {
-    id: 1, name: 'Neon Nebula', color: '#ff2d95', stages: W1, music: 'game',
+    id: 1, name: 'Orbital Ruins', color: '#ff2d95', stages: W1, music: 'game',
     theme: { top: '#16002e', bottom: '#030010', neb: ['#ff2d95', '#7a2dff', '#00b3ff'], grid: '#b04dff' },
   },
+  {
+    // its own recorded sector and boss music (proto2/make-music.py: game2, boss2)
+    id: 2, name: 'Siege of Earth', color: '#ff6a3d', stages: W2_2, music: 'game2', bossMusic: 'boss2',
+    theme: { top: '#0a1024', bottom: '#03050c', neb: ['#3a4566', '#ff5a2e', '#ff2d95'], grid: '#3a4566' },
+  },
+  {
+    // the first world of the full game (worlds 3-10); its own sector and boss music (game3, boss3)
+    id: 3, name: 'Lunar Bridgehead', color: '#a9b8d0', stages: W3_3, music: 'game3', bossMusic: 'boss3',
+    theme: { top: '#14131c', bottom: '#050409', neb: ['#4a4856', '#b8a9d9', '#ff2d95'], grid: '#8d8a99' },
+  },
+  {
+    id: 4, name: 'Red Conversion', color: '#e0452b', stages: W4_4, music: 'game4', bossMusic: 'boss4',
+    theme: { top: '#2a0e09', bottom: '#0c0403', neb: ['#6e2b1c', '#ff5a2e', '#ff2d95'], grid: '#9c4a30' },
+  },
+  {
+    id: 5, name: 'Foundry Belt', color: '#ff8a2a', stages: W5_5, music: 'game5', bossMusic: 'boss5',
+    theme: { top: '#1c1612', bottom: '#060403', neb: ['#3e3630', '#ff7a1a', '#ff2d95'], grid: '#7a8490' },
+  },
+  {
+    id: 6, name: 'Storm Relay', color: '#e3b778', stages: W6_6, music: 'game6', bossMusic: 'boss6',
+    theme: { top: '#2a1c10', bottom: '#0a0604', neb: ['#5a3a1c', '#e3b778', '#ff2d95'], grid: '#b08850' },
+  },
+  {
+    id: 7, name: 'Abyss of Europa', color: '#4fd1e0', stages: W7_7, music: 'game7', bossMusic: 'boss7',
+    theme: { top: '#0a1a2a', bottom: '#020610', neb: ['#1c3a5a', '#4fd1e0', '#7a5cff'], grid: '#5a7aa0' },
+  },
+  {
+    id: 8, name: 'The Rift Gate', color: '#b9a8ff', stages: W8_8, music: 'game8', bossMusic: 'boss8',
+    theme: { top: '#120a24', bottom: '#04020a', neb: ['#3a2a5a', '#b9a8ff', '#ff2d95'], grid: '#7a6aa0' },
+  },
+  {
+    id: 9, name: 'Brood World', color: '#8fd35a', stages: W9_9, music: 'game9', bossMusic: 'boss9',
+    theme: { top: '#121c0a', bottom: '#040702', neb: ['#2a4a1c', '#8fd35a', '#ff2d95'], grid: '#5a8a3a' },
+  },
+  {
+    id: 10, name: 'The Nexus', color: '#ff2d95', stages: W10_10, music: 'game10', bossMusic: 'boss10',
+    theme: { top: '#1a0820', bottom: '#06020a', neb: ['#4a1a4a', '#ff2d95', '#7a5cff'], grid: '#8a4a8a' },
+  },
+  ...PLANNED_WORLDS.map(([id, name, color, story, plan]) => ({ id, name, color, story, plan, stages: [], soon: true })),
+];
+
+export const LEGACY_WORLDS = [
   {
     id: 2, name: 'Crystal Belt', color: '#2ff3ff', stages: W2, music: 'game2',
     theme: { top: '#001a2e', bottom: '#000812', neb: ['#2ff3ff', '#3d7bff', '#b4fff0'], grid: '#2fd2ff' },
@@ -309,14 +880,65 @@ export const WORLDS = [
   },
 ];
 
+// Denser boss attacks (decided by Konrad, 2026-11-03: the bosses were too easy): bigger bursts and summons. The rest
+// (harder hits, shorter pauses, fury, the special attack) is in Game (BOSS_DMG, BOSS_REST, FURY_AT).
+for (const b of Object.values(BOSSES)) {
+  if (b.burstN) b.burstN = Math.round(b.burstN * 1.3);
+  if (b.summonN) b.summonN += 1;
+}
+
+// Attack patterns (decided by Konrad, 2026-11-03: from world 2 on every sector played the same, run and grab an area
+// weapon): besides the spawns all around the ship, sectors of worlds 2-10 get set attacks that make the player position
+// and choose: a wall from one side, a pincer from two, a ring with a closing gap, ranged snipers that have to be hunted
+// down, and a priority target (an elite commander whose aura makes its escort stronger). Two to five per sector, more
+// in later worlds, placed between the sector's own events; the kinds rotate per world and sector (Game.runEvent).
+const PATTERN_KINDS = ['wall', 'gapring', 'snipers', 'pincer', 'hunter'];
+const PATTERN_MSG = { wall: 'FLANK ATTACK', pincer: 'PINCER ATTACK', gapring: 'ENCIRCLEMENT', snipers: 'SNIPERS', hunter: 'PRIORITY TARGET' };
+const RANGED_AI = ['shoot', 'lob', 'turret', 'seeker'];
+function addPatterns(world) {
+  const w = world.id;
+  if (w < 2) return;
+  const types = [...new Set(world.stages.flatMap((st) => st.enemies.map((e) => e[0])))];
+  // the snipers: enemies that shoot first, then turrets, artillery, homing orbs
+  const ranged = RANGED_AI.map((ai) => types.find((t) => ENEMIES[t]?.ai === ai)).find(Boolean);
+  world.stages.forEach((st, si) => {
+    const n = si + 1, end = (st.bossAt || st.duration) - 20;
+    const swarm = st.enemies[0][0];
+    // the priority target: the toughest plain chaser of the sector
+    const movers = st.enemies.map((e) => e[0]).filter((t) => ENEMIES[t]?.speed > 0 && !ENEMIES[t].ai);
+    const mover = movers.sort((a, b) => ENEMIES[b].hp - ENEMIES[a].hp)[0] || swarm;
+    const want = (st.boss ? 1 : n <= 2 ? 2 : n <= 4 ? 3 : 4) + (w >= 6 && !st.boss ? 1 : 0);
+    const taken = st.events.map((e) => e.t);
+    const slots = [];
+    for (let t = 35; t < end && slots.length < want; t += 5) {
+      if (taken.every((x) => Math.abs(x - t) >= 14) && slots.every((x) => t - x >= 28)) slots.push(t);
+    }
+    slots.forEach((t, k) => {
+      let kind = PATTERN_KINDS[(w + n + k) % PATTERN_KINDS.length];
+      if (kind === 'snipers' && !ranged) kind = 'pincer';
+      const ev = { t, type: 'pattern', kind, msg: PATTERN_MSG[kind] };
+      if (kind === 'wall') Object.assign(ev, { enemy: swarm, count: Math.min(30, 14 + 2 * w) });
+      if (kind === 'pincer') Object.assign(ev, { enemy: swarm, count: Math.min(36, 16 + 2 * w) });
+      if (kind === 'gapring') Object.assign(ev, { enemy: swarm, count: Math.min(44, 22 + 2 * w) });
+      if (kind === 'snipers') Object.assign(ev, { enemy: ranged, count: Math.min(9, 4 + Math.floor(w / 2)) });
+      if (kind === 'hunter') Object.assign(ev, { enemy: mover });
+      st.events.push(ev);
+    });
+    st.events.sort((a, b) => a.t - b.t);
+  });
+}
+for (const w of WORLDS) addPatterns(w);
+
 export const ALL_STAGES = WORLDS.flatMap((w) => w.stages.map((s) => ({ ...s, world: w })));
 
 export function stageIndex(id) {
   return ALL_STAGES.findIndex((s) => s.id === id);
 }
 
+// experience needed for the next level; a little gentler since build 148 (Konrad, 2026-11-03: fewer, steadier
+// level-ups), was 4 + 4(L-1) + (L-1)^1.6
 export function xpFor(level) {
-  return Math.floor(4 + (level - 1) * 4 + Math.pow(level - 1, 1.6));
+  return Math.floor(5 + (level - 1) * 4.5 + Math.pow(level - 1, 1.65));
 }
 
 // Endless mode (v1.3, decided by Konrad): one per world, opened by beating the whole game (the Void Heart), full game
@@ -333,6 +955,6 @@ export function endlessStage(world) {
   return {
     id: `E${world.id}`, name: 'Endless', endless: true, world, duration: ENDLESS.ramp,
     hp0: s[0].hp0 || 1, hp: ref.hp, speed: ref.speed, rate: ref.rate, max: ref.max + 20, enemies: ref.enemies,
-    events: [], boss: s[s.length - 1].boss, kills: 0, elites: 0, hazards,
+    events: [], boss: s[s.length - 1].boss, kills: 0, elites: 0, hazards, wrecks: ref.wrecks,
   };
 }

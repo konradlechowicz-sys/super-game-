@@ -1,0 +1,29 @@
+STYLE (keep identical across all images):
+Game art for "Void Blaster", a top-down mobile space shooter (survivors-like).
+Camera: top-down orthographic, looking straight down, no perspective.
+Look: stylized sci-fi with a neon accent. Dark, rich materials (gunmetal, carbon,
+matte ceramic) lit from the top-left, glowing edges and emissive lights only where
+noted. Detail level: high but clean - panel lines, vents, rivets; no grunge overload.
+The background must stay dark and calm so bright game objects read on top of it:
+no bright cyan anywhere (cyan belongs to the player), magenta only as thin traces.
+Rendering: crisp edges, soft bloom on glowing parts only, no motion blur, no depth of
+field, not photorealistic. No text, no logo, no watermark.
+
+WORLD 3 "LUNAR BRIDGEHEAD": just above the Moon's surface, where the Void Collective
+(an alien machine intelligence) built its forward base. Its conduits grow into the rock
+like roots: black-violet pipes #1a0f24 with magenta #ff2d95 veins. Gray regolith
+#2b2a33/#4a4856 with highlights #8d8a99, near-black shadows #0a0910 (no atmosphere),
+pale violet accents #b8a9d9, non-glowing frost #cfd8ef. Hard sunlight from the top-left,
+long sharp black shadows. Ruins of a human lunar base. Mood: sparse, hostile, first
+living growth. 90% machine, 10% organic.
+
+TASK: Arena border pieces seen from directly above on a plain flat dark background
+(#05010f), well apart: 4 straight strips (top, bottom, left, right), each 1024 px long
+and about 160 px thick, tileable along their length: crater rims and rocky ridges with
+long black shadows, clean readable inner edge. Plus 4 matching corners 256x256.
+
+LAYOUT: Exactly eight isolated modular pieces on one square sheet, no text, no labels, no drawn boxes. Two long horizontal strips across the top: top border first, then bottom border, both with a full long straight outer side and a clean readable irregular inner side. In the lower left, two long vertical strips side by side: left border and right border. In the lower right, four L-shaped corner pieces in a 2x2 arrangement: top-left, top-right, bottom-left, bottom-right. L corners must have rock along their two OUTER edges and an empty flat-dark inner quadrant; the two arm tips must reach the crop boundary and match the respective straight strips. Leave generous dark empty gaps between all eight pieces. Strict 90-degree overhead plan view of gray-violet lunar crater rims and rocky ridges, no side elevation or perspective. Hard top-left light and sharp black shadows. No buildings, pipes, glowing veins, atmosphere or snow. Use the approved W3 reference for palette and stone material only. Each straight strip must have an even average thickness and connect seamlessly end-to-end; all eight parts use the same stone scale.
+
+VARIANT B: more rugged ridges made of angular broken lunar blocks, with a few larger boulders and deeper near-black cracks. Uneven jagged inner edge but still clean and readable; broad forms, no noisy gravel overload.
+
+ORIENTATION PRIORITY: The top horizontal strip has its straight outer edge along its TOP and jagged inner edge along its BOTTOM. The second/bottom horizontal strip has its straight outer edge along its BOTTOM and jagged inner edge along its TOP. They must face one another across open arena space. Left vertical strip: straight LEFT outer edge, jagged RIGHT inner edge. Right vertical strip: jagged LEFT inner edge, straight RIGHT outer edge. Keep lighting from upper-left on ALL parts, irrespective of which side they border. Do not duplicate the top-border orientation for the bottom border.

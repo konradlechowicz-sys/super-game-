@@ -1,0 +1,29 @@
+STYLE (keep identical across all images):
+Game art for "Void Blaster", a top-down mobile space shooter (survivors-like).
+Camera: top-down orthographic, looking straight down, no perspective.
+Look: stylized sci-fi with a neon accent. Dark, rich materials (gunmetal, carbon,
+matte ceramic) lit from the top-left, glowing edges and emissive lights only where
+noted. Detail level: high but clean - panel lines, vents, rivets; no grunge overload.
+The background must stay dark and calm so bright game objects read on top of it:
+no bright cyan anywhere (cyan belongs to the player), magenta only as thin traces.
+Rendering: crisp edges, soft bloom on glowing parts only, no motion blur, no depth of
+field, not photorealistic. No text, no logo, no watermark.
+
+WORLD 7 "ABYSS OF EUROPA": just above a thick, translucent ice sheet on Europa; under
+it a dark ocean where the Void Collective (an alien machine intelligence) rewrote alien
+sea life into hybrids. Ice is muted steel-blue and violet, NEVER bright cyan:
+#141c30/#26304e with edges #4a5680. Ocean #05060f. Bioluminescence in toxic green
+#3dff8a and violet #7a3dff. Circuit-vines #2a1438 with magenta #ff2d95 nodes. Almost no
+light from above; light comes from below the ice. Mood: depth, pressure, something
+huge moving underneath. 50% machine, 50% organic.
+
+TASK: The world-7 boss "Abyss Leviathan": a huge squid-like hybrid seen from directly
+above, 1024x1024, plain flat dark background (#05010f): an armored mantle with machine
+plates, a magenta core, 6-8 tentacles of tissue and cable, bioluminescent stripes, 3-4
+glowing weak points (tentacle roots, gill vents, core). Stylized, no gore. Then a second
+image: exploded parts sheet at one scale with generous space: mantle, each tentacle
+(drawn straight), each weak point; plus the complete assembled boss at the same scale in
+the bottom-right corner. No text.
+
+PRODUCTION NOTES (the attached approved P1 is a style/material reference, not a composition to reproduce):
+SUPPLEMENT: draw ONLY EIGHT separate fully extended STRAIGHT tentacle modules for the Abyss Leviathan in SECOND reference, no mantle, boss, weakpoints or other modules. Landscape 2400x1600, FOUR COLUMNS and TWO ROWS, exactly one straight vertical tentacle per cell, thick root at TOP and tapered claw tip at BOTTOM, all complete. Each tentacle's centerline STRAIGHT like a hanging cable, NOT curved, coiled, S-shaped or hooked sideways, so code can bend them. Preserve armor, violet tissue/cables, green bioluminescent spots, magenta root sockets and small distal claw. Every limb a distinct slight variant. Flat #05010f, large blank gaps, no labels. This replaces the earlier curved/short-count tentacles.

@@ -1,0 +1,31 @@
+STYLE (keep identical across all images):
+Game art for "Void Blaster", a top-down mobile space shooter (survivors-like).
+Camera: top-down orthographic, looking straight down, no perspective.
+Look: stylized sci-fi with a neon accent. Dark, rich materials (gunmetal, carbon,
+matte ceramic) lit from the top-left, glowing edges and emissive lights only where
+noted. Detail level: high but clean - panel lines, vents, rivets; no grunge overload.
+The background must stay dark and calm so bright game objects read on top of it:
+no bright cyan anywhere (cyan belongs to the player), magenta only as thin traces.
+Rendering: crisp edges, soft bloom on glowing parts only, no motion blur, no depth of
+field, not photorealistic. No text, no logo, no watermark.
+
+WORLD 2 "SIEGE OF EARTH": low orbit, 400 km above night-side Earth, during the
+landing of the Void Collective (an alien machine intelligence). We fight above a cloud
+layer; under it, coastlines and city lights, some cities burning. Colors: night
+#070b1a, clouds #222b44-#3a4566, tiny warm city lights #ffb347, fires #ff5a2e,
+lightning #e8f0ff, the Collective's tethers and web in magenta #ff2d95.
+No sun (night): clouds lit from below by cities and fires, from above by lightning.
+Mood: siege, storm, the last defense of home. 100% machine.
+
+TASK: Arena border pieces seen from directly above on a plain flat dark background
+(#05010f), well apart: 4 straight strips (top, bottom, left, right), each 1024 px long
+and about 160 px thick, tileable along their length: a wall of dense storm clouds with
+lightning inside, its inner edge clean and readable. Plus 4 matching corners 256x256.
+
+USE CASE: stylized-concept production modular storm-cloud border kit. Transform the approved reference arena's outer storm walls into eight separate modular sprites. Replace all scenery with a plain uniform dark #05010f background. Only dense dark blue-gray clouds and restrained near-white lightning inside clouds; no land, cities, machine nodes, wrecks, magenta, sparks, rain, stars, horizon, or text. Look straight vertically down at cloud tops, never at the side of a cloud wall. Match the approved reference cloud style and palette. Softly irregular inner silhouettes clearly separate the cloud wall from the playable dark area. Clouds should remain dark, lightning localized and narrow.
+
+Exact eight-piece sheet arrangement on a square 1536x1536 canvas, well apart:
+At the TOP, two horizontal strips in two separate rows: TOP strip first (cloud body along upper outer edge, calm inner edge facing DOWN), BOTTOM strip second (body along lower outer edge, calm inner edge facing UP). Each strip is long and thin, about 1024x160, with clouds continuing to both end cuts, seamless along its length.
+In the lower LEFT half, two vertical strips side by side: LEFT strip (cloud body at outer LEFT, inner edge facing RIGHT), RIGHT strip (body at outer RIGHT, inner edge facing LEFT). Each about 160x1024, seamless along its length. Keep the vertical strips away from the horizontal strips.
+In the lower RIGHT half, FOUR square 256x256 corner pieces in a 2x2 arrangement: top-left, top-right, bottom-left, bottom-right respectively. Each corner is an L-shaped storm-cloud bank along the two outside sides of its square, with the inside corner empty dark background, matching the thickness and style of the straight pieces. All eight pieces are completely separate with ample dark gutters. Do not assemble a full arena in this sheet; no grid lines, labels, annotations or numbers. One scale, one cohesive kit.
+VARIANT B: dense wind-swept layered cloud banks with elongated curls and a slightly more jagged scalloped inner silhouette. A few longer branching lightning veins inside the bank, keeping the same dark palette and clear inner edge.

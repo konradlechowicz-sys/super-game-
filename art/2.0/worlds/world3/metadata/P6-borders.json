@@ -1,0 +1,71 @@
+{
+  "background": "#05010f",
+  "straight_pieces_repeat_along_length": true,
+  "all_corner_connections_verified": true,
+  "pieces": [
+    {
+      "name": "top",
+      "file": "graphics/W3-P6-border-pieces/W3-P6-border-top.webp",
+      "size": [
+        1024,
+        160
+      ]
+    },
+    {
+      "name": "bottom",
+      "file": "graphics/W3-P6-border-pieces/W3-P6-border-bottom.webp",
+      "size": [
+        1024,
+        160
+      ]
+    },
+    {
+      "name": "left",
+      "file": "graphics/W3-P6-border-pieces/W3-P6-border-left.webp",
+      "size": [
+        160,
+        1024
+      ]
+    },
+    {
+      "name": "right",
+      "file": "graphics/W3-P6-border-pieces/W3-P6-border-right.webp",
+      "size": [
+        160,
+        1024
+      ]
+    },
+    {
+      "name": "top-left",
+      "file": "graphics/W3-P6-border-pieces/W3-P6-corner-top-left.webp",
+      "size": [
+        256,
+        256
+      ]
+    },
+    {
+      "name": "top-right",
+      "file": "graphics/W3-P6-border-pieces/W3-P6-corner-top-right.webp",
+      "size": [
+        256,
+        256
+      ]
+    },
+    {
+      "name": "bottom-left",
+      "file": "graphics/W3-P6-border-pieces/W3-P6-corner-bottom-left.webp",
+      "size": [
+        256,
+        256
+      ]
+    },
+    {
+      "name": "bottom-right",
+      "file": "graphics/W3-P6-border-pieces/W3-P6-corner-bottom-right.webp",
+      "size": [
+        256,
+        256
+      ]
+    }
+  ]
+}

@@ -2,7 +2,9 @@ import { WORLDS, SHIPS, SHOP, DAILY, ALL_STAGES, BOSSES, ENDLESS, stageIndex } f
 import { WEAPONS } from './weapons.js';
 import { COMBOS } from './combos.js';
 import { codexSections, codexName } from './codex.js';
-import { icon } from './icons.js';
+import { STORY, STORY_ORDER, sceneAfterWorld } from './story.js';
+import { CRATES, CRATE_ORDER } from './crates.js';
+import { icon, uiArt } from './icons.js';
 import { fmtTime } from './util.js';
 import { shipSprite } from './sprites.js';
 import { versionLabel, versionFull } from './version.js';
@@ -19,6 +21,8 @@ const eliteGoal = (st) => {
   return st.boss ? `Destroy ${st.elites ? `${el} and ` : ''}the boss` : `Destroy ${st.elites > 1 ? `all ${el}` : `the ${el}`}`;
 };
 const COIN = '<span class="coin-ico"></span>';
+// the drawn 2.0 icons (js/icons.js) for the shop's upgrades: the perk or pickup each one is like
+const SHOP_ART = { power: 'p-power', armor: 'p-armor', thrusters: 'p-thrusters', tractor: 'p-tractor', amplifier: 'p-amplifier', overclock: 'p-overclock', heal: 'pu-heal', coins: 'pu-coin' };
 
 const titleCase = (s) => s.toLowerCase().replace(/\b\w/g, (c) => c.toUpperCase());
 const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
@@ -108,6 +112,12 @@ export class UI {
     this.paintCanvases(this.screenEl);
   }
 
+  // a 2.0 background picture behind the current screen (Art Bible UI3: the hangar, the journey map), darkened by CSS
+  screenArt(key) {
+    const pic = uiArt(key), el = this.screenEl.firstElementChild;
+    if (pic && el) { el.classList.add('has-art'); el.style.setProperty('--bgimg', `url(${pic})`); }
+  }
+
   clearScreen() { this.screenEl.innerHTML = ''; this.h = {}; }
 
   modal(html, handlers, cls = '', guardMs = 0) {
@@ -132,6 +142,30 @@ export class UI {
     el.querySelectorAll('canvas[data-ship]').forEach((c) => {
       const s = SHIPS[c.dataset.ship];
       const g = c.getContext('2d');
+      // the 2.0 look has a picture of every ship (js/v2/renderer.js); a skin colour other than the ship's tints it
+      // the hangar shows the 3/4 renders (Art Bible UI5) once they are loaded
+      const hero = c.dataset.hero && this.app.v2 && !this.app.oldLook && this.app.heroArt?.(c.dataset.skin || s.id);
+      if (hero) {
+        g.clearRect(0, 0, c.width, c.height);
+        g.drawImage(hero, 0, 0, c.width, c.height);
+        return;
+      }
+      const art = this.app.v2 && !this.app.oldLook && this.app.shipArt?.(s.id);
+      if (art) {
+        g.clearRect(0, 0, c.width, c.height);
+        const k = (c.width * 0.92) / Math.max(art.width, art.height);
+        const w = art.width * k, h = art.height * k;
+        g.drawImage(art, (c.width - w) / 2, (c.height - h) / 2, w, h);
+        if (c.dataset.color && c.dataset.color !== s.color) {
+          g.globalCompositeOperation = 'source-atop';
+          g.globalAlpha = 0.4;
+          g.fillStyle = c.dataset.color;
+          g.fillRect(0, 0, c.width, c.height);
+          g.globalAlpha = 1;
+          g.globalCompositeOperation = 'source-over';
+        }
+        return;
+      }
       const spr = shipSprite(s.shape, c.dataset.color || s.color);
       g.clearRect(0, 0, c.width, c.height);
       g.translate(c.width / 2, c.height / 2);
@@ -219,19 +253,24 @@ export class UI {
   }
 
   // ======================= MAP =======================
-  map(worldId = this.mapWorld || [...WORLDS].reverse().find((w) => this.app.isUnlocked(w.stages[0].id)).id) {
+  map(worldId = this.mapWorld || [...WORLDS].reverse().find((w) => !w.soon && this.app.isUnlocked(w.stages[0].id)).id) {
     this.mapWorld = worldId;
     const save = this.save;
     const world = WORLDS.find((w) => w.id === worldId);
-    const open = (w) => this.app.isUnlocked(w.stages[0].id);
+    const open = (w) => !w.soon && this.app.isUnlocked(w.stages[0].id);
     const tabs = WORLDS.map((w) => `
-      <button class="world-tab ${w.id === worldId ? 'active' : ''} ${open(w) ? '' : 'locked'}" style="--wc:${w.color}" data-act="world" data-id="${w.id}">
-        <span class="wnum">${w.id}</span><span class="wname">${esc(w.name)}</span>
+      <button class="world-tab ${w.id === worldId ? 'active' : ''} ${open(w) ? '' : 'locked'} ${w.soon ? 'wip' : ''}" style="--wc:${w.color}" data-act="world" data-id="${w.id}">
+        ${uiArt(`tok-${w.id}`) ? `<img class="wtoken" src="${uiArt(`${open(w) ? 'tok' : 'tokl'}-${w.id}`)}" alt="">` : ''}<span class="wnum">${w.id}</span><span class="wname">${esc(w.name)}</span>
       </button>`).join('');
     let body;
-    if (world.id > 1 && !this.app.store.isFull()) {
+    if (world.soon) {
+      // a 2.0 world still being built: its story and planned sectors (js/data.js PLANNED_WORLDS)
+      body = `<div class="construct" style="--wc:${world.color}"><div class="construct-kicker">UNDER CONSTRUCTION</div>
+        <h3>${esc(world.name)}</h3><p>${esc(world.story)}</p>
+        <ol class="construct-sectors">${world.plan.map((n, i) => `<li class="${i === world.plan.length - 1 ? 'boss' : ''}"><b>${world.id}-${i + 1}</b><span>${esc(n)}</span>${i === world.plan.length - 1 ? '<em>BOSS</em>' : ''}</li>`).join('')}</ol></div>`;
+    } else if (world.id > 2 && !this.app.store.isFull()) {
       body = `<div class="soon"><img src="${icon('lock', world.color)}" alt=""><h3>${esc(world.name)}</h3>
-        <p>Part of the full game: worlds 2–4, 18 sectors and 3 more bosses.</p>
+        <p>Part of the full game: the journey from the Moon to the Nexus.</p>
         <button class="btn full-btn" data-act="full">UNLOCK FULL GAME</button></div>`;
     } else if (!open(world)) {
       const prev = WORLDS.find((w) => w.id === world.id - 1);
@@ -239,7 +278,7 @@ export class UI {
       body = `<div class="soon"><img src="${icon('lock', world.color)}" alt=""><h3>${esc(world.name)}</h3><p>Defeat the ${esc(gate)} in ${esc(prev.name)} to open this sector.</p></div>`;
     } else {
       const totalStars = world.stages.reduce((a, s) => a + (save.stars[s.id] || 0), 0);
-      body = `<div class="world-head"><h2 style="--wc:${world.color}">${esc(world.name)}</h2><div class="star-count">${STAR}<b>${totalStars}</b>/${world.stages.length * 3}</div></div>
+      body = `<div class="world-head">${uiArt(`tok-${world.id}`) ? `<img class="wtoken-big" src="${uiArt(`tok-${world.id}`)}" alt="">` : ''}<h2 style="--wc:${world.color}">${esc(world.name)}</h2><div class="star-count">${STAR}<b>${totalStars}</b>/${world.stages.length * 3}</div></div>
       <div class="path">` + world.stages.map((s, i) => {
         const unlocked = this.app.isUnlocked(s.id);
         const stars = save.stars[s.id] || 0;
@@ -264,6 +303,7 @@ export class UI {
       stage: (ds) => this.briefing(ds.id),
       endless: (ds) => this.endlessBriefing(+ds.id),
     }, 'map');
+    this.screenArt('bg-map');
     this.coach('map');
   }
 
@@ -271,7 +311,8 @@ export class UI {
   endlessCard(world) {
     const best = this.save.endless[world.id];
     if (!this.app.endlessOpen()) {
-      const why = this.app.store.isFull() ? 'Defeat the Void Heart to open Endless in every world.' : 'Part of the full game.';
+      const last = ALL_STAGES[ALL_STAGES.length - 1];
+      const why = this.app.store.isFull() ? `Defeat the ${titleCase(BOSSES[last.boss].name)} to open Endless.` : 'Part of the full game.';
       return `<div class="endless-card locked" style="--wc:${world.color}"><b>∞ ENDLESS</b><span>${why}</span></div>`;
     }
     const sub = best ? `Best: ${best.kills} kills · ${fmtTime(best.time)}` : 'Survive as long as you can. Score: kills.';
@@ -320,6 +361,7 @@ export class UI {
         ${goal(2, eliteGoal(st))}
       </ul>
       <div class="brief-ship"><canvas data-ship="${ship.id}" width="96" height="96"></canvas><div><b>${esc(ship.name)}</b><br><small>${esc(WEAPONS[ship.weapon].name)}</small></div><button class="btn small" data-act="hangar">CHANGE</button></div>
+      ${this.crateRow()}
       <div class="modal-actions">
         <button class="btn" data-act="close">BACK</button>
         <button class="btn primary" data-act="launch">LAUNCH</button>
@@ -327,8 +369,51 @@ export class UI {
     `, {
       close: () => this.closeModal(),
       hangar: () => { this.closeModal(); this.hangar(() => this.map()); },
-      launch: () => { this.closeModal(); this.app.startStage(id); },
+      crate: (ds) => { this.save.crate = ds.k; this.app.persist(); this.briefing(id); },
+      launch: () => {
+        this.closeModal();
+        // the chosen supply crate is paid here, once, for this run only (RETRY and NEXT do not buy one)
+        const tier = CRATES[this.save.crate] ? this.save.crate : null;
+        if (tier && this.save.coins >= CRATES[tier].cost) {
+          this.save.coins -= CRATES[tier].cost;
+          this.app.persist();
+          this.app.startStage(id, { crate: tier });
+        } else {
+          if (tier) this.toast(`Not enough coins for the ${CRATES[tier].name}`);
+          this.app.startStage(id);
+        }
+      },
     });
+  }
+
+  // The supply crate choice on the briefing (js/crates.js): none or one of three, remembered between briefings.
+  crateRow() {
+    const coins = this.save.coins, sel = CRATES[this.save.crate] ? this.save.crate : 'none';
+    const opt = (k) => {
+      const c = CRATES[k], short = c.cost - coins;
+      return `<button class="crate-opt ${sel === k ? 'on' : ''} ${short > 0 ? 'short' : ''}" style="--kc:${c.color}" data-act="crate" data-k="${k}">
+        <b>${c.name.replace(' Crate', '')}</b><span>${COIN}${c.cost.toLocaleString('en-US')}</span><small>${c.items} item${c.items > 1 ? 's' : ''} · LV ${c.levels[0][0]}-${c.levels[c.levels.length - 1][0]}</small>
+        ${short > 0 ? `<em>${short.toLocaleString('en-US')} short</em>` : ''}</button>`;
+    };
+    return `<div class="crate-row"><div class="crate-head">SUPPLY CRATE <span>random weapons or perks to start with</span></div>
+      <div class="crate-opts"><button class="crate-opt none ${sel === 'none' ? 'on' : ''}" data-act="crate" data-k="none"><b>None</b><span>&nbsp;</span><small>no crate</small></button>${CRATE_ORDER.map(opt).join('')}</div></div>`;
+  }
+
+  // A supply crate opening at the start of a run: its items turn over one after another, then GO.
+  crateOpen(tier, cards, onGo) {
+    const c = CRATES[tier];
+    const html = cards.map((it, i) => `
+      <div class="crate-card" style="--cc:${it.color};--kc:${c.color};animation-delay:${0.35 + i * 0.45}s">
+        <img src="${icon(it.icon, it.color, false, it.art)}" alt="">
+        <div><b>${esc(it.name)}</b><small>${it.kind === 'weapon' ? 'WEAPON' : 'PERK'}</small></div>
+        <span class="crate-lv">LV ${it.level}</span>
+      </div>`).join('');
+    this.modal(`
+      <div class="lu-title" style="color:${c.color}">${esc(c.name.toUpperCase())}</div>
+      <div class="muted center">Supplies for this run</div>
+      <div class="crate-cards">${html}</div>
+      <div class="modal-actions"><button class="btn primary" data-act="go">GO</button></div>
+    `, { go: () => { this.closeModal(); onGo(); } }, 'crate-open', 350 + cards.length * 450);
   }
 
   // ======================= HANGAR =======================
@@ -344,13 +429,16 @@ export class UI {
         : owned ? `<button class="btn small primary" data-act="select" data-id="${s.id}">SELECT</button>`
           : !full ? '<button class="btn small full-btn" data-act="full">FULL GAME</button>'
             : `<button class="btn small buy" data-act="buy" data-id="${s.id}" ${save.coins < s.cost ? 'disabled' : ''}>${COIN}<span class="num">${s.cost}</span></button>`;
-      const skins = s.id === 'striker' && save.skins.includes('gold')
+      // the Striker's skins: Gold (full game) and Veteran (1.x players)
+      const gold = save.skins.includes('gold'), vet = !!save.veteran;
+      const skins = s.id === 'striker' && (gold || vet)
         ? `<div class="skin-row"><span>Color</span>
-            <button class="skin ${save.skin !== 'gold' ? 'on' : ''}" data-act="skin" data-id="" style="--k:${base.color}">Neon</button>
-            <button class="skin ${save.skin === 'gold' ? 'on' : ''}" data-act="skin" data-id="gold" style="--k:#ffd23d">Gold ★</button></div>`
+            <button class="skin ${!['gold', 'veteran'].includes(save.skin) ? 'on' : ''}" data-act="skin" data-id="" style="--k:${base.color}">Neon</button>
+            ${gold ? `<button class="skin ${save.skin === 'gold' ? 'on' : ''}" data-act="skin" data-id="gold" style="--k:#ffd23d">Gold ★</button>` : ''}
+            ${vet ? `<button class="skin ${save.skin === 'veteran' ? 'on' : ''}" data-act="skin" data-id="veteran" style="--k:#ff2d95">Veteran</button>` : ''}</div>`
         : '';
       return `<div class="ship-card ${sel ? 'selected' : ''}" style="--sc:${s.color}">
-        <canvas data-ship="${s.id}" data-color="${s.color}" width="120" height="120"></canvas>
+        <canvas data-ship="${s.id}" data-color="${s.color}" data-hero="1" data-skin="${s.id === 'striker' && ((save.skin === 'gold' && gold) || (save.skin === 'veteran' && vet)) ? save.skin : ''}" width="120" height="120"></canvas>
         <div class="ship-info">
           <h3>${esc(s.name)}</h3>
           <p class="muted">${esc(s.desc)}</p>
@@ -359,7 +447,7 @@ export class UI {
             <label>SPEED</label>${bars(s.speed, 300)}
             <label>POWER</label>${bars(s.dmg, 1.2)}
           </div>
-          <div class="ship-weapon"><img src="${icon(WEAPONS[s.weapon].icon, WEAPONS[s.weapon].color)}" alt=""><span>${esc(WEAPONS[s.weapon].name)}</span><em>${esc(s.perk)}</em></div>
+          <div class="ship-weapon"><img src="${icon(WEAPONS[s.weapon].icon, WEAPONS[s.weapon].color, false, `w-${s.weapon}`)}" alt=""><span>${esc(WEAPONS[s.weapon].name)}</span><em>${esc(s.perk)}</em></div>
           ${skins}
           ${btn}
         </div>
@@ -386,6 +474,7 @@ export class UI {
         this.hangar(back);
       },
     }, 'hangar');
+    this.screenArt('bg-hangar');
   }
 
   // ======================= CODEX =======================
@@ -396,14 +485,19 @@ export class UI {
     const all = sections.flatMap((s) => s.items);
     const count = all.filter((x) => found[x.key]).length;
     const entry = (x) => found[x.key]
-      ? `<div class="codex-item" style="--cc:${x.color}"><img src="${icon(x.icon, x.color, x.evo)}" alt="">
+      ? `<div class="codex-item" style="--cc:${x.color}"><img src="${icon(x.icon, x.color, x.evo, x.art)}" alt="">
           <div><b>${esc(x.name)}</b><small>${esc(x.desc)}</small>${x.recipe ? `<em>${esc(x.recipe)}</em>` : ''}</div></div>`
       : `<div class="codex-item locked"><div class="codex-q">?</div><div><b>???</b><small>${esc(x.hint)}</small></div></div>`;
+    // the Log: the story scenes seen so far, to replay (js/story.js)
+    const seen = this.save.story || {};
+    const logHtml = `<h3 class="codex-head">LOG <span>${STORY_ORDER.filter((k) => seen[k]).length}/${STORY_ORDER.length}</span></h3>${STORY_ORDER.map((k) => (seen[k]
+      ? `<button class="codex-item codex-log" data-act="story" data-k="${k}"><div class="codex-q">▶</div><div><b>${esc(STORY[k].title)}</b><small>Replay this transmission</small></div></button>`
+      : `<div class="codex-item codex-log locked"><div class="codex-q">?</div><div><b>???</b><small>${k === 'intro' ? 'Start the journey' : k === 'outro' ? 'Destroy the Void Heart' : `Defeat the boss of world ${k.slice(1)}`}</small></div></div>`)).join('')}`;
     this.setScreen(`
       <div class="topbar"><button class="icon-btn" data-act="back" aria-label="Back">‹</button><h1 class="title">CODEX</h1><div class="codex-count">${count}/${all.length}</div></div>
       <p class="muted center">Everything you have found in your runs. Keep playing to fill in the rest.</p>
-      <div class="scroll">${sections.map((s) => `<h3 class="codex-head">${s.title} <span>${s.items.filter((x) => found[x.key]).length}/${s.items.length}</span></h3>${s.items.map(entry).join('')}`).join('')}</div>
-    `, { back }, 'codex');
+      <div class="scroll">${logHtml}${sections.map((s) => `<h3 class="codex-head">${s.title} <span>${s.items.filter((x) => found[x.key]).length}/${s.items.length}</span></h3>${s.items.map(entry).join('')}`).join('')}</div>
+    `, { back, story: (d) => this.app.playStory(d.k, () => this.codex(back)) }, 'codex');
   }
 
   // ======================= SHOP =======================
@@ -427,7 +521,7 @@ export class UI {
         ? `${esc(it.stat)} <b class="fx-now">${fmt(lvl)}</b>`
         : `${esc(it.stat)} <b class="fx-now">${fmt(lvl)}</b> <span class="fx-arrow">→</span> <b class="fx-next">${fmt(lvl + 1)}</b>`;
       return `<div class="shop-row">
-        <img src="${icon(it.icon, '#2ff3ff')}" alt="">
+        <img src="${icon(it.icon, '#2ff3ff', false, SHOP_ART[it.icon])}" alt="">
         <div class="shop-info"><div class="shop-head"><b>${esc(it.name)}</b><span class="shop-lvl">LV ${lvl}/${max}</span></div>
           <small class="shop-fx">${effect}</small><div class="pips">${pips}</div></div>
         ${maxed ? '<button class="btn small" disabled>MAX</button>'
@@ -483,6 +577,27 @@ export class UI {
     }, 'daily');
   }
 
+  // The one-time welcome for a 1.x player (js/save.js moved their save to 2.0 and paid the veteran coins).
+  veteran() {
+    const w = this.save.veteranWelcome;
+    if (!w) return;
+    this.modal(`
+      <h2>WELCOME BACK, PILOT</h2>
+      <p>Void Blaster 2.0 is a new journey: ten new worlds from Earth's orbit to the heart of the Collective. Your
+      sector progress and upgrades start over.</p>
+      <p class="muted">Your purchase, ships and settings are kept. For flying with us since 1.x:</p>
+      <div class="veteran-gift">${COIN}<b>${w.coins}</b><small>VETERAN COINS</small></div>
+      <div class="modal-actions"><button class="btn primary" data-act="go">START THE JOURNEY</button></div>
+    `, {
+      go: () => {
+        this.save.veteranWelcome = null;
+        this.app.persist();
+        this.closeModal();
+        this.menu();
+      },
+    }, 'veteran', 400);
+  }
+
   // ======================= SETTINGS =======================
   settings() {
     const s = this.save.settings;
@@ -508,7 +623,7 @@ export class UI {
       tips: () => { setTips(this.app, true); this.toast('Tutorial hints will show again'); },
       restore: async () => {
         const owned = await this.app.store.restore();
-        this.toast(owned ? 'Full game restored' : 'No purchase found for this Apple ID');
+        this.toast(owned ? 'Full game restored' : `No purchase found for this ${this.app.native?.platform === 'android' ? 'Google account' : 'Apple ID'}`);
         this.settings();
       },
       control: () => {
@@ -596,15 +711,15 @@ export class UI {
   }
 
   buildHtml(build) {
-    const item = (x) => `<div class="build-item" style="--ic:${x.color}" title="${esc(x.name)}"><img src="${icon(x.icon, x.color)}" alt=""><b>${x.level}</b></div>`;
+    const item = (x) => `<div class="build-item" style="--ic:${x.color}" title="${esc(x.name)}"><img src="${icon(x.icon, x.color, false, x.art)}" alt=""><b>${x.level}</b></div>`;
     const combos = (build.combos || []).map((c) => `<span class="combo-chip" style="--cc:${c.color}" title="${esc(c.desc)}">${esc(c.name)}</span>`).join('');
     return `<div class="build"><div class="build-row">${build.weapons.map(item).join('')}</div><div class="build-row">${build.passives.map(item).join('')}</div>${combos ? `<div class="build-combos">${combos}</div>` : ''}</div>`;
   }
 
   levelUp({ title, sub, cards, rerolls, build, onPick, onReroll, step = 1, steps = 1, hint = '' }) {
     const html = cards.map((c, i) => `
-      <button class="card ${c.evo ? 'evo' : ''} ${c.combo ? 'combo' : ''}" style="--cc:${c.color}" data-act="pick" data-i="${i}">
-        <img src="${icon(c.icon, c.color, c.evo)}" alt="">
+      <button class="card ${c.evo ? 'evo' : ''} ${c.combo ? 'combo' : ''} ${c.superCombo ? 'super' : ''}" style="--cc:${c.color}" data-act="pick" data-i="${i}">
+        <img src="${icon(c.icon, c.color, c.evo, c.art)}" alt="">
         <div class="card-info">
           <div class="card-top"><b>${esc(c.name)}</b><span class="tag ${c.tag === 'NEW' ? 'new' : ''}">${c.tag}</span></div>
           <div class="card-desc">${esc(c.desc)}</div>
@@ -672,12 +787,12 @@ export class UI {
     const buyLabel = store.mode === 'none' ? 'AVAILABLE IN THE iOS APP'
       : `UNLOCK${price ? ` — ${esc(price)}` : ''}${store.mode === 'dev' ? ' (TEST)' : ''}`;
     this.modal(`
-      <div class="modal-kicker" style="color:var(--gold)">${afterBoss ? 'HIVE MOTHER DEFEATED' : 'VOID BLASTER'}</div>
+      <div class="modal-kicker" style="color:var(--gold)">${afterBoss ? 'HARVESTER DEFEATED' : 'VOID BLASTER'}</div>
       <h2>${afterBoss ? 'THE GALAXY NEEDS YOU' : 'UNLOCK THE FULL GAME'}</h2>
-      <p class="muted center">${afterBoss ? 'Three more worlds are waiting beyond the Neon Nebula.' : 'One purchase, no ads, no subscriptions.'}</p>
+      <p class="muted center">${afterBoss ? 'The journey to the heart of the Collective goes on.' : 'One purchase, no ads, no subscriptions.'}</p>
       <ul class="perks">
-        <li><b>3 new worlds</b><span>Crystal Belt, Solar Forge, Void Core: 18 sectors</span></li>
-        <li><b>3 epic bosses</b><span>Crystal Serpent, Forge Titan and the Void Heart</span></li>
+        <li><b>The whole journey</b><span>From the Moon to the Nexus: worlds 3–10, 48 sectors</span></li>
+        <li><b>8 more bosses</b><span>From the Moon Spire to the Void Heart</span></li>
         <li><b>2 new ships</b><span>Phantom and Titan, unlocked right away</span></li>
         <li><b>Every upgrade level</b><span>Past level ${FREE_SHOP_CAP} in the Upgrades shop</span></li>
         <li><b>Welcome bonus</b><span>${UNLOCK_COINS.toLocaleString('en-US')} coins and the Gold Striker skin</span></li>
@@ -703,13 +818,13 @@ export class UI {
           this.toast('Purchase pending approval');
           after();
         } else {
-          if (status === 'error' || status === 'unavailable') this.toast('The App Store is not available right now');
+          if (status === 'error' || status === 'unavailable') this.toast(`${this.app.native?.platform === 'android' ? 'Google Play' : 'The App Store'} is not available right now`);
           this.paywall(after, afterBoss);
         }
       },
       restore: async () => {
         const owned = await store.restore();
-        this.toast(owned ? 'Full game restored' : 'No purchase found for this Apple ID');
+        this.toast(owned ? 'Full game restored' : `No purchase found for this ${this.app.native?.platform === 'android' ? 'Google account' : 'Apple ID'}`);
         if (owned) { this.closeModal(); after(); } else this.paywall(after, afterBoss);
       },
     }, 'paywall', 300);
@@ -720,10 +835,18 @@ export class UI {
     const next = ALL_STAGES[idx + 1];
     const canNext = r.won && next && this.app.isUnlocked(next.id);
     const invite = r.won && next && this.app.needsFullGame(next.id);
+    // 2.0: past the last built world the journey goes on in a world under construction
+    const ahead = !next && WORLDS.find((w) => w.id === r.stage.world.id + 1);
     // a star earned for the first time in this run is marked NEW
     const stars = [0, 1, 2].map((k) => `<span class="rstar ${k < r.stars ? 'on' : ''} ${k >= r.prevStars && k < r.stars ? 'new' : ''}" style="animation-delay:${0.3 + k * 0.25}s">${STAR}</span>`).join('');
     // every goal with its progress, so the player sees which one was missed
     const st = r.stage;
+    // a world's boss beaten for the first time: its story scene (js/story.js) plays when the player leaves the
+    // results (not on RETRY); after world 2 the trial's invitation follows it
+    const worldDone = r.won && (!next || next.world.id !== st.world.id);
+    const sceneKey = worldDone ? sceneAfterWorld(st.world.id) : null;
+    const scene = sceneKey && !this.save.story?.[sceneKey] ? sceneKey : null;
+    const story = (then) => (scene ? this.app.playStory(scene, then) : then());
     const bossNote = st.boss ? (r.won ? ' + boss' : ' + boss ✗') : '';
     const rows = [
       [st.boss ? 'Defeat the boss' : 'Survive', st.boss ? (r.won ? '✓' : '✗') : `${fmtTime(Math.min(r.time, st.duration))} / ${fmtTime(st.duration)}`],
@@ -736,8 +859,9 @@ export class UI {
     }).join('');
     this.hideHud();
     this.modal(`
-      <div class="lu-title ${r.won ? '' : 'lose'}">${r.won ? (next ? 'SECTOR CLEAR' : 'GALAXY SAVED') : 'SHIP DESTROYED'}</div>
-      ${r.won && !next ? `<p class="muted center">The Void Heart is destroyed. Replay any sector to collect every star.${this.app.endlessOpen() ? ' <b>Endless mode is open in every world.</b>' : ''}</p>` : ''}
+      <div class="lu-title ${r.won ? '' : 'lose'}">${r.won ? (next ? 'SECTOR CLEAR' : ahead ? 'WORLD CLEAR' : 'GALAXY SAVED') : 'SHIP DESTROYED'}</div>
+      ${r.won && ahead ? `<p class="muted center">Next on the journey: ${esc(ahead.name)}, under construction.</p>` : ''}
+      ${r.won && !next && !ahead ? `<p class="muted center">The Void Heart is destroyed. Replay any sector to collect every star.${this.app.endlessOpen() ? ' <b>Endless mode is open in every world.</b>' : ''}</p>` : ''}
       <div class="muted center">${esc(r.stage.id)} · ${esc(r.stage.name)}</div>
       ${r.won ? `<div class="rstars">${stars}</div>` : ''}
       <ul class="goals progress">${goals}</ul>
@@ -757,12 +881,12 @@ export class UI {
         ${invite ? '<button class="btn primary" data-act="full">CONTINUE</button>' : ''}
       </div>
       ${r.newEntries?.length ? `<div class="codex-new">NEW IN CODEX: ${r.newEntries.map((k) => esc(codexName(k))).join(', ')}</div>` : ''}
-      ${!r.won ? '<p class="tiny muted center">Tip: spend coins on permanent Upgrades to get stronger.</p>' : ''}
+      ${!r.won ? `<p class="tiny muted center">Tip: spend coins on permanent Upgrades${this.save.coins >= 250 ? ', or pick a supply crate on the sector briefing' : ''} to get stronger.</p>` : ''}
     `, {
-      map: () => { this.closeModal(); this.app.endRun(); this.map(); },
+      map: () => { this.closeModal(); this.app.endRun(); story(() => this.map()); },
       retry: () => { this.closeModal(); this.app.startStage(r.stage.id); },
-      next: () => { this.closeModal(); this.app.startStage(next.id); },
-      full: () => { this.closeModal(); this.app.endRun(); this.paywall(() => this.map(), true); },
+      next: () => { this.closeModal(); if (scene) { this.app.endRun(); story(() => this.app.startStage(next.id)); } else this.app.startStage(next.id); },
+      full: () => { this.closeModal(); this.app.endRun(); story(() => this.paywall(() => this.map(), true)); },
     }, 'results', 700);
   }
 

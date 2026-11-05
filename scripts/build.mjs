@@ -31,10 +31,7 @@ await build({
 if (channel === 'release' && readFileSync(`${out}/app.js`, 'utf8').includes('VB-TESTKIT')) {
   throw new Error('Release build contains the TEST panel (js/testkit.js). Stopping.');
 }
-// ...nor, until 2.0 launches, the 2.0 look (js/v2/, PixiJS), which only the TEST variant loads
-if (channel === 'release' && readFileSync(`${out}/app.js`, 'utf8').includes('VB-V2LOOK')) {
-  throw new Error('Release build contains the 2.0 look (js/v2/). Stopping.');
-}
+// (the 2.0 line, js/edition.js, contains the 2.0 look (js/v2/, PixiJS) in every build; main's builds stop if they do)
 
 for (const dir of ['css', 'fonts', 'icons']) cpSync(dir, `${out}/${dir}`, { recursive: true });
 

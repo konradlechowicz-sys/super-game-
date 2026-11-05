@@ -1,0 +1,3178 @@
+{
+  "world": 7,
+  "name": "Abyss of Europa",
+  "generator": "built-in image_gen",
+  "assets": {
+    "W7-P3-floor.png": {
+      "source": "W7\\variants\\W7-P3-final-source.png",
+      "native_size": [
+        1254,
+        1254
+      ],
+      "size": [
+        1024,
+        1024
+      ],
+      "mode": "RGBA",
+      "processing": "Minimum-error overlap cuts on existing source pixels, exact stored opposite edges; original retained; output normalization",
+      "upscaled": false
+    },
+    "W7-P2-background.png": {
+      "source": "W7\\variants\\W7-P2-final-source.png",
+      "native_size": [
+        1254,
+        1254
+      ],
+      "size": [
+        2048,
+        2048
+      ],
+      "mode": "RGB",
+      "processing": "Minimum-error overlap cuts on existing source pixels, exact stored opposite edges; original retained; output normalization",
+      "upscaled": true
+    },
+    "W7-P4-overlay.png": {
+      "source": "W7\\variants\\W7-P4-final-source.png",
+      "native_size": [
+        1254,
+        1254
+      ],
+      "size": [
+        1024,
+        1024
+      ],
+      "mode": "RGB",
+      "processing": "Minimum-error overlap cuts on existing source pixels, exact stored opposite edges; original retained; output normalization",
+      "upscaled": false
+    },
+    "W7-P5-props/W7-P5-ice-spire-cluster.png": {
+      "source": "W7\\variants\\W7-P5-camera-corrected-source.png",
+      "source_cell": [
+        0,
+        0,
+        385,
+        585
+      ],
+      "trim_bounds": [
+        20,
+        105,
+        369,
+        551
+      ],
+      "background_estimate": [
+        3.0,
+        0.0,
+        9.0
+      ],
+      "file": "W7-P5-props/W7-P5-ice-spire-cluster.png",
+      "source_content_size": [
+        349,
+        446
+      ],
+      "content_size": [
+        235,
+        300
+      ],
+      "size": [
+        259,
+        324
+      ],
+      "scale_factor": 0.672645739910314,
+      "content_box": [
+        12,
+        12,
+        247,
+        312
+      ],
+      "atlas_box": [
+        70,
+        38,
+        329,
+        362
+      ],
+      "atlas": "W7-P5-props-sheet.png"
+    },
+    "W7-P5-props/W7-P5-frozen-hybrid-carcass.png": {
+      "source": "W7\\variants\\W7-P5-carcass-topdown-source.png",
+      "source_cell": [
+        400,
+        0,
+        875,
+        760
+      ],
+      "trim_bounds": [
+        2,
+        63,
+        465,
+        756
+      ],
+      "background_estimate": [
+        6.0,
+        0.0,
+        15.0
+      ],
+      "file": "W7-P5-props/W7-P5-frozen-hybrid-carcass.png",
+      "source_content_size": [
+        463,
+        693
+      ],
+      "content_size": [
+        187,
+        280
+      ],
+      "size": [
+        211,
+        304
+      ],
+      "scale_factor": 0.40404040404040403,
+      "content_box": [
+        12,
+        12,
+        199,
+        292
+      ],
+      "atlas_box": [
+        494,
+        48,
+        705,
+        352
+      ],
+      "atlas": "W7-P5-props-sheet.png"
+    },
+    "W7-P5-props/W7-P5-green-lit-crevasse.png": {
+      "source": "W7\\variants\\W7-P5-camera-corrected-source.png",
+      "source_cell": [
+        755,
+        0,
+        1095,
+        585
+      ],
+      "trim_bounds": [
+        0,
+        111,
+        325,
+        556
+      ],
+      "background_estimate": [
+        4.0,
+        0.0,
+        9.0
+      ],
+      "file": "W7-P5-props/W7-P5-green-lit-crevasse.png",
+      "source_content_size": [
+        325,
+        445
+      ],
+      "content_size": [
+        204,
+        280
+      ],
+      "size": [
+        228,
+        304
+      ],
+      "scale_factor": 0.6292134831460674,
+      "content_box": [
+        12,
+        12,
+        216,
+        292
+      ],
+      "atlas_box": [
+        886,
+        48,
+        1114,
+        352
+      ],
+      "atlas": "W7-P5-props-sheet.png"
+    },
+    "W7-P5-props/W7-P5-steaming-vent.png": {
+      "source": "W7\\variants\\W7-P5-camera-corrected-source.png",
+      "source_cell": [
+        1095,
+        0,
+        1310,
+        585
+      ],
+      "trim_bounds": [
+        10,
+        130,
+        192,
+        501
+      ],
+      "background_estimate": [
+        4.0,
+        0.0,
+        9.0
+      ],
+      "file": "W7-P5-props/W7-P5-steaming-vent.png",
+      "source_content_size": [
+        182,
+        371
+      ],
+      "content_size": [
+        49,
+        100
+      ],
+      "size": [
+        73,
+        124
+      ],
+      "scale_factor": 0.2695417789757412,
+      "content_box": [
+        12,
+        12,
+        61,
+        112
+      ],
+      "atlas_box": [
+        1364,
+        138,
+        1437,
+        262
+      ],
+      "atlas": "W7-P5-props-sheet.png"
+    },
+    "W7-P5-props/W7-P5-circuit-vine-knot.png": {
+      "source": "W7\\variants\\W7-P5-camera-corrected-source.png",
+      "source_cell": [
+        1310,
+        0,
+        1536,
+        585
+      ],
+      "trim_bounds": [
+        8,
+        183,
+        208,
+        501
+      ],
+      "background_estimate": [
+        4.0,
+        0.0,
+        9.0
+      ],
+      "file": "W7-P5-props/W7-P5-circuit-vine-knot.png",
+      "source_content_size": [
+        200,
+        318
+      ],
+      "content_size": [
+        63,
+        100
+      ],
+      "size": [
+        87,
+        124
+      ],
+      "scale_factor": 0.31446540880503143,
+      "content_box": [
+        12,
+        12,
+        75,
+        112
+      ],
+      "atlas_box": [
+        156,
+        538,
+        243,
+        662
+      ],
+      "atlas": "W7-P5-props-sheet.png"
+    },
+    "W7-P5-props/W7-P5-ice-boulder.png": {
+      "source": "W7\\variants\\W7-P5-camera-corrected-source.png",
+      "source_cell": [
+        0,
+        585,
+        280,
+        1024
+      ],
+      "trim_bounds": [
+        39,
+        110,
+        247,
+        329
+      ],
+      "background_estimate": [
+        3.0,
+        0.0,
+        9.0
+      ],
+      "file": "W7-P5-props/W7-P5-ice-boulder.png",
+      "source_content_size": [
+        208,
+        219
+      ],
+      "content_size": [
+        95,
+        100
+      ],
+      "size": [
+        119,
+        124
+      ],
+      "scale_factor": 0.45662100456621,
+      "content_box": [
+        12,
+        12,
+        107,
+        112
+      ],
+      "atlas_box": [
+        540,
+        538,
+        659,
+        662
+      ],
+      "atlas": "W7-P5-props-sheet.png"
+    },
+    "W7-P5-props/W7-P5-spore-lantern-intact.png": {
+      "source": "W7\\variants\\W7-P5-camera-corrected-source.png",
+      "source_cell": [
+        280,
+        585,
+        575,
+        1024
+      ],
+      "trim_bounds": [
+        24,
+        53,
+        271,
+        339
+      ],
+      "background_estimate": [
+        4.0,
+        0.0,
+        9.0
+      ],
+      "file": "W7-P5-props/W7-P5-spore-lantern-intact.png",
+      "source_content_size": [
+        247,
+        286
+      ],
+      "content_size": [
+        155,
+        180
+      ],
+      "size": [
+        179,
+        204
+      ],
+      "scale_factor": 0.6293706293706294,
+      "content_box": [
+        12,
+        12,
+        167,
+        192
+      ],
+      "atlas_box": [
+        910,
+        498,
+        1089,
+        702
+      ],
+      "atlas": "W7-P5-props-sheet.png"
+    },
+    "W7-P5-props/W7-P5-spore-lantern-shattered.png": {
+      "source": "W7\\variants\\W7-P5-camera-corrected-source.png",
+      "source_cell": [
+        575,
+        585,
+        900,
+        1024
+      ],
+      "trim_bounds": [
+        20,
+        49,
+        283,
+        347
+      ],
+      "background_estimate": [
+        4.0,
+        0.0,
+        9.0
+      ],
+      "file": "W7-P5-props/W7-P5-spore-lantern-shattered.png",
+      "source_content_size": [
+        263,
+        298
+      ],
+      "content_size": [
+        166,
+        188
+      ],
+      "size": [
+        190,
+        212
+      ],
+      "scale_factor": 0.6293706293706294,
+      "content_box": [
+        12,
+        12,
+        178,
+        200
+      ],
+      "atlas_box": [
+        1305,
+        494,
+        1495,
+        706
+      ],
+      "atlas": "W7-P5-props-sheet.png"
+    },
+    "W7-P5-props/W7-P5-ice-locked-pod-intact.png": {
+      "source": "W7\\variants\\W7-P5-camera-corrected-source.png",
+      "source_cell": [
+        900,
+        585,
+        1165,
+        1024
+      ],
+      "trim_bounds": [
+        19,
+        25,
+        225,
+        358
+      ],
+      "background_estimate": [
+        4.0,
+        0.0,
+        9.0
+      ],
+      "file": "W7-P5-props/W7-P5-ice-locked-pod-intact.png",
+      "source_content_size": [
+        206,
+        333
+      ],
+      "content_size": [
+        111,
+        180
+      ],
+      "size": [
+        135,
+        204
+      ],
+      "scale_factor": 0.5405405405405406,
+      "content_box": [
+        12,
+        12,
+        123,
+        192
+      ],
+      "atlas_box": [
+        132,
+        898,
+        267,
+        1102
+      ],
+      "atlas": "W7-P5-props-sheet.png"
+    },
+    "W7-P5-props/W7-P5-ice-locked-pod-shattered.png": {
+      "source": "W7\\variants\\W7-P5-camera-corrected-source.png",
+      "source_cell": [
+        1185,
+        585,
+        1536,
+        1024
+      ],
+      "trim_bounds": [
+        0,
+        17,
+        316,
+        366
+      ],
+      "background_estimate": [
+        4.0,
+        0.0,
+        9.0
+      ],
+      "file": "W7-P5-props/W7-P5-ice-locked-pod-shattered.png",
+      "source_content_size": [
+        316,
+        349
+      ],
+      "content_size": [
+        171,
+        189
+      ],
+      "size": [
+        195,
+        213
+      ],
+      "scale_factor": 0.5405405405405406,
+      "content_box": [
+        12,
+        12,
+        183,
+        201
+      ],
+      "atlas_box": [
+        502,
+        894,
+        697,
+        1107
+      ],
+      "atlas": "W7-P5-props-sheet.png"
+    },
+    "W7-P5-props-sheet.png": {
+      "items": [
+        "W7-P5-props/W7-P5-ice-spire-cluster.png",
+        "W7-P5-props/W7-P5-frozen-hybrid-carcass.png",
+        "W7-P5-props/W7-P5-green-lit-crevasse.png",
+        "W7-P5-props/W7-P5-steaming-vent.png",
+        "W7-P5-props/W7-P5-circuit-vine-knot.png",
+        "W7-P5-props/W7-P5-ice-boulder.png",
+        "W7-P5-props/W7-P5-spore-lantern-intact.png",
+        "W7-P5-props/W7-P5-spore-lantern-shattered.png",
+        "W7-P5-props/W7-P5-ice-locked-pod-intact.png",
+        "W7-P5-props/W7-P5-ice-locked-pod-shattered.png"
+      ],
+      "boxes": [
+        [
+          70,
+          38,
+          329,
+          362
+        ],
+        [
+          494,
+          48,
+          705,
+          352
+        ],
+        [
+          886,
+          48,
+          1114,
+          352
+        ],
+        [
+          1364,
+          138,
+          1437,
+          262
+        ],
+        [
+          156,
+          538,
+          243,
+          662
+        ],
+        [
+          540,
+          538,
+          659,
+          662
+        ],
+        [
+          910,
+          498,
+          1089,
+          702
+        ],
+        [
+          1305,
+          494,
+          1495,
+          706
+        ],
+        [
+          132,
+          898,
+          267,
+          1102
+        ],
+        [
+          502,
+          894,
+          697,
+          1107
+        ]
+      ],
+      "size": [
+        1600,
+        1200
+      ],
+      "operation": "Technical layout at recorded sprite scale, no overlapping boxes"
+    },
+    "W7-P7-enemies/W7-P7-ice-wisp.png": {
+      "source": "W7\\variants\\W7-P7-enemies-source.png",
+      "source_cell": [
+        0,
+        0,
+        500,
+        405
+      ],
+      "trim_bounds": [
+        188,
+        93,
+        327,
+        386
+      ],
+      "background_estimate": [
+        5.0,
+        0.0,
+        12.0
+      ],
+      "file": "W7-P7-enemies/W7-P7-ice-wisp.png",
+      "source_content_size": [
+        139,
+        293
+      ],
+      "content_size": [
+        64,
+        135
+      ],
+      "size": [
+        88,
+        159
+      ],
+      "scale_factor": 0.46075085324232085,
+      "content_box": [
+        12,
+        12,
+        76,
+        147
+      ],
+      "atlas_box": [
+        136,
+        120,
+        224,
+        279
+      ],
+      "atlas": "W7-P7-enemies-sheet.png"
+    },
+    "W7-P7-enemies/W7-P7-frost-crab.png": {
+      "source": "W7\\variants\\W7-P7-enemies-source.png",
+      "source_cell": [
+        500,
+        0,
+        955,
+        405
+      ],
+      "trim_bounds": [
+        8,
+        47,
+        392,
+        392
+      ],
+      "background_estimate": [
+        5.0,
+        0.0,
+        12.0
+      ],
+      "file": "W7-P7-enemies/W7-P7-frost-crab.png",
+      "source_content_size": [
+        384,
+        345
+      ],
+      "content_size": [
+        194,
+        174
+      ],
+      "size": [
+        218,
+        198
+      ],
+      "scale_factor": 0.5052083333333334,
+      "content_box": [
+        12,
+        12,
+        206,
+        186
+      ],
+      "atlas_box": [
+        431,
+        101,
+        649,
+        299
+      ],
+      "atlas": "W7-P7-enemies-sheet.png"
+    },
+    "W7-P7-enemies/W7-P7-tentacle-mine.png": {
+      "source": "W7\\variants\\W7-P7-enemies-source.png",
+      "source_cell": [
+        955,
+        0,
+        1448,
+        405
+      ],
+      "trim_bounds": [
+        33,
+        59,
+        442,
+        370
+      ],
+      "background_estimate": [
+        5.0,
+        0.0,
+        12.0
+      ],
+      "file": "W7-P7-enemies/W7-P7-tentacle-mine.png",
+      "source_content_size": [
+        409,
+        311
+      ],
+      "content_size": [
+        174,
+        132
+      ],
+      "size": [
+        198,
+        156
+      ],
+      "scale_factor": 0.4254278728606357,
+      "content_box": [
+        12,
+        12,
+        186,
+        144
+      ],
+      "atlas_box": [
+        801,
+        122,
+        999,
+        278
+      ],
+      "atlas": "W7-P7-enemies-sheet.png"
+    },
+    "W7-P7-enemies/W7-P7-spore-lantern.png": {
+      "source": "W7\\variants\\W7-P7-enemies-source.png",
+      "source_cell": [
+        0,
+        405,
+        490,
+        1086
+      ],
+      "trim_bounds": [
+        33,
+        71,
+        482,
+        560
+      ],
+      "background_estimate": [
+        5.0,
+        0.0,
+        12.0
+      ],
+      "file": "W7-P7-enemies/W7-P7-spore-lantern.png",
+      "source_content_size": [
+        449,
+        489
+      ],
+      "content_size": [
+        196,
+        213
+      ],
+      "size": [
+        220,
+        237
+      ],
+      "scale_factor": 0.43558282208588955,
+      "content_box": [
+        12,
+        12,
+        208,
+        225
+      ],
+      "atlas_box": [
+        70,
+        482,
+        290,
+        719
+      ],
+      "atlas": "W7-P7-enemies-sheet.png"
+    },
+    "W7-P7-enemies/W7-P7-eel-hybrid.png": {
+      "source": "W7\\variants\\W7-P7-enemies-source.png",
+      "source_cell": [
+        490,
+        405,
+        915,
+        1086
+      ],
+      "trim_bounds": [
+        65,
+        9,
+        356,
+        635
+      ],
+      "background_estimate": [
+        5.0,
+        0.0,
+        12.0
+      ],
+      "file": "W7-P7-enemies/W7-P7-eel-hybrid.png",
+      "source_content_size": [
+        291,
+        626
+      ],
+      "content_size": [
+        112,
+        242
+      ],
+      "size": [
+        136,
+        266
+      ],
+      "scale_factor": 0.3865814696485623,
+      "content_box": [
+        12,
+        12,
+        124,
+        254
+      ],
+      "atlas_box": [
+        472,
+        467,
+        608,
+        733
+      ],
+      "atlas": "W7-P7-enemies-sheet.png"
+    },
+    "W7-P7-enemies/W7-P7-leviathan-spawn.png": {
+      "source": "W7\\variants\\W7-P7-enemies-source.png",
+      "source_cell": [
+        915,
+        405,
+        1448,
+        1086
+      ],
+      "trim_bounds": [
+        14,
+        0,
+        518,
+        643
+      ],
+      "background_estimate": [
+        5.0,
+        0.0,
+        12.0
+      ],
+      "file": "W7-P7-enemies/W7-P7-leviathan-spawn.png",
+      "source_content_size": [
+        504,
+        643
+      ],
+      "content_size": [
+        235,
+        300
+      ],
+      "size": [
+        259,
+        324
+      ],
+      "scale_factor": 0.4665629860031104,
+      "content_box": [
+        12,
+        12,
+        247,
+        312
+      ],
+      "atlas_box": [
+        770,
+        438,
+        1029,
+        762
+      ],
+      "atlas": "W7-P7-enemies-sheet.png"
+    },
+    "W7-P7-enemies-sheet.png": {
+      "items": [
+        "W7-P7-enemies/W7-P7-ice-wisp.png",
+        "W7-P7-enemies/W7-P7-frost-crab.png",
+        "W7-P7-enemies/W7-P7-tentacle-mine.png",
+        "W7-P7-enemies/W7-P7-spore-lantern.png",
+        "W7-P7-enemies/W7-P7-eel-hybrid.png",
+        "W7-P7-enemies/W7-P7-leviathan-spawn.png"
+      ],
+      "boxes": [
+        [
+          136,
+          120,
+          224,
+          279
+        ],
+        [
+          431,
+          101,
+          649,
+          299
+        ],
+        [
+          801,
+          122,
+          999,
+          278
+        ],
+        [
+          70,
+          482,
+          290,
+          719
+        ],
+        [
+          472,
+          467,
+          608,
+          733
+        ],
+        [
+          770,
+          438,
+          1029,
+          762
+        ]
+      ],
+      "size": [
+        1080,
+        800
+      ],
+      "operation": "Technical layout at recorded sprite scale, no overlapping boxes"
+    },
+    "W7-P7-elite-and-shards/W7-P7-frost-crab-elite.png": {
+      "source": "W7\\variants\\W7-P7-elite-shards-source.png",
+      "source_cell": [
+        250,
+        0,
+        775,
+        365
+      ],
+      "trim_bounds": [
+        63,
+        5,
+        461,
+        365
+      ],
+      "background_estimate": [
+        4.0,
+        0.0,
+        10.0
+      ],
+      "file": "W7-P7-elite-and-shards/W7-P7-frost-crab-elite.png",
+      "source_content_size": [
+        398,
+        360
+      ],
+      "content_size": [
+        310,
+        280
+      ],
+      "size": [
+        334,
+        304
+      ],
+      "scale_factor": 0.7788944723618091,
+      "content_box": [
+        12,
+        12,
+        322,
+        292
+      ],
+      "atlas_box": [
+        433,
+        38,
+        767,
+        342
+      ],
+      "atlas": "W7-P7-elite-and-shards-sheet.png"
+    },
+    "W7-P7-elite-and-shards/W7-P7-ice-wisp-shard-1.png": {
+      "source": "W7\\variants\\W7-P7-elite-shards-source.png",
+      "source_cell": [
+        113,
+        366,
+        201,
+        495
+      ],
+      "trim_bounds": [
+        4,
+        5,
+        88,
+        125
+      ],
+      "background_estimate": [
+        5.0,
+        0.0,
+        10.0
+      ],
+      "file": "W7-P7-elite-and-shards/W7-P7-ice-wisp-shard-1.png",
+      "source_content_size": [
+        84,
+        120
+      ],
+      "content_size": [
+        46,
+        66
+      ],
+      "size": [
+        70,
+        90
+      ],
+      "scale_factor": 0.5472972972972973,
+      "content_box": [
+        12,
+        12,
+        58,
+        78
+      ],
+      "atlas_box": [
+        115,
+        415,
+        185,
+        505
+      ],
+      "atlas": "W7-P7-elite-and-shards-sheet.png"
+    },
+    "W7-P7-elite-and-shards/W7-P7-ice-wisp-shard-2.png": {
+      "source": "W7\\variants\\W7-P7-elite-shards-source.png",
+      "source_cell": [
+        342,
+        381,
+        473,
+        527
+      ],
+      "trim_bounds": [
+        4,
+        5,
+        127,
+        142
+      ],
+      "background_estimate": [
+        5.0,
+        0.0,
+        10.0
+      ],
+      "file": "W7-P7-elite-and-shards/W7-P7-ice-wisp-shard-2.png",
+      "source_content_size": [
+        123,
+        137
+      ],
+      "content_size": [
+        67,
+        75
+      ],
+      "size": [
+        91,
+        99
+      ],
+      "scale_factor": 0.5472972972972973,
+      "content_box": [
+        12,
+        12,
+        79,
+        87
+      ],
+      "atlas_box": [
+        404,
+        410,
+        495,
+        509
+      ],
+      "atlas": "W7-P7-elite-and-shards-sheet.png"
+    },
+    "W7-P7-elite-and-shards/W7-P7-ice-wisp-shard-3.png": {
+      "source": "W7\\variants\\W7-P7-elite-shards-source.png",
+      "source_cell": [
+        563,
+        376,
+        695,
+        532
+      ],
+      "trim_bounds": [
+        1,
+        3,
+        127,
+        151
+      ],
+      "background_estimate": [
+        5.0,
+        0.0,
+        10.0
+      ],
+      "file": "W7-P7-elite-and-shards/W7-P7-ice-wisp-shard-3.png",
+      "source_content_size": [
+        126,
+        148
+      ],
+      "content_size": [
+        69,
+        81
+      ],
+      "size": [
+        93,
+        105
+      ],
+      "scale_factor": 0.5472972972972973,
+      "content_box": [
+        12,
+        12,
+        81,
+        93
+      ],
+      "atlas_box": [
+        704,
+        408,
+        797,
+        513
+      ],
+      "atlas": "W7-P7-elite-and-shards-sheet.png"
+    },
+    "W7-P7-elite-and-shards/W7-P7-ice-wisp-shard-4.png": {
+      "source": "W7\\variants\\W7-P7-elite-shards-source.png",
+      "source_cell": [
+        795,
+        367,
+        906,
+        493
+      ],
+      "trim_bounds": [
+        4,
+        5,
+        107,
+        121
+      ],
+      "background_estimate": [
+        5.0,
+        0.0,
+        10.0
+      ],
+      "file": "W7-P7-elite-and-shards/W7-P7-ice-wisp-shard-4.png",
+      "source_content_size": [
+        103,
+        116
+      ],
+      "content_size": [
+        56,
+        63
+      ],
+      "size": [
+        80,
+        87
+      ],
+      "scale_factor": 0.5472972972972973,
+      "content_box": [
+        12,
+        12,
+        68,
+        75
+      ],
+      "atlas_box": [
+        1010,
+        416,
+        1090,
+        503
+      ],
+      "atlas": "W7-P7-elite-and-shards-sheet.png"
+    },
+    "W7-P7-elite-and-shards/W7-P7-frost-crab-shard-1.png": {
+      "source": "W7\\variants\\W7-P7-elite-shards-source.png",
+      "source_cell": [
+        66,
+        550,
+        245,
+        699
+      ],
+      "trim_bounds": [
+        1,
+        4,
+        175,
+        146
+      ],
+      "background_estimate": [
+        4.0,
+        0.0,
+        10.0
+      ],
+      "file": "W7-P7-elite-and-shards/W7-P7-frost-crab-shard-1.png",
+      "source_content_size": [
+        174,
+        142
+      ],
+      "content_size": [
+        116,
+        94
+      ],
+      "size": [
+        140,
+        118
+      ],
+      "scale_factor": 0.6651428571428571,
+      "content_box": [
+        12,
+        12,
+        128,
+        106
+      ],
+      "atlas_box": [
+        80,
+        621,
+        220,
+        739
+      ],
+      "atlas": "W7-P7-elite-and-shards-sheet.png"
+    },
+    "W7-P7-elite-and-shards/W7-P7-frost-crab-shard-2.png": {
+      "source": "W7\\variants\\W7-P7-elite-shards-source.png",
+      "source_cell": [
+        285,
+        545,
+        468,
+        702
+      ],
+      "trim_bounds": [
+        4,
+        4,
+        179,
+        153
+      ],
+      "background_estimate": [
+        4.0,
+        0.0,
+        10.0
+      ],
+      "file": "W7-P7-elite-and-shards/W7-P7-frost-crab-shard-2.png",
+      "source_content_size": [
+        175,
+        149
+      ],
+      "content_size": [
+        116,
+        99
+      ],
+      "size": [
+        140,
+        123
+      ],
+      "scale_factor": 0.6651428571428571,
+      "content_box": [
+        12,
+        12,
+        128,
+        111
+      ],
+      "atlas_box": [
+        380,
+        618,
+        520,
+        741
+      ],
+      "atlas": "W7-P7-elite-and-shards-sheet.png"
+    },
+    "W7-P7-elite-and-shards/W7-P7-frost-crab-shard-3.png": {
+      "source": "W7\\variants\\W7-P7-elite-shards-source.png",
+      "source_cell": [
+        545,
+        547,
+        697,
+        709
+      ],
+      "trim_bounds": [
+        5,
+        4,
+        150,
+        161
+      ],
+      "background_estimate": [
+        4.5,
+        0.0,
+        10.0
+      ],
+      "file": "W7-P7-elite-and-shards/W7-P7-frost-crab-shard-3.png",
+      "source_content_size": [
+        145,
+        157
+      ],
+      "content_size": [
+        96,
+        104
+      ],
+      "size": [
+        120,
+        128
+      ],
+      "scale_factor": 0.6651428571428571,
+      "content_box": [
+        12,
+        12,
+        108,
+        116
+      ],
+      "atlas_box": [
+        690,
+        616,
+        810,
+        744
+      ],
+      "atlas": "W7-P7-elite-and-shards-sheet.png"
+    },
+    "W7-P7-elite-and-shards/W7-P7-frost-crab-shard-4.png": {
+      "source": "W7\\variants\\W7-P7-elite-shards-source.png",
+      "source_cell": [
+        779,
+        559,
+        949,
+        700
+      ],
+      "trim_bounds": [
+        5,
+        4,
+        170,
+        136
+      ],
+      "background_estimate": [
+        4.0,
+        0.0,
+        10.0
+      ],
+      "file": "W7-P7-elite-and-shards/W7-P7-frost-crab-shard-4.png",
+      "source_content_size": [
+        165,
+        132
+      ],
+      "content_size": [
+        110,
+        88
+      ],
+      "size": [
+        134,
+        112
+      ],
+      "scale_factor": 0.6651428571428571,
+      "content_box": [
+        12,
+        12,
+        122,
+        100
+      ],
+      "atlas_box": [
+        983,
+        624,
+        1117,
+        736
+      ],
+      "atlas": "W7-P7-elite-and-shards-sheet.png"
+    },
+    "W7-P7-elite-and-shards/W7-P7-tentacle-mine-shard-1.png": {
+      "source": "W7\\variants\\W7-P7-elite-shards-source.png",
+      "source_cell": [
+        75,
+        723,
+        259,
+        857
+      ],
+      "trim_bounds": [
+        3,
+        1,
+        180,
+        130
+      ],
+      "background_estimate": [
+        4.0,
+        0.0,
+        10.0
+      ],
+      "file": "W7-P7-elite-and-shards/W7-P7-tentacle-mine-shard-1.png",
+      "source_content_size": [
+        177,
+        129
+      ],
+      "content_size": [
+        104,
+        76
+      ],
+      "size": [
+        128,
+        100
+      ],
+      "scale_factor": 0.5898305084745762,
+      "content_box": [
+        12,
+        12,
+        116,
+        88
+      ],
+      "atlas_box": [
+        86,
+        850,
+        214,
+        950
+      ],
+      "atlas": "W7-P7-elite-and-shards-sheet.png"
+    },
+    "W7-P7-elite-and-shards/W7-P7-tentacle-mine-shard-2.png": {
+      "source": "W7\\variants\\W7-P7-elite-shards-source.png",
+      "source_cell": [
+        305,
+        723,
+        473,
+        866
+      ],
+      "trim_bounds": [
+        4,
+        1,
+        164,
+        138
+      ],
+      "background_estimate": [
+        4.0,
+        0.0,
+        9.0
+      ],
+      "file": "W7-P7-elite-and-shards/W7-P7-tentacle-mine-shard-2.png",
+      "source_content_size": [
+        160,
+        137
+      ],
+      "content_size": [
+        94,
+        81
+      ],
+      "size": [
+        118,
+        105
+      ],
+      "scale_factor": 0.5898305084745762,
+      "content_box": [
+        12,
+        12,
+        106,
+        93
+      ],
+      "atlas_box": [
+        391,
+        848,
+        509,
+        953
+      ],
+      "atlas": "W7-P7-elite-and-shards-sheet.png"
+    },
+    "W7-P7-elite-and-shards/W7-P7-tentacle-mine-shard-3.png": {
+      "source": "W7\\variants\\W7-P7-elite-shards-source.png",
+      "source_cell": [
+        532,
+        723,
+        715,
+        863
+      ],
+      "trim_bounds": [
+        4,
+        0,
+        180,
+        136
+      ],
+      "background_estimate": [
+        4.0,
+        0.0,
+        10.0
+      ],
+      "file": "W7-P7-elite-and-shards/W7-P7-tentacle-mine-shard-3.png",
+      "source_content_size": [
+        176,
+        136
+      ],
+      "content_size": [
+        104,
+        80
+      ],
+      "size": [
+        128,
+        104
+      ],
+      "scale_factor": 0.5898305084745762,
+      "content_box": [
+        12,
+        12,
+        116,
+        92
+      ],
+      "atlas_box": [
+        686,
+        848,
+        814,
+        952
+      ],
+      "atlas": "W7-P7-elite-and-shards-sheet.png"
+    },
+    "W7-P7-elite-and-shards/W7-P7-tentacle-mine-shard-4.png": {
+      "source": "W7\\variants\\W7-P7-elite-shards-source.png",
+      "source_cell": [
+        769,
+        732,
+        949,
+        877
+      ],
+      "trim_bounds": [
+        3,
+        4,
+        178,
+        140
+      ],
+      "background_estimate": [
+        4.0,
+        0.0,
+        10.0
+      ],
+      "file": "W7-P7-elite-and-shards/W7-P7-tentacle-mine-shard-4.png",
+      "source_content_size": [
+        175,
+        136
+      ],
+      "content_size": [
+        103,
+        80
+      ],
+      "size": [
+        127,
+        104
+      ],
+      "scale_factor": 0.5898305084745762,
+      "content_box": [
+        12,
+        12,
+        115,
+        92
+      ],
+      "atlas_box": [
+        986,
+        848,
+        1113,
+        952
+      ],
+      "atlas": "W7-P7-elite-and-shards-sheet.png"
+    },
+    "W7-P7-elite-and-shards/W7-P7-spore-lantern-shard-1.png": {
+      "source": "W7\\variants\\W7-P7-elite-shards-source.png",
+      "source_cell": [
+        66,
+        898,
+        260,
+        1079
+      ],
+      "trim_bounds": [
+        4,
+        0,
+        193,
+        176
+      ],
+      "background_estimate": [
+        5.0,
+        0.0,
+        10.0
+      ],
+      "file": "W7-P7-elite-and-shards/W7-P7-spore-lantern-shard-1.png",
+      "source_content_size": [
+        189,
+        176
+      ],
+      "content_size": [
+        128,
+        119
+      ],
+      "size": [
+        152,
+        143
+      ],
+      "scale_factor": 0.6761904761904762,
+      "content_box": [
+        12,
+        12,
+        140,
+        131
+      ],
+      "atlas_box": [
+        74,
+        1048,
+        226,
+        1191
+      ],
+      "atlas": "W7-P7-elite-and-shards-sheet.png"
+    },
+    "W7-P7-elite-and-shards/W7-P7-spore-lantern-shard-2.png": {
+      "source": "W7\\variants\\W7-P7-elite-shards-source.png",
+      "source_cell": [
+        324,
+        898,
+        460,
+        1067
+      ],
+      "trim_bounds": [
+        0,
+        0,
+        132,
+        164
+      ],
+      "background_estimate": [
+        5.0,
+        0.0,
+        10.0
+      ],
+      "file": "W7-P7-elite-and-shards/W7-P7-spore-lantern-shard-2.png",
+      "source_content_size": [
+        132,
+        164
+      ],
+      "content_size": [
+        89,
+        111
+      ],
+      "size": [
+        113,
+        135
+      ],
+      "scale_factor": 0.6761904761904762,
+      "content_box": [
+        12,
+        12,
+        101,
+        123
+      ],
+      "atlas_box": [
+        394,
+        1052,
+        507,
+        1187
+      ],
+      "atlas": "W7-P7-elite-and-shards-sheet.png"
+    },
+    "W7-P7-elite-and-shards/W7-P7-spore-lantern-shard-3.png": {
+      "source": "W7\\variants\\W7-P7-elite-shards-source.png",
+      "source_cell": [
+        547,
+        898,
+        703,
+        1059
+      ],
+      "trim_bounds": [
+        0,
+        1,
+        156,
+        157
+      ],
+      "background_estimate": [
+        5.0,
+        0.0,
+        10.5
+      ],
+      "file": "W7-P7-elite-and-shards/W7-P7-spore-lantern-shard-3.png",
+      "source_content_size": [
+        156,
+        156
+      ],
+      "content_size": [
+        105,
+        105
+      ],
+      "size": [
+        129,
+        129
+      ],
+      "scale_factor": 0.6761904761904762,
+      "content_box": [
+        12,
+        12,
+        117,
+        117
+      ],
+      "atlas_box": [
+        686,
+        1056,
+        815,
+        1185
+      ],
+      "atlas": "W7-P7-elite-and-shards-sheet.png"
+    },
+    "W7-P7-elite-and-shards/W7-P7-spore-lantern-shard-4.png": {
+      "source": "W7\\variants\\W7-P7-elite-shards-source.png",
+      "source_cell": [
+        775,
+        898,
+        964,
+        1081
+      ],
+      "trim_bounds": [
+        1,
+        1,
+        184,
+        178
+      ],
+      "background_estimate": [
+        4.0,
+        0.0,
+        10.0
+      ],
+      "file": "W7-P7-elite-and-shards/W7-P7-spore-lantern-shard-4.png",
+      "source_content_size": [
+        183,
+        177
+      ],
+      "content_size": [
+        124,
+        120
+      ],
+      "size": [
+        148,
+        144
+      ],
+      "scale_factor": 0.6761904761904762,
+      "content_box": [
+        12,
+        12,
+        136,
+        132
+      ],
+      "atlas_box": [
+        976,
+        1048,
+        1124,
+        1192
+      ],
+      "atlas": "W7-P7-elite-and-shards-sheet.png"
+    },
+    "W7-P7-elite-and-shards/W7-P7-eel-hybrid-shard-1.png": {
+      "source": "W7\\variants\\W7-P7-elite-shards-source.png",
+      "source_cell": [
+        74,
+        1078,
+        264,
+        1251
+      ],
+      "trim_bounds": [
+        4,
+        2,
+        190,
+        170
+      ],
+      "background_estimate": [
+        5.0,
+        0.0,
+        10.0
+      ],
+      "file": "W7-P7-elite-and-shards/W7-P7-eel-hybrid-shard-1.png",
+      "source_content_size": [
+        186,
+        168
+      ],
+      "content_size": [
+        130,
+        117
+      ],
+      "size": [
+        154,
+        141
+      ],
+      "scale_factor": 0.698076923076923,
+      "content_box": [
+        12,
+        12,
+        142,
+        129
+      ],
+      "atlas_box": [
+        73,
+        1270,
+        227,
+        1411
+      ],
+      "atlas": "W7-P7-elite-and-shards-sheet.png"
+    },
+    "W7-P7-elite-and-shards/W7-P7-eel-hybrid-shard-2.png": {
+      "source": "W7\\variants\\W7-P7-elite-shards-source.png",
+      "source_cell": [
+        309,
+        1078,
+        494,
+        1258
+      ],
+      "trim_bounds": [
+        4,
+        3,
+        183,
+        176
+      ],
+      "background_estimate": [
+        4.0,
+        0.0,
+        10.0
+      ],
+      "file": "W7-P7-elite-and-shards/W7-P7-eel-hybrid-shard-2.png",
+      "source_content_size": [
+        179,
+        173
+      ],
+      "content_size": [
+        125,
+        121
+      ],
+      "size": [
+        149,
+        145
+      ],
+      "scale_factor": 0.698076923076923,
+      "content_box": [
+        12,
+        12,
+        137,
+        133
+      ],
+      "atlas_box": [
+        376,
+        1268,
+        525,
+        1413
+      ],
+      "atlas": "W7-P7-elite-and-shards-sheet.png"
+    },
+    "W7-P7-elite-and-shards/W7-P7-eel-hybrid-shard-3.png": {
+      "source": "W7\\variants\\W7-P7-elite-shards-source.png",
+      "source_cell": [
+        524,
+        1093,
+        730,
+        1267
+      ],
+      "trim_bounds": [
+        5,
+        5,
+        202,
+        170
+      ],
+      "background_estimate": [
+        4.0,
+        0.0,
+        10.0
+      ],
+      "file": "W7-P7-elite-and-shards/W7-P7-eel-hybrid-shard-3.png",
+      "source_content_size": [
+        197,
+        165
+      ],
+      "content_size": [
+        138,
+        115
+      ],
+      "size": [
+        162,
+        139
+      ],
+      "scale_factor": 0.698076923076923,
+      "content_box": [
+        12,
+        12,
+        150,
+        127
+      ],
+      "atlas_box": [
+        669,
+        1270,
+        831,
+        1409
+      ],
+      "atlas": "W7-P7-elite-and-shards-sheet.png"
+    },
+    "W7-P7-elite-and-shards/W7-P7-eel-hybrid-shard-4.png": {
+      "source": "W7\\variants\\W7-P7-elite-shards-source.png",
+      "source_cell": [
+        745,
+        1103,
+        960,
+        1248
+      ],
+      "trim_bounds": [
+        4,
+        2,
+        212,
+        141
+      ],
+      "background_estimate": [
+        4.0,
+        0.0,
+        10.0
+      ],
+      "file": "W7-P7-elite-and-shards/W7-P7-eel-hybrid-shard-4.png",
+      "source_content_size": [
+        208,
+        139
+      ],
+      "content_size": [
+        145,
+        97
+      ],
+      "size": [
+        169,
+        121
+      ],
+      "scale_factor": 0.698076923076923,
+      "content_box": [
+        12,
+        12,
+        157,
+        109
+      ],
+      "atlas_box": [
+        966,
+        1280,
+        1135,
+        1401
+      ],
+      "atlas": "W7-P7-elite-and-shards-sheet.png"
+    },
+    "W7-P7-elite-and-shards/W7-P7-leviathan-spawn-shard-1.png": {
+      "source": "W7\\variants\\W7-P7-elite-shards-source.png",
+      "source_cell": [
+        38,
+        1263,
+        255,
+        1507
+      ],
+      "trim_bounds": [
+        5,
+        2,
+        213,
+        239
+      ],
+      "background_estimate": [
+        4.0,
+        0.0,
+        10.0
+      ],
+      "file": "W7-P7-elite-and-shards/W7-P7-leviathan-spawn-shard-1.png",
+      "source_content_size": [
+        208,
+        237
+      ],
+      "content_size": [
+        152,
+        173
+      ],
+      "size": [
+        176,
+        197
+      ],
+      "scale_factor": 0.728744939271255,
+      "content_box": [
+        12,
+        12,
+        164,
+        185
+      ],
+      "atlas_box": [
+        62,
+        1462,
+        238,
+        1659
+      ],
+      "atlas": "W7-P7-elite-and-shards-sheet.png"
+    },
+    "W7-P7-elite-and-shards/W7-P7-leviathan-spawn-shard-2.png": {
+      "source": "W7\\variants\\W7-P7-elite-shards-source.png",
+      "source_cell": [
+        289,
+        1263,
+        476,
+        1514
+      ],
+      "trim_bounds": [
+        2,
+        0,
+        183,
+        247
+      ],
+      "background_estimate": [
+        4.0,
+        0.0,
+        10.0
+      ],
+      "file": "W7-P7-elite-and-shards/W7-P7-leviathan-spawn-shard-2.png",
+      "source_content_size": [
+        181,
+        247
+      ],
+      "content_size": [
+        132,
+        180
+      ],
+      "size": [
+        156,
+        204
+      ],
+      "scale_factor": 0.728744939271255,
+      "content_box": [
+        12,
+        12,
+        144,
+        192
+      ],
+      "atlas_box": [
+        372,
+        1458,
+        528,
+        1662
+      ],
+      "atlas": "W7-P7-elite-and-shards-sheet.png"
+    },
+    "W7-P7-elite-and-shards/W7-P7-leviathan-spawn-shard-3.png": {
+      "source": "W7\\variants\\W7-P7-elite-shards-source.png",
+      "source_cell": [
+        532,
+        1270,
+        717,
+        1501
+      ],
+      "trim_bounds": [
+        5,
+        4,
+        181,
+        230
+      ],
+      "background_estimate": [
+        4.0,
+        0.0,
+        10.0
+      ],
+      "file": "W7-P7-elite-and-shards/W7-P7-leviathan-spawn-shard-3.png",
+      "source_content_size": [
+        176,
+        226
+      ],
+      "content_size": [
+        128,
+        165
+      ],
+      "size": [
+        152,
+        189
+      ],
+      "scale_factor": 0.728744939271255,
+      "content_box": [
+        12,
+        12,
+        140,
+        177
+      ],
+      "atlas_box": [
+        674,
+        1466,
+        826,
+        1655
+      ],
+      "atlas": "W7-P7-elite-and-shards-sheet.png"
+    },
+    "W7-P7-elite-and-shards/W7-P7-leviathan-spawn-shard-4.png": {
+      "source": "W7\\variants\\W7-P7-elite-shards-source.png",
+      "source_cell": [
+        738,
+        1269,
+        962,
+        1514
+      ],
+      "trim_bounds": [
+        4,
+        4,
+        220,
+        240
+      ],
+      "background_estimate": [
+        4.0,
+        0.0,
+        10.0
+      ],
+      "file": "W7-P7-elite-and-shards/W7-P7-leviathan-spawn-shard-4.png",
+      "source_content_size": [
+        216,
+        236
+      ],
+      "content_size": [
+        157,
+        172
+      ],
+      "size": [
+        181,
+        196
+      ],
+      "scale_factor": 0.728744939271255,
+      "content_box": [
+        12,
+        12,
+        169,
+        184
+      ],
+      "atlas_box": [
+        960,
+        1462,
+        1141,
+        1658
+      ],
+      "atlas": "W7-P7-elite-and-shards-sheet.png"
+    },
+    "W7-P7-elite-and-shards-sheet.png": {
+      "items": [
+        "W7-P7-elite-and-shards/W7-P7-frost-crab-elite.png",
+        "W7-P7-elite-and-shards/W7-P7-ice-wisp-shard-1.png",
+        "W7-P7-elite-and-shards/W7-P7-ice-wisp-shard-2.png",
+        "W7-P7-elite-and-shards/W7-P7-ice-wisp-shard-3.png",
+        "W7-P7-elite-and-shards/W7-P7-ice-wisp-shard-4.png",
+        "W7-P7-elite-and-shards/W7-P7-frost-crab-shard-1.png",
+        "W7-P7-elite-and-shards/W7-P7-frost-crab-shard-2.png",
+        "W7-P7-elite-and-shards/W7-P7-frost-crab-shard-3.png",
+        "W7-P7-elite-and-shards/W7-P7-frost-crab-shard-4.png",
+        "W7-P7-elite-and-shards/W7-P7-tentacle-mine-shard-1.png",
+        "W7-P7-elite-and-shards/W7-P7-tentacle-mine-shard-2.png",
+        "W7-P7-elite-and-shards/W7-P7-tentacle-mine-shard-3.png",
+        "W7-P7-elite-and-shards/W7-P7-tentacle-mine-shard-4.png",
+        "W7-P7-elite-and-shards/W7-P7-spore-lantern-shard-1.png",
+        "W7-P7-elite-and-shards/W7-P7-spore-lantern-shard-2.png",
+        "W7-P7-elite-and-shards/W7-P7-spore-lantern-shard-3.png",
+        "W7-P7-elite-and-shards/W7-P7-spore-lantern-shard-4.png",
+        "W7-P7-elite-and-shards/W7-P7-eel-hybrid-shard-1.png",
+        "W7-P7-elite-and-shards/W7-P7-eel-hybrid-shard-2.png",
+        "W7-P7-elite-and-shards/W7-P7-eel-hybrid-shard-3.png",
+        "W7-P7-elite-and-shards/W7-P7-eel-hybrid-shard-4.png",
+        "W7-P7-elite-and-shards/W7-P7-leviathan-spawn-shard-1.png",
+        "W7-P7-elite-and-shards/W7-P7-leviathan-spawn-shard-2.png",
+        "W7-P7-elite-and-shards/W7-P7-leviathan-spawn-shard-3.png",
+        "W7-P7-elite-and-shards/W7-P7-leviathan-spawn-shard-4.png"
+      ],
+      "boxes": [
+        [
+          433,
+          38,
+          767,
+          342
+        ],
+        [
+          115,
+          415,
+          185,
+          505
+        ],
+        [
+          404,
+          410,
+          495,
+          509
+        ],
+        [
+          704,
+          408,
+          797,
+          513
+        ],
+        [
+          1010,
+          416,
+          1090,
+          503
+        ],
+        [
+          80,
+          621,
+          220,
+          739
+        ],
+        [
+          380,
+          618,
+          520,
+          741
+        ],
+        [
+          690,
+          616,
+          810,
+          744
+        ],
+        [
+          983,
+          624,
+          1117,
+          736
+        ],
+        [
+          86,
+          850,
+          214,
+          950
+        ],
+        [
+          391,
+          848,
+          509,
+          953
+        ],
+        [
+          686,
+          848,
+          814,
+          952
+        ],
+        [
+          986,
+          848,
+          1113,
+          952
+        ],
+        [
+          74,
+          1048,
+          226,
+          1191
+        ],
+        [
+          394,
+          1052,
+          507,
+          1187
+        ],
+        [
+          686,
+          1056,
+          815,
+          1185
+        ],
+        [
+          976,
+          1048,
+          1124,
+          1192
+        ],
+        [
+          73,
+          1270,
+          227,
+          1411
+        ],
+        [
+          376,
+          1268,
+          525,
+          1413
+        ],
+        [
+          669,
+          1270,
+          831,
+          1409
+        ],
+        [
+          966,
+          1280,
+          1135,
+          1401
+        ],
+        [
+          62,
+          1462,
+          238,
+          1659
+        ],
+        [
+          372,
+          1458,
+          528,
+          1662
+        ],
+        [
+          674,
+          1466,
+          826,
+          1655
+        ],
+        [
+          960,
+          1462,
+          1141,
+          1658
+        ]
+      ],
+      "size": [
+        1200,
+        1800
+      ],
+      "operation": "Technical layout at recorded sprite scale, no overlapping boxes"
+    },
+    "W7-P8-abyss-leviathan.png": {
+      "source": "W7\\variants\\W7-P8-boss-source.png",
+      "native_size": [
+        1254,
+        1254
+      ],
+      "size": [
+        1024,
+        1024
+      ],
+      "processing": "Uniform Lanczos size normalization; full silhouette preserved",
+      "phase": 1,
+      "atlas_box": [
+        3338,
+        3338,
+        4362,
+        4362
+      ],
+      "atlas": "W7-P8-parts-sheet.png"
+    },
+    "W7-P8-parts/W7-P8-mantle.png": {
+      "source": "W7\\variants\\W7-P8-parts-source.png",
+      "source_cell": [
+        0,
+        0,
+        390,
+        400
+      ],
+      "trim_bounds": [
+        69,
+        8,
+        329,
+        393
+      ],
+      "background_estimate": [
+        3.0,
+        0.0,
+        9.0
+      ],
+      "file": "W7-P8-parts/W7-P8-mantle.png",
+      "source_content_size": [
+        260,
+        385
+      ],
+      "content_size": [
+        405,
+        600
+      ],
+      "size": [
+        429,
+        624
+      ],
+      "scale_factor": 1.5584415584415585,
+      "content_box": [
+        12,
+        12,
+        417,
+        612
+      ],
+      "scale_note": "Module scale calibrated against 1024px complete boss; separately generated art is not a pixel-exact animation rig",
+      "atlas_box": [
+        336,
+        238,
+        765,
+        862
+      ],
+      "atlas": "W7-P8-parts-sheet.png"
+    },
+    "W7-P8-parts/W7-P8-tentacle-1.png": {
+      "source": "W7\\variants\\W7-P8-tentacles-straight-source.png",
+      "source_cell": [
+        0,
+        0,
+        384,
+        512
+      ],
+      "trim_bounds": [
+        167,
+        11,
+        276,
+        493
+      ],
+      "background_estimate": [
+        4.0,
+        0.0,
+        11.0
+      ],
+      "file": "W7-P8-parts/W7-P8-tentacle-1.png",
+      "source_content_size": [
+        109,
+        482
+      ],
+      "content_size": [
+        136,
+        600
+      ],
+      "size": [
+        160,
+        624
+      ],
+      "scale_factor": 1.2448132780082988,
+      "content_box": [
+        12,
+        12,
+        148,
+        612
+      ],
+      "scale_note": "Module scale calibrated against 1024px complete boss; separately generated art is not a pixel-exact animation rig",
+      "atlas_box": [
+        1570,
+        238,
+        1730,
+        862
+      ],
+      "atlas": "W7-P8-parts-sheet.png"
+    },
+    "W7-P8-parts/W7-P8-tentacle-2.png": {
+      "source": "W7\\variants\\W7-P8-tentacles-straight-source.png",
+      "source_cell": [
+        384,
+        0,
+        768,
+        512
+      ],
+      "trim_bounds": [
+        132,
+        10,
+        244,
+        493
+      ],
+      "background_estimate": [
+        5.0,
+        0.0,
+        12.0
+      ],
+      "file": "W7-P8-parts/W7-P8-tentacle-2.png",
+      "source_content_size": [
+        112,
+        483
+      ],
+      "content_size": [
+        139,
+        600
+      ],
+      "size": [
+        163,
+        624
+      ],
+      "scale_factor": 1.2422360248447204,
+      "content_box": [
+        12,
+        12,
+        151,
+        612
+      ],
+      "scale_note": "Module scale calibrated against 1024px complete boss; separately generated art is not a pixel-exact animation rig",
+      "atlas_box": [
+        2668,
+        238,
+        2831,
+        862
+      ],
+      "atlas": "W7-P8-parts-sheet.png"
+    },
+    "W7-P8-parts/W7-P8-tentacle-3.png": {
+      "source": "W7\\variants\\W7-P8-tentacles-straight-source.png",
+      "source_cell": [
+        768,
+        0,
+        1152,
+        512
+      ],
+      "trim_bounds": [
+        130,
+        10,
+        254,
+        493
+      ],
+      "background_estimate": [
+        5.0,
+        0.0,
+        12.0
+      ],
+      "file": "W7-P8-parts/W7-P8-tentacle-3.png",
+      "source_content_size": [
+        124,
+        483
+      ],
+      "content_size": [
+        154,
+        600
+      ],
+      "size": [
+        178,
+        624
+      ],
+      "scale_factor": 1.2422360248447204,
+      "content_box": [
+        12,
+        12,
+        166,
+        612
+      ],
+      "scale_note": "Module scale calibrated against 1024px complete boss; separately generated art is not a pixel-exact animation rig",
+      "atlas_box": [
+        3761,
+        238,
+        3939,
+        862
+      ],
+      "atlas": "W7-P8-parts-sheet.png"
+    },
+    "W7-P8-parts/W7-P8-tentacle-4.png": {
+      "source": "W7\\variants\\W7-P8-tentacles-straight-source.png",
+      "source_cell": [
+        1152,
+        0,
+        1536,
+        512
+      ],
+      "trim_bounds": [
+        116,
+        13,
+        224,
+        493
+      ],
+      "background_estimate": [
+        5.0,
+        0.0,
+        12.0
+      ],
+      "file": "W7-P8-parts/W7-P8-tentacle-4.png",
+      "source_content_size": [
+        108,
+        480
+      ],
+      "content_size": [
+        135,
+        600
+      ],
+      "size": [
+        159,
+        624
+      ],
+      "scale_factor": 1.25,
+      "content_box": [
+        12,
+        12,
+        147,
+        612
+      ],
+      "scale_note": "Module scale calibrated against 1024px complete boss; separately generated art is not a pixel-exact animation rig",
+      "atlas_box": [
+        470,
+        1338,
+        629,
+        1962
+      ],
+      "atlas": "W7-P8-parts-sheet.png"
+    },
+    "W7-P8-parts/W7-P8-tentacle-5.png": {
+      "source": "W7\\variants\\W7-P8-tentacles-straight-source.png",
+      "source_cell": [
+        0,
+        512,
+        384,
+        1024
+      ],
+      "trim_bounds": [
+        159,
+        0,
+        279,
+        488
+      ],
+      "background_estimate": [
+        4.0,
+        0.0,
+        11.0
+      ],
+      "file": "W7-P8-parts/W7-P8-tentacle-5.png",
+      "source_content_size": [
+        120,
+        488
+      ],
+      "content_size": [
+        148,
+        600
+      ],
+      "size": [
+        172,
+        624
+      ],
+      "scale_factor": 1.2295081967213115,
+      "content_box": [
+        12,
+        12,
+        160,
+        612
+      ],
+      "scale_note": "Module scale calibrated against 1024px complete boss; separately generated art is not a pixel-exact animation rig",
+      "atlas_box": [
+        1564,
+        1338,
+        1736,
+        1962
+      ],
+      "atlas": "W7-P8-parts-sheet.png"
+    },
+    "W7-P8-parts/W7-P8-tentacle-6.png": {
+      "source": "W7\\variants\\W7-P8-tentacles-straight-source.png",
+      "source_cell": [
+        384,
+        512,
+        768,
+        1024
+      ],
+      "trim_bounds": [
+        136,
+        2,
+        244,
+        484
+      ],
+      "background_estimate": [
+        5.0,
+        0.0,
+        12.0
+      ],
+      "file": "W7-P8-parts/W7-P8-tentacle-6.png",
+      "source_content_size": [
+        108,
+        482
+      ],
+      "content_size": [
+        134,
+        600
+      ],
+      "size": [
+        158,
+        624
+      ],
+      "scale_factor": 1.2448132780082988,
+      "content_box": [
+        12,
+        12,
+        146,
+        612
+      ],
+      "scale_note": "Module scale calibrated against 1024px complete boss; separately generated art is not a pixel-exact animation rig",
+      "atlas_box": [
+        2671,
+        1338,
+        2829,
+        1962
+      ],
+      "atlas": "W7-P8-parts-sheet.png"
+    },
+    "W7-P8-parts/W7-P8-tentacle-7.png": {
+      "source": "W7\\variants\\W7-P8-tentacles-straight-source.png",
+      "source_cell": [
+        768,
+        512,
+        1152,
+        1024
+      ],
+      "trim_bounds": [
+        135,
+        0,
+        247,
+        486
+      ],
+      "background_estimate": [
+        5.0,
+        0.0,
+        12.0
+      ],
+      "file": "W7-P8-parts/W7-P8-tentacle-7.png",
+      "source_content_size": [
+        112,
+        486
+      ],
+      "content_size": [
+        138,
+        600
+      ],
+      "size": [
+        162,
+        624
+      ],
+      "scale_factor": 1.2345679012345678,
+      "content_box": [
+        12,
+        12,
+        150,
+        612
+      ],
+      "scale_note": "Module scale calibrated against 1024px complete boss; separately generated art is not a pixel-exact animation rig",
+      "atlas_box": [
+        3769,
+        1338,
+        3931,
+        1962
+      ],
+      "atlas": "W7-P8-parts-sheet.png"
+    },
+    "W7-P8-parts/W7-P8-tentacle-8.png": {
+      "source": "W7\\variants\\W7-P8-tentacles-straight-source.png",
+      "source_cell": [
+        1152,
+        512,
+        1536,
+        1024
+      ],
+      "trim_bounds": [
+        120,
+        1,
+        237,
+        489
+      ],
+      "background_estimate": [
+        5.0,
+        0.0,
+        12.0
+      ],
+      "file": "W7-P8-parts/W7-P8-tentacle-8.png",
+      "source_content_size": [
+        117,
+        488
+      ],
+      "content_size": [
+        144,
+        600
+      ],
+      "size": [
+        168,
+        624
+      ],
+      "scale_factor": 1.2295081967213115,
+      "content_box": [
+        12,
+        12,
+        156,
+        612
+      ],
+      "scale_note": "Module scale calibrated against 1024px complete boss; separately generated art is not a pixel-exact animation rig",
+      "atlas_box": [
+        466,
+        2438,
+        634,
+        3062
+      ],
+      "atlas": "W7-P8-parts-sheet.png"
+    },
+    "W7-P8-parts/W7-P8-weak-point-1.png": {
+      "source": "W7\\variants\\W7-P8-parts-source.png",
+      "source_cell": [
+        0,
+        780,
+        220,
+        980
+      ],
+      "trim_bounds": [
+        26,
+        6,
+        188,
+        170
+      ],
+      "background_estimate": [
+        3.0,
+        0.0,
+        10.0
+      ],
+      "file": "W7-P8-parts/W7-P8-weak-point-1.png",
+      "source_content_size": [
+        162,
+        164
+      ],
+      "content_size": [
+        109,
+        110
+      ],
+      "size": [
+        133,
+        134
+      ],
+      "scale_factor": 0.6707317073170732,
+      "content_box": [
+        12,
+        12,
+        121,
+        122
+      ],
+      "scale_note": "Module scale calibrated against 1024px complete boss; separately generated art is not a pixel-exact animation rig",
+      "atlas_box": [
+        1584,
+        2683,
+        1717,
+        2817
+      ],
+      "atlas": "W7-P8-parts-sheet.png"
+    },
+    "W7-P8-parts/W7-P8-weak-point-2.png": {
+      "source": "W7\\variants\\W7-P8-parts-source.png",
+      "source_cell": [
+        220,
+        780,
+        420,
+        980
+      ],
+      "trim_bounds": [
+        12,
+        6,
+        192,
+        167
+      ],
+      "background_estimate": [
+        3.0,
+        0.0,
+        10.0
+      ],
+      "file": "W7-P8-parts/W7-P8-weak-point-2.png",
+      "source_content_size": [
+        180,
+        161
+      ],
+      "content_size": [
+        160,
+        143
+      ],
+      "size": [
+        184,
+        167
+      ],
+      "scale_factor": 0.8888888888888888,
+      "content_box": [
+        12,
+        12,
+        172,
+        155
+      ],
+      "scale_note": "Module scale calibrated against 1024px complete boss; separately generated art is not a pixel-exact animation rig",
+      "atlas_box": [
+        2658,
+        2666,
+        2842,
+        2833
+      ],
+      "atlas": "W7-P8-parts-sheet.png"
+    },
+    "W7-P8-parts/W7-P8-weak-point-3.png": {
+      "source": "W7\\variants\\W7-P8-parts-source.png",
+      "source_cell": [
+        420,
+        780,
+        610,
+        980
+      ],
+      "trim_bounds": [
+        21,
+        0,
+        190,
+        171
+      ],
+      "background_estimate": [
+        3.0,
+        0.0,
+        9.0
+      ],
+      "file": "W7-P8-parts/W7-P8-weak-point-3.png",
+      "source_content_size": [
+        169,
+        171
+      ],
+      "content_size": [
+        158,
+        160
+      ],
+      "size": [
+        182,
+        184
+      ],
+      "scale_factor": 0.935672514619883,
+      "content_box": [
+        12,
+        12,
+        170,
+        172
+      ],
+      "scale_note": "Module scale calibrated against 1024px complete boss; separately generated art is not a pixel-exact animation rig",
+      "atlas_box": [
+        3759,
+        2658,
+        3941,
+        2842
+      ],
+      "atlas": "W7-P8-parts-sheet.png"
+    },
+    "W7-P8-parts/W7-P8-weak-point-4.png": {
+      "source": "W7\\variants\\W7-P8-parts-source.png",
+      "source_cell": [
+        610,
+        775,
+        825,
+        980
+      ],
+      "trim_bounds": [
+        36,
+        2,
+        212,
+        186
+      ],
+      "background_estimate": [
+        3.0,
+        0.0,
+        10.0
+      ],
+      "file": "W7-P8-parts/W7-P8-weak-point-4.png",
+      "source_content_size": [
+        176,
+        184
+      ],
+      "content_size": [
+        105,
+        110
+      ],
+      "size": [
+        129,
+        134
+      ],
+      "scale_factor": 0.5978260869565217,
+      "content_box": [
+        12,
+        12,
+        117,
+        122
+      ],
+      "scale_note": "Module scale calibrated against 1024px complete boss; separately generated art is not a pixel-exact animation rig",
+      "atlas_box": [
+        486,
+        3783,
+        615,
+        3917
+      ],
+      "atlas": "W7-P8-parts-sheet.png"
+    },
+    "W7-P8-parts-sheet.png": {
+      "items": [
+        "W7-P8-parts/W7-P8-mantle.png",
+        "W7-P8-parts/W7-P8-tentacle-1.png",
+        "W7-P8-parts/W7-P8-tentacle-2.png",
+        "W7-P8-parts/W7-P8-tentacle-3.png",
+        "W7-P8-parts/W7-P8-tentacle-4.png",
+        "W7-P8-parts/W7-P8-tentacle-5.png",
+        "W7-P8-parts/W7-P8-tentacle-6.png",
+        "W7-P8-parts/W7-P8-tentacle-7.png",
+        "W7-P8-parts/W7-P8-tentacle-8.png",
+        "W7-P8-parts/W7-P8-weak-point-1.png",
+        "W7-P8-parts/W7-P8-weak-point-2.png",
+        "W7-P8-parts/W7-P8-weak-point-3.png",
+        "W7-P8-parts/W7-P8-weak-point-4.png",
+        "W7-P8-abyss-leviathan.png"
+      ],
+      "boxes": [
+        [
+          336,
+          238,
+          765,
+          862
+        ],
+        [
+          1570,
+          238,
+          1730,
+          862
+        ],
+        [
+          2668,
+          238,
+          2831,
+          862
+        ],
+        [
+          3761,
+          238,
+          3939,
+          862
+        ],
+        [
+          470,
+          1338,
+          629,
+          1962
+        ],
+        [
+          1564,
+          1338,
+          1736,
+          1962
+        ],
+        [
+          2671,
+          1338,
+          2829,
+          1962
+        ],
+        [
+          3769,
+          1338,
+          3931,
+          1962
+        ],
+        [
+          466,
+          2438,
+          634,
+          3062
+        ],
+        [
+          1584,
+          2683,
+          1717,
+          2817
+        ],
+        [
+          2658,
+          2666,
+          2842,
+          2833
+        ],
+        [
+          3759,
+          2658,
+          3941,
+          2842
+        ],
+        [
+          486,
+          3783,
+          615,
+          3917
+        ],
+        [
+          3338,
+          3338,
+          4362,
+          4362
+        ]
+      ],
+      "size": [
+        4400,
+        4400
+      ],
+      "operation": "Technical layout at recorded sprite scale, no overlapping boxes",
+      "identical_assembled_boss": "W7-P8-abyss-leviathan.png"
+    },
+    "W7-P1-arena-concept.png": {
+      "source": "Human-approved P1 review copy",
+      "size": [
+        941,
+        1672
+      ]
+    },
+    "W7-P6-border-pieces/W7-P6-border-top.png": {
+      "source": "D:\\void blaster art\\W7\\variants\\W7-P6-final-source.png",
+      "source_cell": [
+        60,
+        15,
+        1200,
+        175
+      ],
+      "size": [
+        1024,
+        160
+      ],
+      "processing": "Crop; uniform thickness scaling; minimum-error cut for periodic strip ends and corner joins; 512px vertical modules repeated twice; background normalization. Originals preserved."
+    },
+    "W7-P6-border-pieces/W7-P6-border-bottom.png": {
+      "source": "D:\\void blaster art\\W7\\variants\\W7-P6-final-source.png",
+      "source_cell": [
+        50,
+        1060,
+        1200,
+        1235
+      ],
+      "size": [
+        1024,
+        160
+      ],
+      "processing": "Crop; uniform thickness scaling; minimum-error cut for periodic strip ends and corner joins; 512px vertical modules repeated twice; background normalization. Originals preserved."
+    },
+    "W7-P6-border-pieces/W7-P6-border-left.png": {
+      "source": "D:\\void blaster art\\W7\\variants\\W7-P6-final-source.png",
+      "source_cell": [
+        10,
+        130,
+        180,
+        1100
+      ],
+      "size": [
+        160,
+        1024
+      ],
+      "processing": "Crop; uniform thickness scaling; minimum-error cut for periodic strip ends and corner joins; 512px vertical modules repeated twice; background normalization. Originals preserved."
+    },
+    "W7-P6-border-pieces/W7-P6-border-right.png": {
+      "source": "D:\\void blaster art\\W7\\variants\\W7-P6-final-source.png",
+      "source_cell": [
+        1075,
+        130,
+        1248,
+        1100
+      ],
+      "size": [
+        160,
+        1024
+      ],
+      "processing": "Crop; uniform thickness scaling; minimum-error cut for periodic strip ends and corner joins; 512px vertical modules repeated twice; background normalization. Originals preserved."
+    },
+    "W7-P6-border-pieces/W7-P6-corner-top-left.png": {
+      "source": "D:\\void blaster art\\W7\\variants\\W7-P6-final-source.png",
+      "source_cell": [
+        240,
+        240,
+        570,
+        565
+      ],
+      "size": [
+        256,
+        256
+      ],
+      "processing": "Crop; uniform thickness scaling; minimum-error cut for periodic strip ends and corner joins; 512px vertical modules repeated twice; background normalization. Originals preserved."
+    },
+    "W7-P6-border-pieces/W7-P6-corner-top-right.png": {
+      "source": "D:\\void blaster art\\W7\\variants\\W7-P6-final-source.png",
+      "source_cell": [
+        685,
+        240,
+        1000,
+        565
+      ],
+      "size": [
+        256,
+        256
+      ],
+      "processing": "Crop; uniform thickness scaling; minimum-error cut for periodic strip ends and corner joins; 512px vertical modules repeated twice; background normalization. Originals preserved."
+    },
+    "W7-P6-border-pieces/W7-P6-corner-bottom-left.png": {
+      "source": "D:\\void blaster art\\W7\\variants\\W7-P6-final-source.png",
+      "source_cell": [
+        240,
+        670,
+        570,
+        970
+      ],
+      "size": [
+        256,
+        256
+      ],
+      "processing": "Crop; uniform thickness scaling; minimum-error cut for periodic strip ends and corner joins; 512px vertical modules repeated twice; background normalization. Originals preserved."
+    },
+    "W7-P6-border-pieces/W7-P6-corner-bottom-right.png": {
+      "source": "D:\\void blaster art\\W7\\variants\\W7-P6-final-source.png",
+      "source_cell": [
+        685,
+        670,
+        1000,
+        970
+      ],
+      "size": [
+        256,
+        256
+      ],
+      "processing": "Crop; uniform thickness scaling; minimum-error cut for periodic strip ends and corner joins; 512px vertical modules repeated twice; background normalization. Originals preserved."
+    }
+  },
+  "limitations": [
+    "P2 is technically normalized/upscaled from recorded native dimensions",
+    "Separately generated boss modules match design and calibrated scale but are not a pixel-exact rig"
+  ],
+  "status": "production complete, technical and visual reviews passed",
+  "visual_review": [
+    "Generated alpha retained in ice and visually checked over dark ocean.",
+    "Frozen carcass changed to dorsal top view; eight straight tentacle modules supplied."
+  ]
+}

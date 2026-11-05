@@ -1,0 +1,29 @@
+STYLE (keep identical across all images):
+Game art for "Void Blaster", a top-down mobile space shooter (survivors-like).
+Camera: top-down orthographic, looking straight down, no perspective.
+Look: stylized sci-fi with a neon accent. Dark, rich materials (gunmetal, carbon,
+matte ceramic) lit from the top-left, glowing edges and emissive lights only where
+noted. Detail level: high but clean - panel lines, vents, rivets; no grunge overload.
+The background must stay dark and calm so bright game objects read on top of it:
+no bright cyan anywhere (cyan belongs to the player), magenta only as thin traces.
+Rendering: crisp edges, soft bloom on glowing parts only, no motion blur, no depth of
+field, not photorealistic. No text, no logo, no watermark.
+
+WORLD 10 "THE NEXUS": the heart of the Void Collective (an alien machine intelligence):
+a living mind of circuits and neurons where geometry stops making sense. Circuit traces
+branch like dendrites, neuron nodes, floating impossible shapes (frames and stairs that
+lead nowhere), broken rings orbiting. Darkness #000000/#0a0414, dominant violet #b04dff
+(dark #3a1060), magenta #ff2d95 everywhere a little, tiny white sparks. Everything
+glows from inside in pulses, like a heartbeat; between pulses the world is dark.
+Mood: the finale, awe and dread. Full fusion of machine and organism.
+
+TASK: The final boss "Void Heart" seen from directly above, 1024x1024, plain flat dark
+background (#05010f): a pulsing heart of fused tissue and circuitry with a blazing
+magenta core, inside a cage of three broken rotating rings, 4 eyes orbiting it, 3-4
+glowing weak points. It has three phases: also draw phase 2 (cage broken open) and
+phase 3 (heart exposed, cracked, burning brighter). Then a second image: exploded parts
+sheet at one scale with generous space: heart, each ring, each eye, each weak point;
+plus the complete assembled boss at the same scale in the bottom-right corner. No text.
+
+PRODUCTION NOTES (the attached approved P1 is a style/material reference, not a composition to reproduce):
+PARTS SHEET only. Second reference is the exact boss design to disassemble; first is approved arena style. Flat #05010f background, strict overhead orthographic, same design and materials as boss, separate INTACT modules with wide empty gutters. No text or grid, no random broken shards. Square 2400x2400, FOUR COLUMNS and FOUR ROWS. Row1 heart alone (no cage/eyes), OUTER broken ring alone, MIDDLE broken ring alone, INNER broken ring alone. Row2 four separate orbiting EYES1,2,3,4. Row3 four weakpoint lock SOCKETS1,2,3,4. Row4 first three cells empty, complete phase1 boss bottom-right. Thus 12 detached modules plus full boss. Each ring only its own SINGLE circular track, no nested other rings. Preserve exact pointed eye pods, angular heart, three-ring architecture and black/violet circuit metal of second reference.

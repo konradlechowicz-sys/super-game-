@@ -1,0 +1,125 @@
+{
+  "variant": "production",
+  "count": 8,
+  "pieces": [
+    {
+      "name": "top",
+      "file": "D:\\void blaster art\\W10\\selected\\W10-P6-border-pieces\\W10-P6-border-top.png",
+      "size": [
+        1024,
+        160
+      ],
+      "source_crop": [
+        40,
+        35,
+        1210,
+        155
+      ]
+    },
+    {
+      "name": "bottom",
+      "file": "D:\\void blaster art\\W10\\selected\\W10-P6-border-pieces\\W10-P6-border-bottom.png",
+      "size": [
+        1024,
+        160
+      ],
+      "source_crop": [
+        40,
+        1085,
+        1210,
+        1215
+      ]
+    },
+    {
+      "name": "left",
+      "file": "D:\\void blaster art\\W10\\selected\\W10-P6-border-pieces\\W10-P6-border-left.png",
+      "size": [
+        160,
+        1024
+      ],
+      "source_crop": [
+        25,
+        175,
+        155,
+        1075
+      ]
+    },
+    {
+      "name": "right",
+      "file": "D:\\void blaster art\\W10\\selected\\W10-P6-border-pieces\\W10-P6-border-right.png",
+      "size": [
+        160,
+        1024
+      ],
+      "source_crop": [
+        1100,
+        175,
+        1235,
+        1075
+      ]
+    },
+    {
+      "name": "top-left",
+      "file": "D:\\void blaster art\\W10\\selected\\W10-P6-border-pieces\\W10-P6-corner-top-left.png",
+      "size": [
+        256,
+        256
+      ],
+      "source_crop": [
+        230,
+        230,
+        575,
+        550
+      ]
+    },
+    {
+      "name": "top-right",
+      "file": "D:\\void blaster art\\W10\\selected\\W10-P6-border-pieces\\W10-P6-corner-top-right.png",
+      "size": [
+        256,
+        256
+      ],
+      "source_crop": [
+        680,
+        230,
+        1025,
+        550
+      ]
+    },
+    {
+      "name": "bottom-left",
+      "file": "D:\\void blaster art\\W10\\selected\\W10-P6-border-pieces\\W10-P6-corner-bottom-left.png",
+      "size": [
+        256,
+        256
+      ],
+      "source_crop": [
+        230,
+        665,
+        575,
+        980
+      ]
+    },
+    {
+      "name": "bottom-right",
+      "file": "D:\\void blaster art\\W10\\selected\\W10-P6-border-pieces\\W10-P6-corner-bottom-right.png",
+      "size": [
+        256,
+        256
+      ],
+      "source_crop": [
+        680,
+        665,
+        1025,
+        980
+      ]
+    }
+  ],
+  "checks": {
+    "stored_strip_ends_identical": true,
+    "stored_corner_join_profiles_identical": true,
+    "exact_dimensions": true
+  },
+  "processing": "Crop; uniform thickness scaling; minimum-error cut for periodic strip ends and corner joins; 512px vertical modules repeated twice; background normalization. Originals preserved.",
+  "visual_review": "pending"
+}

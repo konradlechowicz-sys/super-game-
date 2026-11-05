@@ -1,15 +1,34 @@
 import { TAU, rand, randi, clamp, lerp, pick, weightedPick, angleLerp, SpatialHash } from './util.js';
+import { rollCrate, applyCrate, crateCard } from './crates.js';
 import { ENEMIES, BOSSES, PASSIVES, PASSIVE_MAX, SHIPS, TRAITS, WORLD_TUNING, ENDLESS, xpFor, stageIndex, shopBonus } from './data.js';
 import { WEAPONS, WEAPON_MAX, weaponStats } from './weapons.js';
 import { COMBOS, COMBO_LEVEL, comboActive, combosFor } from './combos.js';
 import { shipLook } from './store.js';
 import { Tutorial, tipsOn, tipSeen, markTip } from './tutorial.js';
 import { renderGame } from './render-canvas.js';
+import { EDITION } from './edition.js';
+import { initProps, updateProps, breakProp, hasProps } from './props.js';
+import { initCover, hasCover, coverAt, updateCover } from './cover.js';
+import { initCrystal, hasCrystal, updateCrystal, layCrystal } from './crystal.js';
+import { ignite, updateArsenal, shieldHit, addFire, inHole } from './arsenal.js';
+import { initWorldFx, hasWorldFx, updateWorldFx } from './worldfx.js';
 
 const MAX_WEAPONS = 4;
 const MAX_PASSIVES = 4;
 const DRAG_SENS = 1.5;
 const MAX_LAG = 150;
+// the fastest a normal enemy chases (85% of the slowest ship's base speed, the Titan's 200)
+const CHASE_CAP = 170;
+// experience pacing (gainXp): the shortest time between two level-ups, and how many levels' worth may wait in the bank
+const LEVEL_GAP = 2.5;
+const XP_BANK_MAX = 2;
+// deadlier bosses (decided by Konrad, 2026-11-03: the bosses were too easy): every hit the ship takes during a boss
+// fight from the boss and its attacks hurts this much more, the pauses between attacks are this much shorter, and
+// below half health the boss goes into a fury (faster, shorter pauses still, its special attack more often)
+const BOSS_DMG = 1.6;
+const BOSS_REST = 0.7;
+const BOSS_SRC = new Set(['boss', 'bullet', 'beam', 'mortar']);
+const FURY_AT = 0.5;
 const ARENA_SCALE = 1.5;
 // Crowd damage (v1.1): invulnerability after touching an enemy (shots and hazards keep 0.6 s), and the squeeze bonus.
 const CONTACT_INV = 0.3;
@@ -19,8 +38,10 @@ const CROWD_MAX = 2.5;
 let nextId = 1;
 
 export class Game {
-  constructor(app, stage) {
+  // opts.crate: the supply crate bought at LAUNCH (js/crates.js), opened 0.8 s into the run
+  constructor(app, stage, opts = {}) {
     this.app = app;
+    this.crate = opts.crate || null;
     this.ui = app.ui;
     this.stage = stage;
     this.tune = WORLD_TUNING[stage.world?.id] || WORLD_TUNING[1];
@@ -32,12 +53,15 @@ export class Game {
     this.time = 0;
     this.state = 'play';
     this.enemies = []; this.proj = []; this.ebullets = []; this.gems = []; this.pickups = [];
+    this.holes = []; this.fires = []; this.beams = []; this.collapses = [];
+    this.sparks = []; // hit sparks of shots (drawn with the 2.0 art, js/render-canvas.js) // the 2.0 arsenal's black holes, burning ground, beams (js/arsenal.js)
     this.particles = []; this.hazards = []; this.rings = []; this.fx = []; this.bolts = []; this.mines = []; this.texts = [];
     this.hash = new SpatialHash(64);
     this.tmp = [];
     this.kills = 0; this.coinsRun = 0;
     this.elitesKilled = 0;
     this.level = 1; this.xp = 0; this.xpNext = xpFor(1); this.pendingLevels = 0; this.pendingChests = 0;
+    this.xpBank = 0; this.lastLevelT = -99;
     this.weapons = []; this.passives = {};
     // weapon combos active this run, and the ones still to announce once the level-up cards close
     this.combos = new Set(); this.comboQueue = []; this.comboBannerT = 0;
@@ -56,6 +80,18 @@ export class Game {
     this.recompute();
     this.player.hp = this.player.maxHp;
     this.addWeapon(this.ship.weapon);
+    // 2.0: world 3's craters, cover from enemy shots (js/cover.js), then each world's props to shoot (js/props.js)
+    this.cover = [];
+    if (EDITION === 2 && hasCover(stage.world?.id)) initCover(this);
+    // world 4's black crystal network and dust storms (js/crystal.js)
+    this.crystal = null; this.storm = null;
+    if (EDITION === 2 && hasCrystal(stage.world?.id)) initCrystal(this);
+    // worlds 6-10: wind, ice, rifts, acid (js/worldfx.js)
+    this.wind = null; this.ice = false; this.rifts = []; this.acid = [];
+    this.worldFx = EDITION === 2 && hasWorldFx(stage.world?.id);
+    if (this.worldFx) initWorldFx(this);
+    this.props = [];
+    if (EDITION === 2 && hasProps(stage.world?.id)) initProps(this);
     this.tut = new Tutorial(this);
     if (stage.endless) this.ui.banner('ENDLESS', stage.world.name.toUpperCase());
     else this.ui.banner(`STAGE ${stage.id}`, stage.name.toUpperCase());
@@ -87,6 +123,14 @@ export class Game {
     p.armor = s.armor || 0;
     p.xpMult = 1 + B('growth');
     p.coinMult = 1 + B('greed');
+    // 2.0 arsenal perks: crits, setting enemies on fire, the Phase Shield (it comes up charged when taken)
+    p.crit = (P.targeting || 0) * 0.06;
+    p.ignite = (P.thermal || 0) * 0.08;
+    p.fireMult = 1 + (P.thermal || 0) * 0.2;
+    // the Phase Shield soaks damage before the hull; a new level fills it up
+    const oldShield = p.shieldMax || 0;
+    p.shieldMax = P.phase ? 25 + 10 * (P.phase - 1) : 0;
+    if (p.shieldMax > oldShield) p.shield = p.shieldMax;
   }
 
   addWeapon(id) {
@@ -162,6 +206,26 @@ export class Game {
     if (p.laststand) dmg *= 1.25;
     p.dmgMult = p.baseDmg * dmg;
     p.cdMult = p.baseCd * cd;
+    // Scorched Trail (perk set): a trail of fire behind the moving ship
+    if (C.has('scorched') && p.moving > 40 && (this.scorchT = (this.scorchT || 0) - dt) <= 0) {
+      this.scorchT = 0.22;
+      addFire(this, p.x, p.y, 34, 10 * p.dmgMult * p.fireMult, 2.2);
+    }
+    // Thunderstorm (super combo): every 6 s lightning strikes 8 enemies in sight, each strike leaves a mine
+    if (C.has('thunderstorm') && (this.stormT = (this.stormT ?? 6) - dt) <= 0) {
+      this.stormT = 6;
+      const ls = this.wstats('lightning'), ms = this.wstats('mines');
+      const { vw, vh } = this.viewSize();
+      const seen = this.enemies.filter((e) => !e.dead && !e.prop && e.spawnT <= 0 && Math.abs(e.x - this.cam.x) < vw / 2 && Math.abs(e.y - this.cam.y) < vh / 2);
+      for (let i = 0; i < 8 && seen.length; i++) {
+        const e = seen.splice(randi(0, seen.length - 1), 1)[0];
+        this.damage(e, ls.dmg * 1.5 * p.dmgMult, 0, 0, true);
+        if (this.bolts.length < 40) this.addBolt([e.x + rand(-40, 40), e.y - 320, e.x, e.y], '#fff27d');
+        if (this.mines.length < 40) this.mines.push({ x: e.x, y: e.y, life: 6, arm: 0.3, dmg: ms.dmg * p.dmgMult, rad: ms.rad * p.areaMult, pull: 0 });
+      }
+      this.shake = Math.max(this.shake, 5);
+      this.sfx('zap');
+    }
     if (C.has('singularity')) {
       this.singT = (this.singT ?? 0) + dt;
       if (this.singT >= 25) {
@@ -261,14 +325,23 @@ export class Game {
   }
 
   // ---------------- combat ----------------
-  damage(e, dmg, kx = 0, ky = 0, quiet = false) {
+  // opt: { fire } burn damage (no crit, never sets on fire again), { noCrit }, { breakShield } a crit breaks a shield
+  damage(e, dmg, kx = 0, ky = 0, quiet = false, opt) {
     if (e.dead) return;
     if (e.parent) {
       // boss body segment: the boss takes reduced damage through its body
       e.flash = 0.07;
-      this.damage(e.parent, dmg * 0.6, 0, 0, quiet);
+      this.damage(e.parent, dmg * 0.6, 0, 0, quiet, opt);
       return;
     }
+    // 2.0 arsenal: Targeting Matrix crits (double damage), Thermal Core sets enemies on fire
+    const p = this.player;
+    const crit = p.crit > 0 && !opt?.noCrit && Math.random() < p.crit;
+    if (crit) dmg *= 2;
+    e.lastCrit = crit; // Salvage Core: a critical kill drops an extra crystal
+    if (p.ignite > 0 && !opt?.fire && !e.prop && Math.random() < p.ignite) ignite(e, 8 * p.dmgMult * p.fireMult, 3);
+    // Gauss Lance: a critical hit breaks a shield outright
+    if (crit && opt?.breakShield && e.shield > 0) e.shield = 0.001;
     if (e.shield > 0) {
       // a shielded elite's shield soaks damage first and regrows after 4 s without hits
       const soak = Math.min(e.shield, dmg);
@@ -279,7 +352,8 @@ export class Game {
     e.hp -= dmg;
     e.flash = 0.07;
     if (!e.boss) { e.kx += kx * e.kbRes; e.ky += ky * e.kbRes; }
-    this.text(e.x, e.y - e.r, Math.round(dmg));
+    if (crit) this.text(e.x, e.y - e.r, `${Math.round(dmg)}!`, '#ffd23d');
+    else this.text(e.x, e.y - e.r, Math.round(dmg), opt?.fire ? '#ff8a2a' : '#ffffff');
     if (!quiet) this.sfx('hit');
     if (e.hp <= 0) this.kill(e);
   }
@@ -295,6 +369,7 @@ export class Game {
   }
 
   kill(e) {
+    if (e.prop) { breakProp(this, e); return; }
     e.dead = true;
     this.kills++;
     if (e.stageElite) this.elitesKilled++;
@@ -306,6 +381,7 @@ export class Game {
     }
     this.sfx('boom');
     this.dropGem(e.x, e.y, e.xp);
+    if (e.lastCrit && this.combos.has('salvage')) this.dropGem(e.x + rand(-10, 10), e.y + rand(-10, 10), e.xp);
     if (e.elite) {
       this.shake = Math.max(this.shake, 10);
       // a trait elite's crate holds two rewards and it drops more coins (12 plain, 20 with one trait, 28 with two)
@@ -339,15 +415,37 @@ export class Game {
   }
 
   // inv = invulnerability after the hit: 0.6 s for shots and hazards, shorter for touching enemies (see CONTACT_INV)
+  // the world's damage level, rising towards the end of the sector (hurtPlayer)
+  dmgScale() {
+    const T = this.tune;
+    return T.dmg * (1 + T.ramp * this.progress());
+  }
+
   hurtPlayer(dmg, src = '?', inv = 0.6) {
     const p = this.player;
     if (p.inv > 0 || this.state !== 'play' || this.app.god) return;
     // the world's damage level, rising towards the end of the sector
     const T = this.tune;
-    dmg *= T.dmg * (1 + T.ramp * this.progress());
+    if (this.boss && !this.boss.dead && BOSS_SRC.has(src)) dmg *= BOSS_DMG;
+    dmg *= this.dmgScale();
     dmg = Math.max(1, dmg - p.armor);
+    // the Phase Shield soaks what it can
+    dmg = shieldHit(this, dmg);
+    if (dmg <= 0) { p.inv = inv; return; }
     p.hp -= dmg;
     (this.dmgLog ||= {})[src] = (this.dmgLog[src] || 0) + dmg;
+    // Phoenix Rail (super combo): once a run a lethal hit turns into a firestorm and 30% hull
+    if (p.hp <= 0 && this.combos.has('phoenixrail') && !this.phoenixUsed) {
+      this.phoenixUsed = true;
+      p.hp = p.maxHp * 0.3;
+      p.inv = 2;
+      this.explode(p.x, p.y, 260, 220 * p.dmgMult, '#ff9a3d');
+      for (let i = 0; i < 10; i++) { const a = (i / 10) * TAU; addFire(this, p.x + Math.cos(a) * 150, p.y + Math.sin(a) * 150, 55, 20 * p.dmgMult * p.fireMult, 4); }
+      this.ui.banner('PHOENIX', 'RISEN FROM THE FIRE');
+      this.shake = 16;
+      this.sfx('evolve');
+      return;
+    }
     p.inv = inv;
     this.app.haptic('medium');
     this.shake = Math.max(this.shake, 9);
@@ -424,6 +522,18 @@ export class Game {
     this.app.audio.setTrack(this.stage.world.music || 'game');
   }
 
+  // A chaser's own way of steering (see the enemy loop in update): how late it reacts to the ship's turns, how far
+  // ahead it aims, the side it approaches from, its wander and how fast it can turn. Swarms are the nimblest.
+  steerFor(e, dx, dy, d) {
+    const p = this.player, pack = !!e.def.pack || e.def.speed >= 100;
+    return {
+      pvx: p.vx || 0, pvy: p.vy || 0,
+      react: rand(0.25, 0.9), lead: pack ? rand(0.2, 1) : rand(0, 0.5), flank: rand(-0.9, 0.9),
+      ww: rand(0.6, 1.4), wph: rand(0, TAU), pace: rand(0.92, 1.05), agil: pack ? rand(2.5, 4.5) : rand(1.5, 3),
+      vx: (dx / d) * e.speed, vy: (dy / d) * e.speed,
+    };
+  }
+
   // ---------------- spawning ----------------
   spawnEnemy(type, x, y, elite = false, traits = []) {
     const d = ENEMIES[type], st = this.stage;
@@ -436,6 +546,10 @@ export class Game {
       rot: 0, state: 'chase', t: 0, cd: rand(0.5, 2), kbRes: d.speed === 0 ? 0 : elite ? 0.25 : d.r > 18 ? 0.4 : 1, alpha: 1,
     };
     e.maxHp = e.hp;
+    // Every ship can outrun the crowd (decided by Konrad, 2026-11-03: swarms faster than the ship left no way out but
+    // an area weapon): the chase speed is at most CHASE_CAP; the pressure comes from numbers and directions. Faster
+    // only: dashes and lunges after their warning, and elites with the 'swift' trait (applyTraits below).
+    if (d.ai !== 'drift') e.speed = Math.min(e.speed, CHASE_CAP);
     if (traits.length) this.applyTraits(e, traits);
     if (d.ai === 'drift') {
       const p = this.player;
@@ -502,10 +616,19 @@ export class Game {
     return { x: clamp(p.x + Math.cos(a) * R, -hw, hw), y: clamp(p.y + Math.sin(a) * R, -hh, hh) };
   }
 
+  fixedCount() {
+    let n = 0;
+    for (const e of this.enemies) if (!e.dead && !e.boss && !e.prop && e.def?.speed === 0) n++;
+    return n;
+  }
+
   // Stationary enemies are placed near the player, everything else just off-screen.
   posFor(type) {
     if (ENEMIES[type].speed > 0) return this.spawnPos();
-    return this.nearPos(rand(190, 280));
+    // not inside a crater (world 3): its own shots would break on it
+    let pos = this.nearPos(rand(190, 280));
+    for (let k = 0; k < 8 && this.cover.length && coverAt(this, pos.x, pos.y, 20); k++) pos = this.nearPos(rand(190, 280));
+    return pos;
   }
 
   nearPos(R) {
@@ -515,7 +638,10 @@ export class Game {
   }
 
   spawnOne() {
-    const pool = this.stage.enemies.filter((e) => this.time >= e[1]);
+    let pool = this.stage.enemies.filter((e) => this.time >= e[1]);
+    // enemies set in the ground (world 3's turrets and mortar nodes) are capped (stage `fixed`, 5 by default), so they
+    // never wall in the ship or fill the sky with shells
+    if (pool.some((e) => ENEMIES[e[0]].speed === 0) && this.fixedCount() >= (this.stage.fixed ?? 5)) pool = pool.filter((e) => ENEMIES[e[0]].speed > 0);
     const [type] = weightedPick(pool, (e) => e[2]);
     const d = ENEMIES[type];
     const pos = this.posFor(type);
@@ -537,6 +663,8 @@ export class Game {
         const a = (i / ev.count) * TAU;
         this.spawnEnemy(ev.enemy, clamp(p.x + Math.cos(a) * R, -hw, hw), clamp(p.y + Math.sin(a) * R, -hh, hh));
       }
+    } else if (ev.type === 'pattern') {
+      this.attackPattern(ev);
     } else if (ev.type === 'elite') {
       // a stationary elite (turret) is placed in sight, closer than a normal turret
       const pos = ENEMIES[ev.enemy].speed > 0 ? this.posFor(ev.enemy) : this.nearPos(150);
@@ -561,6 +689,57 @@ export class Game {
         e.vx = Math.cos(a + Math.PI) * sp; e.vy = Math.sin(a + Math.PI) * sp;
       }
     }
+  }
+
+  // Set attacks of worlds 2-10 (addPatterns in js/data.js): they come from somewhere, so the player has to position.
+  attackPattern(ev) {
+    const p = this.player, { vw, vh } = this.viewSize();
+    const hw = this.arena.w / 2 - 20, hh = this.arena.h / 2 - 20;
+    const at = (x, y) => [clamp(x, -hw, hw), clamp(y, -hh, hh)];
+    const edge = Math.hypot(vw, vh) / 2 + 40;
+    // a line across the approach, just off screen, marching in: each member aims straight ahead, no flanking
+    const wall = (a, count) => {
+      const cx = p.x + Math.cos(a) * edge, cy = p.y + Math.sin(a) * edge;
+      for (let i = 0; i < count; i++) {
+        const off = (i - (count - 1) / 2) * 34;
+        const e = this.spawnEnemy(ev.enemy, ...at(cx - Math.sin(a) * off, cy + Math.cos(a) * off));
+        e.st = { ...this.steerFor(e, p.x - e.x, p.y - e.y, Math.hypot(p.x - e.x, p.y - e.y) || 1), flank: 0, lead: 0.15, react: 0.6 };
+      }
+    };
+    const a = rand(0, TAU);
+    if (ev.kind === 'wall') wall(a, ev.count);
+    else if (ev.kind === 'pincer') { wall(a, Math.ceil(ev.count / 2)); wall(a + Math.PI, Math.floor(ev.count / 2)); }
+    else if (ev.kind === 'gapring') {
+      // a ring around where the ship is now, with one gap that closes over 6 s while the ring tightens; then they chase
+      const R = Math.min(vw, vh) * 0.62 + 120;
+      for (let i = 0; i < ev.count; i++) {
+        const e = this.spawnEnemy(ev.enemy, p.x + Math.cos(a) * R, p.y + Math.sin(a) * R);
+        e.form = { cx: p.x, cy: p.y, gap: a, i, n: ev.count, R, t: 0 };
+        this.formPos(e, 0);
+      }
+    } else if (ev.kind === 'snipers') {
+      // an arc of ranged enemies far on one side: running away does not help, they have to be hunted down
+      for (let i = 0; i < ev.count; i++) {
+        const b = a + (i / Math.max(1, ev.count - 1) - 0.5) * 1.7;
+        this.spawnEnemy(ev.enemy, ...at(p.x + Math.cos(b) * 430, p.y + Math.sin(b) * 430));
+      }
+    } else if (ev.kind === 'hunter') {
+      // an elite commander with its escort; its aura makes nearby enemies faster and stronger while it lives
+      const pos = this.posFor(ev.enemy);
+      const e = this.spawnElite(ev.enemy, pos.x, pos.y, ['commander']);
+      e.hunter = true;
+    }
+  }
+
+  // where a member of a closing ring stands at time t: the gap shrinks from about 70 degrees to none in 6 s, the ring
+  // from R to a third of it
+  formPos(e, t) {
+    const f = e.form, k = Math.min(1, t / 6);
+    const gap = 1.2 * (1 - k), span = TAU - gap;
+    const ang = f.gap + gap / 2 + (f.n > 1 ? (f.i / (f.n - 1)) * span : 0);
+    const R = f.R * (1 - 0.65 * k);
+    e.x = clamp(f.cx + Math.cos(ang) * R, -this.arena.w / 2 + 20, this.arena.w / 2 - 20);
+    e.y = clamp(f.cy + Math.sin(ang) * R, -this.arena.h / 2 + 20, this.arena.h / 2 - 20);
   }
 
   // ---------------- hazards: telegraphed beams, mortar strikes, gravity wells ----------------
@@ -597,6 +776,19 @@ export class Game {
     }
   }
 
+  // World 1 "Orbital Ruins" (Art Bible): a big fragment of a station falls through the arena. First a shadowed amber
+  // corridor warns for `warn` seconds, then the wreck crosses it in `dur` seconds, crushing enemies (and props: fuel
+  // tanks go off) and hurting the ship if it is still inside. Aimed at a point near the ship, from off-screen.
+  fallingWreck() {
+    const p = this.player, { vw, vh } = this.viewSize();
+    const a = rand(0, TAU), L = Math.hypot(vw, vh) / 2 + 260;
+    const tx = p.x + rand(-160, 160), ty = p.y + rand(-160, 160);
+    const c = Math.cos(a), s = Math.sin(a);
+    this.addHazard({ kind: 'wreck', x0: tx - c * L, y0: ty - s * L, x1: tx + c * L, y1: ty + s * L, a, w: 96, warn: 1.8, dur: 1.1,
+      art: randi(1, 4), spin: rand(-2.5, 2.5), hit: new Set(), x: tx - c * L, y: ty - s * L });
+    this.sfx('warn');
+  }
+
   beamEnds(h) {
     const c = Math.cos(h.a), s = Math.sin(h.a);
     return h.centered ? [h.x - c * h.len, h.y - s * h.len, h.x + c * h.len, h.y + s * h.len] : [h.x, h.y, h.x + c * h.len, h.y + s * h.len];
@@ -621,10 +813,26 @@ export class Game {
             const [x0, y0, x1, y1] = this.beamEnds(h);
             const vx = x1 - x0, vy = y1 - y0, l2 = vx * vx + vy * vy || 1;
             const t = clamp(((p.x - x0) * vx + (p.y - y0) * vy) / l2, 0, 1);
-            if (Math.hypot(p.x - (x0 + vx * t), p.y - (y0 + vy * t)) < h.w / 2 + p.r - 3) this.hurtPlayer(h.dmg, 'beam');
+            if (Math.hypot(p.x - (x0 + vx * t), p.y - (y0 + vy * t)) < h.w / 2 + p.r - 3) this.hurtPlayer(h.pct ? (h.pct * p.maxHp) / this.dmgScale() : h.dmg, h.pct ? 'special' : 'beam');
           }
         }
         if (h.t > h.warn + h.dur) done = true;
+      } else if (h.kind === 'wreck') {
+        const k = (h.t - h.warn) / h.dur;
+        if (k >= 0) {
+          if (!h.fired) { h.fired = true; this.sfx('boom'); this.shake = Math.max(this.shake, 7); }
+          h.x = lerp(h.x0, h.x1, Math.min(1, k)); h.y = lerp(h.y0, h.y1, Math.min(1, k));
+          // crushes what it passes, once each, and throws it along its way
+          const st = this.stage, tough = lerp(st.hp0 || 1, st.hp, this.progress()) * this.tune.hp;
+          for (const e of this.enemiesNear(h.x, h.y, h.w / 2)) {
+            if (h.hit.has(e)) continue;
+            h.hit.add(e);
+            this.damage(e, 90 * tough, Math.cos(h.a) * 500, Math.sin(h.a) * 500, true);
+          }
+          if (live && !h.hit.has(p) && Math.hypot(p.x - h.x, p.y - h.y) < h.w * 0.42 + p.r) { h.hit.add(p); this.hurtPlayer(16, 'wreck'); }
+          if (this.particles.length < 600) this.burst(h.x, h.y, '#ffb02e', 3, 200, 0.4, 5);
+          if (k >= 1) done = true;
+        }
       } else if (h.kind === 'mortar') {
         if (h.t >= h.warn) {
           done = true;
@@ -660,7 +868,7 @@ export class Game {
     const { vh } = this.viewSize();
     const hh = this.arena.h / 2 - 80;
     const b = {
-      id: nextId++, boss: true, def, name: def.name, x: p.x, y: clamp(p.y - vh * 0.4, -hh, hh), kx: 0, ky: 0,
+      id: nextId++, boss: true, def, name: def.name, x: p.x, y: clamp(p.y - vh * (def.move === 'anchor' ? 0.27 : 0.4), -hh, hh), kx: 0, ky: 0,
       hp: def.hp * this.tune.boss * (this.endless ? 1 + ENDLESS.bossGrowth * this.endless.bosses++ : 1), r: def.r, speed: def.speed, dmg: def.dmg, color: def.color, flash: 0, spawnT: 1.2,
       rot: 0, rot2: 0, phase: 1, atk: 0, atkT: 2.5, mode: 'idle', modeT: 0, spin: 0, kbRes: 0, alpha: 1,
       heading: Math.PI / 2, lunge: 0,
@@ -696,7 +904,7 @@ export class Game {
     this.text(p.x, p.y - 24, 'HULL RESTORED', '#3dff8a');
     this.ui.banner('WARNING', `${def.name} APPROACHES`);
     this.ui.bossBar(def.name, 1);
-    this.app.audio.setTrack('boss');
+    this.app.audio.setTrack(this.stage.world.bossMusic || 'boss');
     this.sfx('boss');
     this.app.haptic('heavy');
     this.shake = 14;
@@ -712,6 +920,11 @@ export class Game {
     while (this.spawnAcc >= 1) {
       this.spawnAcc -= 1;
       if (this.enemies.length < st.max) this.spawnOne();
+    }
+    // world 1 (2.0): a falling wreck every `wrecks[1]` seconds (±20%), the first at `wrecks[0]`
+    if (st.wrecks && !this.bossDefeated) {
+      this.wreckAt ??= st.wrecks[0];
+      if (this.time >= this.wreckAt) { this.wreckAt = this.time + st.wrecks[1] * rand(0.8, 1.2); this.fallingWreck(); }
     }
     for (let i = 0; i < st.events.length; i++) {
       if (!this.eventsDone.has(i) && this.time >= st.events[i].t) {
@@ -773,13 +986,32 @@ export class Game {
   }
 
   // ---------------- level up / cards ----------------
-  gainXp(v) {
-    this.xp += v * this.player.xpMult;
-    while (this.xp >= this.xpNext) {
+  // Experience comes in through a bank (decided by Konrad, 2026-11-03: a big haul, e.g. a magnet or a bomb, opened the
+  // level-up cards one after another and broke the rhythm): at most one level every LEVEL_GAP seconds, the rest waits
+  // in the bank and flows in later (flowXp, every frame); a bank of more than XP_BANK_MAX levels' worth loses the
+  // excess, so one big haul gives a few levels, not a whole run of them. instant: test tools, all at once.
+  gainXp(v, instant = false) {
+    if (instant) {
+      this.xp += v * this.player.xpMult;
+      while (this.xp >= this.xpNext) { this.xp -= this.xpNext; this.level++; this.xpNext = xpFor(this.level); this.pendingLevels++; }
+      return;
+    }
+    this.xpBank = Math.min(this.xpBank + v * this.player.xpMult, this.xpNext * XP_BANK_MAX);
+    this.flowXp();
+  }
+
+  flowXp() {
+    if (this.xpBank <= 0) return;
+    const ready = this.time - this.lastLevelT >= LEVEL_GAP;
+    const move = Math.min(this.xpBank, ready ? this.xpNext - this.xp : Math.max(0, this.xpNext - this.xp - 1e-6));
+    this.xp += move;
+    this.xpBank -= move;
+    if (this.xp >= this.xpNext) {
       this.xp -= this.xpNext;
       this.level++;
       this.xpNext = xpFor(this.level);
       this.pendingLevels++;
+      this.lastLevelT = this.time;
     }
   }
 
@@ -815,11 +1047,11 @@ export class Game {
   }
 
   describeCard(c) {
-    if (c.kind === 'heal') return { ...c, name: 'Repair Kit', tag: 'HEAL', desc: 'Restore 40% hull.', icon: 'heal', color: '#3dff8a' };
-    if (c.kind === 'coins') return { ...c, name: 'Salvage', tag: 'BONUS', desc: '+25 coins.', icon: 'coins', color: '#ffd23d' };
+    if (c.kind === 'heal') return { ...c, name: 'Repair Kit', tag: 'HEAL', desc: 'Restore 40% hull.', icon: 'heal', art: 'pu-heal', color: '#3dff8a' };
+    if (c.kind === 'coins') return { ...c, name: 'Salvage', tag: 'BONUS', desc: '+25 coins.', icon: 'coins', art: 'pu-coin', color: '#ffd23d' };
     if (c.kind === 'evo') {
       const def = WEAPONS[c.id];
-      return { ...c, name: def.evo.name, tag: 'EVOLUTION', desc: def.evo.desc, icon: def.icon, color: '#ffd23d', evo: true };
+      return { ...c, name: def.evo.name, tag: 'EVOLUTION', desc: def.evo.desc, icon: def.icon, art: `e-${c.id}`, color: '#ffd23d', evo: true };
     }
     if (c.kind === 'wnew' || c.kind === 'wlvl') {
       const def = WEAPONS[c.id];
@@ -827,11 +1059,11 @@ export class Game {
       const lvl = w ? w.level + 1 : 1;
       let desc = def.desc[lvl - 1];
       if (lvl === WEAPON_MAX && def.evo) desc += ` · Evolves with ${PASSIVES[def.evo.with].name}`;
-      return { ...c, name: def.name, tag: w ? `LV ${lvl}` : 'NEW', desc, ...this.comboHint(false, c.id, lvl), icon: def.icon, color: def.color };
+      return { ...c, name: def.name, tag: w ? `LV ${lvl}` : 'NEW', desc, ...this.comboHint(false, c.id, lvl), icon: def.icon, art: `w-${c.id}`, color: def.color };
     }
     const def = PASSIVES[c.id];
     const lvl = (this.passives[c.id] || 0) + 1;
-    return { ...c, name: def.name, tag: lvl === 1 ? 'NEW' : `LV ${lvl}`, desc: def.desc, ...this.comboHint(true, c.id, lvl), icon: def.icon, color: def.color };
+    return { ...c, name: def.name, tag: lvl === 1 ? 'NEW' : `LV ${lvl}`, desc: def.desc, ...this.comboHint(true, c.id, lvl), icon: def.icon, art: `p-${c.id}`, color: def.color };
   }
 
   // Combo hint on a card: only for a partner the player already has, so the rest stays a discovery.
@@ -839,9 +1071,11 @@ export class Game {
     const combos = combosFor(this, perk, id, lvl);
     const done = combos.find((x) => x.done);
     const what = perk ? 'perk set' : 'combo';
-    const comboHint = done ? `Unlocks ${what}: ${COMBOS[done.id].name}`
-      : combos.length ? `${perk ? 'Set' : 'Combo'} with ${combos.map((x) => x.partner).join(' / ')} at LV ${COMBO_LEVEL}` : '';
-    return { comboHint, combo: !!done };
+    const plain = combos.filter((x) => !x.super), sup = combos.filter((x) => x.super);
+    const comboHint = done ? `Unlocks ${done.super ? 'super combo' : what}: ${COMBOS[done.id].name}`
+      : plain.length ? `${perk ? 'Set' : 'Combo'} with ${plain.map((x) => x.partner).join(' / ')} at LV ${COMBO_LEVEL}`
+        : sup.length ? `Super combo with ${sup[0].partner} at LV ${sup[0].level}` : '';
+    return { comboHint, combo: !!done, superCombo: !!done?.super };
   }
 
   applyCard(c) {
@@ -924,15 +1158,15 @@ export class Game {
 
   buildSummary() {
     return {
-      weapons: this.weapons.map((w) => ({ id: w.id, icon: WEAPONS[w.id].icon, color: w.evolved ? '#ffd23d' : WEAPONS[w.id].color, level: w.evolved ? '★' : w.level, name: w.evolved ? WEAPONS[w.id].evo.name : WEAPONS[w.id].name })),
-      passives: Object.entries(this.passives).map(([id, l]) => ({ id, icon: PASSIVES[id].icon, color: PASSIVES[id].color, level: l, name: PASSIVES[id].name })),
+      weapons: this.weapons.map((w) => ({ id: w.id, icon: WEAPONS[w.id].icon, art: `${w.evolved ? 'e' : 'w'}-${w.id}`, color: w.evolved ? '#ffd23d' : WEAPONS[w.id].color, level: w.evolved ? '★' : w.level, name: w.evolved ? WEAPONS[w.id].evo.name : WEAPONS[w.id].name })),
+      passives: Object.entries(this.passives).map(([id, l]) => ({ id, icon: PASSIVES[id].icon, art: `p-${id}`, color: PASSIVES[id].color, level: l, name: PASSIVES[id].name })),
       combos: [...this.combos].map((id) => ({ id, name: COMBOS[id].name, color: COMBOS[id].color, desc: COMBOS[id].desc })),
     };
   }
 
   // ---------------- main update ----------------
   update(rawDt) {
-    if (this.state === 'levelup' || this.state === 'paused' || this.state === 'revive' || this.state === 'over') return;
+    if (this.state === 'levelup' || this.state === 'crate' || this.state === 'paused' || this.state === 'revive' || this.state === 'over') return;
     this.slowmo = Math.min(1, this.slowmo + rawDt * (this.state === 'play' ? 1.5 : 0.25));
     // a tutorial hint waiting for the player slows the action down
     if (this.state === 'play') this.slowmo = Math.min(this.slowmo, this.tut.update(rawDt));
@@ -945,18 +1179,23 @@ export class Game {
 
     this.hash.clear();
     for (const e of this.enemies) if (!e.dead) this.hash.insert(e);
+    for (const o of this.props) if (!o.dead) this.hash.insert(o);
 
     if (this.state === 'play') {
       // announce new combos one at a time once the cards are closed
       this.comboBannerT -= rawDt;
       if (this.comboQueue.length && this.comboBannerT <= 0) {
         const c = COMBOS[this.comboQueue.shift()];
-        this.ui.banner(c.perk ? 'PERK SET!' : 'COMBO!', c.name.toUpperCase());
+        this.ui.banner(c.perk ? 'PERK SET!' : c.super ? 'SUPER COMBO!' : 'COMBO!', c.name.toUpperCase());
         this.comboBannerT = 2.2;
       }
       this.updatePerkSets(dt);
       for (const w of this.weapons) WEAPONS[w.id].update(w, this, dt, weaponStats(w));
       this.directSpawns(dt);
+      if (this.props.length) updateProps(this, dt);
+      if (this.crystal) updateCrystal(this, dt);
+      if (this.cover.length) updateCover(this, dt);
+      if (this.worldFx) updateWorldFx(this, dt);
     }
 
     this.updateEnemies(dt);
@@ -965,6 +1204,7 @@ export class Game {
     this.updateHazards(dt);
     this.updateRings(dt);
     this.updateMines(dt);
+    updateArsenal(this, dt);
     this.updatePickups(dt);
     this.updateFx(dt);
 
@@ -981,6 +1221,20 @@ export class Game {
     this.cam.y = clamp(this.cam.y, -ey, ey);
     this.shake = Math.max(0, this.shake - rawDt * 40);
     this.flash = Math.max(0, this.flash - rawDt);
+
+    // the supply crate bought at LAUNCH opens 0.8 s into the run: the game waits while its items are shown
+    if (this.crate && this.state === 'play' && this.time >= 0.8) {
+      const tier = this.crate, items = rollCrate(this, tier);
+      this.crate = null;
+      this.state = 'crate';
+      this.sfx('chest');
+      this.ui.crateOpen(tier, items.map(crateCard), () => {
+        applyCrate(this, items);
+        if (this.state === 'crate') this.state = 'play';
+        this.player.inv = Math.max(this.player.inv, 0.6);
+        this.app.input.resetDrag();
+      });
+    }
 
     if (this.state === 'play') {
       if (this.pendingChests > 0) this.openCards(true);
@@ -1034,8 +1288,21 @@ export class Game {
     const step = speed * dt;
     const ox = p.x, oy = p.y;
     if (ld <= step) { p.x = p.tx; p.y = p.ty; } else { p.x += (lx / ld) * step; p.y += (ly / ld) * step; }
+    if (this.ice) {
+      // world 7's ice: the ship's velocity only slowly follows where it is steered, so it slides on
+      const k = Math.min(1, dt * 2.6);
+      p.svx = (p.svx || 0) + ((p.x - ox) / (dt || 1) - (p.svx || 0)) * k;
+      p.svy = (p.svy || 0) + ((p.y - oy) / (dt || 1) - (p.svy || 0)) * k;
+      p.x = clamp(ox + p.svx * dt, -hw, hw); p.y = clamp(oy + p.svy * dt, -hh, hh);
+      if (Math.abs(p.x) >= hw) p.svx = 0;
+      if (Math.abs(p.y) >= hh) p.svy = 0;
+    }
     const mv = Math.hypot(p.x - ox, p.y - oy);
     p.moving = dt > 0 ? mv / dt : 0;
+    // the ship's smoothed velocity: intercepting enemies aim where it is going
+    const kv = Math.min(1, dt * 5);
+    p.vx = (p.vx || 0) + ((dt > 0 ? (p.x - ox) / dt : 0) - (p.vx || 0)) * kv;
+    p.vy = (p.vy || 0) + ((dt > 0 ? (p.y - oy) / dt : 0) - (p.vy || 0)) * kv;
     if (mv > 0.3) p.facing = angleLerp(p.facing, Math.atan2(p.y - oy, p.x - ox), Math.min(1, dt * 12));
     p.inv = Math.max(0, p.inv - dt);
     if (p.regen && this.state === 'play') p.hp = Math.min(p.maxHp, p.hp + p.regen * dt);
@@ -1063,8 +1330,41 @@ export class Game {
         continue;
       }
       const dx = p.x - e.x, dy = p.y - e.y, d = Math.hypot(dx, dy) || 1;
+      // a stationary enemy left far behind is taken away (no kill), so new ones can come up near the ship
+      if (e.def.speed === 0 && !e.elite && d > 1100) { e.dead = true; continue; }
+      // a member of a closing ring (attackPattern) holds its place in the ring, then chases like the rest
+      if (e.form) {
+        e.form.t += dt;
+        if (e.form.t < 6) {
+          const ox = e.x, oy = e.y;
+          this.formPos(e, e.form.t);
+          e.rot = Math.atan2(e.y - oy, e.x - ox) || e.rot;
+          if (Math.hypot(p.x - e.x, p.y - e.y) < e.r + p.r) contacts.push(e);
+          continue;
+        }
+        e.form = null;
+      }
       let mx = (dx / d) * e.speed, my = (dy / d) * e.speed;
       const ai = e.def.ai;
+      // Chasers steer like a flock, not as one body (decided by Konrad: 2026-11-01 crowds that only trailed the ship
+      // clumped into one mass; 2026-11-03 the interceptors then turned all at once with the ship). Each one has its
+      // own late picture of where the ship is going (reaction 0.25-0.9 s), its own lead, a side it comes from while
+      // still far, a slow wander, and inertia: it turns in an arc instead of snapping to the new heading.
+      if (!ai && e.def.speed > 0) {
+        const s = e.st || (e.st = this.steerFor(e, dx, dy, d));
+        const kr = Math.min(1, dt / s.react);
+        s.pvx += ((p.vx || 0) - s.pvx) * kr; s.pvy += ((p.vy || 0) - s.pvy) * kr;
+        const lead = Math.min(1.2, d / Math.max(60, e.speed)) * s.lead;
+        let tx = dx + s.pvx * lead, ty = dy + s.pvy * lead;
+        const far = clamp((d - 120) / 380, 0, 1);
+        const ang = (s.flank + Math.sin(this.time * s.ww + s.wph) * 0.35) * far;
+        const c = Math.cos(ang), sn = Math.sin(ang);
+        const rx = tx * c - ty * sn, ry = tx * sn + ty * c, rl = Math.hypot(rx, ry) || 1;
+        const want = e.speed * s.pace * (1 + 0.08 * Math.sin(this.time * s.ww * 1.7 + s.wph));
+        const ka = Math.min(1, dt * s.agil);
+        s.vx += ((rx / rl) * want - s.vx) * ka; s.vy += ((ry / rl) * want - s.vy) * ka;
+        mx = s.vx; my = s.vy;
+      }
       let bounded = true, separate = true;
       if (ai === 'dash') {
         e.cd -= dt;
@@ -1116,12 +1416,69 @@ export class Game {
         }
       } else if (ai === 'turret') {
         mx = my = 0; separate = false;
+        // aim: turns its gun after the ship and fires a short fan at it (world 3's crater turret)
+        if (e.def.aim) e.rot = angleLerp(e.rot, Math.atan2(dy, dx), Math.min(1, dt * 2.2));
         e.cd -= dt;
         if (e.cd < 0.3) e.flash = Math.max(e.flash, 0.02);
         if (e.cd <= 0 && d < 430) {
           e.cd = e.elite ? 1.4 : 2.6;
-          const n = e.elite ? 8 : 4;
-          for (let k = 0; k < n; k++) this.enemyShoot(e.x, e.y, e.rot + (k / n) * TAU, 150, this.shotDmg(e, 6));
+          if (e.def.aim) {
+            const n = e.elite ? 5 : 3;
+            for (let k = 0; k < n; k++) this.enemyShoot(e.x, e.y, e.rot + (k - (n - 1) / 2) * 0.2, 175, this.shotDmg(e, 6));
+          } else {
+            const n = e.elite ? 8 : 4;
+            for (let k = 0; k < n; k++) this.enemyShoot(e.x, e.y, e.rot + (k / n) * TAU, 150, this.shotDmg(e, 6));
+          }
+        }
+      } else if (ai === 'lob') {
+        // a mortar set in the ground (world 3): every few seconds a shell lands where the ship is, after a warning
+        // circle; craters do not stop it
+        mx = my = 0; separate = false;
+        e.rot = angleLerp(e.rot, Math.atan2(dy, dx), Math.min(1, dt * 2));
+        e.cd -= dt;
+        if (e.cd < 0.4) e.flash = Math.max(e.flash, 0.02);
+        if (e.cd <= 0 && d < 520) {
+          e.cd = e.elite ? 2.2 : 4.2;
+          const n = e.elite ? 3 : 1;
+          for (let k = 0; k < n; k++) {
+            const a = rand(0, TAU), R = k ? rand(60, 120) : rand(0, 30);
+            this.addHazard({ kind: 'mortar', x: p.x + Math.cos(a) * R, y: p.y + Math.sin(a) * R, r: 54, warn: 1.25 + k * 0.15, dmg: this.shotDmg(e, 10), color: '#ff2d95', from: e });
+          }
+          this.sfx('warn');
+        }
+      } else if (ai === 'vortex') {
+        // world 6's vortex: drifts at the ship and drags it in
+        if (d < 260 && this.state === 'play') {
+          const f = (80 * (1 - d / 260) + 20) * dt;
+          p.x -= (dx / d) * f; p.y -= (dy / d) * f; p.tx -= (dx / d) * f; p.ty -= (dy / d) * f;
+        }
+      } else if (ai === 'nest') {
+        // a nest (worlds 8 and 9): set in the ground, it breeds its young while the ship is near
+        mx = my = 0; separate = false;
+        e.cd -= dt;
+        if (e.cd <= 0 && d < 600) {
+          e.cd = e.elite ? 3 : 5.5;
+          if (this.enemies.length < this.stage.max) {
+            for (let k = 0; k < (e.elite ? 4 : 2); k++) { const c = this.spawnEnemy(e.def.spawn, e.x + rand(-25, 25), e.y + rand(-25, 25)); c.spawnT = 0.3; }
+            e.flash = 0.15;
+          }
+        }
+      } else if (ai === 'lay') {
+        // world 4's Spreader: walks at the ship and lays black crystal where it goes
+        e.cd -= dt;
+        if (e.cd <= 0) { e.cd = e.elite ? 1.2 : 2.4; layCrystal(this, e.x, e.y, e.elite ? 95 : 70); }
+      } else if (ai === 'hop') {
+        // moves in leaps (world 3's lunar hopper): creeps, crouches, then jumps at where the ship is
+        if (e.state === 'chase') {
+          mx *= 0.3; my *= 0.3;
+          e.cd -= dt;
+          if (e.cd <= 0 && d < 560) { e.state = 'wind'; e.t = 0.28; }
+        } else if (e.state === 'wind') {
+          mx = my = 0; e.t -= dt;
+          if (e.t <= 0) { e.state = 'leap'; e.t = 0.45; e.dir = Math.atan2(dy, dx) + rand(-0.12, 0.12); e.leapV = Math.min(430, d / 0.45 + 40); }
+        } else {
+          mx = Math.cos(e.dir) * e.leapV; my = Math.sin(e.dir) * e.leapV; e.t -= dt;
+          if (e.t <= 0) { e.state = 'chase'; e.cd = e.elite ? rand(0.4, 0.6) : rand(0.8, 1.2); }
         }
       } else if (ai === 'blink') {
         // fade out, reappear next to the player
@@ -1249,7 +1606,7 @@ export class Game {
       e.wardT = 5;
       const near = this.tmp4 || (this.tmp4 = []);
       this.hash.query(e.x, e.y, 180, near);
-      for (const o of near) if (o !== e && !o.boss && !o.seg && !o.dead && !(o.shield > 0)) { o.shield = o.maxHp * 0.3; o.warded = true; }
+      for (const o of near) if (o !== e && !o.boss && !o.seg && !o.prop && !o.dead && !(o.shield > 0)) { o.shield = o.maxHp * 0.3; o.warded = true; }
       this.addFx(e.x, e.y, 180, TRAITS.shielded.color, 0.35, 3);
     }
     if (t.has('shielded') && e.maxShield && this.time - e.lastHit > 4) e.shield = Math.min(e.maxShield, e.shield + e.maxShield * 0.1 * dt);
@@ -1258,7 +1615,7 @@ export class Game {
       const near = this.tmp3 || (this.tmp3 = []);
       this.hash.query(e.x, e.y, 220, near);
       e.led = 0;
-      for (const o of near) if (o !== e && !o.boss && !o.seg && !o.elite && (o.x - e.x) ** 2 + (o.y - e.y) ** 2 < 220 * 220) { o.buffT = 0.25; e.led++; }
+      for (const o of near) if (o !== e && !o.boss && !o.seg && !o.prop && !o.elite && (o.x - e.x) ** 2 + (o.y - e.y) ** 2 < 220 * 220) { o.buffT = 0.25; e.led++; }
     }
     if (t.has('bulwark') && d < e.r + 160) this.slowNext = Math.min(this.slowNext ?? 1, 0.5);
     // a commander stays in sight: a ranged one does not back off past 190 px like a plain shooter
@@ -1282,9 +1639,11 @@ export class Game {
     return null;
   }
 
-  enemyShoot(x, y, a, speed, dmg, homing = false) {
+  enemyShoot(x, y, a, speed, dmg, homing = false, r = homing ? 6 : 5) {
     if (this.ebullets.length > 400) return;
-    this.ebullets.push({ x, y, vx: Math.cos(a) * speed, vy: Math.sin(a) * speed, r: homing ? 6 : 5, dmg, life: homing ? 4.5 : 6, homing, a, speed });
+    // from: the crater it was fired in, if any (world 3's cover stops shots that fly into a crater, not out of one)
+    const from = this.cover.length ? coverAt(this, x, y) : null;
+    this.ebullets.push({ x, y, vx: Math.cos(a) * speed, vy: Math.sin(a) * speed, r, dmg, life: homing ? 4.5 : 6, homing, a, speed, from });
     this.sfx('eshoot');
   }
 
@@ -1309,6 +1668,23 @@ export class Game {
       this.shake = 14;
       this.bossSummon(b, 10);
     }
+    if (!b.fury && b.hp < b.maxHp * FURY_AT) {
+      b.fury = true;
+      this.ui.banner(`${b.name} · FURY`, 'it hits harder and faster now');
+      this.sfx('boss');
+      this.shake = 16;
+    }
+    // the special attack: three wide beams aimed at the ship, announced for 1.5 s, each takes 40% of the hull
+    b.specT = (b.specT ?? 9) - dt * (b.fury ? 1.6 : 1);
+    if (b.specT <= 0 && b.mode === 'idle') {
+      b.specT = rand(11, 14);
+      const aim = Math.atan2(dy, dx);
+      for (let k = -1; k <= 1; k++) {
+        this.addHazard({ kind: 'beam', owner: b, x: b.x, y: b.y, a: aim + k * 0.42, len: 1500, w: 84, warn: 1.5, dur: 0.6, dmg: 0, pct: 0.4, rot: 0 });
+      }
+      this.text(b.x, b.y - b.r - 20, '!! INCOMING !!', '#ff4d6d', true);
+      this.sfx('warn');
+    }
     const enr = b.phase - 1;
     const fast = 1 + enr * 0.25;
     b.rot += dt * (0.6 + enr * 0.6);
@@ -1323,6 +1699,9 @@ export class Game {
       const ex = p.x + Math.cos(b.oa) * 240 - b.x, ey = p.y + Math.sin(b.oa) * 240 - b.y, el = Math.hypot(ex, ey) || 1;
       const sp = Math.min(b.speed * 2.2, el * 2);
       mx = (ex / el) * sp; my = (ey / el) * sp;
+    } else if (def.move === 'anchor') {
+      // rooted in its crater: it never moves, its cannon turns after the ship (Moon Spire)
+      b.aim = angleLerp(b.aim ?? Math.atan2(dy, dx), Math.atan2(dy, dx), Math.min(1, dt * (1.2 + enr * 0.5)));
     } else if (def.move === 'serpent') {
       b.heading = angleLerp(b.heading, Math.atan2(dy, dx), Math.min(1, dt * (1.3 + enr * 0.5)));
       const a = b.heading + Math.sin(this.time * 2.6) * 0.55;
@@ -1341,9 +1720,10 @@ export class Game {
         b.mode = 'idle';
         b.ghost = false;
         b.alpha = 1;
-        b.atkT = def.rest * (1 - enr * 0.25);
+        b.atkT = def.rest * (1 - enr * 0.25) * BOSS_REST * (b.fury ? 0.65 : 1);
       }
     }
+    if (b.fury) { mx *= 1.3; my *= 1.3; }
     b.x += mx * dt;
     b.y += my * dt;
     const hw = this.arena.w / 2 - b.r, hh = this.arena.h / 2 - b.r;
@@ -1391,6 +1771,35 @@ export class Game {
         break;
       }
       case 'mortar': b.modeT = 1.4; this.mortars(5 + enr * 3, 1.1); break;
+      // the cannon (Moon Spire): it charges (flashing), then fires heavy shells along its aim, 3 to 5 in a row
+      case 'cannon': b.modeT = 0.9 + (3 + enr) * 0.32; b.shots = 0; this.sfx('warn'); break;
+      // crystal (Red Colossus): black crystal bursts out of the ground around the ship, with a ring of shards
+      case 'crystal': {
+        b.modeT = 1.2;
+        for (let i = 0; i < 3 + enr; i++) {
+          const a = rand(0, TAU), R = i ? rand(90, 200) : rand(0, 40);
+          layCrystal(this, p.x + Math.cos(a) * R, p.y + Math.sin(a) * R, 90, 18);
+        }
+        const n = (b.def.burstN || 18) + enr * 4, off = rand(0, TAU);
+        for (let k = 0; k < n; k++) this.enemyShoot(b.x, b.y, off + (k / n) * TAU, 140 * (b.def.bulletSpeed || 1), b.def.bulletDmg || 8);
+        this.sfx('warn');
+        break;
+      }
+      // build (Foundry Mother): its two assembly bays put out a squad each, left and right of it
+      case 'build': {
+        b.modeT = 1.0; b.built = this.time;
+        const a = Math.atan2(dy, dx), types = b.def.summon, n = (b.def.summonN || 4) + enr * 2;
+        for (const side of [-1, 1]) {
+          const bx = b.x + Math.cos(a + side * Math.PI / 2) * b.r * 1.05, by = b.y + Math.sin(a + side * Math.PI / 2) * b.r * 1.05;
+          for (let i = 0; i < n; i++) {
+            const e = this.spawnEnemy(types[i % types.length], bx + rand(-20, 20), by + rand(-20, 20));
+            e.spawnT = 0.3;
+          }
+          this.addFx(bx, by, 60, '#ff7a1a', 0.4, 4);
+        }
+        this.sfx('warn');
+        break;
+      }
       case 'turrets': {
         b.modeT = 0.6;
         const hw = this.arena.w / 2 - 30, hh = this.arena.h / 2 - 30;
@@ -1409,6 +1818,21 @@ export class Game {
     const p = this.player;
     const bd = b.def.bulletDmg || 10, bs = b.def.bulletSpeed || 1;
     switch (b.mode) {
+      case 'cannon': {
+        const n = 3 + enr, left = b.modeT - (n - b.shots) * 0.32;
+        if (b.shots === 0 && left > 0) { b.flash = Math.max(b.flash, Math.sin(b.modeT * 50) > 0 ? 0.03 : 0); break; }
+        if (b.shots < n && b.modeT <= (n - b.shots) * 0.32) {
+          b.shots++;
+          b.fired = this.time;
+          const a = b.aim ?? Math.atan2(dy, dx), mz = b.r * 0.9;
+          this.enemyShoot(b.x + Math.cos(a) * mz, b.y + Math.sin(a) * mz, a, 270 * bs, bd * 2.2, false, 13);
+          // two lighter shells beside it from the second phase on
+          if (enr) for (const s of [-1, 1]) this.enemyShoot(b.x + Math.cos(a) * mz, b.y + Math.sin(a) * mz, a + s * 0.3, 230 * bs, bd);
+          this.sfx('boom');
+          this.shake = Math.max(this.shake, 5);
+        }
+        break;
+      }
       case 'spiral':
         b.shotT -= dt;
         if (b.shotT <= 0) {
@@ -1493,8 +1917,11 @@ export class Game {
       let remove = false;
       if (pr.kind === 'missile') {
         if (!pr.target || pr.target.dead) pr.target = this.nearestEnemy(pr.x, pr.y, 500);
-        if (pr.target) {
-          const want = Math.atan2(pr.target.y - pr.y, pr.target.x - pr.x);
+        // Gravity Barrage combo: missiles curve into an open black hole nearby
+        const hole = this.combos.has('gravbarrage') && this.holes.find((h) => h.t >= h.fly && (h.x - pr.x) ** 2 + (h.y - pr.y) ** 2 < 400 * 400);
+        if (hole || pr.target) {
+          const tx = hole ? hole.x : pr.target.x, ty = hole ? hole.y : pr.target.y;
+          const want = Math.atan2(ty - pr.y, tx - pr.x);
           pr.a = angleLerp(pr.a, want, Math.min(1, pr.turn * dt));
         }
         pr.speed = Math.min(pr.speed + 500 * dt, 700);
@@ -1514,7 +1941,7 @@ export class Game {
           if ((e.x - pr.x) ** 2 + (e.y - pr.y) ** 2 > rr * rr) continue;
           if (pr.hit.includes(e.id)) continue;
           if (pr.kind === 'missile') {
-            this.explode(pr.x, pr.y, pr.rad, pr.dmg, pr.color);
+            this.explode(pr.x, pr.y, pr.rad, pr.dmg * (this.combos.has('gravbarrage') && inHole(this, pr.x, pr.y) ? 1.5 : 1), pr.color);
             this.missileCombos(pr.x, pr.y);
             remove = true;
             break;
@@ -1522,6 +1949,7 @@ export class Game {
           const sp = pr.speed || 1;
           this.damage(e, pr.dmg, (pr.vx / sp) * pr.knock, (pr.vy / sp) * pr.knock);
           pr.hit.push(e.id);
+          if (this.sparks.length < 40) this.sparks.push({ x: pr.x, y: pr.y, color: pr.color, t: 0 });
           if (pr.flak) {
             // Flak Cannon: a small quiet blast around the hit
             for (const o of this.enemiesNear(pr.x, pr.y, pr.flak)) if (o !== e) this.damage(o, pr.dmg * 0.6, 0, 0, true);
@@ -1559,6 +1987,13 @@ export class Game {
       }
       b.x += b.vx * dt; b.y += b.vy * dt; b.life -= dt;
       let remove = b.life <= 0 || Math.abs(b.x) > hw || Math.abs(b.y) > hh;
+      if (!remove && this.cover.length) {
+        const c = coverAt(this, b.x, b.y);
+        if (c && c !== b.from) {
+          remove = true;
+          if (this.particles.length < 600) this.burst(b.x, b.y, '#b8a9d9', 3, 90, 0.3, 4);
+        } else if (!c) b.from = null;
+      }
       if (!remove && this.state === 'play' && (b.x - p.x) ** 2 + (b.y - p.y) ** 2 < (b.r + p.r - 3) ** 2 && p.inv <= 0) {
         this.hurtPlayer(b.dmg, 'bullet');
         remove = true;
@@ -1602,7 +2037,7 @@ export class Game {
       if (m.pull && m.arm <= 0) {
         // Gravity Mines: drag nearby enemies (not bosses) toward the mine
         for (const e of this.enemiesNear(m.x, m.y, m.pull)) {
-          if (e.boss || e.seg || e.def.speed === 0) continue;
+          if (e.boss || e.seg || e.prop || e.def.speed === 0) continue;
           const dx = m.x - e.x, dy = m.y - e.y, d = Math.hypot(dx, dy) || 1;
           const v = 160 * dt * (e.kbRes ?? 0.4);
           e.x += (dx / d) * v; e.y += (dy / d) * v;
@@ -1616,6 +2051,9 @@ export class Game {
         const coil = this.combos.has('stormmines') && this.wstats('lightning');
         const tgt = coil && this.nearestEnemy(m.x, m.y, 170);
         if (tgt) this.chainLightning(m.x, m.y, tgt, coil.dmg * this.player.dmgMult, 4, '#7df9ff');
+        // Napalm Mines combo: the blast leaves a pool of fire at the Flamethrower's heat
+        const fl = this.combos.has('napalm') && this.wstats('flame');
+        if (fl) addFire(this, m.x, m.y, m.rad * 0.8, fl.burn * this.player.dmgMult * this.player.fireMult, 3);
       }
     }
   }
@@ -1636,6 +2074,7 @@ export class Game {
       }
       return d2 < collectR * collectR;
     };
+    this.flowXp();
     for (let i = this.gems.length - 1; i >= 0; i--) {
       const g = this.gems[i];
       if (pull(g)) {
@@ -1689,6 +2128,7 @@ export class Game {
       q.vx *= f; q.vy *= f;
       q.x += q.vx * dt; q.y += q.vy * dt;
     }
+    for (let i = this.sparks.length - 1; i >= 0; i--) if ((this.sparks[i].t += dt) > 0.25) this.sparks.splice(i, 1);
     for (let i = this.fx.length - 1; i >= 0; i--) {
       this.fx[i].t += dt;
       if (this.fx[i].t >= this.fx[i].dur) this.fx.splice(i, 1);

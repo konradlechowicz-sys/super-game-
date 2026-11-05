@@ -1,0 +1,28 @@
+STYLE (keep identical across all images):
+Game art for "Void Blaster", a top-down mobile space shooter (survivors-like).
+Camera: top-down orthographic, looking straight down, no perspective.
+Look: stylized sci-fi with a neon accent. Dark, rich materials (gunmetal, carbon,
+matte ceramic) lit from the top-left, glowing edges and emissive lights only where
+noted. Detail level: high but clean - panel lines, vents, rivets; no grunge overload.
+The background must stay dark and calm so bright game objects read on top of it:
+no bright cyan anywhere (cyan belongs to the player), magenta only as thin traces.
+Rendering: crisp edges, soft bloom on glowing parts only, no motion blur, no depth of
+field, not photorealistic. No text, no logo, no watermark.
+
+WORLD 4 "RED CONVERSION": low above a Mars plain in the middle of being rewritten by the
+Void Collective (an alien machine intelligence): a network of black crystal spreads over
+the red dust. Matte rust dust #4a1d14/#6e2b1c with highlights #9c4a30, black crystal
+#0d0a12 with facets #3b2a4a and an ember glow #ff5a2e inside, magenta #ff2d95 veins in
+the crystal, brown dusty haze #5a2a1f. Weak reddish sun from the top-left, diffused by
+dust. Mood: unease, a planet being converted. 80% machine, crystal growths.
+Mars is dusty and matte, never bright orange.
+
+TASK: The world-4 boss "Red Colossus": a walking fortress made of black alien crystal,
+seen from directly above, 1024x1024, plain flat dark background (#05010f): a massive
+faceted body with an ember-and-magenta core, four heavy legs, crystal cannons on its
+back, 3-4 glowing weak points (leg joints, core vents). Then a second image: exploded
+parts sheet at one scale with generous space: body, each leg, each cannon, each weak
+point; plus the complete assembled boss at the same scale in the bottom-right corner.
+No text.
+
+Execution direction for this invocation: produce ONLY the FIRST image, one complete assembled boss at 1024x1024. Use image1 approved W4 arena for aggressive black crystal/ember/magenta materials; image2 W4 enemy sheet for clean heavy machine construction. The boss must be much more massive and fortress-like than a normal enemy. Strict vertical overhead view, forward direction UP. A broad octagonal obsidian-armored central hull, layered enormous faceted plates, bright ember-and-magenta reactor in center, TWO clearly separate parallel crystal artillery cannons mounted on the upper left and upper right of its back with muzzles pointing UP. EXACTLY FOUR heavy mechanical legs, one extending to each diagonal quadrant NW NE SW SE, all with clear hip, knee, broad clawed foot, gaps between legs. FOUR small glowing magenta joint/vent weak points, one at each hip. No insect swarm, no humanoid, no wheels, no perspective. Compact powerful silhouette; menacing obsidian blades and robust pistons, mostly dark crystalline armor, not a molten lava monster. Isolated centered with at least50px clear #05010f margin, no ground, no cast terrain shadow, no text, no grid. Do NOT draw exploded parts yet.

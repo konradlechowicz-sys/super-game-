@@ -1,0 +1,38 @@
+STYLE (keep identical across all images):
+Game art for "Void Blaster", a top-down mobile space shooter (survivors-like).
+Camera: top-down orthographic, looking straight down, no perspective.
+Look: stylized sci-fi with a neon accent. Dark, rich materials (gunmetal, carbon,
+matte ceramic) lit from the top-left, glowing edges and emissive lights only where
+noted. Detail level: high but clean - panel lines, vents, rivets; no grunge overload.
+The background must stay dark and calm so bright game objects read on top of it:
+no bright cyan anywhere (cyan belongs to the player), magenta only as thin traces.
+Rendering: crisp edges, soft bloom on glowing parts only, no motion blur, no depth of
+field, not photorealistic. No text, no logo, no watermark.
+
+WORLD 2 "SIEGE OF EARTH": low orbit, 400 km above night-side Earth, during the
+landing of the Void Collective (an alien machine intelligence). We fight above a cloud
+layer; under it, coastlines and city lights, some cities burning. Colors: night
+#070b1a, clouds #222b44-#3a4566, tiny warm city lights #ffb347, fires #ff5a2e,
+lightning #e8f0ff, the Collective's tethers and web in magenta #ff2d95.
+No sun (night): clouds lit from below by cities and fires, from above by lightning.
+Mood: siege, storm, the last defense of home. 100% machine.
+
+TASK: The world-2 boss "Landing Citadel": a flying fortress seen from directly above,
+1024x1024, on a plain flat dark background (#05010f): a heavy armored core with a big
+magenta heart, two rotating gun rings around it (rings of turrets), landing claws,
+launch bays for lander pods, 3-4 glowing weak points (bays, ring motors, core vents).
+Then a second image: exploded parts sheet of the same boss, all parts at one scale with
+generous space between them: core hull, each gun ring separately, each weak point,
+engine flame; plus the complete assembled boss at the same scale in the bottom-right
+corner as a reference. No text.
+
+USE CASE: stylized-concept, production boss sprite. Turn the supplied W2 machine and arena references into the world-2 flying fortress. CURRENT CALL: ONLY the complete ASSEMBLED boss, centered on a plain uniform #05010f background, square 1024x1024. Its matching exploded parts sheet will be cut from this exact artwork afterward to preserve identical details and scale.
+
+Strict vertically overhead 90-degree ORTHOGRAPHIC camera: circles must appear circular, no tilted ellipses, no side/front faces, no perspective. One single huge heavily armored machine fortress. Clean stylized game rendering consistent with W2 enemy armor; gunmetal, carbon, matte dark-gray ceramic, restrained magenta #ff2d95 energy, small red/white-hot fixtures; light from upper left. No organic elements, scenery, ground, clouds, stars, cyan, green, gold, text, labels or logos.
+
+Structure must read as THREE SEPARABLE CONCENTRIC ASSEMBLIES: a compact central armored core hull, a complete inner circular turret ring, and a complete outer circular turret ring. EXACTLY TWO physical gun rings, not three; the large central magenta reactor is a heart, not a third gun ring. Leave clear dark air gaps between hull and inner ring, and between the two rings. Keep turret barrels attached to their own ring and clear of neighboring assemblies. Only minimal thin mechanical radial supports across gaps, if any.
+Approximate proportions in the image: outer turret ring and guns span 88-92% of the canvas diameter; inner ring and guns span 64-70%; core hull and folded landing claws fit within 45-48%. Both gun rings have crisp visible armor segments and distinct turret housings. All parts fully inside the canvas with generous outer margin.
+Central hull: thick layered armor surrounding a big glowing MAGENTA HEART. Visible lander launch bays on the left and right sides. Four short folded landing claws attached to the core hull and kept inside the inner ring's opening. EXACTLY FOUR distinct small orange-red/white-hot glowing weak-point fixtures on the core hull, placed at its NW, NE, SW and SE quarters around the heart, well separated and clearly exposed: bay power modules / ring drive motor vents. These four fixtures must be detachable-looking small mechanical modules, not flame clouds.
+At SIX O'CLOCK directly below the central hull, include ONE small distinct orange engine-exhaust flame plume, separated from the four weak points and fully contained in the dark gap before the inner ring; keep it clear of gun rings so it can be extracted.
+No extra escort ships or loose fragments. No cropping.
+VARIANT B: compact angular HEXAGONAL central hull with wedge-plated shoulders, a round magenta heart inset into a faceted reactor housing. Outer ring has twelve compact turret stations on a faceted near-circular structure, inner ring has eight heavier wedge turret pods. Both gun rings are concentric and distinctly separate. More radial, articulated and layered while retaining heavy siege-machine construction.

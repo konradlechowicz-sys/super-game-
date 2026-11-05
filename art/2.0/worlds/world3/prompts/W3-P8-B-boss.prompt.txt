@@ -1,0 +1,30 @@
+STYLE (keep identical across all images):
+Game art for "Void Blaster", a top-down mobile space shooter (survivors-like).
+Camera: top-down orthographic, looking straight down, no perspective.
+Look: stylized sci-fi with a neon accent. Dark, rich materials (gunmetal, carbon,
+matte ceramic) lit from the top-left, glowing edges and emissive lights only where
+noted. Detail level: high but clean - panel lines, vents, rivets; no grunge overload.
+The background must stay dark and calm so bright game objects read on top of it:
+no bright cyan anywhere (cyan belongs to the player), magenta only as thin traces.
+Rendering: crisp edges, soft bloom on glowing parts only, no motion blur, no depth of
+field, not photorealistic. No text, no logo, no watermark.
+
+WORLD 3 "LUNAR BRIDGEHEAD": just above the Moon's surface, where the Void Collective
+(an alien machine intelligence) built its forward base. Its conduits grow into the rock
+like roots: black-violet pipes #1a0f24 with magenta #ff2d95 veins. Gray regolith
+#2b2a33/#4a4856 with highlights #8d8a99, near-black shadows #0a0910 (no atmosphere),
+pale violet accents #b8a9d9, non-glowing frost #cfd8ef. Hard sunlight from the top-left,
+long sharp black shadows. Ruins of a human lunar base. Mood: sparse, hostile, first
+living growth. 90% machine, 10% organic.
+
+TASK: The world-3 boss "Moon Spire": a cannon tower growing out of a crater, seen from
+directly above, 1024x1024, plain flat dark background (#05010f): a round armored
+crown with a huge magenta cannon core in the middle, roots of conduits spreading from
+its base into the rock, 3-4 glowing weak points (root nodes, cannon vents). Then a
+second image: exploded parts sheet at one scale with generous space: crown, cannon
+core, each root, each weak point, muzzle flash; plus the complete assembled boss at the
+same scale in the bottom-right corner. No text.
+
+FIRST IMAGE ONLY in this call: the complete assembled static Moon Spire boss, a single isolated asset, target 1024x1024. Exact 90-degree overhead orthographic plan view: the entire footprint is visible from the zenith, circular crown and circular crater mouth, no horizon or side elevation. A large round armored cannon crown is embedded in a broken gray-violet lunar crater foundation. In its center a huge circular magenta cannon reactor, surrounded by a dark mechanical collar so the reactor can be separated as its own component. Exactly four MAIN black-violet living conduit roots leave the foundation toward north, east, south and west; each may branch only near its distal tip. Keep the four root assemblies spatially separate with broad dark gaps between them. Exactly four clearly separate bright magenta weak-point modules around the crown at northwest, northeast, southeast and southwest, with dark mechanical seams around them. Preserve a clear seam between crown and each root. Pale gray-violet armor, dark gunmetal machinery, subtle living cords, non-glowing lunar stone. Boss centered with every root tip and shadow fully inside the frame; generous flat #05010f empty margin, no detached rocks or props outside the silhouette. Hard top-left light, crisp black shadows. No muzzle flash in this static assembled image, no text, no cyan, gold or orange. The second required exploded sheet will be assembled from the exact boss parts at unchanged scale, with a matching generated muzzle-flash insert and this exact assembled boss in its bottom-right corner. Use the attached approved arena and selected enemy sheet as style references only.
+
+VARIANT B: round crown formed from eight overlapping curved pale armor sectors, deep layered circular cannon reactor, four thick ribbed roots with more visibly branching organic dark cords. A rugged fractured crater rim with larger angular blocks. Four round weak-point node caps on the diagonal armor sectors.

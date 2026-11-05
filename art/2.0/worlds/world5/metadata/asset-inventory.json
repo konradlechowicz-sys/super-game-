@@ -1,0 +1,2086 @@
+{
+  "W5-P5-assembly-gantry": {
+    "source": "variants/W5-P5-source.png",
+    "source_cell": [
+      0,
+      0,
+      350,
+      325
+    ],
+    "trim_bounds": [
+      13,
+      17,
+      350,
+      319
+    ],
+    "estimated_backdrop": [
+      5.0,
+      0.0,
+      13.0
+    ],
+    "file": "W5-P5-props/W5-P5-assembly-gantry.png",
+    "content_size": [
+      300,
+      269
+    ],
+    "size": [
+      324,
+      293
+    ],
+    "scale_factor": 0.8902077151335311,
+    "sheet_box": [
+      70,
+      76,
+      370,
+      345
+    ]
+  },
+  "W5-P5-furnace-pit": {
+    "source": "variants/W5-P5-source.png",
+    "source_cell": [
+      350,
+      0,
+      646,
+      325
+    ],
+    "trim_bounds": [
+      16,
+      5,
+      289,
+      318
+    ],
+    "estimated_backdrop": [
+      5.0,
+      1.0,
+      13.0
+    ],
+    "file": "W5-P5-props/W5-P5-furnace-pit.png",
+    "content_size": [
+      262,
+      300
+    ],
+    "size": [
+      286,
+      324
+    ],
+    "scale_factor": 0.9584664536741214,
+    "sheet_box": [
+      529,
+      60,
+      791,
+      360
+    ]
+  },
+  "W5-P5-ore-conveyor": {
+    "source": "variants/W5-P5-source.png",
+    "source_cell": [
+      646,
+      0,
+      995,
+      325
+    ],
+    "trim_bounds": [
+      13,
+      75,
+      335,
+      276
+    ],
+    "estimated_backdrop": [
+      5.0,
+      1.0,
+      13.0
+    ],
+    "file": "W5-P5-props/W5-P5-ore-conveyor.png",
+    "content_size": [
+      300,
+      187
+    ],
+    "size": [
+      324,
+      211
+    ],
+    "scale_factor": 0.9316770186335404,
+    "sheet_box": [
+      950,
+      116,
+      1250,
+      303
+    ]
+  },
+  "W5-P5-drifting-asteroid-1": {
+    "source": "variants/W5-P5-source.png",
+    "source_cell": [
+      0,
+      325,
+      350,
+      635
+    ],
+    "trim_bounds": [
+      23,
+      9,
+      321,
+      297
+    ],
+    "estimated_backdrop": [
+      5.0,
+      1.0,
+      13.0
+    ],
+    "file": "W5-P5-props/W5-P5-drifting-asteroid-1.png",
+    "content_size": [
+      170,
+      164
+    ],
+    "size": [
+      194,
+      188
+    ],
+    "scale_factor": 0.5704697986577181,
+    "sheet_box": [
+      135,
+      498,
+      305,
+      662
+    ]
+  },
+  "W5-P5-drifting-asteroid-2": {
+    "source": "variants/W5-P5-source.png",
+    "source_cell": [
+      350,
+      325,
+      646,
+      635
+    ],
+    "trim_bounds": [
+      28,
+      12,
+      283,
+      296
+    ],
+    "estimated_backdrop": [
+      5.0,
+      1.0,
+      13.0
+    ],
+    "file": "W5-P5-props/W5-P5-drifting-asteroid-2.png",
+    "content_size": [
+      153,
+      170
+    ],
+    "size": [
+      177,
+      194
+    ],
+    "scale_factor": 0.5985915492957746,
+    "sheet_box": [
+      584,
+      495,
+      737,
+      665
+    ]
+  },
+  "W5-P5-drifting-asteroid-3": {
+    "source": "variants/W5-P5-source.png",
+    "source_cell": [
+      646,
+      325,
+      995,
+      635
+    ],
+    "trim_bounds": [
+      28,
+      22,
+      316,
+      287
+    ],
+    "estimated_backdrop": [
+      5.0,
+      1.0,
+      13.0
+    ],
+    "file": "W5-P5-props/W5-P5-drifting-asteroid-3.png",
+    "content_size": [
+      170,
+      156
+    ],
+    "size": [
+      194,
+      180
+    ],
+    "scale_factor": 0.5902777777777778,
+    "sheet_box": [
+      1015,
+      502,
+      1185,
+      658
+    ]
+  },
+  "W5-P5-welding-arm": {
+    "source": "variants/W5-P5-source.png",
+    "source_cell": [
+      0,
+      635,
+      350,
+      912
+    ],
+    "trim_bounds": [
+      58,
+      10,
+      305,
+      237
+    ],
+    "estimated_backdrop": [
+      5.0,
+      1.0,
+      13.0
+    ],
+    "file": "W5-P5-props/W5-P5-welding-arm.png",
+    "content_size": [
+      100,
+      92
+    ],
+    "size": [
+      124,
+      116
+    ],
+    "scale_factor": 0.4048582995951417,
+    "sheet_box": [
+      170,
+      854,
+      270,
+      946
+    ]
+  },
+  "W5-P5-ore-cart": {
+    "source": "variants/W5-P5-source.png",
+    "source_cell": [
+      350,
+      635,
+      646,
+      912
+    ],
+    "trim_bounds": [
+      28,
+      79,
+      264,
+      219
+    ],
+    "estimated_backdrop": [
+      5.0,
+      1.0,
+      13.0
+    ],
+    "file": "W5-P5-props/W5-P5-ore-cart.png",
+    "content_size": [
+      100,
+      59
+    ],
+    "size": [
+      124,
+      83
+    ],
+    "scale_factor": 0.423728813559322,
+    "sheet_box": [
+      610,
+      870,
+      710,
+      929
+    ]
+  },
+  "W5-P5-hull-plates": {
+    "source": "variants/W5-P5-source.png",
+    "source_cell": [
+      646,
+      635,
+      995,
+      912
+    ],
+    "trim_bounds": [
+      51,
+      46,
+      288,
+      238
+    ],
+    "estimated_backdrop": [
+      5.0,
+      1.0,
+      13.0
+    ],
+    "file": "W5-P5-props/W5-P5-hull-plates.png",
+    "content_size": [
+      100,
+      81
+    ],
+    "size": [
+      124,
+      105
+    ],
+    "scale_factor": 0.4219409282700422,
+    "sheet_box": [
+      1050,
+      860,
+      1150,
+      941
+    ]
+  },
+  "W5-P5-fuel-tank-intact": {
+    "source": "variants/W5-P5-source.png",
+    "source_cell": [
+      0,
+      912,
+      338,
+      1254
+    ],
+    "trim_bounds": [
+      20,
+      52,
+      316,
+      241
+    ],
+    "estimated_backdrop": [
+      5.0,
+      1.0,
+      13.0
+    ],
+    "file": "W5-P5-props/W5-P5-fuel-tank-intact.png",
+    "content_size": [
+      180,
+      115
+    ],
+    "size": [
+      204,
+      139
+    ],
+    "scale_factor": 0.6081081081081081,
+    "sheet_box": [
+      130,
+      1182,
+      310,
+      1297
+    ]
+  },
+  "W5-P5-fuel-tank-destroyed": {
+    "source": "variants/W5-P5-source.png",
+    "source_cell": [
+      338,
+      912,
+      646,
+      1254
+    ],
+    "trim_bounds": [
+      6,
+      25,
+      295,
+      277
+    ],
+    "estimated_backdrop": [
+      5.0,
+      1.0,
+      13.0
+    ],
+    "file": "W5-P5-props/W5-P5-fuel-tank-destroyed.png",
+    "content_size": [
+      176,
+      153
+    ],
+    "size": [
+      200,
+      177
+    ],
+    "scale_factor": 0.6081081081081081,
+    "sheet_box": [
+      572,
+      1164,
+      748,
+      1317
+    ]
+  },
+  "W5-P5-power-capacitor-intact": {
+    "source": "variants/W5-P5-source.png",
+    "source_cell": [
+      646,
+      912,
+      936,
+      1254
+    ],
+    "trim_bounds": [
+      22,
+      27,
+      262,
+      249
+    ],
+    "estimated_backdrop": [
+      5.0,
+      1.0,
+      13.0
+    ],
+    "file": "W5-P5-props/W5-P5-power-capacitor-intact.png",
+    "content_size": [
+      180,
+      166
+    ],
+    "size": [
+      204,
+      190
+    ],
+    "scale_factor": 0.75,
+    "sheet_box": [
+      1010,
+      1157,
+      1190,
+      1323
+    ]
+  },
+  "W5-P5-power-capacitor-destroyed": {
+    "source": "variants/W5-P5-source.png",
+    "source_cell": [
+      936,
+      912,
+      1254,
+      1254
+    ],
+    "trim_bounds": [
+      7,
+      28,
+      298,
+      271
+    ],
+    "estimated_backdrop": [
+      5.0,
+      1.0,
+      13.0
+    ],
+    "file": "W5-P5-props/W5-P5-power-capacitor-destroyed.png",
+    "content_size": [
+      218,
+      182
+    ],
+    "size": [
+      242,
+      206
+    ],
+    "scale_factor": 0.75,
+    "sheet_box": [
+      1431,
+      1149,
+      1649,
+      1331
+    ]
+  },
+  "W5-P7-forge-drone": {
+    "source": "variants/W5-P7-enemies-source-v2.png",
+    "source_cell": [
+      0,
+      0,
+      512,
+      470
+    ],
+    "trim_bounds": [
+      118,
+      117,
+      396,
+      381
+    ],
+    "estimated_backdrop": [
+      5.0,
+      1.0,
+      12.0
+    ],
+    "file": "W5-P7-enemies/W5-P7-forge-drone.png",
+    "content_size": [
+      160,
+      152
+    ],
+    "size": [
+      184,
+      176
+    ],
+    "scale_factor": 0.5755395683453237,
+    "sheet_box": [
+      176,
+      180,
+      336,
+      332
+    ]
+  },
+  "W5-P7-welder": {
+    "source": "variants/W5-P7-enemies-source-v2.png",
+    "source_cell": [
+      512,
+      0,
+      1024,
+      470
+    ],
+    "trim_bounds": [
+      68,
+      51,
+      444,
+      406
+    ],
+    "estimated_backdrop": [
+      5.0,
+      1.0,
+      13.0
+    ],
+    "file": "W5-P7-enemies/W5-P7-welder.png",
+    "content_size": [
+      170,
+      161
+    ],
+    "size": [
+      194,
+      185
+    ],
+    "scale_factor": 0.4521276595744681,
+    "sheet_box": [
+      683,
+      176,
+      853,
+      337
+    ]
+  },
+  "W5-P7-assembler-turret": {
+    "source": "variants/W5-P7-enemies-source-v2.png",
+    "source_cell": [
+      1024,
+      0,
+      1536,
+      470
+    ],
+    "trim_bounds": [
+      55,
+      22,
+      454,
+      463
+    ],
+    "estimated_backdrop": [
+      5.0,
+      1.0,
+      13.0
+    ],
+    "file": "W5-P7-enemies/W5-P7-assembler-turret.png",
+    "content_size": [
+      217,
+      240
+    ],
+    "size": [
+      241,
+      264
+    ],
+    "scale_factor": 0.54421768707483,
+    "sheet_box": [
+      1172,
+      136,
+      1389,
+      376
+    ]
+  },
+  "W5-P7-rock-drifter": {
+    "source": "variants/W5-P7-enemies-source-v2.png",
+    "source_cell": [
+      0,
+      470,
+      512,
+      1024
+    ],
+    "trim_bounds": [
+      19,
+      17,
+      482,
+      500
+    ],
+    "estimated_backdrop": [
+      5.0,
+      1.0,
+      12.0
+    ],
+    "file": "W5-P7-enemies/W5-P7-rock-drifter.png",
+    "content_size": [
+      268,
+      280
+    ],
+    "size": [
+      292,
+      304
+    ],
+    "scale_factor": 0.5797101449275363,
+    "sheet_box": [
+      122,
+      628,
+      390,
+      908
+    ]
+  },
+  "W5-P7-ore-hauler": {
+    "source": "variants/W5-P7-enemies-source-v2.png",
+    "source_cell": [
+      512,
+      470,
+      1024,
+      1024
+    ],
+    "trim_bounds": [
+      28,
+      1,
+      512,
+      481
+    ],
+    "estimated_backdrop": [
+      6.0,
+      1.0,
+      12.0
+    ],
+    "file": "W5-P7-enemies/W5-P7-ore-hauler.png",
+    "content_size": [
+      300,
+      298
+    ],
+    "size": [
+      324,
+      322
+    ],
+    "scale_factor": 0.6198347107438017,
+    "sheet_box": [
+      618,
+      619,
+      918,
+      917
+    ]
+  },
+  "W5-P7-worker-mech": {
+    "source": "variants/W5-P7-enemies-source-v2.png",
+    "source_cell": [
+      1024,
+      470,
+      1536,
+      1024
+    ],
+    "trim_bounds": [
+      0,
+      69,
+      490,
+      470
+    ],
+    "estimated_backdrop": [
+      5.0,
+      1.0,
+      13.0
+    ],
+    "file": "W5-P7-enemies/W5-P7-worker-mech.png",
+    "content_size": [
+      200,
+      164
+    ],
+    "size": [
+      224,
+      188
+    ],
+    "scale_factor": 0.40816326530612246,
+    "sheet_box": [
+      1180,
+      686,
+      1380,
+      850
+    ]
+  },
+  "W5-P7-forge-drone-elite": {
+    "source": "variants/W5-P7-elite-shards-source.png",
+    "source_cell": [
+      380,
+      0,
+      860,
+      285
+    ],
+    "trim_bounds": [
+      82,
+      11,
+      409,
+      267
+    ],
+    "estimated_backdrop": [
+      5.0,
+      0.0,
+      11.0
+    ],
+    "file": "W5-P7-elite-and-shards/W5-P7-forge-drone-elite.png",
+    "content_size": [
+      256,
+      200
+    ],
+    "size": [
+      280,
+      224
+    ],
+    "scale_factor": 0.7828746177370031,
+    "sheet_box": [
+      640,
+      70,
+      896,
+      270
+    ]
+  },
+  "W5-P7-forge-drone-shard-1": {
+    "source": "variants/W5-P7-elite-shards-source.png",
+    "source_cell": [
+      55,
+      285,
+      355,
+      416
+    ],
+    "trim_bounds": [
+      101,
+      19,
+      229,
+      112
+    ],
+    "estimated_backdrop": [
+      5.0,
+      0.0,
+      12.0
+    ],
+    "file": "W5-P7-elite-and-shards/W5-P7-forge-drone-shard-1.png",
+    "content_size": [
+      77,
+      56
+    ],
+    "size": [
+      101,
+      80
+    ],
+    "scale_factor": 0.6037735849056604,
+    "sheet_box": [
+      154,
+      442,
+      231,
+      498
+    ]
+  },
+  "W5-P7-forge-drone-shard-2": {
+    "source": "variants/W5-P7-elite-shards-source.png",
+    "source_cell": [
+      355,
+      285,
+      620,
+      416
+    ],
+    "trim_bounds": [
+      49,
+      0,
+      212,
+      118
+    ],
+    "estimated_backdrop": [
+      5.0,
+      0.0,
+      12.0
+    ],
+    "file": "W5-P7-elite-and-shards/W5-P7-forge-drone-shard-2.png",
+    "content_size": [
+      98,
+      71
+    ],
+    "size": [
+      122,
+      95
+    ],
+    "scale_factor": 0.6037735849056604,
+    "sheet_box": [
+      527,
+      434,
+      625,
+      505
+    ]
+  },
+  "W5-P7-forge-drone-shard-3": {
+    "source": "variants/W5-P7-elite-shards-source.png",
+    "source_cell": [
+      620,
+      285,
+      910,
+      416
+    ],
+    "trim_bounds": [
+      81,
+      12,
+      219,
+      122
+    ],
+    "estimated_backdrop": [
+      5.0,
+      0.0,
+      12.0
+    ],
+    "file": "W5-P7-elite-and-shards/W5-P7-forge-drone-shard-3.png",
+    "content_size": [
+      83,
+      66
+    ],
+    "size": [
+      107,
+      90
+    ],
+    "scale_factor": 0.6037735849056604,
+    "sheet_box": [
+      918,
+      437,
+      1001,
+      503
+    ]
+  },
+  "W5-P7-forge-drone-shard-4": {
+    "source": "variants/W5-P7-elite-shards-source.png",
+    "source_cell": [
+      910,
+      285,
+      1210,
+      416
+    ],
+    "trim_bounds": [
+      53,
+      30,
+      190,
+      108
+    ],
+    "estimated_backdrop": [
+      5.0,
+      0.0,
+      12.0
+    ],
+    "file": "W5-P7-elite-and-shards/W5-P7-forge-drone-shard-4.png",
+    "content_size": [
+      83,
+      47
+    ],
+    "size": [
+      107,
+      71
+    ],
+    "scale_factor": 0.6037735849056604,
+    "sheet_box": [
+      1302,
+      446,
+      1385,
+      493
+    ]
+  },
+  "W5-P7-welder-shard-1": {
+    "source": "variants/W5-P7-elite-shards-source.png",
+    "source_cell": [
+      55,
+      416,
+      355,
+      567
+    ],
+    "trim_bounds": [
+      61,
+      8,
+      250,
+      129
+    ],
+    "estimated_backdrop": [
+      5.0,
+      0.0,
+      12.0
+    ],
+    "file": "W5-P7-elite-and-shards/W5-P7-welder-shard-1.png",
+    "content_size": [
+      86,
+      55
+    ],
+    "size": [
+      110,
+      79
+    ],
+    "scale_factor": 0.4533333333333333,
+    "sheet_box": [
+      149,
+      642,
+      235,
+      697
+    ]
+  },
+  "W5-P7-welder-shard-2": {
+    "source": "variants/W5-P7-elite-shards-source.png",
+    "source_cell": [
+      355,
+      416,
+      620,
+      567
+    ],
+    "trim_bounds": [
+      64,
+      7,
+      198,
+      130
+    ],
+    "estimated_backdrop": [
+      5.0,
+      0.0,
+      12.0
+    ],
+    "file": "W5-P7-elite-and-shards/W5-P7-welder-shard-2.png",
+    "content_size": [
+      61,
+      56
+    ],
+    "size": [
+      85,
+      80
+    ],
+    "scale_factor": 0.4533333333333333,
+    "sheet_box": [
+      546,
+      642,
+      607,
+      698
+    ]
+  },
+  "W5-P7-welder-shard-3": {
+    "source": "variants/W5-P7-elite-shards-source.png",
+    "source_cell": [
+      620,
+      416,
+      910,
+      567
+    ],
+    "trim_bounds": [
+      48,
+      21,
+      224,
+      129
+    ],
+    "estimated_backdrop": [
+      5.0,
+      0.0,
+      12.0
+    ],
+    "file": "W5-P7-elite-and-shards/W5-P7-welder-shard-3.png",
+    "content_size": [
+      80,
+      49
+    ],
+    "size": [
+      104,
+      73
+    ],
+    "scale_factor": 0.4533333333333333,
+    "sheet_box": [
+      920,
+      646,
+      1000,
+      695
+    ]
+  },
+  "W5-P7-welder-shard-4": {
+    "source": "variants/W5-P7-elite-shards-source.png",
+    "source_cell": [
+      910,
+      416,
+      1210,
+      567
+    ],
+    "trim_bounds": [
+      34,
+      28,
+      209,
+      128
+    ],
+    "estimated_backdrop": [
+      5.0,
+      0.0,
+      12.0
+    ],
+    "file": "W5-P7-elite-and-shards/W5-P7-welder-shard-4.png",
+    "content_size": [
+      79,
+      45
+    ],
+    "size": [
+      103,
+      69
+    ],
+    "scale_factor": 0.4533333333333333,
+    "sheet_box": [
+      1304,
+      648,
+      1383,
+      693
+    ]
+  },
+  "W5-P7-assembler-turret-shard-1": {
+    "source": "variants/W5-P7-elite-shards-source.png",
+    "source_cell": [
+      55,
+      567,
+      355,
+      718
+    ],
+    "trim_bounds": [
+      72,
+      3,
+      259,
+      151
+    ],
+    "estimated_backdrop": [
+      5.0,
+      0.0,
+      12.0
+    ],
+    "file": "W5-P7-elite-and-shards/W5-P7-assembler-turret-shard-1.png",
+    "content_size": [
+      101,
+      80
+    ],
+    "size": [
+      125,
+      104
+    ],
+    "scale_factor": 0.5393258426966292,
+    "sheet_box": [
+      142,
+      830,
+      243,
+      910
+    ]
+  },
+  "W5-P7-assembler-turret-shard-2": {
+    "source": "variants/W5-P7-elite-shards-source.png",
+    "source_cell": [
+      355,
+      567,
+      620,
+      718
+    ],
+    "trim_bounds": [
+      71,
+      2,
+      196,
+      142
+    ],
+    "estimated_backdrop": [
+      5.0,
+      0.0,
+      12.0
+    ],
+    "file": "W5-P7-elite-and-shards/W5-P7-assembler-turret-shard-2.png",
+    "content_size": [
+      67,
+      76
+    ],
+    "size": [
+      91,
+      100
+    ],
+    "scale_factor": 0.5393258426966292,
+    "sheet_box": [
+      542,
+      832,
+      609,
+      908
+    ]
+  },
+  "W5-P7-assembler-turret-shard-3": {
+    "source": "variants/W5-P7-elite-shards-source.png",
+    "source_cell": [
+      620,
+      567,
+      910,
+      718
+    ],
+    "trim_bounds": [
+      44,
+      7,
+      228,
+      132
+    ],
+    "estimated_backdrop": [
+      5.0,
+      0.0,
+      12.0
+    ],
+    "file": "W5-P7-elite-and-shards/W5-P7-assembler-turret-shard-3.png",
+    "content_size": [
+      99,
+      67
+    ],
+    "size": [
+      123,
+      91
+    ],
+    "scale_factor": 0.5393258426966292,
+    "sheet_box": [
+      910,
+      836,
+      1009,
+      903
+    ]
+  },
+  "W5-P7-assembler-turret-shard-4": {
+    "source": "variants/W5-P7-elite-shards-source.png",
+    "source_cell": [
+      910,
+      567,
+      1210,
+      718
+    ],
+    "trim_bounds": [
+      25,
+      5,
+      232,
+      147
+    ],
+    "estimated_backdrop": [
+      5.0,
+      0.0,
+      12.0
+    ],
+    "file": "W5-P7-elite-and-shards/W5-P7-assembler-turret-shard-4.png",
+    "content_size": [
+      112,
+      77
+    ],
+    "size": [
+      136,
+      101
+    ],
+    "scale_factor": 0.5393258426966292,
+    "sheet_box": [
+      1288,
+      832,
+      1400,
+      909
+    ]
+  },
+  "W5-P7-rock-drifter-shard-1": {
+    "source": "variants/W5-P7-elite-shards-source.png",
+    "source_cell": [
+      55,
+      718,
+      355,
+      885
+    ],
+    "trim_bounds": [
+      54,
+      6,
+      280,
+      158
+    ],
+    "estimated_backdrop": [
+      5.0,
+      0.0,
+      12.0
+    ],
+    "file": "W5-P7-elite-and-shards/W5-P7-rock-drifter-shard-1.png",
+    "content_size": [
+      129,
+      87
+    ],
+    "size": [
+      153,
+      111
+    ],
+    "scale_factor": 0.5714285714285714,
+    "sheet_box": [
+      128,
+      1026,
+      257,
+      1113
+    ]
+  },
+  "W5-P7-rock-drifter-shard-2": {
+    "source": "variants/W5-P7-elite-shards-source.png",
+    "source_cell": [
+      355,
+      718,
+      620,
+      885
+    ],
+    "trim_bounds": [
+      48,
+      5,
+      209,
+      157
+    ],
+    "estimated_backdrop": [
+      5.0,
+      0.0,
+      12.0
+    ],
+    "file": "W5-P7-elite-and-shards/W5-P7-rock-drifter-shard-2.png",
+    "content_size": [
+      92,
+      87
+    ],
+    "size": [
+      116,
+      111
+    ],
+    "scale_factor": 0.5714285714285714,
+    "sheet_box": [
+      530,
+      1026,
+      622,
+      1113
+    ]
+  },
+  "W5-P7-rock-drifter-shard-3": {
+    "source": "variants/W5-P7-elite-shards-source.png",
+    "source_cell": [
+      620,
+      718,
+      910,
+      885
+    ],
+    "trim_bounds": [
+      41,
+      6,
+      230,
+      157
+    ],
+    "estimated_backdrop": [
+      5.0,
+      0.0,
+      12.0
+    ],
+    "file": "W5-P7-elite-and-shards/W5-P7-rock-drifter-shard-3.png",
+    "content_size": [
+      108,
+      86
+    ],
+    "size": [
+      132,
+      110
+    ],
+    "scale_factor": 0.5714285714285714,
+    "sheet_box": [
+      906,
+      1027,
+      1014,
+      1113
+    ]
+  },
+  "W5-P7-rock-drifter-shard-4": {
+    "source": "variants/W5-P7-elite-shards-source.png",
+    "source_cell": [
+      910,
+      718,
+      1210,
+      885
+    ],
+    "trim_bounds": [
+      36,
+      8,
+      221,
+      156
+    ],
+    "estimated_backdrop": [
+      5.0,
+      0.0,
+      12.0
+    ],
+    "file": "W5-P7-elite-and-shards/W5-P7-rock-drifter-shard-4.png",
+    "content_size": [
+      106,
+      85
+    ],
+    "size": [
+      130,
+      109
+    ],
+    "scale_factor": 0.5714285714285714,
+    "sheet_box": [
+      1291,
+      1028,
+      1397,
+      1113
+    ]
+  },
+  "W5-P7-ore-hauler-shard-1": {
+    "source": "variants/W5-P7-elite-shards-source.png",
+    "source_cell": [
+      55,
+      885,
+      355,
+      1042
+    ],
+    "trim_bounds": [
+      53,
+      2,
+      263,
+      140
+    ],
+    "estimated_backdrop": [
+      5.0,
+      0.0,
+      12.0
+    ],
+    "file": "W5-P7-elite-and-shards/W5-P7-ore-hauler-shard-1.png",
+    "content_size": [
+      129,
+      84
+    ],
+    "size": [
+      153,
+      108
+    ],
+    "scale_factor": 0.6122448979591837,
+    "sheet_box": [
+      128,
+      1228,
+      257,
+      1312
+    ]
+  },
+  "W5-P7-ore-hauler-shard-2": {
+    "source": "variants/W5-P7-elite-shards-source.png",
+    "source_cell": [
+      355,
+      885,
+      620,
+      1042
+    ],
+    "trim_bounds": [
+      26,
+      12,
+      230,
+      145
+    ],
+    "estimated_backdrop": [
+      5.0,
+      0.0,
+      12.0
+    ],
+    "file": "W5-P7-elite-and-shards/W5-P7-ore-hauler-shard-2.png",
+    "content_size": [
+      125,
+      81
+    ],
+    "size": [
+      149,
+      105
+    ],
+    "scale_factor": 0.6122448979591837,
+    "sheet_box": [
+      514,
+      1230,
+      639,
+      1311
+    ]
+  },
+  "W5-P7-ore-hauler-shard-3": {
+    "source": "variants/W5-P7-elite-shards-source.png",
+    "source_cell": [
+      620,
+      885,
+      910,
+      1042
+    ],
+    "trim_bounds": [
+      32,
+      11,
+      236,
+      138
+    ],
+    "estimated_backdrop": [
+      5.0,
+      0.0,
+      11.0
+    ],
+    "file": "W5-P7-elite-and-shards/W5-P7-ore-hauler-shard-3.png",
+    "content_size": [
+      125,
+      78
+    ],
+    "size": [
+      149,
+      102
+    ],
+    "scale_factor": 0.6122448979591837,
+    "sheet_box": [
+      898,
+      1231,
+      1023,
+      1309
+    ]
+  },
+  "W5-P7-ore-hauler-shard-4": {
+    "source": "variants/W5-P7-elite-shards-source.png",
+    "source_cell": [
+      910,
+      885,
+      1210,
+      1042
+    ],
+    "trim_bounds": [
+      18,
+      6,
+      227,
+      138
+    ],
+    "estimated_backdrop": [
+      5.0,
+      0.0,
+      12.0
+    ],
+    "file": "W5-P7-elite-and-shards/W5-P7-ore-hauler-shard-4.png",
+    "content_size": [
+      128,
+      81
+    ],
+    "size": [
+      152,
+      105
+    ],
+    "scale_factor": 0.6122448979591837,
+    "sheet_box": [
+      1280,
+      1230,
+      1408,
+      1311
+    ]
+  },
+  "W5-P7-worker-mech-shard-1": {
+    "source": "variants/W5-P7-elite-shards-source.png",
+    "source_cell": [
+      55,
+      1042,
+      355,
+      1254
+    ],
+    "trim_bounds": [
+      63,
+      4,
+      244,
+      173
+    ],
+    "estimated_backdrop": [
+      5.0,
+      1.0,
+      11.0
+    ],
+    "file": "W5-P7-elite-and-shards/W5-P7-worker-mech-shard-1.png",
+    "content_size": [
+      78,
+      73
+    ],
+    "size": [
+      102,
+      97
+    ],
+    "scale_factor": 0.43010752688172044,
+    "sheet_box": [
+      153,
+      1434,
+      231,
+      1507
+    ]
+  },
+  "W5-P7-worker-mech-shard-2": {
+    "source": "variants/W5-P7-elite-shards-source.png",
+    "source_cell": [
+      355,
+      1042,
+      620,
+      1254
+    ],
+    "trim_bounds": [
+      37,
+      7,
+      223,
+      176
+    ],
+    "estimated_backdrop": [
+      5.0,
+      1.0,
+      11.0
+    ],
+    "file": "W5-P7-elite-and-shards/W5-P7-worker-mech-shard-2.png",
+    "content_size": [
+      80,
+      73
+    ],
+    "size": [
+      104,
+      97
+    ],
+    "scale_factor": 0.43010752688172044,
+    "sheet_box": [
+      536,
+      1434,
+      616,
+      1507
+    ]
+  },
+  "W5-P7-worker-mech-shard-3": {
+    "source": "variants/W5-P7-elite-shards-source.png",
+    "source_cell": [
+      620,
+      1042,
+      910,
+      1254
+    ],
+    "trim_bounds": [
+      55,
+      8,
+      226,
+      165
+    ],
+    "estimated_backdrop": [
+      5.0,
+      1.0,
+      11.0
+    ],
+    "file": "W5-P7-elite-and-shards/W5-P7-worker-mech-shard-3.png",
+    "content_size": [
+      74,
+      68
+    ],
+    "size": [
+      98,
+      92
+    ],
+    "scale_factor": 0.43010752688172044,
+    "sheet_box": [
+      923,
+      1436,
+      997,
+      1504
+    ]
+  },
+  "W5-P7-worker-mech-shard-4": {
+    "source": "variants/W5-P7-elite-shards-source.png",
+    "source_cell": [
+      910,
+      1042,
+      1210,
+      1254
+    ],
+    "trim_bounds": [
+      62,
+      2,
+      206,
+      178
+    ],
+    "estimated_backdrop": [
+      5.0,
+      1.0,
+      11.0
+    ],
+    "file": "W5-P7-elite-and-shards/W5-P7-worker-mech-shard-4.png",
+    "content_size": [
+      62,
+      76
+    ],
+    "size": [
+      86,
+      100
+    ],
+    "scale_factor": 0.43010752688172044,
+    "sheet_box": [
+      1313,
+      1432,
+      1375,
+      1508
+    ]
+  },
+  "W5-P8-body": {
+    "source": "variants/W5-P8-parts-source.png",
+    "source_cell": [
+      75,
+      10,
+      710,
+      750
+    ],
+    "trim_bounds": [
+      12,
+      13,
+      635,
+      737
+    ],
+    "estimated_backdrop": [
+      5.0,
+      0.0,
+      11.0
+    ],
+    "file": "W5-P8-parts/W5-P8-body.png",
+    "content_size": [
+      706,
+      820
+    ],
+    "size": [
+      730,
+      844
+    ],
+    "scale_factor": 1.132596685082873,
+    "sheet_box": [
+      137,
+      80,
+      843,
+      900
+    ]
+  },
+  "W5-P8-arm-nw": {
+    "source": "variants/W5-P8-parts-source.png",
+    "source_cell": [
+      710,
+      10,
+      990,
+      355
+    ],
+    "trim_bounds": [
+      4,
+      44,
+      261,
+      337
+    ],
+    "estimated_backdrop": [
+      5.0,
+      0.0,
+      10.0
+    ],
+    "file": "W5-P8-parts/W5-P8-arm-nw.png",
+    "content_size": [
+      307,
+      350
+    ],
+    "size": [
+      331,
+      374
+    ],
+    "scale_factor": 1.1945392491467577,
+    "sheet_box": [
+      1396,
+      125,
+      1703,
+      475
+    ]
+  },
+  "W5-P8-arm-ne": {
+    "source": "variants/W5-P8-parts-source.png",
+    "source_cell": [
+      990,
+      10,
+      1254,
+      355
+    ],
+    "trim_bounds": [
+      0,
+      44,
+      246,
+      335
+    ],
+    "estimated_backdrop": [
+      4.0,
+      0.0,
+      10.0
+    ],
+    "file": "W5-P8-parts/W5-P8-arm-ne.png",
+    "content_size": [
+      296,
+      350
+    ],
+    "size": [
+      320,
+      374
+    ],
+    "scale_factor": 1.2027491408934707,
+    "sheet_box": [
+      2352,
+      125,
+      2648,
+      475
+    ]
+  },
+  "W5-P8-arm-sw": {
+    "source": "variants/W5-P8-parts-source.png",
+    "source_cell": [
+      710,
+      355,
+      990,
+      700
+    ],
+    "trim_bounds": [
+      7,
+      29,
+      257,
+      326
+    ],
+    "estimated_backdrop": [
+      5.0,
+      0.0,
+      11.0
+    ],
+    "file": "W5-P8-parts/W5-P8-arm-sw.png",
+    "content_size": [
+      219,
+      260
+    ],
+    "size": [
+      243,
+      284
+    ],
+    "scale_factor": 0.8754208754208754,
+    "sheet_box": [
+      1440,
+      720,
+      1659,
+      980
+    ]
+  },
+  "W5-P8-arm-se": {
+    "source": "variants/W5-P8-parts-source.png",
+    "source_cell": [
+      990,
+      355,
+      1254,
+      700
+    ],
+    "trim_bounds": [
+      0,
+      29,
+      242,
+      326
+    ],
+    "estimated_backdrop": [
+      4.0,
+      0.0,
+      10.0
+    ],
+    "file": "W5-P8-parts/W5-P8-arm-se.png",
+    "content_size": [
+      212,
+      260
+    ],
+    "size": [
+      236,
+      284
+    ],
+    "scale_factor": 0.8754208754208754,
+    "sheet_box": [
+      2394,
+      720,
+      2606,
+      980
+    ]
+  },
+  "W5-P8-bay-west": {
+    "source": "variants/W5-P8-parts-source.png",
+    "source_cell": [
+      35,
+      715,
+      345,
+      995
+    ],
+    "trim_bounds": [
+      12,
+      3,
+      299,
+      278
+    ],
+    "estimated_backdrop": [
+      4.0,
+      0.0,
+      11.0
+    ],
+    "file": "W5-P8-parts/W5-P8-bay-west.png",
+    "content_size": [
+      430,
+      412
+    ],
+    "size": [
+      454,
+      436
+    ],
+    "scale_factor": 1.4982578397212543,
+    "sheet_box": [
+      85,
+      1064,
+      515,
+      1476
+    ]
+  },
+  "W5-P8-bay-east": {
+    "source": "variants/W5-P8-parts-source.png",
+    "source_cell": [
+      440,
+      715,
+      735,
+      995
+    ],
+    "trim_bounds": [
+      22,
+      2,
+      295,
+      276
+    ],
+    "estimated_backdrop": [
+      5.0,
+      0.0,
+      10.0
+    ],
+    "file": "W5-P8-parts/W5-P8-bay-east.png",
+    "content_size": [
+      428,
+      430
+    ],
+    "size": [
+      452,
+      454
+    ],
+    "scale_factor": 1.5693430656934306,
+    "sheet_box": [
+      586,
+      1055,
+      1014,
+      1485
+    ]
+  },
+  "W5-P8-weak-point-bay-west": {
+    "source": "variants/W5-P8-parts-source.png",
+    "source_cell": [
+      35,
+      995,
+      200,
+      1220
+    ],
+    "trim_bounds": [
+      16,
+      9,
+      147,
+      189
+    ],
+    "estimated_backdrop": [
+      4.0,
+      0.0,
+      11.0
+    ],
+    "file": "W5-P8-parts/W5-P8-weak-point-bay-west.png",
+    "content_size": [
+      189,
+      260
+    ],
+    "size": [
+      213,
+      284
+    ],
+    "scale_factor": 1.4444444444444444,
+    "sheet_box": [
+      106,
+      1870,
+      295,
+      2130
+    ]
+  },
+  "W5-P8-weak-point-bay-east": {
+    "source": "variants/W5-P8-parts-source.png",
+    "source_cell": [
+      200,
+      995,
+      355,
+      1220
+    ],
+    "trim_bounds": [
+      13,
+      7,
+      142,
+      190
+    ],
+    "estimated_backdrop": [
+      4.0,
+      0.0,
+      11.0
+    ],
+    "file": "W5-P8-parts/W5-P8-weak-point-bay-east.png",
+    "content_size": [
+      183,
+      260
+    ],
+    "size": [
+      207,
+      284
+    ],
+    "scale_factor": 1.4207650273224044,
+    "sheet_box": [
+      508,
+      1870,
+      691,
+      2130
+    ]
+  },
+  "W5-P8-weak-point-furnace-west": {
+    "source": "variants/W5-P8-parts-source.png",
+    "source_cell": [
+      355,
+      995,
+      535,
+      1220
+    ],
+    "trim_bounds": [
+      10,
+      1,
+      179,
+      199
+    ],
+    "estimated_backdrop": [
+      4.0,
+      0.0,
+      11.0
+    ],
+    "file": "W5-P8-parts/W5-P8-weak-point-furnace-west.png",
+    "content_size": [
+      239,
+      280
+    ],
+    "size": [
+      263,
+      304
+    ],
+    "scale_factor": 1.4141414141414141,
+    "sheet_box": [
+      80,
+      2360,
+      319,
+      2640
+    ]
+  },
+  "W5-P8-weak-point-furnace-east": {
+    "source": "variants/W5-P8-parts-source.png",
+    "source_cell": [
+      535,
+      995,
+      715,
+      1220
+    ],
+    "trim_bounds": [
+      17,
+      0,
+      180,
+      199
+    ],
+    "estimated_backdrop": [
+      4.0,
+      0.0,
+      11.0
+    ],
+    "file": "W5-P8-parts/W5-P8-weak-point-furnace-east.png",
+    "content_size": [
+      229,
+      280
+    ],
+    "size": [
+      253,
+      304
+    ],
+    "scale_factor": 1.407035175879397,
+    "sheet_box": [
+      486,
+      2360,
+      715,
+      2640
+    ]
+  },
+  "W5-P6-top": {
+    "file": "W5-P6-border-pieces/W5-P6-border-top.png",
+    "size": [
+      1024,
+      160
+    ],
+    "source_cell": [
+      150,
+      8,
+      1108,
+      172
+    ]
+  },
+  "W5-P6-bottom": {
+    "file": "W5-P6-border-pieces/W5-P6-border-bottom.png",
+    "size": [
+      1024,
+      160
+    ],
+    "source_cell": [
+      150,
+      1015,
+      1108,
+      1235
+    ]
+  },
+  "W5-P6-left": {
+    "file": "W5-P6-border-pieces/W5-P6-border-left.png",
+    "size": [
+      160,
+      1024
+    ],
+    "source_cell": [
+      18,
+      193,
+      190,
+      1012
+    ]
+  },
+  "W5-P6-right": {
+    "file": "W5-P6-border-pieces/W5-P6-border-right.png",
+    "size": [
+      160,
+      1024
+    ],
+    "source_cell": [
+      1074,
+      193,
+      1240,
+      1012
+    ]
+  },
+  "W5-P6-top-left": {
+    "file": "W5-P6-border-pieces/W5-P6-corner-top-left.png",
+    "size": [
+      256,
+      256
+    ],
+    "source_cell": [
+      275,
+      248,
+      562,
+      530
+    ]
+  },
+  "W5-P6-top-right": {
+    "file": "W5-P6-border-pieces/W5-P6-corner-top-right.png",
+    "size": [
+      256,
+      256
+    ],
+    "source_cell": [
+      694,
+      248,
+      987,
+      530
+    ]
+  },
+  "W5-P6-bottom-left": {
+    "file": "W5-P6-border-pieces/W5-P6-corner-bottom-left.png",
+    "size": [
+      256,
+      256
+    ],
+    "source_cell": [
+      275,
+      675,
+      562,
+      958
+    ]
+  },
+  "W5-P6-bottom-right": {
+    "file": "W5-P6-border-pieces/W5-P6-corner-bottom-right.png",
+    "size": [
+      256,
+      256
+    ],
+    "source_cell": [
+      694,
+      675,
+      987,
+      958
+    ]
+  }
+}

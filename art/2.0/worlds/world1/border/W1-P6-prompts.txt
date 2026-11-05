@@ -1,0 +1,28 @@
+Generation mode: built-in image_gen, using approved W1 P1 reference.
+Technical export: individual crops resized to specified dimensions, near-black background normalized to #05010f; paired 28-pixel endpoint transition on each straight strip makes opposite endpoints identical for lengthwise repeat. No rotations, so top-left illumination stays consistent. Final atlas assembled at 1:1 scale from the exported pieces.
+
+FINAL GENERATION PROMPT
+Use case: stylized-concept.
+Asset type: Void Blaster W1 P6 production arena border asset ATLAS. Create ONE square sheet, 1254x1254 pixels, with exactly EIGHT isolated pieces on plain flat solid #05010f RGB(5,1,15), no text or labels.
+
+Reference image is the approved Orbital Ruins arena, used as STYLE reference: match its dense ring of HUMAN station wreckage, dead satellites and broken AMBER HEXAGONAL energy shield fragments along the ARENA-FACING INNER edge. Do not copy Earth, the full arena composition or starfield. All empty areas of this sheet must be uniform #05010f.
+
+STRICT TOP-DOWN ORTHOGRAPHIC, looking vertically down, no perspective, isometric tilt, visible sidewalls or horizon. Stylized sci-fi clean high detail, crisp edges, gunmetal/carbon/matte ceramic, panel lines, vents, small rivets. Dark metal #3a4152–#6b7a99, restrained highlights, never near-white. Top-left light consistent across EVERY piece, faint blue fill, no bright cyan, sparse magenta only hairline circuit traces. No grunge overload. Soft bloom only on the amber hex shield edges. No motion blur, no depth of field, not photorealistic. Cold, lonely, 100% machine.
+Dense belts of small snapped station plate fragments, girders, damaged solar cells, cable bundles, dead satellites, packed irregularly but with clear controlled silhouette. No large intact ships, enemies, characters, organic elements, typography, logos or watermarks.
+Amber #ffb02e energy-shield fragments: recognizable damaged HONEYCOMB HEXAGONS with thin luminous amber edges and extremely dim dark amber transparent faces, with missing cells and broken sections, matching the reference. No continuous neon stripe and no solid opaque orange wall. The shield is always on the inner arena side of each border.
+
+EXACT ATLAS LAYOUT — eight pieces WELL APART, never an assembled arena frame:
+1 TOP STRIP: a single horizontal straight repeating wreckage belt, centered across the upper part of sheet, bounding rectangle x=219 to1034, y=64 to190 (816px long,127px thick). Inner/arena side is DOWN: hex shield fragments along its LOWER edge.
+2 BOTTOM STRIP: single horizontal straight repeating belt in rectangle x=219 to1034,y=1063 to1189. Inner side is UP: shield along its UPPER edge.
+3 LEFT STRIP: single vertical straight repeating belt in rectangle x=64 to190,y=219 to1034. Inner side is RIGHT: shield along its RIGHT edge.
+4 RIGHT STRIP: single vertical straight repeating belt in rectangle x=1063 to1189,y=219 to1034. Inner side is LEFT: shield along its LEFT edge.
+Keep the long edges of these strips PARALLEL and each belt confined inside its given rectangle. Strips have SQUARE BUTT ENDS, never rounded end caps or long tapered tips. Continuous belt right up to the two short ends.
+PERFECT REPEAT along length: left and right ends of horizontal strips must match pixel-for-pixel with consistent density and shield phase; top and bottom ends of vertical strips must likewise match. Each strip can extend infinitely end to end without a gap, seam or abrupt bright band. No flat black interruption at the butt ends.
+
+Four CORNERS inside the otherwise EMPTY center of this atlas, separated by wide gaps. Each an independent 204x204 square tile, same wreckage scale and belt thickness as strips:
+5 TOP-LEFT CORNER in x=374..577,y=374..577: wreckage wraps the TOP and LEFT outer sides as a rounded L-turn, inner shield faces the empty LOWER-RIGHT quadrant.
+6 TOP-RIGHT CORNER in x=676..879,y=374..577: wraps TOP and RIGHT, inner shield faces LOWER-LEFT.
+7 BOTTOM-LEFT CORNER in x=374..577,y=676..879: wraps BOTTOM and LEFT, inner shield faces UPPER-RIGHT.
+8 BOTTOM-RIGHT CORNER in x=676..879,y=676..879: wraps BOTTOM and RIGHT, inner shield faces UPPER-LEFT.
+All four corner tiles form matching 90 degree turns with open arena-side corners and square joining ends. NOT circular isolated piles. Match the straight belts' gunmetal, density, size of wreckage and amber hex size. No corner tile touches any other tile or strip.
+No guide rectangles, grid, numbering, captions, UI or borders around the sheet. ONLY these eight separate game assets on plain #05010f.
