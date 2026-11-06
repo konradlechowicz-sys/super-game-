@@ -130,7 +130,7 @@ Tasks, in this order:
 ## Android (decided by Konrad)
 Android launches with 2.0 (Google Play needs 12 testers for 14 days on a new account before publishing, so closed
 testing should start during 2.0 work). Project in `android/`, see README.md. Google Play Billing is the same
-"VoidStore" plugin as on iOS (`android/.../StorePlugin.java`, Billing 7.1.1, product id as on the App Store, build 143);
+"VoidStore" plugin as on iOS (`android/.../StorePlugin.java`, Billing 8.0.0 since build 156, product id as on the App Store, build 143);
 back button `MainActivity.java` → `app.handleBack`; `npm run android:bundle` makes the signed `.aab` (upload key out of git). This cloud environment cannot build Android (no SDK); Konrad builds in
 Android Studio on his Mac (`npm run android:open`; `npm run android:play` / `npm run android:test` install and
 launch the normal game / the TEST app "VB Test" on the emulator or phone).
