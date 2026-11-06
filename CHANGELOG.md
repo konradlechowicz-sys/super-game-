@@ -36,6 +36,10 @@ VOID BLASTER 2.0: A WHOLE NEW JOURNEY
 • Endless mode in every world after the journey
 Full Game owners keep everything they bought. Your progress starts over with a veteran bonus and the Veteran Striker skin.
 
+## Build 156 · 2026-11-06
+- [Poprawka] Android: biblioteka płatności Google Play podniesiona z 7.1.1 do 8.0.0 (Play Console nie przyjmowała pakietu z 7.x).
+- [Zmiana] Android: wersja aplikacji 2.0.0 (kod wersji 156).
+
 ## Build 155 · 2026-11-05
 - [App Store] Zrzuty ekranu 2.0 z prawdziwej gry, 8 scen z podpisami (rój, boss w furii, ulepszenia, mapa 10 światów, fabuła, Europa, Codex, hangar): App Store 6,9" (1320×2868) i 6,5" (1284×2778) oraz Google Play (1080×1920) w `appstore/2.0/screenshots/`, plus zrzut ekranu zakupu do recenzji Apple.
 - [Zmiana] Cena pełnej gry w przeglądarce i w testowym pliku StoreKit (symulator): 4,99 USD jak w sklepie.

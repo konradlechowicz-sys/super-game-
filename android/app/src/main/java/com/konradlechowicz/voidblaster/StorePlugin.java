@@ -21,7 +21,7 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * The full-game purchase on Android: Google Play Billing behind the same "VoidStore" plugin as the iOS StoreKit one
+ * The full-game purchase on Android: Google Play Billing (8.x) behind the same "VoidStore" plugin as the iOS StoreKit one
  * (ios/App/App/StorePlugin.swift), so js/store.js works unchanged: getProduct (price), isOwned, purchase
  * ('purchased' | 'cancelled' | 'pending' | 'error'), restore, and an 'owned' event when a purchase completes later
  * (a pending payment) or is refunded. The product is a one-time in-app product in Play Console with the same id as on
@@ -62,7 +62,9 @@ public class StorePlugin extends Plugin implements PurchasesUpdatedListener {
                 .setProductList(Collections.singletonList(QueryProductDetailsParams.Product.newBuilder()
                     .setProductId(id).setProductType(BillingClient.ProductType.INAPP).build()))
                 .build();
-            billing.queryProductDetailsAsync(params, (result, list) -> {
+            // Billing 8: the answer is a QueryProductDetailsResult (found products + the ones Play could not fetch)
+            billing.queryProductDetailsAsync(params, (result, found) -> {
+                List<ProductDetails> list = found != null ? found.getProductDetailsList() : null;
                 if (result.getResponseCode() != BillingClient.BillingResponseCode.OK || list == null || list.isEmpty()) {
                     call.reject("product unavailable");
                     return;
