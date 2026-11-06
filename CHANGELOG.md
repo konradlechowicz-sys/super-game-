@@ -36,6 +36,9 @@ VOID BLASTER 2.0: A WHOLE NEW JOURNEY
 • Endless mode in every world after the journey
 Full Game owners keep everything they bought. Your progress starts over with a veteran bonus and the Veteran Striker skin.
 
+## Build 157 · 2026-11-06
+- [App Store] Polityka prywatności obejmuje teraz Androida: płatności przez Google Play Billing, rankingi Game Center / Google Play Games, nazwa dewelopera (Konrad Lechowicz) i kontakt. Wcześniej opisywała tylko Apple (możliwy powód odrzucenia w Google Play).
+
 ## Build 156 · 2026-11-06
 - [Poprawka] Android: biblioteka płatności Google Play podniesiona z 7.1.1 do 8.0.0 (Play Console nie przyjmowała pakietu z 7.x).
 - [Zmiana] Android: wersja aplikacji 2.0.0 (kod wersji 156).
