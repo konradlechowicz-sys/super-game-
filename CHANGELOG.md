@@ -36,6 +36,11 @@ VOID BLASTER 2.0: A WHOLE NEW JOURNEY
 • Endless mode in every world after the journey
 Full Game owners keep everything they bought. Your progress starts over with a veteran bonus and the Veteran Striker skin.
 
+## Build 160 · 2026-11-07
+- [Narzędzia] `npm run export:ue` zapisuje dane gry 2.0 (statki, wrogowie, bossowie, 10 światów i 60 sektorów, bronie,
+  perki, kombosy, skrzynki, XP) jako JSON dla Void Blaster 3.0 na Unreal Engine 5; gra się nie zmienia.
+- [Narzędzia] CLAUDE.md: decyzje o 3.0 (UE5, PC/Steam, osobne repo, kamera, modele AI 3D, PC z Windows do rozwoju).
+
 ## Build 159 · 2026-11-07
 - [Narzędzia] CLAUDE.md: sekcja „2.0 release status” (stan wydania na iOS i Androidzie, konto Play LoneCometGames, kolejne kroki), cena 4,99 USD od 2.0.
 

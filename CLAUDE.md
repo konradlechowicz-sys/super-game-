@@ -127,6 +127,25 @@ Tasks, in this order:
    2 weeks before launch, landscape trailer (`promo/record.mjs`), AI content disclosure (ChatGPT art, Suno music;
    check that the Suno tracks were made on a plan that allows commercial use).
 
+## Void Blaster 3.0: Unreal Engine 5, PC/Steam (decided by Konrad, 2026-11-07)
+A PC/Steam version in UE5: the same game and concept (ship, swarms, auto-fire, level-ups, 10 worlds × 6 sectors,
+bosses, story) in 3D, with Lumen lighting, Niagara effects for weapons, enemy shots and ships, more enemies on screen
+(target 1000+), gamepad, 4K/ultrawide and PC graphics settings. Plan: Claude Doc "Void Blaster 3.0 – plan
+wykonawczy" (https://claude.ai/artifact/CVomFsXKnPLjQMFdp7h53c), milestones M0-M6 (M1 = world-1 vertical slice on grey
+models, gate: 1000 enemies at 60+ FPS).
+- Order: the 2.0 Steam release (Electron/Tauri, "PC / Steam" tasks above) comes first; 3.0 runs alongside as its own project.
+- Its own GitHub repo `void-blaster-3` with Git LFS (to be created by Konrad); this repo stays the iOS/Android/2.0 game.
+- Camera: top-down 3D tilted about 55-65°, gameplay on a plane as in 2.0.
+- 3D models: AI 3D generators (Meshy / Tripo / Rodin) from ChatGPT concepts per the Art Bible; backgrounds, rocks and
+  wrecks from Fab/Quixel. Claude writes prompts and specs, Konrad generates and sends them back. Task codes `3D-SH`,
+  `3D-EN`, `3D-EL`, `3D-BS`, `3D-PU`, `3D-ENV`.
+- Hardware: the Mac is for talking about the project and ideas; the Windows PC (UE5, Visual Studio 2022, C++) is where
+  3.0 is really developed, compiled and tested.
+- All game logic in C++ (Claude cannot edit Blueprints or `.uasset`, and this cloud has no UE5): the editor only holds
+  assets. Balance data comes from 2.0: `npm run export:ue [-- <dir>]` (`scripts/export-ue.mjs`) writes the tables of
+  `js/data.js`, `js/weapons.js`, `js/combos.js`, `js/crates.js` as JSON (default `dist/ue-data`), functions left out
+  and listed in `_manifest.json`.
+
 ## 2.0 release status (2026-11-07)
 - `v2` was merged into `main` for the launch (branch `claude/release-2.0`, builds 154-155, accepted): `main` is now the
   2.0 game and GitHub Pages serves the 2.0 trial. Builds 154-158 are in `main` only, not in `v2`.
