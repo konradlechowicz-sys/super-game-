@@ -127,6 +127,29 @@ Tasks, in this order:
    2 weeks before launch, landscape trailer (`promo/record.mjs`), AI content disclosure (ChatGPT art, Suno music;
    check that the Suno tracks were made on a plan that allows commercial use).
 
+## 2.0 release status (2026-11-07)
+- `v2` was merged into `main` for the launch (branch `claude/release-2.0`, builds 154-155, accepted): `main` is now the
+  2.0 game and GitHub Pages serves the 2.0 trial. Builds 154-158 are in `main` only, not in `v2`.
+- Store material: texts `appstore/LISTING.md` (App Store) and `appstore/GOOGLE-PLAY-LISTING.md`, icon
+  `proto2/make-app-icon.py`, screenshots `appstore/2.0/screenshots/{6.9,6.5,play}` + `iap-review-fullgame.jpg`, made by
+  `node promo/screens.mjs` after `npm run build:web`. Privacy and support pages (`site/`) cover iOS and Android, contact
+  lonecometgames@gmail.com (build 158).
+- iOS: Konrad ran `npm run release` as v2.0.0 (build 155) and sent it to TestFlight for testers. Still to do in App
+  Store Connect: Game Center leaderboards w5-w10 (`com.konradlechowicz.voidblaster.endless.wN`, "Endless · <world>")
+  and renaming w1-w4, Full Game price USD 4.99 + new description + review screenshot, version 2.0.0 page, manual
+  release on the same day as Android.
+- Android: Play Console developer account "LoneCometGames" (Google account lonecometgames@gmail.com, personal account,
+  identity verified, payments profile set). App "Void Blaster: Neon Survivor" was rejected on 2026-11-06 because the
+  Financial features declaration wrongly said "mobile payments and digital wallets" (needs an organization account);
+  fixed (no financial features, target age 13+) and resent for review on 2026-11-07 with build 156 (2.0.0, Billing
+  8.0.0) on the closed track "Alpha". Play App Signing is on (upload key `android/void-blaster-upload.jks`, out of git).
+  Next: add at least 12 testers (14 days before production access), share the join link, create the in-app product
+  `com.konradlechowicz.voidblaster.fullgame` (USD 4.99), license testing; Play Games leaderboards later (plugin off until
+  `game_services_project_id` and `PLAY_IDS` are filled). The seller "trader" status (EU) is left until Konrad's company
+  (planned name Lone Comet Games) exists.
+- Konrad can let Claude in Chrome read or change Play Console from his computer; Claude writes the prompt (read-only
+  unless he asks for changes, stop before submitting).
+
 ## Android (decided by Konrad)
 Android launches with 2.0 (Google Play needs 12 testers for 14 days on a new account before publishing, so closed
 testing should start during 2.0 work). Project in `android/`, see README.md. Google Play Billing is the same
@@ -136,7 +159,7 @@ Android Studio on his Mac (`npm run android:open`; `npm run android:play` / `npm
 launch the normal game / the TEST app "VB Test" on the emulator or phone).
 
 ## Monetization (decided by Konrad)
-Free trial + one non-consumable in-app purchase "Full Game" (USD 3.99, `com.konradlechowicz.voidblaster.fullgame`).
+Free trial + one non-consumable in-app purchase "Full Game" (USD 3.99 in 1.x, USD 4.99 from 2.0, `com.konradlechowicz.voidblaster.fullgame`).
 Free: world 1 with its boss, the Striker, upgrades up to level 3. Full: worlds 2-4, Phantom + Titan, all upgrade
 levels, 1,000 coins, Gold Striker skin. No ads, no subscriptions, no pay-to-win coin sales. Logic: `js/store.js`;
 StoreKit 2: `ios/App/App/StorePlugin.swift`.

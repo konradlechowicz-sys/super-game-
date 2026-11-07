@@ -36,6 +36,9 @@ VOID BLASTER 2.0: A WHOLE NEW JOURNEY
 • Endless mode in every world after the journey
 Full Game owners keep everything they bought. Your progress starts over with a veteran bonus and the Veteran Striker skin.
 
+## Build 159 · 2026-11-07
+- [Narzędzia] CLAUDE.md: sekcja „2.0 release status” (stan wydania na iOS i Androidzie, konto Play LoneCometGames, kolejne kroki), cena 4,99 USD od 2.0.
+
 ## Build 158 · 2026-11-07
 - [App Store] Polityka prywatności i strona pomocy: e-mail kontaktowy lonecometgames@gmail.com, Android obok iPhone'a, jasny zapis o monetach (1000 monet to jednorazowy bonus pełnej gry, monet nie sprzedajemy osobno), zgodnie z opisem w Google Play.
 
