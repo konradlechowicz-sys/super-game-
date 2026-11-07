@@ -36,6 +36,10 @@ VOID BLASTER 2.0: A WHOLE NEW JOURNEY
 • Endless mode in every world after the journey
 Full Game owners keep everything they bought. Your progress starts over with a veteran bonus and the Veteran Striker skin.
 
+## Build 160 · 2026-11-07
+- [Narzędzia] Znowu jedna linia: cała dalsza praca (2.x, poprawki, narzędzia) idzie z `main`. `npm run review` scala każdy zaakceptowany build do `main` i nie pokazuje już grupy „Wersja 2.0 → v2”. Linia `v2` jest zamknięta na buildzie 153.
+- [Narzędzia] `CLAUDE.md`, `README.md` i `JAK-TESTOWAC.md` opisują nowy układ.
+
 ## Build 159 · 2026-11-07
 - [Narzędzia] CLAUDE.md: sekcja „2.0 release status” (stan wydania na iOS i Androidzie, konto Play LoneCometGames, kolejne kroki), cena 4,99 USD od 2.0.
 

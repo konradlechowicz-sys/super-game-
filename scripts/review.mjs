@@ -1,11 +1,10 @@
 // npm run review — test new game versions prepared in the cloud, then accept or reject them.
 //
-// Two accepted lines (decided by Konrad, 2026-10-27): `main` = Void Blaster 1.x (releasable, bug fixes only) and
-// `v2` = the accepted builds of 2.0 (never released from there; it is merged into main for the 2.0 launch).
-// Cloud sessions push their work to `claude/...` branches: `claude/v2-...` are 2.0 candidates for `v2`, every other
-// `claude/...` branch is a 1.x candidate for `main`. This script lists those with changes not yet in their line,
+// One accepted line (decided by Konrad, 2026-11-07): `main` = the game (2.0 since the launch merge, builds 154+).
+// The old `v2` line (2026-10-27 to 2026-11-07) is closed. Cloud sessions push their work to `claude/...` branches,
+// every one a candidate for `main`. This script lists those with changes not yet in main,
 // builds the chosen one, launches it in the iOS Simulator or on the iPhone (scripts/run.mjs) and asks Konrad for a decision:
-//   accept -> merged into its line (main or v2) and pushed (main is the version that gets released),
+//   accept -> merged into main and pushed (main is the version that gets released),
 //   reject -> back to main; this exact version is not offered again (new commits on the branch will be),
 //   later  -> back to main, nothing changes.
 // Set VB_NO_SIM=1 to skip the simulator (for testing this script on a machine without Xcode).
@@ -43,10 +42,8 @@ function buildLabel(ref) {
   }
 }
 
-// claude/v2-... (or claude/v2/...) goes to the 2.0 line once it exists on GitHub; everything else to main.
-const LINES = { main: 'Void Blaster 1.x → main', v2: 'Wersja 2.0 → v2' };
-let hasV2 = false;
-const lineOf = (branch) => (hasV2 && /^claude\/v2[-/]/.test(branch) ? 'v2' : 'main');
+// Every claude/... branch goes to main (the v2 line is closed since 2026-11-07).
+const lineOf = () => 'main';
 
 const buildOf = (ref) => { try { return +(sh(`git show ${ref}:js/version.js`).match(/build: (\d+)/) || [])[1] || 0; } catch { return 0; } };
 // What a version changes compared with the accepted one, from its CHANGELOG.md.
@@ -80,7 +77,6 @@ const startBranch = sh('git branch --show-current');
 const startSha = sh('git rev-parse HEAD');
 console.log('Sprawdzam nowe wersje na GitHubie…');
 run('git fetch -q --prune origin');
-hasV2 = (() => { try { sh('git rev-parse --verify -q origin/v2'); return true; } catch { return false; } })();
 
 const candidates = sh('git for-each-ref --sort=-committerdate --format="%(refname:short)" refs/remotes/origin/claude/')
   .split('\n').filter(Boolean)
@@ -96,13 +92,10 @@ const candidates = sh('git for-each-ref --sort=-committerdate --format="%(refnam
     when: sh(`git log -1 --format=%cr ${ref}`),
     label: buildLabel(ref),
   }))
-  .filter((c) => c.ahead > 0 && !rejected.has(c.sha))
-  // 1.x first, then 2.0; newest first within each line
-  .sort((a, b) => (a.line === b.line ? 0 : a.line === 'main' ? -1 : 1));
+  .filter((c) => c.ahead > 0 && !rejected.has(c.sha));
 
 const mainHasGame = (() => { try { sh('git cat-file -e origin/main:package.json'); return true; } catch { return false; } })();
-console.log(`Zaakceptowana wersja 1.x (main): ${mainHasGame ? buildLabel('origin/main') : 'jeszcze żadna'}`);
-if (hasV2) console.log(`Zaakceptowana wersja 2.0 (v2): ${buildLabel('origin/v2')}`);
+console.log(`Zaakceptowana wersja (main): ${mainHasGame ? buildLabel('origin/main') : 'jeszcze żadna'}`);
 console.log('');
 if (!candidates.length) {
   if (mainHasGame && startBranch !== 'main') {
@@ -116,7 +109,6 @@ if (!candidates.length) {
 
 console.log('Nowe wersje do sprawdzenia:');
 candidates.forEach((c, i) => {
-  if (hasV2 && (i === 0 || candidates[i - 1].line !== c.line)) console.log(`\n  ── ${LINES[c.line]} ──`);
   console.log(`  ${i + 1}) ${c.label} · ${c.when}\n     gałąź: ${c.branch}\n${changesOf(c.ref, 4, c.line)}\n`);
 });
 const pick = candidates.length === 1 ? '1' : await ask(`\nKtórą wersję uruchomić? [1-${candidates.length}, Enter = 1] `);
@@ -156,7 +148,7 @@ if (decision === 'a') {
   } catch {
     console.log(`\n✔ Zaakceptowano lokalnie, ale nie udało się wysłać na GitHub (git push). Spróbuj później: git push origin ${c.line}`);
   }
-  // the folder (and the Xcode project) always ends on the releasable 1.x line
+  // the folder (and the Xcode project) always ends on main
   if (c.line !== 'main') switchToMain();
   syncAcceptedVersion();
 } else if (decision === 'o') {
