@@ -36,16 +36,11 @@ Przed uruchomieniem zawsze wypisuje ramkę, żebyś wiedział, co testujesz:
 
 Po decyzji wracasz do zaakceptowanej wersji (main).
 
-## Dwie linie: 1.x i 2.0
+## Jedna linia: `main`
 
-| Linia | Co to jest | Do czego |
-|---|---|---|
-| **`main`** | Void Blaster 1.x, gotowy do wydania | tylko poprawki błędów; z niej robisz `npm run release` |
-| **`v2`** | zaakceptowane buildy wersji 2.0 | cała nowa praca; nigdy nie idzie prosto do App Store |
-
-`npm run review` pokazuje nowe buildy w dwóch grupach: **„Void Blaster 1.x → main”** i **„Wersja 2.0 → v2”**.
-Akceptujesz jak zwykle **[a]**, a skrypt sam wie, do której linii trafi build. Po wszystkim folder projektu wraca
-na `main`, więc Xcode i `npm run release` zawsze mają 1.x. Na premierę 2.0 linia `v2` zostanie scalona do `main`.
+Od 7 listopada 2026 jest jedna linia. **`main`** to gra (2.0 i dalej). Z niej robisz `npm run release` i do niej
+`npm run review` scala każdy zaakceptowany build. Dawna linia `v2` jest zamknięta: kończy się na buildzie 153 i nie
+jest już używana.
 
 ## Ważne
 

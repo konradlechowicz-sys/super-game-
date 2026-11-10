@@ -129,7 +129,8 @@ Tasks, in this order:
 
 ## 2.0 release status (2026-11-07)
 - `v2` was merged into `main` for the launch (branch `claude/release-2.0`, builds 154-155, accepted): `main` is now the
-  2.0 game and GitHub Pages serves the 2.0 trial. Builds 154-158 are in `main` only, not in `v2`.
+  2.0 game and GitHub Pages serves the 2.0 trial. Builds 154+ are in `main` only; the `v2` line is closed (2026-11-07,
+  see "Three lines" below), all further work goes from `main`.
 - Store material: texts `appstore/LISTING.md` (App Store) and `appstore/GOOGLE-PLAY-LISTING.md`, icon
   `proto2/make-app-icon.py`, screenshots `appstore/2.0/screenshots/{6.9,6.5,play}` + `iap-review-fullgame.jpg`, made by
   `node promo/screens.mjs` after `npm run build:web`. Privacy and support pages (`site/`) cover iOS and Android, contact
@@ -175,7 +176,12 @@ tested (purchase works in the simulator from Xcode); never hand-write them in an
 | **RELEASE** | `release` + tags `vX.Y.Z` | exactly what was sent to the App Store (`npm run release`), no test tools | Konrad only |
 Claude never pushes to `main`, `v2` or `release` and never creates `v*` tags.
 
-**Two accepted lines (decided by Konrad, 2026-10-27):** `main` = Void Blaster 1.x (releasable, bug fixes only) and
+**One accepted line again (decided by Konrad, 2026-11-07):** all work (2.x features, fixes, tools) goes on
+`claude/...` branches cut from `origin/main`, and `npm run review` merges every accepted one into `main`. The `v2`
+line is closed: it stopped at build 153 and is not updated or used any more (builds 154+ are in `main` only). The
+paragraph below is history.
+
+**Two accepted lines (decided by Konrad, 2026-10-27, closed 2026-11-07):** `main` = Void Blaster 1.x (releasable, bug fixes only) and
 `v2` = accepted 2.0 builds. All 2.0 work goes on `claude/v2-...` branches cut from `origin/v2`; `npm run review` offers
 them under "Wersja 2.0 → v2" and merges accepted ones into `v2`. Every other `claude/...` branch is a 1.x candidate
 for `main`. 1.x fixes accepted into `main` are brought into `v2` by Claude (merge `origin/main` into a `claude/v2-...`
@@ -221,8 +227,8 @@ Konrad wants to see what every build changes when he reviews and releases, and a
 
 ## Shipping a change (do all three after every gameplay change)
 Konrad decides what becomes the real game: **never push to `main`**. `main` holds only versions he accepted.
-1. **Repo:** commit and push to a `claude/...` branch: `claude/v2-...` (from `origin/v2`) for 2.0 work, another
-   `claude/...` branch (from `origin/main`) for 1.x fixes and tools. Do not merge into `main` or `v2`.
+1. **Repo:** commit and push to a `claude/...` branch cut from `origin/main` (all work, since 2026-11-07). Do not
+   merge into `main`.
 2. **Shareable previews:** `npm run build:web` produces `dist/void-blaster.html` and `dist/void-blaster-test.html`
    (the game's code, about 0.8 MB each) and `dist/assets/` (the 2.0 pictures and music, shared by both; since build
    106, when one file no longer fit the 16 MB artifact limit). Publish each page with every file of `dist/assets` as
