@@ -127,5 +127,8 @@ leaderboards, unlocked after finishing the journey.
 Dynamic Island (medium display)" and rejects 6.9" there. `6.9/` (1320 × 2868) and `6.5/` (1284 × 2778) are kept for
 the other iPhone slots; the same 8 scenes in upload order in every folder. Google Play: `appstore/2.0/screenshots/play/`.
 
+## Header (product page)
+`appstore/2.0/app-store-header-3840x1646.jpg` (3840 × 1646, made by `python3 promo/header.py` from the key art).
+
 ## Copyright
 `2026 Konrad Lechowicz`
