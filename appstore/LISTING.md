@@ -129,6 +129,7 @@ the other iPhone slots; the same 8 scenes in upload order in every folder. Googl
 
 ## Header (product page)
 `appstore/2.0/app-store-header-3840x1646.jpg` (3840 × 1646, made by `python3 promo/header.py` from the key art).
+Search Results (optional): `appstore/2.0/app-store-search-1920x1280.jpg` (same script).
 
 ## Copyright
 `2026 Konrad Lechowicz`
