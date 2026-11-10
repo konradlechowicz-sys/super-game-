@@ -1,8 +1,8 @@
 // Store screenshots of the real game (2.0 release, 2026-11-05): the same 8 scenes in the three sizes the stores need,
 // App Store 6.9" (1320x2868), App Store 6.5" (1284x2778) and Google Play (1080x1920), with a caption in the game's
-// style. Uses the video recorder's toolkit (promo/record.mjs: window.__promo, the page's clock held, one frame drawn
+// style (6.3" = 1206x2622, the "medium display" App Store Connect asks for since 2026-11). Uses the video recorder's toolkit (promo/record.mjs: window.__promo, the page's clock held, one frame drawn
 // per screenshot). Needs npm run build:web first. Writes appstore/2.0/screenshots/<size>/NN-<scene>.jpg.
-// Run from the repo root: node promo/screens.mjs [6.9|6.5|play|iap]
+// Run from the repo root: node promo/screens.mjs [6.9|6.5|6.3|play|iap]
 import { createRequire } from 'node:module';
 import { mkdirSync, readFileSync, existsSync } from 'node:fs';
 import { resolve } from 'node:path';
@@ -15,7 +15,7 @@ const src = readFileSync('promo/record.mjs', 'utf8');
 const body = src.match(/const LIB = String\.raw`([\s\S]*?)`;\n/)[1];
 const LIB = new Function('resolve', 'CODEX_KEYS', `return String.raw\`${body}\`;`)(resolve, CODEX_KEYS);
 
-const SIZES = { '6.9': [440, 956, 3], '6.5': [428, 926, 3], play: [360, 640, 3] };
+const SIZES = { '6.9': [440, 956, 3], '6.5': [428, 926, 3], '6.3': [402, 874, 3], play: [360, 640, 3] };
 const DT = 1 / 30;
 // name, setup (in the page), seconds of game run before the picture, caption
 const SCENES = [
@@ -74,7 +74,8 @@ for (const [size, [w, h, dpr]] of Object.entries(SIZES)) {
       }, { dt: DT, vt, i, warm });
       await page.evaluate((dt) => window.__tick(dt), DT);
     }
-    await page.evaluate((cap) => { window.__promo.cap(cap, 1, 1); window.__bossFury = null; }, cap);
+    // in-game banners (COMBO!, PERK SET!) would sit under the caption: cleared before the picture
+    await page.evaluate((cap) => { document.querySelectorAll('.banner-layer > *').forEach((e) => e.remove()); window.__promo.cap(cap, 1, 1); window.__bossFury = null; }, cap);
     await page.evaluate((dt) => window.__tick(dt), DT);
     await page.screenshot({ path: `${out}/${String(n).padStart(2, '0')}-${name}.jpg`, type: 'jpeg', quality: 92 });
     console.log(`${size}: ${n}-${name}`);

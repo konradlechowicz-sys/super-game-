@@ -36,6 +36,14 @@ VOID BLASTER 2.0: A WHOLE NEW JOURNEY
 • Endless mode in every world after the journey
 Full Game owners keep everything they bought. Your progress starts over with a veteran bonus and the Veteran Striker skin.
 
+## Build 163 · 2026-11-10
+- [App Store] Grafika „Header” na stronę produktu w App Store (3840 × 1646, `appstore/2.0/app-store-header-3840x1646.jpg`, z key artu; skrypt `promo/header.py`).
+- [App Store] Grafika „Search Results” (1920 × 1280, `appstore/2.0/app-store-search-1920x1280.jpg`), z tego samego key artu.
+
+## Build 162 · 2026-11-10
+- [App Store] Zrzuty ekranu 2.0 w rozmiarze 6.3" (1206 × 2622, `appstore/2.0/screenshots/6.3`): App Store Connect wymaga teraz tego rozmiaru dla iPhone’a i odrzucał 6.9".
+- [Narzędzia] `node promo/screens.mjs 6.3`; banery z gry (COMBO!, PERK SET!) są usuwane przed zrobieniem zrzutu, żeby nie nachodziły na podpis.
+
 ## Build 161 · 2026-11-10
 - [Narzędzia] Znowu jedna linia: cała dalsza praca (2.x, poprawki, narzędzia) idzie z `main`. `npm run review` scala każdy zaakceptowany build do `main` i nie pokazuje już grupy „Wersja 2.0 → v2”. Linia `v2` jest zamknięta na buildzie 153.
 - [Narzędzia] `CLAUDE.md`, `README.md` i `JAK-TESTOWAC.md` opisują nowy układ.

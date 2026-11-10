@@ -132,7 +132,7 @@ Tasks, in this order:
   2.0 game and GitHub Pages serves the 2.0 trial. Builds 154+ are in `main` only; the `v2` line is closed (2026-11-07,
   see "Three lines" below), all further work goes from `main`.
 - Store material: texts `appstore/LISTING.md` (App Store) and `appstore/GOOGLE-PLAY-LISTING.md`, icon
-  `proto2/make-app-icon.py`, screenshots `appstore/2.0/screenshots/{6.9,6.5,play}` + `iap-review-fullgame.jpg`, made by
+  `proto2/make-app-icon.py`, screenshots `appstore/2.0/screenshots/{6.3,6.9,6.5,play}` (App Store Connect wants 6.3" = 1206x2622) + `iap-review-fullgame.jpg`, made by
   `node promo/screens.mjs` after `npm run build:web`. Privacy and support pages (`site/`) cover iOS and Android, contact
   lonecometgames@gmail.com (build 158).
 - iOS: Konrad ran `npm run release` as v2.0.0 (build 155) and sent it to TestFlight for testers. Still to do in App

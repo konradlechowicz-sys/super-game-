@@ -123,8 +123,13 @@ leaderboards, unlocked after finishing the journey.
 10 Endless leaderboards for the 2.0 worlds, added to version 2.0.0: `appstore/GAME-CENTER.md`, section "Wersja 2.0".
 
 ## Screenshots
-`appstore/2.0/screenshots/6.9/` (1320 × 2868, iPhone 6.9") and `appstore/2.0/screenshots/6.5/` (1284 × 2778), the same
-8 scenes in upload order; smaller sizes are made by App Store Connect. Google Play: `appstore/2.0/screenshots/play/`.
+`appstore/2.0/screenshots/6.3/` (1206 × 2622): App Store Connect (since 2026-11) asks for this size under "iPhone with
+Dynamic Island (medium display)" and rejects 6.9" there. `6.9/` (1320 × 2868) and `6.5/` (1284 × 2778) are kept for
+the other iPhone slots; the same 8 scenes in upload order in every folder. Google Play: `appstore/2.0/screenshots/play/`.
+
+## Header (product page)
+`appstore/2.0/app-store-header-3840x1646.jpg` (3840 × 1646, made by `python3 promo/header.py` from the key art).
+Search Results (optional): `appstore/2.0/app-store-search-1920x1280.jpg` (same script).
 
 ## Copyright
 `2026 Konrad Lechowicz`
