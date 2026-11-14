@@ -108,7 +108,110 @@ Opisy do 4 filmików kampanii z `appstore/2.0/video/` (build 139), po angielsku 
 
 ---
 
+## Druga partia (VB-05 – VB-08, 2026-11-14)
+
+## VB-05 · Out Now (zwiastun premierowy)
+
+**TikTok**
+> It's here. 10 worlds, 10 bosses, no ads. 🚀 Void Blaster 2.0 is out now on iPhone, Android coming soon.
+> #indiegame #spaceshooter #mobilegames #iosgames #newgame
+
+**Instagram Reels**
+> It's here. 🚀
+>
+> Void Blaster 2.0 is out now on iPhone: 10 worlds from Earth's orbit to the Nexus, 10 bosses and a story to fight through.
+> Free to try. No ads. No timers. Plays offline.
+>
+> Android coming soon. Search "Void Blaster" on the App Store.
+>
+> #voidblaster #indiegame #spaceshooter #mobilegame #survivorslike #iosgames #newgame #gamedev #indiedev #androidgames
+
+**YouTube Shorts**
+- Title: `Void Blaster 2.0 is OUT NOW on iPhone 🚀 #Shorts`
+- Description:
+> 10 worlds, 10 bosses, 11 weapons with evolutions, combos and super combos. Free to try, no ads, plays offline.
+> Out now on iPhone (search "Void Blaster" on the App Store), coming soon to Android.
+> #voidblaster #indiegame #mobilegames
+
+---
+
+## VB-06 · From Pea Shooter to Photon Storm (ewolucja broni)
+
+**TikTok**
+> Level 1 vs. the end of the run. 🔫➡️☀️ Void Blaster 2.0, out now on iPhone.
+> #indiegame #survivorslike #roguelite #mobilegames #spaceshooter
+
+**Instagram Reels**
+> You start with one pulse blaster.
+> Every level-up: pick 1 of 3. Max a weapon, match its partner upgrade and it evolves.
+> Three maxed weapons? Super combo. 🔥
+>
+> 54 ways to fight in Void Blaster 2.0. Out now on iPhone, coming soon to Android.
+>
+> #voidblaster #survivorslike #roguelite #indiegame #mobilegame #spaceshooter #gaming #iosgames #gamedev #indiedev
+
+**YouTube Shorts**
+- Title: `From pea shooter to Photon Storm in one run 🔥 Void Blaster 2.0 #Shorts`
+- Description:
+> One pulse blaster at the start, a screen full of fire at the end: level-ups, weapon evolutions, combos and super combos.
+> Void Blaster 2.0, out now on iPhone, coming soon to Android.
+> #indiegame #survivorslike #mobilegames
+
+---
+
+## VB-07 · Which Build Are You? (4 buildy)
+
+**TikTok**
+> 1, 2, 3 or 4? Comment your build 👇 Void Blaster 2.0, out now on iPhone.
+> #indiegame #survivorslike #mobilegames #spaceshooter #gaming
+
+**Instagram Reels**
+> Pick your build 👇
+> 1 · INFERNO: flamethrower + proximity mines
+> 2 · STORM: arc coil + proximity mines
+> 3 · BLACK HOLE: singularity cannon + nova pulse
+> 4 · RAILGUN: railgun + arc coil
+>
+> Every one of them is a real combo in Void Blaster 2.0. Which one are you? Comment 1, 2, 3 or 4.
+> Out now on iPhone, coming soon to Android.
+>
+> #voidblaster #survivorslike #roguelite #indiegame #mobilegame #spaceshooter #gaming #iosgames #androidgames
+
+**YouTube Shorts**
+- Title: `Which build are you? 1, 2, 3 or 4 👇 Void Blaster 2.0 #Shorts`
+- Description:
+> Inferno, Storm, Black Hole or Railgun: four weapon combos from Void Blaster 2.0. Comment your pick!
+> Out now on iPhone, coming soon to Android.
+> #indiegame #mobilegames #survivorslike
+
+---
+
+## VB-08 · 1 HP (walka z bossem na krawędzi)
+
+**TikTok**
+> 1 HP. Boss at 5%. Don't. Blink. 😰 Void Blaster 2.0, out now on iPhone.
+> #indiegame #bossfight #mobilegames #spaceshooter #clutch
+
+**Instagram Reels**
+> 1 HP left.
+> The Void Heart at 5%.
+> One hit decides everything. 😰
+>
+> The final boss of Void Blaster 2.0, out now on iPhone, coming soon to Android.
+>
+> #voidblaster #bossfight #indiegame #mobilegame #spaceshooter #survivorslike #clutch #gaming #iosgames #gamedev
+
+**YouTube Shorts**
+- Title: `1 HP vs the final boss 😰 Void Blaster 2.0 #Shorts`
+- Description:
+> The Void Heart in its fury phase, one hit left on the ship. Would you make it?
+> Void Blaster 2.0, out now on iPhone, coming soon to Android.
+> #indiegame #bossfight #mobilegames
+
+---
+
 ## Wskazówki publikacji (w pliku, krótko)
 - **Kolejność:** VB-01 jako pierwszy (przedstawia świat), potem VB-02, VB-03 i VB-04, co 2–3 dni.
+- **Druga partia:** VB-05 (premiera) od razu i przypięty na profilu, potem VB-06, VB-07 (zachęca do komentarzy, odpowiadaj na nie) i VB-08, co 2–3 dni.
 - **Okładki:** pliki `.jpg` obok filmików, jako miniatura na Instagramie i YouTube.
 - **Przypięty komentarz:** link lub zapis na listę premierową, gdy Konrad go założy (miejsce na link do uzupełnienia).
