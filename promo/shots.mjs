@@ -192,7 +192,7 @@ const builds = {
 const B8 = 60 / 152.25 * 4;
 // every frame of the fight: the ship's hull almost gone, the boss held at a share of its life, its special attacks
 const LOW = (bossShare, spec) => `const g = window.__app.game; if (g && g.player) g.player.hp = g.player.maxHp * 0.04; P.vig(0.4 + 0.2 * Math.sin(t * 9));` +
-  `if (g && g.boss) { g.boss.hp = Math.min(g.boss.hp, g.boss.maxHp * ${bossShare}); ${spec ? "if (g.boss.mode === 'idle') g.boss.specT = 0;" : ''} }`;
+  `if (g && g.boss) { g.boss.hp = g.boss.maxHp * ${bossShare}; ${spec ? "if (g.boss.mode === 'idle') g.boss.specT = 0;" : ''} }`;
 const onehp = {
   file: 'VB-08-one-hp', cover: 3,
   music: { file: 'art/2.0/audio/w10-nexus-boss.mp3', start: 1.048 + 61 * B8 },

@@ -214,7 +214,7 @@ for (const shot of video.shots) {
         const a0 = cap.at ?? 0.15, a1 = cap.until ?? dur;
         const a = t < a0 ? 0 : Math.min(1, (t - a0) / 0.25, (a1 - t) / 0.2);
         P.cap(a > 0 ? cap : null, Math.max(0, a), cap.rows ? Math.min(1, (t - a0) / Math.max(0.1, (cap.rowsIn || 1.5))) : 1);
-      }
+      } else P.cap(null);
       P.fade(Math.max(fadeIn ? Math.max(0, 1 - t / fadeIn) : 0, fadeOut ? Math.max(0, (t - (dur - fadeOut)) / fadeOut) : 0));
       P.anims(vt);
     },{ dt: DT, t, vt, dur: shot.dur, each: shot.each || null, cap: shot.cap || null, fadeOut: shot.fadeOut || 0, fadeIn: shot.fadeIn || 0, nob: !!shot.nob });
