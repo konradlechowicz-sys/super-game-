@@ -50,10 +50,11 @@ window.__promo = (() => {
       '#pend .two{font:600 13px Orbitron,sans-serif;letter-spacing:.5em;color:#ff4fa8;margin-bottom:34px}' +
       '#pend .cs{font:800 26px Orbitron,sans-serif;letter-spacing:.2em;color:#ffb02e}' +
       '#pend .pl{margin-top:12px;font:600 18px Rajdhani,sans-serif;letter-spacing:.3em;color:#dfe5ee}' +
+      '#pend .an{margin-top:22px;font:600 12px Orbitron,sans-serif;letter-spacing:.3em;color:#ff4fa8}' +
       '#pfade{position:fixed;inset:0;z-index:99;background:#000;opacity:0;pointer-events:none}';
     document.head.appendChild(css);
     for (const id of ['pcap', 'pend', 'pfade']) { const d = document.createElement('div'); d.id = id; document.body.appendChild(d); }
-    document.getElementById('pend').innerHTML = '<div class="sh"></div><div class="in"><h1>VOID BLASTER</h1><div class="two">2.0</div><div class="cs">COMING SOON</div><div class="pl">iPHONE &amp; ANDROID</div></div>';
+    document.getElementById('pend').innerHTML = '<div class="sh"></div><div class="in"><h1>VOID BLASTER</h1><div class="two">2.0</div><div class="cs">OUT NOW</div><div class="pl">ON iPHONE</div><div class="an">ANDROID · COMING SOON</div></div>';
     document.getElementById('pend').style.backgroundImage = 'url(' + P.keyArt + ')';
     const s = app.save;
     s.settings.control = 'drag'; s.settings.sfx = false; s.settings.music = false; s.settings.dmgNums = false;

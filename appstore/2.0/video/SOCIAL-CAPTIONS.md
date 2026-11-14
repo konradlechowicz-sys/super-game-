@@ -7,7 +7,7 @@ Opisy do 4 filmików kampanii z `appstore/2.0/video/` (build 139), po angielsku 
 ## VB-01 · The Invasion (zwiastun fabularny)
 
 **TikTok**
-> Earth's defenses fell in 11 minutes. One ship is left. 🚀 Void Blaster 2.0, coming soon to iPhone & Android.
+> Earth's defenses fell in 11 minutes. One ship is left. 🚀 Void Blaster 2.0, out now on iPhone, coming soon to Android.
 > #indiegame #spaceshooter #mobilegames #gamedev #scifi
 
 **Instagram Reels**
@@ -16,7 +16,7 @@ Opisy do 4 filmików kampanii z `appstore/2.0/video/` (build 139), po angielsku 
 >
 > Fight the Void Collective from Earth's orbit to the heart of their empire, across 10 worlds.
 >
-> 🚀 VOID BLASTER 2.0, coming soon to iPhone & Android.
+> 🚀 VOID BLASTER 2.0, out now on iPhone, coming soon to Android.
 > Follow so you don't miss the launch.
 >
 > #voidblaster #indiegame #spaceshooter #mobilegame #survivorslike #scifi #gamedev #indiedev #iosgames #androidgames
@@ -25,7 +25,7 @@ Opisy do 4 filmików kampanii z `appstore/2.0/video/` (build 139), po angielsku 
 - Title: `One ship against an alien invasion 🚀 Void Blaster 2.0 #Shorts`
 - Description:
 > Earth's defenses are gone. One pilot is left to take back the sky, from Earth's orbit to the Nexus, the heart of the Void Collective.
-> Void Blaster 2.0: a neon space survivor with 10 worlds, 10 bosses and a story to fight through. Coming soon to iPhone & Android.
+> Void Blaster 2.0: a neon space survivor with 10 worlds, 10 bosses and a story to fight through. Out now on iPhone, coming soon to Android.
 > #voidblaster #indiegame #mobilegames
 
 ---
@@ -33,7 +33,7 @@ Opisy do 4 filmików kampanii z `appstore/2.0/video/` (build 139), po angielsku 
 ## VB-02 · The Swarm (chaos gameplayu)
 
 **TikTok**
-> 300+ enemies on screen. One ship. Zero chill. 💥 Void Blaster 2.0, coming soon.
+> 300+ enemies on screen. One ship. Zero chill. 💥 Void Blaster 2.0, out now on iPhone.
 > #bullethell #survivorslike #mobilegames #indiegame #satisfying
 
 **Instagram Reels**
@@ -42,7 +42,7 @@ Opisy do 4 filmików kampanii z `appstore/2.0/video/` (build 139), po angielsku 
 >
 > Inferno. Event Horizon. Tempest. Gauss Lance. Which one is your build?
 >
-> 🚀 VOID BLASTER 2.0, coming soon to iPhone & Android.
+> 🚀 VOID BLASTER 2.0, out now on iPhone, coming soon to Android.
 >
 > #voidblaster #survivorslike #bullethell #roguelite #indiegame #mobilegame #spaceshooter #gaming #iosgames #androidgames
 
@@ -50,7 +50,7 @@ Opisy do 4 filmików kampanii z `appstore/2.0/video/` (build 139), po angielsku 
 - Title: `300+ enemies on screen at once 💥 Void Blaster 2.0 #Shorts`
 - Description:
 > A survivor-style space shooter where the screen never calms down: level up, pick upgrades, evolve 11 weapons and unlock combos and super combos.
-> Void Blaster 2.0, coming soon to iPhone & Android.
+> Void Blaster 2.0, out now on iPhone, coming soon to Android.
 > #survivorslike #bullethell #indiegame
 
 ---
@@ -58,7 +58,7 @@ Opisy do 4 filmików kampanii z `appstore/2.0/video/` (build 139), po angielsku 
 ## VB-03 · Ten Bosses
 
 **TikTok**
-> 10 worlds. 10 bosses. Can you reach the heart? ❤️‍🔥 Void Blaster 2.0, coming soon.
+> 10 worlds. 10 bosses. Can you reach the heart? ❤️‍🔥 Void Blaster 2.0, out now on iPhone.
 > #bossfight #mobilegames #indiegame #spaceshooter #gaming
 
 **Instagram Reels**
@@ -68,7 +68,7 @@ Opisy do 4 filmików kampanii z `appstore/2.0/video/` (build 139), po angielsku 
 >
 > 10 bosses stand between you and the heart of the Void Collective. Can you reach it?
 >
-> 🚀 VOID BLASTER 2.0, coming soon to iPhone & Android.
+> 🚀 VOID BLASTER 2.0, out now on iPhone, coming soon to Android.
 >
 > #voidblaster #bossfight #indiegame #spaceshooter #mobilegame #survivorslike #scifi #gamedev #iosgames #androidgames
 
@@ -76,7 +76,7 @@ Opisy do 4 filmików kampanii z `appstore/2.0/video/` (build 139), po angielsku 
 - Title: `10 bosses, one pilot. Can you reach the heart? #Shorts`
 - Description:
 > Every world of Void Blaster 2.0 ends with its own boss, from the Harvester in Earth's orbit to the Void Heart in the Nexus.
-> Coming soon to iPhone & Android.
+> Out now on iPhone, coming soon to Android.
 > #bossfight #indiegame #mobilegames
 
 ---
@@ -84,7 +84,7 @@ Opisy do 4 filmików kampanii z `appstore/2.0/video/` (build 139), po angielsku 
 ## VB-04 · 10 Worlds · 54 Ways to Fight
 
 **TikTok**
-> 10 worlds, 54 ways to fight. Which one would you play first? 🌌 Void Blaster 2.0, coming soon.
+> 10 worlds, 54 ways to fight. Which one would you play first? 🌌 Void Blaster 2.0, out now on iPhone.
 > #indiegame #mobilegames #spaceshooter #gamedev #roguelite
 
 **Instagram Reels**
@@ -94,7 +94,7 @@ Opisy do 4 filmików kampanii z `appstore/2.0/video/` (build 139), po angielsku 
 > 11 weapons · 11 evolutions · 9 perks · 12 combos · 8 perk sets · 3 super combos.
 > 3 ships, skins, and weapon modules that show your build on the hull.
 >
-> 🚀 VOID BLASTER 2.0, coming soon to iPhone & Android.
+> 🚀 VOID BLASTER 2.0, out now on iPhone, coming soon to Android.
 > Which world are you most excited for? 👇
 >
 > #voidblaster #indiegame #spaceshooter #mobilegame #roguelite #survivorslike #gamedev #indiedev #iosgames #androidgames
@@ -103,7 +103,7 @@ Opisy do 4 filmików kampanii z `appstore/2.0/video/` (build 139), po angielsku 
 - Title: `10 worlds, 54 ways to fight 🌌 Void Blaster 2.0 #Shorts`
 - Description:
 > Orbital Ruins, Siege of Earth, Lunar Bridgehead, Red Conversion, Foundry Belt, Storm Relay, Abyss of Europa, The Rift Gate, Brood World and The Nexus.
-> 11 weapons with evolutions, perks, combos and super combos to collect in the Codex. Coming soon to iPhone & Android.
+> 11 weapons with evolutions, perks, combos and super combos to collect in the Codex. Out now on iPhone, coming soon to Android.
 > #indiegame #mobilegames #spaceshooter
 
 ---

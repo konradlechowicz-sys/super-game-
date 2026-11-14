@@ -11,7 +11,7 @@ const HALE = 'EARTH COMMAND // ADMIRAL HALE', VOID = 'VOID COLLECTIVE // SIGNAL'
 const TYPE = 'P.type(t);';
 // a story shot: the scene's picture with the given transmission (functions run in the page, so the text goes in as JSON)
 const story = (key, panel, say) => new Function(`window.__promo.story(${JSON.stringify(key)}, ${panel}, ${JSON.stringify(say || null)});`);
-// the end card: key art, VOID BLASTER 2.0, COMING SOON, iPhone & Android
+// the end card: key art, VOID BLASTER 2.0, OUT NOW on iPhone, Android coming soon (changed 2026-11-14, promo/recard.mjs)
 const END = (bars, bar) => ({ dur: bars * bar, each: 'P.end(Math.min(1, t / 0.4));', fadeOut: 0.8 });
 
 // ---- 1. THE INVASION: the story trailer, on the 2.0 theme (142.2 BPM); the gameplay starts on the drop
