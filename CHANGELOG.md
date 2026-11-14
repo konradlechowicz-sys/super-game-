@@ -36,6 +36,11 @@ VOID BLASTER 2.0: A WHOLE NEW JOURNEY
 • Endless mode in every world after the journey
 Full Game owners keep everything they bought. Your progress starts over with a veteran bonus and the Veteran Striker skin.
 
+## Build 166 · 2026-11-14
+- [App Store] Druga partia 4 filmików na social media (`appstore/2.0/video/`, 1080 × 1920, 19–23 s, z prawdziwej gry): VB-05 „Out Now” (zwiastun premierowy), VB-06 „Evolution” (od jednego blastera do super kombosa), VB-07 „Which Build Are You?” (4 buildy, zachęta do komentarzy), VB-08 „1 HP” (finałowy boss na krawędzi, 3 gwiazdki). Plansza końcowa: OUT NOW ON iPHONE · ANDROID COMING SOON.
+- [App Store] Opisy do TikToka, Reels i Shorts dla VB-05–VB-08 w `SOCIAL-CAPTIONS.md`.
+- [Narzędzia] `promo/record.mjs`: ujęcia kontynuujące tę samą walkę (`keep`), wyłączanie banerów gry (`nob`), czerwona winieta, małe podpisy; tempo muzyki zmierzone dla utworów światów 5, 6 i bossa 10.
+
 ## Build 164 · 2026-11-14
 - [App Store] 4 filmiki promocyjne 2.0: plansza końcowa mówi teraz „OUT NOW ON iPHONE · ANDROID COMING SOON” zamiast „COMING SOON · iPHONE & ANDROID”. Reszta filmów bez zmian (podmieniona tylko plansza, bez ponownego nagrywania).
 - [App Store] Opisy do social mediów (`SOCIAL-CAPTIONS.md`) zmienione tak samo.
