@@ -60,7 +60,7 @@
   organic the deeper you go) attacks Earth; the player fights from Earth's orbit to its heart, the Nexus (worlds and
   enemies in `art/2.0/CHATGPT-BRIEF.md`; free trial = worlds 1-2). Work on 2.0 starts only after 1.3 is released.
   2.0 decisions (Konrad, 2026-10-26; execution plan in the Claude Doc "Void Blaster 2.0 – plan wykonawczy"): the 10
-  new worlds replace the 4 of 1.x; all 10 ship at once, iOS and Android the same day; the "1.4" content (OVERLOAD
+  new worlds replace the 4 of 1.x; all 10 ship at once (iOS and Android were planned for the same day; iOS went first, 2026-11-14); the "1.4" content (OVERLOAD
   minute, Railgun, Flamethrower, Singularity Cannon, 12 combos, 8 perk sets, 3 super combos) goes into 2.0; 2.0 is a
   free update for Full Game owners (same app, same product); progress starts over, with a bonus for 1.x veterans
   (decided 2026-10-31, `migrate` in `js/save.js`: 300 coins + 10 per 1.x star + half the coins spent on upgrades, at
@@ -127,7 +127,7 @@ Tasks, in this order:
    2 weeks before launch, landscape trailer (`promo/record.mjs`), AI content disclosure (ChatGPT art, Suno music;
    check that the Suno tracks were made on a plan that allows commercial use).
 
-## 2.0 release status (2026-11-07)
+## 2.0 release status (2026-11-14)
 - `v2` was merged into `main` for the launch (branch `claude/release-2.0`, builds 154-155, accepted): `main` is now the
   2.0 game and GitHub Pages serves the 2.0 trial. Builds 154+ are in `main` only; the `v2` line is closed (2026-11-07,
   see "Three lines" below), all further work goes from `main`.
@@ -135,16 +135,18 @@ Tasks, in this order:
   `proto2/make-app-icon.py`, screenshots `appstore/2.0/screenshots/{6.3,6.9,6.5,play}` (App Store Connect wants 6.3" = 1206x2622) + `iap-review-fullgame.jpg`, made by
   `node promo/screens.mjs` after `npm run build:web`. Privacy and support pages (`site/`) cover iOS and Android, contact
   lonecometgames@gmail.com (build 158).
-- iOS: Konrad ran `npm run release` as v2.0.0 (build 155) and sent it to TestFlight for testers. Still to do in App
-  Store Connect: Game Center leaderboards w5-w10 (`com.konradlechowicz.voidblaster.endless.wN`, "Endless · <world>")
-  and renaming w1-w4, Full Game price USD 4.99 + new description + review screenshot, version 2.0.0 page, manual
-  release on the same day as Android.
+- iOS: **2.0.0 (build 155) is released on the App Store** (Konrad, confirmed 2026-11-14), after TestFlight and App
+  Review; Game Center leaderboards w1-w10, the 6.3" screenshots, Header and Search Results assets (build 162-163) were
+  set in App Store Connect. Plan changed (Konrad, 2026-11-14): iOS went first, Android follows when its closed test is
+  done (no longer the same day). Promo videos and social captions say "out now on iPhone, Android coming soon"
+  (build 164, `promo/recard.mjs`).
 - Android: Play Console developer account "LoneCometGames" (Google account lonecometgames@gmail.com, personal account,
   identity verified, payments profile set). App "Void Blaster: Neon Survivor" was rejected on 2026-11-06 because the
   Financial features declaration wrongly said "mobile payments and digital wallets" (needs an organization account);
   fixed (no financial features, target age 13+) and resent for review on 2026-11-07 with build 156 (2.0.0, Billing
   8.0.0) on the closed track "Alpha". Play App Signing is on (upload key `android/void-blaster-upload.jks`, out of git).
-  Next: add at least 12 testers (14 days before production access), share the join link, create the in-app product
+  Alpha approved; 2026-11-14: 6 of 12 testers in, the game installs and runs well for them. The 14 days start once 12
+  testers are in. Next: add at least 12 testers (14 days before production access), share the join link, create the in-app product
   `com.konradlechowicz.voidblaster.fullgame` (USD 4.99), license testing; Play Games leaderboards later (plugin off until
   `game_services_project_id` and `PLAY_IDS` are filled). The seller "trader" status (EU) is left until Konrad's company
   (planned name Lone Comet Games) exists.

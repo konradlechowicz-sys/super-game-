@@ -36,6 +36,9 @@ VOID BLASTER 2.0: A WHOLE NEW JOURNEY
 • Endless mode in every world after the journey
 Full Game owners keep everything they bought. Your progress starts over with a veteran bonus and the Veteran Striker skin.
 
+## Build 165 · 2026-11-14
+- [Narzędzia] CLAUDE.md: stan wydania z 14.11 (iOS 2.0.0 wydany w App Store, Android czeka na 12 testerów, zmiana planu: iOS najpierw).
+
 ## Build 164 · 2026-11-14
 - [App Store] 4 filmiki promocyjne 2.0: plansza końcowa mówi teraz „OUT NOW ON iPHONE · ANDROID COMING SOON” zamiast „COMING SOON · iPHONE & ANDROID”. Reszta filmów bez zmian (podmieniona tylko plansza, bez ponownego nagrywania).
 - [App Store] Opisy do social mediów (`SOCIAL-CAPTIONS.md`) zmienione tak samo.
