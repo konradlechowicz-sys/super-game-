@@ -111,4 +111,102 @@ const worlds = {
   ],
 };
 
-export const VIDEOS = { invasion, swarm, bosses, worlds };
+// ======== second batch (approved by Konrad 2026-11-14): launch, weapon growth, builds, a boss at 1 HP ========
+// Bar grids measured from the tracks (onset autocorrelation): Foundry Belt 136 BPM, Storm Relay 137.35 BPM, Nexus boss
+// 152.25 BPM; the theme as in video 1.
+const NOB = { nob: true }; // the game's own banners off where a caption sits in their place
+
+// ---- 5. OUT NOW: the launch trailer on the theme's drop
+const outnow = {
+  file: 'VB-05-out-now', cover: 0.6,
+  music: { file: 'art/2.0/audio/void-blaster-theme-suno.mp3', start: 35.5 },
+  shots: [
+    { dur: B1, warm: 1.5, ...NOB, setup: () => { const P = window.__promo; P.stage('9-4', { at: 60, weapons: [['rail', 5], ['flame', 5], ['blaster', 5], ['lightning', 5]] }); P.stress(260); },
+      cap: { t: "IT'S HERE.", s: 'VOID BLASTER 2.0', y: 0.17, at: 0.05 } },
+    ...WORLDS.map((n, i) => ({
+      dur: B1 / 2, warm: i % 2 ? 4.5 : 2, ...NOB,
+      setup: new Function(`const P = window.__promo; P.stage('${i + 1}-${i % 2 ? 6 : 3}', { ${i % 2 ? 'boss: true, r: 90' : 'at: 55'}, ship: ${JSON.stringify(['striker', 'phantom', 'titan'][i % 3])}, weapons: ${JSON.stringify(LOADOUTS[i % 4])} }); ${i % 2 ? '' : 'P.stress(110);'}`),
+      cap: { t: n, y: 0.86, at: 0, sm: true },
+    })),
+    { dur: B1, warm: 1.5, ...NOB, setup: () => { const P = window.__promo; P.stage('5-3', { at: 55, weapons: [['flame', 5, true], ['orbit', 5]] }); P.stress(160); },
+      cap: { t: '10 WORLDS', s: '60 SECTORS · ONE JOURNEY', y: 0.17, at: 0.05 } },
+    { dur: B1, warm: 4.5, ...NOB, setup: () => window.__promo.stage('10-6', { boss: true, r: 90, weapons: [['rail', 5, true], ['singularity', 5], ['pulse', 5]] }),
+      cap: { t: '10 BOSSES', s: 'FURY PHASES · SPECIAL ATTACKS', y: 0.8, at: 0.05 } },
+    { dur: B1, warm: 1.5, ...NOB, setup: () => { const P = window.__promo; P.stage('7-3', { at: 55, weapons: [['singularity', 5, true], ['pulse', 5]] }); P.stress(200); },
+      cap: { t: 'NO ADS. EVER.', s: 'NO TIMERS · PLAYS OFFLINE', y: 0.4, box: true, at: 0.05 } },
+    { dur: B1, setup: () => window.__promo.hangar(),
+      cap: { t: 'FREE TO TRY', s: 'WORLDS 1-2 FREE · ONE PURCHASE FOR THE REST', y: 0.42, box: true, at: 0.05 } },
+    END(2, B1),
+  ],
+};
+
+// ---- 6. FROM PEA SHOOTER TO PHOTON STORM: one arsenal growing, on world 5's sector track (136 BPM)
+const B6 = 60 / 136 * 4;
+const evolve = {
+  file: 'VB-06-evolution', cover: 9.5,
+  music: { file: 'art/2.0/audio/w05-foundry-belt-sector.mp3', start: 1.334 + 5 * B6 },
+  shots: [
+    { dur: 2 * B6, warm: 1, ...NOB, fadeIn: 0.3, setup: () => { const P = window.__promo; P.stage('5-2', { at: 20, r: 40 }); P.stress(18); },
+      cap: { t: 'LV 1', s: 'ONE PULSE BLASTER', y: 0.17, at: 0.3 } },
+    { dur: B6, warm: 0.5, ...NOB, setup: () => { const P = window.__promo; const g = P.stage('5-2', { at: 35, weapons: [['blaster', 2]] }); delete g.openCards; g.gainXp((g.xpNext - g.xp) / g.player.xpMult + 1, true); },
+      cap: { t: 'LEVEL UP', s: 'PICK 1 OF 3', y: 0.84, at: 0.1 } },
+    { dur: 1.5 * B6, warm: 1, ...NOB, setup: () => { const P = window.__promo; P.stage('5-3', { at: 45, weapons: [['blaster', 5], ['missiles', 5], ['spread', 5]] }); P.stress(120); },
+      cap: { t: 'LV 5', s: 'THREE WEAPONS ON YOUR HULL', y: 0.17, at: 0.1 } },
+    { dur: 2 * B6, warm: 1, ...NOB, setup: () => { const P = window.__promo; P.stage('5-4', { at: 50, weapons: [['blaster', 5], ['missiles', 5], ['spread', 5]] }); P.stress(150); P.evo = 0; },
+      each: 'if (t > 0.45 && !P.evo) { P.evo = 1; P.weapon("blaster", 5, true); }',
+      cap: { t: 'EVOLUTION', s: 'PULSE BLASTER → PHOTON STORM', y: 0.17, at: 0.45 } },
+    { dur: 2 * B6, warm: 1.5, setup: () => { const P = window.__promo; P.stage('9-4', { at: 60, weapons: [['rail', 5], ['flame', 5, true], ['blaster', 5, true], ['lightning', 5]] }); P.stress(260); },
+      cap: { t: 'PHOENIX RAIL', s: 'THREE WEAPONS AT MAX', y: 0.8, at: 0.3 } },
+    { dur: 1.5 * B6, warm: 1, ...NOB, setup: () => { const P = window.__promo; P.stage('6-3', { at: 50, ship: 'phantom', weapons: [['lightning', 5, true], ['mines', 5], ['rail', 5]] }); P.stress(150); },
+      cap: { t: '54 WAYS TO FIGHT', s: '11 WEAPONS · 11 EVOLUTIONS · 12 COMBOS', y: 0.4, box: true, at: 0.1 } },
+    END(2, B6),
+  ],
+};
+
+// ---- 7. WHICH BUILD ARE YOU? Four builds, each a real combo, on world 6's sector track (137.35 BPM)
+const B7 = 60 / 137.35 * 4;
+const BUILDS = [
+  ['INFERNO', 'FLAMETHROWER + PROXIMITY MINES', '4-3', 'striker', [['flame', 5, true], ['mines', 5]]],
+  ['STORM', 'ARC COIL + PROXIMITY MINES', '6-3', 'phantom', [['lightning', 5, true], ['mines', 5]]],
+  ['BLACK HOLE', 'SINGULARITY CANNON + NOVA PULSE', '8-3', 'titan', [['singularity', 5, true], ['pulse', 5]]],
+  ['RAILGUN', 'RAILGUN + ARC COIL', '7-3', 'striker', [['rail', 5, true], ['lightning', 5]]],
+];
+const builds = {
+  file: 'VB-07-builds', cover: 4,
+  music: { file: 'art/2.0/audio/w06-storm-relay-sector.mp3', start: 1.731 + 63 * B7 },
+  shots: [
+    { dur: 1.5 * B7, warm: 1.5, ...NOB, setup: () => { const P = window.__promo; P.stage('2-4', { at: 60, weapons: [['blaster', 5], ['spread', 5]] }); P.stress(150); },
+      cap: { t: 'PICK YOUR BUILD', s: 'WHICH ONE ARE YOU?', y: 0.4, box: true, at: 0.05 } },
+    ...BUILDS.map(([n, s, id, ship, w], i) => ({
+      dur: 2 * B7, warm: 1.5, ...NOB,
+      setup: new Function(`const P = window.__promo; P.stage('${id}', { at: 50, ship: '${ship}', weapons: ${JSON.stringify(w)} }); P.stress(170);`),
+      cap: { t: `${i + 1} · ${n}`, s, y: 0.17, at: 0.05 },
+    })),
+    { dur: 1.5 * B7, warm: 1.5, ...NOB, setup: () => { const P = window.__promo; P.stage('10-3', { at: 55, ship: 'phantom', weapons: [['rail', 5], ['singularity', 5], ['flame', 5]] }); P.stress(180); },
+      cap: { t: 'COMMENT YOUR BUILD', s: '1 · 2 · 3 · 4', y: 0.4, box: true, at: 0.05 } },
+    END(2, B7),
+  ],
+};
+
+// ---- 8. 1 HP: the Void Heart at its last breath, one fight in four shots, on world 10's boss track (152.25 BPM)
+const B8 = 60 / 152.25 * 4;
+// every frame of the fight: the ship's hull almost gone, the boss held at a share of its life, its special attacks
+const LOW = (bossShare, spec) => `const g = window.__app.game; if (g && g.player) g.player.hp = g.player.maxHp * 0.04; P.vig(0.4 + 0.2 * Math.sin(t * 9));` +
+  `if (g && g.boss) { g.boss.hp = Math.min(g.boss.hp, g.boss.maxHp * ${bossShare}); ${spec ? "if (g.boss.mode === 'idle') g.boss.specT = 0;" : ''} }`;
+const onehp = {
+  file: 'VB-08-one-hp', cover: 3,
+  music: { file: 'art/2.0/audio/w10-nexus-boss.mp3', start: 1.048 + 61 * B8 },
+  shots: [
+    { dur: 2 * B8, warm: 4.5, ...NOB, fadeIn: 0.3,
+      setup: () => window.__promo.stage('10-6', { boss: true, r: 100, w: 1.2, weapons: [['rail', 5, true], ['flame', 5], ['singularity', 5], ['blaster', 5]] }),
+      each: LOW(0.3, false), cap: { t: '1 HP.', y: 0.72, at: 0.3, void: true } },
+    { dur: 2 * B8, keep: true, ...NOB, each: LOW(0.05, true), cap: { t: 'VOID HEART: 5%', s: 'FURY PHASE', y: 0.72, at: 0.1, void: true } },
+    { dur: 2 * B8, keep: true, ...NOB, each: LOW(0.05, true), cap: { t: "DON'T. BLINK.", y: 0.72, at: 0.1 } },
+    // the last hit: the boss goes, the sector is won with all three stars
+    { dur: 4 * B8, keep: true, ...NOB,
+      each: 'const g = window.__app.game; P.vig(Math.max(0, 0.4 - t)); if (g && g.boss && t > 0.3) { g.kills = Math.max(g.kills, g.stage.kills); g.elitesKilled = Math.max(g.elitesKilled, g.stage.elites); g.boss.hp = 1; }' },
+    END(2, B8),
+  ],
+};
+
+export const VIDEOS = { invasion, swarm, bosses, worlds, outnow, evolve, builds, onehp };

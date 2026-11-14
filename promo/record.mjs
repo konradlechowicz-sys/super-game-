@@ -7,7 +7,7 @@
 // the end card are HTML laid over the game in its own fonts; the music is a track of the game, cut with ffmpeg.
 // Writes appstore/2.0/video/<file>.mp4 (1080x1920, H.264 + AAC, -14 LUFS) and a cover picture <file>.jpg.
 // Needs Playwright with Chromium and ffmpeg. Run from the repo root:
-//   npm run promo:video -- <invasion|swarm|bosses|worlds> [seconds: record only the start, for a test]
+//   npm run promo:video -- <invasion|swarm|bosses|worlds|outnow|evolve|builds|onehp> [seconds: record only the start, for a test]
 import { createRequire } from 'node:module';
 import { mkdirSync, rmSync, existsSync } from 'node:fs';
 import { execFileSync } from 'node:child_process';
@@ -51,9 +51,11 @@ window.__promo = (() => {
       '#pend .cs{font:800 26px Orbitron,sans-serif;letter-spacing:.2em;color:#ffb02e}' +
       '#pend .pl{margin-top:12px;font:600 18px Rajdhani,sans-serif;letter-spacing:.3em;color:#dfe5ee}' +
       '#pend .an{margin-top:22px;font:600 12px Orbitron,sans-serif;letter-spacing:.3em;color:#ff4fa8}' +
+      '#pcap.sm .t{font-size:20px;letter-spacing:.12em}' +
+      '#pvig{position:fixed;inset:0;z-index:89;pointer-events:none;opacity:0;background:radial-gradient(ellipse at center,rgba(255,30,60,0) 58%,rgba(255,20,50,.3) 82%,rgba(170,0,25,.7) 100%)}' +
       '#pfade{position:fixed;inset:0;z-index:99;background:#000;opacity:0;pointer-events:none}';
     document.head.appendChild(css);
-    for (const id of ['pcap', 'pend', 'pfade']) { const d = document.createElement('div'); d.id = id; document.body.appendChild(d); }
+    for (const id of ['pcap', 'pend', 'pfade', 'pvig']) { const d = document.createElement('div'); d.id = id; document.body.appendChild(d); }
     document.getElementById('pend').innerHTML = '<div class="sh"></div><div class="in"><h1>VOID BLASTER</h1><div class="two">2.0</div><div class="cs">OUT NOW</div><div class="pl">ON iPHONE</div><div class="an">ANDROID · COMING SOON</div></div>';
     document.getElementById('pend').style.backgroundImage = 'url(' + P.keyArt + ')';
     const s = app.save;
@@ -67,7 +69,7 @@ window.__promo = (() => {
     document.querySelectorAll('.story').forEach((e) => e.remove());
     ui.closeModal();
     if (app.game) { app.game = null; app.endRun(); ui.hideHud(); }
-    P.cap(null); P.end(0);
+    P.cap(null); P.end(0); P.vig(0);
     P.path = null;
   };
   // a sector with the ship flying a slow loop; the level-up cards picked by themselves (off camera)
@@ -118,7 +120,7 @@ window.__promo = (() => {
     const el = document.getElementById('pcap');
     if (!c) { el.style.display = 'none'; return; }
     el.style.display = 'block';
-    el.className = (c.void ? 'void ' : '') + (c.box ? 'box' : '');
+    el.className = (c.void ? 'void ' : '') + (c.box ? 'box ' : '') + (c.sm ? 'sm' : '');
     el.style.top = ((c.y ?? 0.2) * 100) + '%';
     el.style.opacity = a;
     el.style.transform = 'scale(' + (0.92 + 0.08 * Math.min(1, a)) + ')';
@@ -127,6 +129,10 @@ window.__promo = (() => {
   };
   P.end = (a) => { const e = document.getElementById('pend'); e.style.display = a > 0 ? 'block' : 'none'; e.style.opacity = a; };
   P.fade = (a) => { document.getElementById('pfade').style.opacity = a; };
+  // the red edge of a ship about to break (the "1 HP" video)
+  P.vig = (a) => { document.getElementById('pvig').style.opacity = a; };
+  // the game's own banners (COMBO!, WARNING, elites) off, where a caption sits in their place
+  P.nob = () => document.querySelectorAll('.banner-layer > *').forEach((e) => e.remove());
   // a story scene: its picture and the given transmission (who: cmd | void | lost), typed out by tTyped seconds
   P.story = (key, panel, say) => {
     app.playStory(key, () => {});
@@ -189,17 +195,21 @@ let frame = 0, vt = 0;
 const total = Math.min(limit, video.shots.reduce((a, s) => a + s.dur, 0));
 for (const shot of video.shots) {
   if (vt >= total) break;
-  await page.evaluate(() => window.__promo.clear());
-  if (shot.setup) await page.evaluate(shot.setup);
+  // keep: the shot goes on with the previous one's scene (the same fight), so no new setup
+  if (!shot.keep) {
+    await page.evaluate(() => window.__promo.clear());
+    if (shot.setup) await page.evaluate(shot.setup);
+  }
   // run the game a while off camera (enemies arrive, the boss appears)
   for (let w = 0; w < (shot.warm || 0) * FPS; w++) await page.evaluate((dt) => window.__promo.step(dt), DT);
   const n = Math.round(shot.dur * FPS);
   for (let i = 0; i < n && vt < total; i++) {
     const t = i / FPS;
-    await page.evaluate(({ dt, t, vt, dur, each, cap, fadeOut, fadeIn }) => {
+    await page.evaluate(({ dt, t, vt, dur, each, cap, fadeOut, fadeIn, nob }) => {
       const P = window.__promo;
       P.step(dt);
       if (each) new Function('P', 't', 'dur', each)(P, t, dur);
+      if (nob) P.nob();
       if (cap) {
         const a0 = cap.at ?? 0.15, a1 = cap.until ?? dur;
         const a = t < a0 ? 0 : Math.min(1, (t - a0) / 0.25, (a1 - t) / 0.2);
@@ -207,7 +217,7 @@ for (const shot of video.shots) {
       }
       P.fade(Math.max(fadeIn ? Math.max(0, 1 - t / fadeIn) : 0, fadeOut ? Math.max(0, (t - (dur - fadeOut)) / fadeOut) : 0));
       P.anims(vt);
-    },{ dt: DT, t, vt, dur: shot.dur, each: shot.each || null, cap: shot.cap || null, fadeOut: shot.fadeOut || 0, fadeIn: shot.fadeIn || 0 });
+    },{ dt: DT, t, vt, dur: shot.dur, each: shot.each || null, cap: shot.cap || null, fadeOut: shot.fadeOut || 0, fadeIn: shot.fadeIn || 0, nob: !!shot.nob });
     await drawn();
     await page.screenshot({ path: `${FRAMES}/${String(frame).padStart(5, '0')}.jpg`, type: 'jpeg', quality: 93 });
     frame++; vt += DT;
