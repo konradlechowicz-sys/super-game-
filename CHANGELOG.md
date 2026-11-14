@@ -36,6 +36,11 @@ VOID BLASTER 2.0: A WHOLE NEW JOURNEY
 • Endless mode in every world after the journey
 Full Game owners keep everything they bought. Your progress starts over with a veteran bonus and the Veteran Striker skin.
 
+## Build 164 · 2026-11-14
+- [App Store] 4 filmiki promocyjne 2.0: plansza końcowa mówi teraz „OUT NOW ON iPHONE · ANDROID COMING SOON” zamiast „COMING SOON · iPHONE & ANDROID”. Reszta filmów bez zmian (podmieniona tylko plansza, bez ponownego nagrywania).
+- [App Store] Opisy do social mediów (`SOCIAL-CAPTIONS.md`) zmienione tak samo.
+- [Narzędzia] `node promo/recard.mjs`: podmienia planszę końcową w gotowych filmikach; `promo/record.mjs` rysuje już nową planszę.
+
 ## Build 163 · 2026-11-10
 - [App Store] Grafika „Header” na stronę produktu w App Store (3840 × 1646, `appstore/2.0/app-store-header-3840x1646.jpg`, z key artu; skrypt `promo/header.py`).
 - [App Store] Grafika „Search Results” (1920 × 1280, `appstore/2.0/app-store-search-1920x1280.jpg`), z tego samego key artu.
